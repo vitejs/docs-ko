@@ -16,8 +16,8 @@ module.exports = {
     editLinkText: 'Suggest changes to this page',
 
     algolia: {
-      apiKey: 'b573aa848fd57fb47d693b531297403c',
-      indexName: 'vitejs'
+      apiKey: 'f710f043c25b9358f3bf357b1efe7e8f',
+      indexName: 'vitejs-ko'
     },
 
     carbonAds: {
