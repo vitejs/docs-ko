@@ -1,18 +1,20 @@
-# Why Vite
+# Vite를 사용해야 하는 이유
 
-## The Problems
+## 이런 문제점이 있었어요
 
-Before ES modules were available in browsers, developers had no native mechanism for authoring JavaScript in a modularized fashion. This is why we are all familiar with the concept of "bundling": using tools that crawl, process and concatenate our source modules into files that can run in the browser.
+브라우저에서 ESM(ES Modules)을 지원하기 전까지는, JavaScript 모듈화를 네이티브 레벨에서 진행할 수 없었습니다. 따라서 개발자들은 "번들링(Bundling)\*"이라는 우회적인 방법을 사용할 수 밖에 없었죠. (\* 번들링: 모듈화된 소스 코드를 브라우저에서 실행할 수 있는 파일로 한데 묶어 연결해주는 작업)
 
-Over time we have seen tools like [webpack](https://webpack.js.org/), [Rollup](https://rollupjs.org) and [Parcel](https://parceljs.org/), which greatly improved the development experience for frontend developers.
+[Webpack](https://webpack.js.org/), [Rolup](https://rollupjs.org) 그리고 [Parcel](https://parceljs.org/)과 같은 도구는 이런 번들링 작업을 진행해줌으로써 프런트엔드 개발자의 생산성을 크게 향상시켰습니다.
 
-However, as we start to build more and more ambitious applications, the amount of JavaScript we are dealing with also increased exponentially. It is not uncommon for large scale projects to contain thousands of modules. We are starting to hit a performance bottleneck for JavaScript based tooling: it can often take an unreasonably long wait (sometimes up to minutes!) to spin up a dev server, and even with HMR, file edits can take a couple seconds to be reflected in the browser. The slow feedback loop can greatly affect developers' productivity and happiness.
+하지만, 1000개의 JavaScript 모듈이 된 거대한 프로젝트라면 어떨까요? 실제로 이러한 상황을 어렵지 않게 마주할 수 있으며, 이 경우 Webpack과 같은 JavaScript 기반의 도구는 병목 현상이 발생하곤 합니다. (혹시, 개발 서버를 실행하는 데 있어 비합리적으로 긴 시간을 기다려 본 적이 있나요? 또는 HMR을 사용할 때 편집한 코드가 브라우저에 반영되기까지 수 초 이상이 소요되어 답답했던 적이 있나요?)
 
-Vite aims to address these issues by leveraging new advancements in the ecosystem: the availability of native ES modules in the browser, and the rise of JavaScript tools written in compile-to-native languages.
+Vite는 이러한 것에 초점을 맞춰, 브라우저에서 지원하는 ES Modules(ESM) 및 네이티브 언어로 작성된 JavaScript 도구 등을 활용해 문제를 해결하고자 합니다.
 
-### Slow Server Start
+### 지루할 정도로 길었던 서버 구동
 
 When cold-starting the dev server, a bundler-based build setup has to eagerly crawl and build your entire application before it can be served.
+
+Cold-Starting\* 방식으로 개발 서버를 구동할 때, 번들러 기반의 도구의 경우 애플리케이션 내 모든 소스 코드에 대해 크롤링 및 빌드 작업을 마쳐야지만이 실제 페이지를 제공할 수 있습니다. (\* Cold-Starting: )
 
 Vite improves the dev server start time by first dividing the modules in an application into two categories: **dependencies** and **source code**.
 

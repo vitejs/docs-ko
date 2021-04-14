@@ -5,15 +5,15 @@
  */
 module.exports = {
   title: 'Vite',
-  description: 'Next Generation Frontend Tooling',
+  lang: 'ko',
+  description: '차세대 프런트엔드 개발 및 빌드 툴',
   head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]],
   themeConfig: {
-    repo: 'vitejs/vite',
+    repo: 'Gumball12/vitejs-ko',
     logo: '/logo.svg',
-    docsDir: 'docs',
     docsBranch: 'main',
     editLinks: true,
-    editLinkText: 'Suggest changes to this page',
+    editLinkText: '이 페이지 수정하기',
 
     algolia: {
       apiKey: 'f710f043c25b9358f3bf357b1efe7e8f',
@@ -26,18 +26,18 @@ module.exports = {
     },
 
     nav: [
-      { text: 'Guide', link: '/guide/' },
-      { text: 'Config', link: '/config/' },
-      { text: 'Plugins', link: '/plugins/' },
+      { text: '가이드', link: '/guide/' },
+      { text: '설정', link: '/config/' },
+      { text: '플러그인', link: '/plugins/' },
       {
-        text: 'Links',
+        text: '관련 링크',
         items: [
           {
-            text: 'Twitter',
+            text: '트위터',
             link: 'https://twitter.com/vite_js'
           },
           {
-            text: 'Discord Chat',
+            text: '디스코드',
             link: 'https://chat.vitejs.dev'
           },
           {
@@ -45,15 +45,15 @@ module.exports = {
             link: 'https://github.com/vitejs/awesome-vite'
           },
           {
-            text: 'DEV Community',
+            text: '개발 커뮤니티',
             link: 'https://dev.to/t/vite'
           },
           {
-            text: 'Rollup Plugins Compat',
+            text: '호환 가능한 Rollup 플러그인',
             link: 'https://vite-rollup-plugins.patak.dev/'
           },
           {
-            text: 'Changelog',
+            text: '변경 사항',
             link:
               'https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md'
           }
@@ -67,18 +67,18 @@ module.exports = {
       // catch-all fallback
       '/': [
         {
-          text: 'Guide',
+          text: '가이드',
           children: [
             {
-              text: 'Why Vite',
+              text: 'Vite를 사용해야 하는 이유',
               link: '/guide/why'
             },
             {
-              text: 'Getting Started',
+              text: '시작하기',
               link: '/guide/'
             },
             {
-              text: 'Features',
+              text: '지원하는 기능들',
               link: '/guide/features'
             },
             {
@@ -120,10 +120,10 @@ module.exports = {
           ]
         },
         {
-          text: 'APIs',
+          text: 'API',
           children: [
             {
-              text: 'Plugin API',
+              text: '플러그인 API',
               link: '/guide/api-plugin'
             },
             {
