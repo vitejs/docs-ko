@@ -70,7 +70,7 @@ module.exports = {
           text: '가이드',
           children: [
             {
-              text: 'Vite를 사용해야 하는 이유',
+              text: 'Vite을 사용해야 하는 이유',
               link: '/guide/why'
             },
             {
@@ -82,23 +82,23 @@ module.exports = {
               link: '/guide/features'
             },
             {
-              text: 'Dependency Pre-Bundling',
+              text: '미리 빌드된 디펜던시',
               link: '/guide/dep-pre-bundling'
             },
             {
-              text: 'Static Asset Handling',
+              text: '에셋 가져오기',
               link: '/guide/assets'
             },
             {
-              text: 'Building for Production',
+              text: '배포하기',
               link: '/guide/build'
             },
             {
-              text: 'Deploying a Static Site',
+              text: '정적 페이지 만들기',
               link: '/guide/static-deploy'
             },
             {
-              text: 'Env Variables and Modes',
+              text: 'Vite의 환경 변수와 모드',
               link: '/guide/env-and-mode'
             },
             {
@@ -106,15 +106,15 @@ module.exports = {
               link: '/guide/ssr'
             },
             {
-              text: 'Backend Integration',
+              text: '백엔드 프레임워크와 함께 사용하기',
               link: '/guide/backend-integration'
             },
             {
-              text: 'Comparisons',
+              text: '다른 번들러와의 차이점',
               link: '/guide/comparisons'
             },
             {
-              text: 'Migration from v1',
+              text: 'v1에서 마이그레이션하기',
               link: '/guide/migration'
             }
           ]
