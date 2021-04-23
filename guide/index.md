@@ -4,13 +4,9 @@
 
 Vite(프랑스어로 "빠르다"를 의미하며, 발음은 `/vit/` 입니다.)은 빠르고 간결한 모던 웹 프로젝트 개발 경험에 초점을 맞춰 탄생한 빌드 도구이며, 두 가지 컨셉을 중심으로 하고 있습니다.
 
-- A dev server that provides [rich feature enhancements](./features) over [native ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), for example extremely fast [Hot Module Replacement (HMR)](./features#hot-module-replacement).
+- 개발 시 [네이티브 ES Module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 넘어 [더욱 다양한 기능](./features)을 제공합니다. 가령, [Hot Module Replacement (HMR)](./features#hot-module-replacement)과 같은 것들 말이죠.
 
-- 개발 시 [네이티브 ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 포함해 [다양한 기능](./features)을 제공합니다. 가령, [Hot Module Replacement (HMR)](./features#hot-module-replacement)과 같은 것들 말이죠.
-
-- A build command that bundles your code with [Rollup](https://rollupjs.org), pre-configured to output highly optimized static assets for production.
-
-- 번들링 시, [Rollup](https://rollupjs.org) 기반의 다양한 빌드 커맨드를 사용할 수 있습니다. 이는 높은 수준으로 최적화된 정적(Static) 리소스들을 배포할 수 있게끔 하며, 미리 정의된 설정(Pre-configured)을 이용할 수 있습니다.
+- 번들링 시, [Rollup](https://rollupjs.org) 기반의 다양한 빌드 커맨드를 사용할 수 있습니다. 이는 높은 수준으로 최적화된 정적(Static) 리소스들을 배포할 수 있게끔 하며, 미리 정의된 설정(Pre-configured)을 제공합니다.
 
 Vite은 기본적으로 최적화 된 설정을 제공하지만, [Plugin API](./api-plugin) 또는 [JavaScript API](./api-javascript)를 이용할 수 있습니다. (물론 TypeScript 역시 지원하구요.)
 
@@ -20,7 +16,7 @@ Vite은 기본적으로 최적화 된 설정을 제공하지만, [Plugin API](./
 
 - 개발 시: 반드시 [Native ESM dynamic import](https://caniuse.com/es6-module-dynamic-import)를 지원하는 브라우저를 이용해야 합니다.
 
-- 배포 시: 기본적으로 [Script 태그를 이용한 Native ESM](https://caniuse.com/es6-module)을 지원하는 브라우저를 대상으로 하고 있습니다. 만일 레거시 브라우저 역시 타겟으로 하고 있다면, [@vitejs/plugin-legacy] 플러그인을 이용해주세요. ([Building for Production](./build) 섹션에서 조금 더 자세히 다룹니다.)
+- 배포 시: 기본적으로 [Script 태그를 이용한 Native ESM](https://caniuse.com/es6-module)을 지원하는 브라우저를 대상으로 하고 있습니다. 만일 레거시 브라우저 역시 타겟으로 하고 있다면, [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 이용해주세요. ([배포하기](./build) 섹션에서 조금 더 자세히 다룹니다.)
 
 ## 첫 Vite 프로젝트 만들어보기
 
@@ -95,17 +91,11 @@ npx degit user/project#main my-project
 
 ## `index.html` 그리고 프로젝트의 루트
 
-One thing you may have noticed is that in a Vite project, `index.html` is front-and-central instead of being tucked away inside `public`. This is intentional: during development Vite is a server, and `index.html` is the entry point to your application.
+만들어진 Vite 프로젝트를 유심히 보면 `index.html` 파일이 `public` 디렉터리가 아닌 프로젝트의 루트에 위치해 있다는 것을 발견할 수 있습니다. 의도적으로 이렇게 위치시킨 것인데, 추가적인 번들링 과정 없이 `index.html` 파일이 앱의 진입점이 되게끔 하기 위함입니다.
 
-만들어진 Vite 프로젝트를 유심히 보다 보면, `index.html` 파일이 `public` 디렉터리가 아닌 프로젝트의 루트에 위치해 있다는 것을 발견할 수 있습니다. 의도적으로 이렇게 위치시킨 것인데, 추가적인 번들링 과정 없이 `index.html` 파일이 앱의 진입점이 되게끔 하기 위함입니다.
+Vite은 `index.html` 파일을 소스 코드이자 JavaScript 모듈 그래프를 구성하는 요소 중 하나로 취급하고 있습니다. 다시말해, `<script type="module" src="...">` 태그를 이용해 JavaScript 소스 코드를 가져온다는 의미이며, 인라인으로 작성된 `<script type="module">`이나 `<link href>`와 같은 CSS 역시 Vite에서 취급이 가능합니다. 추가적으로, Vite는 `index.html` 내에 존재하는 URL에 대해 `%PUBLIC_URL%`과 같은 Placeholder 없이 사용할 수 있도록 URL 베이스를 자동으로 맞춰줍니다.
 
-Vite treats `index.html` as source code and part of the module graph. It resolves `<script type="module" src="...">` that references your JavaScript source code. Even inline `<script type="module">` and CSS referenced via `<link href>` also enjoy Vite-specific features. In addition, URLs inside `index.html` are automatically rebased so there's no need for special `%PUBLIC_URL%` placeholders.
-
-Vite은 `index.html` 파일을 소스 코드이자 JavaScript 모듈 그래프를 구성하는 요소로 취급하고 있습니다. 무슨 말이냐면, `<script type="module" src="...">` 태그를
-
-Similar to static http servers, Vite has the concept of a "root directory" which your files are served from. You will see it referenced as `<root>` throughout the rest of the docs. Absolute URLs in your source code will be resolved using the project root as base, so you can write code as if you are working with a normal static file server (except way more powerful!). Vite is also capable of handling dependencies that resolve to out-of-root file system locations, which makes it usable even in a monorepo-based setup.
-
-Static HTTP 서버와 비슷한데, Vite은
+Vite은 정적(Static) HTTP 서버와 비슷하게 "루트 디렉터리"라는 개념을 갖고 있습니다. 향후 `<root>`라는 이름으로 문서 내에서 보게 되는데, 이는 Absolute URL을 프로젝트 루트를 가리키게끔 함으로써 일반적인 정적 파일 서버와 동일하게 코드를 작성할 수 있게 됩니다. 또한 Vite은 프로젝트 루트 외부에서도 디펜던시를 가져올 수 있게끔 구현했는데, 이를 이용하면 모노레포 구성 등 다양한 작업이 가능합니다.
 
 또한 Vite은 여러 `.html` 파일을 앱의 진입점으로 하는 [Multi-page apps](./build#multi-page-app)를 지원하고 있습니다.
 
