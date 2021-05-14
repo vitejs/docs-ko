@@ -2,6 +2,6 @@
   {
     "name": "Tailwind Labs",
     "href": "https://tailwindcss.com",
-    "src": "/tailwind-labs.svg"
+    "src": "./tailwind-labs.svg"
   }
 ]
