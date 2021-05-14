@@ -2,7 +2,7 @@
   "name": "vitejs-ko",
   "version": "1.0.0",
   "description": "Vite.js documentation Korean translation",
-  "repository": "https://github.com/Gumball12/vitejs-ko.git",
+  "repository": "https://github.com/vitejs-ko/docs-next.git",
   "author": "Evan You",
   "license": "MIT",
   "private": true,
