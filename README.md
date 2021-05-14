@@ -2,6 +2,9 @@
 
 [ViteJs 공식 문서](https://vitejs.dev/) 한글 번역 목적의 리포지토리 입니다.
 
+- [Discussions](https://github.com/vitejs-kr/docs-next/discussions)
+- [번역 진행 상황](https://github.com/vitejs-kr/docs-next/discussions/1)
+
 ## 시작하기
 
 ### 설치
@@ -32,6 +35,8 @@ yarn dev # or npm run dev
 - `gh-pages`는 https://vitejs-kr.github.io/docs-next/ 사이트 소스로 사용됩니다.
 
 ### 번역에 기여하기
+
+> [번역 진행 상황](https://github.com/vitejs-kr/docs-next/discussions/1)을 참고해 번역을 진행해주세요.
 
 1. 이 리포지토리의 우측 상단에 위치한 Fork 버튼을 눌러 자신의 계정으로 리포지토리를 복사해주세요.
 2. `git clone https://github.com/<계정명>/docs-next` 명령을 통해 로컬로 Fork한 리포지토리를 복사해주세요.
