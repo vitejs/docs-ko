@@ -9,7 +9,7 @@ module.exports = {
   description: '차세대 프런트엔드 개발 및 빌드 툴',
   head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]],
   themeConfig: {
-    repo: 'Gumball12/vitejs-ko',
+    repo: 'vitejs-kr/docs-next',
     logo: '/logo.svg',
     docsBranch: 'main',
     editLinks: true,
