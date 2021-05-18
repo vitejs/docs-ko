@@ -83,7 +83,7 @@ module.exports = {
               link: '/guide/features'
             },
             {
-              text: '미리 빌드된 디펜던시',
+              text: 'Pre-bundling 된 디펜던시',
               link: '/guide/dep-pre-bundling'
             },
             {
