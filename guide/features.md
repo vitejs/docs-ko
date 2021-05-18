@@ -18,7 +18,7 @@ import { someMethod } from 'my-dep'
 
 참고로, **디펜던시는 반드시 캐시됩니다.**
 
-Vite은 HTTP 헤더를 이용해 요청한 디펜던시를 브라우저에서 캐싱하도록 합니다. 만약 디펜던시의 수정 또는 디버깅이 필요하다면 [여기](./dep-pre-bundling#browser-cache)를 참고해주세요.
+Vite은 HTTP 헤더를 이용해 요청한 디펜던시를 브라우저에서 캐싱하도록 합니다. 만약 디펜던시의 수정 또는 디버깅이 필요하다면 [여기](./dep-pre-bundling#브라우저-캐시)를 참고해주세요.
 
 ## Hot Module Replacement
 
