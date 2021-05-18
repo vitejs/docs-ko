@@ -60,7 +60,7 @@ const worker = new Worker()
 import InlineWorker from './shader.js?worker&inline'
 ```
 
-좀 더 자세한 사항은 [웹 워커 섹션](./features/#web-workers)을 참고해주세요.
+좀 더 자세한 사항은 [웹 워커 섹션](./features#web-workers)을 참고해주세요.
 
 ## `public` 디렉터리
 
