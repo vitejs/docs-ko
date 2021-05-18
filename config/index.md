@@ -124,7 +124,7 @@ export default ({ command, mode }) => {
 
   Directory to serve as plain static assets. Files in this directory are served at `/` during dev and copied to the root of `outDir` during build, and are always served or copied as-is without transform. The value can be either an absolute file system path or a path relative to project root.
 
-  See [The `public` Directory](/guide/assets#the-public-directory) for more details.
+  See [The `public` Directory](/guide/assets#public-디렉터리) for more details.
 
 ### resolve.alias
 
