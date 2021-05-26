@@ -13,7 +13,7 @@ Vite opts to have a deeper integration with one single bundler (Rollup) in order
 Due to a more integrated build process, Vite supports a wide range of features that are currently not available in Snowpack build optimizers:
 
 - [Multi-Page Support](./build#multi-page-app)
-- [Library Mode](./build#library-mode)
+- [Library Mode](./build#library-모드)
 - [Automatic CSS code-splitting](./features#css-code-splitting)
 - [Optimized async chunk loading](./features#async-chunk-loading-optimization)
 - [Automatic dynamic import polyfill](./features#dynamic-import-polyfill)
