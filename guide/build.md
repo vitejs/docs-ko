@@ -1,37 +1,39 @@
-# Building for Production
+# 배포 버전으로 빌드하기
 
-When it is time to deploy your app for production, simply run the `vite build` command. By default, it uses `<root>/index.html` as the build entry point, and produces an application bundle that is suitable to be served over a static hosting service. Check out the [Deploying a Static Site](./static-deploy) for guides about popular services.
+앱을 어느정도 완성하셨나요? 배포 버전으로 빌드하고자 한다면 `vite build` 명령을 실행해주세요. 빌드 시 기본적으로 `<root>/index.html` 파일이 빌드를 위한 진입점(Entry point)으로 사용되며, 정적 호스팅을 위한 형태로 진행됩니다. 추가적으로, GitHub Pages와 같은 정적 호스팅 서비스를 위한 빌드 방법을 알고싶다면 [정적 사이트 배포하기](./static-deploy) 섹션을 참고해주세요.
 
-## Browser Compatibility
+## 브라우저 지원 현황
 
-The production bundle assumes a baseline support for modern JavaScript. By default, all code is transpiled targeting [browsers with native ESM script tag support](https://caniuse.com/es6-module):
+빌드된 배포 버전의 경우, 모던 JavaScript를 지원하는 브라우저를 타깃으로 합니다. 따라서 *기본적으로* 모든 코드는 [네이티브 ESM 태그를 지원하는 브라우저](https://caniuse.com/es6-module)를 타깃으로 변환됩니다.
 
 - Chrome >=61
 - Firefox >=60
 - Safari >=11
 - Edge >=16
 
-A lightweight [dynamic import polyfill](https://github.com/GoogleChromeLabs/dynamic-import-polyfill) is also automatically injected.
+물론 [Dynamic Import 폴리필](https://github.com/GoogleChromeLabs/dynamic-import-polyfill)은 자동으로 포함됩니다.
 
-You can specify custom targets via the [`build.target` config option](/config/#build-target), where the lowest target is `es2015`.
+만약 JavaScript 타깃을 지정하고자 한다면, [`build.target` 설정](/config/#build-target)을 이용해주세요. 다만 버전은 최소한 `es2015` 이상이어야 합니다.
 
 Note that by default, Vite only handles syntax transforms and **does not cover polyfills by default**. You can check out [Polyfill.io](https://polyfill.io/v3/) which is a service that automatically generates polyfill bundles based on the user's browser UserAgent string.
 
-Legacy browsers can be supported via [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy), which will automatically generate legacy chunks and corresponding ES language feature polyfills. The legacy chunks are conditionally loaded only in browsers that do not have native ESM support.
+위에서 언급되는 *'기본적으로'* 라는 말의 의미를 잠깐 설명하자면, Vite은
+
+레거시 브라우저의 경우 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 이용할 수 있습니다. 이 플러그인을 사용하면 자동으로 레거시 버전에 대한 청크를 생성하게 되고, 이를 통해 레거시 브라우저 또한 Vite으로 빌드된 앱을 이용할 수 있게 됩니다. 참고로, 생성된 레거시 청크는 브라우저가 ESM을 지원하지 않는 경우에만 불러오게 됩니다.
 
 ## Public Base Path
 
-- Related: [Asset Handling](./assets)
+- [에셋 가져오기](./assets) 섹션과 관련이 있는 내용입니다.
 
-If you are deploying your project under a nested public path, simply specify the [`base` config option](/config/#base) and all asset paths will be rewritten accordingly. This option can also be specified as a command line flag, e.g. `vite build --base=/my/public/path/`.
+만약 배포하고자 하는 디렉터리가 루트 디렉터리가 아닌가요? 간단히 [`base` 설정](/config/#base)을 이용해 프로젝트의 루트가 될 디렉터리를 명시해 줄 수 있습니다. 또는 `vite build --base=/my/public/path` 명령과 같이 커맨드 라인에서도 지정이 가능합니다.
 
 JS-imported asset URLs, CSS `url()` references, and asset references in your `.html` files are all automatically adjusted to respect this option during build.
 
 The exception is when you need to dynamically concatenate URLs on the fly. In this case, you can use the globally injected `import.meta.env.BASE_URL` variable which will be the public base path. Note this variable is statically replaced during build so it must appear exactly as-is (i.e. `import.meta.env['BASE_URL']` won't work).
 
-## Customizing the Build
+## 빌드 커스터마이즈하기
 
-The build can be customized via various [build config options](/config/#build-options). Specifically, you can directly adjust the underlying [Rollup options](https://rollupjs.org/guide/en/#big-list-of-options) via `build.rollupOptions`:
+빌드와 관련된 커스터마이즈는 [build 설정](/config/#build-options)을 통해 가능합니다. 특별히 알아두어야 할 것이 하나 있는데, [Rollup 옵션](https://rollupjs.org/guide/en/#big-list-of-options)을 `build.rollupOptions`에 명시해 사용이 가능합니다.
 
 ```js
 // vite.config.js
@@ -46,9 +48,11 @@ module.exports = {
 
 For example, you can specify multiple Rollup outputs with plugins that are only applied during build.
 
+예를 들어,
+
 ## Multi-Page App
 
-Suppose you have the following source code structure:
+아래와 같은 구조의 소스 코드를 갖고 있다고 가정해봅시다.
 
 ```
 ├── package.json
@@ -60,9 +64,9 @@ Suppose you have the following source code structure:
     └── nested.js
 ```
 
-During dev, simply navigate or link to `/nested/` - it works as expected, just like for a normal static file server.
+개발 시, `/nested/` 디렉터리 아래에 있는 페이지는 간단히 `/nested/`로 참조가 가능합니다. 일반적인 정적 파일 서버와 다르지 않습니다.
 
-During build, all you need to do is to specify multiple `.html` files as entry points:
+빌드 시에는, 사용자가 접근할 수 있는 모든 `.html` 파일에 대해 아래와 같이 빌드 진입점이라 명시해줘야만 합니다.
 
 ```js
 // vite.config.js
@@ -80,9 +84,9 @@ module.exports = {
 }
 ```
 
-## Library Mode
+## Library 모드
 
-When you are developing a browser-oriented library, you are likely spending most of the time on a test/demo page that imports your actual library. With Vite, you can use your `index.html` for that purpose to get the smooth development experience.
+만약 브라우저 기반의 라이브러리를 개발하고 있다면, 라이브러리 갱신 시마다 테스트 페이지에서 이를 불러오는 데 많은 시간을 소모할 것입니다. Vite은 `index.html`을 이용해 좀 더 나은 개발 환경(경험)을 마련해줍니다.
 
 When it is time to bundle your library for distribution, use the [`build.lib` config option](/config/#build-lib). Make sure to also externalize any dependencies that you do not want to bundle into your library, e.g. `vue` or `react`:
 
