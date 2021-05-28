@@ -409,7 +409,7 @@ export default ({ command, mode }) => {
 
 - **Type:** `string`
 - **Default:** `'modules'`
-- **Related:** [Browser Compatibility](/guide/build#browser-compatibility)
+- **Related:** [Browser Compatibility](/guide/build#브라우저-지원-현황)
 
   Browser compatibility target for the final bundle. The default value is a Vite special value, `'modules'`, which targets [browsers with native ES module support](https://caniuse.com/es6-module).
 
@@ -432,7 +432,7 @@ export default ({ command, mode }) => {
   import 'vite/dynamic-import-polyfill'
   ```
 
-  Note: the polyfill does **not** apply to [Library Mode](/guide/build#library-mode). If you need to support browsers without native dynamic import, you should probably avoid using it in your library.
+  Note: the polyfill does **not** apply to [Library Mode](/guide/build#library-모드). If you need to support browsers without native dynamic import, you should probably avoid using it in your library.
 
 ### build.outDir
 
@@ -486,7 +486,7 @@ export default ({ command, mode }) => {
 ### build.lib
 
 - **Type:** `{ entry: string, name?: string, formats?: ('es' | 'cjs' | 'umd' | 'iife')[] }`
-- **Related:** [Library Mode](/guide/build#library-mode)
+- **Related:** [Library Mode](/guide/build#library-모드)
 
   Build as a library. `entry` is required since the library cannot use HTML as entry. `name` is the exposed global variable and is required when `formats` includes `'umd'` or `'iife'`. Default `formats` are `['es', 'umd']`.
 
