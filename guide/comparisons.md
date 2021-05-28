@@ -45,6 +45,6 @@ WMR은 주로 [Preact](https://preactjs.com/) 프로젝트를 위해 설계되�
 
 [@web/dev-server](https://modern-web.dev/docs/dev-server/overview/) (이전 `es-dev-server`)는 훌륭한 프로젝트이며, 이는 Vite 1.0의 Koa 기반 서버 설정에 영감을 주었습니다.
 
-`@web/dev-server`는 범위 측면에서 약간 낮은 수준입니다. 공식 프레임 워크 통합을 제공하지 않으며 프로덕션 빌드를 위한 Rollup 구성을 수동으로 설정해야 합니다.
+`@web/dev-server`는 범위 측면에서 약간 낮은 수준입니다. 공식 프레임워크 통합을 제공하지 않으며 프로덕션 빌드를 위한 Rollup 구성을 수동으로 설정해야 합니다.
 
 전반적으로 Vite는 더 독창적인 작업 흐름를 제공하는 것을 목표로 하는, 보다 독단적이고 높은 수준의 도구입니다. 즉, `@web` 총합 프로젝트에는 Vite 사용자에게도 도움을 줄 수 있는 다른 많은 훌륭한 도구가 포함되어 있습니다.
