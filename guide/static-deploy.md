@@ -1,10 +1,10 @@
-# Deploying a Static Site
+# 정적 사이트로 배포하기
 
-The following guides are based on some shared assumptions:
+이 곳의 내용은 아래와 같이 설정하였다고 가정한 상태에서 진행합니다.
 
-- You are using the default build output location (`dist`). This location [can be changed using `build.outDir`](https://vitejs.dev/config/#build-outdir), and you can extrapolate instructions from these guides in that case.
-- Vite is installed as a local dev dependency in your project, and you have setup the following npm scripts:
-- You are using npm. You can use equivalent commands to run the scripts if you are using Yarn or other package managers.
+- 빌드 결과물이 저장되는 디렉터리를 기본 디렉터리(`dist`)로 지정한 상태입니다. 물론 [`build.outDir` 설정 값을 이용해 바꿀 수는 있으나](/config/#build-outdir), 여기서는 `dist`를 빌드 디렉터리로 지정했다 가정하고 진행합니다.
+- NPM 또는 NPM 스크립트를 실행할 수 있는 Yarn과 같은 패키지 매니저를 사용하고 있습니다.
+- Vite은 로컬 PC에 존재하는 프로젝트에 개발용(Dev) 디펜던시로 설치된 상태이며, 아래와 같이 NPM 스크립트를 설정한 상태입니다.
 
 ```json
 {
@@ -15,34 +15,34 @@ The following guides are based on some shared assumptions:
 }
 ```
 
-It is important to note that `vite preview` is intended for previewing the build locally and not meant as a production server.
+한 가지 유의할 것은, `vite preview` 명령은 로컬에서 어떤 형태로 빌드가 되는지 미리 확인하기 위한 용도일 뿐이며, 실제 배포(Production) 서버를 의미하지는 않습니다.
 
 ::: tip NOTE
-These guides provide instructions for performing a static deployment of your Vite site. Vite also has experimental support for Server Side Rendering. SSR refers to front-end frameworks that support running the same application in Node.js, pre-rendering it to HTML, and finally hydrating it on the client. Check out the [SSR Guide](./ssr) to learn about this feature. On the other hand, if you are looking for integration with traditional server-side frameworks, check out the [Backend Integration guide](./backend-integration) instead.
+이 가이드는 Vite 기반의 사이트를 정적(Static)으로 배포하기 위한 방법을 설명하고 있습니다. 물론 Vite는 서버 측 렌더링(SSR, Server Side Rendering)을 지원하고 있으나, 현재는 실험적인 기능입니다. 참고로 '서버 측 렌더링'이란, Node.js를 이용해 동일한 웹 애플리케이션을 HTML로 사전에 렌더링한 뒤, 이를 클라이언트에게 제공하는 방식의 프런트엔드 프레임워크를 의미합니다. 이에 대해 더 알고자 한다면 [SSR 가이드](./ssr)를 참고해주세요. 만약 기존에 사용하고 있는 서버측 프레임워크(Ror, Laravel 등)가 있다면, [백엔드 통합 가이드](./backend-integration)를 참고해주세요.
 :::
 
-## Building The App
+## 앱 빌드하기
 
-You may run `npm run build` command to build the app.
+아래와 같이 `npm run build` 명령을 통해 앱을 빌드할 수 있습니다.
 
 ```bash
 $ npm run build
 ```
 
-By default, the build output will be placed at `dist`. You may deploy this `dist` folder to any of your preferred platforms.
+기본적으로 `dist` 디렉터리에 빌드 결과물이 저장되며, 배포 시 `dist` 디렉터리를 원하는 플랫폼에 맞춰 그대로 배포하면 됩니다.
 
-### Testing The App Locally
+### 로컬에서 앱 테스트하기
 
-Once you've built the app, you may test it locally by running `npm run preview` command.
+한 번 빌드된 앱은 `npm run preview` 명령으로 로컬에서 테스트가 가능합니다.
 
 ```bash
 $ npm run build
 $ npm run preview
 ```
 
-The `preview` command will boot up local static web server that serves the files from `dist` at http://localhost:5000. It's an easy way to check if the production build looks OK in your local environment.
+`preview` 명령을 실행하게 되면 정적 웹 서버가 실행되며, 이 서버는 `dist` 내에 존재하는 파일을 http://localhost:5000 경로를 통해 배포합니다. 브라우저를 통해 사이트에 접속하여 실제 배포 시 어떻게 보여질 것인지 쉽게 파악할 수 있습니다.
 
-You may configure the port of the server py passing `--port` flag as an argument.
+만약 특정 포트를 지정하고자 한다면 `--port` 옵션을 이용해주세요.
 
 ```json
 {
@@ -52,63 +52,63 @@ You may configure the port of the server py passing `--port` flag as an argument
 }
 ```
 
-Now the `preview` method will launch the server at http://localhost:8080.
+이렇게 설정한 경우 http://localhost:8080 을 기준으로 `preview` 명령이 실행됩니다.
 
-## GitHub Pages
+## GitHub Pages 배포
 
-1. Set the correct `base` in `vite.config.js`.
+1. `vite.config.js` 파일 내 `base` 설정 값을 적절하게 설정합니다.
 
-   If you are deploying to `https://<USERNAME>.github.io/`, you can omit `base` as it defaults to `'/'`.
+    만약 `https://<USERNAME>.github.io/`와 같은 형태로 배포하고자 한다면, `base` 설정 값을 생략하거나 기본 값인 `'/'` 로 지정해주세요.
 
-   If you are deploying to `https://<USERNAME>.github.io/<REPO>/`, for example your repository is at `https://github.com/<USERNAME>/<REPO>`, then set `base` to `'/<REPO>/'`.
+    만약 `https://<USERNAME>.github.io/<REPO>/`와 같은 형태로 배포하고자 한다면, `base` 설정 값을 `'/<REPO>/'`로 지정해주세요.
 
-2. Inside your project, create `deploy.sh` with the following content (with highlighted lines uncommented appropriately), and run it to deploy:
+2. 프로젝트의 루트에 아래와 같은 내용이 들어간 `deploy.sh` 파일을 생성 및 실행해주세요(하이라이트 된 라인은 필요에 따라 주석 처리를 풀어주세요).
 
 ```bash{13,20,23}
 #!/usr/bin/env sh
 
-# abort on errors
+# 에러가 발생될 경우 스크립트 실행을 중지
 set -e
 
-# build
+# 앱 빌드
 npm run build
 
-# navigate into the build output directory
+# 빌드된 파일이 존재하는 dist 디렉터리로 이동
 cd dist
 
-# if you are deploying to a custom domain
+# CNAME 파일을 이용해 커스텀 도메인을 지정할 수도 있습니다.
 # echo 'www.example.com' > CNAME
 
 git init
 git add -A
 git commit -m 'deploy'
 
-# if you are deploying to https://<USERNAME>.github.io
+# https://<USERNAME>.github.io 에 배포
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
-# if you are deploying to https://<USERNAME>.github.io/<REPO>
+# https://<USERNAME>.github.io/<REPO> 에 배포
 # git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
 
 cd -
 ```
 
 ::: tip
-You can also run the above script in your CI setup to enable automatic deployment on each push.
+물론 CI 툴을 이용해 위 스크립트 기반으로 배포가 자동으로 이루어지게끔 설정이 가능합니다.
 :::
 
-### GitHub Pages and Travis CI
+### Travis CI를 이용한 GitHub Pages 배포
 
-1. Set the correct `base` in `vite.config.js`.
+1. `vite.config.js` 파일 내 `base` 설정 값을 적절하게 지정합니다.
 
-   If you are deploying to `https://<USERNAME or GROUP>.github.io/`, you can omit `base` as it defaults to `'/'`.
+    만약 `https://<USERNAME or GROUP>.github.io/`와 같은 형태로 배포하고자 한다면, `base` 설정 값을 생략하거나 기본 값인 `'/'`로 지정해주세요.
 
-   If you are deploying to `https://<USERNAME or GROUP>.github.io/<REPO>/`, for example your repository is at `https://github.com/<USERNAME>/<REPO>`, then set `base` to `'/<REPO>/'`.
+    만약 `https://<USERNAME or GROUP>.github.io/<REPO>/`와 같은 형태로 배포하고자 한다면, `base` 설정 값을 `'/<REPO>/'`로 지정해주세요.
 
-2. Create a file named `.travis.yml` in the root of your project.
+2. 프로젝트의 루트에 `.travis.yml` 파일을 생성해주세요(파일 내용은 아래 코드를 참고해주세요).
 
-3. Run `npm install` locally and commit the generated lockfile (`package-lock.json`).
+3. `npm install` 명령을 실행한 뒤, `package-lock.json` 파일을 커밋해주세요.
 
-4. Use the GitHub Pages deploy provider template, and follow the [Travis CI documentation](https://docs.travis-ci.com/user/deployment/pages/).
+4. [Travis CI 문서](https://docs.travis-ci.com/user/deployment/pages/)를 참고해서 GitHub Pages 배포를 위한 설정을 진행해주세요. 예를 들어 아래와 같이 설정이 가능합니다.
 
 ```yaml
 language: node_js
@@ -122,25 +122,30 @@ deploy:
   provider: pages
   skip_cleanup: true
   local_dir: dist
-  # A token generated on GitHub allowing Travis to push code on you repository.
-  # Set in the Travis settings page of your repository, as a secure variable.
+  # Travis가 리포지토리에 Push 할 수 있도록 GitHub에서 $GITHUB_TOKEN을 생성합니다.
+  # 생성한 $GITHUB_TOKEN의 값은 Travis 설정 페이지에서 환경 변수로 지정해 사용할 수 있어요.
   github_token: $GITHUB_TOKEN
   keep_history: true
   on:
     branch: master
 ```
 
-## GitLab Pages and GitLab CI
+`$GITHUB_TOKEN`과 관련한 내용은 아래 문서를 참고해주세요.
 
-1. Set the correct `base` in `vite.config.js`.
+- [개인 액세스 토큰 생성하기 (GitHub)](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+- [GitHub Token 설정하기 (Travis)](https://docs.travis-ci.com/user/deployment/pages/#setting-the-github-token)
 
-    If you are deploying to `https://<USERNAME or GROUP>.gitlab.io/`, you can omit `base` as it defaults to `'/'`.
+## GitHub Pages 그리고 GitLab CI
 
-    If you are deploying to `https://<USERNAME or GROUP>.gitlab.io/<REPO>/`, for example your repository is at `https://gitlab.com/<USERNAME>/<REPO>`, then set `base` to `'/<REPO>/'`.
+1. `vite.config.js` 파일 내 `base` 설정 값을 적절하게 지정합니다.
 
-2. Set `build.outDir` in `vite.config.js` to `public`.
+    만약 `https://<USERNAME or GROUP>.gitlab.io/`와 같은 형태로 배포하고자 한다면, `base` 설정 값을 생략하거나 기본 값인 `'/'`로 지정해주세요.
 
-3. Create a file called `.gitlab-ci.yml` in the root of your project with the content below. This will build and deploy your site whenever you make changes to your content:
+    만약 `https://<USERNAME or GROUP>.gitlab.io/<REPO>/`와 같은 형태로 배포하고자 한다면, `base` 설정 값을 `'/<REPO>/'`로 지정해주세요.
+
+2. `vite.config.js` 파일의 `build.outDir` 값을 `public`으로 설정해주세요.
+
+3. 아래와 같은 내용으로 프로젝트의 루트에 `.gitlab-ci.yml` 파일을 생성해주세요. 이와 같이 설정하게 되면, 콘텐츠가 변경될 때마다 사이트가 빌드 및 배포됩니다.
 
 ```yaml
 image: node:10.22.0
@@ -160,18 +165,18 @@ pages:
 
 ## Netlify
 
-1. On [Netlify](https://netlify.com), setup up a new project from GitHub with the following settings:
+1. [Netlify](https://netlify.com)에서 아래와 같은 설정으로 GitHub 프로젝트를 생성해주세요.
 
-- **Build Command:** `vite build` or `npm run build`
+- **Build Command:** `vite build` 또는 `npm run build`
 - **Publish directory:** `dist`
 
-2. Hit the deploy button.
+2. Deploy 버튼을 눌러주세요.
 
 ## Google Firebase
 
-1. Make sure you have [firebase-tools](https://www.npmjs.com/package/firebase-tools) installed.
+1. [firebase-tools](https://www.npmjs.com/package/firebase-tools)가 설치되어 있는지 확인해주세요.
 
-2. Create `firebase.json` and `.firebaserc` at the root of your project with the following content:
+2. 아래와 같은 내용으로 프로젝트 루트에 `firebase.json` 및 `.firebaserc` 파일을 생성해주세요.
 
  `firebase.json`:
 
@@ -194,31 +199,31 @@ pages:
   }
   ```
 
-3. After running `npm run build`, deploy using the command `firebase deploy`.
+3. `npm run build` 명령을 먼저 실행하고, 그 다음 `firebase deploy` 명령을 통해 배포가 가능합니다.
 
 ## Surge
 
-1. First install [surge](https://www.npmjs.com/package/surge), if you haven’t already.
+1. [surge](https://www.npmjs.com/package/surge)가 설치되지 않은 경우, 먼저 설치해주세요.
 
-2. Run `npm run build`.
+2. `npm run build` 명령을 실행해주세요.
 
-3. Deploy to surge by typing `surge dist`.
+3. `surge dist` 명령을 통해 Surge로 배포해주세요.
 
-You can also deploy to a [custom domain](http://surge.sh/help/adding-a-custom-domain) by adding `surge dist yourdomain.com`.
+물론, `surge dist yourdomain.com`과 같은 명령을 이용해 [커스텀 도메인](http://surge.sh/help/adding-a-custom-domain)으로 배포할 수도 있습니다.
 
 ## Heroku
 
-1. Install [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli).
+1. [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)를 설치해주세요.
 
-2. Create a Heroku account by [signing up](https://signup.heroku.com).
+2. [Heroku 가입 페이지](https://signup.heroku.com)에서 계정을 만들어주세요.
 
-3. Run `heroku login` and fill in your Heroku credentials:
+3. `heroku login` 명령으로 Heroku에 로그인해주세요.
 
 ```bash
 $ heroku login
 ```
 
-4. Create a file called `static.json` in the root of your project with the below content:
+4. 아래와 같은 내용으로 `static.json` 파일을 프로젝트 루트에 생성해주세요.
 
 `static.json`:
 
@@ -228,41 +233,41 @@ $ heroku login
 }
 ```
 
-This is the configuration of your site; read more at [heroku-buildpack-static](https://github.com/heroku/heroku-buildpack-static).
+이러한 방식으로 배포될 사이트에 대한 설정이 가능합니다. 더 많은 정보가 필요하다면 [heroku-buildpack-static](https://github.com/heroku/heroku-buildpack-static) 리포지토리를 참고해주세요.
 
-5. Set up your Heroku git remote:
+5. Heroku Git remote를 설정해주세요.
 
 ```bash
-# version change
+# 버전 갱신
 $ git init
 $ git add .
 $ git commit -m "My site ready for deployment."
 
-# creates a new app with a specified name
+# 새로운 애플리케이션 생성
 $ heroku apps:create example
 
-# set buildpack for static sites
+# 정적 사이트 배포를 위해 Buildpack 정의
 $ heroku buildpacks:set https://github.com/heroku/heroku-buildpack-static.git
 ```
 
-6. Deploy your site:
+6. 마지막으로, 아래 명령을 통해 사이트를 배포하게 됩니다.
 
 ```bash
-# publish site
+# 사이트 배포
 $ git push heroku master
 
-# opens a browser to view the Dashboard version of Heroku CI
+# Heroku CI 대시보드 열기
 $ heroku open
 ```
 
 ## Vercel
 
-To deploy your Vite app with a [Vercel for Git](https://vercel.com/docs/git), make sure it has been pushed to a Git repository.
+[Git을 이용해 배포](https://vercel.com/docs/git)하기 위해, 먼저 Git 리포지토리에 프로젝트가 Push 되었는지 확인해주세요.
 
-Go to https://vercel.com/import/git and import the project into Vercel using your Git of choice (GitHub, GitLab or BitBucket). Follow the wizard to select the project root with the project's `package.json` and override the build step using `npm run build` and the output dir to be `./dist`
+Push가 되었다면, https://vercel.com/import/git 에 접속해 Git 리모트 서버(GitHub, GitLab 또는 BitBucket)에서 Vercel로 프로젝트를 가져와주세요. 이후 Vercel 마법사를 따라 프로젝트의 `package.json`이 있는 프로젝트의 루트를 선택하고, Build and Output Settings 내 BUILD COMMAND를 `npm run build`로 지정해주세요. OUTPUT DIRECTORY에는 `./dist`로 값을 지정해주세요(설정 값은 OVERRIDE 하도록 해주세요).
 
 ![Override Vercel Configuration](../images/vercel-configuration.png)
 
-After your project has been imported, all subsequent pushes to branches will generate Preview Deployments, and all changes made to the Production Branch (commonly "main") will result in a Production Deployment.
+성공적으로 프로젝트를 Vercel로 불러왔다면, 이후 모든 브랜치에 대한 Push 동작은 애플리케이션에 대해 미리보기(`preview`) 형태의 배포를, 그리고 배포 브랜치(일반적으로 `main`)에 대한 변경 사항은 프로덕션(`build`) 형태의 배포를 진행하게 됩니다.
 
-Once deployed, you will get a URL to see your app live, such as the following: https://vite.vercel.app
+이렇게 배포가 완료되면 https://vite.vercel.app 과 같이 실시간으로 애플리케이션에 접속할 수 있는 URL이 제공됩니다.
