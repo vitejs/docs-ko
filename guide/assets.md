@@ -1,54 +1,56 @@
-# Static Asset Handling
+# 에셋 가져오기 {#static-asset-handling}
 
-- Related: [Public Base Path](./build#public-base-path)
-- Related: [`assetsInclude` config option](/config/#assetsinclude)
+다음 두 개의 주제와 관련있는 섹션입니다.
 
-## Importing Asset as URL
+- [Public Base Path](./build#public-base-path)
+- [`assetsInclude` config option](/config/#assetsinclude)
 
-Importing a static asset will return the resolved public URL when it is served:
+## URL을 통해 에셋 Import 하기 {#importing-asset-as-url}
+
+정적 에셋을 Import하게 되면 에셋에 접근할 수 있는 URL이 반환됩니다.
 
 ```js
 import imgUrl from './img.png'
 document.getElementById('hero-img').src = imgUrl
 ```
 
-For example, `imgUrl` will be `/img.png` during development, and become `/assets/img.2d8efhg.png` in the production build.
+예를 들어, `imgUrl` 객체는 개발 시 `/img.png` 값으로 할당되겠으나, 실제 배포 버전에서는 `/assets/img.2d8efhg.png`와 같은 값\*이 할당됩니다. (\* 여기서 `2d8efhg`는 해시 값을 의미합니다.)
 
-The behavior is similar to webpack's `file-loader`. The difference is that the import can be either using absolute public paths (based on project root during dev) or relative paths.
+Webpack의 `file-loader`와 비슷한데, 하나 차이점이 있다면 Vite는 절대 경로와 상대 경로 둘 다 사용할 수 있습니다.
 
-- `url()` references in CSS are handled the same way.
+- `url()`로 참조되는 CSS의 경우 동일한 방식으로 동작합니다.
 
-- If using the Vue plugin, asset references in Vue SFC templates are automatically converted into imports.
+- 만약 Vue 플러그인을 사용한다면, [Vue SFC](https://v3.vuejs.org/guide/single-file-component.html) 에셋의 경우 자동으로 변환되어 Import 됩니다.
 
-- Common image, media, and font filetypes are detected as assets automatically. You can extend the internal list using the [`assetsInclude` option](/config/#assetsinclude).
+- 일반적인 이미지, 미디어, 폰트 파일 타입은 자동으로 에셋 목록에 포함됩니다. 물론 [`assetsInclude` 옵션](/config/#assetsinclude)을 이용해 더 많은 파일 타입을 포함하도록 할 수 있습니다.
 
-- Referenced assets are included as part of the build assets graph, will get hashed file names, and can be processed by plugins for optimization.
+- 참조된 에셋은 빌드 에셋 그래프의 일부 요소로 포함되며, 파일 이름이 해싱되거나 최적화를 위해 플러그인으로 처리될 수 있습니다.
 
-- Assets smaller in bytes than the [`assetsInlineLimit` option](/config/#build-assetsinlinelimit) will be inlined as base64 data URLs.
+- [`assetsInlineLimimt` 옵션](/config/#assetsinlinelimit)의 값보다 작은 에셋 파일의 경우, Base64 포맷의 데이터 URL\* 문자열로 가져옵니다. (\* [데이터 URL MDN doc](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs))
 
-### Explicit URL Imports
+### 접미사를 이용해 URL로 에셋 가져오기 {#explicit-url-imports}
 
-Assets that are not included in the internal list or in `assetsInclude`, can be explicitly imported as an URL using the `?url` suffix. This is useful, for example, to import [Houdini Paint Worklets](https://houdini.how/usage).
+`assetsInclude` 옵션 또는 URL로 가져오도록 Vite 내부적으로 설정된 리스트에 포함되지 않은 에셋의 경우에도 URL 포맷으로 에셋을 가져오도록 지정할 수 있습니다. `?url` 접미사(Suffix)를 붙여 에셋을 가져오면 되는데, 예를 하나 들어보자면 다음과 같습니다.
 
 ```js
 import workletURL from 'extra-scalloped-border/worklet.js?url'
 CSS.paintWorklet.addModule(workletURL)
 ```
 
-### Importing Asset as String
+### 문자열 형태로 에셋 가져오기 {#importing-asset-as-string}
 
-Assets can be imported as strings using the `?raw` suffix.
+`?raw` 접미사를 붙여 Import하는 에셋은 문자열 형태로 가져와지게 됩니다.
 
 ```js
 import shaderString from './shader.glsl?raw'
 ```
 
-### Importing Script as a Worker
+### 스크립트를 Worker로 가져오기 {#importing-script-as-a-worker}
 
-Scripts can be imported as web workers with the `?worker` or `?sharedworker` suffix.
+스크립트는 웹 워커로 가져올 수 있는데, 이 때는 `?worker` 접미사를 이용합니다.
 
 ```js
-// Separate chunk in the production build
+// 배포 시에는 청크로 분리됩니다.
 import Worker from './shader.js?worker'
 const worker = new Worker()
 ```
@@ -60,32 +62,32 @@ const sharedWorker = new SharedWorker()
 ```
 
 ```js
-// Inlined as base64 strings
+// `inline` 접미사는 Base64 포맷의 문자열로 에셋을 가져옵니다.
 import InlineWorker from './shader.js?worker&inline'
 ```
 
-Check out the [Web Worker section](./features.md#web-workers) for more details.
+좀 더 자세한 사항은 [웹 워커 섹션](./features#web-workers)을 참고해주세요.
 
-## The `public` Directory
+## `public` 디렉터리 {#the-public-directory}
 
-If you have assets that are:
+다음 에셋의 경우
 
-- Never referenced in source code (e.g. `robots.txt`)
-- Must retain the exact same file name (without hashing)
-- ...or you simply don't want to have to import an asset first just to get its URL
+- `robots.txt`와 같이 소스 코드에서 참조되지 않는 에셋
+- 해싱 없이 항상 같은 이름을 갖는 에셋
+- 또는 URL을 얻기 위해 굳이 Import 할 필요 없는 에셋
 
-Then you can place the asset in a special `public` directory under your project root. Assets in this directory will be served at root path `/` during dev, and copied to the root of the dist directory as-is.
+`public` 디렉터리 아래에 에셋을 위치시키세요. 이 곳에 위치한 에셋은 개발 시에 `/` 경로에, 배포 시에는 `dist` 디렉터리에 위치하게 됩니다.
 
-The directory defaults to `<root>/public`, but can be configured via the [`publicDir` option](/config/#publicdir).
+만약 `<root>/public` 디렉터리가 아닌 다른 디렉터리를 사용하고자 하는 경우, [`publicDir` 옵션](/config/#publicdir)을 이용할 수 있습니다.
 
-Note that:
+마지막으로, 다음의 사항을 유의해주세요.
 
-- You should always reference `public` assets using root absolute path - for example, `public/icon.png` should be referenced in source code as `/icon.png`.
-- Assets in `public` cannot be imported from JavaScript.
+- `public` 디렉터리에 위치해 있는 에셋을 가져오고자 하는 경우, 항상 루트를 기준으로 하는 절대 경로로 가져와야만 합니다. ( `public/icon.png` 에셋은 소스 코드에서 `/icon.png`으로 접근이 가능합니다.)
+- `public` 디렉터리에 위치한 에셋은 JavaScript 코드로 가져올 수 없습니다.
 
-## new URL(url, import.meta.url)
+## new URL(url, import.meta.url) {#new-url-url-import-meta-url}
 
-[import.meta.url](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import.meta) is a native ESM feature that exposes the current module's URL. Combining it with the native [URL constructor](https://developer.mozilla.org/en-US/docs/Web/API/URL), we can obtain the full, resolved URL of a static asset using relative path from a JavaScript module:
+네이티브 ESM의 API 중 하나인 [import.meta.url](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import.meta)은 현재 모듈의 URL을 보여주는 기능입니다. [URL 생성자](https://developer.mozilla.org/en-US/docs/Web/API/URL)와 함께 사용하면, 정적 에셋의 전제 URL을 확인할 수 있게 됩니다.
 
 ```js
 const imgUrl = new URL('./img.png', import.meta.url)
@@ -93,9 +95,9 @@ const imgUrl = new URL('./img.png', import.meta.url)
 document.getElementById('hero-img').src = imgUrl
 ```
 
-This works natively in modern browsers - in fact, Vite doesn't need to process this code at all during development!
+위 코드는 네이티브 ESM을 지원하는 모던 브라우저에서 동작합니다. 물론, Vite는 위 동작을 자동으로 수행해주기에 따로 처리할 필요는 없습니다.
 
-This pattern also supports dynamic URLs via template literals:
+참고로 위 코드는 템플릿 리터럴을 이용해 동적으로 생성되는 URL에서도 동작합니다.
 
 ```js
 function getImageUrl(name) {
@@ -103,8 +105,8 @@ function getImageUrl(name) {
 }
 ```
 
-During the production build, Vite will perform necessary transforms so that the URLs still point to the correct location even after bundling and asset hashing.
+배포 버전으로 빌드 시, Vite는 번들링 및 에셋 해싱 후에도 해당 에셋에 대한 URL을 올바르게 가리키기 위해 필요한 변환 작업을 수행합니다.
 
-::: warning Note: Does not work with SSR
-This pattern does not work if you are using Vite for Server-Side Rendering, because `import.meta.url` have different semantics in browsers vs. Node.js. The server bundle also cannot determine the client host URL ahead of time.
+::: warning SSR과 함께 사용하지 마세요!
+`import.meta.url`은 브라우저와 Node.js 간 서로 다른 의미를 갖기 때문에, 이 패턴은 서버-사이드 렌더링(SSR)에 Vite을 사용하는 경우 동작하지 않습니다.
 :::

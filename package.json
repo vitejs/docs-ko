@@ -1,0 +1,22 @@
+{
+  "name": "vitejs-ko",
+  "version": "1.0.0",
+  "description": "Vite.js documentation Korean translation",
+  "repository": "https://github.com/vitejs-ko/docs-next.git",
+  "author": "Evan You",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "chalk": "^4.1.0",
+    "vitepress": "^0.13.2",
+    "yorkie": "^2.0.0"
+  },
+  "scripts": {
+    "dev": "vitepress dev .",
+    "build": "vitepress build .",
+    "serve": "vitepress serve ."
+  },
+  "gitHooks": {
+		"commit-msg": "node scripts/verifyCommit.js"
+	}
+}
