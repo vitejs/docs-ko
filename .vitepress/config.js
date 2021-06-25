@@ -87,7 +87,7 @@ module.exports = {
           text: '가이드',
           children: [
             {
-              text: 'Vite을 사용해야 하는 이유',
+              text: 'Vite를 사용해야 하는 이유',
               link: '/guide/why'
             },
             {
@@ -99,7 +99,7 @@ module.exports = {
               link: '/guide/features'
             },
             {
-              text: 'Using Plugins',
+              text: '플러그인 사용하기',
               link: '/guide/using-plugins'
             },
             {

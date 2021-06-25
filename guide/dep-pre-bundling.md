@@ -13,16 +13,16 @@ Pre-bundling them to speed up dev server page load...
 
 이러한 메시지가 나타나는 이유는 Vite의 "Pre-bundling" 기능으로 인한 것인데, 이를 사용하는 목적은 다음과 같습니다.
 
-1. **CommonJS 그리고 UMD 모듈을 ESM으로 가져오기:** 개발 시, Vite의 개발 서버는 모든 코드를 네이티브 ESM으로 가져오게 됩니다. 따라서, Vite은 반드시 모든 CommonJS 및 UMD 파일을 ESM으로 불러올 수 있도록 변환 작업을 진행해줘야 합니다.
+1. **CommonJS 그리고 UMD 모듈을 ESM으로 가져오기:** 개발 시, Vite의 개발 서버는 모든 코드를 네이티브 ESM으로 가져오게 됩니다. 따라서, vite는 반드시 모든 CommonJS 및 UMD 파일을 ESM으로 불러올 수 있도록 변환 작업을 진행해줘야 합니다.
 
-   Vite은 조금 영리하게 ESM 파일로 변환을 진행하는데, 가령 CommonJS 디펜던시를 변환해주는 경우 아래와 같이 이름을 지정해 CommonJS 형태의 모듈을 Import 할 수도 있습니다.
+   vite는 조금 영리하게 ESM 파일로 변환을 진행하는데, 가령 CommonJS 디펜던시를 변환해주는 경우 아래와 같이 이름을 지정해 CommonJS 형태의 모듈을 Import 할 수도 있습니다.
 
    ```js
    // 아래 코드는 정상적으로 동작합니다.
    import React, { useState } from 'react'
    ```
 
-2. **퍼포먼스:** Vite은 여러 디펜던시가 존재하는 ESM 모듈을 하나의 모듈로 변환하여 페이지 로드에 대한 퍼포먼스를 향상시킵니다.
+2. **퍼포먼스:** vite는 여러 디펜던시가 존재하는 ESM 모듈을 하나의 모듈로 변환하여 페이지 로드에 대한 퍼포먼스를 향상시킵니다.
 
    600개의 모듈을 갖고 있는 [`lodash-es`](https://unpkg.com/browse/lodash-es/)와 같이 매우 많은 모듈을 Import하는 디펜던시의 경우, 그 수만큼 HTTP 요청을 전송하게 됩니다(`import { debounce } from 'loash-es'`를 한다고 해도 말이죠). 서버가 이 요청들을 모두 정상적으로 처리한다고 해도, 브라우저 자체에서 이러한 네트워크 요청에 대한 오버헤드가 존재하기에 페이지 로드 퍼포먼스는 떨어질 수 밖에 없습니다. 즉, `lodash-es` 모듈을 Import하게 된다면... 600개의 HTTP 요청을 전송하게 되는 것이죠.
 
@@ -30,19 +30,19 @@ Pre-bundling them to speed up dev server page load...
 
 ## 자동으로 디펜던시 탐색하기 {#automatic-dependency-discovery}
 
-만약 디펜던시가 캐시되지 않았다면 어떻게 될까요? Vite은 프로젝트 내 모든 소스 코드를 탐색하여 디펜던시를 찾아낸 뒤, Pre-bundling을 이용해 Import 합니다(`node_modules`에서 디펜던시를 가져오듯이 말이죠). 물론, 이 Pre-bundling 과정은 `esbuild`를 이용하기에 보통 매우 빠른 속도로 진행됩니다.
+만약 디펜던시가 캐시되지 않았다면 어떻게 될까요? vite는 프로젝트 내 모든 소스 코드를 탐색하여 디펜던시를 찾아낸 뒤, Pre-bundling을 이용해 Import 합니다(`node_modules`에서 디펜던시를 가져오듯이 말이죠). 물론, 이 Pre-bundling 과정은 `esbuild`를 이용하기에 보통 매우 빠른 속도로 진행됩니다.
 
-서버가 이미 시작된 이후에 캐시되지 않은 새로운 디펜던시가 추가되는 경우라면, Vite은 디펜던시 번들링 과정을 재시작하고 이후 해당 페이지를 다시 불러오게 됩니다.
+서버가 이미 시작된 이후에 캐시되지 않은 새로운 디펜던시가 추가되는 경우라면, vite는 디펜던시 번들링 과정을 재시작하고 이후 해당 페이지를 다시 불러오게 됩니다.
 
 ## 모노리포 디펜던시 {#monorepos-and-linked-dependencies}
 
-모노리포 프로젝트의 경우 디펜던시는 동일한 하나의 리포지토리에 존재할 수 있습니다\*. Vite은 이 역시 자동으로 연결된 디펜던시를 탐색하여 소스 코드로 가져오지만, 이를 하나의 번들로 묶지는 않습니다. 그저 연결된 디펜던시를 분석할 뿐이죠. (\* 모노리포는 두 개 이상의 리포지토리를 가지는 리포지토리입니다. 서로 관련된 리포지토리에 중복된 디펜던시가 많은 경우, 이를 하나로 통합하여 관리할 수 있다는 장점이 있습니다. 자세한 사항은 [Yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/)를 참고해주세요.)
+모노리포 프로젝트의 경우 디펜던시는 동일한 하나의 리포지토리에 존재할 수 있습니다\*. vite는 이 역시 자동으로 연결된 디펜던시를 탐색하여 소스 코드로 가져오지만, 이를 하나의 번들로 묶지는 않습니다. 그저 연결된 디펜던시를 분석할 뿐이죠. (\* 모노리포는 두 개 이상의 리포지토리를 가지는 리포지토리입니다. 서로 관련된 리포지토리에 중복된 디펜던시가 많은 경우, 이를 하나로 통합하여 관리할 수 있다는 장점이 있습니다. 자세한 사항은 [Yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/)를 참고해주세요.)
 
 ## 디펜던시 탐색 과정 커스터마이즈하기 {#customizing-the-behavior}
 
 기본적으로 Vite의 Pre-bundling 디펜던시 탐색은 휴리스틱(Heuristics) 기반으로 이루어집니다. 물론 모든 상황에서 적절하게 동작할 것이라는 보장은 없죠. 만약 특정 디펜던시를 포함시키거나 포함시키지 않도록 설정하고자 한다면 [`optimizeDeps` 옵션](/config/#dep-optimization-options)을 이용해주세요.
 
-이 옵션은 일반적으로 소스 코드에서 바로 가져올 수 없는 파일에 대해 `optimizeDeps.include` 또는 `optimizeDeps.exclude`에 명시하는 방식으로 사용합니다. 플러그인을 통해 생성된 어떤 파일을 명시적으로 Import 하고자 하는 경우와 같이 말이죠. 다시말해 Vite은 첫 번째 스캐닝 시 모든 디펜던시를 스캔하지 않으며, 오로지 브라우저가 요청했을 때에만 해당 디펜던시를 변환해 가져오는 방식으로 동작합닌다. 물론 서버가 이미 실행된 이후에도 말이죠.
+이 옵션은 일반적으로 소스 코드에서 바로 가져올 수 없는 파일에 대해 `optimizeDeps.include` 또는 `optimizeDeps.exclude`에 명시하는 방식으로 사용합니다. 플러그인을 통해 생성된 어떤 파일을 명시적으로 Import 하고자 하는 경우와 같이 말이죠. 다시말해 vite는 첫 번째 스캐닝 시 모든 디펜던시를 스캔하지 않으며, 오로지 브라우저가 요청했을 때에만 해당 디펜던시를 변환해 가져오는 방식으로 동작합닌다. 물론 서버가 이미 실행된 이후에도 말이죠.
 
 `include`나 `exclude`를 사용하는 예시를 들어 볼까요? 만약 디펜던시가 매우 크거나, 많은 모듈을 포함하고 있거나, CommonJS 포맷으로 되어있는 경우 이 디펜던시들을 Pre-bundling 과정에 포함시킬 수 있도록 `include` 옵션에 명시해야 합니다. 만약 디펜던시가 작거나, 이미 ESM 스타일로 작성된 경우라면 굳이 Pre-bundling 과정에 포함시킬 필요가 없으니 `exclude` 옵션에 명시해 브라우저에서 바로 불러올 수 있도록 설정할 수도 있습니다.
 
@@ -50,7 +50,7 @@ Pre-bundling them to speed up dev server page load...
 
 ### 파일 시스템 캐시 {#file-system-cache}
 
-Vite은 Pre-bundling 된 디펜던시를 `node_modules/.vite` 디렉터리 내에 캐시하고 있습니다. 다만 이를 다시 번들링하는 경우가 있는데, 다음과 같습니다.
+Vite는 Pre-bundling 된 디펜던시를 `node_modules/.vite` 디렉터리 내에 캐시하고 있습니다. 다만 이를 다시 번들링하는 경우가 있는데, 다음과 같습니다.
 
 - `package.json` 내 `dependencies` 리스트가 변경되었을 때
 - `package-lock.json`, `yarn.lock` 또는 `pnpm-lock.yaml` 파일과 같은 패키지 매니저의 Lock 파일이 변경되었을 때
