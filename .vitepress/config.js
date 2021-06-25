@@ -5,15 +5,16 @@
  */
 module.exports = {
   title: 'Vite',
-  description: 'Next Generation Frontend Tooling',
-  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]],
+  lang: 'ko',
+  base: '/docs-next/',
+  description: '차세대 프런트엔드 개발 및 빌드 툴',
+  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/docs-next/logo.svg' }]],
   themeConfig: {
-    repo: 'vitejs/vite',
+    repo: 'vitejs-kr/docs-next',
     logo: '/logo.svg',
-    docsDir: 'docs',
     docsBranch: 'main',
     editLinks: true,
-    editLinkText: 'Suggest changes to this page',
+    editLinkText: '이 페이지 수정하기',
 
     algolia: {
       apiKey: 'b573aa848fd57fb47d693b531297403c',
@@ -29,18 +30,18 @@ module.exports = {
     },
 
     nav: [
-      { text: 'Guide', link: '/guide/' },
-      { text: 'Config', link: '/config/' },
-      { text: 'Plugins', link: '/plugins/' },
+      { text: '가이드', link: '/guide/' },
+      { text: '설정', link: '/config/' },
+      { text: '플러그인', link: '/plugins/' },
       {
-        text: 'Links',
+        text: '관련 링크',
         items: [
           {
-            text: 'Twitter',
+            text: '트위터',
             link: 'https://twitter.com/vite_js'
           },
           {
-            text: 'Discord Chat',
+            text: '디스코드',
             link: 'https://chat.vitejs.dev'
           },
           {
@@ -48,16 +49,17 @@ module.exports = {
             link: 'https://github.com/vitejs/awesome-vite'
           },
           {
-            text: 'DEV Community',
+            text: '개발 커뮤니티',
             link: 'https://dev.to/t/vite'
           },
           {
-            text: 'Rollup Plugins Compat',
+            text: '호환 가능한 Rollup 플러그인',
             link: 'https://vite-rollup-plugins.patak.dev/'
           },
           {
-            text: 'Changelog',
-            link: 'https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md'
+            text: '변경 사항',
+            link:
+              'https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md'
           }
         ]
       },
@@ -82,18 +84,18 @@ module.exports = {
       // catch-all fallback
       '/': [
         {
-          text: 'Guide',
+          text: '가이드',
           children: [
             {
-              text: 'Why Vite',
+              text: 'Vite을 사용해야 하는 이유',
               link: '/guide/why'
             },
             {
-              text: 'Getting Started',
+              text: '시작하기',
               link: '/guide/'
             },
             {
-              text: 'Features',
+              text: '지원하는 기능들',
               link: '/guide/features'
             },
             {
@@ -101,23 +103,23 @@ module.exports = {
               link: '/guide/using-plugins'
             },
             {
-              text: 'Dependency Pre-Bundling',
+              text: 'Pre-bundling 된 디펜던시',
               link: '/guide/dep-pre-bundling'
             },
             {
-              text: 'Static Asset Handling',
+              text: '에셋 가져오기',
               link: '/guide/assets'
             },
             {
-              text: 'Building for Production',
+              text: '배포하기',
               link: '/guide/build'
             },
             {
-              text: 'Deploying a Static Site',
+              text: '정적 페이지 만들기',
               link: '/guide/static-deploy'
             },
             {
-              text: 'Env Variables and Modes',
+              text: 'Vite의 환경 변수와 모드',
               link: '/guide/env-and-mode'
             },
             {
@@ -125,24 +127,24 @@ module.exports = {
               link: '/guide/ssr'
             },
             {
-              text: 'Backend Integration',
+              text: '백엔드 프레임워크와 함께 사용하기',
               link: '/guide/backend-integration'
             },
             {
-              text: 'Comparisons',
+              text: '다른 번들러와의 차이점',
               link: '/guide/comparisons'
             },
             {
-              text: 'Migration from v1',
+              text: 'v1에서 마이그레이션하기',
               link: '/guide/migration'
             }
           ]
         },
         {
-          text: 'APIs',
+          text: 'API',
           children: [
             {
-              text: 'Plugin API',
+              text: '플러그인 API',
               link: '/guide/api-plugin'
             },
             {

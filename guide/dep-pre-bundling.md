@@ -1,6 +1,6 @@
-# Dependency Pre-Bundling
+# Pre-bundling 된 디펜던시 {dependency-pre-building}
 
-When you run `vite` for the first time, you may notice this message:
+맨 처음 `vite` 명령을 실행했을 때, 다음 메시지를 마주했을 것입니다.
 
 ```
 Optimizable dependencies detected:
@@ -9,61 +9,61 @@ Pre-bundling them to speed up dev server page load...
 (this will be run only when your dependencies have changed)
 ```
 
-## The Why
+## 왜 이런 메시지가 나타나나요? {#the-why}
 
-This is Vite performing what we call "dependency pre-bundling". This process serves two purposes:
+이러한 메시지가 나타나는 이유는 Vite의 "Pre-bundling" 기능으로 인한 것인데, 이를 사용하는 목적은 다음과 같습니다.
 
-1. **CommonJS and UMD compatibility:** During development, Vite's dev serves all code as native ESM. Therefore, Vite must convert dependencies that are shipped as CommonJS or UMD into ESM first.
+1. **CommonJS 그리고 UMD 모듈을 ESM으로 가져오기:** 개발 시, Vite의 개발 서버는 모든 코드를 네이티브 ESM으로 가져오게 됩니다. 따라서, Vite은 반드시 모든 CommonJS 및 UMD 파일을 ESM으로 불러올 수 있도록 변환 작업을 진행해줘야 합니다.
 
-   When converting CommonJS dependencies, Vite performs smart import analysis so that named imports to CommonJS modules will work as expected even if the exports are dynamically assigned (e.g. React):
+   Vite은 조금 영리하게 ESM 파일로 변환을 진행하는데, 가령 CommonJS 디펜던시를 변환해주는 경우 아래와 같이 이름을 지정해 CommonJS 형태의 모듈을 Import 할 수도 있습니다.
 
    ```js
-   // works as expected
+   // 아래 코드는 정상적으로 동작합니다.
    import React, { useState } from 'react'
    ```
 
-2. **Performance:** Vite converts ESM dependencies with many internal modules into a single module to improve subsequent page load performance.
+2. **퍼포먼스:** Vite은 여러 디펜던시가 존재하는 ESM 모듈을 하나의 모듈로 변환하여 페이지 로드에 대한 퍼포먼스를 향상시킵니다.
 
-   Some packages ship their ES modules builds as many separate files importing one another. For example, [`lodash-es` has over 600 internal modules](https://unpkg.com/browse/lodash-es/)! When we do `import { debounce } from 'lodash-es'`, the browser fires off 600+ HTTP requests at the same time! Even though the server has no problem handling them, the large amount of requests create a network congestion on the browser side, causing the page to load noticeably slower.
+   600개의 모듈을 갖고 있는 [`lodash-es`](https://unpkg.com/browse/lodash-es/)와 같이 매우 많은 모듈을 Import하는 디펜던시의 경우, 그 수만큼 HTTP 요청을 전송하게 됩니다(`import { debounce } from 'loash-es'`를 한다고 해도 말이죠). 서버가 이 요청들을 모두 정상적으로 처리한다고 해도, 브라우저 자체에서 이러한 네트워크 요청에 대한 오버헤드가 존재하기에 페이지 로드 퍼포먼스는 떨어질 수 밖에 없습니다. 즉, `lodash-es` 모듈을 Import하게 된다면... 600개의 HTTP 요청을 전송하게 되는 것이죠.
 
-   By pre-bundling `lodash-es` into a single module, we now only need one HTTP request instead!
+   만약 `lodash-es` 모듈을 하나의 모듈로 번들링하게 된다면 어떻게 될까요? 브라우저는 단지 하나의 HTTP 요청만을 전송하게 됩니다.
 
-## Automatic Dependency Discovery
+## 자동으로 디펜던시 탐색하기 {#automatic-dependency-discovery}
 
-If an existing cache is not found, Vite will crawl your source code and automatically discover dependency imports (i.e. "bare imports" that expect to be resolved from `node_modules`) and use these found imports as entry points for the pre-bundle. The pre-bundling is performed with `esbuild` so it's typically very fast.
+만약 디펜던시가 캐시되지 않았다면 어떻게 될까요? Vite은 프로젝트 내 모든 소스 코드를 탐색하여 디펜던시를 찾아낸 뒤, Pre-bundling을 이용해 Import 합니다(`node_modules`에서 디펜던시를 가져오듯이 말이죠). 물론, 이 Pre-bundling 과정은 `esbuild`를 이용하기에 보통 매우 빠른 속도로 진행됩니다.
 
-After the server has already started, if a new dependency import is encountered that isn't already in the cache, Vite will re-run the dep bundling process and reload the page.
+서버가 이미 시작된 이후에 캐시되지 않은 새로운 디펜던시가 추가되는 경우라면, Vite은 디펜던시 번들링 과정을 재시작하고 이후 해당 페이지를 다시 불러오게 됩니다.
 
-## Monorepos and Linked Dependencies
+## 모노리포 디펜던시 {#monorepos-and-linked-dependencies}
 
-In a monorepo setup, a dependency may be a linked package from the same repo. Vite automatically detects dependencies that are not resolved from `node_modules` and treats the linked dep as source code. It will not attempt to bundle the linked dep, and instead will analyze the linked dep's dependency list instead.
+모노리포 프로젝트의 경우 디펜던시는 동일한 하나의 리포지토리에 존재할 수 있습니다\*. Vite은 이 역시 자동으로 연결된 디펜던시를 탐색하여 소스 코드로 가져오지만, 이를 하나의 번들로 묶지는 않습니다. 그저 연결된 디펜던시를 분석할 뿐이죠. (\* 모노리포는 두 개 이상의 리포지토리를 가지는 리포지토리입니다. 서로 관련된 리포지토리에 중복된 디펜던시가 많은 경우, 이를 하나로 통합하여 관리할 수 있다는 장점이 있습니다. 자세한 사항은 [Yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/)를 참고해주세요.)
 
-## Customizing the Behavior
+## 디펜던시 탐색 과정 커스터마이즈하기 {#customizing-the-behavior}
 
-The default dependency discovery heuristics may not always be desirable. In cases where you want to explicitly include/exclude dependencies from the list, use the [`optimizeDeps` config options](/config/#dep-optimization-options).
+기본적으로 Vite의 Pre-bundling 디펜던시 탐색은 휴리스틱(Heuristics) 기반으로 이루어집니다. 물론 모든 상황에서 적절하게 동작할 것이라는 보장은 없죠. 만약 특정 디펜던시를 포함시키거나 포함시키지 않도록 설정하고자 한다면 [`optimizeDeps` 옵션](/config/#dep-optimization-options)을 이용해주세요.
 
-A typical use case for `optimizeDeps.include` or `optimizeDeps.exclude` is when you have an import that is not directly discoverable in the source code. For example, maybe the import is created as a result of a plugin transform. This means Vite won't be able to discover the import on the initial scan - it can only discover it after the file is requested by the browser and transformed. This will cause the server to immediately re-bundle after server start.
+이 옵션은 일반적으로 소스 코드에서 바로 가져올 수 없는 파일에 대해 `optimizeDeps.include` 또는 `optimizeDeps.exclude`에 명시하는 방식으로 사용합니다. 플러그인을 통해 생성된 어떤 파일을 명시적으로 Import 하고자 하는 경우와 같이 말이죠. 다시말해 Vite은 첫 번째 스캐닝 시 모든 디펜던시를 스캔하지 않으며, 오로지 브라우저가 요청했을 때에만 해당 디펜던시를 변환해 가져오는 방식으로 동작합닌다. 물론 서버가 이미 실행된 이후에도 말이죠.
 
-Both `include` and `exclude` can be used to deal with this. If the dependency is large (with many internal modules) or is CommonJS, then you should include it; If the dependency is small and is already valid ESM, you can exclude it and let the browser load it directly.
+`include`나 `exclude`를 사용하는 예시를 들어 볼까요? 만약 디펜던시가 매우 크거나, 많은 모듈을 포함하고 있거나, CommonJS 포맷으로 되어있는 경우 이 디펜던시들을 Pre-bundling 과정에 포함시킬 수 있도록 `include` 옵션에 명시해야 합니다. 만약 디펜던시가 작거나, 이미 ESM 스타일로 작성된 경우라면 굳이 Pre-bundling 과정에 포함시킬 필요가 없으니 `exclude` 옵션에 명시해 브라우저에서 바로 불러올 수 있도록 설정할 수도 있습니다.
 
-## Caching
+## 캐싱 {#caching}
 
-### File System Cache
+### 파일 시스템 캐시 {#file-system-cache}
 
-Vite caches the pre-bundled dependencies in `node_modules/.vite`. It determines whether it needs to re-run the pre-bundling step based on a few sources:
+Vite은 Pre-bundling 된 디펜던시를 `node_modules/.vite` 디렉터리 내에 캐시하고 있습니다. 다만 이를 다시 번들링하는 경우가 있는데, 다음과 같습니다.
 
-- The `dependencies` list in your `package.json`
-- Package manager lockfiles, e.g. `package-lock.json`, `yarn.lock`, or `pnpm-lock.yaml`.
-- Relevant fields in your `vite.config.js`, if present.
+- `package.json` 내 `dependencies` 리스트가 변경되었을 때
+- `package-lock.json`, `yarn.lock` 또는 `pnpm-lock.yaml` 파일과 같은 패키지 매니저의 Lock 파일이 변경되었을 때
+- `vite.config.js`와 관련되어 있는 필드가 변경되었을 때
 
-The pre-bundling step will only need to be re-run when one of the above has changed.
+위의 변경 사항이 발생된 경우 Pre-bundling 과정을 다시 시작하게 됩니다.
 
-If for some reason you want to force Vite to re-bundle deps, you can either start the dev server with the `--force` command line option, or manually delete the `node_modules/.vite` cache directory.
+만약 강제로 디펜던시를 다시 번들링해야 하는 경우, 개발 서버를 `--force` 옵션과 함께 시작해주세요. 또는 그냥 `node_modules/.vite` 디렉터리를 삭제해줘도 됩니다.
 
-### Browser Cache
+### 브라우저 캐시 {#browser-cache}
 
-Resolved dependency requests are strongly cached with HTTP headers `max-age=31536000,immutable` to improve page reload performance during dev. Once cached, these requests will never hit the dev server again. They are auto invalidated by the appended version query if a different version is installed (as reflected in your package manager lockfile). If you want to debug your dependencies by making local edits, you can:
+HTTP 헤더를 `max-age=31536000,immutable`과 같이 디펜던시가 반드시 캐시되도록 설정한 경우\*, 개발 시 페이지를 다시 불러올 때의 퍼포먼스를 향상시킬 수 있습니다. 한 번 캐시된 디펜던시는 다시 서버에 요청하지 않기 때문이죠. 물론 캐시된 디펜던시와 다른 버전이 설치된 경우, 기존 버전은 자동으로 무효화됩니다. 물론 아래의 과정을 통해 버전 변경 없이 직접 디펜던시를 수정(디버그)할 수도 있습니다. (\* Pre-bundling 된 디펜던시의 경우 이 헤더가 추가됩니다.)
 
-1. Temporarily disable cache via the Network tab of your browser devtools;
-2. Restart Vite dev server with the `--force` flag to re-bundle the deps;
-3. Reload the page.
+1. 브라우저의 개발자 도구를 이용해 캐시를 사용하지 않도록 설정합니다.
+2. 디펜던시를 다시 번들링하는 `--force` 옵션과 함께 Vite의 개발 서버를 재시작합니다.
+3. 페이지를 다시 로드합니다.
