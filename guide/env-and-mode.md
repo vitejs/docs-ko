@@ -1,6 +1,6 @@
-# Env Variables and Modes
+# Env Variables and Modes {#env-variables-and-modes}
 
-## Env Variables
+## Env Variables {#env-variables}
 
 Vite exposes env variables on the special **`import.meta.env`** object. Some built-in variables are available in all cases:
 
@@ -12,7 +12,7 @@ Vite exposes env variables on the special **`import.meta.env`** object. Some bui
 
 - **`import.meta.env.DEV`**: {boolean} whether the app is running in development (always the opposite of `import.meta.env.PROD`)
 
-### Production Replacement
+### Production Replacement {#production-replacement}
 
 During production, these env variables are **statically replaced**. It is therefore necessary to always reference them using the full static string. For example, dynamic key access like `import.meta.env[key]` will not work.
 
@@ -22,7 +22,7 @@ It will also replace these strings appearing in JavaScript strings and Vue templ
 
 - For Vue templates or other HTML that gets compiled into JavaScript strings, you can use the [`<wbr>` tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/wbr), e.g. `import.meta.<wbr>env.MODE`.
 
-## `.env` Files
+## `.env` Files {#env-files}
 
 Vite uses [dotenv](https://github.com/motdotla/dotenv) to load additional environment variables from the following files in your [environment directory](/config/#envDir):
 
@@ -64,7 +64,7 @@ interface ImportMetaEnv {
 }
 ```
 
-## Modes
+## Modes {#modes}
 
 By default, the dev server (`serve` command) runs in `development` mode, and the `build` command runs in `production` mode.
 

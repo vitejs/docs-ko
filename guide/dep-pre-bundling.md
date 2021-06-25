@@ -1,4 +1,4 @@
-# Pre-bundling 된 디펜던시 {dependency-pre-building}
+# Pre-bundling 된 디펜던시 {#dependency-pre-building}
 
 맨 처음 `vite` 명령을 실행했을 때, 다음 메시지를 마주했을 것입니다.
 
