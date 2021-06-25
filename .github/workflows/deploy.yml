@@ -16,6 +16,11 @@ jobs:
         with:
           cmd: install
 
+      - name: Rewrite titles
+        uses: Borales/actions-yarn@v2.3.0
+        with:
+          cmd: rewrite-title
+
       - name: Build
         uses: Borales/actions-yarn@v2.3.0
         with:
