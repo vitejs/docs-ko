@@ -13,8 +13,9 @@
   },
   "scripts": {
     "dev": "vitepress dev .",
-    "build": "node scripts/rewrite-title && vitepress build .",
-    "serve": "vitepress serve ."
+    "build": "vitepress build .",
+    "serve": "vitepress serve .", 
+    "rewrite-title": "node scripts/rewrite-title"
   },
   "gitHooks": {
 		"commit-msg": "node scripts/verifyCommit.js"
