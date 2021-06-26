@@ -16,7 +16,8 @@
     "dev": "vitepress dev .",
     "build": "vitepress build .",
     "serve": "vitepress serve .",
-    "rewrite-title": "node scripts/rewrite-title"
+    "rewrite-title": "node scripts/rewrite-title",
+    "sync": "node scripts/sync"
   },
   "gitHooks": {
     "commit-msg": "node scripts/verifyCommit.js"
