@@ -7,6 +7,7 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
+    "@octokit/rest": "^18.6.2",
     "chalk": "^4.1.0",
     "vitepress": "^0.13.2",
     "yorkie": "^2.0.0"
@@ -14,10 +15,10 @@
   "scripts": {
     "dev": "vitepress dev .",
     "build": "vitepress build .",
-    "serve": "vitepress serve .", 
+    "serve": "vitepress serve .",
     "rewrite-title": "node scripts/rewrite-title"
   },
   "gitHooks": {
-		"commit-msg": "node scripts/verifyCommit.js"
-	}
+    "commit-msg": "node scripts/verifyCommit.js"
+  }
 }
