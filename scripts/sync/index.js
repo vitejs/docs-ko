@@ -2,7 +2,7 @@ const fs = require('fs');
 const splitCommit = require('./splitCommit');
 const { Octokit } = require('@octokit/rest');
 
-const syncFilePath = require('path').resolve(__dirname, '..', 'sync');
+const syncFilePath = require('path').resolve(__dirname, '..', '..', 'sync');
 const pat = process.argv[2];
 
 fs.readFile(syncFilePath, (err, file) => {
