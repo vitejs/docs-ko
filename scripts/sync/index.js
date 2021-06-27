@@ -23,9 +23,9 @@ fs.readFile(syncFilePath, (err, file) => {
         '',
         '---',
         '',
-        '```diff',
+        '````diff',
         diff,
-        '```',
+        '````',
       ].join('\n'),
     }));
 });
