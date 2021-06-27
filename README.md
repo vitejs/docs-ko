@@ -6,6 +6,8 @@
 
 [![Deploy](https://github.com/vitejs-kr/docs-next/actions/workflows/deploy.yml/badge.svg)](https://github.com/vitejs-kr/docs-next/actions/workflows/deploy.yml)
 
+[![Sync](https://github.com/vitejs-kr/docs-next/actions/workflows/sync.yml/badge.svg)](https://github.com/vitejs-kr/docs-next/actions/workflows/sync.yml)
+
 [ViteJs 공식 문서](https://vitejs.dev/) 한글 번역 목적의 리포지터리 입니다.
 
 - [Discussions](https://github.com/vitejs-kr/docs-next/discussions)
