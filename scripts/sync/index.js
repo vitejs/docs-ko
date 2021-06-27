@@ -3,14 +3,14 @@ const splitCommit = require('./splitCommit');
 const { Octokit } = require('@octokit/rest');
 
 const syncFilePath = require('path').resolve(__dirname, '..', '..', 'sync');
-const pat = process.argv[2];
+const token = process.argv[2];
 
 fs.readFile(syncFilePath, (err, file) => {
   if (err) {
     return console.error(err);
   }
 
-  const octokit = new Octokit({ auth: pat });
+  const octokit = new Octokit({ auth: token });
 
   splitCommit(file.toString()).forEach(({ diff, hash, msg }) =>
     octokit.rest.issues.create({

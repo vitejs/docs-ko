@@ -44,4 +44,4 @@ jobs:
       - name: Run sync script
         uses: Borales/actions-yarn@v2.3.0
         with:
-          cmd: sync ${{ secrets.PAT }}
+          cmd: sync ${{ github.token }}
