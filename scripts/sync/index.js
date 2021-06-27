@@ -17,12 +17,15 @@ fs.readFile(syncFilePath, (err, file) => {
       owner: 'vitejs-kr',
       repo: 'docs-next',
       title: `[SYNC] ${msg}`,
+      labels: ['sync'],
       body: [
         `${msg} ([${hash.slice(0, 7)}](https://github.com/vitejs/vite/commit/${hash}))`,
         '',
         '---',
         '',
-        `${diff}`,
+        '```diff',
+        diff,
+        '```',
       ].join('\n'),
     }));
 });
