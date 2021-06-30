@@ -367,7 +367,7 @@ export default async ({ command, mode }) => {
 
 - **Type:** `boolean | string`
 
-  Automatically open the app in the browser on server start. When the value is a string, it will be used as the URL's pathname.
+  Automatically open the app in the browser on server start. When the value is a string, it will be used as the URL's pathname. If you want to open the server in a specific browser you like, you can set the env `process.env.BROWSER` (e.g. `firefox`). See [the `open` package](https://github.com/sindresorhus/open#app) for more details.
 
   **Example:**
 
@@ -488,7 +488,7 @@ async function createServer() {
 createServer()
 ```
 
-### server.fsServe.strict
+### server.fs.strict
 
 - **Experimental**
 - **Type:** `boolean`
@@ -496,12 +496,12 @@ createServer()
 
   Restrict serving files outside of workspace root.
 
-### server.fsServe.allow
+### server.fs.allow
 
 - **Experimental**
 - **Type:** `string[]`
 
-  Restrict files that could be served via `/@fs/`. When `server.fsServe.strict` is set to `true`, accessing files outside this directory list will result in a 403.
+  Restrict files that could be served via `/@fs/`. When `server.fs.strict` is set to `true`, accessing files outside this directory list will result in a 403.
 
   Vite will search for the root of the potential workspace and use it as default. A valid workspace met the following conditions, otherwise will fallback to the [project root](/guide/#index-html-and-project-root).
 
@@ -514,7 +514,7 @@ createServer()
   ```js
   export default {
     server: {
-      fsServe: {
+      fs: {
         // Allow serving files from one level up to the project root
         allow: [
           '..'
@@ -613,6 +613,12 @@ createServer()
 
   Options to pass on to [@rollup/plugin-commonjs](https://github.com/rollup/plugins/tree/master/packages/commonjs).
 
+### build.dynamicImportVarsOptions
+
+- **Type:** [`RollupDynamicImportVarsOptions`](https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#options)
+
+  Options to pass on to [@rollup/plugin-dynamic-import-vars](https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars).
+
 ### build.lib
 
 - **Type:** `{ entry: string, name?: string, formats?: ('es' | 'cjs' | 'umd' | 'iife')[], fileName?: string }`
@@ -699,6 +705,10 @@ createServer()
 - **Type:** `string[]`
 
   Dependencies to exclude from pre-bundling.
+
+  :::warning CommonJS
+  CommonJS dependencies should not be excluded from optimization. If an ESM dependency has a nested CommonJS dependency, it should not be excluded as well.
+  :::
 
 ### optimizeDeps.include
 
