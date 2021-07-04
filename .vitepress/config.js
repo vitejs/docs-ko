@@ -6,11 +6,10 @@
 module.exports = {
   title: 'Vite',
   lang: 'ko',
-  base: '/docs-next/',
   description: '차세대 프런트엔드 개발 및 빌드 툴',
-  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/docs-next/logo.svg' }]],
+  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]],
   themeConfig: {
-    repo: 'vitejs-kr/docs-next',
+    repo: 'vitejs-kr/vitejs-kr.github.io',
     logo: '/logo.svg',
     docsBranch: 'main',
     editLinks: true,
