@@ -15,7 +15,7 @@ fs.readFile(syncFilePath, (err, file) => {
   splitCommit(file.toString()).forEach(({ diff, hash, msg }) =>
     octokit.rest.issues.create({
       owner: 'vitejs-kr',
-      repo: 'docs-next',
+      repo: 'vitejs-kr.github.io',
       title: `[SYNC] ${msg}`,
       labels: ['sync'],
       body: [

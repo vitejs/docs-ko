@@ -3,18 +3,18 @@
     "id": "tailwind",
     "name": "Tailwind Labs",
     "href": "https://tailwindcss.com",
-    "src": "/docs-next/tailwind-labs.svg"
+    "src": "/tailwind-labs.svg"
   },
   {
     "id": "vuejobs",
     "name": "Vue Jobs",
     "href": "https://vuejobs.com/?ref=vuejs",
-    "src": "/docs-next/vuejobs.png"
+    "src": "/vuejobs.png"
   },
   {
     "id": "mux",
     "name": "Mux",
     "href": "https://mux.com",
-    "src": "/docs-next/mux.svg"
+    "src": "/mux.svg"
   }
 ]
