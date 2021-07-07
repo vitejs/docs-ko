@@ -36,6 +36,13 @@ jobs:
           git push origin sync
           git checkout main
 
+      - name: Forced merge from vite
+        if: ${{ failure() }}
+        run: |
+          git pull vite main
+          git push origin +sync
+          git checkout main
+
       - name: Install dependencies
         uses: Borales/actions-yarn@v2.3.0
         with:
