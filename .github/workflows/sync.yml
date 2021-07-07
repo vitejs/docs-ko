@@ -15,24 +15,24 @@ jobs:
 
       - name: Pull changes
         run: |
-          git remote add upstream https://github.com/vitejs/vite
+          git remote add vite https://github.com/vitejs/vite
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
 
       - name: Fetch and Checkout datas
         run: |
-          git fetch upstream
+          git fetch vite
           git fetch origin
           git checkout --track origin/sync
 
       - name: Diff
         run: |
-          git diff sync upstream/main -- docs >> sync
-          git log sync..upstream/main -- docs >> sync
+          git diff sync vite/main -- docs >> sync
+          git log sync..vite/main -- docs >> sync
 
-      - name: Merge from upstream
+      - name: Merge from vite
         run: |
-          git pull upstream main
+          git pull vite main
           git push origin sync
           git checkout main
 
