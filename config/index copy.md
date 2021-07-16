@@ -1,12 +1,12 @@
-# Vite 설정하기 {#configuring-vite}
+# Configuring Vite
 
-## 설정 파일 {#config-file}
+## Config File
 
 ### Config File Resolving
 
-명령줄에서 `vite`를 실행시킬 때, Vite는 자동으로 [프로젝트 루트](/guide/#index-html-and-project-root)의 `vite.config.js` 파일을 처리하기 위해 시도합니다.
+When running `vite` from the command line, Vite will automatically try to resolve a config file named `vite.config.js` inside [project root](/guide/#index-html-and-project-root).
 
-가장 기본적인 설정 파일의 내용은 다음과 같습니다:
+The most basic config file looks like this:
 
 ```js
 // vite.config.js
@@ -15,17 +15,17 @@ export default {
 }
 ```
 
-비록 프로젝트에서 `type: "module"`을 통한 네이티브 노드 ESM을 사용하지 않더라도 Vite는 설정 파일에서 ES 모듈 구문 사용을 지원함을 참고해주세요. 이 경우에 설정 파일은 로드되기 전에 자동으로 미리 처리됩니다.
+Note Vite supports using ES modules syntax in the config file even if the project is not using native Node ESM via `type: "module"`. In this case the config file is auto pre-processed before load.
 
-또한 `--config` CLI 옵션을 사용하여 명시적으로 특정 설정 파일을 지정할 수도 있습니다. (경로는 `cwd`를 기준으로 하여 상대적으로 처리됩니다.)
+You can also explicitly specify a config file to use with the `--config` CLI option (resolved relative to `cwd`):
 
 ```bash
 vite --config my-config.js
 ```
 
-### 인텔리센스 설정 {#config-intellisense}
+### Config Intellisense
 
-Vite는 TypeScript 형식을 포함하고 있기 때문에, jsdoc 형식의 힌트를 통해 사용자 IDE의 인텔리센스를 활용할 수 있습니다:
+Since Vite ships with TypeScript typings, you can leverage your IDE's intellisense with jsdoc type hints:
 
 ```js
 /**
@@ -38,7 +38,7 @@ const config = {
 export default config
 ```
 
-대안으로 jsdoc 주석이 없어도 인텔리센스가 제공되는 `defineConfig` 도우미 함수를 사용할 수도 있습니다:
+Alternatively you can use the `defineConfig` helper which should provide intellisense without the need for jsdoc annotations:
 
 ```js
 import { defineConfig } from 'vite'
@@ -48,11 +48,11 @@ export default defineConfig({
 })
 ```
 
-Vite는 또한 TS 설정 파일을 직접 지원합니다. `defineConfig` 도우미 함수와 함께 `vite.config.ts` 를 사용할 수 있습니다.
+Vite also directly supports TS config files. You can use `vite.config.ts` with the `defineConfig` helper as well.
 
-### 조건부 설정 {#conditional-config}
+### Conditional Config
 
-만약 설정에서 명령 (`serve` 또는 `build`) 또는 사용중인 [모드](/guide/env-and-mode)에 따라 조건부로 옵션을 결정해야 하는 경우, 아래와 같이 함수를 내보낼 수 있습니다:
+If the config needs to conditional determine options based on the command (`serve` or `build`) or the [mode](/guide/env-and-mode) being used, it can export a function instead:
 
 ```js
 export default ({ command, mode }) => {
@@ -68,9 +68,9 @@ export default ({ command, mode }) => {
 }
 ```
 
-### 비동기 설정 {#async-config}
+### Async Config
 
-만약 설정에서 비동기(async) 함수를 호출해야 한다면, async 함수를 내보낼 수 있습니다:
+If the config needs to call async function, it can export a async function instead:
 
 ```js
 export default async ({ command, mode }) => {
@@ -81,7 +81,7 @@ export default async ({ command, mode }) => {
 }
 ```
 
-## 공용 옵션 {#shared-options}
+## Shared Options
 
 ### root
 
@@ -331,7 +331,7 @@ export default async ({ command, mode }) => {
 
   See [here](/guide/env-and-mode#env-files) for more about environment files.
 
-## 서버 옵션 {#server-options}
+## Server Options
 
 ### server.host
 
@@ -524,7 +524,7 @@ createServer()
   }
   ```
 
-## 빌드 옵션 {#build-options}
+## Build Options
 
 ### build.target
 
@@ -725,7 +725,7 @@ createServer()
   Set this to `true` to keep the `name` property on functions and classes.
   See [`keepNames`](https://esbuild.github.io/api/#keep-names).
 
-## SSR 옵션 {#ssr-options}
+## SSR Options
 
 :::warning Experimental
 SSR options may be adjusted in minor releases.
