@@ -259,7 +259,7 @@ const modules = {
 - Glob 패턴 사용 시, 상대 경로(`./`) 또는 절대 경로(`/`)만을 이용해야 합니다.
 - Glob 패턴 매칭은 `fast-glob`을 이용합니다. 자세한 것은 [지원하는 Glob 패턴 목록](https://github.com/mrmlnc/fast-glob#pattern-syntax)을 참고해주세요.
 
-## Web Assembly {#web-assembly}
+## WebAssembly {#web-assembly}
 
 컴파일 된 `.wasm` 파일 역시 Import가 가능합니다. Wasm 파일의 `export default`로 Wasm 인스턴스에서 Export한 객체를 `Promise` 형태로 반환하는 초기화 함수가 들어가 있으며, 이를 호출하는 방식으로 사용이 가능합니다.
 
