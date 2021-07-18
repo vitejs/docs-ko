@@ -27,13 +27,19 @@ vite는 버전 12.0.0 이상의 [Node.js](https://nodejs.org/)를 요구합니�
 NPM:
 
 ```bash
-$ npm init @vitejs/app
+$ npm init vite@latest
 ```
 
 Yarn:
 
 ```bash
-$ yarn create @vitejs/app
+$ yarn create vite
+```
+
+PNPM:
+
+```bash
+$ pnpx create-vite
 ```
 
 이후에는 프롬프트 창에 출력된 메시지를 따라주세요.
@@ -42,13 +48,13 @@ $ yarn create @vitejs/app
 
 ```bash
 # npm 6.x
-npm init @vitejs/app my-vue-app --template vue
+npm init vite@latest my-vue-app --template vue
 
-# npm 7+, extra double-dash is needed:
-npm init @vitejs/app my-vue-app -- --template vue
+# npm 7+, '--'를 반드시 붙여주세요
+npm init vite@latest my-vue-app -- --template vue
 
 # yarn
-yarn create @vitejs/app my-vue-app --template vue
+yarn create vite my-vue-app --template vue
 ```
 
 이와 같이 지정할 수 있습니다.
@@ -68,11 +74,11 @@ yarn create @vitejs/app my-vue-app --template vue
 - `svelte`
 - `svelte-ts`
 
-각 템플릿에 대해 조금 더 자세한 설명이 필요하다면 [@vitejs/create-app](https://github.com/vitejs/vite/tree/main/packages/create-app)을 참고해주세요.
+각 템플릿에 대해 조금 더 자세한 설명이 필요하다면 [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)을 참고해주세요.
 
 ## 커뮤니티 템플릿 {#community-templates}
 
-Vite에서 제공하고 있는 템플릿 말고도 [Awesome-vite templates](https://github.com/vitejs/awesome-vite#templates)와 같이 다양한 도구와 프레임워크를 타겟으로 하는 커뮤니티 템플릿들이 있습니다. `@vitejs/create-app`은 이러한 템플릿을 기반으로도 빠르게 프로젝트를 구성할 수 있도록 지원하고 있으며, [degit](https://github.com/Rich-Harris/degit)을 이용합니다.
+Vite에서 제공하고 있는 템플릿 말고도 [Awesome-vite templates](https://github.com/vitejs/awesome-vite#templates)와 같이 다양한 도구와 프레임워크를 타겟으로 하는 커뮤니티 템플릿들이 있습니다. `create-vite`은 이러한 템플릿을 기반으로도 빠르게 프로젝트를 구성할 수 있도록 지원하고 있으며, [degit](https://github.com/Rich-Harris/degit)을 이용합니다.
 
 ```bash
 npx degit user/project my-project
