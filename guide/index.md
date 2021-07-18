@@ -27,13 +27,19 @@ vite는 버전 12.0.0 이상의 [Node.js](https://nodejs.org/)를 요구합니�
 NPM:
 
 ```bash
-$ npm init @vitejs/app
+$ npm init vite@latest
 ```
 
 Yarn:
 
 ```bash
-$ yarn create @vitejs/app
+$ yarn create vite
+```
+
+PNPM:
+
+```bash
+$ pnpx create-vite
 ```
 
 이후에는 프롬프트 창에 출력된 메시지를 따라주세요.
@@ -42,13 +48,13 @@ $ yarn create @vitejs/app
 
 ```bash
 # npm 6.x
-npm init @vitejs/app my-vue-app --template vue
+npm init vite@latest my-vue-app --template vue
 
-# npm 7+, extra double-dash is needed:
-npm init @vitejs/app my-vue-app -- --template vue
+# npm 7+, '--'를 반드시 붙여주세요
+npm init vite@latest my-vue-app -- --template vue
 
 # yarn
-yarn create @vitejs/app my-vue-app --template vue
+yarn create vite my-vue-app --template vue
 ```
 
 이와 같이 지정할 수 있습니다.
