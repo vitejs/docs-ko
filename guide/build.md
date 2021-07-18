@@ -106,7 +106,8 @@ module.exports = {
   build: {
     lib: {
       entry: path.resolve(__dirname, 'lib/main.js'),
-      name: 'MyLib'
+      name: 'MyLib',
+      fileName: format => `my-lib.${format}.js`
     },
     rollupOptions: {
       // 라이브러리에 포함하지 않을 디펜던시를 명시해주세요

@@ -24,7 +24,7 @@ vite는 HTTP 헤더를 이용해 요청한 디펜던시를 브라우저에서 �
 
 vite는 이용해 네이티브 ESM 기반의 [HMR API](./api-hmr)을 제공합니다. HRM을 이용하는 프레임워크는 애플리케이션을 다시 시작하지 않고도 일부 컨텐츠만을 갱신할 수 있다는 장점이 있는데, vite는 [Vue Single File Components](https://github.com/vitejs/vite/tree/main/packages/plugin-vue), [React Fast Refresh](https://github.com/vitejs/vite/tree/main/packages/plugin-react-refresh) 또는 [@prefresh/vite](https://github.com/JoviDeCroock/prefresh/tree/main/packages/vite)과 같은 First-party HMR* 모듈을 제공하고 있습니다. (* Vite에서 직접 제공하는 HMR 모듈)
 
-물론, [`@vitejs/create-app`](./)에서 제공하는 템플릿 안에는 HMR 모듈이 포함되어 있기 때문에 굳이 위와 같은 방법을 따르지 않아도 됩니다.
+물론, [`create-vite`](./)에서 제공하는 템플릿 안에는 HMR 모듈이 포함되어 있기 때문에 굳이 위와 같은 방법을 따르지 않아도 됩니다.
 
 ## TypeScript {#typescript}
 
@@ -259,7 +259,7 @@ const modules = {
 - Glob 패턴 사용 시, 상대 경로(`./`) 또는 절대 경로(`/`)만을 이용해야 합니다.
 - Glob 패턴 매칭은 `fast-glob`을 이용합니다. 자세한 것은 [지원하는 Glob 패턴 목록](https://github.com/mrmlnc/fast-glob#pattern-syntax)을 참고해주세요.
 
-## Web Assembly {#web-assembly}
+## WebAssembly {#web-assembly}
 
 컴파일 된 `.wasm` 파일 역시 Import가 가능합니다. Wasm 파일의 `export default`로 Wasm 인스턴스에서 Export한 객체를 `Promise` 형태로 반환하는 초기화 함수가 들어가 있으며, 이를 호출하는 방식으로 사용이 가능합니다.
 
