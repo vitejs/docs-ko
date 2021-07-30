@@ -72,6 +72,10 @@ module.exports = {
           {
             text: '简体中文',
             link: 'https://cn.vitejs.dev'
+          },
+          {
+            text: '日本語',
+            link: 'https://ja.vitejs.dev'
           }
         ]
       }
