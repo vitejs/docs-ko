@@ -20,6 +20,13 @@
    })
    ```
 
+   만약 [Module Preload Polyfill](/config/#polyfillmodulepreload) 기능을 비활성화하지 않은 경우, 아래와 같이 폴리필을 가져와야만 합니다.
+
+   ```js
+   // 앱 진입점(Entry)에 추가합니다.
+   import 'vite/modulepreload-polyfill'
+   ```
+
 2. 개발을 위해 서버의 HTML 템플릿에 다음을 삽입합니다(`http://localhost:3000`을 Vite가 실행중인 로컬 URL로 대체).
 
    ```html
