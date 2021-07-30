@@ -20,13 +20,6 @@
    })
    ```
 
-   만약 [`@vitejs/plugin-legacy`](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 또는 [`build.dynamicImportPolyfill` 옵션](/config/#build-polyfilldynamicimport)을 사용하는 경우라면, 이들이 자동으로 주입되지 않으므로 항목에 [dynamic import polyfill](/config/#build-polyfilldynamicimport)을 추가해야 합니다.
-
-   ```js
-   // 앱 항목의 시작 영역에 추가합니다.
-   import 'vite/dynamic-import-polyfill'
-   ```
-
 2. 개발을 위해 서버의 HTML 템플릿에 다음을 삽입합니다(`http://localhost:3000`을 Vite가 실행중인 로컬 URL로 대체).
 
    ```html
