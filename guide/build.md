@@ -32,13 +32,13 @@ JS(`import`), CSS(`url()`), 그리고 `.html` 파일에서 참조되는 에셋 �
 
 ```js
 // vite.config.js
-module.exports = {
+module.exports = defineConfig({
   build: {
     rollupOptions: {
       // https://rollupjs.org/guide/en/#big-list-of-options
     }
   }
-}
+})
 ```
 
 예를 들어, 여러 Rollup 빌드 결과(Output)를 위해 빌드 플러그인을 등록할 수도 있습니다.
@@ -49,13 +49,13 @@ module.exports = {
 
 ```js
 // vite.config.js
-module.exports = {
+module.exports = defineConfig({
   build: {
     watch: {
       // https://rollupjs.org/guide/en/#watch-options
     }
   }
-}
+})
 ```
 
 ## Multi-Page App {#multi-page-app}
@@ -79,8 +79,9 @@ module.exports = {
 ```js
 // vite.config.js
 const { resolve } = require('path')
+const { defineConfig } = require('vite')
 
-module.exports = {
+module.exports = defineConfig({
   build: {
     rollupOptions: {
       input: {
@@ -89,7 +90,7 @@ module.exports = {
       }
     }
   }
-}
+})
 ```
 
 ## Library 모드 {#library-mode}
@@ -101,13 +102,14 @@ module.exports = {
 ```js
 // vite.config.js
 const path = require('path')
+const { defineConfig } = require('vite')
 
-module.exports = {
+module.exports = defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, 'lib/main.js'),
       name: 'MyLib',
-      fileName: format => `my-lib.${format}.js`
+      fileName: (format) => `my-lib.${format}.js`
     },
     rollupOptions: {
       // 라이브러리에 포함하지 않을 디펜던시를 명시해주세요
@@ -121,7 +123,7 @@ module.exports = {
       }
     }
   }
-}
+})
 ```
 
 위와 같은 Rollup 설정과 함께 `vite build` 명령을 실행하게 되면, `es` 및 `umd` 두 가지의 포맷으로 번들링 과정이 진행되게 됩니다(이에 대해 조금 더 자세히 알고 싶다면 `build.lib` 설정을 참고해주세요).

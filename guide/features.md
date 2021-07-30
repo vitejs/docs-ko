@@ -71,12 +71,12 @@ vite는 기본적으로 Vue를 지원하고 있습니다.
 
 ```js
 // vite.config.js
-export default {
+export default defineConfig({
   esbuild: {
     jsxFactory: 'h',
     jsxFragment: 'Fragment'
   }
-}
+})
 ```
 
 자세한 사항은 [esbuild 문서](https://esbuild.github.io/content-types/#jsx)를 참고해주세요.
@@ -85,11 +85,11 @@ export default {
 
 ```js
 // vite.config.js
-export default {
+export default defineConfig({
   esbuild: {
     jsxInject: `import React from 'react'`
   }
-}
+})
 ```
 
 ## CSS {#css}

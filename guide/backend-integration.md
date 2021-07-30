@@ -8,7 +8,7 @@
 
    ```js
    // vite.config.js
-   export default {
+   export default defineConfig({
      build: {
        // outDir에서 manifest.json을 생성합니다.
        manifest: true,
@@ -17,7 +17,7 @@
          input: '/path/to/main.js'
        }
      }
-   }
+   })
    ```
 
    만약 [`@vitejs/plugin-legacy`](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 또는 [`build.dynamicImportPolyfill` 옵션](/config/#build-polyfilldynamicimport)을 사용하는 경우라면, 이들이 자동으로 주입되지 않으므로 항목에 [dynamic import polyfill](/config/#build-polyfilldynamicimport)을 추가해야 합니다.
