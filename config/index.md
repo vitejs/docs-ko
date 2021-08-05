@@ -55,7 +55,7 @@ Vite는 또한 TS 설정 파일을 직접 지원합니다. `defineConfig` 도우
 만약 설정에서 명령 (`serve` 또는 `build`) 또는 사용중인 [모드](/guide/env-and-mode)에 따라 조건부로 옵션을 결정해야 하는 경우, 아래와 같이 함수를 내보낼 수 있습니다:
 
 ```js
-export default ({ command, mode }) => {
+export default defineConfig(({ command, mode }) => {
   if (command === 'serve') {
     return {
       // serve specific config
@@ -65,7 +65,7 @@ export default ({ command, mode }) => {
       // build specific config
     }
   }
-}
+})
 ```
 
 ### 비동기 설정 {#async-config}
@@ -73,7 +73,7 @@ export default ({ command, mode }) => {
 만약 설정에서 비동기(async) 함수를 호출해야 한다면, async 함수를 내보낼 수 있습니다:
 
 ```js
-export default async ({ command, mode }) => {
+export default defineConfig(async ({ command, mode }) => {
   const data = await asyncFunction()
   return {
     // build specific config
@@ -136,11 +136,13 @@ export default async ({ command, mode }) => {
 
 ### publicDir
 
-- **타입:** `string`
+- **타입:** `string | false`
 - **기본값:** `"public"`
 
   정적 에셋들을 제공하는 디렉터리 입니다. 이 디렉터리의 파일들은 개발 중에는 `/` 에서 제공되고 빌드 시에는 `outDir`의 루트로 복사되며, 변형 없이 언제나 있는 그대로 제공되거나 복사됩니다. 값은 절대 파일 시스템 경로 또는 프로젝트 루트의 상대적인 경로중 하나가 될 수 있습니다.
 
+  `publicDir`를 `false`로 정의하면 이 기능이 비활성화됩니다.
+  
   [`public` 디렉터리](/guide/assets#the-public-directory)에서 더 자세한 점을 볼 수 있습니다.
 
 ### cacheDir
@@ -211,7 +213,7 @@ export default async ({ command, mode }) => {
   ```ts
   interface CSSModulesOptions {
     scopeBehaviour?: 'global' | 'local'
-    globalModulePaths?: string[]
+    globalModulePaths?: RegExp[]
     generateScopedName?:
       | string
       | ((name: string, filename: string, css: string) => string)
@@ -240,7 +242,7 @@ export default async ({ command, mode }) => {
   CSS 전처리기로 전달할 옵션을 지정합니다. 예제:
 
   ```js
-  export default {
+  export default defineConfig({
     css: {
       preprocessorOptions: {
         scss: {
@@ -248,7 +250,7 @@ export default async ({ command, mode }) => {
         }
       }
     }
-  }
+  })
   ```
 
 ### json.namedExports
@@ -274,12 +276,12 @@ export default async ({ command, mode }) => {
   `ESBuildOptions`는 [ESbuild 변환 옵션](https://esbuild.github.io/api/#transform-api)을 확장합니다. 가장 일반적인 사례는 JSX를 사용자 지정하는 것입니다:
 
   ```js
-  export default {
+  export default defineConfig({
     esbuild: {
       jsxFactory: 'h',
       jsxFragment: 'Fragment'
     }
-  }
+  })
   ```
 
   기본적으로, ESBuild는 `ts`, `jsx`, `tsx` 파일들에 적용됩니다. `esbuild.include`와 `esbuild.exclude`를 사용하여 사용자 정의할 수 있으며, 둘 다 `string | RegExp | (string | RegExp)[]` 타입으로 예상합니다.
@@ -287,11 +289,11 @@ export default async ({ command, mode }) => {
   추가적으로, ESBuild에 의해 변환된 모든 파일에 대해 JSX 헬퍼 import 들을 자동으로 주입하기 위해 `esbuild.jsxInject`도 사용할 수 있습니다:
 
   ```js
-  export default {
+  export default defineConfig({
     esbuild: {
       jsxInject: `import React from 'react'`
     }
-  }
+  })
   ```
 
   ESBuild 변환을 사용하지 않으려면 `false`로 설정하세요.
@@ -372,11 +374,11 @@ export default async ({ command, mode }) => {
   **Example:**
 
   ```js
-  export default {
+  export default defineConfig({
     server: {
       open: '/docs/index.html'
     }
-  }
+  })
   ```
 
 ### server.proxy
@@ -390,7 +392,7 @@ export default async ({ command, mode }) => {
   **Example:**
 
   ```js
-  export default {
+  export default defineConfig({
     server: {
       proxy: {
         // string shorthand
@@ -417,7 +419,7 @@ export default async ({ command, mode }) => {
         }
       }
     }
-  }
+  })
   ```
 
 ### server.cors
@@ -512,16 +514,14 @@ createServer()
   사용자 지정 작업 공간 루트를 지정하는 경로를 허용합니다. 절대 경로 또는 [프로젝트 루트](/guide/#index-html-and-project-root)에 대한 상대 경로일 수 있습니다. 다음은 하나의 예입니다.
 
   ```js
-  export default {
+  export default defineConfig({
     server: {
       fs: {
         // Allow serving files from one level up to the project root
-        allow: [
-          '..'
-        ]
+        allow: ['..']
       }
     }
-  }
+  })
   ```
 
 ## 빌드 옵션 {#build-options}
@@ -543,20 +543,18 @@ createServer()
 
   코드안에 esbuild로 안전하게 트랜스파일할 수 없는 기능이 포함된 경우 빌드는 실패할 것입니다. 자세한 점은 [esbuild 문서](https://esbuild.github.io/content-types/#javascript)를 확인하세요.
 
-### build.polyfillDynamicImport
+### build.polyfillModulePreload
 
 - **타입:** `boolean`
 - **기본값:** `false`
 
-  [동적 가져오기 폴리필](https://github.com/GoogleChromeLabs/dynamic-import-polyfill)을 자동으로 주입할지 여부입니다.
+  [모듈 미리로드 폴리필](https://guybedford.com/es-module-preloading-integrity#modulepreload-polyfill)을 자동으로 주입할지 여부입니다.
 
   true로 설정하면 폴리필이 각 `index.html` 항목의 프록시 모듈에 자동으로 주입됩니다. 빌드가 `build.rollupOptions.input`을 통해 비 html 사용자 지정 진입점을 사용하도록 구성된 경우, 사용자 지정 진입점에 폴리필을 수동으로 import 해야 합니다:
 
   ```js
-  import 'vite/dynamic-import-polyfill'
+  import 'vite/modulepreload-polyfill'
   ```
-
-  [`@vitejs/plugin-legacy`](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)를 사용할 때, 플러그인은 자동으로 이 옵션을 `true`로 설정합니다.
 
   참고: 폴리필은 [Library 모드](/guide/build#library-mode)에 적용되지 **않습니다**. 네이티브 동적 가져오기 없이 브라우저를 지원해야 한다면, 아마도 라이브러리에서 이것을 사용하지 않는 것이 좋습니다.
 
@@ -599,7 +597,7 @@ createServer()
 - **타입:** `boolean | 'inline' | 'hidden'`
 - **기본값:** `false`
 
-  프로덕션에서 소스 맵을 생성합니다.
+  프로덕션에서 소스 맵을 생성합니다. `true`인 경우 별도의 소스 맵 파일이 생성됩니다. `'inline'`인 경우 소스 맵이 결과 출력 파일에 데이터 URI로 추가됩니다. `'hidden'`은 번들 파일의 해당 소스 맵 설명이 표시되지 않는 경우를 제외하고 `true`와 같이 작동합니다.
 
 ### build.rollupOptions
 
@@ -621,10 +619,10 @@ createServer()
 
 ### build.lib
 
-- **타입:** `{ entry: string, name?: string, formats?: ('es' | 'cjs' | 'umd' | 'iife')[], fileName?: string }`
+- **타입:** `{ entry: string, name?: string, formats?: ('es' | 'cjs' | 'umd' | 'iife')[], fileName?: string | ((format: ModuleFormat) => string) }`
 - **참고:** [Library 모드](/guide/build#library-mode)
 
-  라이브러리로 빌드합니다. 라이브러리에서 HTML을 진입점으로 사용할 수 없으므로, `entry`가 필요합니다. `name`은 노출된 전역 변수이며 `formats`이 `'umd'` 또는 `'iife'`를 포함할 때 필요합니다. 기본 `formats`은 `['es', 'umd']` 입니다. `fileName`은 패키지 파일 출력의 이름이며, 기본값은 package.json 파일의 name 옵션입니다.
+  라이브러리로 빌드합니다. 라이브러리에서 HTML을 진입점으로 사용할 수 없으므로, `entry`가 필요합니다. `name`은 노출된 전역 변수이며 `formats`이 `'umd'` 또는 `'iife'`를 포함할 때 필요합니다. 기본 `formats`은 `['es', 'umd']` 입니다. `fileName`은 패키지 파일 출력의 이름이며, 기본값은 package.json 파일의 name 옵션입니다. 또한 `format`을 인수로 취하는 함수로도 정의될 수 있습니다.
 
 ### build.manifest
 
