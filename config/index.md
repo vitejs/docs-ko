@@ -546,7 +546,7 @@ createServer()
 ### build.polyfillModulePreload
 
 - **타입:** `boolean`
-- **기본값:** `false`
+- **기본값:** `true`
 
   [모듈 미리로드 폴리필](https://guybedford.com/es-module-preloading-integrity#modulepreload-polyfill)을 자동으로 주입할지 여부입니다.
 
@@ -579,7 +579,7 @@ createServer()
 
   이 값보다 작은 크기의 import 되거나 참조된 에셋은 부가적인 http 요청을 피하기 위해 base64 URL로 인라인 처리됩니다. 만일 인라인 변환을 사용하지 않으려면 `0`으로 설정하세요.
 
-  ::: 참고 팁
+  ::: tip 참고
   `build.lib`를 지정하면, `build.assetsInlineLimit`는 무시되며 파일 크기에 관계없이 에셋이 항상 인라인 처리됩니다.
   :::
 
@@ -704,7 +704,7 @@ createServer()
 
   사전 번들링에서 제외할 디펜던시 목록입니다.
 
-  :::경고 CommonJS
+  :::warning CommonJS
   CommonJS 디펜던시는 최적화에서 제외되서는 안 됩니다. ESM 디펜던시에 중첩된 CommonJS 디펜던시가 있는 경우, 이 또한 제외되서는 안 됩니다.
   :::
 
@@ -725,7 +725,7 @@ createServer()
 
 ## SSR 옵션 {#ssr-options}
 
-:::경고 - 실험중입니다
+:::warning 실험중입니다
 SSR 옵션은 마이너 릴리즈에서 조정될 수 있습니다.
 :::
 
