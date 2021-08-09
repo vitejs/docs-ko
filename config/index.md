@@ -78,7 +78,7 @@ export default defineConfig(async ({ command, mode }) => {
   return {
     // build specific config
   }
-}
+})
 ```
 
 ## 공용 옵션 {#shared-options}
