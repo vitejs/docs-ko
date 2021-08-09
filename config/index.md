@@ -453,6 +453,8 @@ export default defineConfig(async ({ command, mode }) => {
 
   [chokidar](https://github.com/paulmillr/chokidar#api)에 전달할 파일 시스템 감시자 옵션입니다.
 
+  Windows Subsystem for Linux(WSL) 2에서 Vite를 실행하고, 그리고 프로젝트 폴더가 Windows 파일 시스템에 존재하는 경우, `{ usePolling: true }` 옵션을 설정해줘야 합니다. 이는 Windows 파일 시스템의 [WSL2 제한사항](https://github.com/microsoft/WSL/issues/4739)으로 인한 것입니다.
+
 ### server.middlewareMode
 
 - **타입:** `'ssr' | 'html'`
