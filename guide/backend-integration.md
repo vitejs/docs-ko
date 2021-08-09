@@ -1,8 +1,11 @@
 # 백엔드 프레임워크와 함께 사용하기 {#backend-integration}
 
+:::tip 노트
+
 기존 백엔드(예 : Rails, Laravel)를 사용하여 HTML을 제공하지만 에셋에 Vite를 사용하기를 원한다면 [Awesome Vite](https://github.com/vitejs/awesome-vite#integrations-with-backends)에 나열된 기존의 통합을 확인하십시오.
 
-또는 다음 단계에 따라 수동으로 구성할 수 있습니다.
+만약 직접 설정하기를 원한다면, 아래의 가이드에 따라 수동으로 이를 구성할 수 있습니다.
+:::
 
 1. Vite config 파일에서 항목을 구성하고 빌드 매니페스트를 활성화합니다.
 
