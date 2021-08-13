@@ -23,7 +23,7 @@
    })
    ```
 
-   만약 [Module Preload Polyfill](/config/#polyfillmodulepreload) 기능을 비활성화하지 않은 경우, 아래와 같이 폴리필을 가져와야만 합니다.
+   만약 [Module Preload Polyfill](/config/#build-polyfillmodulepreload) 기능을 비활성화하지 않은 경우, 아래와 같이 폴리필을 가져와야만 합니다.
 
    ```js
    // 앱 진입점(Entry)에 추가합니다.

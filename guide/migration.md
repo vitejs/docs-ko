@@ -32,7 +32,7 @@
   - `httpsOptions` has been removed. [`server.https`](/config/#server-https) can directly accept the options object.
   - `chokidarWatchOptions` is now [`server.watch`](/config/#server-watch).
 
-- [`assetsInclude`](/config/#assetsInclude) now expects `string | RegExp | (string | RegExp)[]` instead of a function.
+- [`assetsInclude`](/config/#assetsinclude) now expects `string | RegExp | (string | RegExp)[]` instead of a function.
 
 - All Vue specific options are removed; Pass options to the Vue plugin instead.
 
