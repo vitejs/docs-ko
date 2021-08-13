@@ -1,66 +1,66 @@
-# Server-Side Rendering {#server-side-rendering}
+# 서버 측 렌더링 (SSR) {#server-side-rendering}
 
-:::warning Experimental
-SSR support is still experimental and you may encounter bugs and unsupported use cases. Proceed at your own risk.
+:::warning 실험적인 기능
+SSR은 현재 실험적인 기능이며 버그가 있거나 지원하지 않는 사례가 발생될 수 있습니다. 자신의 책임 아래 진행하시기 바랍니다.
 :::
 
 :::tip Note
-SSR specifically refers to front-end frameworks (for example React, Preact, Vue, and Svelte) that support running the same application in Node.js, pre-rendering it to HTML, and finally hydrating it on the client. If you are looking for integration with traditional server-side frameworks, check out the [Backend Integration guide](./backend-integration) instead.
+SSR은 동일한 전체 사이트를 Node.js에서 동작시키고, 이를 HTML로 사전 렌더링 한 후, 마지막으로 이를 클라이언트의 프런트엔드 프레임워크(가령 React, Preact, Vue 및 Svelte와 같은)에서 가져오도록 하는 기능입니다. 만약 기존에 사용하고 있었던 서버 사이드 프레임워크와의 연동을 원한다면 [백엔드 프레임워크와 함께 사용하기](./backend-integration)를 참고하시기 바랍니다.
 
-The following guide also assumes prior experience working with SSR in your framework of choice, and will only focus on Vite-specific integration details.
+또한, 아래의 가이드는 선택한 프레임워크에서 SSR을 적용해 보았다고 가정하며, Vite에서는 이를 어떻게 적용할 수 있는지에 대한 세부 정보에만 초점을 맞추었습니다.
 :::
 
 :::warning Low-level API
-This is a low-level API meant for library and framework authors. If your goal is to create an application, make sure to check out the higher-level SSR plugins and tools at [Awesome Vite SSR section](https://github.com/vitejs/awesome-vite#ssr) first. That said, many applications are successfully built directly on top of Vite's native low-level API.
+이 내용은 라이브러리 및 프레임워크 개발자들을 위한 저수준 API 입니다. 만약 일반적인 애플리케이션을 만드는 것이 목적이라면, 먼저 [Awesome Vite SSR](https://github.com/vitejs/awesome-vite#ssr)에서 SSR 플러그인과 관련 툴을 확인해주세요. Vite의 저수준의 네이티브 API 기반으로 많은 수의 프로젝트들이 성공적으로 구축되어 있습니다.
 :::
 
 :::tip Help
-If you have questions, the community is usually helpful at [Vite Discord's #ssr channel](https://discord.gg/PkbxgzPhJv).
+만약 질문하고자 한다면, [Vite Discord의 #ssr 채널](https://discord.gg/PkbxgzPhJv)을 방문해주세요.
 :::
 
-## Example Projects {#example-projects}
+## 예제 프로젝트 {#example-projects}
 
-Vite provides built-in support for server-side rendering (SSR). The Vite playground contains example SSR setups for Vue 3 and React, which can be used as references for this guide:
+Vite는 서버 측 렌더링(SSR, Server-side Rendering)을 기본적으로 지원합니다. Vite 플레이그라운드에서는 SSR 설정에 대한 Vue 3 및 React 예제를 제공하고 있으며, 이를 참고할 수 있습니다.
 
 - [Vue 3](https://github.com/vitejs/vite/tree/main/packages/playground/ssr-vue)
 - [React](https://github.com/vitejs/vite/tree/main/packages/playground/ssr-react)
 
-## Source Structure {#source-structure}
+## 프로젝트 구조 {#source-structure}
 
-A typical SSR application will have the following source file structure:
+일반적으로 SSR 애플리케이션의 프로젝트 구조는 다음과 같습니다:
 
 ```
 - index.html
 - src/
-  - main.js          # exports env-agnostic (universal) app code
-  - entry-client.js  # mounts the app to a DOM element
-  - entry-server.js  # renders the app using the framework's SSR API
+  - main.js          # 환경에 구애받지 않는(Env-agnostic) 범용 앱 코드로 내보내는(Export) 스크립트
+  - entry-client.js  # 앱을 DOM 엘리먼트에 마운트하는 스크립트
+  - entry-server.js  # 프레임워크의 SSR API를 사용해 앱을 렌더링하는 스크립트
 ```
 
-The `index.html` will need to reference `entry-client.js` and include a placeholder where the server-rendered markup should be injected:
+`index.html`은 `entry-client.js`를 반드시 참조해야 하며, 서버에서 렌더링된 페이지를 삽입해야 하는 자리 표시자(Placeholder)를 포함해야 합니다:
 
 ```html
 <div id="app"><!--ssr-outlet--></div>
 <script type="module" src="/src/entry-client.js"></script>
 ```
 
-You can use any placeholder you prefer instead of `<!--ssr-outlet-->`, as long as it can be precisely replaced.
+정확하게 바꿀 수 있다고 판단된다면, `<!--ssr-outlet-->` 대신 원하는 자리 표시자를 사용할 수도 있습니다.
 
-## Conditional Logic {#conditional-logic}
+## 조건부 논리 {#conditional-logic}
 
-If you need to perform conditional logic based on SSR vs. client, you can use
+만약 SSR 또는 CSR(클라이언트 측 렌더링, Client-side Rendering) 여부에 따라 다른 코드를 실행하고자 하는 경우, 아래와 같이 조건부 논리 코드를 사용할 수 있습니다:
 
 ```js
 if (import.meta.env.SSR) {
-  // ... server only logic
+  // ... SSR 에서만 작동하는 코드
 }
 ```
 
-This is statically replaced during build so it will allow tree-shaking of unused branches.
+이러한 코드는 빌드 중에 정적으로 대체되기에, 사용하지 않는 분기문에 대해서는 트리-쉐이킹\*을 적용합니다. (\* 트리-쉐이킹: Tree-shaking, 사용하지 않는 코드를 제거하는 기법 / [참고](https://webpack.js.org/guides/tree-shaking/))
 
-## Setting Up the Dev Server {#setting-up-the-dev-server}
+## 개발 서버 구성하기 {#setting-up-the-dev-server}
 
-When building an SSR app, you likely want to have full control over your main server and decouple Vite from the production environment. It is therefore recommended to use Vite in middleware mode. Here is an example with [express](https://expressjs.com/):
+SSR 앱을 빌드할 때, 메인 서버를 완전히 제어하고 Vite를 프로덕션 환경에서 분리하고자 한다면 어떻게 해야 할까요? 가장 좋은 방법은, Vite를 미들웨어 모드로 사용하는 것입니다. 가령 [Express](https://expressjs.com/)를 예로 들자면:
 
 **server.js**
 
@@ -73,19 +73,19 @@ const { createServer: createViteServer } = require('vite')
 async function createServer() {
   const app = express()
 
-  // Create vite server in middleware mode. This disables Vite's own HTML
-  // serving logic and let the parent server take control.
+  // 미들웨어 모드로 Vite 서버를 생성합니다.
+  // 이는 Vite의 자체적인 HTML 제공 로직을 비활성화하고, 상위 서버가 제어하도록 합니다.
   //
-  // If you want to use Vite's own HTML serving logic (using Vite as
-  // a development middleware), using 'html' instead.
+  // 만약 Vite의 자체적인 HTML 제공 로직(Vite를 개발 미들웨어로 사용하고)을 사용하고자 한다면
+  // 이 대신 'html'을 사용하세요.
   const vite = await createViteServer({
     server: { middlewareMode: 'ssr' }
   })
-  // use vite's connect instance as middleware
+  // Vite를 미들웨어로 사용합니다.
   app.use(vite.middlewares)
 
   app.use('*', async (req, res) => {
-    // serve index.html - we will tackle this next
+    // index.html 파일을 제공합니다 - 아래에서 이를 다룰 예정입니다.
   })
 
   app.listen(3000)
@@ -94,44 +94,43 @@ async function createServer() {
 createServer()
 ```
 
-Here `vite` is an instance of [ViteDevServer](./api-javascript#vitedevserver). `vite.middlewares` is a [Connect](https://github.com/senchalabs/connect) instance which can be used as a middleware in any connect-compatible Node.js framework.
+여기서의 `vite`는 [ViteDevServer](./api-javascript#vitedevserver)의 인스턴스입니다. `vite.middlewares`는 [Connect](https://github.com/senchalabs/connect) 인스턴스이며, `Connect`는 미들웨어로 알려진 플러그인을 사용하는 Node.js용 HTTP 서버 프레임워크입니다.
 
-The next step is implementing the `*` handler to serve server-rendered HTML:
+다음 단계는 서버에서 렌더링된 HTML을 제공하기 위해 `*` 핸들러를 구현하는 것입니다:
 
 ```js
 app.use('*', async (req, res) => {
   const url = req.originalUrl
 
   try {
-    // 1. Read index.html
+    // 1. index.html 파일을 읽어들입니다.
     let template = fs.readFileSync(
       path.resolve(__dirname, 'index.html'),
       'utf-8'
     )
 
-    // 2. Apply vite HTML transforms. This injects the vite HMR client, and
-    //    also applies HTML transforms from Vite plugins, e.g. global preambles
-    //    from @vitejs/plugin-react-refresh
+    // 2. Vite의 HTML 변환 작업을 통해 Vite HMR 클라이언트를 주입하고,
+    //    Vite 플러그인의 HTML 변환도 적용합니다.
     template = await vite.transformIndexHtml(url, template)
 
-    // 3. Load the server entry. vite.ssrLoadModule automatically transforms
-    //    your ESM source code to be usable in Node.js! There is no bundling
-    //    required, and provides efficient invalidation similar to HMR.
+    // 3. 서버의 진입점(Entry)을 로드합니다.
+    //    vite.ssrLoadModule은 Node.js에서 사용할 수 있도록 ESM 소스 코드를 자동으로 변환합니다.
+    //    추가적인 번들링이 필요하지 않으며, HMR과 유사한 동작을 수행합니다.
     const { render } = await vite.ssrLoadModule('/src/entry-server.js')
 
-    // 4. render the app HTML. This assumes entry-server.js's exported `render`
-    //    function calls appropriate framework SSR APIs,
-    //    e.g. ReactDOMServer.renderToString()
+    // 4. 앱의 HTML을 렌더링합니다.
+    //    이는 entry-server.js에서 내보낸(Export) `render` 함수가
+    //    ReactDOMServer.renderToString()과 같은 적절한 프레임워크의 SSR API를 호출한다고 가정합니다.
     const appHtml = await render(url)
 
-    // 5. Inject the app-rendered HTML into the template.
+    // 5. 렌더링된 HTML을 템플릿에 주입합니다.
     const html = template.replace(`<!--ssr-outlet-->`, appHtml)
 
-    // 6. Send the rendered HTML back.
+    // 6. 렌더링된 HTML을 응답으로 전송합니다.
     res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
   } catch (e) {
-    // If an error is caught, let vite fix the stracktrace so it maps back to
-    // your actual source code.
+    // 만약 오류가 발생된다면, Vite는 스택트레이스(Stacktrace)를 수정하여
+    // 오류가 실제 코드에 매핑되도록 재구성합니다.
     vite.ssrFixStacktrace(e)
     console.error(e)
     res.status(500).end(e.message)
@@ -139,7 +138,7 @@ app.use('*', async (req, res) => {
 })
 ```
 
-The `dev` script in `package.json` should also be changed to use the server script instead:
+`package.json`의 `dev` 스크립트도 서버 스크립트를 사용하도록 변경해줍니다:
 
 ```diff
   "scripts": {
@@ -148,14 +147,14 @@ The `dev` script in `package.json` should also be changed to use the server scri
   }
 ```
 
-## Building for Production {#building-for-production}
+## 프로덕션을 위해 빌드하기 {#building-for-production}
 
-To ship an SSR project for production, we need to:
+SSR 프로젝트를 프로덕션으로 제공하기 위해서는 다음이 필요합니다:
 
-1. Produce a client build as normal;
-2. Produce an SSR build, which can be directly loaded via `require()` so that we don't have to go through Vite's `ssrLoadModule`;
+1. 클라이언트 빌드를 정상적으로 생성합니다.
+2. Vite의 `ssrLoadModule`을 거칠 필요가 없도록 `require()` 함수를 통해 직접 로드할 수 있는 SSR 빌드를 생성합니다.
 
-Our scripts in `package.json` will look like this:
+이를 위한 `package.json`의 스크립트는 다음과 같습니다:
 
 ```json
 {
@@ -167,67 +166,67 @@ Our scripts in `package.json` will look like this:
 }
 ```
 
-Note the `--ssr` flag which indicates this is an SSR build. It should also specify the SSR entry.
+`--ssr` 플래그는 SSR 빌드임을 의미하며, SSR의 진입점(Entry)이 될 스크립트를 명시해줘야 합니다.
 
-Then, in `server.js` we need to add some production specific logic by checking `process.env.NODE_ENV`:
+그 다음, `server.js`에서 `process.env.NODE_ENV` 값을 확인하여 일부 프로덕션에 대한 특정 로직을 추가해줘야 합니다:
 
-- Instead of reading the root `index.html`, use the `dist/client/index.html` as the template instead, since it contains the correct asset links to the client build.
+- 프로젝트 루트의 `index.html` 파일이 아닌, `dist/client/index.html`를 템플릿으로 사용하도록 합니다. 이 파일에 클라이언트 빌드에 대한 올바른 참조가 포함되어 있기 때문입니다.
 
-- Instead of `await vite.ssrLoadModule('/src/entry-server.js')`, use `require('./dist/server/entry-server.js')` instead (this file is the result of the SSR build).
+- `await vite.ssrLoadModule('/src/entry-server.js')` 대신, `require('./dist/server/entry-server.js')`를 사용하여 스크립트를 로드하도록 합니다. (이 파일은 SSR 빌드 결과물 입니다.)
 
-- Move the creation and all usage of the `vite` dev server behind dev-only conditional branches, then add static file serving middlewares to serve files from `dist/client`.
+- `vite` 개발 서버의 생성과 모든 사용은 개발 전용으로 구분된 조건문 아래로 이동한 다음, `dist/client`를 통해 파일을 제공할 수 있도록 미들웨어를 추가해줍니다.
 
-Refer to the [Vue](https://github.com/vitejs/vite/tree/main/packages/playground/ssr-vue) and [React](https://github.com/vitejs/vite/tree/main/packages/playground/ssr-react) demos for working setup.
+이 [Vue](https://github.com/vitejs/vite/tree/main/packages/playground/ssr-vue) 및 [React](https://github.com/vitejs/vite/tree/main/packages/playground/ssr-react) 데모를 참조해 자세한 프로젝트 구성을 확인할 수 있습니다.
 
-## Generating Preload Directives {#generating-preload-directives}
+## 사전 로드될 지시문 생성하기 {#generating-preload-directives}
 
-`vite build` supports the `--ssrManifest` flag which will generate `ssr-manifest.json` in build output directory:
+`vite build`는 빌드 시 `ssr-manifest.json` 파일을 생성하도록 하는 `--ssrManifest` 플래그를 지원합니다.
 
 ```diff
 - "build:client": "vite build --outDir dist/client",
 + "build:client": "vite build --outDir dist/client --ssrManifest",
 ```
 
-The above script will now generate `dist/client/ssr-manifest.json` for the client build (Yes, the SSR manifest is generated from the client build because we want to map module IDs to client files). The manifest contains mappings of module IDs to their associated chunks and asset files.
+위와 같이 구성된 스크립트는 클라이언트 빌드 시 `dist/client/ssr-manifest.json`을 생성합니다. 참고로 SSR 매니페스트 파일은 모듈 ID를 클라이언트 파일에 대해 매핑하고자 하기 때문에, 클라이언트 빌드에서 생성됩니다. 이 매니페스트 파일에는 모듈 ID와 관련된 청크 파일이나 에셋 파일에 대한 매핑이 포함되어 있습니다.
 
-To leverage the manifest, frameworks need to provide a way to collect the module IDs of the components that were used during a server render call.
+매니페스트 파일을 활용하고자 한다면, 프레임워크는 서버 렌더링 호출에서 사용된 컴포넌트의 모듈 ID를 수집하는 방법을 제공해야 합니다.
 
-`@vitejs/plugin-vue` supports this out of the box and automatically registers used component module IDs on to the associated Vue SSR context:
+`@vitejs/plugin-vue`는 이를 이미 지원하고 있으며, 사용된 컴포넌트의 모듈 ID를 연결된 Vue SSR 컨텍스트에 자동으로 등록하도록 합니다:
 
 ```js
 // src/entry-server.js
 const ctx = {}
 const html = await vueServerRenderer.renderToString(app, ctx)
-// ctx.modules is now a Set of module IDs that were used during the render
+// ctx.modules는 이제 렌더링 중에 사용된 모듈 ID의 집합(Set)입니다.
 ```
 
-In the production branch of `server.js` we need to read and pass the manifest to the `render` function exported by `src/entry-server.js`. This would provide us with enough information to render preload directives for files used by async routes! See [demo source](https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/src/entry-server.js) for full example.
+`server.js`의 프로덕션 분기문에서는 매니페스트 파일을 읽고, `src/entry-server.js`에서 내보낸(Export) `render` 함수에 전달해야 합니다. 이는 비동기 라우팅에서 사용되는 파일에 대한 사전 로드 지시문(Directives)을 렌더링하기에 충분한 정보를 제공합니다. 전체 예제는 [데모 소스 코드](https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/src/entry-server.js)를 참고해주세요.
 
-## Pre-Rendering / SSG {#pre-rendering-ssg}
+## 사전 렌더링 / SSG {#pre-rendering-ssg}
 
-If the routes and the data needed for certain routes are known ahead of time, we can pre-render these routes into static HTML using the same logic as production SSR. This can also be considered a form of Static-Site Generation (SSG). See [demo pre-render script](https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/prerender.js) for working example.
+만약 어떤 라우트에 필요한 경로와 데이터를 미리 알고 있는 경우, 프로덕션 SSR과 동일한 로직을 사용하여 이를 정적 HTML 파일로 미리 렌더링할 수 있습니다. 이는 SSG(정적 사이트 생성, Static-Site Generation)의 한 형태로 생각할 수 있습니다. 동작하는 예제는 [사전 렌더링 데모 스크립트](https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/prerender.js)를 참고해주세요.
 
-## SSR Externals {#ssr-externals}
+## SSR 외부화 {#ssr-externals}
 
-Many dependencies ship both ESM and CommonJS files. When running SSR, a dependency that provides CommonJS builds can be "externalized" from Vite's SSR transform / module system to speed up both dev and build. For example, instead of pulling in the pre-bundled ESM version of React and then transforming it back to be Node.js-compatible, it is more efficient to simply `require('react')` instead. It also greatly improves the speed of the SSR bundle build.
+대다수의 디펜던시는 ESM과 CommonJS 파일을 모두 제공합니다. 다만, SSR을 실행할 때는 CommonJS 빌드를 제공하는 디펜던시를 Vite의 SSR 변환/모듈 시스템에서 "외부화(Externalized)"하여 개발과 빌드 속도를 높일 수 있습니다. 예를 들어, 미리 번들링 된 ESM 버전의 React를 가져온 다음 Node.js와 호환되도록 이를 다시 변환하는 대신에, 단순히 `require('react')`를 사용하도록 하는 것이 더 효율적이라는 의미입니다. 또한 이는 SSR 번들링 시에도 더 빠르게 빌드할 수 있도록 합니다.
 
-Vite performs automated SSR externalization based on the following heuristics:
+Vite는 아래와 같은 휴리스틱을 기반으로 자동화는 SSR 외부화를 수행합니다:
 
-- If a dependency's resolved ESM entry point and its default Node entry point are different, its default Node entry is probably a CommonJS build that can be externalized. For example, `vue` will be automatically externalized because it ships both ESM and CommonJS builds.
+- 만약 디펜던시가 ESM을 통해 가져와지는 경로와 Node를 통해 가져와지는 경로가 서로 다른 경우, Node의 경로는 외부화할 수 있는 CommonJS 빌드일 수 있습니다. 예를 들어, `vue`는 ESM 및 CommonJS 빌드를 모두 제공하기에 자동으로 외부화됩니다.
 
-- Otherwise, Vite will check whether the package's entry point contains valid ESM syntax - if not, the package is likely CommonJS and will be externalized. As an example, `react-dom` will be automatically externalized because it only specifies a single entry which is in CommonJS format.
+- 그렇지 않은 경우, Vite는 패키지의 진입점에 유효한 ESM 구문이 포함되어 있는지 확인합니다. 포함되어 있지 않다면 패키지는 CommonJS일 가능성이 있으며 외부화됩니다. 예를 들어, `react-dom`은 CommonJS 형식의 단일 항목만을 제공하기에 자동으로 외부화됩니다.
 
-If this heuristics leads to errors, you can manually adjust SSR externals using `ssr.external` and `ssr.noExternal` config options.
+이 휴리스틱이 오류를 일으키면, `ssr.external`와 `ssr.noExternal` 설정을 직접 이용해 SSR 외부화를 직접 수행할 수 있습니다.
 
-In the future, this heuristics will likely improve to detect if the project has `type: "module"` enabled, so that Vite can also externalize dependencies that ship Node-compatible ESM builds by importing them via dynamic `import()` during SSR.
+향후 이러한 휴리스틱은 프로젝트에 `type: "module"`이 활성화되어 있는지 여부를 감지하도록 개선될 것이며, Vite는 SSR 과정 중 동적인 `import()`를 통해 노드와 호환되는 ESM 빌드를 제공하는 디펜던시를 외부화하도록 할 것입니다.
 
-:::warning Working with Aliases
-If you have configured aliases that redirects one package to another, you may want to alias the actual `node_modules` packages instead to make it work for SSR externalized dependencies. Both [Yarn](https://classic.yarnpkg.com/en/docs/cli/add/#toc-yarn-add-alias) and [pnpm](https://pnpm.js.org/en/aliases) support aliasing via the `npm:` prefix.
+:::warning 별칭을 이용하는 경우
+만약 어떤 하나의 패키지를 다른 패키지를 리다이렉트하는 별칭을 사용하는 경우, 외부화된 SSR 디펜던시에서도 사용할 수 있도록 `node_modules` 패키지에 별칭을 지정할 수 있습니다. [Yarn](https://classic.yarnpkg.com/en/docs/cli/add/#toc-yarn-add-alias)과 [pnpm](https://pnpm.js.org/en/aliases) 모두 `npm:` 접두사를 사용하여 별칭을 지정할 수 있습니다.
 :::
 
-## SSR-specific Plugin Logic {#ssr-specific-plugin-logic}
+## SSR 전용 플러그인 로직 {#ssr-specific-plugin-logic}
 
-Some frameworks such as Vue or Svelte compiles components into different formats based on client vs. SSR. To support conditional transforms, Vite passes an additional `ssr` argument to the following plugin hooks:
+Vue 또는 Svelte와 같은 일부 프레임워크는 클라이언트 또는 SSR에 따라 컴포넌트를 다른 형식으로 컴파일합니다. 이 조건부 변환을 지원하기 위해, Vite는 `ssr` 이라는 추가적인 인수를 아래의 플러그인 훅(Hook)에 전달합니다:
 
 - `resolveId`
 - `load`
@@ -241,13 +240,13 @@ export function mySSRPlugin() {
     name: 'my-ssr',
     transform(code, id, ssr) {
       if (ssr) {
-        // perform ssr-specific transform...
+        // SSR인 경우에만 수행될 변환 작업 관련 코드들...
       }
     }
   }
 }
 ```
 
-## SSR Target {#ssr-target}
+## SSR 타겟 {#ssr-target}
 
-The default target for the SSR build is a node environment, but you can also run the server in a Web Worker. Packages entry resolution is different for each platform. You can configure the target to be Web Worker using the `ssr.target` set to `'webworker'`.
+기본적으로 SSR 빌드 타겟은 Node 환경이지만, 웹 워커를 통해 서버를 실행할 수도 있습니다. 패키지들의 진입점(Entry)은 플랫폼 별 다릅니다. `ssr.target`를 `'webworker'`로 설정하면 Web Worker를 통해 서버를 실행할 수 있습니다.
