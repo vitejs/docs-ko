@@ -126,7 +126,7 @@ module.exports = {
               link: '/guide/env-and-mode'
             },
             {
-              text: 'Server-Side Rendering (SSR)',
+              text: '서버 측 렌더링 (SSR)',
               link: '/guide/ssr'
             },
             {
