@@ -135,7 +135,7 @@ $ npm run preview
 - [개인 액세스 토큰 생성하기 (GitHub)](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 - [GitHub Token 설정하기 (Travis)](https://docs.travis-ci.com/user/deployment/pages/#setting-the-github-token)
 
-## GitHub Pages 그리고 GitLab CI {#github-pages-and-gitlab-ci}
+## GitLab Pages 그리고 GitLab CI {#github-pages-and-gitlab-ci}
 
 1. `vite.config.js` 파일 내 `base` 설정 값을 적절하게 지정합니다.
 
