@@ -7,13 +7,12 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
       - name: Install dependencies
-        uses: Borales/actions-yarn@v2.3.0
-        with:
-          cmd: install
+        run: yarn install
 
       - name: Build
-        uses: Borales/actions-yarn@v2.3.0
-        with:
-          cmd: build
+        run: yarn build
