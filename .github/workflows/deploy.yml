@@ -7,24 +7,34 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
-      - name: Install dependencies
-        uses: Borales/actions-yarn@v2.3.0
+      - uses: actions/setup-node@v2
         with:
-          cmd: install
+          node-version: '14'
+
+      - name: Resolve cache directory
+        id: yarn-cache-dir
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Caching
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install deps
+        run: yarn install --frozen-lockfile
 
       - name: Rewrite titles
-        uses: Borales/actions-yarn@v2.3.0
-        with:
-          cmd: rewrite-title
+        run: yarn rewrite-title
 
       - name: Build
-        uses: Borales/actions-yarn@v2.3.0
-        with:
-          cmd: build
+        run: yarn build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
