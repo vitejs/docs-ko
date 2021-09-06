@@ -10,7 +10,7 @@
 {
   "scripts": {
     "build": "vite build",
-    "preview": "vite preview"
+    "serve": "vite preview"
   }
 }
 ```
@@ -33,26 +33,30 @@ $ npm run build
 
 ### 로컬에서 앱 테스트하기 {#testing-the-app-locally}
 
-한 번 빌드된 앱은 `npm run preview` 명령으로 로컬에서 테스트가 가능합니다.
+한 번 빌드된 앱은 `npm run serve` 명령으로 로컬에서 테스트가 가능합니다.
 
 ```bash
 $ npm run build
-$ npm run preview
+$ npm run serve
 ```
 
-`preview` 명령을 실행하게 되면 정적 웹 서버가 실행되며, 이 서버는 `dist` 내에 존재하는 파일을 http://localhost:5000 경로를 통해 배포합니다. 브라우저를 통해 사이트에 접속하여 실제 배포 시 어떻게 보여질 것인지 쉽게 파악할 수 있습니다.
+`vite preview` 명령을 실행하게 되면 정적 웹 서버가 실행되며, 이 서버는 `dist` 내에 존재하는 파일을 http://localhost:5000 경로를 통해 배포합니다. 브라우저를 통해 사이트에 접속하여 실제 배포 시 어떻게 보여질 것인지 쉽게 파악할 수 있습니다.
 
 만약 특정 포트를 지정하고자 한다면 `--port` 옵션을 이용해주세요.
 
 ```json
 {
   "scripts": {
-    "preview": "vite preview --port 8080"
+    "serve": "vite preview --port 8080"
   }
 }
 ```
 
 이렇게 설정한 경우 http://localhost:8080 을 기준으로 `preview` 명령이 실행됩니다.
+
+::: tip 노트
+`serve`에서 `preview`로 스크립트의 이름을 바꾸는 경우, 일부 패키지 매니저에서 [Pre & Post 스크립트](https://docs.npmjs.com/cli/v7/using-npm/scripts#pre--post-scripts)를 처리하는 방식으로 인해 문제가 발생될 수 있습니다.
+:::
 
 ## GitHub Pages 배포 {#github-pages}
 
