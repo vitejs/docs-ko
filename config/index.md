@@ -333,6 +333,17 @@ export default defineConfig(async ({ command, mode }) => {
 
   환경 파일에 대한 더 자세한 점을 알려면, [여기](/guide/env-and-mode#env-files)를 확인하세요.
 
+### envPrefix
+
+- **타입:** `string | string[]`
+- **기본값:** `VITE_`
+
+`envPrefix`로 시작하는 환경 변수는 import.meta.env를 통해 소스 코드에서 접근할 수 있습니다.
+
+:::warning 보안 사항
+- `envPrefix`를 `''`로 설정해서는 안 됩니다. 이렇게 설정한 경우 모든 환경 변수가 노출되며, 이로 인해 예기치 않게 민감한 정보가 누출될 수 있습니다. 따라서 Vite는 `''`로 설정되었을 때 오류를 발생시킵니다.
+:::
+
 ## 서버 옵션 {#server-options}
 
 ### server.host
@@ -415,7 +426,7 @@ export default defineConfig(async ({ command, mode }) => {
           changeOrigin: true,
           configure: (proxy, options) => {
             // proxy will be an instance of 'http-proxy'
-          }),
+          }
         }
       }
     }
@@ -530,7 +541,7 @@ createServer()
 
 ### build.target
 
-- **타입:** `string`
+- **타입:** `string | string[]`
 - **기본값:** `'modules'`
 - **참고:** [브라우저 지원 현황](/guide/build#browser-compatibility)
 
@@ -647,12 +658,6 @@ createServer()
 
   Terser로 전달할 추가적인 [경량화 옵션](https://terser.org/docs/api-reference#minify-options)입니다.
 
-### build.cleanCssOptions
-
-- **타입:** `CleanCSS.Options`
-
-  [clean-css](https://github.com/jakubpawlowicz/clean-css#constructor-options)로 전달할 생성자 옵션입니다.
-
 ### build.write
 
 - **타입:** `boolean`
@@ -707,7 +712,16 @@ createServer()
   사전 번들링에서 제외할 디펜던시 목록입니다.
 
   :::warning CommonJS
-  CommonJS 디펜던시는 최적화에서 제외되서는 안 됩니다. ESM 디펜던시에 중첩된 CommonJS 디펜던시가 있는 경우, 이 또한 제외되서는 안 됩니다.
+  CommonJS 디펜던시는 최적화에서 제외되서는 안 됩니다. ESM 디펜던시가 최적화에서 제외되었지만 이와 중첩된(Nested) CommonJS 디펜던시가 있는 경우, CommonJS 디펜던시를 `optimizeDeps.include`에 추가해줘야 합니다:
+
+  ```js
+  export default defineConfig({
+    optimizeDeps: {
+      include: ['esm-dep > cjs-dep']
+    }
+  })
+  ```
+
   :::
 
 ### optimizeDeps.include
@@ -741,9 +755,9 @@ SSR 옵션은 마이너 릴리즈에서 조정될 수 있습니다.
 
 ### ssr.noExternal
 
-- **타입:** `string | RegExp | (string | RegExp)[]`
+- **타입:** `string | RegExp | (string | RegExp)[] | true`
 
-  SSR을 위한 디펜던시 중에 이 목록에 있는 디펜던시는 외부화 되는 것이 방지됩니다.
+  SSR을 위한 디펜던시 중에 이 목록에 있는 디펜던시는 외부화 되는 것이 방지됩니다. 만약 `true`인 경우, 어떠한 디펜던시도 외부화되지 않음을 의미합니다.
 
 ### ssr.target
 

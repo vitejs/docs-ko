@@ -250,3 +250,10 @@ export function mySSRPlugin() {
 ## SSR 타겟 {#ssr-target}
 
 기본적으로 SSR 빌드 타겟은 Node 환경이지만, 웹 워커를 통해 서버를 실행할 수도 있습니다. 패키지들의 진입점(Entry)은 플랫폼 별 다릅니다. `ssr.target`를 `'webworker'`로 설정하면 Web Worker를 통해 서버를 실행할 수 있습니다.
+
+## SSR 번들 {#ssr-bundle}
+
+특정 `webworker`와 같은 런타임에서, 하나의 JavaScript 파일로 SSR 빌드를 번들링하고자 할 수 있습니다. 이는 `ssr.noExternal`을 `true`로 설정해 가능하며, 아래의 두 가지 동작을 수행합니다.
+
+- 모든 디펜던시를 `noExternal`로 처리합니다.
+- Node.js 내장(Built-ins) 기능을 가져오면 오류가 발생됩니다.

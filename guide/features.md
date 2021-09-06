@@ -34,8 +34,34 @@ vite는 `.ts` 파일에 대한 컴파일링 및 Import 역시 지원합니다.
 
 Vite의 TypeScript 컴파일링은 [Esbuild](https://github.com/evanw/esbuild)를 이용하며, TypeScript 소스 코드를 JavaScript 소스 코드로 변환하는 작업에 대해 `tsc` 대비 약 20~30배 정도 빠른 퍼포먼스를 보이고 있습니다. (HMR은 50ms 미만)
 
-이렇게 `esbuild`는 타입의 정보 없이 트랜스파일링만 진행하기에, 각 모듈이 안전한지 확인(경고)이 필요하다면 이를 활성화 할 수 있도록 `tsconfig.json` 파일 내 `compilerOptions` 설정을 `"isolatedModules": true`\*와 같이 구성해줘야 합니다. (\* `isolatedModules`: [ts.transpileModule](https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API#a-simple-transform-function)과 같은 API를 사용해 각각의 파일로 트랜스파일링 시 해당 모듈이 안전한지 여부를 알려주는 옵션 ([Docs: Isolated Modules -
-isolatedModules](https://www.typescriptlang.org/tsconfig#isolatedModules)))
+### 타입스크립트 컴파일러 옵션 {#typescript-compiler-options}
+
+`tsconfig.json` 파일 내 `compilerOptions` 설정들의 값을 조작할 때는 특별한 주의가 필요합니다.
+
+#### `isolatedModules` {#isolatedmodules}
+
+`true`로 설정해야 합니다.
+
+`esbuild`는 타입에 대한 정보 없이 변환(Transpilation)만을 수행하기에, const enum 또는 암시적으로 타입만을 가져오는(Import) 등과 같은 특정 기능을 지원하지 않습니다.
+
+이를 감지하기 위해 `tsconfig.json` 내 `compilerOptions` 설정을 `"isolatedModules": true`와 같이 설정해줘야만 하며, 이 설정으로 TS가 위와 같은 상황에서 작동하지 않는 기능들에 대해 경고할 수 있게 됩니다.
+
+#### `useDefineForClassFields` {#usedefineforclassfields}
+
+Vite 2.5.0 부터는 TypeScript의 변환 대상이 `ESNext`인 경우, 기본 값을 `true`로 설정합니다. 이는 [`tsc` 버전 4.3.2 이상](https://github.com/microsoft/TypeScript/pull/42663) 및 ECMAScript 표준을 따르도록 하는 설정입니다.
+
+그러나 다른 프로그래밍 언어나 이전 버전의 TypeScript를 사용하던 사람들에게는 직관적이지 않은 내용일 수 있습니다. 이에 대한 자세한 정보는 [TypeScript 3.7 릴리스 노트](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#the-usedefineforclassfields-flag-and-the-declare-property-modifier)를 참고할 수 있습니다.
+
+또한, [MobX](https://mobx.js.org/installation.html#use-spec-compliant-transpilation-for-class-properties)나 [Vue 클래스 컴포넌트 8.X](https://github.com/vuejs/vue-class-component/issues/465)와 같은 대부분의 라이브러리는 `"useDefineForClassFields": true`인 것으로 가정하고 동작하빈다. 따라서 만약 클래스의 필드에 크게 의존하는 라이브러리를 사용하는 경우라면, 이러한 라이브러리를 사용하는 것에 대해 옵션을 수정하는 경우 상당한 주의를 기울어야 합니다.
+
+다만 [`lit-element`](https://github.com/lit/lit-element/issues/1030)를 포함해 일부 라이브러리는 아직 이 새로운 기본값이 적용되지 않았습니다. 이러한 경우에는 `useDefineForClassFields`의 값을 `false`로 설정해주세요.
+
+#### 빌드 결과에 영향을 미치는 또 다른 컴파일러 옵션들 {#other-compiler-options-affecting-the-build-result}
+
+- [`extends`](https://www.typescriptlang.org/tsconfig#extends)
+- [`importsNotUsedAsValues`](https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues)
+- [`jsxFactory`](https://www.typescriptlang.org/tsconfig#jsxFactory)
+- [`jsxFragmentFactory`](https://www.typescriptlang.org/tsconfig#jsxFragmentFactory)
 
 ### Client Types {#client-types}
 
