@@ -530,7 +530,7 @@ createServer()
 
 ### build.target
 
-- **타입:** `string`
+- **타입:** `string | string[]`
 - **기본값:** `'modules'`
 - **참고:** [브라우저 지원 현황](/guide/build#browser-compatibility)
 
@@ -646,12 +646,6 @@ createServer()
 - **타입:** `TerserOptions`
 
   Terser로 전달할 추가적인 [경량화 옵션](https://terser.org/docs/api-reference#minify-options)입니다.
-
-### build.cleanCssOptions
-
-- **타입:** `CleanCSS.Options`
-
-  [clean-css](https://github.com/jakubpawlowicz/clean-css#constructor-options)로 전달할 생성자 옵션입니다.
 
 ### build.write
 
