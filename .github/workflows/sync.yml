@@ -12,6 +12,10 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
 
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
       - name: Pull changes
         run: |
           git remote add vite https://github.com/vitejs/vite
@@ -43,11 +47,7 @@ jobs:
           git checkout main
 
       - name: Install dependencies
-        uses: Borales/actions-yarn@v2.3.0
-        with:
-          cmd: install
+        run: yarn install
 
       - name: Run sync script
-        uses: Borales/actions-yarn@v2.3.0
-        with:
-          cmd: sync ${{ github.token }}
+        run: yarn sync ${{ github.token }}
