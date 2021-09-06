@@ -415,7 +415,7 @@ export default defineConfig(async ({ command, mode }) => {
           changeOrigin: true,
           configure: (proxy, options) => {
             // proxy will be an instance of 'http-proxy'
-          },
+          }
         }
       }
     }
@@ -741,9 +741,9 @@ SSR 옵션은 마이너 릴리즈에서 조정될 수 있습니다.
 
 ### ssr.noExternal
 
-- **타입:** `string | RegExp | (string | RegExp)[]`
+- **타입:** `string | RegExp | (string | RegExp)[] | true`
 
-  SSR을 위한 디펜던시 중에 이 목록에 있는 디펜던시는 외부화 되는 것이 방지됩니다.
+  SSR을 위한 디펜던시 중에 이 목록에 있는 디펜던시는 외부화 되는 것이 방지됩니다. 만약 `true`인 경우, 어떠한 디펜던시도 외부화되지 않음을 의미합니다.
 
 ### ssr.target
 
