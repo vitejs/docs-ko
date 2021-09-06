@@ -712,7 +712,16 @@ createServer()
   사전 번들링에서 제외할 디펜던시 목록입니다.
 
   :::warning CommonJS
-  CommonJS 디펜던시는 최적화에서 제외되서는 안 됩니다. ESM 디펜던시에 중첩된 CommonJS 디펜던시가 있는 경우, 이 또한 제외되서는 안 됩니다.
+  CommonJS 디펜던시는 최적화에서 제외되서는 안 됩니다. ESM 디펜던시가 최적화에서 제외되었지만 이와 중첩된(Nested) CommonJS 디펜던시가 있는 경우, CommonJS 디펜던시를 `optimizeDeps.include`에 추가해줘야 합니다:
+
+  ```js
+  export default defineConfig({
+    optimizeDeps: {
+      include: ['esm-dep > cjs-dep']
+    }
+  })
+  ```
+
   :::
 
 ### optimizeDeps.include
