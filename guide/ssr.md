@@ -253,8 +253,6 @@ export function mySSRPlugin() {
 
 ## SSR 번들 {#ssr-bundle}
 
-In some cases like `webworker` runtimes, you might want to bundle your SSR build into a single JavaScript file. You can enable this behavior by setting `ssr.noExternal` to `true`. This will do two things:
-
 특정 `webworker`와 같은 런타임에서, 하나의 JavaScript 파일로 SSR 빌드를 번들링하고자 할 수 있습니다. 이는 `ssr.noExternal`을 `true`로 설정해 가능하며, 아래의 두 가지 동작을 수행합니다.
 
 - 모든 디펜던시를 `noExternal`로 처리합니다.
