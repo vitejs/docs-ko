@@ -44,7 +44,7 @@ VITE_SOME_KEY=123
 
 `VITE_SOME_KEY` 변수만이 `import.meta.env.VITE_SOME_KEY`로 접근이 가능합니다. (`DB_PASSWORD`는 노출되지 않습니다.)
 
-만약 환경 변수에 대한 접미사(Prefix)를 커스터마이즈 하고자 한다면, [envPrefix](/config/index#envPrefix) 옵션을 참고해주세요.
+만약 환경 변수에 대한 접미사(Prefix)를 커스터마이즈 하고자 한다면, [envPrefix](/config/index#envprefix) 옵션을 참고해주세요.
 
 :::warning 보안 사항
 
