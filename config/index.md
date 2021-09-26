@@ -206,6 +206,16 @@ export default defineConfig(async ({ command, mode }) => {
 
   확장자를 생략한 가져오기를 위해 시도할 파일 확장자 목록입니다. IDE 와 타입 지원을 방해할 수 있으므로 (`.vue`와 같은) 사용자 지정 가져오기 형식에 대해서는 확장자를 생략하지 **않는** 것을 추천합니다.
 
+### resolve.preserveSymlinks
+
+- **타입:** `boolean`
+- **기본값:** `false`
+
+  이 설정을 활성화하면 Vite가 심볼릭 링크를 따르는 실제 파일 경로 대신, 심볼릭 링크를 따르지 않는 원래 파일 경로로 파일의 ID를 결정하게 됩니다.
+
+- **관련 사항:** [esbuild#preserve-symlinks](https://esbuild.github.io/api/#preserve-symlinks), [webpack#resolve.symlinks
+  ](https://webpack.js.org/configuration/resolve/#resolvesymlinks)
+
 ### css.modules
 
 - **타입:**
