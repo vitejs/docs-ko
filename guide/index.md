@@ -130,18 +130,18 @@ Vite CLI와 함께 `--port`, `--https`와 같은 옵션을 사용할 수 있습�
 
 ## 릴리즈되지 않은 Vite 사용하기 {#using-unreleased-commits}
 
-만약 아직 릴리즈되지 않은 Vite를 사용하고자 한다면, 먼저 [Vite 리포지토리](https://github.com/vitejs/vite)를 로컬 컴퓨터로 클론한 뒤 이를 빌드해 사용하는 방법이 있습니다. ([Yarn 1.x](https://classic.yarnpkg.com/lang/en/)가 필요해요.)
+만약 아직 릴리즈되지 않은 Vite를 사용하고자 한다면, 먼저 [Vite 리포지토리](https://github.com/vitejs/vite)를 로컬 컴퓨터로 클론한 뒤 이를 빌드해 사용하는 방법이 있습니다. ([pnpm](https://pnpm.io/)가 필요해요.)
 
 ```bash
 git clone https://github.com/vitejs/vite.git
 cd vite
-yarn
+pnpm install
 cd packages/vite
-yarn build
-yarn link
+pnpm run build
+pnpm link # 이 단계에서는 선호하는 패키지 관리자를 사용할 수 있습니다.
 ```
 
-이후 Vite를 클론한 프로젝트 위에서 `yarn link vite` 명령을 실행해 주세요. 이 작업 이후 개발 서버를 재시작(`yarn dev`)하게 되면, 클론된 Vite를 이용해 프로젝트를 진행할 수 있게 됩니다.
+이후 Vite를 클론한 프로젝트 위에서 `pnpm link vite` 명령을 실행해 주세요(또는 `vite`를 전역적으로 링크하는 데 사용했던 패키지 관리자를 사용합니다). 이 작업 이후 개발 서버를 재시작(`yarn dev`)하게 되면, 클론된 Vite를 이용해 프로젝트를 진행할 수 있게 됩니다.
 
 ## 커뮤니티 {#community}
 
