@@ -60,9 +60,13 @@ VITE_SOME_KEY=123
 `src` 디렉터리 내 `env.d.ts` 파일을 생성한 후, 아래와 같이 `ImportMetaEnv`를 정의하여 `VITE_` 환경 변수에 대한 타입을 정의할 수 있습니다.
 
 ```typescript
-interface ImportMetaEnv {
-  VITE_APP_TITLE: string
+interface ImportMetaEnv extends Readonly<Record<string, string>> {
+  readonly VITE_APP_TITLE: string
   // 다른 환경 변수들에 대한 타입 정의...
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv
 }
 ```
 
