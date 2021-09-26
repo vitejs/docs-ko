@@ -44,7 +44,7 @@ VITE_SOME_KEY=123
 
 `VITE_SOME_KEY` 변수만이 `import.meta.env.VITE_SOME_KEY`로 접근이 가능합니다. (`DB_PASSWORD`는 노출되지 않습니다.)
 
-만약 환경 변수에 대한 접미사(Prefix)를 커스터마이즈 하고자 한다면, [envPrefix](/config/index#envPrefix) 옵션을 참고해주세요.
+만약 환경 변수에 대한 접미사(Prefix)를 커스터마이즈 하고자 한다면, [envPrefix](/config/index#envprefix) 옵션을 참고해주세요.
 
 :::warning 보안 사항
 
@@ -60,15 +60,19 @@ VITE_SOME_KEY=123
 `src` 디렉터리 내 `env.d.ts` 파일을 생성한 후, 아래와 같이 `ImportMetaEnv`를 정의하여 `VITE_` 환경 변수에 대한 타입을 정의할 수 있습니다.
 
 ```typescript
-interface ImportMetaEnv {
-  VITE_APP_TITLE: string
+interface ImportMetaEnv extends Readonly<Record<string, string>> {
+  readonly VITE_APP_TITLE: string
   // 다른 환경 변수들에 대한 타입 정의...
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv
 }
 ```
 
 ## 모드 {#modes}
 
-기본적으로, `serve` 명령으로 실행되는 개발 서버는 `development` 모드로 동작하고, `build` 명령으로 실행되는 경우에는 `production` 모드로 동작합니다.
+기본적으로, `dev` 명령으로 실행되는 개발 서버는 `development` 모드로 동작하고, `serve` 명령으로 실행되는 경우에는 `production` 모드로 동작합니다.
 
 즉, `vite build` 명령을 실행하게 되면 `.env.production`에 정의된 환경 변수를 불러오게 됩니다.
 

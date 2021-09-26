@@ -1,8 +1,12 @@
 # 시작하기 {#getting-started}
 
+<audio id="vite-audio">
+  <source src="/vite.mp3" type="audio/mpeg">
+</audio>
+
 ## 들어가기 전에 {#overview}
 
-Vite(프랑스어로 "빠르다"를 의미하며, 발음은 `/vit/` 입니다.)은 빠르고 간결한 모던 웹 프로젝트 개발 경험에 초점을 맞춰 탄생한 빌드 도구이며, 두 가지 컨셉을 중심으로 하고 있습니다.
+Vite(프랑스어로 "빠르다(Quick)"를 의미하며, 발음은 "veet"와 비슷한 `/vit/`<button style="border:none;padding:3px;border-radius:4px" id="play-vite-audio" onclick="document.getElementById('vite-audio').play();"><img src="/voice.svg" height="15"></button> 입니다.)은 빠르고 간결한 모던 웹 프로젝트 개발 경험에 초점을 맞춰 탄생한 빌드 도구이며, 두 가지 컨셉을 중심으로 하고 있습니다.
 
 - 개발 시 [네이티브 ES Module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 넘어 [더욱 다양한 기능](./features)을 제공합니다. 가령, [Hot Module Replacement (HMR)](./features#hot-module-replacement)과 같은 것들 말이죠.
 
@@ -39,7 +43,7 @@ $ yarn create vite
 PNPM:
 
 ```bash
-$ pnpx create-vite
+$ pnpm dlx create-vite
 ```
 
 이후에는 프롬프트 창에 출력된 메시지를 따라주세요.
@@ -69,8 +73,8 @@ yarn create vite my-vue-app --template vue
 - `react-ts`
 - `preact`
 - `preact-ts`
-- `lit-element`
-- `lit-element-ts`
+- `lit`
+- `lit-ts`
 - `svelte`
 - `svelte-ts`
 
@@ -126,18 +130,18 @@ Vite CLI와 함께 `--port`, `--https`와 같은 옵션을 사용할 수 있습�
 
 ## 릴리즈되지 않은 Vite 사용하기 {#using-unreleased-commits}
 
-만약 아직 릴리즈되지 않은 Vite를 사용하고자 한다면, 먼저 [Vite 리포지토리](https://github.com/vitejs/vite)를 로컬 컴퓨터로 클론한 뒤 이를 빌드해 사용하는 방법이 있습니다. ([Yarn 1.x](https://classic.yarnpkg.com/lang/en/)가 필요해요.)
+만약 아직 릴리즈되지 않은 Vite를 사용하고자 한다면, 먼저 [Vite 리포지토리](https://github.com/vitejs/vite)를 로컬 컴퓨터로 클론한 뒤 이를 빌드해 사용하는 방법이 있습니다. ([pnpm](https://pnpm.io/)가 필요해요.)
 
 ```bash
 git clone https://github.com/vitejs/vite.git
 cd vite
-yarn
+pnpm install
 cd packages/vite
-yarn build
-yarn link
+pnpm run build
+pnpm link # 이 단계에서는 선호하는 패키지 관리자를 사용할 수 있습니다.
 ```
 
-이후 Vite를 클론한 프로젝트 위에서 `yarn link vite` 명령을 실행해 주세요. 이 작업 이후 개발 서버를 재시작(`yarn dev`)하게 되면, 클론된 Vite를 이용해 프로젝트를 진행할 수 있게 됩니다.
+이후 Vite를 클론한 프로젝트 위에서 `pnpm link vite` 명령을 실행해 주세요(또는 `vite`를 전역적으로 링크하는 데 사용했던 패키지 관리자를 사용합니다). 이 작업 이후 개발 서버를 재시작(`yarn dev`)하게 되면, 클론된 Vite를 이용해 프로젝트를 진행할 수 있게 됩니다.
 
 ## 커뮤니티 {#community}
 

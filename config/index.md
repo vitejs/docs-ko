@@ -206,6 +206,16 @@ export default defineConfig(async ({ command, mode }) => {
 
   확장자를 생략한 가져오기를 위해 시도할 파일 확장자 목록입니다. IDE 와 타입 지원을 방해할 수 있으므로 (`.vue`와 같은) 사용자 지정 가져오기 형식에 대해서는 확장자를 생략하지 **않는** 것을 추천합니다.
 
+### resolve.preserveSymlinks
+
+- **타입:** `boolean`
+- **기본값:** `false`
+
+  이 설정을 활성화하면 Vite가 심볼릭 링크를 따르는 실제 파일 경로 대신, 심볼릭 링크를 따르지 않는 원래 파일 경로로 파일의 ID를 결정하게 됩니다.
+
+- **관련 사항:** [esbuild#preserve-symlinks](https://esbuild.github.io/api/#preserve-symlinks), [webpack#resolve.symlinks
+  ](https://webpack.js.org/configuration/resolve/#resolvesymlinks)
+
 ### css.modules
 
 - **타입:**
@@ -303,13 +313,21 @@ export default defineConfig(async ({ command, mode }) => {
 - **타입:** `string | RegExp | (string | RegExp)[]`
 - **참고:** [정적 에셋 가져오기](/guide/assets)
 
-  정적 에셋으로 처리할 추가 파일 형식을 지정합니다:
+  정적 에셋으로 처리할 추가 [피코매치 패턴](https://github.com/micromatch/picomatch)을 지정합니다:
 
   - HTML에서 참조되거나 `fetch` 또는 XHR을 통해 직접 요청될 때, 이것은 플러그인 변환 파이프라인에서 제외됩니다.
 
   - JS에서 그것을 가져오면 처리된 URL 문자열이 반환됩니다. (이것은 에셋 형식을 다르게 처리하기 위한 `enforce: 'pre'` 플러그인이 있다면 덮어쓰여질 수 있습니다.)
 
   이 빌트인 에셋 형식 목록은 [여기](https://github.com/vitejs/vite/blob/main/packages/vite/src/node/constants.ts)에서 확인할 수 있습니다.
+
+  **예시:**
+
+  ```js
+  export default defineConfig({
+    assetsInclude: ['**/*.gltf']
+  })
+  ```
 
 ### logLevel
 
@@ -486,7 +504,7 @@ const { createServer: createViteServer } = require('vite')
 async function createServer() {
   const app = express()
 
-  // Create vite server in middleware mode.
+  // Create Vite server in middleware mode.
   const vite = await createViteServer({
     server: { middlewareMode: 'ssr' }
   })
@@ -524,7 +542,7 @@ createServer()
   - 다음 파일 중 하나를 포함함
     - `pnpm-workspace.yaml`
 
-  사용자 지정 작업 공간 루트를 지정하는 경로를 허용합니다. 절대 경로 또는 [프로젝트 루트](/guide/#index-html-and-project-root)에 대한 상대 경로일 수 있습니다. 다음은 하나의 예입니다.
+  사용자 지정 작업 공간 루트를 지정하는 경로를 허용합니다. 절대 경로 또는 [프로젝트 루트](/guide/#index-html-and-project-root)에 대한 상대 경로일 수 있습니다. 다음은 하나의 예입니다:
 
   ```js
   export default defineConfig({
@@ -532,6 +550,24 @@ createServer()
       fs: {
         // Allow serving files from one level up to the project root
         allow: ['..']
+      }
+    }
+  })
+  ```
+
+  만약 `server.fs.allow` 옵션이 지정되면, 자동으로 워크스페이스의 루트를 감지하는 기능이 비활성화됩니다. 이후 기존의 동작을 확장하기 위해 `searchForWorkspaceRoot` 유틸리티가 노출됩니다:
+
+  ```js
+  import { defineConfig, searchForWorkspaceRoot } from 'vite'
+  export default defineConfig({
+    server: {
+      fs: {
+        allow: [
+          // search up for workspace root
+          searchForWorkspaceRoot(process.cwd()),
+          // your custom rules
+          '/path/to/custom/allow'
+        ]
       }
     }
   })
@@ -644,6 +680,14 @@ createServer()
 - **참고:** [백엔드 프레임워크와 함께 사용하기](/guide/backend-integration)
 
   `true`로 설정하면, 빌드는 해시되지 않은 에셋 파일 이름을 해시된 버전으로의 매핑이 포함된 `manifest.json` 파일도 생성합니다. 이 파일은 서버 프레임워크에서 올바른 에셋 링크를 렌더링하는 데 사용할 수 있습니다.
+
+### build.ssrManifest
+
+- **타입:** `boolean`
+- **기본값:** `false`
+- **참고:** [Server-Side Rendering](/guide/ssr)
+
+  `true`로 설정하면, 빌드는 스타일 링크와 사전 로드된 에셋 디렉티브를 결정하기 위한 SSR 매니패스트 파일을 생성합니다.
 
 ### build.minify
 
