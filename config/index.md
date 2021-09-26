@@ -313,13 +313,21 @@ export default defineConfig(async ({ command, mode }) => {
 - **타입:** `string | RegExp | (string | RegExp)[]`
 - **참고:** [정적 에셋 가져오기](/guide/assets)
 
-  정적 에셋으로 처리할 추가 파일 형식을 지정합니다:
+  정적 에셋으로 처리할 추가 [피코매치 패턴](https://github.com/micromatch/picomatch)을 지정합니다:
 
   - HTML에서 참조되거나 `fetch` 또는 XHR을 통해 직접 요청될 때, 이것은 플러그인 변환 파이프라인에서 제외됩니다.
 
   - JS에서 그것을 가져오면 처리된 URL 문자열이 반환됩니다. (이것은 에셋 형식을 다르게 처리하기 위한 `enforce: 'pre'` 플러그인이 있다면 덮어쓰여질 수 있습니다.)
 
   이 빌트인 에셋 형식 목록은 [여기](https://github.com/vitejs/vite/blob/main/packages/vite/src/node/constants.ts)에서 확인할 수 있습니다.
+
+  **예시:**
+
+  ```js
+  export default defineConfig({
+    assetsInclude: ['**/*.gltf']
+  })
+  ```
 
 ### logLevel
 
