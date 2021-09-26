@@ -542,7 +542,7 @@ createServer()
   - 다음 파일 중 하나를 포함함
     - `pnpm-workspace.yaml`
 
-  사용자 지정 작업 공간 루트를 지정하는 경로를 허용합니다. 절대 경로 또는 [프로젝트 루트](/guide/#index-html-and-project-root)에 대한 상대 경로일 수 있습니다. 다음은 하나의 예입니다.
+  사용자 지정 작업 공간 루트를 지정하는 경로를 허용합니다. 절대 경로 또는 [프로젝트 루트](/guide/#index-html-and-project-root)에 대한 상대 경로일 수 있습니다. 다음은 하나의 예입니다:
 
   ```js
   export default defineConfig({
@@ -550,6 +550,24 @@ createServer()
       fs: {
         // Allow serving files from one level up to the project root
         allow: ['..']
+      }
+    }
+  })
+  ```
+
+  만약 `server.fs.allow` 옵션이 지정되면, 자동으로 워크스페이스의 루트를 감지하는 기능이 비활성화됩니다. 이후 기존의 동작을 확장하기 위해 `searchForWorkspaceRoot` 유틸리티가 노출됩니다:
+
+  ```js
+  import { defineConfig, searchForWorkspaceRoot } from 'vite'
+  export default defineConfig({
+    server: {
+      fs: {
+        allow: [
+          // search up for workspace root
+          searchForWorkspaceRoot(process.cwd()),
+          // your custom rules
+          '/path/to/custom/allow'
+        ]
       }
     }
   })
