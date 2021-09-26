@@ -14,9 +14,9 @@
 
 - Vue 3 JSX 지원을 제공합니다. ([전용 `Babel` 변형](https://github.com/vuejs/jsx-next)을 통해)
 
-### [@vitejs/plugin-react-refresh](https://github.com/vitejs/vite/tree/main/packages/plugin-react-refresh)
+### [@vitejs/plugin-react](https://github.com/vitejs/vite/tree/main/packages/plugin-react)
 
-- React Fast Refresh 지원을 제공합니다.
+- 리액트를 지원합니다.
 
 ### [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)
 
