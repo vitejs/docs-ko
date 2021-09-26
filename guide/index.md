@@ -39,7 +39,7 @@ $ yarn create vite
 PNPM:
 
 ```bash
-$ pnpx create-vite
+$ pnpm dlx create-vite
 ```
 
 이후에는 프롬프트 창에 출력된 메시지를 따라주세요.
