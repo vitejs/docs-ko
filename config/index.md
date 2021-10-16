@@ -575,6 +575,19 @@ createServer()
 
 ## 빌드 옵션 {#build-options}
 
+### server.origin
+
+- **타입:** `string`
+
+에셋 URL에 대한 Origin을 정의합니다.
+
+```js
+export default defineConfig({
+  server: {
+    origin: 'http://127.0.0.1:8080/'
+  }
+})
+
 ### build.target
 
 - **타입:** `string | string[]`
