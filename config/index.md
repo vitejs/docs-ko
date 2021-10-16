@@ -480,9 +480,26 @@ export default defineConfig(async ({ command, mode }) => {
 
 - **타입:** `object`
 
-  [chokidar](https://github.com/paulmillr/chokidar#api)에 전달할 파일 시스템 감시자 옵션입니다.
+  [chokidar](https://github.com/paulmillr/chokidar#api)에 전달할 파일 시스템 감시자(Watcher) 옵션입니다.
 
   Windows Subsystem for Linux(WSL) 2에서 Vite를 실행하고, 그리고 프로젝트 폴더가 Windows 파일 시스템에 존재하는 경우, `{ usePolling: true }` 옵션을 설정해줘야 합니다. 이는 Windows 파일 시스템의 [WSL2 제한사항](https://github.com/microsoft/WSL/issues/4739)으로 인한 것입니다.
+
+  Vite의 서버 감시자는 기본적으로 `.git/` 및 `node_modules/` 디렉터리를 스킵합니다. 만약 `node_modules/` 내부의 패키지를 감시하고자 한다면, 다음과 같은 Glob 패턴을 `server.watch.ignored`에 전달하면 됩니다:
+
+  ```js
+  export default defineConfig({
+    server: {
+      watch: {
+        ignored: ['!**/node_modules/your-package-name/**']
+      }
+    },
+    // 감시 중인 패키지는 최적화에서 제외되어야,
+    // 디펜던시 그래픝에 나타나고 핫 리로드를 트리거 할 수 있게 됩니다.
+    optimizeDeps: {
+      exclude: ['your-package-name']
+    }
+  })
+  ```
 
 ### server.middlewareMode
 
@@ -587,6 +604,7 @@ export default defineConfig({
     origin: 'http://127.0.0.1:8080/'
   }
 })
+```
 
 ### build.target
 
