@@ -90,7 +90,7 @@ import InlineWorker from './shader.js?worker&inline'
 네이티브 ESM의 API 중 하나인 [import.meta.url](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import.meta)은 현재 모듈의 URL을 보여주는 기능입니다. [URL 생성자](https://developer.mozilla.org/en-US/docs/Web/API/URL)와 함께 사용하면, 정적 에셋의 전제 URL을 확인할 수 있게 됩니다.
 
 ```js
-const imgUrl = new URL('./img.png', import.meta.url)
+const imgUrl = new URL('./img.png', import.meta.url).href
 
 document.getElementById('hero-img').src = imgUrl
 ```
