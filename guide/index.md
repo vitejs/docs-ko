@@ -22,6 +22,21 @@ vite는 기본적으로 최적화 된 설정을 제공하지만, [Plugin API](./
 
 - 배포 시: 기본적으로 [Script 태그를 이용한 Native ESM](https://caniuse.com/es6-module)을 지원하는 브라우저를 대상으로 하고 있습니다. 만일 레거시 브라우저 역시 타겟으로 하고 있다면, [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 이용해주세요. ([배포하기](./build) 섹션에서 조금 더 자세히 다룹니다.)
 
+## Trying Vite Online
+
+[StackBlitz](https://vite.new/)에서 Vite를 온라인으로 체험해 볼 수 있습니다. Vite를 구성하기 위해 필요한 설정들을 브라우저에서 직접 실행하므로 로컬 환경과 매우 유사하며, 컴퓨터에 그 어떠한 것도 설치할 필요가 없습니다. `vite.new/{template}` 으로 이동해 사용할 프레임워크를 선택해 시작해보세요.
+
+현재 지원하고 있는 템플릿은 다음과 같습니다:
+
+| JavaScript | TypeScript |
+| :---: | :---: |
+| [vanilla](https://vite.new/vanilla) | [vanilla-ts](https://vite.new/vanilla-ts) |
+| [vue](https://vite.new/vue) | [vue-ts](https://vite.new/vue-ts) |
+| [react](https://vite.new/react) | [react-ts](https://vite.new/react-ts) |
+| [preact](https://vite.new/preact) | [preact-ts](https://vite.new/preact-ts) |
+| [lit](https://vite.new/lit) | [lit-ts](https://vite.new/lit-ts) |
+| [svelte](https://vite.new/svelte) | [svelte-ts](https://vite.new/svelte-ts) |
+
 ## 첫 Vite 프로젝트 만들어보기 {#scaffolding-your-first-vite-project}
 
 ::: tip 호환성
@@ -63,22 +78,7 @@ yarn create vite my-vue-app --template vue
 
 이와 같이 지정할 수 있습니다.
 
-현재 Vite에서 공식적으로 지원하고 있는 템플릿은 아래와 같습니다.
-
-- `vanilla`
-- `vanilla-ts`
-- `vue`
-- `vue-ts`
-- `react`
-- `react-ts`
-- `preact`
-- `preact-ts`
-- `lit`
-- `lit-ts`
-- `svelte`
-- `svelte-ts`
-
-각 템플릿에 대해 조금 더 자세한 설명이 필요하다면 [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)을 참고해주세요.
+[create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite) 섹션에서는 더욱 다양한 템플릿들에 대해 다루고 있습니다: `vanilla`, `vanilla-ts`, `vue`, `vue-ts`, `react`, `react-ts`, `preact`, `preact-ts`, `lit`, `lit-ts`, `svelte`, `svelte-ts`
 
 ## 커뮤니티 템플릿 {#community-templates}
 

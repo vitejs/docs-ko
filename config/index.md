@@ -474,15 +474,32 @@ export default defineConfig(async ({ command, mode }) => {
 
   `clientPort`는 클라이언트측의 포트만 재정의하는 고급 옵션으로, 클라이언트 코드에서 찾는 것과 다른 포트에서 웹 소켓을 제공할 수 있습니다. 개발 서버의 앞단에서 SSL 프록시를 사용하는 경우에 유용합니다.
 
-  `server.middlewareMode`와 `server.https`를 사용할 때, `server.hmr.server`를 HTTPS 서버로 설정하면 서버를 통해 HMR 보안 연결 요청이 처리됩니다. 이는 자체 서명된 인증서를 사용할 때 유용할 수 있습니다.
+  `server.middlewareMode` 또는 `server.https`를 사용할 때, `server.hmr.server`를 HTTP(S) 서버로 설정하면 서버를 통해 HMR 연결 요청이 처리됩니다. 이는 자체 서명된 인증서를 사용하거나, 또는 단을 포트 네트워크를 통해 Vite에 접근이 가능하게 구성하는 경우 유용할 수 있습니다.
 
 ### server.watch
 
 - **타입:** `object`
 
-  [chokidar](https://github.com/paulmillr/chokidar#api)에 전달할 파일 시스템 감시자 옵션입니다.
+  [chokidar](https://github.com/paulmillr/chokidar#api)에 전달할 파일 시스템 감시자(Watcher) 옵션입니다.
 
   Windows Subsystem for Linux(WSL) 2에서 Vite를 실행하고, 그리고 프로젝트 폴더가 Windows 파일 시스템에 존재하는 경우, `{ usePolling: true }` 옵션을 설정해줘야 합니다. 이는 Windows 파일 시스템의 [WSL2 제한사항](https://github.com/microsoft/WSL/issues/4739)으로 인한 것입니다.
+
+  Vite의 서버 감시자는 기본적으로 `.git/` 및 `node_modules/` 디렉터리를 스킵합니다. 만약 `node_modules/` 내부의 패키지를 감시하고자 한다면, 다음과 같은 Glob 패턴을 `server.watch.ignored`에 전달하면 됩니다:
+
+  ```js
+  export default defineConfig({
+    server: {
+      watch: {
+        ignored: ['!**/node_modules/your-package-name/**']
+      }
+    },
+    // 감시 중인 패키지는 최적화에서 제외되어야,
+    // 디펜던시 그래픝에 나타나고 핫 리로드를 트리거 할 수 있게 됩니다.
+    optimizeDeps: {
+      exclude: ['your-package-name']
+    }
+  })
+  ```
 
 ### server.middlewareMode
 
@@ -575,6 +592,20 @@ createServer()
 
 ## 빌드 옵션 {#build-options}
 
+### server.origin
+
+- **타입:** `string`
+
+에셋 URL에 대한 Origin을 정의합니다.
+
+```js
+export default defineConfig({
+  server: {
+    origin: 'http://127.0.0.1:8080/'
+  }
+})
+```
+
 ### build.target
 
 - **타입:** `string | string[]`
@@ -585,7 +616,7 @@ createServer()
 
   또 다른 특수 값은 `'esnext'`입니다. 이는 네이티브 동적 가져오기가 지원되는 것으로 가정하고 가능한 한 적게 트랜스파일됩니다:
 
-  - [`build.minify`](#build-minify) 옵션이 `'terser'` (기본값) 이라면, `'esnext'`는 `'es2019'`로 다운 설정됩니다.
+  - [`build.minify`](#build-minify) 옵션이 `'terser'` 이라면, `'esnext'`는 `'es2019'`로 다운 설정됩니다.
   - 다른 경우에는, 전혀 트랜스파일이 수행되지 않습니다.
 
   변환은 esbuild로 수행되며, 값은 유효한 [esbuild 타깃 옵션](https://esbuild.github.io/api/#target)이어야 합니다. 사용자 지정 타깃은 ES 버전 (예: `es2015`)이나 버전이 있는 브라우저 (예: `chrome58`) 또는 다중 타깃 문자열의 배열이 될 수 있습니다.
@@ -641,6 +672,17 @@ createServer()
 
   비활성화된 경우, 전체 프로젝트의 모든 CSS가 단일 CSS 파일로 추출됩니다.
 
+### build.cssTarget
+
+- **타입:** `string | string[]`
+- **기본값:** [`build.target`](/config/#build-target)과 동일합니다.
+
+  이 옵션을 사용하면 CSS 압축(Minification) 시 타깃이 되는 브라우저를 설정할 수 있습니다.
+
+  일반적으로 비주류 브라우저를 대상으로 하는 경우에만 사용되며, Android WeChat WebView를 예로 들 수 있습니다.
+  이 브라우저는 대부분의 최신 JavaScript 문법을 지원하지만 [16진수 CSS 색상 표기법인 `#RGBA`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb_colors)를 지원하지 않습니다.
+  이 경우, Vite가 `rgba()` 색상을 `#RGBA` 16진수 표기법으로 변환하는 것을 방지하기 위해 `build.cssTarget`을 `chrome61`로 설정해줘야 합니다.
+
 ### build.sourcemap
 
 - **타입:** `boolean | 'inline' | 'hidden'`
@@ -692,9 +734,9 @@ createServer()
 ### build.minify
 
 - **타입:** `boolean | 'terser' | 'esbuild'`
-- **기본값:** `'terser'`
+- **기본값:** `'esbuild'`
 
-  코드 경량화를 사용하지 않으려면 `false`로 설정하고, 또는 사용할 코드 경량화 도구를 지정하세요. 기본값은 [Terser](https://github.com/terser/terser)로, 속도는 느리지만 대부분의 경우 더 작은 번들을 생성합니다. Esbuild 경량화는 훨씬 빠르긴 하지만, 번들의 크기가 약간 더 큽니다.
+  코드 경량화를 사용하지 않으려면 `false`로 설정하거나, 사용할 코드 경량화 도구를 지정하세요. 기본값은 [Esbuild](https://github.com/evanw/esbuild)로, Terser보다 20에서 40배 가량 빠르지만 압축률은 1 ~ 2%에 불과합니다.
 
 ### build.terserOptions
 
