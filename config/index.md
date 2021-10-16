@@ -474,7 +474,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   `clientPort`는 클라이언트측의 포트만 재정의하는 고급 옵션으로, 클라이언트 코드에서 찾는 것과 다른 포트에서 웹 소켓을 제공할 수 있습니다. 개발 서버의 앞단에서 SSL 프록시를 사용하는 경우에 유용합니다.
 
-  `server.middlewareMode`와 `server.https`를 사용할 때, `server.hmr.server`를 HTTPS 서버로 설정하면 서버를 통해 HMR 보안 연결 요청이 처리됩니다. 이는 자체 서명된 인증서를 사용할 때 유용할 수 있습니다.
+  `server.middlewareMode` 또는 `server.https`를 사용할 때, `server.hmr.server`를 HTTP(S) 서버로 설정하면 서버를 통해 HMR 연결 요청이 처리됩니다. 이는 자체 서명된 인증서를 사용하거나, 또는 단을 포트 네트워크를 통해 Vite에 접근이 가능하게 구성하는 경우 유용할 수 있습니다.
 
 ### server.watch
 
