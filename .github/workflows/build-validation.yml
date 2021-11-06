@@ -14,5 +14,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Rewrite titles
+        run: yarn rewrite-title
+
       - name: Build
         run: yarn build
