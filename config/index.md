@@ -366,11 +366,11 @@ export default defineConfig(async ({ command, mode }) => {
 
 ### server.host
 
-- **타입:** `string`
+- **타입:** `string | boolean`
 - **기본값:** `'127.0.0.1'`
 
   서버가 수신할 IP 주소를 지정합니다.
-  LAN와 공용 주소를 포함한 모든 주소를 수신하려면 이 값을 `0.0.0.0`으로 설정하세요.
+  LAN와 공용 주소를 포함한 모든 주소를 수신하려면 이 값을 `0.0.0.0` 또는 `ture`로 설정하세요.
 
   CLI에서는 `--host 0.0.0.0` or `--host`로 설정될 수 있습니다.
 
