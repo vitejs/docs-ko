@@ -63,6 +63,8 @@ Vite 2.5.0 부터는 TypeScript의 변환 대상이 `ESNext`인 경우, 기본 �
 - [`jsxFactory`](https://www.typescriptlang.org/tsconfig#jsxFactory)
 - [`jsxFragmentFactory`](https://www.typescriptlang.org/tsconfig#jsxFragmentFactory)
 
+다만 `"isolatedModules": true`로 마이그레이션 할 수 없다면, [rollup-plugin-friendly-type-imports](https://www.npmjs.com/package/rollup-plugin-friendly-type-imports)와 같은 써드 파티 플러그인을 사용하는 방법도 있습니다. 그러나 이러한 접근 방식은 Vite에서 공식적으로 지원하는 방법은 아닙니다.
+
 ### Client Types {#client-types}
 
 vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 있습니다. 따라서 Client-side의 환경을 위해 Shim을 구성하고자 한다면, `d.ts` 선언 파일을 추가해주세요.
