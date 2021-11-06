@@ -63,6 +63,8 @@ Vite 2.5.0 부터는 TypeScript의 변환 대상이 `ESNext`인 경우, 기본 �
 - [`jsxFactory`](https://www.typescriptlang.org/tsconfig#jsxFactory)
 - [`jsxFragmentFactory`](https://www.typescriptlang.org/tsconfig#jsxFragmentFactory)
 
+다만 `"isolatedModules": true`로 마이그레이션 할 수 없다면, [rollup-plugin-friendly-type-imports](https://www.npmjs.com/package/rollup-plugin-friendly-type-imports)와 같은 써드 파티 플러그인을 사용하는 방법도 있습니다. 그러나 이러한 접근 방식은 Vite에서 공식적으로 지원하는 방법은 아닙니다.
+
 ### Client Types {#client-types}
 
 vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 있습니다. 따라서 Client-side의 환경을 위해 Shim을 구성하고자 한다면, `d.ts` 선언 파일을 추가해주세요.
@@ -284,6 +286,7 @@ const modules = {
 - 이 기능들은 Vite에서 제공하는 기능입니다. (ES 표준이나 웹 브라우저에서 제공하는 기능이 아니에요.)
 - Glob 패턴 사용 시, 상대 경로(`./`) 또는 절대 경로(`/`)만을 이용해야 합니다.
 - Glob 패턴 매칭은 `fast-glob`을 이용합니다. 자세한 것은 [지원하는 Glob 패턴 목록](https://github.com/mrmlnc/fast-glob#pattern-syntax)을 참고해주세요.
+- Glob을 이용한 `import`는 변수를 허용하지 않기 때문에, 문자열 패턴을 직접 전달해야만 합니다.
 
 ## WebAssembly {#web-assembly}
 

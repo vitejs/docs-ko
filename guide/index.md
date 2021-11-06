@@ -28,14 +28,14 @@ vite는 기본적으로 최적화 된 설정을 제공하지만, [Plugin API](./
 
 현재 지원하고 있는 템플릿은 다음과 같습니다:
 
-| JavaScript | TypeScript |
-| :---: | :---: |
+|             JavaScript              |                TypeScript                 |
+| :---------------------------------: | :---------------------------------------: |
 | [vanilla](https://vite.new/vanilla) | [vanilla-ts](https://vite.new/vanilla-ts) |
-| [vue](https://vite.new/vue) | [vue-ts](https://vite.new/vue-ts) |
-| [react](https://vite.new/react) | [react-ts](https://vite.new/react-ts) |
-| [preact](https://vite.new/preact) | [preact-ts](https://vite.new/preact-ts) |
-| [lit](https://vite.new/lit) | [lit-ts](https://vite.new/lit-ts) |
-| [svelte](https://vite.new/svelte) | [svelte-ts](https://vite.new/svelte-ts) |
+|     [vue](https://vite.new/vue)     |     [vue-ts](https://vite.new/vue-ts)     |
+|   [react](https://vite.new/react)   |   [react-ts](https://vite.new/react-ts)   |
+|  [preact](https://vite.new/preact)  |  [preact-ts](https://vite.new/preact-ts)  |
+|     [lit](https://vite.new/lit)     |     [lit-ts](https://vite.new/lit-ts)     |
+|  [svelte](https://vite.new/svelte)  |  [svelte-ts](https://vite.new/svelte-ts)  |
 
 ## 첫 Vite 프로젝트 만들어보기 {#scaffolding-your-first-vite-project}
 
@@ -58,7 +58,7 @@ $ yarn create vite
 PNPM:
 
 ```bash
-$ pnpm dlx create-vite
+$ pnpm create vite
 ```
 
 이후에는 프롬프트 창에 출력된 메시지를 따라주세요.
@@ -74,6 +74,9 @@ npm init vite@latest my-vue-app -- --template vue
 
 # yarn
 yarn create vite my-vue-app --template vue
+
+# pnpm
+pnpm create vite my-vue-app -- --template vue
 ```
 
 이와 같이 지정할 수 있습니다.
@@ -121,7 +124,7 @@ vite가 설치된 프로젝트는 `vite` 명령을 통해 바로 Vite를 실행�
   "scripts": {
     "dev": "vite", // start dev server
     "build": "vite build", // build for production
-    "serve": "vite preview" // locally preview production build
+    "preview": "vite preview" // locally preview production build
   }
 }
 ```

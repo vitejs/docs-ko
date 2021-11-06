@@ -10,7 +10,7 @@
 {
   "scripts": {
     "build": "vite build",
-    "serve": "vite preview"
+    "preview": "vite preview"
   }
 }
 ```
@@ -192,7 +192,13 @@ $ npm run serve
     {
       "hosting": {
         "public": "dist",
-        "ignore": []
+        "ignore": [],
+        "rewrites": [
+          {
+            "source": "**",
+            "destination": "/index.html"
+          }
+        ]
       }
     }
     ```
