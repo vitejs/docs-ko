@@ -28,14 +28,14 @@ vite는 기본적으로 최적화 된 설정을 제공하지만, [Plugin API](./
 
 현재 지원하고 있는 템플릿은 다음과 같습니다:
 
-| JavaScript | TypeScript |
-| :---: | :---: |
+|             JavaScript              |                TypeScript                 |
+| :---------------------------------: | :---------------------------------------: |
 | [vanilla](https://vite.new/vanilla) | [vanilla-ts](https://vite.new/vanilla-ts) |
-| [vue](https://vite.new/vue) | [vue-ts](https://vite.new/vue-ts) |
-| [react](https://vite.new/react) | [react-ts](https://vite.new/react-ts) |
-| [preact](https://vite.new/preact) | [preact-ts](https://vite.new/preact-ts) |
-| [lit](https://vite.new/lit) | [lit-ts](https://vite.new/lit-ts) |
-| [svelte](https://vite.new/svelte) | [svelte-ts](https://vite.new/svelte-ts) |
+|     [vue](https://vite.new/vue)     |     [vue-ts](https://vite.new/vue-ts)     |
+|   [react](https://vite.new/react)   |   [react-ts](https://vite.new/react-ts)   |
+|  [preact](https://vite.new/preact)  |  [preact-ts](https://vite.new/preact-ts)  |
+|     [lit](https://vite.new/lit)     |     [lit-ts](https://vite.new/lit-ts)     |
+|  [svelte](https://vite.new/svelte)  |  [svelte-ts](https://vite.new/svelte-ts)  |
 
 ## 첫 Vite 프로젝트 만들어보기 {#scaffolding-your-first-vite-project}
 
