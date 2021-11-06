@@ -58,7 +58,7 @@ $ yarn create vite
 PNPM:
 
 ```bash
-$ pnpm dlx create-vite
+$ pnpm create vite
 ```
 
 이후에는 프롬프트 창에 출력된 메시지를 따라주세요.
@@ -74,6 +74,9 @@ npm init vite@latest my-vue-app -- --template vue
 
 # yarn
 yarn create vite my-vue-app --template vue
+
+# pnpm
+pnpm create vite my-vue-app -- --template vue
 ```
 
 이와 같이 지정할 수 있습니다.
