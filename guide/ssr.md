@@ -226,7 +226,7 @@ Vite는 아래와 같은 휴리스틱을 기반으로 자동화는 SSR 외부화
 
 ## SSR 전용 플러그인 로직 {#ssr-specific-plugin-logic}
 
-Vue 또는 Svelte와 같은 일부 프레임워크는 클라이언트 또는 SSR에 따라 컴포넌트를 다른 형식으로 컴파일합니다. 이 조건부 변환을 지원하기 위해, Vite는 `ssr` 이라는 추가적인 인수를 아래의 플러그인 훅(Hook)에 전달합니다:
+Vue 또는 Svelte와 같은 일부 프레임워크는 클라이언트 또는 SSR에 따라 컴포넌트를 다른 형식으로 컴파일합니다. 이 조건부 변환을 지원하기 위해, Vite는 `options` 객체에 존재하는 `ssr` 이라는 추가적인 인수를 아래의 플러그인 훅(Hook)에 전달합니다:
 
 - `resolveId`
 - `load`
@@ -238,14 +238,20 @@ Vue 또는 Svelte와 같은 일부 프레임워크는 클라이언트 또는 SSR
 export function mySSRPlugin() {
   return {
     name: 'my-ssr',
-    transform(code, id, ssr) {
-      if (ssr) {
+    transform(code, id, options) {
+      if (options?.ssr) {
         // SSR인 경우에만 수행될 변환 작업 관련 코드들...
       }
     }
   }
 }
 ```
+
+`load`와 `transform` 메서드의 옵션 객체는 어디까지나 선택 사항일 뿐입니다. 현재 Rollup에서 이 객체를 사용하지는 않으나, 향후 메타데이터로 이를 확장할 수 있습니다.
+
+::: note
+Vite 2.7 이전에는 `options` 객체를 사용하는 대신 `ssr` 매개변수를 이용했습니다. 따라서 이와 관련된 모든 프레임워크와 플러그인이 업데이트 될 것이지만, 간혹 이전 API를 이용하는 경우를 마주할 수도 있습니다.
+:::
 
 ## SSR 타겟 {#ssr-target}
 
