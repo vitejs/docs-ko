@@ -30,6 +30,8 @@ footer: MIT Licensed | Copyright © 2019-present Evan You & Vite Contributors
   </a>
   <br>
   <a v-for="{ href, src, name, id } of sponsors.filter(s => s.tier !== 'platinum')" :href="href" target="_blank" rel="noopener" aria-label="sponsor-img">
+    <img :src="src" :alt="name" :id="`sponsor-${id}`">
+  </a>
   <br>
   <a href="https://github.com/sponsors/yyx990803" target="_blank" rel="noopener">GitHub을 통해 후원할 수 있어요</a>
 </div>
