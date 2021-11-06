@@ -124,7 +124,7 @@ vite가 설치된 프로젝트는 `vite` 명령을 통해 바로 Vite를 실행�
   "scripts": {
     "dev": "vite", // start dev server
     "build": "vite build", // build for production
-    "serve": "vite preview" // locally preview production build
+    "preview": "vite preview" // locally preview production build
   }
 }
 ```
