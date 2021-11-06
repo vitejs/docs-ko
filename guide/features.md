@@ -286,6 +286,7 @@ const modules = {
 - 이 기능들은 Vite에서 제공하는 기능입니다. (ES 표준이나 웹 브라우저에서 제공하는 기능이 아니에요.)
 - Glob 패턴 사용 시, 상대 경로(`./`) 또는 절대 경로(`/`)만을 이용해야 합니다.
 - Glob 패턴 매칭은 `fast-glob`을 이용합니다. 자세한 것은 [지원하는 Glob 패턴 목록](https://github.com/mrmlnc/fast-glob#pattern-syntax)을 참고해주세요.
+- Glob을 이용한 `import`는 변수를 허용하지 않기 때문에, 문자열 패턴을 직접 전달해야만 합니다.
 
 ## WebAssembly {#web-assembly}
 
