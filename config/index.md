@@ -377,6 +377,7 @@ export default defineConfig(async ({ command, mode }) => {
 ### server.port
 
 - **타입:** `number`
+- **기본값**: `3000`
 
   서버 포트를 지정합니다. 포트가 이미 사용 중이라면, Vite는 자동으로 사용 가능한 다음 포트를 시도할 것이므로, 결과적으로 이 포트 번호가 서버의 수신 포트가 되지 않을 수도 있습니다.
 
