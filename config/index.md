@@ -593,6 +593,15 @@ createServer()
 
 ## 빌드 옵션 {#build-options}
 
+### server.fs.deny
+
+- **실험적인 기능**
+- **타입**: `string[]`
+
+  Vite dev 서버에서 제공되지 않기를 원하는 민감한 파일들에 대한 차단 목록입니다.
+
+  기본적으로 `['.env', '.env.*', '*.{pem,crt}']` 파일들이 들어가 있습니다.
+
 ### server.origin
 
 - **타입:** `string`
