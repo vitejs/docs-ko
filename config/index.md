@@ -920,14 +920,17 @@ export default defineConfig({
 
   기본적으로 `node_modules` 내부에 없는 연결된 패키지들은 미리 번들로 제공되지 않습니다. 이 옵션을 사용하여 연결된 패키지를 미리 번들로 묶을 수 있습니다.
 
-### optimizeDeps.keepNames
+### optimizeDeps.esbuildOptions
 
-- **타입:** `boolean`
-- **기본값:** `false`
+- **타입:** [`EsbuildBuildOptions`](https://esbuild.github.io/api/#simple-options)
 
-  번들러는 충돌을 방지하기 위해 때때로 기호 이름을 변경해야 하는 경우가 있습니다.
-  함수 및 클래스의 `name` 속성을 유지하려면 이 값을 `true`로 설정하세요.
-  [`keepNames`](https://esbuild.github.io/api/#keep-names)를 확인하세요.
+  디펜던시 스캐닝 및 최적화 중 Esbuild에 전달할 옵션입니다.
+
+  특정 옵션은 Vite의 디펜던시 최적화와 호환되지 않기에 생략되었습니다.
+
+  - `external`은 생략됩니다. 이 대신 Vite의 `optimizeDeps.exclude` 옵션을 사용합니다.
+  - `plugins`는 Vite의 디펜던시 플러그인과 병합됩니다.
+  - `keepNames`는 이제 더 이상 사용되지 않는 `optimizeDeps.keepNames`보다 우선시됩니다.
 
 ## SSR 옵션 {#ssr-options}
 
