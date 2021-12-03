@@ -231,7 +231,7 @@ JSON 파일은 바로 Import가 가능합니다. 물론, 가져올 필드를 지
 ```js
 // 객체 형태로 가져오기
 import json from './example.json'
-// 필드를 지정해 가져오기
+// 필드를 지정해 가져오기 (트리-쉐이킹 됩니다.)
 import { field } from './example.json'
 ```
 
