@@ -88,7 +88,7 @@ $ npm run preview
    git commit -m 'deploy'
 
    # https://<USERNAME>.github.io 에 배포
-   # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
+   # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git main
 
    # https://<USERNAME>.github.io/<REPO> 에 배포
    # git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
