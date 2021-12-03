@@ -52,7 +52,7 @@ Vite는 또한 TS 설정 파일을 직접 지원합니다. `defineConfig` 도우
 
 ### 조건부 설정 {#conditional-config}
 
-만약 설정에서 명령 (`serve` 또는 `build`) 또는 사용중인 [모드](/guide/env-and-mode)에 따라 조건부로 옵션을 결정해야 하는 경우, 아래와 같이 함수를 내보낼 수 있습니다:
+만약 설정에서 명령 (`dev`/`serve` 또는 `build`) 또는 사용중인 [모드](/guide/env-and-mode)에 따라 조건부로 옵션을 결정해야 하는 경우, 아래와 같이 함수를 내보낼 수 있습니다:
 
 ```js
 export default defineConfig(({ command, mode }) => {
@@ -67,6 +67,8 @@ export default defineConfig(({ command, mode }) => {
   }
 })
 ```
+
+Vite의 API에서 `command` 값은 개발 서버(참고로 CLI `vite`는 `vite dev` 및 `vite serve`의 별칭)에서 `serve`이며, 프로덕션으로 빌드 시(`vite build`)에는 `build`가 들어가게 됩니다.
 
 ### 비동기 설정 {#async-config}
 
@@ -169,6 +171,10 @@ export default defineConfig(async ({ command, mode }) => {
 
   만약 앱 내에서 (호이스팅 또는 모노리포 안의 연결된 패키지로 인해 발생할 수 있는) 동일한 디펜던시의 중복된 복사본을 갖고 있다면, 이 옵션을 사용해서 무조건 Vite가 나열된 디펜던시를 항상 (프로젝트 루트의) 동일한 복사본으로 사용하게 할 수 있습니다.
 
+  :::warning SSR + ESM
+  SSR 빌드의 경우, `build.rollupOptions.output`을 통해 구성된 ESM 빌드 결과물에 대해 중복된 코드의 제거가 진행되지 않습니다. 이를 해결하기 위해서는 ESM이 모듈 로드에 대한 플러그인 지원을 개선할 때까지 CJS(CommonJS) 빌드를 이용하는 것입니다.
+  :::
+
 ### resolve.conditions
 
 - **타입:** `string[]`
@@ -229,9 +235,14 @@ export default defineConfig(async ({ command, mode }) => {
       | ((name: string, filename: string, css: string) => string)
     hashPrefix?: string
     /**
-     * default: 'camelCaseOnly'
+     * default: null
      */
-    localsConvention?: 'camelCase' | 'camelCaseOnly' | 'dashes' | 'dashesOnly'
+    localsConvention?:
+      | 'camelCase'
+      | 'camelCaseOnly'
+      | 'dashes'
+      | 'dashesOnly'
+      | null
   }
   ```
 
@@ -358,8 +369,8 @@ export default defineConfig(async ({ command, mode }) => {
 
 `envPrefix`로 시작하는 환경 변수는 import.meta.env를 통해 소스 코드에서 접근할 수 있습니다.
 
-:::warning 보안 사항
-- `envPrefix`를 `''`로 설정해서는 안 됩니다. 이렇게 설정한 경우 모든 환경 변수가 노출되며, 이로 인해 예기치 않게 민감한 정보가 누출될 수 있습니다. 따라서 Vite는 `''`로 설정되었을 때 오류를 발생시킵니다.
+:::warning 보안 권고 사항
+`envPrefix`를 `''`로 설정해서는 안 됩니다. 이렇게 설정한 경우 모든 환경 변수가 노출되며, 이로 인해 예기치 않게 민감한 정보가 누출될 수 있습니다. 따라서 Vite는 `''`로 설정되었을 때 오류를 발생시킵니다.
 :::
 
 ## 서버 옵션 {#server-options}
@@ -682,6 +693,10 @@ export default defineConfig({
 
   비활성화된 경우, 전체 프로젝트의 모든 CSS가 단일 CSS 파일로 추출됩니다.
 
+  ::: tip 참고 사항
+  만약 `build.lib`으로 지정하게 되면, `build.cssCodeSplit`이 기본적으로 `false`가 됩니다.
+  :::
+
 ### build.cssTarget
 
 - **타입:** `string | string[]`
@@ -737,16 +752,24 @@ export default defineConfig({
 
 - **타입:** `boolean`
 - **기본값:** `false`
-- **참고:** [Server-Side Rendering](/guide/ssr)
+- **참고:** [서버 측 렌더링](/guide/ssr)
 
   `true`로 설정하면, 빌드는 스타일 링크와 사전 로드된 에셋 디렉티브를 결정하기 위한 SSR 매니패스트 파일을 생성합니다.
+
+### build.ssr
+
+- **타입:** `boolean | string`
+- **기본값:** `undefined`
+- **참고:** [서버 측 렌더링](/guide/ssr)
+
+  서버 측 렌더링으로 빌드합니다. 설정 값은 SSR 항목을 직접 지정하는 문자열이거나, `rollupOptions.input`을 통해 SSR 항목을 지정해야 하는 `ture`가 될 수 있습니다.
 
 ### build.minify
 
 - **타입:** `boolean | 'terser' | 'esbuild'`
 - **기본값:** `'esbuild'`
 
-  코드 경량화를 사용하지 않으려면 `false`로 설정하거나, 사용할 코드 경량화 도구를 지정하세요. 기본값은 [Esbuild](https://github.com/evanw/esbuild)로, Terser보다 20에서 40배 가량 빠르지만 압축률은 1 ~ 2%에 불과합니다.
+  코드 경량화를 사용하지 않으려면 `false`로 설정하거나, 사용할 코드 경량화 도구를 지정하세요. 기본값은 [Esbuild](https://github.com/evanw/esbuild)로, Terser보다 20에서 40배 가량 빠르며 압축률 또한 1 ~ 2% 밖에 떨어지지 않습니다.
 
 ### build.terserOptions
 
@@ -768,12 +791,12 @@ export default defineConfig({
 
   기본적으로 Vite는 `outDir`이 프로젝트 루트 내부에 있는 경우 빌드할 때 이 곳을 비웁니다. `outDir`가 루트 외부에 있으면 실수로 중요한 파일을 제거하지 않도록 경고 메시지가 표시됩니다. 경고를 표시하지 않도록 이 옵션을 명시적으로 설정할 수 있습니다. 명령줄에서는 `--emptyOutDir`로 이를 사용할 수 있습니다.
 
-### build.brotliSize
+### build.reportCompressedSize
 
 - **타입:** `boolean`
 - **기본값:** `true`
 
-  brotli 압축 크기 보고를 활성화/비활성화합니다. 큰 출력 파일을 압축하는 경우 속도가 느릴 수 있으므로, 이를 사용하지 않도록 설정하면 대규모 프로젝트의 빌드 성능이 향상될 수 있습니다.
+  gzip 압축 크기 보고를 활성화/비활성화합니다. 큰 출력 파일을 압축하는 경우 속도가 느릴 수 있으므로, 이를 사용하지 않도록 설정하면 대규모 프로젝트의 빌드 성능이 향상될 수 있습니다.
 
 ### build.chunkSizeWarningLimit
 
@@ -788,6 +811,77 @@ export default defineConfig({
 - **기본값:** `null`
 
   Rollup 감시자를 사용하려면 `{}`로 설정하세요. 이는 대부분 빌드 전용 플러그인 또는 통합 프로세스를 포함하는 경우에 사용됩니다.
+
+## Preview Options
+
+### preview.host
+
+- **타입:** `string | boolean`
+- **기본값:** [`server.host`](#server_host)
+
+  어떤 IP 주소를 대상으로 서버가 수신 대기(Listen)하는지 지정합니다.
+  `0.0.0.0` 또는 `true`로 설정된 경우 LAN 및 공용 주소를 포함한 모든 주소를 대상으로 합니다.
+
+  CLI의 경우 `--host 0.0.0.0` 또는 `--host`로 지정이 가능합니다.
+
+### preview.port
+
+- **타입:** `number`
+- **기본값:** `5000`
+
+  서버의 포트를 지정합니다. 포트가 이미 사용 중인 경우에는 Vite가 자동으로 사용 가능한 다음 포트로 설정되기에 실제 서버 포트가 아닐 수 있습니다.
+
+**예시:**
+
+```js
+export default defineConfig({
+  server: {
+    port: 3030
+  },
+  preview: {
+    port: 8080
+  }
+})
+```
+
+### preview.strictPort
+
+- **타입:** `boolean`
+- **기본값:** [`server.strictPort`](#server_strictport)
+
+  `true`로 설정한 경우, 포트가 이미 사용중이라면 자동으로 다른 포트로 설정되는 것이 아닌 종료하도록 합니다.
+
+### preview.https
+
+- **Type:** `boolean | https.ServerOptions`
+- **기본값:** [`server.https`](#server_https)
+
+  TLS + HTTP/2를 활성화합니다. [`server.proxy`](#server-proxy) 옵션이 함께 사용되는 경우에만 TLS로 다운그레이드됩니다.
+
+  참고로 이 값은 `https.createServer()`에 전달된 [옵션 객체](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener)가 될 수도 있습니다.
+
+### preview.open
+
+- **타입:** `boolean | string`
+- **기본값:** [`server.open`](#server_open)
+
+  서버 시작 시 자동으로 브라우저를 열도록 설정할 수 있습니다. 값이 문자열인 경우 URL 경로를 의미하며, 원하는 특정 브라우저를 열고자 하는 경우에는 `process.env.BROWSER` 환경 변수를 `firefox`와 같은 값으로 설정합니다. 자세한 내용은 [`open` 패키지](https://github.com/sindresorhus/open#app)를 참고해주세.
+
+### preview.proxy
+
+- **타입:** `Record<string, string | ProxyOptions>`
+- **기본값:** [`server.proxy`](#server_proxy)
+
+  개발 서버에 대한 사용자 지정 프록시 규칙을 설정할 수 있습니다. `{ key: options }` 형태로 구성되며, 키 값이 `^`로 시작하는 경우 `RegExp`로 해석됩니다. `configure` 옵션을 사용하여 프록시 인스턴스에 접근할 수 있습니다.
+
+  이는 [`http-proxy`](https://github.com/http-party/node-http-proxy)를 사용하며, 더 많은 옵션은 [이 링크](https://github.com/http-party/node-http-proxy#options)를 참고해주세요.
+
+### preview.cors
+
+- **타입:** `boolean | CorsOptions`
+- **기본값:** [`server.cors`](#server_proxy)
+
+  개발 서버에 대한 CORS를 구성합니다. 기본적으로 활성화 되어 있는 옵션이며, 모든 출처를 허용하고 있습니다. 이를 설정하기 위해서는 [옵션 객체](https://github.com/expressjs/cors)를 전달하고, 비활성화하고자 한다면 `false` 값으로 설정해주세요.
 
 ## Dep Optimization Options
 
@@ -826,14 +920,17 @@ export default defineConfig({
 
   기본적으로 `node_modules` 내부에 없는 연결된 패키지들은 미리 번들로 제공되지 않습니다. 이 옵션을 사용하여 연결된 패키지를 미리 번들로 묶을 수 있습니다.
 
-### optimizeDeps.keepNames
+### optimizeDeps.esbuildOptions
 
-- **타입:** `boolean`
-- **기본값:** `false`
+- **타입:** [`EsbuildBuildOptions`](https://esbuild.github.io/api/#simple-options)
 
-  번들러는 충돌을 방지하기 위해 때때로 기호 이름을 변경해야 하는 경우가 있습니다.
-  함수 및 클래스의 `name` 속성을 유지하려면 이 값을 `true`로 설정하세요.
-  [`keepNames`](https://esbuild.github.io/api/#keep-names)를 확인하세요.
+  디펜던시 스캐닝 및 최적화 중 Esbuild에 전달할 옵션입니다.
+
+  특정 옵션은 Vite의 디펜던시 최적화와 호환되지 않기에 생략되었습니다.
+
+  - `external`은 생략됩니다. 이 대신 Vite의 `optimizeDeps.exclude` 옵션을 사용합니다.
+  - `plugins`는 Vite의 디펜던시 플러그인과 병합됩니다.
+  - `keepNames`는 이제 더 이상 사용되지 않는 `optimizeDeps.keepNames`보다 우선시됩니다.
 
 ## SSR 옵션 {#ssr-options}
 

@@ -119,10 +119,11 @@ vite는 정적(Static) HTTP 서버와 비슷하게 "루트 디렉터리"라는 �
 
 vite가 설치된 프로젝트는 `vite` 명령을 통해 바로 Vite를 실행할 수 있습니다. (`npx vite`을 이용해도 되구요.) 기본적으로 Vite에서 제공하는 npm 스크립트는 아래와 같습니다.
 
-```json
+<!-- prettier-ignore -->
+```json5
 {
   "scripts": {
-    "dev": "vite", // start dev server
+    "dev": "vite", // start dev server, aliases: `vite dev`, `vite serve`
     "build": "vite build", // build for production
     "preview": "vite preview" // locally preview production build
   }
@@ -141,10 +142,10 @@ cd vite
 pnpm install
 cd packages/vite
 pnpm run build
-pnpm link # 이 단계에서는 선호하는 패키지 관리자를 사용할 수 있습니다.
+pnpm link --global # 이 단계에서는 선호하는 패키지 관리자를 사용할 수 있습니다.
 ```
 
-이후 Vite를 클론한 프로젝트 위에서 `pnpm link vite` 명령을 실행해 주세요(또는 `vite`를 전역적으로 링크하는 데 사용했던 패키지 관리자를 사용합니다). 이 작업 이후 개발 서버를 재시작(`yarn dev`)하게 되면, 클론된 Vite를 이용해 프로젝트를 진행할 수 있게 됩니다.
+이후 Vite를 클론한 프로젝트 위에서 `pnpm link --global vite` 명령을 실행해 주세요(또는 `vite`를 전역적으로 링크하는 데 사용했던 패키지 관리자를 사용합니다). 이 작업 이후 개발 서버를 재시작(`yarn dev`)하게 되면, 클론된 Vite를 이용해 프로젝트를 진행할 수 있게 됩니다.
 
 ## 커뮤니티 {#community}
 
