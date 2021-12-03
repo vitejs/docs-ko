@@ -748,7 +748,7 @@ export default defineConfig({
 - **타입:** `boolean | 'terser' | 'esbuild'`
 - **기본값:** `'esbuild'`
 
-  코드 경량화를 사용하지 않으려면 `false`로 설정하거나, 사용할 코드 경량화 도구를 지정하세요. 기본값은 [Esbuild](https://github.com/evanw/esbuild)로, Terser보다 20에서 40배 가량 빠르지만 압축률은 1 ~ 2%에 불과합니다.
+  코드 경량화를 사용하지 않으려면 `false`로 설정하거나, 사용할 코드 경량화 도구를 지정하세요. 기본값은 [Esbuild](https://github.com/evanw/esbuild)로, Terser보다 20에서 40배 가량 빠르며 압축률 또한 1 ~ 2% 밖에 떨어지지 않습니다.
 
 ### build.terserOptions
 
