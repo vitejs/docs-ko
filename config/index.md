@@ -739,9 +739,17 @@ export default defineConfig({
 
 - **타입:** `boolean`
 - **기본값:** `false`
-- **참고:** [Server-Side Rendering](/guide/ssr)
+- **참고:** [서버 측 렌더링](/guide/ssr)
 
   `true`로 설정하면, 빌드는 스타일 링크와 사전 로드된 에셋 디렉티브를 결정하기 위한 SSR 매니패스트 파일을 생성합니다.
+
+### build.ssr
+
+- **타입:** `boolean | string`
+- **기본값:** `undefined`
+- **참고:** [서버 측 렌더링](/guide/ssr)
+
+  서버 측 렌더링으로 빌드합니다. 설정 값은 SSR 항목을 직접 지정하는 문자열이거나, `rollupOptions.input`을 통해 SSR 항목을 지정해야 하는 `ture`가 될 수 있습니다.
 
 ### build.minify
 
