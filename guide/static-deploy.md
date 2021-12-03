@@ -33,11 +33,11 @@ $ npm run build
 
 ### 로컬에서 앱 테스트하기 {#testing-the-app-locally}
 
-한 번 빌드된 앱은 `npm run serve` 명령으로 로컬에서 테스트가 가능합니다.
+한 번 빌드된 앱은 `npm run preview` 명령으로 로컬에서 테스트가 가능합니다.
 
 ```bash
 $ npm run build
-$ npm run serve
+$ npm run preview
 ```
 
 `vite preview` 명령을 실행하게 되면 정적 웹 서버가 실행되며, 이 서버는 `dist` 내에 존재하는 파일을 http://localhost:5000 경로를 통해 배포합니다. 브라우저를 통해 사이트에 접속하여 실제 배포 시 어떻게 보여질 것인지 쉽게 파악할 수 있습니다.
@@ -47,7 +47,7 @@ $ npm run serve
 ```json
 {
   "scripts": {
-    "serve": "vite preview --port 8080"
+    "preview": "vite preview --port 8080"
   }
 }
 ```
