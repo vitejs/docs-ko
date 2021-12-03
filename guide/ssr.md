@@ -111,6 +111,7 @@ app.use('*', async (req, res) => {
 
     // 2. Vite의 HTML 변환 작업을 통해 Vite HMR 클라이언트를 주입하고,
     //    Vite 플러그인의 HTML 변환도 적용합니다.
+    //    (예시: @vitejs/plugin-react의 Global Preambles)
     template = await vite.transformIndexHtml(url, template)
 
     // 3. 서버의 진입점(Entry)을 로드합니다.
