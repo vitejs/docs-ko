@@ -90,7 +90,7 @@ export default defineConfig({
 
 ## React 지원 {#react-support}
 
-React의 Fast Refresh는 이제 [`@vitejs/plugin-react-refresh`](https://github.com/vitejs/vite/tree/main/packages/plugin-react-refresh) 플러그인을 통해 지원됩니다.
+React의 Fast Refresh는 이제 [`@vitejs/plugin-react`](https://github.com/vitejs/vite/tree/main/packages/plugin-react) 플러그인을 통해 지원됩니다.
 
 ## HMR API 변경 {#hmr-api-change}
 
