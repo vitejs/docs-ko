@@ -688,6 +688,10 @@ export default defineConfig({
 
   비활성화된 경우, 전체 프로젝트의 모든 CSS가 단일 CSS 파일로 추출됩니다.
 
+  ::: tip 참고 사항
+  만약 `build.lib`으로 지정하게 되면, `build.cssCodeSplit`이 기본적으로 `false`가 됩니다.
+  :::
+
 ### build.cssTarget
 
 - **타입:** `string | string[]`
