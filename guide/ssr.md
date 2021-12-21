@@ -77,8 +77,8 @@ async function createServer() {
   // 미들웨어 모드로 Vite 서버를 생성합니다.
   // 이는 Vite의 자체적인 HTML 제공 로직을 비활성화하고, 상위 서버가 제어하도록 합니다.
   //
-  // 만약 Vite의 자체적인 HTML 제공 로직(Vite를 개발 미들웨어로 사용하고)을 사용하고자 한다면
-  // 이 대신 'html'을 사용하세요.
+  // 미들웨어 모드에서 Vite의 자체적인 HTML 제공 로직을 사용하고자 한다면,
+  // `middlewareMode`(https://vitejs.dev/config/#server-middlewaremode)를 `'html'`로 설정하세요.
   const vite = await createViteServer({
     server: { middlewareMode: 'ssr' }
   })
