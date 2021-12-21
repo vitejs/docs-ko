@@ -924,9 +924,7 @@ export default defineConfig({
 
 - **타입:** [`EsbuildBuildOptions`](https://esbuild.github.io/api/#simple-options)
 
-  디펜던시 스캐닝 및 최적화 중 Esbuild에 전달할 옵션입니다.
-
-  특정 옵션은 Vite의 디펜던시 최적화와 호환되지 않기에 생략되었습니다.
+  디펜던시 스캐닝 및 최적화 중 Esbuild에 전달할 옵션입니다. 특정 옵션은 Vite의 디펜던시 최적화와 호환되지 않기에 생략되었습니다.
 
   - `external`은 생략됩니다. 이 대신 Vite의 `optimizeDeps.exclude` 옵션을 사용합니다.
   - `plugins`는 Vite의 디펜던시 플러그인과 병합됩니다.
