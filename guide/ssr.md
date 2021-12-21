@@ -31,6 +31,7 @@ Vite는 서버 측 렌더링(SSR, Server-side Rendering)을 기본적으로 지�
 
 ```
 - index.html
+- server.js # main application server
 - src/
   - main.js          # 환경에 구애받지 않는(Env-agnostic) 범용 앱 코드로 내보내는(Export) 스크립트
   - entry-client.js  # 앱을 DOM 엘리먼트에 마운트하는 스크립트
