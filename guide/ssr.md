@@ -31,6 +31,7 @@ Vite는 서버 측 렌더링(SSR, Server-side Rendering)을 기본적으로 지�
 
 ```
 - index.html
+- server.js # main application server
 - src/
   - main.js          # 환경에 구애받지 않는(Env-agnostic) 범용 앱 코드로 내보내는(Export) 스크립트
   - entry-client.js  # 앱을 DOM 엘리먼트에 마운트하는 스크립트
@@ -76,8 +77,8 @@ async function createServer() {
   // 미들웨어 모드로 Vite 서버를 생성합니다.
   // 이는 Vite의 자체적인 HTML 제공 로직을 비활성화하고, 상위 서버가 제어하도록 합니다.
   //
-  // 만약 Vite의 자체적인 HTML 제공 로직(Vite를 개발 미들웨어로 사용하고)을 사용하고자 한다면
-  // 이 대신 'html'을 사용하세요.
+  // 미들웨어 모드에서 Vite의 자체적인 HTML 제공 로직을 사용하고자 한다면,
+  // `middlewareMode`(https://vitejs.dev/config/#server-middlewaremode)를 `'html'`로 설정하세요.
   const vite = await createViteServer({
     server: { middlewareMode: 'ssr' }
   })
@@ -250,7 +251,7 @@ export function mySSRPlugin() {
 
 `load`와 `transform` 메서드의 옵션 객체는 어디까지나 선택 사항일 뿐입니다. 현재 Rollup에서 이 객체를 사용하지는 않으나, 향후 메타데이터로 이를 확장할 수 있습니다.
 
-::: tip 참고 사항
+:::tip 참고 사항
 Vite 2.7 이전에는 `options` 객체를 사용하는 대신 `ssr` 매개변수를 이용했습니다. 따라서 이와 관련된 모든 프레임워크와 플러그인이 업데이트 될 것이지만, 간혹 이전 API를 이용하는 경우를 마주할 수도 있습니다.
 :::
 

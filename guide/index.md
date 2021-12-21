@@ -40,7 +40,7 @@ vite는 기본적으로 최적화 된 설정을 제공하지만, [Plugin API](./
 ## 첫 Vite 프로젝트 만들어보기 {#scaffolding-your-first-vite-project}
 
 ::: tip 호환성
-vite는 버전 12.0.0 이상의 [Node.js](https://nodejs.org/)를 요구합니다.
+vite는 버전 12.2.0 이상의 [Node.js](https://nodejs.org/)를 요구합니다. 다만 일부 템플릿의 경우 더 높은 버전의 Node.js를 요구할 수 있습니다.
 :::
 
 NPM:

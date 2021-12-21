@@ -91,7 +91,7 @@ $ npm run preview
    # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git main
 
    # https://<USERNAME>.github.io/<REPO> 에 배포
-   # git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
+   # git push -f git@github.com:<USERNAME>/<REPO>.git main:gh-pages
 
    cd -
    ```
@@ -131,7 +131,7 @@ $ npm run preview
      github_token: $GITHUB_TOKEN
      keep_history: true
      on:
-       branch: master
+       branch: main
    ```
 
 `$GITHUB_TOKEN`과 관련한 내용은 아래 문서를 참고해주세요.
@@ -268,7 +268,7 @@ $ npm run preview
 
    ```bash
    # 사이트 배포
-   $ git push heroku master
+   $ git push heroku main
    
    # Heroku CI 대시보드 열기
    $ heroku open
