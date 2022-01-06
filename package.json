@@ -7,11 +7,11 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "@octokit/rest": "^18.6.2",
-    "chalk": "^4.1.0",
-    "gray-matter": "^4.0.3",
-    "vitepress": "^0.20.1",
-    "yorkie": "^2.0.0"
+    "@octokit/rest": "18.6.2",
+    "chalk": "4.1.1",
+    "gray-matter": "4.0.3",
+    "vitepress": "0.20.1",
+    "yorkie": "2.0.0"
   },
   "scripts": {
     "dev": "vitepress dev .",
