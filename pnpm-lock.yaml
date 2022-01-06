@@ -2,14 +2,14 @@ lockfileVersion: 5.3
 
 specifiers:
   '@octokit/rest': 18.6.2
-  chalk: 4.1.1
+  chalk: 4.1.2
   gray-matter: 4.0.3
   vitepress: 0.20.1
   yorkie: 2.0.0
 
 devDependencies:
   '@octokit/rest': 18.6.2
-  chalk: 4.1.1
+  chalk: 4.1.2
   gray-matter: 4.0.3
   vitepress: 0.20.1
   yorkie: 2.0.0
@@ -373,8 +373,8 @@ packages:
     resolution: {integrity: sha512-3pZEU3NT5BFUo/AD5ERPWOgQOCZITni6iavr5AUw5AUwQjMlI0kzu5btnyD39AF0gUEsDPwJT+oY1ORBJijPjQ==}
     dev: true
 
-  /chalk/4.1.1:
-    resolution: {integrity: sha512-diHzdDKxcU+bAsUboHLPEDQiw0qEe0qd7SYUn3HgcFlWgbDcfLGswOHYeGrHKzG9z6UYf01d9VFMfZxPM1xZSg==}
+  /chalk/4.1.2:
+    resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
     dependencies:
       ansi-styles: 4.3.0
