@@ -85,4 +85,5 @@ Heading 마지막에 `{#custom-anchor-name}`와 같은 형태로 커스텀 앵�
 <p align="center">
   <a target="_blank" href="https://github.com/eterv"><img width="150" src="https://github.com/eterv.png" alt="eterv"></a>
   <a target="_blank" href="https://github.com/proceane"><img width="150" src="https://github.com/proceane.png" alt="proceane"></a>
+  <a target="_blank" href="https://github.com/eddie0329"><img width="150" src="https://github.com/eddie0329.png" alt="eddie0329"></a>
 </p>
