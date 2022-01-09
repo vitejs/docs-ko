@@ -1,4 +1,4 @@
-# 다른 번들러와의 차이점 {#comparisons-with-other-no-bundler-solutions}
+# 다른 빌드 도구와의 차이점 {#comparisons-with-other-no-bundler-solutions}
 
 ## Snowpack {#snowpack}
 
