@@ -134,7 +134,7 @@ module.exports = {
               link: '/guide/backend-integration'
             },
             {
-              text: '다른 번들러와의 차이점',
+              text: '다른 빌드 도구와의 차이점',
               link: '/guide/comparisons'
             },
             {
