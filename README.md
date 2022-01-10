@@ -10,9 +10,6 @@
 
 [ViteJs 공식 문서](https://vitejs.dev/) 한글 번역 목적의 리포지터리 입니다.
 
-- [Discussions](https://github.com/vitejs-kr/vitejs-kr.github.io/discussions)
-- [번역 진행 상황](https://github.com/vitejs-kr/vitejs-kr.github.io/discussions/1)
-
 ## 시작하기
 
 ### 설치
