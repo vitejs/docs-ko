@@ -182,13 +182,13 @@ vite는 모던 브라우저만을 타깃으로 하기에, 표준을 준수하도
 
 ```bash
 # .scss 그리고 .sass
-npm install -D sass
+npm add -D sass
 
 # .less
-npm install -D less
+npm add -D less
 
 # .styl 그리고 .stylus
-npm install -D stylus
+npm add -D stylus
 ```
 
 Vue 싱글 파일 컴포넌트를 사용하는 경우, 설치 후 별 다른 설정 없이도 `<style lang="sass">`와 같은 CSS 전처리기를 바로 사용할 수 있습니다.

@@ -46,7 +46,7 @@ vite는 버전 12.2.0 이상의 [Node.js](https://nodejs.org/)를 요구합니�
 NPM:
 
 ```bash
-$ npm init vite@latest
+$ npm create vite@latest
 ```
 
 Yarn:
@@ -67,10 +67,10 @@ $ pnpm create vite
 
 ```bash
 # npm 6.x
-npm init vite@latest my-vue-app --template vue
+npm create vite@latest my-vue-app --template vue
 
 # npm 7+, '--'를 반드시 붙여주세요
-npm init vite@latest my-vue-app -- --template vue
+npm create vite@latest my-vue-app -- --template vue
 
 # yarn
 yarn create vite my-vue-app --template vue
