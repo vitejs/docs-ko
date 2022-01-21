@@ -130,6 +130,13 @@ export default defineConfig(async ({ command, mode }) => {
 
   예를 들어, `process.env.FOO` 와 `__APP_VERSION__` 는 서로 잘 맞습니다. 하지만 `process` 또는 `global` 을 이 옵션에 넣어서는 안됩니다. 대신에 변수를 끼워넣거나 폴리필로 사용할 수 있습니다.
 
+  예시:
+
+  ```ts
+  // vite-end.d.ts
+  declare const __APP_VERSION__: string
+  ```
+
 ### plugins
 
 - **타입:** ` (Plugin | Plugin[])[]`
