@@ -6,7 +6,7 @@ title: Configuring Vite
 
 ## 설정 파일 {#config-file}
 
-### Config File Resolving
+### Config File Resolving {#config-file-resolving}
 
 명령줄에서 `vite`를 실행시킬 때, Vite는 자동으로 [프로젝트 루트](/guide/#index-html-and-project-root)의 `vite.config.js` 파일을 처리하기 위해 시도합니다.
 
@@ -97,7 +97,7 @@ export default defineConfig(async ({ command, mode }) => {
 
 ## 공용 옵션 {#shared-options}
 
-### root
+### root {#root}
 
 - **타입:** `string`
 - **기본값:** `process.cwd()`
@@ -106,7 +106,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   [프로젝트 루트](/guide/#index-html-and-project-root)에서 더 자세한 점을 볼 수 있습니다.
 
-### base
+### base {#base}
 
 - **타입:** `string`
 - **기본값:** `/`
@@ -119,7 +119,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   [Public Base Path](/guide/build#public-base-path)에서 더 자세한 점을 볼 수 있습니다.
 
-### mode
+### mode {#mode}
 
 - **타입:** `string`
 - **기본값:** `serve` 에서는 `'development'`, `build` 에서는 `'production'`
@@ -128,7 +128,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   [환경 변수와 모드](/guide/env-and-mode)에서 더 자세한 점을 볼 수 있습니다.
 
-### define
+### define {#define}
 
 - **타입:** `Record<string, string>`
 
@@ -149,13 +149,13 @@ export default defineConfig(async ({ command, mode }) => {
   declare const __APP_VERSION__: string
   ```
 
-### plugins
+### plugins {#plugins}
 
 - **타입:** ` (Plugin | Plugin[])[]`
 
   사용할 플러그인의 배열입니다. 잘못된 플러그인은 무시되고 플러그인의 배열은 평탄화됩니다. [플러그인 API](/guide/api-plugin)에서 Vite 플러그인에 대한 더 자세한 점을 볼 수 있습니다.
 
-### publicDir
+### publicDir {#publicdir}
 
 - **타입:** `string | false`
 - **기본값:** `"public"`
@@ -166,14 +166,14 @@ export default defineConfig(async ({ command, mode }) => {
   
   [`public` 디렉터리](/guide/assets#the-public-directory)에서 더 자세한 점을 볼 수 있습니다.
 
-### cacheDir
+### cacheDir {#cachedir}
 
 - **타입:** `string`
 - **기본값:** `"node_modules/.vite"`
 
   캐시 파일을 저장할 디렉터리 입니다. 이 디렉터리의 파일들은 미리 번들된 의존 파일이거나 Vite에 의해 생성된 어떤 다른 캐시 파일로서, 성능을 향상시킬 수 있습니다. 캐시 파일을 다시 생성하기 위해 `--force` 플래그를 사용하거나 또는 직접 디렉터리를 삭제할 수 있습니다. 값은 절대 파일 시스템 경로 또는 프로젝트 루트의 상대적인 경로중 하나가 될 수 있습니다.
 
-### resolve.alias
+### resolve.alias {#resolve-alias}
 
 - **타입:**
   `Record<string, string> | Array<{ find: string | RegExp, replacement: string, customResolver?: ResolverFunction | ResolverObject }>`
@@ -184,7 +184,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   더 자세한 해결책은 [플러그인](/guide/api-plugin)에서 찾아볼 수 있습니다.
 
-### resolve.dedupe
+### resolve.dedupe {#resolve-dedupe}
 
 - **타입:** `string[]`
 
@@ -194,7 +194,7 @@ export default defineConfig(async ({ command, mode }) => {
   SSR 빌드의 경우, `build.rollupOptions.output`을 통해 구성된 ESM 빌드 결과물에 대해 중복된 코드의 제거가 진행되지 않습니다. 이를 해결하기 위해서는 ESM이 모듈 로드에 대한 플러그인 지원을 개선할 때까지 CJS(CommonJS) 빌드를 이용하는 것입니다.
   :::
 
-### resolve.conditions
+### resolve.conditions {#resolve-conditions}
 
 - **타입:** `string[]`
 
@@ -217,21 +217,21 @@ export default defineConfig(async ({ command, mode }) => {
 
   Vite 는 "허용되는 조건들"의 목록을 가지며 이것은 허용되는 목록안의 첫번째 조건과 매치됩니다. 기본적으로 허용되는 조건들은 `import`, `module`, `browser`, `default`, 그리고 현재 모드를 기반으로 한 `production/development` 입니다. `resolve.conditions` 설정 옵션은 추가적으로 허용되는 조건들을 지정하는 것을 허용합니다.
 
-### resolve.mainFields
+### resolve.mainFields {#resolve-mainfields}
 
 - **타입:** `string[]`
 - **기본값:** `['module', 'jsnext:main', 'jsnext']`
 
   패키지의 진입점을 확인할 때 시도할 `package.json`안의 필드 목록입니다. 이것은 `exports` 필드에서 처리되는 조건부 내보내기보다 우선 순위가 낮습니다: 만약 진입점이 `exports`로부터 성공적으로 확인되면, 메인 필드는 무시될 것입니다.
 
-### resolve.extensions
+### resolve.extensions {#resolve-extensions}
 
 - **타입:** `string[]`
 - **기본값:** `['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']`
 
   확장자를 생략한 가져오기를 위해 시도할 파일 확장자 목록입니다. IDE 와 타입 지원을 방해할 수 있으므로 (`.vue`와 같은) 사용자 지정 가져오기 형식에 대해서는 확장자를 생략하지 **않는** 것을 추천합니다.
 
-### resolve.preserveSymlinks
+### resolve.preserveSymlinks {#resolve-preservesymlinks}
 
 - **타입:** `boolean`
 - **기본값:** `false`
@@ -241,7 +241,7 @@ export default defineConfig(async ({ command, mode }) => {
 - **관련 사항:** [esbuild#preserve-symlinks](https://esbuild.github.io/api/#preserve-symlinks), [webpack#resolve.symlinks
   ](https://webpack.js.org/configuration/resolve/#resolvesymlinks)
 
-### css.modules
+### css.modules {#css-modules}
 
 - **타입:**
 
@@ -267,7 +267,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   CSS 모듈 행동을 구성합니다. 옵션들은 [postcss-modules](https://github.com/css-modules/postcss-modules)로 전달됩니다.
 
-### css.postcss
+### css.postcss {#css-postcss}
 
 - **타입:** `string | (postcss.ProcessOptions & { plugins?: postcss.Plugin[] })`
 
@@ -275,7 +275,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   인라인 설정이 제공되는 경우, Vite는 다른 PostCSS 설정 소스를 찾지 않을 것입니다.
 
-### css.preprocessorOptions
+### css.preprocessorOptions {#css-preprocessoroptions}
 
 - **타입:** `Record<string, object>`
 
@@ -293,14 +293,14 @@ export default defineConfig(async ({ command, mode }) => {
   })
   ```
 
-### json.namedExports
+### json.namedExports {#json-namedexports}
 
 - **타입:** `boolean`
 - **기본값:** `true`
 
   `.json` 파일에서 명명된 가져오기를 지원하는지 여부입니다.
 
-### json.stringify
+### json.stringify {#json-stringify}
 
 - **타입:** `boolean`
 - **기본값:** `false`
@@ -309,7 +309,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   이 옵션을 사용하면 명명된 가져오기가 비활성화됩니다.
 
-### esbuild
+### esbuild {#esbuild}
 
 - **타입:** `ESBuildOptions | false`
 
@@ -338,7 +338,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   ESBuild 변환을 사용하지 않으려면 `false`로 설정하세요.
 
-### assetsInclude
+### assetsInclude {#assetsinclude}
 
 - **타입:** `string | RegExp | (string | RegExp)[]`
 - **참고:** [정적 에셋 가져오기](/guide/assets)
@@ -359,20 +359,20 @@ export default defineConfig(async ({ command, mode }) => {
   })
   ```
 
-### logLevel
+### logLevel {#loglevel}
 
 - **타입:** `'info' | 'warn' | 'error' | 'silent'`
 
   콘솔 출력의 상세 정도를 조정합니다. 기본값은 `'info'` 입니다.
 
-### clearScreen
+### clearScreen {#clearscreen}
 
 - **타입:** `boolean`
 - **기본값:** `true`
 
   특정 메시지를 로그로 남길 때, Vite가 터미널 화면을 지우지 않도록 하려면 `false`로 설정하세요. 명령줄에서는 `--clearScreen false`를 사용하세요.
 
-### envDir
+### envDir {#envdir}
 
 - **타입:** `string`
 - **기본값:** `root`
@@ -381,7 +381,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   환경 파일에 대한 더 자세한 점을 알려면, [여기](/guide/env-and-mode#env-files)를 확인하세요.
 
-### envPrefix
+### envPrefix {#envprefix}
 
 - **타입:** `string | string[]`
 - **기본값:** `VITE_`
@@ -394,7 +394,7 @@ export default defineConfig(async ({ command, mode }) => {
 
 ## 서버 옵션 {#server-options}
 
-### server.host
+### server.host {#server-host}
 
 - **타입:** `string | boolean`
 - **기본값:** `'127.0.0.1'`
@@ -404,20 +404,20 @@ export default defineConfig(async ({ command, mode }) => {
 
   CLI에서는 `--host 0.0.0.0` or `--host`로 설정될 수 있습니다.
 
-### server.port
+### server.port {#server-port}
 
 - **타입:** `number`
 - **기본값**: `3000`
 
   서버 포트를 지정합니다. 포트가 이미 사용 중이라면, Vite는 자동으로 사용 가능한 다음 포트를 시도할 것이므로, 결과적으로 이 포트 번호가 서버의 수신 포트가 되지 않을 수도 있습니다.
 
-### server.strictPort
+### server.strictPort {#server-strictport}
 
 - **타입:** `boolean`
 
   포트가 이미 사용 중일 경우, 사용 가능한 다음 포트를 자동으로 시도하지 않도록 하려면 `true`로 로 설정하세요.
 
-### server.https
+### server.https {#server-https}
 
 - **타입:** `boolean | https.ServerOptions`
 
@@ -425,7 +425,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   이 값은 또한 [옵션 객체](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener)가 `https.createServer()`로 전달되는 값일 수도 있습니다.
 
-### server.open
+### server.open {#server-open}
 
 - **타입:** `boolean | string`
 
@@ -441,7 +441,7 @@ export default defineConfig(async ({ command, mode }) => {
   })
   ```
 
-### server.proxy
+### server.proxy {#server-proxy}
 
 - **타입:** `Record<string, string | ProxyOptions>`
 
@@ -482,20 +482,20 @@ export default defineConfig(async ({ command, mode }) => {
   })
   ```
 
-### server.cors
+### server.cors {#server-cors}
 
 - **타입:** `boolean | CorsOptions`
 
   개발 서버를 위한 CORS를 설정합니다. 이것은 기본적으로 활성화되어 있으며 모든 오리진을 허용합니다. 동작을 상세하게 조절하기 위해 [옵션 객체](https://github.com/expressjs/cors)를 전달하거나, 사용하지 않기 위해 `false`를 전달하세요.
 
-### server.force
+### server.force {#server-force}
 
 - **타입:** `boolean`
 - **참고:** [Pre-bundling 된 디펜던시](/guide/dep-pre-bundling)
 
   디펜던시의 사전 번들링을 강제하려면 `true`로 설정하세요.
 
-### server.hmr
+### server.hmr {#server-hmr}
 
 - **타입:** `boolean | { protocol?: string, host?: string, port?: number, path?: string, timeout?: number, overlay?: boolean, clientPort?: number, server?: Server }`
 
@@ -507,7 +507,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   `server.middlewareMode` 또는 `server.https`를 사용할 때, `server.hmr.server`를 HTTP(S) 서버로 설정하면 서버를 통해 HMR 연결 요청이 처리됩니다. 이는 자체 서명된 인증서를 사용하거나, 또는 단을 포트 네트워크를 통해 Vite에 접근이 가능하게 구성하는 경우 유용할 수 있습니다.
 
-### server.watch
+### server.watch {#server-watch}
 
 - **타입:** `object`
 
@@ -532,7 +532,7 @@ export default defineConfig(async ({ command, mode }) => {
   })
   ```
 
-### server.middlewareMode
+### server.middlewareMode {#server-middlewaremode}
 
 - **타입:** `'ssr' | 'html'`
 
@@ -569,7 +569,7 @@ async function createServer() {
 createServer()
 ```
 
-### server.fs.strict
+### server.fs.strict {#server-fs-strict}
 
 - **Experimental**
 - **타입:** `boolean`
@@ -577,7 +577,7 @@ createServer()
 
   작업영역 루트 외부에 있는 파일 제공을 제한합니다.
 
-### server.fs.allow
+### server.fs.allow {#server-fs-allow}
 
 - **Experimental**
 - **타입:** `string[]`
@@ -623,7 +623,7 @@ createServer()
 
 ## 빌드 옵션 {#build-options}
 
-### server.fs.deny
+### server.fs.deny {#server-fs-deny}
 
 - **실험적인 기능**
 - **타입**: `string[]`
@@ -632,7 +632,7 @@ createServer()
 
   기본적으로 `['.env', '.env.*', '*.{pem,crt}']` 파일들이 들어가 있습니다.
 
-### server.origin
+### server.origin {#server-origin}
 
 - **타입:** `string`
 
@@ -646,7 +646,7 @@ export default defineConfig({
 })
 ```
 
-### build.target
+### build.target {#build-target}
 
 - **타입:** `string | string[]`
 - **기본값:** `'modules'`
@@ -663,7 +663,7 @@ export default defineConfig({
 
   코드안에 esbuild로 안전하게 트랜스파일할 수 없는 기능이 포함된 경우 빌드는 실패할 것입니다. 자세한 점은 [esbuild 문서](https://esbuild.github.io/content-types/#javascript)를 확인하세요.
 
-### build.polyfillModulePreload
+### build.polyfillModulePreload {#build-polyfillmodulepreload}
 
 - **타입:** `boolean`
 - **기본값:** `true`
@@ -678,21 +678,21 @@ export default defineConfig({
 
   참고: 폴리필은 [Library 모드](/guide/build#library-mode)에 적용되지 **않습니다**. 네이티브 동적 가져오기 없이 브라우저를 지원해야 한다면, 아마도 라이브러리에서 이것을 사용하지 않는 것이 좋습니다.
 
-### build.outDir
+### build.outDir {#build-outdir}
 
 - **타입:** `string`
 - **기본값:** `dist`
 
   ([프로젝트 루트](/guide/#index-html-and-project-root)에 상대적인) 출력 디렉터리를 지정합니다.
 
-### build.assetsDir
+### build.assetsDir {#build-assetsdir}
 
 - **타입:** `string`
 - **기본값:** `assets`
 
   생성된 에셋을 (`build.outDir`에 상대적으로) 저장할 디렉터리를 지정합니다.
 
-### build.assetsInlineLimit
+### build.assetsInlineLimit {#build-assetsinlinelimit}
 
 - **타입:** `number`
 - **기본값:** `4096` (4kb)
@@ -703,7 +703,7 @@ export default defineConfig({
   `build.lib`를 지정하면, `build.assetsInlineLimit`는 무시되며 파일 크기에 관계없이 에셋이 항상 인라인 처리됩니다.
   :::
 
-### build.cssCodeSplit
+### build.cssCodeSplit {#build-csscodesplit}
 
 - **타입:** `boolean`
 - **기본값:** `true`
@@ -716,7 +716,7 @@ export default defineConfig({
   만약 `build.lib`으로 지정하게 되면, `build.cssCodeSplit`이 기본적으로 `false`가 됩니다.
   :::
 
-### build.cssTarget
+### build.cssTarget {#build-csstarget}
 
 - **타입:** `string | string[]`
 - **기본값:** [`build.target`](/config/#build-target)과 동일합니다.
@@ -727,39 +727,39 @@ export default defineConfig({
   이 브라우저는 대부분의 최신 JavaScript 문법을 지원하지만 [16진수 CSS 색상 표기법인 `#RGBA`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb_colors)를 지원하지 않습니다.
   이 경우, Vite가 `rgba()` 색상을 `#RGBA` 16진수 표기법으로 변환하는 것을 방지하기 위해 `build.cssTarget`을 `chrome61`로 설정해줘야 합니다.
 
-### build.sourcemap
+### build.sourcemap {#build-sourcemap}
 
 - **타입:** `boolean | 'inline' | 'hidden'`
 - **기본값:** `false`
 
   프로덕션에서 소스 맵을 생성합니다. `true`인 경우 별도의 소스 맵 파일이 생성됩니다. `'inline'`인 경우 소스 맵이 결과 출력 파일에 데이터 URI로 추가됩니다. `'hidden'`은 번들 파일의 해당 소스 맵 설명이 표시되지 않는 경우를 제외하고 `true`와 같이 작동합니다.
 
-### build.rollupOptions
+### build.rollupOptions {#build-rollupoptions}
 
 - **타입:** [`RollupOptions`](https://rollupjs.org/guide/en/#big-list-of-options)
 
   기본 Rollup 번들을 직접 사용자 지정합니다. 이는 Rollup 설정 파일에서 내보낼 수 있는 옵션과 동일하며 Vite의 내부 Rollup 옵션과 병합됩니다. 더 자세한 점은 [Rollup 옵션 문서](https://rollupjs.org/guide/en/#big-list-of-options)를 참고하세요.
 
-### build.commonjsOptions
+### build.commonjsOptions {#build-commonjsoptions}
 
 - **타입:** [`RollupCommonJSOptions`](https://github.com/rollup/plugins/tree/master/packages/commonjs#options)
 
   [@rollup/plugin-commonjs](https://github.com/rollup/plugins/tree/master/packages/commonjs)에 전달할 옵션입니다.
 
-### build.dynamicImportVarsOptions
+### build.dynamicImportVarsOptions {#build-dynamicimportvarsoptions}
 
 - **타입:** [`RollupDynamicImportVarsOptions`](https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#options)
 
   [@rollup/plugin-dynamic-import-vars](https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars)에 전달할 옵션입니다.
 
-### build.lib
+### build.lib {#build-lib}
 
 - **타입:** `{ entry: string, name?: string, formats?: ('es' | 'cjs' | 'umd' | 'iife')[], fileName?: string | ((format: ModuleFormat) => string) }`
 - **참고:** [Library 모드](/guide/build#library-mode)
 
   라이브러리로 빌드합니다. 라이브러리에서 HTML을 진입점으로 사용할 수 없으므로, `entry`가 필요합니다. `name`은 노출된 전역 변수이며 `formats`이 `'umd'` 또는 `'iife'`를 포함할 때 필요합니다. 기본 `formats`은 `['es', 'umd']` 입니다. `fileName`은 패키지 파일 출력의 이름이며, 기본값은 package.json 파일의 name 옵션입니다. 또한 `format`을 인수로 취하는 함수로도 정의될 수 있습니다.
 
-### build.manifest
+### build.manifest {#build-manifest}
 
 - **타입:** `boolean`
 - **기본값:** `false`
@@ -767,7 +767,7 @@ export default defineConfig({
 
   `true`로 설정하면, 빌드는 해시되지 않은 에셋 파일 이름을 해시된 버전으로의 매핑이 포함된 `manifest.json` 파일도 생성합니다. 이 파일은 서버 프레임워크에서 올바른 에셋 링크를 렌더링하는 데 사용할 수 있습니다.
 
-### build.ssrManifest
+### build.ssrManifest {#build-ssrmanifest}
 
 - **타입:** `boolean`
 - **기본값:** `false`
@@ -775,7 +775,7 @@ export default defineConfig({
 
   `true`로 설정하면, 빌드는 스타일 링크와 사전 로드된 에셋 디렉티브를 결정하기 위한 SSR 매니패스트 파일을 생성합니다.
 
-### build.ssr
+### build.ssr {#build-ssr}
 
 - **타입:** `boolean | string`
 - **기본값:** `undefined`
@@ -783,7 +783,7 @@ export default defineConfig({
 
   서버 측 렌더링으로 빌드합니다. 설정 값은 SSR 항목을 직접 지정하는 문자열이거나, `rollupOptions.input`을 통해 SSR 항목을 지정해야 하는 `ture`가 될 수 있습니다.
 
-### build.minify
+### build.minify {#build-minify}
 
 - **타입:** `boolean | 'terser' | 'esbuild'`
 - **기본값:** `'esbuild'`
@@ -792,50 +792,50 @@ export default defineConfig({
 
   참고로 `'es'`를 사용하는 Lib 모드에서 `build.minify` 옵션은 동작하지 않습니다.
 
-### build.terserOptions
+### build.terserOptions {#build-terseroptions}
 
 - **타입:** `TerserOptions`
 
   Terser로 전달할 추가적인 [경량화 옵션](https://terser.org/docs/api-reference#minify-options)입니다.
 
-### build.write
+### build.write {#build-write}
 
 - **타입:** `boolean`
 - **기본값:** `true`
 
   번들을 생성할 때 디스크에 기록하지 않으려면 `false`로 설정하세요. 이것은 디스크에 쓰기 전에 번들의 추가 후처리가 필요한 [프로그래밍 방식 `build()` 호출](/guide/api-javascript#build)에서 주로 사용됩니다.
 
-### build.emptyOutDir
+### build.emptyOutDir {#build-emptyoutdir}
 
 - **타입:** `boolean`
 - **기본값:** `outDir`이 `root` 안에 있다면 `true`
 
   기본적으로 Vite는 `outDir`이 프로젝트 루트 내부에 있는 경우 빌드할 때 이 곳을 비웁니다. `outDir`가 루트 외부에 있으면 실수로 중요한 파일을 제거하지 않도록 경고 메시지가 표시됩니다. 경고를 표시하지 않도록 이 옵션을 명시적으로 설정할 수 있습니다. 명령줄에서는 `--emptyOutDir`로 이를 사용할 수 있습니다.
 
-### build.reportCompressedSize
+### build.reportCompressedSize {#build-reportcompressedsize}
 
 - **타입:** `boolean`
 - **기본값:** `true`
 
   gzip 압축 크기 보고를 활성화/비활성화합니다. 큰 출력 파일을 압축하는 경우 속도가 느릴 수 있으므로, 이를 사용하지 않도록 설정하면 대규모 프로젝트의 빌드 성능이 향상될 수 있습니다.
 
-### build.chunkSizeWarningLimit
+### build.chunkSizeWarningLimit {#build-chunksizewarninglimit}
 
 - **타입:** `number`
 - **기본값:** `500`
 
   청크 크기 경고를 위한 제한값 입니다. (단위: KB)
 
-### build.watch
+### build.watch {#build-watch}
 
 - **타입:** [`WatcherOptions`](https://rollupjs.org/guide/en/#watch-options)`| null`
 - **기본값:** `null`
 
   Rollup 감시자를 사용하려면 `{}`로 설정하세요. 이는 대부분 빌드 전용 플러그인 또는 통합 프로세스를 포함하는 경우에 사용됩니다.
 
-## Preview Options
+## Preview Options {#preview-options}
 
-### preview.host
+### preview.host {#preview-host}
 
 - **타입:** `string | boolean`
 - **기본값:** [`server.host`](#server_host)
@@ -845,7 +845,7 @@ export default defineConfig({
 
   CLI의 경우 `--host 0.0.0.0` 또는 `--host`로 지정이 가능합니다.
 
-### preview.port
+### preview.port {#preview-port}
 
 - **타입:** `number`
 - **기본값:** `4173`
@@ -865,14 +865,14 @@ export default defineConfig({
 })
 ```
 
-### preview.strictPort
+### preview.strictPort {#preview-strictport}
 
 - **타입:** `boolean`
 - **기본값:** [`server.strictPort`](#server_strictport)
 
   `true`로 설정한 경우, 포트가 이미 사용중이라면 자동으로 다른 포트로 설정되는 것이 아닌 종료하도록 합니다.
 
-### preview.https
+### preview.https {#preview-https}
 
 - **Type:** `boolean | https.ServerOptions`
 - **기본값:** [`server.https`](#server_https)
@@ -881,14 +881,14 @@ export default defineConfig({
 
   참고로 이 값은 `https.createServer()`에 전달된 [옵션 객체](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener)가 될 수도 있습니다.
 
-### preview.open
+### preview.open {#preview-open}
 
 - **타입:** `boolean | string`
 - **기본값:** [`server.open`](#server_open)
 
   서버 시작 시 자동으로 브라우저를 열도록 설정할 수 있습니다. 값이 문자열인 경우 URL 경로를 의미하며, 원하는 특정 브라우저를 열고자 하는 경우에는 `process.env.BROWSER` 환경 변수를 `firefox`와 같은 값으로 설정합니다. 자세한 내용은 [`open` 패키지](https://github.com/sindresorhus/open#app)를 참고해주세.
 
-### preview.proxy
+### preview.proxy {#preview-proxy}
 
 - **타입:** `Record<string, string | ProxyOptions>`
 - **기본값:** [`server.proxy`](#server_proxy)
@@ -897,18 +897,18 @@ export default defineConfig({
 
   이는 [`http-proxy`](https://github.com/http-party/node-http-proxy)를 사용하며, 더 많은 옵션은 [이 링크](https://github.com/http-party/node-http-proxy#options)를 참고해주세요.
 
-### preview.cors
+### preview.cors {#preview-cors}
 
 - **타입:** `boolean | CorsOptions`
 - **기본값:** [`server.cors`](#server_proxy)
 
   개발 서버에 대한 CORS를 구성합니다. 기본적으로 활성화 되어 있는 옵션이며, 모든 출처를 허용하고 있습니다. 이를 설정하기 위해서는 [옵션 객체](https://github.com/expressjs/cors)를 전달하고, 비활성화하고자 한다면 `false` 값으로 설정해주세요.
 
-## Dep Optimization Options
+## Dep Optimization Options {#dep-optimization-options}
 
 - **참고:** [사전 번들링된 디펜던시](/guide/dep-pre-bundling)
 
-### optimizeDeps.entries
+### optimizeDeps.entries {#optimizedeps-entries}
 
 - **타입:** `string | string[]`
 
@@ -916,7 +916,7 @@ export default defineConfig({
 
   둘 다 필요에 맞지 않는 경우, 이 옵션을 사용하여 사용자 지정 진입점들을 지정할 수 있습니다. 값은 [fast-glob 패턴](https://github.com/mrmlnc/fast-glob#basic-syntax) 또는 Vite 프로젝트 루트에서 상대적인 경로 패턴 배열이어야 합니다. 이는 기본 진입점 추론을 덮어씁니다.
 
-### optimizeDeps.exclude
+### optimizeDeps.exclude {#optimizedeps-exclude}
 
 - **타입:** `string[]`
 
@@ -935,13 +935,13 @@ export default defineConfig({
 
   :::
 
-### optimizeDeps.include
+### optimizeDeps.include {#optimizedeps-include}
 
 - **타입:** `string[]`
 
   기본적으로 `node_modules` 내부에 없는 연결된 패키지들은 미리 번들로 제공되지 않습니다. 이 옵션을 사용하여 연결된 패키지를 미리 번들로 묶을 수 있습니다.
 
-### optimizeDeps.esbuildOptions
+### optimizeDeps.esbuildOptions {#optimizedeps-esbuildoptions}
 
 - **타입:** [`EsbuildBuildOptions`](https://esbuild.github.io/api/#simple-options)
 
@@ -959,19 +959,19 @@ SSR 옵션은 마이너 릴리즈에서 조정될 수 있습니다.
 
 - **참고:** [SSR Externals](/guide/ssr#ssr-externals)
 
-### ssr.external
+### ssr.external {#ssr-external}
 
 - **타입:** `string[]`
 
   SSR을 위한 디펜던시를 강제로 외부화 합니다.
 
-### ssr.noExternal
+### ssr.noExternal {#ssr-noexternal}
 
 - **타입:** `string | RegExp | (string | RegExp)[] | true`
 
   SSR을 위한 디펜던시 중에 이 목록에 있는 디펜던시는 외부화 되는 것이 방지됩니다. 만약 `true`인 경우, 어떠한 디펜던시도 외부화되지 않음을 의미합니다.
 
-### ssr.target
+### ssr.target {#ssr-target}
 
 - **타입:** `'node' | 'webworker'`
 - **기본값:** `node`
