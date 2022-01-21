@@ -34,6 +34,13 @@ vite는 `.ts` 파일에 대한 컴파일링 및 Import 역시 지원합니다.
 
 Vite의 TypeScript 컴파일링은 [Esbuild](https://github.com/evanw/esbuild)를 이용하며, TypeScript 소스 코드를 JavaScript 소스 코드로 변환하는 작업에 대해 `tsc` 대비 약 20~30배 정도 빠른 퍼포먼스를 보이고 있습니다. (HMR은 50ms 미만)
 
+참고로 타입만을 Import하는 경우 잘못 번들링이 될 수 있으며, 이는 [타입 전용 Imports와 Exports](https://www.typescriptlang.org/ko/docs/handbook/release-notes/typescript-3-8.html#type-only-imports-and-export)를 사용하여 이 문제를 우회할 수 있습니다:
+
+```ts
+import type { T } from 'only/types'
+export type { T }
+```
+
 ### 타입스크립트 컴파일러 옵션 {#typescript-compiler-options}
 
 `tsconfig.json` 파일 내 `compilerOptions` 설정들의 값을 조작할 때는 특별한 주의가 필요합니다.
