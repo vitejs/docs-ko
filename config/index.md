@@ -1,3 +1,7 @@
+---
+title: Configuring Vite
+---
+
 # Vite 설정하기 {#configuring-vite}
 
 ## 설정 파일 {#config-file}
