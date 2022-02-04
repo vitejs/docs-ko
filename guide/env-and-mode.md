@@ -80,9 +80,9 @@ interface ImportMeta {
 
 ## 모드 {#modes}
 
-기본적으로, `dev` 명령으로 실행되는 개발 서버는 `development` 모드로 동작하고, `serve` 명령으로 실행되는 경우에는 `production` 모드로 동작합니다.
+기본적으로, `dev` 명령으로 실행되는 개발 서버는 `development` 모드로 동작하고, `build` 명령으로 실행되는 경우에는 `production` 모드로 동작합니다.
 
-즉, `vite build` 명령을 실행하게 되면 `.env.production`에 정의된 환경 변수를 불러오게 됩니다.
+다시말해 `vite build` 명령을 실행하게 되면 `.env.production`에 정의된 환경 변수를 불러오게 됩니다.
 
 ```
 # .env.production
