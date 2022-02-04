@@ -100,7 +100,7 @@ createServer()
 다음 단계는 서버에서 렌더링된 HTML을 제공하기 위해 `*` 핸들러를 구현하는 것입니다:
 
 ```js
-app.use('*', async (req, res) => {
+app.use('*', async (req, res, next) => {
   const url = req.originalUrl
 
   try {
@@ -134,8 +134,7 @@ app.use('*', async (req, res) => {
     // 만약 오류가 발생된다면, Vite는 스택트레이스(Stacktrace)를 수정하여
     // 오류가 실제 코드에 매핑되도록 재구성합니다.
     vite.ssrFixStacktrace(e)
-    console.error(e)
-    res.status(500).end(e.message)
+    next(e)
   }
 })
 ```
