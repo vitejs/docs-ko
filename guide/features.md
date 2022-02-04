@@ -22,7 +22,7 @@ vite는 HTTP 헤더를 이용해 요청한 디펜던시를 브라우저에서 �
 
 ## Hot Module Replacement {#hot-module-replacement}
 
-vite는 이용해 네이티브 ESM 기반의 [HMR API](./api-hmr)을 제공합니다. HRM을 이용하는 프레임워크는 애플리케이션을 다시 시작하지 않고도 일부 컨텐츠만을 갱신할 수 있다는 장점이 있는데, vite는 [Vue Single File Components](https://github.com/vitejs/vite/tree/main/packages/plugin-vue), [React Fast Refresh](https://github.com/vitejs/vite/tree/main/packages/plugin-react) 또는 [@prefresh/vite](https://github.com/JoviDeCroock/prefresh/tree/main/packages/vite)과 같은 First-party HMR\* 모듈을 제공하고 있습니다. (\* Vite에서 직접 제공하는 HMR 모듈)
+vite는 이용해 네이티브 ESM 기반의 [HMR API](./api-hmr)을 제공합니다. HMR을 이용하는 프레임워크는 애플리케이션을 다시 시작하지 않고도 일부 컨텐츠만을 갱신할 수 있다는 장점이 있는데, vite는 [Vue Single File Components](https://github.com/vitejs/vite/tree/main/packages/plugin-vue), [React Fast Refresh](https://github.com/vitejs/vite/tree/main/packages/plugin-react) 또는 [@prefresh/vite](https://github.com/JoviDeCroock/prefresh/tree/main/packages/vite)과 같은 First-party HMR\* 모듈을 제공하고 있습니다. (\* Vite에서 직접 제공하는 HMR 모듈)
 
 물론, [`create-vite`](./)에서 제공하는 템플릿 안에는 HMR 모듈이 포함되어 있기 때문에 굳이 위와 같은 방법을 따르지 않아도 됩니다.
 
@@ -101,7 +101,7 @@ vite는 기본적으로 Vue를 지원하고 있습니다.
 
 `.jsx`와 `.tsx` 역시 사용이 가능합니다. 마찬가지로 [ESBuild](https://esbuild.github.io)를 이용해 컴파일링하며, React 16 스타일의 JSX를 기본적으로 지원합니다. React 17 스타일의 JSX는 [현재 작업 중에 있습니다](https://github.com/evanw/esbuild/issues/334).
 
-기존에 Vue를 사용했던 개발자들은 Vue 3에서 제공하고 있는 API(HRM, 글로벌 컴포넌트, 디렉티브 및 슬롯 등)를 위해 [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx)를 사용해야 합니다.
+기존에 Vue를 사용했던 개발자들은 Vue 3에서 제공하고 있는 API(HMR, 글로벌 컴포넌트, 디렉티브 및 슬롯 등)를 위해 [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx)를 사용해야 합니다.
 
 물론 React나 Vue를 사용하지 않는다 해도, [`esbuild` 옵션](/config/#esbuild)을 이용해 `jsxFactory`나 `jsxFragment`를 커스터마이징 할 수 있습니다. Preact를 예로 들어보자면 다음과 같습니다.
 
@@ -130,7 +130,7 @@ export default defineConfig({
 
 ## CSS {#css}
 
-`.css` 파일을 Import 할 때, 기본적으로 HRM을 위해 `<style>` 태그로 변환되어 불러와지게 됩니다. 물론 String 타입의 모듈로 Import할 수도 있구요.
+`.css` 파일을 Import 할 때, 기본적으로 HMR을 위해 `<style>` 태그로 변환되어 불러와지게 됩니다. 물론 String 타입의 모듈로 Import할 수도 있구요.
 
 ```js
 import style from './style.css'
