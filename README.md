@@ -6,7 +6,7 @@
 
 [![Deploy](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/deploy.yml) [![Sync](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/sync.yml/badge.svg)](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/sync.yml)
 
-[ViteJs 공식 문서](https://vitejs.dev/) 한글 번역 목적의 리포지터리 입니다.
+[ViteJS 공식 문서](https://vitejs.dev/) 한글 번역 목적의 리포지터리 입니다.
 
 ## 시작하기
 
@@ -14,7 +14,7 @@
 
 이 프로젝트는 [PNPM](https://pnpm.io/ko/)을 이용합니다.
 
-```sh
+```bash
 # 1. 이 리포지터리의 사본을 로컬에 복사합니다
 git clone https://github.com/vitejs-kr/vitejs-kr.github.io
 cd vitejs-kr.github.io
@@ -25,7 +25,7 @@ pnpm install
 # 3. 로컬 개발 서버를 시작합니다 (http://localhost:3000/)
 pnpm dev
 
-# 4. 프로젝트를 빌드합니다. (dist/)
+# 4. 프로젝트를 빌드합니다. (./dist/)
 pnpm build
 ```
 
@@ -33,28 +33,28 @@ pnpm build
 
 커밋 시 `./scripts/verifyCommit.js` 스크립트를 기반으로 커밋 메시지 내용을 검증하게 됩니다. 따라서, 아래와 같은 형태로 커밋 메시지를 남겨주세요.
 
-```sh
+```bash
 "docs(ko): translate <document-name>.md"
 ```
 
-자세한 사항은 `./scripts/verifyCommit.js` 스크립트를 참고해주세요.
+커밋 메시지 검증과 관련되어 자세한 사항은 `verifyCommit.js` 스크립트를 참고해주세요.
 
 ## 번역
 
 ### 브랜치
 
 - `main` 브랜치는 번역 작업을 진행하는 목적으로 사용됩니다.
-- `sync` 브랜치는 매일 00시, 원본 문서와의 동기화를 진행하는 목적으로 사용됩니다.
+- `sync` 브랜치는 매일 원본 문서와의 동기화를 진행하는 목적으로 사용됩니다.
 - `gh-pages` 브랜치는 https://vitejs-kr.github.io/ 사이트 소스로 사용됩니다.
 
 ### 번역에 기여하기
 
-> [번역 진행 상황](https://github.com/vitejs-kr/vitejs-kr.github.io/discussions/1)을 참고해 번역을 진행해주세요.
+번역에 기여해 주신 모든 분께 감사드립니다.
 
 1. 이 리포지터리의 우측 상단에 위치한 Fork 버튼을 눌러 자신의 계정으로 리포지터리를 복사해주세요.
 2. `git clone https://github.com/<계정명>/vitejs-kr.github.io` 명령을 통해 로컬로 Fork한 리포지터리를 복사해주세요.
-3. 번역되지 못한 부분을 번역해주세요.
-4. 번역을 완료한 후, `vitejs-ko/main` 으로 PR을 생성해주세요.
+3. [Issues](https://github.com/vitejs-kr/vitejs-kr.github.io/issues)를 참고해 번역되지 못한 부분을 번역해주세요.
+4. 번역을 완료한 후, 자신의 번역 리포지터리로 커밋 및 `main` 브랜치로 PR을 생성해주세요.
 
 ### 커스텀 앵커(Anchor)
 
@@ -62,7 +62,7 @@ pnpm build
 
 Heading 마지막에 `{#custom-anchor-name}`와 같은 형태로 커스텀 앵커의 지정이 가능하며, 앵커 이름은 원본 문서를 기준으로 합니다.
 
-가령, 아래와 같은 문서를 번역한다고 했을 때
+가령, 아래와 같은 문서를 번역한다고 했을 때:
 
 ```
 # Getting Started
@@ -79,11 +79,3 @@ Heading 마지막에 `{#custom-anchor-name}`와 같은 형태로 커스텀 앵�
 ```
 [시작하기](#getting-started)
 ```
-
-## 번역에 기여해 주신 분들
-
-<p align="center">
-  <a target="_blank" href="https://github.com/eterv"><img width="150" src="https://github.com/eterv.png" alt="eterv"></a>
-  <a target="_blank" href="https://github.com/proceane"><img width="150" src="https://github.com/proceane.png" alt="proceane"></a>
-  <a target="_blank" href="https://github.com/eddie0329"><img width="150" src="https://github.com/eddie0329.png" alt="eddie0329"></a>
-</p>
