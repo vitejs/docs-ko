@@ -588,6 +588,7 @@ createServer()
 
   - `package.json`에 `workspaces` 필드가 포함됨
   - 다음 파일 중 하나를 포함함
+    - `lerna.json`
     - `pnpm-workspace.yaml`
 
   사용자 지정 작업 공간 루트를 지정하는 경로를 허용합니다. 절대 경로 또는 [프로젝트 루트](/guide/#index-html-and-project-root)에 대한 상대 경로일 수 있습니다. 다음은 하나의 예입니다:
