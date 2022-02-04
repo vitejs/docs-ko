@@ -4,9 +4,7 @@
   <img width="200" src="./public/logo.svg">
 </p>
 
-[![Deploy](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/deploy.yml)
-
-[![Sync](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/sync.yml/badge.svg)](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/sync.yml)
+[![Deploy](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/deploy.yml) [![Sync](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/sync.yml/badge.svg)](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/sync.yml)
 
 [ViteJs 공식 문서](https://vitejs.dev/) 한글 번역 목적의 리포지터리 입니다.
 
