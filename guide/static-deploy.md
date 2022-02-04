@@ -276,15 +276,30 @@ $ npm run preview
 
 ## Vercel {#vercel}
 
-[Git을 이용해 배포](https://vercel.com/docs/git)하기 위해, 먼저 Git 리포지토리에 프로젝트가 Push 되었는지 확인해주세요.
+### Vercel CLI {#vercel-cli}
 
-Push가 되었다면, https://vercel.com/import/git 에 접속해 Git 리모트 서버(GitHub, GitLab 또는 BitBucket)에서 Vercel로 프로젝트를 가져와주세요. 이후 Vercel 마법사를 따라 프로젝트의 `package.json`이 있는 프로젝트의 루트를 선택하고, Build and Output Settings 내 BUILD COMMAND를 `npm run build`로 지정해주세요. OUTPUT DIRECTORY에는 `./dist`로 값을 지정해주세요(설정 값은 OVERRIDE 하도록 해주세요).
+1. [Vercel CLI](https://vercel.com/cli)를 설치하고 `vercel`을 실행하여 배포합니다.
+2. Vercel은 Vite를 사용하고 있음을 감지하게 되며, 배포와 관련된 올바른 설정을 활성화합니다.
+3. 애플리케이션이 배포되었습니다! (예시: [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
 
-![Override Vercel Configuration](../images/vercel-configuration.png)
+```bash
+$ npm i -g vercel
+$ vercel init vite
+Vercel CLI
+> Success! Initialized "vite" example in ~/your-folder.
+- To deploy, `cd vite` and run `vercel`.
+```
 
-성공적으로 프로젝트를 Vercel로 불러왔다면, 이후 모든 브랜치에 대한 Push 동작은 애플리케이션에 대해 미리보기(`preview`) 형태의 배포를, 그리고 배포 브랜치(일반적으로 `main`)에 대한 변경 사항은 프로덕션(`build`) 형태의 배포를 진행하게 됩니다.
+### Vercel for Git {#vercel-for-git}
 
-이렇게 배포가 완료되면 https://vite.vercel.app 과 같이 실시간으로 애플리케이션에 접속할 수 있는 URL이 제공됩니다.
+1. 사용하고 있는 Git 리포지터리(GitHub, GitLab, BitBucket)으로 소스 코드를 Push 합니다.
+2. Vercel로 [Vite 프로젝트를 가져옵니다](https://vercel.com/new).
+3. Vercel은 Vite를 사용하고 있음을 감지하게 되며, 배포와 관련된 올바른 설정을 활성화합니다.
+4. 애플리케이션이 배포되었습니다! (예시: [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
+
+Vercel로 프로젝트를 불러오고 배포까지 완료했다면, 이후 브랜치에 대한 모든 Push 동작은 애플리케이션에 대한 [미리보기용 배포](https://vercel.com/docs/concepts/deployments/environments#preview)를 생성하게 됩니다. 그리고 프로덕션용 브랜치(일반적으로 "main")에 대한 모든 변경 사항은 [프로덕션 배포](https://vercel.com/docs/concepts/deployments/environments#production)가 됩니다.
+
+이에 대해 좀 더 알고 싶다면 Vercel의 [Git](https://vercel.com/docs/concepts/git) 문서를 참고해주세요.
 
 ## Azure Static Web Apps {#azure-static-web-apps}
 
