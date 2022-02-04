@@ -36,9 +36,7 @@ Vite는 확립된 패턴을 제공하기 위해 노력하고 있습니다. 따�
 - `vite-plugin-react-`는 React만을 지원하는 Vite 플러그인을 의미합니다.
 - `vite-plugin-svelte-`는 Svelte만을 지원하는 Vite 플러그인을 의미합니다.
 
-[가상 모듈](https://rollupjs.org/guide/en/#a-simple-example)은 Vite에서 `virtual:` 접두사를 붙여 표현합니다. 또한, 가능한 플러그인의 이름을 네임스페이스로 사용하여 다른 플러그인과의 충돌을 방지해야 합니다. 가령 `vite-plugin-posts` 라는 이름을 가진 플러그인이 있고, 이 플러그인을 사용하는 사용자는 가상 모듈을 포함(Import)해야 한다고 가정하겠습니다. 이 때 가상 모듈의 이름은 `virtual:posts` 또는 `virtual:posts/helpers`와 같이 플러그인 이름인 `posts`를 사용하는 것이 적절합니다. 그리고 이름 규칙에 대해 내부적으로 보자면, 가상 모듈을 사용하는 플러그인은 Rollup의 규칙과 같이 모듈의 ID를 확인하는 과정에서 ID 앞에 `\0`을 붙여줘야 합니다. 이는 다른 플러그인이 노드를 확인하는 작업(Node Resolution) 등과 같이 가상 모듈의 ID를 처리하는 것을 방지하고, 또 소스 맵과 같은 핵심 기능에서는 가상 모듈과 일반 모듈을 구별하기 위해 사용하기 때문입니다. 다만 `\0`은 `import` 시 사용되는 URL에서 허용되는 문자가 아니기에, `import` 분석 중에는 이 문자열을 대체해줘야 합니다. 브라우저에서는 `\0{id}` 라는 ID가 `/@id/__x00__{id}`로 인코딩되며, 이 ID는 플러그인 파이프라인을 진행하기 전 다시 디코딩되기에 플러그인 훅 내부에서는 이를 볼 수 없습니다.
-
-단일 파일 컴포넌트(Single File Component, .vue 나 .svelte 확장자가 붙은)와 같이 실제 파일을 기반으로 만들어진 모듈의 경우에는 위 규칙을 따를 필요가 없습니다. 특히 SFC는 일반적으로 하위 모듈들을 생성하는 방식으로 처리되나, 이들의 코드는 파일 시스템에 다시 매핑될 수 있습니다. 이 하위 모듈에 `\0`을 사용하게 되면 소스 맵이 정상적으로 동작하지 않습니다.
+[가상 모듈 컨벤션](#virtual-modules-convention)또한 참고가 가능합니다.
 
 ## 플러그인 설정 {#plugins-config}
 
@@ -84,7 +82,34 @@ export default defineConfig({
 Vite 또는 Rollup 플러그인을 구현할 때는 실제 플러그인 객체를 반환하는 팩토리 함수로 작성하는 것이 일반적인 관례입니다. 또한 이렇게 구성할 경우 플러그인을 사용하는 사용자가 플러그인의 세부적인 동작을 정의할 수 있는 옵션을 허용할 수 있게 만들어 줄 수도 있습니다.
 :::
 
+### 파일 타입 변환하기 {#transforming-custom-file-types}
+
+```js
+const fileRegex = /\.(my-file-ext)$/
+
+export default function myPlugin() {
+  return {
+    name: 'transform-file',
+
+    transform(src, id) {
+      if (fileRegex.test(id)) {
+        return {
+          code: compileFileToJS(src),
+          map: null // 가능하다면 소스 맵을 제공
+        }
+      }
+    }
+  }
+}
+```
+
 ### 가상 모듈 가져오기 {#importing-a-virtual-file}
+
+예제는 [다음 섹션](#virtual-modules-convention)을 참고해주세요.
+
+## 가상 모듈 컨벤션 {#virtual-modules-convention}
+
+가상 모듈은 ESM의 일반적인 `import` 구문을 사용해 소스 파일에 빌드 시의 정보를 전달할 수 있는 유용한 기법입니다.
 
 ```js
 export default function myPlugin() {
@@ -115,26 +140,9 @@ import { msg } from '@my-virtual-module'
 console.log(msg)
 ```
 
-### 사용자 정의 파일 형식 반환하기 {#transforming-custom-file-types}
+[가상 모듈](https://rollupjs.org/guide/en/#a-simple-example)은 Vite와 Rollup에서 `virtual:` 접두사를 붙여 표현 및 사용합니다. 또한, 가능한 플러그인의 이름을 네임스페이스로 사용하여 다른 플러그인과의 충돌을 방지해야 합니다. 가령 `vite-plugin-posts` 라는 이름을 가진 플러그인이 있고, 이 플러그인을 사용하는 사용자는 가상 모듈을 포함(Import)해야 한다고 가정하겠습니다. 이 때 가상 모듈의 이름은 `virtual:posts` 또는 `virtual:posts/helpers`와 같이 플러그인 이름인 `posts`를 사용하는 것이 적절합니다. 그리고 이름 규칙에 대해 내부적으로 보자면, 가상 모듈을 사용하는 플러그인은 Rollup의 규칙과 같이 모듈의 ID를 확인하는 과정에서 ID 앞에 `\0`을 붙여줘야 합니다. 이는 다른 플러그인이 노드를 확인하는 작업(Node Resolution) 등과 같이 가상 모듈의 ID를 처리하는 것을 방지하고, 또 소스 맵과 같은 핵심 기능에서는 가상 모듈과 일반 모듈을 구별하기 위해 사용하기 때문입니다. 다만 `\0`은 `import` 시 사용되는 URL에서 허용되는 문자가 아니기에, `import` 분석 중에는 이 문자열을 대체해줘야 합니다. 브라우저에서는 `\0{id}` 라는 ID가 `/@id/__x00__{id}`로 인코딩되며, 이 ID는 플러그인 파이프라인을 진행하기 전 다시 디코딩되기에 플러그인 훅 내부에서는 이를 볼 수 없습니다.
 
-```js
-const fileRegex = /\.(my-file-ext)$/
-
-export default function myPlugin() {
-  return {
-    name: 'transform-file',
-
-    transform(src, id) {
-      if (fileRegex.test(id)) {
-        return {
-          code: compileFileToJS(src),
-          map: null // 가능한 경우 소스 맵을 제공하도록 합니다.
-        }
-      }
-    }
-  }
-}
-```
+단일 파일 컴포넌트(Single File Component, .vue 나 .svelte 확장자가 붙은)와 같이 실제 파일을 기반으로 만들어진 모듈의 경우에는 위 규칙을 따를 필요가 없습니다. 특히 SFC는 일반적으로 하위 모듈들을 생성하는 방식으로 처리되나, 이들의 코드는 파일 시스템에 다시 매핑될 수 있습니다. 이 하위 모듈에 `\0`을 사용하게 되면 소스 맵이 정상적으로 동작하지 않습니다.
 
 ## 범용 훅 {#universal-hooks}
 
