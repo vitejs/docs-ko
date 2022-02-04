@@ -14,16 +14,21 @@
 
 ### 설치
 
+이 프로젝트는 [PNPM](https://pnpm.io/ko/)을 이용합니다.
+
 ```sh
 # 1. 이 리포지터리의 사본을 로컬에 복사합니다
 git clone https://github.com/vitejs-kr/vitejs-kr.github.io
 cd vitejs-kr.github.io
 
 # 2. 모듈을 설치합니다
-yarn # or npm install
+pnpm install
 
 # 3. 로컬 개발 서버를 시작합니다 (http://localhost:3000/)
-yarn dev # or npm run dev
+pnpm dev
+
+# 4. 프로젝트를 빌드합니다. (dist/)
+pnpm build
 ```
 
 ### 커밋
