@@ -159,7 +159,7 @@ module.exports = {
               link: '/guide/api-javascript'
             },
             {
-              text: 'Config Reference',
+              text: 'Vite 설정 레퍼런스',
               link: '/config/'
             }
           ]
