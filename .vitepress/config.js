@@ -6,7 +6,7 @@
 module.exports = {
   title: 'Vite',
   lang: 'ko',
-  description: '차세대 프런트엔드 개발 및 빌드 툴',
+  description: '차세대 프런트엔드 개발 툴',
   head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]],
   themeConfig: {
     repo: 'vitejs-kr/vitejs-kr.github.io',
@@ -106,7 +106,7 @@ module.exports = {
               link: '/guide/using-plugins'
             },
             {
-              text: 'Pre-bundling 된 디펜던시',
+              text: '사전 번들링 된 디펜던시',
               link: '/guide/dep-pre-bundling'
             },
             {
@@ -114,11 +114,11 @@ module.exports = {
               link: '/guide/assets'
             },
             {
-              text: '배포하기',
+              text: '프로덕션 버전으로 빌드하기',
               link: '/guide/build'
             },
             {
-              text: '정적 페이지 만들기',
+              text: '정적 웹 페이지로 배포하기',
               link: '/guide/static-deploy'
             },
             {

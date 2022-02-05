@@ -6,16 +6,16 @@ title: Configuring Vite
 
 ## 설정 파일 {#config-file}
 
-### Config File Resolving {#config-file-resolving}
+### 설정 파일 확인 {#config-file-resolving}
 
-명령줄에서 `vite`를 실행시킬 때, Vite는 자동으로 [프로젝트 루트](/guide/#index-html-and-project-root)의 `vite.config.js` 파일을 처리하기 위해 시도합니다.
+명령줄에서 `vite`를 실행시킬 때, Vite는 자동으로 [프로젝트 루트](/guide/#index-html-and-project-root)의 `vite.config.js` 파일 확인을 시도합니다.
 
 가장 기본적인 설정 파일의 내용은 다음과 같습니다:
 
 ```js
 // vite.config.js
 export default {
-  // config options
+  // 설정 옵션들
 }
 ```
 
@@ -70,11 +70,11 @@ Vite는 또한 TS 설정 파일을 직접 지원합니다. `defineConfig` 도우
 export default defineConfig(({ command, mode }) => {
   if (command === 'serve') {
     return {
-      // serve specific config
+      // 개발 서버 설정
     }
   } else {
     return {
-      // build specific config
+      // 빌드 설정
     }
   }
 })
@@ -90,7 +90,7 @@ Vite의 API에서 `command` 값은 개발 서버(참고로 CLI `vite`는 `vite d
 export default defineConfig(async ({ command, mode }) => {
   const data = await asyncFunction()
   return {
-    // build specific config
+    // 설정 값 전달
   }
 })
 ```
@@ -115,7 +115,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   - 절대 URL 경로명, 예) `/foo/`
   - 전체 URL, 예) `https://foo.com/`
-  - 빈 문자열 또는 `./` (내장된 배포를 위한)
+  - 빈 문자열 또는 `./`
 
   [Public Base Path](/guide/build#public-base-path)에서 더 자세한 점을 볼 수 있습니다.
 
@@ -142,7 +142,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   예를 들어, `process.env.FOO` 와 `__APP_VERSION__` 는 서로 잘 맞습니다. 하지만 `process` 또는 `global` 을 이 옵션에 넣어서는 안됩니다. 대신에 변수를 끼워넣거나 폴리필로 사용할 수 있습니다.
 
-  예시:
+  예제:
 
   ```ts
   // vite-end.d.ts
@@ -229,7 +229,7 @@ export default defineConfig(async ({ command, mode }) => {
 - **타입:** `string[]`
 - **기본값:** `['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']`
 
-  확장자를 생략한 가져오기를 위해 시도할 파일 확장자 목록입니다. IDE 와 타입 지원을 방해할 수 있으므로 (`.vue`와 같은) 사용자 지정 가져오기 형식에 대해서는 확장자를 생략하지 **않는** 것을 추천합니다.
+  확장자를 생략한 가져오기를 위해 시도할 파일 확장자 목록입니다. IDE 와 타입 지원을 방해할 수 있으므로 (`.vue`와 같은) 사용자가 지정한 방식의 가져오기 형식에 대해서는 확장자를 생략하지 **않는** 것을 추천합니다.
 
 ### resolve.preserveSymlinks {#resolve-preservesymlinks}
 
@@ -238,8 +238,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   이 설정을 활성화하면 Vite가 심볼릭 링크를 따르는 실제 파일 경로 대신, 심볼릭 링크를 따르지 않는 원래 파일 경로로 파일의 ID를 결정하게 됩니다.
 
-- **관련 사항:** [esbuild#preserve-symlinks](https://esbuild.github.io/api/#preserve-symlinks), [webpack#resolve.symlinks
-  ](https://webpack.js.org/configuration/resolve/#resolvesymlinks)
+- **참고:** [esbuild#preserve-symlinks](https://esbuild.github.io/api/#preserve-symlinks), [webpack#resolve.symlinks](https://webpack.js.org/configuration/resolve/#resolvesymlinks)
 
 ### css.modules {#css-modules}
 
@@ -254,7 +253,7 @@ export default defineConfig(async ({ command, mode }) => {
       | ((name: string, filename: string, css: string) => string)
     hashPrefix?: string
     /**
-     * default: null
+     * 기본값: null
      */
     localsConvention?:
       | 'camelCase'
@@ -313,7 +312,7 @@ export default defineConfig(async ({ command, mode }) => {
 
 - **타입:** `ESBuildOptions | false`
 
-  `ESBuildOptions`는 [ESbuild 변환 옵션](https://esbuild.github.io/api/#transform-api)을 확장합니다. 가장 일반적인 사례는 JSX를 사용자 지정하는 것입니다:
+  `ESBuildOptions`는 [ESbuild 변환 옵션](https://esbuild.github.io/api/#transform-api)을 확장합니다. 가장 일반적인 사례는 JSX를 커스터마이즈 하는 것입니다:
 
   ```js
   export default defineConfig({
@@ -324,9 +323,9 @@ export default defineConfig(async ({ command, mode }) => {
   })
   ```
 
-  기본적으로, ESBuild는 `ts`, `jsx`, `tsx` 파일들에 적용됩니다. `esbuild.include`와 `esbuild.exclude`를 사용하여 사용자 정의할 수 있으며, 둘 다 `string | RegExp | (string | RegExp)[]` 타입으로 예상합니다.
+  기본적으로, ESBuild는 `ts`, `jsx`, `tsx` 파일들에 적용됩니다. `esbuild.include`와 `esbuild.exclude`를 사용하여 커스터마이즈 할 수 있으며, 둘 다 `string | RegExp | (string | RegExp)[]` 타입으로 예상합니다.
 
-  추가적으로, ESBuild에 의해 변환된 모든 파일에 대해 JSX 헬퍼 import 들을 자동으로 주입하기 위해 `esbuild.jsxInject`도 사용할 수 있습니다:
+  추가적으로, ESBuild에 의해 변환된 모든 파일에 대해 JSX 헬퍼 `import` 들을 자동으로 주입하기 위해 `esbuild.jsxInject`도 사용할 수 있습니다:
 
   ```js
   export default defineConfig({
@@ -351,7 +350,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   이 빌트인 에셋 형식 목록은 [여기](https://github.com/vitejs/vite/blob/main/packages/vite/src/node/constants.ts)에서 확인할 수 있습니다.
 
-  **예시:**
+  **예제:**
 
   ```js
   export default defineConfig({
@@ -400,7 +399,7 @@ export default defineConfig(async ({ command, mode }) => {
 - **기본값:** `'127.0.0.1'`
 
   서버가 수신할 IP 주소를 지정합니다.
-  LAN와 공용 주소를 포함한 모든 주소를 수신하려면 이 값을 `0.0.0.0` 또는 `ture`로 설정하세요.
+  LAN와 공용 주소를 포함한 모든 주소를 수신하려면 이 값을 `0.0.0.0` 또는 `true`로 설정하세요.
 
   CLI에서는 `--host 0.0.0.0` or `--host`로 설정될 수 있습니다.
 
@@ -431,7 +430,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   서버가 시작될 때 자동으로 브라우저에서 앱을 보여줍니다. 값이 문자열이면 URL의 경로명으로 사용됩니다. 원하는 특정 브라우저에서 열기를 원한다면, `process.env.BROWSER` (예: `firefox`) 환경 변수를 설정할 수 있습니다. 더 자세한 점을 알려면 [`open` 패키지](https://github.com/sindresorhus/open#app)를 확인하세요.
 
-  **Example:**
+  **예제:**
 
   ```js
   export default defineConfig({
@@ -449,35 +448,35 @@ export default defineConfig(async ({ command, mode }) => {
 
   [`http-proxy`](https://github.com/http-party/node-http-proxy)를 사용하세요. 전체 옵션은 [여기](https://github.com/http-party/node-http-proxy#options)에 있습니다.
 
-  **Example:**
+  **예제:**
 
   ```js
   export default defineConfig({
     server: {
       proxy: {
-        // string shorthand
+        // 문자열만
         '/foo': 'http://localhost:4567',
-        // with options
+        // 옵션과 함께
         '/api': {
           target: 'http://jsonplaceholder.typicode.com',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, '')
         },
-        // with RegEx
+        // 정규식(RegEx)과 함께
         '^/fallback/.*': {
           target: 'http://jsonplaceholder.typicode.com',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/fallback/, '')
         },
-        // Using the proxy instance
+        // 프록시 인스턴스 사용
         '/api': {
           target: 'http://jsonplaceholder.typicode.com',
           changeOrigin: true,
           configure: (proxy, options) => {
-            // proxy will be an instance of 'http-proxy'
+            // proxy 변수에는 'http-proxy'의 인스턴스가 전달됩니다
           }
         },
-        // Proxying websockets or socket.io
+        // 웹소켓 또는 socket.io 프록시
         '/socket.io': {
           target: 'ws://localhost:3000',
           ws: true
@@ -496,7 +495,7 @@ export default defineConfig(async ({ command, mode }) => {
 ### server.force {#server-force}
 
 - **타입:** `boolean`
-- **참고:** [Pre-bundling 된 디펜던시](/guide/dep-pre-bundling)
+- **참고:** [사전 번들링 된 디펜던시](/guide/dep-pre-bundling)
 
   디펜던시의 사전 번들링을 강제하려면 `true`로 설정하세요.
 
@@ -548,7 +547,7 @@ export default defineConfig(async ({ command, mode }) => {
 
 - **참고:** [SSR - 개발 서버 설정하기](/guide/ssr#setting-up-the-dev-server)
 
-- **Example:**
+- **예제:**
 
 ```js
 const express = require('express')
@@ -557,17 +556,17 @@ const { createServer: createViteServer } = require('vite')
 async function createServer() {
   const app = express()
 
-  // Create Vite server in middleware mode.
+  // 미들웨어 모드에서 Vite 서버를 생성합니다.
   const vite = await createViteServer({
     server: { middlewareMode: 'ssr' }
   })
-  // Use vite's connect instance as middleware
+  // Vite의 연결(Connect) 인스턴스를 미들웨어로 사용
   app.use(vite.middlewares)
 
   app.use('*', async (req, res) => {
-    // If `middlewareMode` is `'ssr'`, should serve `index.html` here.
-    // If `middlewareMode` is `'html'`, there is no need to serve `index.html`
-    // because Vite will do that.
+    // 만약 `middlewareMode`가 `'ssr'`이면, 이 곳에서 `index.html`를 제공(Serve)합니다.
+    // 만약 `middlewareMode`가 `'html'`이면, Vite가 이를 처리하기에
+    // `index.html`을 제공할 필요가 없습니다.
   })
 }
 
@@ -576,7 +575,7 @@ createServer()
 
 ### server.fs.strict {#server-fs-strict}
 
-- **Experimental**
+- **실험적 기능**
 - **타입:** `boolean`
 - **기본값:** `true` (Vite 2.7에서 기본적으로 활성화되도록 변경되었습니다.)
 
@@ -584,7 +583,7 @@ createServer()
 
 ### server.fs.allow {#server-fs-allow}
 
-- **Experimental**
+- **실험적 기능**
 - **타입:** `string[]`
 
   `/@fs/`를 통해 제공될 수 있는 파일을 제한합니다. `server.fs.strict`가 `true`로 설정된 경우, 이 목록에 포함되지 않았으며 허용된 파일에서 `import` 되는것도 아닌 외부 파일에 접근하면 403 결과를 반환합니다.
@@ -602,7 +601,7 @@ createServer()
   export default defineConfig({
     server: {
       fs: {
-        // Allow serving files from one level up to the project root
+        // 프로젝트 루트 바로 위 까지의 파일만 접근 가능
         allow: ['..']
       }
     }
@@ -613,13 +612,14 @@ createServer()
 
   ```js
   import { defineConfig, searchForWorkspaceRoot } from 'vite'
+
   export default defineConfig({
     server: {
       fs: {
         allow: [
-          // search up for workspace root
+          // 작업 공간(Workspace)의 루트를 지정
           searchForWorkspaceRoot(process.cwd()),
-          // your custom rules
+          // 커스텀 allow 옵션 규칙
           '/path/to/custom/allow'
         ]
       }
@@ -631,7 +631,7 @@ createServer()
 
 ### server.fs.deny {#server-fs-deny}
 
-- **실험적인 기능**
+- **실험적 기능**
 - **타입**: `string[]`
 
   Vite dev 서버에서 제공되지 않기를 원하는 민감한 파일들에 대한 차단 목록입니다.
@@ -642,7 +642,7 @@ createServer()
 
 - **타입:** `string`
 
-에셋 URL에 대한 Origin을 정의합니다.
+에셋 URL에 대한 `origin` 헤더를 정의합니다.
 
 ```js
 export default defineConfig({
@@ -676,13 +676,13 @@ export default defineConfig({
 
   [모듈 미리로드 폴리필](https://guybedford.com/es-module-preloading-integrity#modulepreload-polyfill)을 자동으로 주입할지 여부입니다.
 
-  true로 설정하면 폴리필이 각 `index.html` 항목의 프록시 모듈에 자동으로 주입됩니다. 빌드가 `build.rollupOptions.input`을 통해 비 html 사용자 지정 진입점을 사용하도록 구성된 경우, 사용자 지정 진입점에 폴리필을 수동으로 import 해야 합니다:
+  true로 설정하면 폴리필이 각 `index.html` 항목의 프록시 모듈에 자동으로 주입됩니다. 빌드가 `build.rollupOptions.input`을 통해 비 html 사용자 지정 진입점을 사용하도록 구성된 경우, 사용자 지정 진입점에 폴리필을 수동으로 가져와야 합니다:
 
   ```js
   import 'vite/modulepreload-polyfill'
   ```
 
-  참고: 폴리필은 [Library 모드](/guide/build#library-mode)에 적용되지 **않습니다**. 네이티브 동적 가져오기 없이 브라우저를 지원해야 한다면, 아마도 라이브러리에서 이것을 사용하지 않는 것이 좋습니다.
+  참고: 폴리필은 [라이브러리 모드](/guide/build#library-mode)에 적용되지 **않습니다**. 네이티브 동적 가져오기 없이 브라우저를 지원해야 한다면, 아마도 라이브러리에서 이것을 사용하지 않는 것이 좋습니다.
 
 ### build.outDir {#build-outdir}
 
@@ -703,7 +703,7 @@ export default defineConfig({
 - **타입:** `number`
 - **기본값:** `4096` (4kb)
 
-  이 값보다 작은 크기의 import 되거나 참조된 에셋은 부가적인 http 요청을 피하기 위해 base64 URL로 인라인 처리됩니다. 만일 인라인 변환을 사용하지 않으려면 `0`으로 설정하세요.
+  이 값보다 작은 크기로 import 되거나 참조된 에셋은 부가적인 http 요청을 피하기 위해 base64 URL로 인라인 처리됩니다. 만일 인라인 변환을 사용하지 않으려면 `0`으로 설정하세요.
 
   ::: tip 참고
   `build.lib`를 지정하면, `build.assetsInlineLimit`는 무시되며 파일 크기에 관계없이 에셋이 항상 인라인 처리됩니다.
@@ -718,8 +718,8 @@ export default defineConfig({
 
   비활성화된 경우, 전체 프로젝트의 모든 CSS가 단일 CSS 파일로 추출됩니다.
 
-  ::: tip 참고 사항
-  만약 `build.lib`으로 지정하게 되면, `build.cssCodeSplit`이 기본적으로 `false`가 됩니다.
+  ::: tip 참고
+  만약 `build.lib`으로 지정하게 되면, `build.cssCodeSplit`이 기본적으로 `false`가 됩니다.
   :::
 
 ### build.cssTarget {#build-csstarget}
@@ -744,7 +744,7 @@ export default defineConfig({
 
 - **타입:** [`RollupOptions`](https://rollupjs.org/guide/en/#big-list-of-options)
 
-  기본 Rollup 번들을 직접 사용자 지정합니다. 이는 Rollup 설정 파일에서 내보낼 수 있는 옵션과 동일하며 Vite의 내부 Rollup 옵션과 병합됩니다. 더 자세한 점은 [Rollup 옵션 문서](https://rollupjs.org/guide/en/#big-list-of-options)를 참고하세요.
+  기존 Rollup 번들을 커스텀합니다. 이는 Rollup 설정 파일에서 내보낼 수 있는 옵션과 동일하며 Vite의 내부 Rollup 옵션과 병합됩니다. 더 자세한 점은 [Rollup 옵션 문서](https://rollupjs.org/guide/en/#big-list-of-options)를 참고하세요.
 
 ### build.commonjsOptions {#build-commonjsoptions}
 
@@ -761,7 +761,7 @@ export default defineConfig({
 ### build.lib {#build-lib}
 
 - **타입:** `{ entry: string, name?: string, formats?: ('es' | 'cjs' | 'umd' | 'iife')[], fileName?: string | ((format: ModuleFormat) => string) }`
-- **참고:** [Library 모드](/guide/build#library-mode)
+- **참고:** [라이브러리 모드](/guide/build#library-mode)
 
   라이브러리로 빌드합니다. 라이브러리에서 HTML을 진입점으로 사용할 수 없으므로, `entry`가 필요합니다. `name`은 노출된 전역 변수이며 `formats`이 `'umd'` 또는 `'iife'`를 포함할 때 필요합니다. 기본 `formats`은 `['es', 'umd']` 입니다. `fileName`은 패키지 파일 출력의 이름이며, 기본값은 package.json 파일의 name 옵션입니다. 또한 `format`을 인수로 취하는 함수로도 정의될 수 있습니다.
 
@@ -787,7 +787,7 @@ export default defineConfig({
 - **기본값:** `undefined`
 - **참고:** [서버 측 렌더링](/guide/ssr)
 
-  서버 측 렌더링으로 빌드합니다. 설정 값은 SSR 항목을 직접 지정하는 문자열이거나, `rollupOptions.input`을 통해 SSR 항목을 지정해야 하는 `ture`가 될 수 있습니다.
+  서버 측 렌더링으로 빌드합니다. 설정 값은 SSR 항목을 직접 지정하는 문자열이거나, `rollupOptions.input`을 통해 SSR 항목을 지정해야 하는 `true`가 될 수 있습니다.
 
 ### build.minify {#build-minify}
 
@@ -858,7 +858,7 @@ export default defineConfig({
 
   서버의 포트를 지정합니다. 포트가 이미 사용 중인 경우에는 Vite가 자동으로 사용 가능한 다음 포트로 설정되기에 실제 서버 포트가 아닐 수 있습니다.
 
-**예시:**
+**예제:**
 
 ```js
 export default defineConfig({
@@ -880,7 +880,7 @@ export default defineConfig({
 
 ### preview.https {#preview-https}
 
-- **Type:** `boolean | https.ServerOptions`
+- **타입:** `boolean | https.ServerOptions`
 - **기본값:** [`server.https`](#server_https)
 
   TLS + HTTP/2를 활성화합니다. [`server.proxy`](#server-proxy) 옵션이 함께 사용되는 경우에만 TLS로 다운그레이드됩니다.
@@ -938,7 +938,6 @@ export default defineConfig({
     }
   })
   ```
-
   :::
 
 ### optimizeDeps.include {#optimizedeps-include}
@@ -959,7 +958,7 @@ export default defineConfig({
 
 ## SSR 옵션 {#ssr-options}
 
-:::warning 실험중입니다
+:::warning 실험적 기능
 SSR 옵션은 마이너 릴리즈에서 조정될 수 있습니다.
 :::
 

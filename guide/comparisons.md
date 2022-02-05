@@ -2,7 +2,7 @@
 
 ## Snowpack {#snowpack}
 
-[Snowpack](https://www.snowpack.dev/)은 Vite와 범위가 매우 유사한 번들없는 기본 ESM 개발 서버입니다. 다른 구현 세부 사항 외에도 두 프로젝트는 기존 도구에 비해 기술적 이점 측면에서 많은 부분을 공유합니다. 또한 Vite의 종속성 사전 번들링은 Snowpack v1 (현재 [`esinstall`](https://github.com/snowpackjs/snowpack/tree/main/esinstall))에서 영감을 받았습니다. 두 프로젝트의 주요 차이점은 다음과 같습니다.
+[Snowpack](https://www.snowpack.dev/)은 Vite와 범위가 매우 유사한 번들없는 기본 ESM 개발 서버입니다. 다른 구현 세부 사항 외에도 두 프로젝트는 기존 도구에 비해 기술적 이점 측면에서 많은 부분을 공유합니다. 또한 Vite의 디펜던시 사전 번들링은 Snowpack v1 (현재 [`esinstall`](https://github.com/snowpackjs/snowpack/tree/main/esinstall))에서 영감을 받았습니다. 두 프로젝트의 주요 차이점은 다음과 같습니다.
 
 **프로덕션 빌드**
 
@@ -19,17 +19,17 @@ Vite는 보다 간소화된 경험을 제공하기 위해 하나의 단일 번�
 - [자동으로 polyfill 동적으로 가져오기](./features#dynamic-import-polyfill)
 - 듀얼 모던 / 레거시 번들을 생성하고 브라우저 지원을 기반으로 올바른 번들을 자동으로 제공하는 공식 [레거시 모드 플러그인](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy).
 
-**더 빠른 종속성 사전 번들링**
+**더 빠른 디펜던시 사전 번들링**
 
-Vite는 종속성 사전 번들링을 위해 Rollup 대신 [esbuild](https://esbuild.github.io/)를 사용합니다. 이로 인해 콜드 서버 시작과 종속성 무효화에 대한 재번들링 측면에서 성능이 크게 향상됩니다.
+Vite는 디펜던시 사전 번들링을 위해 Rollup 대신 [esbuild](https://esbuild.github.io/)를 사용합니다. 이는 Cold-Starting과 같이 디펜던시를 다시 번들링 해야 하는 경우, 이 성능을 크게 향상시킵니다.
 
-**Monorepo 지원**
+**모노리포 지원**
 
-Vite는 Monorepo 설정을 처리하도록 설계되었으며, 사용자가 Monorepo기반의 Yarn, Yarn 2 그리고 PNPM을 성공적으로 사용하도록 합니다.
+Vite는 모노리포 설정을 처리하도록 설계되었으며, 사용자가 모노리포기반의 Yarn, Yarn 2 그리고 PNPM을 성공적으로 사용하도록 합니다.
 
 **css 전처리 지원**
 
-Vite는 향상된 `@import` 해상도(별칭 및 npm 종속성) 및 [내부 파일에 대한 자동 `url()` 리베이스](./features#import-inlining-and-rebasing)를 포함하여 Sass 및 Less에 대해 보다 세련된 지원을 제공합니다.
+Vite는 향상된 `@import` 해상도(별칭 및 npm 디펜던시) 및 [내부 파일에 대한 자동 `url()` 리베이스](./features#import-inlining-and-rebasing)를 포함하여 Sass 및 Less에 대해 보다 세련된 지원을 제공합니다.
 
 **높은 수준의 Vue 지원**
 

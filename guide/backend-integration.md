@@ -1,7 +1,6 @@
 # 백엔드 프레임워크와 함께 사용하기 {#backend-integration}
 
-:::tip 노트
-
+:::tip 참고
 기존 백엔드(예 : Rails, Laravel)를 사용하여 HTML을 제공하지만 에셋에 Vite를 사용하기를 원한다면 [Awesome Vite](https://github.com/vitejs/awesome-vite#integrations-with-backends)에 나열된 기존의 통합을 확인하십시오.
 
 만약 직접 설정하기를 원한다면, 아래의 가이드에 따라 수동으로 이를 구성할 수 있습니다.
@@ -52,7 +51,7 @@
    </script>
    ```
 
-3. 운영하는 경우 : `vite build`를 실행한 후에 `manifest.json`파일은 다른 에셋 파일과 함께 생성됩니다. 매니페스트 파일 예시는 다음과 같습니다.
+3. 프로덕션 빌드 : `vite build`를 실행한 후에 `manifest.json`파일은 다른 에셋 파일과 함께 생성됩니다. 매니페스트 파일 예시는 다음과 같습니다.
 
    ```json
    {
@@ -84,8 +83,7 @@
    해시 된 파일 이름으로 링크를 렌더링하거나 지시문을 미리 로드하기 위해 이 파일을 사용할 수 있습니다(참고 : 여기에 있는 구문은 설명하기 위한 용도이며 서버 템플릿 언어로 대체합니다).
 
    ```html
-   <!-- 운영하는 경우 -->
+   <!-- 프로덕션의 경우 -->
    <link rel="stylesheet" href="/assets/{{ manifest['main.js'].css }}" />
    <script type="module" src="/assets/{{ manifest['main.js'].file }}"></script>
    ```
-   

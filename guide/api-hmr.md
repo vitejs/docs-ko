@@ -1,6 +1,6 @@
 # HMR API {#hmr-api}
 
-:::tip Note
+:::tip 참고
 해당 문서는 클라이언트 쪽 HMR API입니다. HMR 변경을 제어하는 플러그인은 [다음](./api-plugin#handlehotupdate)을 참고해 주세요.
 
 HMR API 설정은 기본적으로 프레임워크나 Vite 지원 도구 원작자를 위해 만들어졌습니다. 최종 사용자에게 있어서는 HMR은 특정 프레임워크 스타터 템플릿에 이미 처리되어 있습니다. 
@@ -30,7 +30,7 @@ interface ImportMeta {
 
 ## 필수적인 Conditional Guard {#required-conditional-guard}
 
-첫 번째로, 프로덕션에서 tree-shaking 하기 위해 HMR API를 사용하기 앞서 conditional block을 해놓는 것이 좋습니다:
+첫 번째로, 프로덕션에서 트리 셰이킹 하기 위해 HMR API를 사용하기 앞서 conditional block을 해놓는 것이 좋습니다:
 
 ```js
 if (import.meta.hot) {
@@ -54,7 +54,7 @@ if (import.meta.hot) {
 
 Hot updates를 "수용한" 모듈은 **HMR 범위**로 간주됩니다.
 
-Vite은 처음에 불러온 모듈을 교환하지 않습니다: 만약에 HMR 범위의 모듈이 dep으로부터 imports를 다시 exports 한다면, 해당 re-exports를 업데이트할 책임이 있습니다 (그리고 그러한 exports는 `let`을 사용하였을 것입니다). 게다가 경계 모듈에서 체인 위에 있는 importers에게는 변화가 되었다고 알리지 않습니다.
+Vite은 처음에 불러온 모듈을 교환하지 않습니다: 만약에 HMR 범위의 모듈이 디펜던시로부터 imports를 다시 exports 한다면, 해당 re-exports를 업데이트할 책임이 있습니다 (그리고 그러한 exports는 `let`을 사용하였을 것입니다). 게다가 경계 모듈에서 체인 위에 있는 importers에게는 변화가 되었다고 알리지 않습니다.
 
 Vite의 간소화된 HMR 기능은 프록시 모듈을 생산하는 것과 같은 비용이 큰일을 하지 않고서 대부분의 개발 환경에서 충분합니다.
 
@@ -113,7 +113,7 @@ if (import.meta.hot) {
 
 ## `hot.on(event, cb)` {#hot-on-event-cb}
 
-HMR 이벤트를 들을 수 있습니다.
+HMR 이벤트에 대한 핸들러를 정의합니다.
 
 다음 HMR 이벤트들은 Vite에서 자동적으로 호출됩니다:
 

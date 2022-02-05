@@ -1,4 +1,4 @@
-# 정적 사이트로 배포하기 {#deploying-a-static-site}
+# 정적 웹 페이지로 배포하기 {#deploying-a-static-site}
 
 이 곳의 내용은 아래와 같이 설정하였다고 가정한 상태에서 진행합니다.
 
@@ -15,9 +15,9 @@
 }
 ```
 
-한 가지 유의할 것은, `vite preview` 명령은 로컬에서 어떤 형태로 빌드가 되는지 미리 확인하기 위한 용도일 뿐이며, 실제 배포(Production) 서버를 의미하지는 않습니다.
+한 가지 유의할 점은, `vite preview` 명령은 로컬에서 어떤 형태로 빌드가 되는지 미리 확인하기 위한 용도일 뿐이며, 실제 배포용 서버를 의미하지는 않습니다.
 
-::: tip NOTE
+::: tip 참고
 이 가이드는 Vite 기반의 사이트를 정적(Static)으로 배포하기 위한 방법을 설명하고 있습니다. 물론 Vite는 서버 측 렌더링(SSR, Server Side Rendering)을 지원하고 있으나, 현재는 실험적인 기능입니다. 참고로 '서버 측 렌더링'이란, Node.js를 이용해 동일한 웹 애플리케이션을 HTML로 사전에 렌더링한 뒤, 이를 클라이언트에게 제공하는 방식의 프런트엔드 프레임워크를 의미합니다. 이에 대해 더 알고자 한다면 [SSR 가이드](./ssr)를 참고해주세요. 만약 기존에 사용하고 있는 서버측 프레임워크(Ror, Laravel 등)가 있다면, [백엔드 통합 가이드](./backend-integration)를 참고해주세요.
 :::
 
@@ -54,11 +54,11 @@ $ npm run preview
 
 이렇게 설정한 경우 http://localhost:8080 을 기준으로 `preview` 명령이 실행됩니다.
 
-::: tip 노트
+::: tip 참고
 `serve`에서 `preview`로 스크립트의 이름을 바꾸는 경우, 일부 패키지 매니저에서 [Pre & Post 스크립트](https://docs.npmjs.com/cli/v7/using-npm/scripts#pre--post-scripts)를 처리하는 방식으로 인해 문제가 발생될 수 있습니다.
 :::
 
-## GitHub Pages 배포 {#github-pages}
+## GitHub Pages {#github-pages}
 
 1. `vite.config.js` 파일 내 `base` 설정 값을 적절하게 설정합니다.
 
@@ -100,7 +100,7 @@ $ npm run preview
 물론 CI 툴을 이용해 위 스크립트 기반으로 배포가 자동으로 이루어지게끔 설정이 가능합니다.
 :::
 
-### Travis CI를 이용한 GitHub Pages 배포 {#github-pages-and-travis-ci}
+### GitHub Pages 그리고 Travis CI {#github-pages-and-travis-ci}
 
 1. `vite.config.js` 파일 내 `base` 설정 값을 적절하게 지정합니다.
 
@@ -126,7 +126,7 @@ $ npm run preview
      provider: pages
      skip_cleanup: true
      local_dir: dist
-     # Travis가 리포지토리에 Push 할 수 있도록 GitHub에서 $GITHUB_TOKEN을 생성합니다.
+     # Travis가 리포지터리에 Push 할 수 있도록 GitHub에서 $GITHUB_TOKEN을 생성합니다.
      # 생성한 $GITHUB_TOKEN의 값은 Travis 설정 페이지에서 환경 변수로 지정해 사용할 수 있어요.
      github_token: $GITHUB_TOKEN
      keep_history: true
@@ -247,7 +247,7 @@ $ npm run preview
    }
    ```
 
-   이러한 방식으로 배포될 사이트에 대한 설정이 가능합니다. 더 많은 정보가 필요하다면 [heroku-buildpack-static](https://github.com/heroku/heroku-buildpack-static) 리포지토리를 참고해주세요.
+   이러한 방식으로 배포될 사이트에 대한 설정이 가능합니다. 더 많은 정보가 필요하다면 [heroku-buildpack-static](https://github.com/heroku/heroku-buildpack-static) 리포지터리를 참고해주세요.
 
 5. Heroku Git remote를 설정해주세요.
 

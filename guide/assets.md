@@ -3,24 +3,24 @@
 다음 두 개의 주제와 관련있는 섹션입니다.
 
 - [Public Base Path](./build#public-base-path)
-- [`assetsInclude` config option](/config/#assetsinclude)
+- [`assetsInclude` 설정 옵션](/config/#assetsinclude)
 
-## URL을 통해 에셋 Import 하기 {#importing-asset-as-url}
+## URL을 통해 에셋 가져오기 {#importing-asset-as-url}
 
-정적 에셋을 Import하게 되면 에셋에 접근할 수 있는 URL이 반환됩니다.
+정적 에셋을 가져오게 되면 에셋에 접근할 수 있는 URL이 반환됩니다.
 
 ```js
 import imgUrl from './img.png'
 document.getElementById('hero-img').src = imgUrl
 ```
 
-예를 들어, `imgUrl` 객체는 개발 시 `/img.png` 값으로 할당되겠으나, 실제 배포 버전에서는 `/assets/img.2d8efhg.png`와 같은 값\*이 할당됩니다. (\* 여기서 `2d8efhg`는 해시 값을 의미합니다.)
+예를 들어, `imgUrl` 객체는 개발 시 `/img.png` 값으로 할당되겠으나, 실제 프로덕션 버전에서는 `/assets/img.2d8efhg.png`와 같은 값\*이 할당됩니다. (\* 여기서 `2d8efhg`는 해시 값을 의미합니다.)
 
 Webpack의 `file-loader`와 비슷한데, 하나 차이점이 있다면 Vite는 절대 경로와 상대 경로 둘 다 사용할 수 있습니다.
 
 - `url()`로 참조되는 CSS의 경우 동일한 방식으로 동작합니다.
 
-- 만약 Vue 플러그인을 사용한다면, [Vue SFC](https://v3.vuejs.org/guide/single-file-component.html) 에셋의 경우 자동으로 변환되어 Import 됩니다.
+- 만약 Vue 플러그인을 사용한다면, [Vue SFC](https://v3.vuejs.org/guide/single-file-component.html) 에셋의 경우 자동으로 변환되어 가져와집니다.
 
 - 일반적인 이미지, 미디어, 폰트 파일 타입은 자동으로 에셋 목록에 포함됩니다. 물론 [`assetsInclude` 옵션](/config/#assetsinclude)을 이용해 더 많은 파일 타입을 포함하도록 할 수 있습니다.
 
@@ -39,7 +39,7 @@ CSS.paintWorklet.addModule(workletURL)
 
 ### 문자열 형태로 에셋 가져오기 {#importing-asset-as-string}
 
-`?raw` 접미사를 붙여 Import하는 에셋은 문자열 형태로 가져와지게 됩니다.
+`?raw` 접미사를 붙여 가져오는 에셋은 문자열 형태로 가져와지게 됩니다.
 
 ```js
 import shaderString from './shader.glsl?raw'
@@ -50,7 +50,7 @@ import shaderString from './shader.glsl?raw'
 스크립트는 웹 워커로 가져올 수 있는데, 이 때는 `?worker` 접미사를 이용합니다.
 
 ```js
-// 배포 시에는 청크로 분리됩니다.
+// 프로덕션 빌드 시에는 청크로 분리됩니다.
 import Worker from './shader.js?worker'
 const worker = new Worker()
 ```
@@ -74,7 +74,7 @@ import InlineWorker from './shader.js?worker&inline'
 
 - `robots.txt`와 같이 소스 코드에서 참조되지 않는 에셋
 - 해싱 없이 항상 같은 이름을 갖는 에셋
-- 또는 URL을 얻기 위해 굳이 Import 할 필요 없는 에셋
+- 또는 URL을 얻기 위해 굳이 `import` 할 필요 없는 에셋
 
 `public` 디렉터리 아래에 에셋을 위치시키세요. 이 곳에 위치한 에셋은 개발 시에 `/` 경로에, 배포 시에는 `dist` 디렉터리에 위치하게 됩니다.
 
@@ -105,7 +105,7 @@ function getImageUrl(name) {
 }
 ```
 
-배포 버전으로 빌드 시, Vite는 번들링 및 에셋 해싱 후에도 해당 에셋에 대한 URL을 올바르게 가리키기 위해 필요한 변환 작업을 수행합니다.
+프로덕션 빌드 시, Vite는 번들링 및 에셋 해싱 후에도 해당 에셋에 대한 URL을 올바르게 가리키기 위해 필요한 변환 작업을 수행합니다.
 
 ::: warning SSR과 함께 사용하지 마세요!
 `import.meta.url`은 브라우저와 Node.js 간 서로 다른 의미를 갖기 때문에, 이 패턴은 서버-사이드 렌더링(SSR)에 Vite를 사용하는 경우 동작하지 않습니다.

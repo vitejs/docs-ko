@@ -20,9 +20,9 @@ vite는 기본적으로 최적화 된 설정을 제공하지만, [Plugin API](./
 
 - 개발 시: 반드시 [Native ESM dynamic import](https://caniuse.com/es6-module-dynamic-import)를 지원하는 브라우저를 이용해야 합니다.
 
-- 배포 시: 기본적으로 [Script 태그를 이용한 Native ESM](https://caniuse.com/es6-module)을 지원하는 브라우저를 대상으로 하고 있습니다. 만일 레거시 브라우저 역시 타겟으로 하고 있다면, [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 이용해주세요. ([배포하기](./build) 섹션에서 조금 더 자세히 다룹니다.)
+- 배포 시: 기본적으로 [Script 태그를 이용한 Native ESM](https://caniuse.com/es6-module)을 지원하는 브라우저를 대상으로 하고 있습니다. 만일 레거시 브라우저 역시 타겟으로 하고 있다면, [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 이용해주세요. ([프로덕션 버전으로 빌드하기](./build) 섹션에서 조금 더 자세히 다룹니다.)
 
-## Trying Vite Online
+## 온라인에서 Vite 체험해보기
 
 [StackBlitz](https://vite.new/)에서 Vite를 온라인으로 체험해 볼 수 있습니다. Vite를 구성하기 위해 필요한 설정들을 브라우저에서 직접 실행하므로 로컬 환경과 매우 유사하며, 컴퓨터에 그 어떠한 것도 설치할 필요가 없습니다. `vite.new/{template}` 으로 이동해 사용할 프레임워크를 선택해 시작해보세요.
 
@@ -63,7 +63,7 @@ $ pnpm create vite
 
 이후에는 프롬프트 창에 출력된 메시지를 따라주세요.
 
-물론 프로젝트의 이름이나 템플릿을 지정해 프로젝트를 만들 수 있습니다. 가령, Vite를 이용해 Vue 프로젝트를 만들자고 한다면...
+물론 프로젝트의 이름이나 템플릿을 지정해 프로젝트를 만들 수 있습니다. 가령, Vite를 이용해 Vue 프로젝트를 만들자고 한다면:
 
 ```bash
 # npm 6.x
@@ -105,11 +105,11 @@ npx degit user/project#main my-project
 
 만들어진 Vite 프로젝트를 유심히 보면 `index.html` 파일이 `public` 디렉터리가 아닌 프로젝트의 루트에 위치해 있다는 것을 발견할 수 있습니다. 의도적으로 이렇게 위치시킨 것인데, 추가적인 번들링 과정 없이 `index.html` 파일이 앱의 진입점이 되게끔 하기 위함입니다.
 
-vite는 `index.html` 파일을 소스 코드이자 JavaScript 모듈 그래프를 구성하는 요소 중 하나로 취급하고 있습니다. 다시말해, `<script type="module" src="...">` 태그를 이용해 JavaScript 소스 코드를 가져온다는 의미이며, 인라인으로 작성된 `<script type="module">`이나 `<link href>`와 같은 CSS 역시 Vite에서 취급이 가능합니다. 추가적으로, Vite는 `index.html` 내에 존재하는 URL에 대해 `%PUBLIC_URL%`과 같은 Placeholder 없이 사용할 수 있도록 URL 베이스를 자동으로 맞춰줍니다.
+Vite는 `index.html` 파일을 소스 코드이자 JavaScript 모듈 그래프를 구성하는 요소 중 하나로 취급하고 있습니다. 다시말해, `<script type="module" src="...">` 태그를 이용해 JavaScript 소스 코드를 가져온다는 의미이며, 인라인으로 작성된 `<script type="module">`이나 `<link href>`와 같은 CSS 역시 Vite에서 취급이 가능합니다. 추가적으로, Vite는 `index.html` 내에 존재하는 URL에 대해 `%PUBLIC_URL%`과 같은 Placeholder 없이 사용할 수 있도록 URL 베이스를 자동으로 맞춰줍니다.
 
-vite는 정적(Static) HTTP 서버와 비슷하게 "루트 디렉터리"라는 개념을 갖고 있습니다. 향후 `<root>`라는 이름으로 문서 내에서 보게 되는데, 이는 Absolute URL을 프로젝트 루트를 가리키게끔 함으로써 일반적인 정적 파일 서버와 동일하게 코드를 작성할 수 있게 됩니다. 또한 vite는 프로젝트 루트 외부에서도 디펜던시를 가져올 수 있게끔 구현했는데, 이를 이용하면 모노리포 구성 등 다양한 작업이 가능합니다.
+Vite는 정적(Static) HTTP 서버와 비슷하게 "루트 디렉터리"라는 개념을 갖고 있습니다. 향후 `<root>`라는 이름으로 문서 내에서 보게 되는데, 이는 Absolute URL을 프로젝트 루트를 가리키게끔 함으로써 일반적인 정적 파일 서버와 동일하게 코드를 작성할 수 있게 됩니다. 또한 Vite는 프로젝트 루트 외부에서도 디펜던시를 가져올 수 있게끔 구현했는데, 이를 이용하면 모노리포 구성 등 다양한 작업이 가능합니다.
 
-또한 vite는 여러 `.html` 파일을 앱의 진입점으로 하는 [Multi-page apps](./build#multi-page-app)를 지원하고 있습니다.
+또한 Vite는 여러 `.html` 파일을 앱의 진입점으로 하는 [Multi-page apps](./build#multi-page-app)를 지원하고 있습니다.
 
 #### 프로젝트 루트 지정 {#specifying-alternative-root}
 
@@ -134,7 +134,7 @@ Vite CLI와 함께 `--port`, `--https`와 같은 옵션을 사용할 수 있습�
 
 ## 릴리즈되지 않은 Vite 사용하기 {#using-unreleased-commits}
 
-만약 아직 릴리즈되지 않은 Vite를 사용하고자 한다면, 먼저 [Vite 리포지토리](https://github.com/vitejs/vite)를 로컬 컴퓨터로 클론한 뒤 이를 빌드해 사용하는 방법이 있습니다. ([pnpm](https://pnpm.io/)가 필요해요.)
+만약 아직 릴리즈되지 않은 Vite를 사용하고자 한다면, 먼저 [Vite 리포지터리](https://github.com/vitejs/vite)를 로컬 컴퓨터로 클론한 뒤 이를 빌드해 사용하는 방법이 있습니다. ([PNPM](https://pnpm.io/)이 필요해요.)
 
 ```bash
 git clone https://github.com/vitejs/vite.git

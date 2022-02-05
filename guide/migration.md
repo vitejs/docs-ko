@@ -115,7 +115,7 @@ React의 Fast Refresh는 이제 [`@vitejs/plugin-react`](https://github.com/vite
 }
 ```
 
-JS 청크 파일의 경우, 사전 로드 지시문(Preload Directives)을 렌더링하는 데 사용할 수 있도록 가져와진(Imported) 청크도 나열됩니다.
+JS 청크 파일의 경우, 사전 로드 지시문(Preload Directives)을 렌더링하는 데 사용할 수 있도록 가져와진(Import) 청크도 나열됩니다.
 
 ## 플러그인 개발자를 위해 {#for-plugin-authors}
 

@@ -20,11 +20,11 @@
 
 ### [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)
 
-- 배포버전 빌드를 위한 이전 브라우저 지원을 제공합니다.
+- 프로덕션 빌드를 위한 이전 브라우저 지원을 제공합니다.
 
 ## 커뮤니티 플러그인 {#community-plugins}
 
-[awesome-vite](https://github.com/vitejs/awesome-vite) 을 확인해 보세요 - 또한 그곳에서 PR을 제출하여 여러분의 플러그인을 목록에 올릴 수 있습니다.
+[awesome-vite](https://github.com/vitejs/awesome-vite)를 확인해 보세요. 또한 그곳에서 PR을 제출하여 여러분의 플러그인을 목록에 올릴 수 있습니다.
 
 ## `Rollup` 플러그인 {#rollup-plugins}
 

@@ -4,9 +4,9 @@
 
 브라우저에서 ESM(ES Modules)을 지원하기 전까지는, JavaScript 모듈화를 네이티브 레벨에서 진행할 수 없었습니다. 따라서 개발자들은 "번들링(Bundling)\*"이라는 우회적인 방법을 사용할 수 밖에 없었죠. (\* 번들링: 모듈화된 소스 코드를 브라우저에서 실행할 수 있는 파일로 한데 묶어 연결해주는 작업)
 
-[Webpack](https://webpack.js.org/), [Rolup](https://rollupjs.org) 그리고 [Parcel](https://parceljs.org/)과 같은 도구는 이런 번들링 작업을 진행해줌으로써 프런트엔드 개발자의 생산성을 크게 향상시켰습니다.
+[Webpack](https://webpack.js.org/), [Rollup](https://rollupjs.org) 그리고 [Parcel](https://parceljs.org/)과 같은 도구는 이런 번들링 작업을 진행해줌으로써 프런트엔드 개발자의 생산성을 크게 향상시켰습니다.
 
-하지만, 1000개의 JavaScript 모듈이 된 거대한 프로젝트라면 어떨까요? 실제로 이러한 상황을 어렵지 않게 마주할 수 있으며, 이 경우 Webpack과 같은 JavaScript 기반의 도구는 병목 현상이 발생하곤 합니다. (개발 서버를 실행하는 데 있어 비합리적으로 긴 시간을 기다려 본 적이 있나요? 또는 HMR을 사용할 때 편집한 코드가 브라우저에 반영되기까지 수 초 이상이 소요되어 답답했던 적이 있나요?)
+하지만, 1000개의 JavaScript 모듈이 있는 거대한 프로젝트라면 어떨까요? 실제로 이러한 상황을 어렵지 않게 마주할 수 있으며, 이 경우 Webpack과 같은 JavaScript 기반의 도구는 병목 현상이 발생하곤 합니다. (개발 서버를 실행하는 데 있어 비합리적으로 긴 시간을 기다려 본 적이 있나요? 또는 HMR을 사용할 때 편집한 코드가 브라우저에 반영되기까지 수 초 이상이 소요되어 답답했던 적이 있나요?)
 
 vite는 이러한 것에 초점을 맞춰, 브라우저에서 지원하는 ES Modules(ESM) 및 네이티브 언어로 작성된 JavaScript 도구 등을 활용해 문제를 해결하고자 합니다.
 
@@ -18,7 +18,7 @@ vite는 이 문제를 **dependencies** 그리고 **source code** 두 가지 카�
 
 - **Dependencies**: 개발 시 그 내용이 바뀌지 않을 일반적인(Plain) JavaScript 소스 코드입니다. 기존 번들러로는 컴포넌트 라이브러리와 같이 몇 백 개의 JavaScript 모듈을 갖고 있는 매우 큰 디펜던시에 대한 번들링 과정이 매우 비효율적이었고 많은 시간을 필요로 했습니다.
 
-  Vite의 [Pre-bundling](./dep-pre-bundling) 기능은 [Esbuild](https://esbuild.github.io/)를 사용하고 있습니다. Go로 작성된 Esbuild는 Webpack, Parcel과 같은 기존의 번들러 대비 10-100배 빠른 번들링 속도를 보였죠.
+  Vite의 [사전 번들링](./dep-pre-bundling) 기능은 [Esbuild](https://esbuild.github.io/)를 사용하고 있습니다. Go로 작성된 Esbuild는 Webpack, Parcel과 같은 기존의 번들러 대비 10-100배 빠른 번들링 속도를 보였죠.
 
 - **Source code**: JSX, CSS 또는 Vue/Svelte 컴포넌트와 같이 컴파일링이 필요하고, 수정 또한 매우 잦은 Non-plain JavaScript 소스 코드는 어떻게 할까요? (물론 이들 역시 특정 시점에서 모두 불러올 필요는 없습니다.)
 
@@ -46,10 +46,10 @@ vite는 이 문제를 **dependencies** 그리고 **source code** 두 가지 카�
 
 따라서, 모든 사용자 경험을 충족시키기 위해서라도 배포 시에는 번들링 과정이 필수적입니다. 이것이 바로 vite가 미리 설정된 [빌드 커맨드](./build)를 이용하고, [빌드 퍼포먼스 최적화](./features#build-optimizations)를 진행하는 이유입니다.
 
-## 왜 번들링(배포) 시에는 Esbuild를 사용하지 않나요? {#why-not-bundle-with-esbuild}
+## 왜 번들링 시에는 Esbuild를 사용하지 않나요? {#why-not-bundle-with-esbuild}
 
-`Esbuild`는 굉장히 빠른 속도로 번들링이 가능하다는 장점이 있으나, 번들링에 필수적으로 요구되는 기능인 코드 분할(Code-splitting) 및 CSS와 관련된 처리가 아직 미비합니다. Vite에서 사용중인 Rollup은 이에 대해 조금 더 성숙하고 유연한 처리가 가능하게끔 구현되어 있기에 현재로서는 이를 사용하고 있으며, 향후 `Esbuild`가 안정화 되었을 때 어떤 프로덕션 번들링 도구가 적절할 것인지 다시 논의할 예정입니다.
+`Esbuild`는 굉장히 빠른 속도로 번들링이 가능하다는 장점이 있으나, 번들링에 필수적으로 요구되는 기능인 코드 분할(Code-splitting) 및 CSS와 관련된 처리가 아직 미비합니다. Vite에서 사용중인 Rollup은 이에 대해 조금 더 검정되었고 유연한 처리가 가능하게끔 구현되어 있기에 현재로서는 이를 사용하고 있으며, 향후 `Esbuild`가 안정화 되었을 때 어떤 프로덕션 번들링 도구가 적절할 것인지 다시 논의할 예정입니다.
 
-## Vite과 다른 번들러 도구의 차이점 {#how-is-vite-different-from-x}
+## Vite와 다른 도구의 차이점 {#how-is-vite-different-from-x}
 
-[다른 번들러와의 차이점](./comparisons) 섹션에서 Vite과 다른 번들러 도구의 차이점에 대해 자세히 다루고 있습니다.
+[다른 빌드 도구와의 차이점](./comparisons) 섹션에서 Vite와 다른 번들러 도구의 차이점에 대해 자세히 다루고 있습니다.

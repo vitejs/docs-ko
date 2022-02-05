@@ -1,16 +1,16 @@
 # 서버 측 렌더링 (SSR) {#server-side-rendering}
 
-:::warning 실험적인 기능
+:::warning 실험적 기능
 SSR은 현재 실험적인 기능이며 버그가 있거나 지원하지 않는 사례가 발생될 수 있습니다. 자신의 책임 아래 진행하시기 바랍니다.
 :::
 
-:::tip Note
+:::tip 참고
 SSR은 동일한 전체 사이트를 Node.js에서 동작시키고, 이를 HTML로 사전 렌더링 한 후, 마지막으로 이를 클라이언트의 프런트엔드 프레임워크(가령 React, Preact, Vue 및 Svelte와 같은)에서 가져오도록 하는 기능입니다. 만약 기존에 사용하고 있었던 서버 사이드 프레임워크와의 연동을 원한다면 [백엔드 프레임워크와 함께 사용하기](./backend-integration)를 참고하시기 바랍니다.
 
 또한, 아래의 가이드는 선택한 프레임워크에서 SSR을 적용해 보았다고 가정하며, Vite에서는 이를 어떻게 적용할 수 있는지에 대한 세부 정보에만 초점을 맞추었습니다.
 :::
 
-:::warning Low-level API
+:::warning 저수준 API
 이 내용은 라이브러리 및 프레임워크 개발자들을 위한 저수준 API 입니다. 만약 일반적인 애플리케이션을 만드는 것이 목적이라면, 먼저 [Awesome Vite SSR](https://github.com/vitejs/awesome-vite#ssr)에서 SSR 플러그인과 관련 툴을 확인해주세요. Vite의 저수준의 네이티브 API 기반으로 많은 수의 프로젝트들이 성공적으로 구축되어 있습니다.
 :::
 
@@ -57,7 +57,7 @@ if (import.meta.env.SSR) {
 }
 ```
 
-이러한 코드는 빌드 중에 정적으로 대체되기에, 사용하지 않는 분기문에 대해서는 트리-쉐이킹\*을 적용합니다. (\* 트리-쉐이킹: Tree-shaking, 사용하지 않는 코드를 제거하는 기법 / [참고](https://webpack.js.org/guides/tree-shaking/))
+이러한 코드는 빌드 중에 정적으로 대체되기에, 사용하지 않는 분기문에 대해서는 트리-쉐이킹\*을 적용합니다. (\* 트리 셰이킹: Tree-shaking, 사용하지 않는 코드를 제거하는 기법 / [참고](https://webpack.js.org/guides/tree-shaking/))
 
 ## 개발 서버 구성하기 {#setting-up-the-dev-server}
 
@@ -148,7 +148,7 @@ app.use('*', async (req, res, next) => {
   }
 ```
 
-## 프로덕션을 위해 빌드하기 {#building-for-production}
+## 프로덕션 빌드 {#building-for-production}
 
 SSR 프로젝트를 프로덕션으로 제공하기 위해서는 다음이 필요합니다:
 
@@ -221,7 +221,7 @@ Vite는 아래와 같은 휴리스틱을 기반으로 자동화는 SSR 외부화
 
 향후 이러한 휴리스틱은 프로젝트에 `type: "module"`이 활성화되어 있는지 여부를 감지하도록 개선될 것이며, Vite는 SSR 과정 중 동적인 `import()`를 통해 노드와 호환되는 ESM 빌드를 제공하는 디펜던시를 외부화하도록 할 것입니다.
 
-:::warning 별칭을 이용하는 경우
+:::warning 별칭을 사용하는 경우
 만약 어떤 하나의 패키지를 다른 패키지를 리다이렉트하는 별칭을 사용하는 경우, 외부화된 SSR 디펜던시에서도 사용할 수 있도록 `node_modules` 패키지에 별칭을 지정할 수 있습니다. [Yarn](https://classic.yarnpkg.com/en/docs/cli/add/#toc-yarn-add-alias)과 [pnpm](https://pnpm.js.org/en/aliases) 모두 `npm:` 접두사를 사용하여 별칭을 지정할 수 있습니다.
 :::
 
@@ -233,7 +233,7 @@ Vue 또는 Svelte와 같은 일부 프레임워크는 클라이언트 또는 SSR
 - `load`
 - `transform`
 
-**Example:**
+**예제:**
 
 ```js
 export function mySSRPlugin() {
@@ -250,7 +250,7 @@ export function mySSRPlugin() {
 
 `load`와 `transform` 메서드의 옵션 객체는 어디까지나 선택 사항일 뿐입니다. 현재 Rollup에서 이 객체를 사용하지는 않으나, 향후 메타데이터로 이를 확장할 수 있습니다.
 
-:::tip 참고 사항
+:::tip 참고
 Vite 2.7 이전에는 `options` 객체를 사용하는 대신 `ssr` 매개변수를 이용했습니다. 따라서 이와 관련된 모든 프레임워크와 플러그인이 업데이트 될 것이지만, 간혹 이전 API를 이용하는 경우를 마주할 수도 있습니다.
 :::
 

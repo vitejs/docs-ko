@@ -1,10 +1,10 @@
-# 배포 버전으로 빌드하기 {#building-for-production}
+# 프로덕션 버전으로 빌드하기 {#building-for-production}
 
-앱을 어느정도 완성하셨나요? 배포 버전으로 빌드하고자 한다면 `vite build` 명령을 실행해주세요. 빌드 시 기본적으로 `<root>/index.html` 파일이 빌드를 위한 진입점(Entry point)으로 사용되며, 정적 호스팅을 위한 형태로 진행됩니다. 추가적으로, GitHub Pages와 같은 정적 호스팅 서비스를 위한 빌드 방법을 알고싶다면 [정적 사이트 배포하기](./static-deploy) 섹션을 참고해주세요.
+앱을 어느정도 완성하셨나요? 프로덕션 버전으로 빌드하고자 한다면 `vite build` 명령을 실행해주세요. 빌드 시 기본적으로 `<root>/index.html` 파일이 빌드를 위한 진입점(Entry point)으로 사용되며, 정적 호스팅을 위한 형태로 진행됩니다. 추가적으로, GitHub Pages와 같은 정적 호스팅 서비스를 위한 빌드 방법을 알고싶다면 [정적 웹 페이지로 배포하기](./static-deploy) 섹션을 참고해주세요.
 
 ## 브라우저 지원 현황 {#browser-compatibility}
 
-빌드된 배포 버전의 경우 모던 JavaScript를 지원하는 브라우저에서 동작한다고 가정합니다. 따라서, *'기본적으로'* 모든 코드는 [네이티브 ESM 태그](https://caniuse.com/es6-module)와 [네이티브 ESM의 Dynamic Import](https://caniuse.com/es6-module-dynamic-import)를 지원하는 브라우저를 타깃으로 하고 있습니다. 참고로 Vite는 아래의 [Browserlist](https://github.com/browserslist/browserslist) 쿼리를 사용합니다.
+빌드된 프로덕션 버전의 경우 모던 JavaScript를 지원하는 브라우저에서 동작한다고 가정합니다. 따라서, *'기본적으로'* 모든 코드는 [네이티브 ESM 태그](https://caniuse.com/es6-module)와 [네이티브 ESM의 Dynamic Import](https://caniuse.com/es6-module-dynamic-import)를 지원하는 브라우저를 타깃으로 하고 있습니다. 참고로 Vite는 아래의 [Browserlist](https://github.com/browserslist/browserslist) 쿼리를 사용합니다.
 
 ```
 defaults and supports es6-module and supports es6-module-dynamic-import, not opera > 0, not samsung > 0, not and_qq > 0
@@ -93,7 +93,7 @@ module.exports = defineConfig({
 })
 ```
 
-## Library 모드 {#library-mode}
+## 라이브러리 모드 {#library-mode}
 
 만약 브라우저 기반의 라이브러리를 개발하고 있다면, 라이브러리 갱신 시마다 테스트 페이지에서 이를 불러오는 데 많은 시간을 소모할 것입니다. Vite는 `index.html`을 이용해 좀 더 나은 개발 환경(경험)을 마련해줍니다.
 

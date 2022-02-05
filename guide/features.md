@@ -2,7 +2,7 @@
 
 기본적으로 vite는 여타 정적 파일 서버와 크게 다르지 않습니다. 다만, vite는 네이티브 ESM 말고도 기존 번들러에서 제공하던 기능을 대부분 지원한다는 차이점이 있습니다.
 
-## NPM을 이용한 디펜던시 `import` 그리고 Pre-Bundling {#npm-dependency-resolving-and-pre-building}
+## NPM을 이용한 디펜던시 `import` 그리고 사전 번들링 {#npm-dependency-resolving-and-pre-building}
 
 다음 코드는 네이티브 ES에서 정상적으로 실행되지 않습니다:
 
@@ -12,7 +12,7 @@ import { someMethod } from 'my-dep'
 
 모듈의 위치를 찾을 수 없기 때문인데, vite는 다음을 기준으로 모듈을 가져오기 때문에 위 코드 역시 정상적으로 실행됩니다.
 
-1. Vite를 통해 ESM 스타일로 [미리 번들링 된](./dep-pre-bundling) CommonJS 및 UMD\* 모듈. 이 과정은 [Esbuild](https://esbuild.github.io/)를 통해 이루어지며, JavaScript 기반의 다른 번들러보다 빠른 Cold-starting이 가능합니다. (\* Universal Module Definition: CommonJS와 AMD 스타일의 모듈을 둘 다 지원하는 모듈 형태)
+1. Vite를 통해 ESM 스타일로 [사전에 번들링 된](./dep-pre-bundling) CommonJS 및 UMD\* 모듈. 이 과정은 [Esbuild](https://esbuild.github.io/)를 통해 이루어지며, JavaScript 기반의 다른 번들러보다 빠른 Cold-starting이 가능합니다. (\* Universal Module Definition: CommonJS와 AMD 스타일의 모듈을 둘 다 지원하는 모듈 형태)
 
 2. `/node_modules/.vite/my-dep.js?v=f3sf2ebd`와 같이 URL을 이용해 ESM을 지원하는 브라우저에서 모듈을 가져올 수 있도록 `import` 구문을 수정.
 
@@ -34,7 +34,7 @@ vite는 `.ts` 파일에 대한 컴파일링 및 Import 역시 지원합니다.
 
 Vite의 TypeScript 컴파일링은 [Esbuild](https://github.com/evanw/esbuild)를 이용하며, TypeScript 소스 코드를 JavaScript 소스 코드로 변환하는 작업에 대해 `tsc` 대비 약 20~30배 정도 빠른 퍼포먼스를 보이고 있습니다. (HMR은 50ms 미만)
 
-참고로 타입만을 Import하는 경우 잘못 번들링이 될 수 있으며, 이는 [타입 전용 Imports와 Exports](https://www.typescriptlang.org/ko/docs/handbook/release-notes/typescript-3-8.html#type-only-imports-and-export)를 사용하여 이 문제를 우회할 수 있습니다:
+참고로 타입만을 가져오는 경우 잘못 번들링이 될 수 있으며, 이는 [타입 전용 Imports와 Exports](https://www.typescriptlang.org/ko/docs/handbook/release-notes/typescript-3-8.html#type-only-imports-and-export)를 사용하여 이 문제를 우회할 수 있습니다:
 
 ```ts
 import type { T } from 'only/types'
@@ -49,7 +49,7 @@ export type { T }
 
 `true`로 설정해야 합니다.
 
-`esbuild`는 타입에 대한 정보 없이 변환(Transpilation)만을 수행하기에, const enum 또는 암시적으로 타입만을 가져오는(Import) 등과 같은 특정 기능을 지원하지 않습니다.
+`esbuild`는 타입에 대한 정보 없이 변환(Transpilation)만을 수행하기에, const enum 또는 암시적으로 타입만을 가져오는 것과 같은 특정 기능을 지원하지 않습니다.
 
 이를 감지하기 위해 `tsconfig.json` 내 `compilerOptions` 설정을 `"isolatedModules": true`와 같이 설정해줘야만 하며, 이 설정으로 TS가 위와 같은 상황에서 작동하지 않는 기능들에 대해 경고할 수 있게 됩니다.
 
@@ -130,7 +130,7 @@ export default defineConfig({
 
 ## CSS {#css}
 
-`.css` 파일을 Import 할 때, 기본적으로 HMR을 위해 `<style>` 태그로 변환되어 불러와지게 됩니다. 물론 String 타입의 모듈로 Import할 수도 있구요.
+`.css` 파일을 Import 할 때, 기본적으로 HMR을 위해 `<style>` 태그로 변환되어 불러와지게 됩니다. 물론 String 타입의 모듈로 가져올 수도 있구요.
 
 ```js
 import style from './style.css'
@@ -166,7 +166,7 @@ document.getElementById('foo').className = classes.red
 
 참고로, CSS 모듈에 대한 동작 방식을 입맛대로 수정할 수 있습니다. [`css.modules` 옵션](/config/#css-modules) 옵션을 참고해주세요.
 
-가령 `css.modules.localsConvention` 옵션을 camelCase로 설정하게 되면(`localsConvention: 'camelCaseOnly'`), 아래와 같이 Import 할 수 있게 됩니다.
+가령 `css.modules.localsConvention` 옵션을 camelCase로 설정하게 되면(`localsConvention: 'camelCaseOnly'`), 아래와 같이 가져올 수 있게 됩니다.
 
 ```js
 // .apply-color -> applyColor
@@ -201,7 +201,7 @@ Sass나 Less에서의 `@import` 별칭 또한 Vite에서 사용이 가능합니�
 
 ## 정적 에셋 {#static-assets}
 
-정적(Static) 에셋을 Import 하는 경우, 이에 대한 Public URL이 반환됩니다.
+정적 에셋을 Import 하는 경우, 이에 대한 Public URL이 반환됩니다.
 
 ```js
 import imgUrl from './img.png'
@@ -261,7 +261,7 @@ const modules = {
 }
 ```
 
-이렇게 Import한 `modules`를 순회하여 각 모듈에 접근할 수 있게 됩니다.
+이렇게 가져온 `modules`를 순회하여 각 모듈에 접근할 수 있게 됩니다.
 
 ```js
 for (const path in modules) {
@@ -271,7 +271,7 @@ for (const path in modules) {
 }
 ```
 
-기본적으로 `import.meta.glob` 함수를 이용하면, Dynamic Import를 이용해 Lazy하게 파일의 청크를 가져옵니다. 만약 동적(Dynamic)으로 Import하는 것이 아닌 직접 모듈을 가져오고자 한다면, `import.meta.globEager` 함수를 이용해주세요.
+기본적으로 `import.meta.glob` 함수를 이용하면, Dynamic Import를 이용해 Lazy하게 파일의 청크를 가져옵니다. 만약 동적으로(Dynamic) Import하는 것이 아니라 직접 모듈을 가져오고자 한다면, `import.meta.globEager` 함수를 이용해주세요.
 
 ```js
 const modules = import.meta.globEager('./dir/*.js')
@@ -323,7 +323,7 @@ init({
 })
 ```
 
-배포 버전으로 빌드 시 `assetsInlineLimit` 옵션\*의 값보다 작은 `.wasm` 파일은 Base64 문자열 포맷으로 변환됩니다. 그렇지 않은 경우, `dist` 디렉터리에 파일이 복사되어 요청(Fetch) 시 불러오는 방식으로 동작하게 됩니다. (\* [`assetsInlineLimit` doc](/config/#build-assetsinlinelimit))
+프로덕션 빌드 시 `assetsInlineLimit` 옵션\*의 값보다 작은 `.wasm` 파일은 Base64 문자열 포맷으로 변환됩니다. 그렇지 않은 경우, `dist` 디렉터리에 파일이 복사되어 요청(Fetch) 시 불러오는 방식으로 동작하게 됩니다. (\* [`assetsInlineLimit` doc](/config/#build-assetsinlinelimit))
 
 ## Web Workers {#web-workers}
 
@@ -335,9 +335,9 @@ import MyWorker from './worker?worker'
 const worker = new MyWorker()
 ```
 
-물론, `import` 대신 `importScripts()` 함수\*를 이용할 수도 있습니다. 다만 이 경우 개발 환경에서는 브라우저의 네이티브 API에만 의존하여 크롬에서만 동작한다는 것을 유의해주세요. 물론 배포 환경으로 빌드 시 다양한 브라우저를 지원하도록 컴파일됩니다. (\* [`importScripts()` MDN doc](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope/importScripts))
+물론, `import` 대신 `importScripts()` 함수\*를 이용할 수도 있습니다. 다만 이 경우 개발 환경에서는 브라우저의 네이티브 API에만 의존하여 크롬에서만 동작한다는 것을 유의해주세요. 물론 프로덕션 빌드 시 다양한 브라우저를 지원하도록 컴파일됩니다. (\* [`importScripts()` MDN doc](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope/importScripts))
 
-마지막으로, 기본적으로 워커의 경우 배포 시 분리된 청크로 컴파일됩니다. 만약 분리된 청크가 아니라 Base64 포맷의 문자열로 이를 사용하고자 한다면, `inline` 쿼리를 이용해주세요.
+마지막으로, 기본적으로 워커의 경우 프로덕션 빌드 분리된 청크로 컴파일됩니다. 만약 분리된 청크가 아니라 Base64 포맷의 문자열로 이를 사용하고자 한다면, `inline` 쿼리를 이용해주세요.
 
 ```js
 import MyWorker from './worker?worker&inline'

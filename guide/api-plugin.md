@@ -248,7 +248,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 - **종류:** `async`, `sequential`
 - **참고:** [ViteDevServer](./api-javascript#vitedevserver)
 
-  개발 서버를 구성하기 위한 훅입니다. 일반적으로 사용자 정의 미들웨어를 내부의 [connect](https://github.com/senchalabs/connect) 앱에 추가하기 위해 사용합니다:
+  개발 서버를 구성하기 위한 훅입니다. 일반적으로 커스텀 미들웨어를 내부의 [connect](https://github.com/senchalabs/connect) 앱에 추가하기 위해 사용합니다:
 
   ```js
   const myPlugin = () => ({
@@ -261,9 +261,9 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
   })
   ```
 
-  **내부 미들웨어 설치 이후에 호출되는 사용자 정의 미들웨어 구성하기**
+  **내부 미들웨어 설치 이후에 호출되는 커스텀 미들웨어 구성하기**
 
-  `configureServer` 훅은 내부의 미들웨어가 설치되기 전 호출됩니다. 따라서 위와 같은 방식의 사용자 정의 미들웨어는 내부의 미들웨어보다 먼저 실행됩니다. 만약 내부의 미들웨어가 설치된 **이후에** 사용자 정의 미들웨어를 호출하고자 한다면, `configureServer`의 반환 값으로 함수를 반환해주세요:
+  `configureServer` 훅은 내부의 미들웨어가 설치되기 전 호출됩니다. 따라서 위와 같은 방식의 커스텀 미들웨어는 내부의 미들웨어보다 먼저 실행됩니다. 만약 내부의 미들웨어가 설치된 **이후에** 커스텀 미들웨어를 호출하고자 한다면, `configureServer`의 반환 값으로 함수를 반환해주세요:
 
   ```js
   const myPlugin = () => ({
@@ -300,7 +300,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
   }
   ```
 
-  참고로 `configureServer`는 배포용으로 빌드할 때 호출되지 않으므로 위 예시와 같이 훅이 존재하지 않는 경우를 분기해줘야 합니다.
+  참고로 `configureServer`는 프로덕션 버전으로 빌드할 때 호출되지 않으므로 위 예시와 같이 훅이 존재하지 않는 경우를 분기해줘야 합니다.
 
 ### `transformIndexHtml` {#transformindexhtml}
 
@@ -391,7 +391,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
   - 영향을 받는 모듈 목록을 필터링하고 범위를 좁혀 더 정확하게 HMR이 동작하도록 구성합니다.
 
-  - 사용자가 직접 HMR 처리를 수행하도록 빈 배열을 반환하고 사용자 지정 이벤트를 호출합니다:
+  - 사용자가 직접 HMR 처리를 수행하도록 빈 배열을 반환하고 커스텀 이벤트를 호출합니다:
 
     ```js
     handleHotUpdate({ server }) {
@@ -404,19 +404,19 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
     }
     ```
 
-    위의 사용자 지정 이벤트는 [HMR API](./api-hmr)를 사용하여 핸들러를 등록해야 합니다(이는 동일한 플러그인의 `transform` 훅에 주입될 수 있습니다):
+    위의 커스텀 이벤트는 [HMR API](./api-hmr)를 사용하여 핸들러를 등록해야 합니다(이는 동일한 플러그인의 `transform` 훅에 주입될 수 있습니다):
 
     ```js
     if (import.meta.hot) {
       import.meta.hot.on('special-update', (data) => {
-        // 사용자 지정 업데이트 수행
+        // 커스텀 업데이트 수행
       })
     }
     ```
 
 ## 플러그인 순서 {#plugin-ordering}
 
-Vite 플러그인은 Webpack 로더와 유사한 `enforce` 속성을 추가적으로 지정하여 플러그인 애플리케이션의 순서를 조정할 수 있습니다. `enforce` 값은 `"pre"` 또는 `"post"`로 지정할 수 있으며, 이를 통해 지정되는 플러그인 순서는 다음과 같습니다:
+Vite 플러그인은 Webpack 로더와 유사한 `enforce` 프로퍼티를 추가적으로 지정하여 플러그인 애플리케이션의 순서를 조정할 수 있습니다. `enforce` 값은 `"pre"` 또는 `"post"`로 지정할 수 있으며, 이를 통해 지정되는 플러그인 순서는 다음과 같습니다:
 
 - 별칭
 - `enforce: 'pre'`로 지정된 플러그인
@@ -428,7 +428,7 @@ Vite 플러그인은 Webpack 로더와 유사한 `enforce` 속성을 추가적�
 
 ## 조건부 애플리케이션 {#conditional-application}
 
-기본적으로 플러그인은 개발 서버 및 빌드 시 모두 호출됩니다. 만약 플러그인이 개발 조건부로 호출되어야 하는 경우, `apply` 속성을 사용하여 `'build'` 또는 `'serve'` 중에만 플러그인이 호출되도록 구성해주세요:
+기본적으로 플러그인은 개발 서버 및 빌드 시 모두 호출됩니다. 만약 플러그인이 개발 조건부로 호출되어야 하는 경우, `apply` 프로퍼티를 사용하여 `'build'` 또는 `'serve'` 중에만 플러그인이 호출되도록 구성해주세요:
 
 ```js
 function myPlugin() {
@@ -461,7 +461,7 @@ A fair number of Rollup plugins will work directly as a Vite plugin (e.g. `@roll
 
 만약 Rollup 플러그인이 빌드 단계에서만 의미가 있는 경우라면, `build.rollupOptions.plugins` 옵션에 해당 플러그인을 사용하도록 지정할 수 있습니다.
 
-물론 Vite 전용 속성으로 기존 Rollup 플러그인을 보강할 수도 있습니다:
+물론 Vite 전용 프로퍼티로 기존 Rollup 플러그인을 보강할 수도 있습니다:
 
 ```js
 // vite.config.js
