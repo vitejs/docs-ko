@@ -15,17 +15,17 @@
 이 프로젝트는 [PNPM](https://pnpm.io/ko/)을 이용합니다.
 
 ```bash
-# 1. 이 리포지터리의 사본을 로컬에 복사합니다
+# 1. 이 리포지터리를 클론합니다
 git clone https://github.com/vitejs-kr/vitejs-kr.github.io
 cd vitejs-kr.github.io
 
 # 2. 모듈을 설치합니다
 pnpm install
 
-# 3. 로컬 개발 서버를 시작합니다 (http://localhost:3000/)
+# 3. 개발 서버를 시작합니다 (http://localhost:3000/)
 pnpm dev
 
-# 4. 프로젝트를 빌드합니다. (./dist/)
+# 4. 프로젝트를 빌드합니다 (./dist/)
 pnpm build
 ```
 
@@ -47,7 +47,7 @@ pnpm build
 - `sync` 브랜치는 매일 원본 문서와의 동기화를 진행하는 목적으로 사용됩니다.
 - `gh-pages` 브랜치는 https://vitejs-kr.github.io/ 사이트 소스로 사용됩니다.
 
-### 번역에 기여하기
+### 기여하기
 
 번역에 기여해 주신 모든 분께 감사드립니다.
 
