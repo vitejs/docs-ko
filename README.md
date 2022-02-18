@@ -79,3 +79,8 @@ Heading 마지막에 `{#custom-anchor-name}`와 같은 형태로 커스텀 앵�
 ```
 [시작하기](#getting-started)
 ```
+
+커스텀 앵커를 이용하기에 일반적으로 원본 Vite 문서에 대한 한글 문서는 도메인 네임만 `vitejs-kr.github.io`로 바꿔주면 참조가 가능합니다:
+
+- 원본: https://vitejs.dev/guide/ssr.html#generating-preload-directives
+- 한글 문서: https://vitejs-kr.github.io/guide/ssr.html#generating-preload-directives
