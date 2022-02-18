@@ -767,19 +767,19 @@ export default defineConfig({
 
 ### build.manifest {#build-manifest}
 
-- **타입:** `boolean`
+- **타입:** `boolean | string`
 - **기본값:** `false`
 - **참고:** [백엔드 프레임워크와 함께 사용하기](/guide/backend-integration)
 
-  `true`로 설정하면, 빌드는 해시되지 않은 에셋 파일 이름을 해시된 버전으로의 매핑이 포함된 `manifest.json` 파일도 생성합니다. 이 파일은 서버 프레임워크에서 올바른 에셋 링크를 렌더링하는 데 사용할 수 있습니다.
+  `true`로 설정하면, 빌드는 해시되지 않은 에셋 파일 이름을 해시된 버전으로의 매핑이 포함된 `manifest.json` 파일도 생성합니다. 이 파일은 서버 프레임워크에서 올바른 에셋 링크를 렌더링하는 데 사용할 수 있습니다. 문자열 타입의 값은 매니페스트 파일의 이름으로 사용됩니다.
 
 ### build.ssrManifest {#build-ssrmanifest}
 
-- **타입:** `boolean`
+- **타입:** `boolean | string`
 - **기본값:** `false`
 - **참고:** [서버 측 렌더링](/guide/ssr)
 
-  `true`로 설정하면, 빌드는 스타일 링크와 사전 로드된 에셋 디렉티브를 결정하기 위한 SSR 매니패스트 파일을 생성합니다.
+  `true`로 설정하면, 빌드는 스타일 링크와 사전 로드된 에셋 디렉티브를 결정하기 위한 SSR 매니페스트 파일을 생성합니다. 문자열 타입의 값은 매니페스트 파일의 이름으로 사용됩니다.
 
 ### build.ssr {#build-ssr}
 
