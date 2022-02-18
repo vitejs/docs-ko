@@ -173,12 +173,27 @@ $ npm run preview
 
 ## Netlify {#netlify}
 
-1. [Netlify](https://netlify.com)에서 아래와 같은 설정으로 GitHub 프로젝트를 생성해주세요.
+1. [Netlify CLI](https://cli.netlify.com/)를 설치해주세요.
+2. `ntl init` 또는 `netlify init` 명령으로 새로운 사이트를 생성해주세요.
+3. 이제 `ntl deploy` 명령으로 배포할 수 있습니다.
 
-   - **Build Command:** `vite build` 또는 `npm run build`
-   - **Publish directory:** `dist`
+```bash
+# Netlify CLI 설치
+$ npm install -g netlify-cli
 
-2. Deploy 버튼을 눌러주세요.
+# 새로운 Netlify 사이트 생성
+$ ntl init
+
+# 검토를 위한 미기보기 형태로 배포
+$ ntl deploy
+```
+
+`ntl deploy` 명령은 기본적으로 미리보기 형태로 사이트를 배포하며, 미리보기 URL을 출력으로 보여줍니다. 만약 배포할 준비가 모두 완료되어 프로덕션 배포를 하고자 한다면 `prod` 플래그를 사용해주세요:
+
+```bash
+# 프로덕션으로 배포
+# ntl deploy --prod
+```
 
 ## Google Firebase {#google-firebase}
 
