@@ -1,7 +1,7 @@
 # Vitejs Document (korean)
 
 <p align="center">
-  <img width="200" src="./public/logo.svg">
+  <img width="400" src="./docs/logo-transparent.png">
 </p>
 
 [![Deploy](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/deploy.yml) [![Sync](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/sync.yml/badge.svg)](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/sync.yml)
