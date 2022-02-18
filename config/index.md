@@ -918,7 +918,7 @@ export default defineConfig({
 
 - **타입:** `string | string[]`
 
-  기본적으로 Vite는 index.html을 탐색하여 사전 번들링이 필요한 디펜던시를 탐지합니다. `build.rollupOptions.input`이 지정된 경우 Vite가 대신 해당 진입점을 탐색합니다.
+  기본적으로 Vite는 `index.html`을 탐색하여 사전 번들링이 필요한 디펜던시를 탐지합니다. `build.rollupOptions.input`이 지정된 경우 Vite가 대신 해당 진입점을 탐색합니다.
 
   둘 다 필요에 맞지 않는 경우, 이 옵션을 사용하여 사용자 지정 진입점들을 지정할 수 있습니다. 값은 [fast-glob 패턴](https://github.com/mrmlnc/fast-glob#basic-syntax) 또는 Vite 프로젝트 루트에서 상대적인 경로 패턴 배열이어야 합니다. 이는 기본 진입점 추론을 덮어씁니다.
 
