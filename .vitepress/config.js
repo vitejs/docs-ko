@@ -8,6 +8,9 @@ module.exports = {
   lang: 'ko',
   description: '차세대 프런트엔드 개발 툴',
   head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]],
+  vue: {
+    reactivityTransform: true
+  },
   themeConfig: {
     repo: 'vitejs-kr/vitejs-kr.github.io',
     logo: '/logo.svg',
