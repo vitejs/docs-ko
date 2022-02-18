@@ -10,7 +10,7 @@
     "@octokit/rest": "^18.6.2",
     "chalk": "^4.1.0",
     "gray-matter": "^4.0.3",
-    "vitepress": "^0.20.1",
+    "vitepress": "^0.22.2",
     "yorkie": "^2.0.0"
   },
   "scripts": {
