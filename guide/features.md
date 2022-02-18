@@ -289,7 +289,23 @@ const modules = {
 }
 ```
 
-추가적으로, Glob 패턴과 관련하여 다음의 사항을 유의해주세요.
+`import.meta.glob` 그리고 `import.meta.globEager`도 [문자열 형태로 에셋 가져오기](https://vitejs-kr.github.io/guide/assets.html#importing-asset-as-string) 기능과 유사하게 문자열로 파일을 가져올 수 있습니다. 이는 [Import Assertions](https://github.com/tc39/proposal-import-assertions#synopsis) 구문을 사용합니다.
+
+```js
+const modules = import.meta.glob('./dir/*.js', { assert: { type: 'raw' } })
+```
+
+위 코드는 다음과 같이 변환됩니다:
+
+```js
+// Vite를 통해 변환된 코드
+const modules = {
+  './dir/foo.js': '{\n  "msg": "foo"\n}\n',
+  './dir/bar.js': '{\n  "msg": "bar"\n}\n'
+}
+```
+
+추가적으로, Glob 패턴과 관련하여 다음의 사항을 유의해주세요:
 
 - 이 기능들은 Vite에서 제공하는 기능입니다. (ES 표준이나 웹 브라우저에서 제공하는 기능이 아니에요.)
 - Glob 패턴 사용 시, 상대 경로(`./`) 또는 절대 경로(`/`)만을 이용해야 합니다.
