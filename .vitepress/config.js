@@ -7,7 +7,11 @@ module.exports = {
   title: 'Vite',
   lang: 'ko',
   description: '차세대 프런트엔드 개발 툴',
-  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]],
+  head: [
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
+    ['script', { src: 'https://www.googletagmanager.com/gtag/js?id=G-V8ZS1G7X21' }],
+    ['script', {}, `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-V8ZS1G7X21');`]
+  ],
   vue: {
     reactivityTransform: true
   },
