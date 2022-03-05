@@ -319,8 +319,6 @@ Vercel로 프로젝트를 불러오고 배포까지 완료했다면, 이후 브�
 
 ## Azure Static Web Apps {#azure-static-web-apps}
 
-You can quickly deploy your Vite app with Microsoft Azure [Static Web Apps](https://aka.ms/staticwebapps) service. You need:
-
 마이크로소프트 Azure 클라우드 서비스의 [Static Web Apps](https://aka.ms/staticwebapps) 서비스를 이용해 빠르게 Vite 앱을 배포할 수 있습니다.
 
 - Azure 계정과 구독(Subscription) 키가 필요해요. [여기서 무료로 Azure 계정을 만들 수 있답니다](https://azure.microsoft.com/free).
