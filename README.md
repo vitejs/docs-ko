@@ -85,10 +85,14 @@ Heading 마지막에 `{#custom-anchor-name}`와 같은 형태로 커스텀 앵�
 - 원본: https://vitejs.dev/guide/ssr.html#generating-preload-directives
 - 한글 문서: https://vitejs-kr.github.io/guide/ssr.html#generating-preload-directives
 
-## 번역에 기여해 주신 분들
+## 기여해 주신 분들
 
 <p align="center">
    <a target="_blank" href="https://github.com/eterv"><img width="150" src="https://github.com/eterv.png" alt="eterv"></a>
    <a target="_blank" href="https://github.com/proceane"><img width="150" src="https://github.com/proceane.png" alt="proceane"></a>
    <a target="_blank" href="https://github.com/eddie0329"><img width="150" src="https://github.com/eddie0329.png" alt="eddie0329"></a>
+   <a target="_blank" href="https://github.com/junghyeonsu"><img width="150" src="https://github.com/junghyeonsu.png" alt="junghyeonsu"></a>
+   <a target="_blank" href="https://github.com/dante01yoon"><img width="150" src="https://github.com/dante01yoon.png" alt="dante01yoon"></a>
  </p>
+
+ 기여에 감사드립니다.
