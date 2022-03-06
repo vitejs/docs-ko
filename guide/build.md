@@ -43,6 +43,20 @@ module.exports = defineConfig({
 
 예를 들어, 여러 Rollup 빌드 결과(Output)를 위해 빌드 플러그인을 등록할 수도 있습니다.
 
+## 청크를 만드는 방식 {#chunking-strategy}
+
+`build.rollupOptions.manualChunks`를 사용해 청크를 분할하는 방식을 구성할 수 있습니다(자세한 사항은 [Rollup 문서](https://rollupjs.org/guide/en/#outputmanualchunks)를 참고해주세요). Vite 2.7 까지는 청크를 만들 때 기본적으로 `index`와 `vendor`를 기준으로 분할했습니다. 이 방식은 일부 SPA를 대상으로는 잘 동작했으나, Vite가 지원하고자 하는 모든 사례에 대해서 범용적으로 적용하기는 어려웠습니다. 따라서 Vite 2.8부터 `manualChunks`는 더 이상 기본적으로 수정하지 않습니다. 만약 계속 `manualChunks`를 수정하기 원한다면 `splitVendorChunkPlugin`을 사용해주세요.
+
+```js
+// vite.config.js
+import { splitVendorChunkPlugin } from 'vite'
+module.exports = defineConfig({
+  plugins: [splitVendorChunkPlugin()]
+})
+```
+
+이러한 방식은 사용자 정의 로직을 사용한 구성이 필요한 경우를 대비해 `splitVendorChunk({ cache: SplitVendorChunkCache })` 팩토리 함수로도 제공됩니다. 이 때, 빌드 감시 모드가 정상적으로 작동하기 위해서는 `cache.reset()`을 `buildStart` 훅에서 호출해야 합니다.
+
 ## 파일 변경 시 다시 빌드하기 {#rebuild-on-files-changes}
 
 `vite build --watch` 명령을 통해 Rollup Watcher를 활성화 할 수 있습니다. 또는, `build.watch` 옵션에서 [`WatcherOptions`](https://rollupjs.org/guide/en/#watch-options)를 직접 명시할 수도 있습니다.
