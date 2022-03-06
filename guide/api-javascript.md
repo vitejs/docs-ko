@@ -93,7 +93,7 @@ interface ViteDevServer {
    */
   ssrLoadModule(
     url: string,
-    options?: { isolated?: boolean }
+    options?: { fixStacktrace?: boolean }
   ): Promise<Record<string, any>>
   /**
    * SSR 에러 stacktrace 수정하기
