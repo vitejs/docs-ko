@@ -72,6 +72,8 @@ module.exports = defineConfig({
 })
 ```
 
+`--watch` 플래그가 활성화된 상태에서 `vite.config.js` 또는 번들링 된 파일을 변경하게 되면 다시 빌드가 시작됩니다.
+
 ## Multi-Page App {#multi-page-app}
 
 아래와 같은 구조의 소스 코드를 갖고 있다고 가정해봅시다.
