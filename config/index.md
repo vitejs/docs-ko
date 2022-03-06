@@ -138,9 +138,14 @@ export default defineConfig(async ({ command, mode }) => {
 
   - 매치되는 부분이 단어 경계 (`\b`)로 둘러쌓인 경우에만 대체가 수행됩니다.
 
+  ::: warning
   이것은 아무런 구문 분석 없이 간단한 텍스트 대체로 구현되므로, 상수에만 `define` 을 사용하는 것을 추천합니다.
 
   예를 들어, `process.env.FOO` 와 `__APP_VERSION__` 는 서로 잘 맞습니다. 하지만 `process` 또는 `global` 을 이 옵션에 넣어서는 안됩니다. 대신에 변수를 끼워넣거나 폴리필로 사용할 수 있습니다.
+  :::
+
+  ::: tip 참고
+  TypeScript를 사용할 때 타입 체크 및 인텔리센스를 활성화하고자 한다면, `env.d.ts` 또는 `vite-env.d.ts` 파일에 해당 타입을 선언해줘야 합니다.
 
   예제:
 
@@ -148,6 +153,8 @@ export default defineConfig(async ({ command, mode }) => {
   // vite-end.d.ts
   declare const __APP_VERSION__: string
   ```
+
+  :::
 
 ### plugins {#plugins}
 
