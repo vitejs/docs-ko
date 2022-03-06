@@ -3,10 +3,10 @@
 맨 처음 `vite` 명령을 실행했을 때, 다음 메시지를 마주했을 것입니다.
 
 ```
-Optimizable dependencies detected:
-react, react-dom
-Pre-bundling them to speed up dev server page load...
-(this will be run only when your dependencies have changed)
+Pre-bundling dependencies:
+  react
+  react-dom
+(this will be run only when your dependencies or config have changed)
 ```
 
 ## 왜 이런 메시지가 나타나나요? {#the-why}
@@ -28,6 +28,8 @@ Pre-bundling them to speed up dev server page load...
 
    만약 `lodash-es` 모듈을 하나의 모듈로 번들링하게 된다면 어떻게 될까요? 브라우저는 단지 하나의 HTTP 요청만을 전송하게 됩니다.
 
+참고로 이 기능은 개발 모드에서만 적용됩니다.
+
 ## 자동으로 디펜던시 탐색하기 {#automatic-dependency-discovery}
 
 만약 디펜던시가 캐시되지 않았다면 어떻게 될까요? vite는 프로젝트 내 모든 소스 코드를 탐색하여 디펜던시를 찾아낸 뒤, 사전 번들링을 이용해 Import 합니다(`node_modules`에서 디펜던시를 가져오듯이 말이죠). 물론, 이 사전 번들링 과정은 `esbuild`를 이용하기에 보통 매우 빠른 속도로 진행됩니다.
@@ -36,10 +38,27 @@ Pre-bundling them to speed up dev server page load...
 
 ## 모노리포 디펜던시 {#monorepos-and-linked-dependencies}
 
-모노리포 프로젝트의 경우 디펜던시는 동일한 하나의 리포지터리에 존재할 수 있습니다\*. Vite는 `node_modules`에 명시되지 않았음에도 사용하는 디펜던시를 스스로 탐색하여 소스 코드로 가져오지만, 이를 번들로 묶지는 않습니다. 그저 연결된 디펜던시 목록를 분석할 뿐이죠. (\* 모노리포는 두 개 이상의 리포지터리를 가지는 리포지터리입니다. 서로 관련된 리포지터리에 중복된 디펜던시가 많은 경우, 이를 하나로 통합하여 관리할 수 있다는 장점이 있습니다. 자세한 사항은 [Yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/)를 참고해주세요.)
+모노리포\* 프로젝트의 경우 디펜던시는 동일한 하나의 리포지터리에 연결된 패키지일 수 있습니다. Vite는 사용하는 디펜던시가 `node_modules`에 존재하지 않더라도 스스로 탐색하여 이를 소스 코드로 가져올 수 있지만, 이를 번들로 묶지는 않습니다. 그저 연결된 디펜던시 목록을 분석할 뿐이죠. (\* 모노리포는 두 개 이상의 리포지터리를 가지는 리포지터리입니다. 서로 관련된 리포지터리에 중복된 디펜던시가 많은 경우, 이를 하나로 통합하여 관리할 수 있다는 장점이 있습니다. 자세한 사항은 [Yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/)를 참고해주세요.)
 
-::: warning
-모노리포에서 이러한 방식으로 가져와지는 디펜던시는 최종 빌드에서 제대로 작동하지 않을 수 있습니다. 최종적으로 번들링되는 과정에서 발생되는 문제를 방지하기 위해서는 모든 로컬 디펜던시에서 `npm pack`을 사용합니다.
+이를 위해서는 연결된 디펜던시가 ESM 형태로 내보내져야 합니다. 만약 그렇지 않다면, 해당되는 디펜던시들을 [`optimizeDeps.include`](/config/#optimizedeps-include)와 [`build.commonjsOptions.include`](/config/#build-commonjsoptions) 설정에 추가해주세요.
+
+```js
+export default defineConfig({
+   optimizeDeps: {
+      include: ['linked-dep']
+   },
+   build: {
+      commonjsOptions: {
+         include: [/linked-dep/, /node_modules/]
+      }
+   }
+})
+```
+
+설정 값 변경 이후 `--force` 플래그를 이용해 개발 서버를 다시 시작하게 되면 해당 내용이 적용됩니다.
+
+::: warning 중복 제거
+디펜던시를 찾는 과정의 차이로 인해 중복된 디펜던시가 잘못 제거되어 런타임에서 문제가 발생될 수 있습니다. 만약 이런 문제가 발생된다면 연결된 모든 디펜던시에 대해 `npm pack` 명령을 사용해주세요.
 :::
 
 ## 디펜던시 탐색 과정 커스터마이즈하기 {#customizing-the-behavior}
