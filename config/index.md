@@ -95,6 +95,22 @@ export default defineConfig(async ({ command, mode }) => {
 })
 ```
 
+### 환경 변수 {#environment-variables}
+
+Vite는 Vite의 설정을 끝마친 뒤 어떻게 파일을 불러올 것인지 알 수 있기 때문에, 기본적으로 `.env` 파일을 로드하지 않습니다. 가령 `root` 또는 `envDir` 설정 값에 따라 어떻게 파일을 불러올 것인지 달라지게 됩니다. 다만 필요하다면 `loadEnv` 헬퍼를 사용해 `.env` 파일을 불러올 수도 있습니다.
+
+```js
+import { defineConfig, loadEnv } from 'vite'
+
+export default defineConfig(({ command, mode }) => {
+  // 현재 작업 디렉터리의 `mode`를 기반으로 env 파일을 불러옴
+  const env = loadEnv(mode, process.cwd())
+  return {
+    // 빌드 전용 설정
+  }
+})
+```
+
 ## 공용 옵션 {#shared-options}
 
 ### root {#root}
