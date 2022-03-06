@@ -104,3 +104,9 @@ Heading 마지막에 `{#custom-anchor-name}`와 같은 형태로 커스텀 앵�
 본 번역 프로젝트는 영리 목적으로 시작된 것이 아니며, 어떠한 방식으로도 수익을 내지 않습니다. 또한 앞으로도 그럴 계획이 없습니다.
 
 프로젝트는 [ViteJS 리포지터리](https://github.com/vitejs/vite)를 포크해 시작했습니다. 이 과정에서 대부분의 설정 값을 그대로 사용하게 되었고, 광고와 관련된 설정 또한 원본과 동일하게 유지했습니다([config.js](https://github.com/vitejs-kr/vitejs-kr.github.io/blob/eae7c247bfc1ad0056428987f4f781eef762d6b5/.vitepress/config.js#L26)). 이로 인해 [ViteJS 번역 문서](https://vitejs-kr.github.io/)에서 광고가 나타나게 되었으며 광고의 설정 및 내용은 [ViteJS 공식 문서](https://vitejs.dev/)와 동일합니다.
+
+### 검색 기능이 제대로 동작하지 않아요
+
+ViteJS **공식** 문서의 검색 기능은 [Algolia DocSearch](https://docsearch.algolia.com/) 서비스를 이용해 제공되고 있습니다. 이 서비스는 API Key를 발급받아 사용이 가능하며, 신청한 순서에 따라 차례대로 발급이 진행됩니다.
+
+본 번역 프로젝트 또한 2월 경 신청하였으며, 향후 API Key를 발급받게 되면 프로젝트에 적용할 예정입니다.
