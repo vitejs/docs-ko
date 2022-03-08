@@ -4,7 +4,7 @@ Vite는 몇 가지 추가적인 Vite 전용 옵션과 함께 잘 설계된 Rollu
 
 ## 플러그인 추가하기 {#adding-a-plugin}
 
-플러그인을 사용하려면 프로젝트의 `devDependencies`에 플러그인을 추가하고, `vite.config.js` 설정 파일의 `plugins` 배열에 해당 플러그인을 포함시켜야 합니다. 예를 들어, 레거시 프라우저에 대한 지원을 제공하기 위해 공식 플러그인 중 하나인 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)를 사용하고자 한다면 다음과 같이 할 수 있습니다:
+플러그인을 사용하려면 프로젝트의 `devDependencies`에 플러그인을 추가하고, `vite.config.js` 설정 파일의 `plugins` 배열에 해당 플러그인을 포함시켜야 합니다. 예를 들어, 레거시 브라우저에 대한 지원을 제공하기 위해 공식 플러그인 중 하나인 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)를 사용하고자 한다면 다음과 같이 할 수 있습니다:
 
 ```
 $ npm add -D @vitejs/plugin-legacy
