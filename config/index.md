@@ -240,6 +240,10 @@ export default defineConfig(({ command, mode }) => {
 
   Vite 는 "허용되는 조건들"의 목록을 가지며 이것은 허용되는 목록안의 첫번째 조건과 매치됩니다. 기본적으로 허용되는 조건들은 `import`, `module`, `browser`, `default`, 그리고 현재 모드를 기반으로 한 `production/development` 입니다. `resolve.conditions` 설정 옵션은 추가적으로 허용되는 조건들을 지정하는 것을 허용합니다.
 
+  :::warning 하위 경로 내보내기 키 값
+  "/"로 끝나는 `exports` 객체의 키 값은 Node에서 더 이상 사용되지 않기 때문에 제대로 작동하지 않을 수 있습니다. 이 대신 [`*` 하위 경로 패턴](https://nodejs.org/api/packages.html#package-entry-points)을 사용할 수 있도록 사용하고 있는 패키지의 관리자에게 문의해주세요.
+  :::
+
 ### resolve.mainFields {#resolve-mainfields}
 
 - **타입:** `string[]`
