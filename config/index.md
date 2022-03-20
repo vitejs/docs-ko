@@ -27,13 +27,16 @@ export default {
 vite --config my-config.js
 ```
 
-참고로 Vite는 `__filename`, `__dirname` 그리고 `import.meta.url` 문자열을 아래와 같이 변경합니다. 따라서 이러한 이름으로 변수 이름을 설정하게 되면 에러가 발생됩니다:
+::: tip 참고
+Vite는 **CommonJS** 및 **TypeScript** 설정 파일에서 `__filename`, `__dirname` 그리고 `import.meta.url` 문자열을 대체합니다. 따라서 이러한 이름으로 변수 이름을 설정하게 되면 에러가 발생됩니다:
 
 ```js
 const __filename = "value"
 // 아래와 같이 변경됩니다
 const "path/vite.config.js" = "value"
 ```
+
+:::
 
 ### 인텔리센스 설정 {#config-intellisense}
 
