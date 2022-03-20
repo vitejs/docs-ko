@@ -459,7 +459,7 @@ apply(config, { command }) {
 - [`moduleParsed`](https://rollupjs.org/guide/en/#moduleparsed) 훅을 사용하지 않음
 - 번들 단계의 훅과 번들링 이후 출력 단계의 훅 사이에 강력한 결합이 없음
 
-만약 Rollup 플러그인이 빌드 단계에서만 의미가 있는 경우라면, `build.rollupOptions.plugins` 옵션에 해당 플러그인을 사용하도록 지정할 수 있습니다.
+만약 Rollup 플러그인이 빌드 단계에서만 의미가 있는 경우라면, `build.rollupOptions.plugins` 옵션에 해당 플러그인을 사용하도록 지정할 수 있습니다. 이는 `enforce: 'post'` 및 `apply: 'build'` 옵션으로 지정된 Vite 플러그인과 동일하게 동작합니다.
 
 물론 Vite 전용 프로퍼티로 기존 Rollup 플러그인을 보강할 수도 있습니다:
 
