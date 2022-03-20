@@ -350,7 +350,7 @@ export default defineConfig(({ command, mode }) => {
   })
   ```
 
-  기본적으로, ESBuild는 `ts`, `jsx`, `tsx` 파일들에 적용됩니다. `esbuild.include`와 `esbuild.exclude`를 사용하여 커스터마이즈 할 수 있으며, 둘 다 `string | RegExp | (string | RegExp)[]` 타입으로 예상합니다.
+  기본적으로, ESBuild는 `ts`, `jsx`, `tsx` 파일들에 적용됩니다. `esbuild.include`와 `esbuild.exclude`를 사용하여 커스터마이즈 할 수 있으며, 정규식이나 [picomatch](https://github.com/micromatch/picomatch#globbing-features) 패턴 또는 그 중 하나의 배열이 될 수 있습니다.
 
   추가적으로, ESBuild에 의해 변환된 모든 파일에 대해 JSX 헬퍼 `import` 들을 자동으로 주입하기 위해 `esbuild.jsxInject`도 사용할 수 있습니다:
 
@@ -369,7 +369,7 @@ export default defineConfig(({ command, mode }) => {
 - **타입:** `string | RegExp | (string | RegExp)[]`
 - **참고:** [정적 에셋 가져오기](/guide/assets)
 
-  정적 에셋으로 처리할 추가 [피코매치 패턴](https://github.com/micromatch/picomatch)을 지정합니다:
+  정적 에셋으로 처리할 추가 [picomatch 패턴](https://github.com/micromatch/picomatch#globbing-features)을 지정합니다:
 
   - HTML에서 참조되거나 `fetch` 또는 XHR을 통해 직접 요청될 때, 이것은 플러그인 변환 파이프라인에서 제외됩니다.
 
