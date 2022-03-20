@@ -28,7 +28,9 @@ Pre-bundling dependencies:
 
    만약 `lodash-es` 모듈을 하나의 모듈로 번들링하게 된다면 어떻게 될까요? 브라우저는 단지 하나의 HTTP 요청만을 전송하게 됩니다.
 
-참고로 이 기능은 개발 모드에서만 적용됩니다.
+::: tip 참고
+디펜던시 사전 번들링 기능은 개발 모드에서만 적용되며, `esbuild`를 이용해 디펜던시를 ESM으로 변환합니다. 프로덕션 빌드의 경우, 이 대신 `@rollup/plugin-commonjs`가 대신 사용됩니다.
+:::
 
 ## 자동으로 디펜던시 탐색하기 {#automatic-dependency-discovery}
 
