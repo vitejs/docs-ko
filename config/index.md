@@ -515,6 +515,12 @@ export default defineConfig(({ command, mode }) => {
 
   개발 서버를 위한 CORS를 설정합니다. 이것은 기본적으로 활성화되어 있으며 모든 오리진을 허용합니다. 동작을 상세하게 조절하기 위해 [옵션 객체](https://github.com/expressjs/cors)를 전달하거나, 사용하지 않기 위해 `false`를 전달하세요.
 
+### server.headers {#server-headers}
+
+- **타입:** `OutgoingHttpHeaders`
+
+  서버 응답 헤더를 지정합니다.
+
 ### server.force {#server-force}
 
 - **타입:** `boolean`
@@ -597,6 +603,12 @@ async function createServer() {
 
 createServer()
 ```
+
+### server.base {#server-base}
+
+- **타입:** `string | undefined`
+
+  Vite를 하위 디렉터리로 프록시하기 위해 이 디렉터리를 http 요청 앞에 추가합니다. 시작과 끝이 모두 `/` 문자여야 합니다.
 
 ### server.fs.strict {#server-fs-strict}
 
