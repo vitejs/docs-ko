@@ -289,10 +289,10 @@ const modules = {
 }
 ```
 
-`import.meta.glob` 그리고 `import.meta.globEager`도 [문자열 형태로 에셋 가져오기](https://vitejs-kr.github.io/guide/assets.html#importing-asset-as-string) 기능과 유사하게 문자열로 파일을 가져올 수 있습니다. 이는 [Import Assertions](https://github.com/tc39/proposal-import-assertions#synopsis) 구문을 사용합니다.
+`import.meta.glob` 그리고 `import.meta.globEager`도 [문자열 형태로 에셋 가져오기](https://vitejs-kr.github.io/guide/assets.html#importing-asset-as-string) 기능과 유사하게 문자열로 파일을 가져올 수 있습니다. 이는 [Import Reflection](https://github.com/tc39/proposal-import-reflection) 구문을 사용합니다:
 
 ```js
-const modules = import.meta.glob('./dir/*.js', { assert: { type: 'raw' } })
+const modules = import.meta.glob('./dir/*.js', { as: 'raw' })
 ```
 
 위 코드는 다음과 같이 변환됩니다:
