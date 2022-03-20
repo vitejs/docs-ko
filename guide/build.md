@@ -142,6 +142,15 @@ module.exports = defineConfig({
 })
 ```
 
+패키지의 진입점이 되는 파일에는 패키지의 사용자가 `import` 할 수 있도록 `export` 구문이 포함되게 됩니다:
+
+```js
+// lib/main.js
+import Foo from './Foo.vue'
+import Bar from './Bar.vue'
+export { Foo, Bar }
+```
+
 위와 같은 Rollup 설정과 함께 `vite build` 명령을 실행하게 되면, `es` 및 `umd` 두 가지의 포맷으로 번들링 과정이 진행되게 됩니다(이에 대해 조금 더 자세히 알고 싶다면 `build.lib` 설정을 참고해주세요).
 
 ```
