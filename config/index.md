@@ -8,7 +8,7 @@ title: Configuring Vite
 
 ### 설정 파일 확인 {#config-file-resolving}
 
-명령줄에서 `vite`를 실행시킬 때, Vite는 자동으로 [프로젝트 루트](/guide/#index-html-and-project-root)의 `vite.config.js` 파일 확인을 시도합니다.
+명령 줄에서 `vite`를 실행시킬 때, Vite는 자동으로 [프로젝트 루트](/guide/#index-html-and-project-root)의 `vite.config.js` 파일 확인을 시도합니다.
 
 가장 기본적인 설정 파일의 내용은 다음과 같습니다:
 
@@ -28,7 +28,7 @@ vite --config my-config.js
 ```
 
 ::: tip 참고
-Vite는 **CommonJS** 및 **TypeScript** 설정 파일에서 `__filename`, `__dirname` 그리고 `import.meta.url` 문자열을 대체합니다. 따라서 이러한 이름으로 변수 이름을 설정하게 되면 에러가 발생됩니다:
+Vite는 **CommonJS** 및 **TypeScript** 설정 파일에서 `__filename`, `__dirname` 그리고 `import.meta.url` 문자열을 대체합니다. 따라서 이러한 이름으로 변수 이름을 설정하게 되면 에러가 발생합니다:
 
 ```js
 const __filename = "value"
@@ -67,7 +67,7 @@ Vite는 또한 TS 설정 파일을 직접 지원합니다. `defineConfig` 도우
 
 ### 조건부 설정 {#conditional-config}
 
-만약 설정에서 명령 (`dev`/`serve` 또는 `build`) 또는 사용중인 [모드](/guide/env-and-mode)에 따라 조건부로 옵션을 결정해야 하는 경우, 아래와 같이 함수를 내보낼 수 있습니다:
+만약 설정에서 명령 (`dev`/`serve` 또는 `build`) 또는 사용 중인 [모드](/guide/env-and-mode)에 따라 조건부로 옵션을 결정해야 하는 경우, 아래와 같이 함수를 내보낼 수 있습니다:
 
 ```js
 export default defineConfig(({ command, mode }) => {
@@ -143,7 +143,7 @@ export default defineConfig(({ command, mode }) => {
 - **타입:** `string`
 - **기본값:** `serve` 에서는 `'development'`, `build` 에서는 `'production'`
 
-  설정에서 이것을 지정하면 **serve와 build 모두**에서 기본 모드를 오버라이드 합니다. 또한 이 값은 명령줄 `--mode` 옵션으로도 오버라이드 될 수 있습니다.
+  설정에서 이것을 지정하면 **serve와 build 모두**에서 기본 모드를 오버라이드 합니다. 또한 이 값은 명령 줄 `--mode` 옵션으로도 오버라이드 될 수 있습니다.
 
   [환경 변수와 모드](/guide/env-and-mode)에서 더 자세한 점을 볼 수 있습니다.
 
@@ -241,10 +241,10 @@ export default defineConfig(({ command, mode }) => {
 
   여기에, `import`와 `require`는 "조건"입니다. 조건은 중첩될 수 있으며 구체적인 조건부터 덜 구체적인 조건까지 다양하게 지정될 수 있습니다.
 
-  Vite 는 "허용되는 조건들"의 목록을 가지며 이것은 허용되는 목록안의 첫번째 조건과 매치됩니다. 기본적으로 허용되는 조건들은 `import`, `module`, `browser`, `default`, 그리고 현재 모드를 기반으로 한 `production/development` 입니다. `resolve.conditions` 설정 옵션은 추가적으로 허용되는 조건들을 지정하는 것을 허용합니다.
+  Vite 는 "허용되는 조건들"의 목록을 가지며 이것은 허용되는 목록 안의 첫 번째 조건과 매치됩니다. 기본적으로 허용되는 조건들은 `import`, `module`, `browser`, `default`, 그리고 현재 모드를 기반으로 한 `production/development` 입니다. `resolve.conditions` 설정 옵션은 추가적으로 허용되는 조건들을 지정하는 것을 허용합니다.
 
-  :::warning 하위 경로 내보내기 키 값
-  "/"로 끝나는 `exports` 객체의 키 값은 Node에서 더 이상 사용되지 않기 때문에 제대로 작동하지 않을 수 있습니다. 이 대신 [`*` 하위 경로 패턴](https://nodejs.org/api/packages.html#package-entry-points)을 사용할 수 있도록 사용하고 있는 패키지의 관리자에게 문의해주세요.
+  :::warning 하위 경로 내보내기 키값
+  "/"로 끝나는 `exports` 객체의 키값은 Node에서 더 이상 사용되지 않기 때문에 제대로 작동하지 않을 수 있습니다. 이 대신 [`*` 하위 경로 패턴](https://nodejs.org/api/packages.html#package-entry-points)을 사용할 수 있도록 사용하고 있는 패키지의 관리자에게 문의해주세요.
   :::
 
 ### resolve.mainFields {#resolve-mainfields}
@@ -252,14 +252,14 @@ export default defineConfig(({ command, mode }) => {
 - **타입:** `string[]`
 - **기본값:** `['module', 'jsnext:main', 'jsnext']`
 
-  패키지의 진입점을 확인할 때 시도할 `package.json`안의 필드 목록입니다. 이것은 `exports` 필드에서 처리되는 조건부 내보내기보다 우선 순위가 낮습니다: 만약 진입점이 `exports`로부터 성공적으로 확인되면, 메인 필드는 무시될 것입니다.
+  패키지의 진입점을 확인할 때 시도할 `package.json`안의 필드 목록입니다. 이것은 `exports` 필드에서 처리되는 조건부 내보내기보다 우선순위가 낮습니다: 만약 진입점이 `exports`로부터 성공적으로 확인되면, 메인 필드는 무시될 것입니다.
 
 ### resolve.extensions {#resolve-extensions}
 
 - **타입:** `string[]`
 - **기본값:** `['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']`
 
-  확장자를 생략한 가져오기를 위해 시도할 파일 확장자 목록입니다. IDE 와 타입 지원을 방해할 수 있으므로 (`.vue`와 같은) 사용자가 지정한 방식의 가져오기 형식에 대해서는 확장자를 생략하지 **않는** 것을 추천합니다.
+  확장자를 생략한 가져오기를 위해 시도할 파일 확장자 목록입니다. IDE와 타입 지원을 방해할 수 있으므로 (`.vue`와 같은) 사용자가 지정한 방식의 가져오기 형식에 대해서는 확장자를 생략하지 **않는** 것을 추천합니다.
 
 ### resolve.preserveSymlinks {#resolve-preservesymlinks}
 
@@ -300,7 +300,7 @@ export default defineConfig(({ command, mode }) => {
 
 - **타입:** `string | (postcss.ProcessOptions & { plugins?: postcss.Plugin[] })`
 
-  (`postcss.config.js` 와 동일한 형식으로 기대되는) 인라인 PostCSS 설정, 또는 PostCSS 설정을 검색할 사용자 지정 디렉터리 (기본값은 프로젝트 루트) 입니다. 검색은 [postcss-load-config](https://github.com/postcss/postcss-load-config)를 사용하여 수행되며, 지원되는 설정 파일 이름만 불러오게 됩니다.
+  (`postcss.config.js` 와 동일한 형식으로 기대되는) 인라인 PostCSS 설정, 또는 PostCSS 설정을 검색할 사용자 지정 디렉터리(기본값은 프로젝트 루트)입니다. 검색은 [postcss-load-config](https://github.com/postcss/postcss-load-config)를 사용하여 수행되며, 지원되는 설정 파일 이름만 불러오게 됩니다.
 
   인라인 설정이 제공되는 경우, Vite는 다른 PostCSS 설정 소스를 찾지 않을 것입니다.
 
@@ -342,7 +342,7 @@ export default defineConfig(({ command, mode }) => {
 
 - **타입:** `ESBuildOptions | false`
 
-  `ESBuildOptions`는 [ESbuild 변환 옵션](https://esbuild.github.io/api/#transform-api)을 확장합니다. 가장 일반적인 사례는 JSX를 커스터마이즈 하는 것입니다:
+  `ESBuildOptions`는 [ESbuild 변환 옵션](https://esbuild.github.io/api/#transform-api)을 확장합니다. 가장 일반적인 사례는 JSX를 커스터마이즈하는 것입니다:
 
   ```js
   export default defineConfig({
@@ -353,7 +353,7 @@ export default defineConfig(({ command, mode }) => {
   })
   ```
 
-  기본적으로, ESBuild는 `ts`, `jsx`, `tsx` 파일들에 적용됩니다. `esbuild.include`와 `esbuild.exclude`를 사용하여 커스터마이즈 할 수 있으며, 정규식이나 [picomatch](https://github.com/micromatch/picomatch#globbing-features) 패턴 또는 그 중 하나의 배열이 될 수 있습니다.
+  기본적으로, ESBuild는 `ts`, `jsx`, `tsx` 파일들에 적용됩니다. `esbuild.include`와 `esbuild.exclude`를 사용하여 커스터마이즈할 수 있으며, 정규식이나 [picomatch](https://github.com/micromatch/picomatch#globbing-features) 패턴 또는 그 중 하나의 배열이 될 수 있습니다.
 
   추가적으로, ESBuild에 의해 변환된 모든 파일에 대해 JSX 헬퍼 `import` 들을 자동으로 주입하기 위해 `esbuild.jsxInject`도 사용할 수 있습니다:
 
@@ -399,7 +399,7 @@ export default defineConfig(({ command, mode }) => {
 - **타입:** `boolean`
 - **기본값:** `true`
 
-  특정 메시지를 로그로 남길 때, Vite가 터미널 화면을 지우지 않도록 하려면 `false`로 설정하세요. 명령줄에서는 `--clearScreen false`를 사용하세요.
+  특정 메시지를 로그로 남길 때, Vite가 터미널 화면을 지우지 않도록 하려면 `false`로 설정하세요. 명령 줄에서는 `--clearScreen false`를 사용하세요.
 
 ### envDir {#envdir}
 
@@ -444,7 +444,7 @@ export default defineConfig(({ command, mode }) => {
 
 - **타입:** `boolean`
 
-  포트가 이미 사용 중일 경우, 사용 가능한 다음 포트를 자동으로 시도하지 않도록 하려면 `true`로 로 설정하세요.
+  포트가 이미 사용 중일 경우, 사용 가능한 다음 포트를 자동으로 시도하지 않도록 하려면 `true`로 설정하세요.
 
 ### server.https {#server-https}
 
@@ -545,7 +545,7 @@ export default defineConfig(({ command, mode }) => {
 
   포트가 없는 도메인에 연결하고자 한다면 `server.hmr.port`를 `false`로 설정해주세요.
 
-  `clientPort`는 클라이언트측의 포트만 재정의하는 고급 옵션으로, 클라이언트 코드에서 찾는 것과 다른 포트에서 웹 소켓을 제공할 수 있습니다. 개발 서버의 앞단에서 SSL 프록시를 사용하는 경우에 유용합니다.
+  `clientPort`는 클라이언트 측의 포트만 재정의하는 고급 옵션으로, 클라이언트 코드에서 찾는 것과 다른 포트에서 웹 소켓을 제공할 수 있습니다. 개발 서버의 앞단에서 SSL 프록시를 사용하는 경우에 유용합니다.
 
   `server.middlewareMode` 또는 `server.https`를 사용할 때, `server.hmr.server`를 HTTP(S) 서버로 설정하면 서버를 통해 HMR 연결 요청이 처리됩니다. 이는 자체 서명된 인증서를 사용하거나, 또는 단을 포트 네트워크를 통해 Vite에 접근이 가능하게 구성하는 경우 유용할 수 있습니다.
 
@@ -567,7 +567,7 @@ export default defineConfig(({ command, mode }) => {
       }
     },
     // 감시 중인 패키지는 최적화에서 제외되어야,
-    // 디펜던시 그래픝에 나타나고 핫 리로드를 트리거 할 수 있게 됩니다.
+    // 디펜던시 그래프에 나타나고 핫 리로드를 트리거 할 수 있게 됩니다.
     optimizeDeps: {
       exclude: ['your-package-name']
     }
@@ -602,7 +602,7 @@ async function createServer() {
   app.use(vite.middlewares)
 
   app.use('*', async (req, res) => {
-    // 만약 `middlewareMode`가 `'ssr'`이면, 이 곳에서 `index.html`를 제공(Serve)합니다.
+    // 만약 `middlewareMode`가 `'ssr'`이면, 이곳에서 `index.html`를 제공(Serve)합니다.
     // 만약 `middlewareMode`가 `'html'`이면, Vite가 이를 처리하기에
     // `index.html`을 제공할 필요가 없습니다.
   })
@@ -630,7 +630,7 @@ createServer()
 - **실험적 기능**
 - **타입:** `string[]`
 
-  `/@fs/`를 통해 제공될 수 있는 파일을 제한합니다. `server.fs.strict`가 `true`로 설정된 경우, 이 목록에 포함되지 않았으며 허용된 파일에서 `import` 되는것도 아닌 외부 파일에 접근하면 403 결과를 반환합니다.
+  `/@fs/`를 통해 제공될 수 있는 파일을 제한합니다. `server.fs.strict`가 `true`로 설정된 경우, 이 목록에 포함되지 않았으며 허용된 파일에서 `import` 되는 것도 아닌 외부 파일에 접근하면 403 결과를 반환합니다.
 
   Vite는 잠재적인 작업 공간의 루트를 검색하여 기본값으로 사용합니다. 유효한 작업 공간은 다음 조건을 충족합니다. 그렇지 않으면 [프로젝트 루트](/guide/#index-html-and-project-root)로 대체됩니다.
 
@@ -704,14 +704,14 @@ export default defineConfig({
 
   최종 번들을 위한 브라우저 호환성 타깃입니다. 기본값은 Vite 특수 값으로, [네이티브 ES 모듈을 지원하는 브라우저](https://caniuse.com/es6-module)를 타깃으로 하는 `'module'` 입니다.
 
-  또 다른 특수 값은 `'esnext'`입니다. 이는 네이티브 동적 가져오기가 지원되는 것으로 가정하고 가능한 한 적게 트랜스파일됩니다:
+  또 다른 특수 값은 `'esnext'`입니다. 이는 네이티브 동적 가져오기가 지원되는 것으로 가정하고 가능한 한 적게 트랜스파일 됩니다:
 
   - [`build.minify`](#build-minify) 옵션이 `'terser'` 이라면, `'esnext'`는 `'es2019'`로 다운 설정됩니다.
   - 다른 경우에는, 전혀 트랜스파일이 수행되지 않습니다.
 
   변환은 esbuild로 수행되며, 값은 유효한 [esbuild 타깃 옵션](https://esbuild.github.io/api/#target)이어야 합니다. 사용자 지정 타깃은 ES 버전 (예: `es2015`)이나 버전이 있는 브라우저 (예: `chrome58`) 또는 다중 타깃 문자열의 배열이 될 수 있습니다.
 
-  코드안에 esbuild로 안전하게 트랜스파일할 수 없는 기능이 포함된 경우 빌드는 실패할 것입니다. 자세한 점은 [esbuild 문서](https://esbuild.github.io/content-types/#javascript)를 확인하세요.
+  코드안에 esbuild로 안전하게 트랜스파일 할 수 없는 기능이 포함된 경우 빌드는 실패할 것입니다. 자세한 점은 [esbuild 문서](https://esbuild.github.io/content-types/#javascript)를 확인하세요.
 
 ### build.polyfillModulePreload {#build-polyfillmodulepreload}
 
@@ -838,7 +838,7 @@ export default defineConfig({
 - **타입:** `boolean | 'terser' | 'esbuild'`
 - **기본값:** `'esbuild'`
 
-  코드 경량화를 사용하지 않으려면 `false`로 설정하거나, 사용할 코드 경량화 도구를 지정하세요. 기본값은 [Esbuild](https://github.com/evanw/esbuild)로, Terser보다 20에서 40배 가량 빠르며 압축률 또한 1 ~ 2% 밖에 떨어지지 않습니다.
+  코드 경량화를 사용하지 않으려면 `false`로 설정하거나, 사용할 코드 경량화 도구를 지정하세요. 기본값은 [Esbuild](https://github.com/evanw/esbuild)로, Terser보다 20에서 40배가량 빠르며 압축률 또한 1 ~ 2%밖에 떨어지지 않습니다.
 
   참고로 `'es'`를 사용하는 Lib 모드에서 `build.minify` 옵션은 동작하지 않습니다.
 
@@ -860,7 +860,7 @@ export default defineConfig({
 - **타입:** `boolean`
 - **기본값:** `outDir`이 `root` 안에 있다면 `true`
 
-  기본적으로 Vite는 `outDir`이 프로젝트 루트 내부에 있는 경우 빌드할 때 이 곳을 비웁니다. `outDir`가 루트 외부에 있으면 실수로 중요한 파일을 제거하지 않도록 경고 메시지가 표시됩니다. 경고를 표시하지 않도록 이 옵션을 명시적으로 설정할 수 있습니다. 명령줄에서는 `--emptyOutDir`로 이를 사용할 수 있습니다.
+  기본적으로 Vite는 `outDir`이 프로젝트 루트 내부에 있는 경우 빌드할 때 이 곳을 비웁니다. `outDir`가 루트 외부에 있으면 실수로 중요한 파일을 제거하지 않도록 경고 메시지가 표시됩니다. 경고를 표시하지 않도록 이 옵션을 명시적으로 설정할 수 있습니다. 명령 줄에서는 `--emptyOutDir`로 이를 사용할 수 있습니다.
 
 ### build.reportCompressedSize {#build-reportcompressedsize}
 
@@ -920,7 +920,7 @@ export default defineConfig({
 - **타입:** `boolean`
 - **기본값:** [`server.strictPort`](#server_strictport)
 
-  `true`로 설정한 경우, 포트가 이미 사용중이라면 자동으로 다른 포트로 설정되는 것이 아닌 종료하도록 합니다.
+  `true`로 설정한 경우, 포트가 이미 사용 중이라면 자동으로 다른 포트로 설정되는 것이 아닌 종료 하도록 합니다.
 
 ### preview.https {#preview-https}
 
@@ -936,14 +936,14 @@ export default defineConfig({
 - **타입:** `boolean | string`
 - **기본값:** [`server.open`](#server_open)
 
-  서버 시작 시 자동으로 브라우저를 열도록 설정할 수 있습니다. 값이 문자열인 경우 URL 경로를 의미하며, 원하는 특정 브라우저를 열고자 하는 경우에는 `process.env.BROWSER` 환경 변수를 `firefox`와 같은 값으로 설정합니다. 자세한 내용은 [`open` 패키지](https://github.com/sindresorhus/open#app)를 참고해주세.
+  서버 시작 시 자동으로 브라우저를 열도록 설정할 수 있습니다. 값이 문자열인 경우 URL 경로를 의미하며, 원하는 특정 브라우저를 열고자 하는 경우에는 `process.env.BROWSER` 환경 변수를 `firefox`와 같은 값으로 설정합니다. 자세한 내용은 [`open` 패키지](https://github.com/sindresorhus/open#app)를 참고해주세요.
 
 ### preview.proxy {#preview-proxy}
 
 - **타입:** `Record<string, string | ProxyOptions>`
 - **기본값:** [`server.proxy`](#server_proxy)
 
-  개발 서버에 대한 사용자 지정 프록시 규칙을 설정할 수 있습니다. `{ key: options }` 형태로 구성되며, 키 값이 `^`로 시작하는 경우 `RegExp`로 해석됩니다. `configure` 옵션을 사용하여 프록시 인스턴스에 접근할 수 있습니다.
+  개발 서버에 대한 사용자 지정 프록시 규칙을 설정할 수 있습니다. `{ key: options }` 형태로 구성되며, 키값이 `^`로 시작하는 경우 `RegExp`로 해석됩니다. `configure` 옵션을 사용하여 프록시 인스턴스에 접근할 수 있습니다.
 
   이는 [`http-proxy`](https://github.com/http-party/node-http-proxy)를 사용하며, 더 많은 옵션은 [이 링크](https://github.com/http-party/node-http-proxy#options)를 참고해주세요.
 
@@ -973,7 +973,7 @@ export default defineConfig({
   사전 번들링에서 제외할 디펜던시 목록입니다.
 
   :::warning CommonJS
-  CommonJS 디펜던시는 최적화에서 제외되서는 안 됩니다. ESM 디펜던시가 최적화에서 제외되었지만 이와 중첩된(Nested) CommonJS 디펜던시가 있는 경우, CommonJS 디펜던시를 `optimizeDeps.include`에 추가해줘야 합니다:
+  CommonJS 디펜던시는 최적화에서 제외돼서는 안 됩니다. ESM 디펜던시가 최적화에서 제외되었지만 이와 중첩된(Nested) CommonJS 디펜던시가 있는 경우, CommonJS 디펜던시를 `optimizeDeps.include`에 추가해줘야 합니다:
 
   ```js
   export default defineConfig({
@@ -1012,20 +1012,20 @@ SSR 옵션은 마이너 릴리즈에서 조정될 수 있습니다.
 
 - **타입:** `string[]`
 
-  SSR을 위한 디펜던시를 강제로 외부화 합니다.
+  SSR을 위한 디펜던시를 강제로 외부화합니다.
 
 ### ssr.noExternal {#ssr-noexternal}
 
 - **타입:** `string | RegExp | (string | RegExp)[] | true`
 
-  SSR을 위한 디펜던시 중에 이 목록에 있는 디펜던시는 외부화 되는 것이 방지됩니다. 만약 `true`인 경우, 어떠한 디펜던시도 외부화되지 않음을 의미합니다.
+  SSR을 위한 디펜던시 중에 이 목록에 있는 디펜던시는 외부화되는 것이 방지됩니다. 만약 `true`인 경우, 어떠한 디펜던시도 외부화되지 않음을 의미합니다.
 
 ### ssr.target {#ssr-target}
 
 - **타입:** `'node' | 'webworker'`
 - **기본값:** `node`
 
-  SSR 서버를 위한 빌드 타겟입니다.
+  SSR 서버를 위한 빌드 타깃입니다.
 
 ## 워커 옵션 {#worker-options}
 
