@@ -100,7 +100,7 @@ export default defineConfig(async ({ command, mode }) => {
 
 ### 환경 변수 {#environment-variables}
 
-Vite는 Vite의 설정을 끝마친 뒤 어떻게 파일을 불러올 것인지 알 수 있기 때문에, 기본적으로 `.env` 파일을 로드하지 않습니다. 가령 `root` 또는 `envDir` 설정 값에 따라 어떻게 파일을 불러올 것인지 달라지게 됩니다. 다만 필요하다면 `loadEnv` 헬퍼를 사용해 `.env` 파일을 불러올 수도 있습니다.
+Vite는 Vite의 설정을 끝마친 뒤 어떻게 파일을 불러올 것인지 알 수 있기 때문에, 기본적으로 `.env` 파일을 로드하지 않습니다. 가령 `root` 또는 `envDir` 설정 값에 따라 어떻게 파일을 불러올 것인지 달라집니다. 다만 필요하다면 `loadEnv` 헬퍼를 사용해 `.env` 파일을 불러올 수도 있습니다.
 
 ```js
 import { defineConfig, loadEnv } from 'vite'
@@ -241,10 +241,10 @@ export default defineConfig(({ command, mode }) => {
 
   여기에, `import`와 `require`는 "조건"입니다. 조건은 중첩될 수 있으며 구체적인 조건부터 덜 구체적인 조건까지 다양하게 지정될 수 있습니다.
 
-  Vite 는 "허용되는 조건들"의 목록을 가지며 이것은 허용되는 목록 안의 첫 번째 조건과 매치됩니다. 기본적으로 허용되는 조건들은 `import`, `module`, `browser`, `default`, 그리고 현재 모드를 기반으로 한 `production/development` 입니다. `resolve.conditions` 설정 옵션은 추가적으로 허용되는 조건들을 지정하는 것을 허용합니다.
+  Vite 는 "허용되는 조건들"의 목록을 가지며 이것은 허용되는 목록 안의 첫 번째 조건과 매치됩니다. 기본적으로 허용되는 조건들은 `import`, `module`, `browser`, `default`, 그리고 현재 모드를 기반으로 한 `production/development` 입니다. `resolve.conditions` 설정 옵션은 추가로 허용되는 조건들을 지정하는 것을 허용합니다.
 
   :::warning 하위 경로 내보내기 키값
-  "/"로 끝나는 `exports` 객체의 키값은 Node에서 더 이상 사용되지 않기 때문에 제대로 작동하지 않을 수 있습니다. 이 대신 [`*` 하위 경로 패턴](https://nodejs.org/api/packages.html#package-entry-points)을 사용할 수 있도록 사용하고 있는 패키지의 관리자에게 문의해주세요.
+  "/"로 끝나는 `exports` 객체의 키값은 Node에서 더는 사용되지 않기 때문에 제대로 작동하지 않을 수 있습니다. 이 대신 [`*` 하위 경로 패턴](https://nodejs.org/api/packages.html#package-entry-points)을 사용할 수 있도록 사용하고 있는 패키지의 관리자에게 문의해주세요.
   :::
 
 ### resolve.mainFields {#resolve-mainfields}
@@ -376,7 +376,7 @@ export default defineConfig(({ command, mode }) => {
 
   - HTML에서 참조되거나 `fetch` 또는 XHR을 통해 직접 요청될 때, 이것은 플러그인 변환 파이프라인에서 제외됩니다.
 
-  - JS에서 그것을 가져오면 처리된 URL 문자열이 반환됩니다. (이것은 에셋 형식을 다르게 처리하기 위한 `enforce: 'pre'` 플러그인이 있다면 덮어쓰여질 수 있습니다.)
+  - JS에서 그것을 가져오면 처리된 URL 문자열이 반환됩니다. (이것은 에셋 형식을 다르게 처리하기 위한 `enforce: 'pre'` 플러그인이 있다면 덮어 쓰일 수 있습니다.)
 
   이 빌트인 에셋 형식 목록은 [여기](https://github.com/vitejs/vite/blob/main/packages/vite/src/node/constants.ts)에서 확인할 수 있습니다.
 
@@ -557,7 +557,7 @@ export default defineConfig(({ command, mode }) => {
 
   Windows Subsystem for Linux(WSL) 2에서 Vite를 실행하고, 그리고 프로젝트 폴더가 Windows 파일 시스템에 존재하는 경우, `{ usePolling: true }` 옵션을 설정해줘야 합니다. 이는 Windows 파일 시스템의 [WSL2 제한사항](https://github.com/microsoft/WSL/issues/4739)으로 인한 것입니다.
 
-  Vite의 서버 감시자는 기본적으로 `.git/` 및 `node_modules/` 디렉터리를 스킵합니다. 만약 `node_modules/` 내부의 패키지를 감시하고자 한다면, 다음과 같은 Glob 패턴을 `server.watch.ignored`에 전달하면 됩니다:
+  Vite의 서버 감시자는 기본적으로 `.git/` 및 `node_modules/` 디렉터리를 건너뜁니다. 만약 `node_modules/` 내부의 패키지를 감시하고자 한다면, 다음과 같은 Glob 패턴을 `server.watch.ignored`에 전달하면 됩니다:
 
   ```js
   export default defineConfig({
@@ -652,7 +652,7 @@ createServer()
   })
   ```
 
-  만약 `server.fs.allow` 옵션이 지정되면, 자동으로 워크스페이스의 루트를 감지하는 기능이 비활성화됩니다. 이후 기존의 동작을 확장하기 위해 `searchForWorkspaceRoot` 유틸리티가 노출됩니다:
+  만약 `server.fs.allow` 옵션이 지정되면, 자동으로 작업 영역의 루트를 감지하는 기능이 비활성화됩니다. 이후 기존의 동작을 확장하기 위해 `searchForWorkspaceRoot` 유틸리티가 노출됩니다:
 
   ```js
   import { defineConfig, searchForWorkspaceRoot } from 'vite'
@@ -747,10 +747,10 @@ export default defineConfig({
 - **타입:** `number`
 - **기본값:** `4096` (4kb)
 
-  이 값보다 작은 크기로 import 되거나 참조된 에셋은 부가적인 http 요청을 피하기 위해 base64 URL로 인라인 처리됩니다. 만일 인라인 변환을 사용하지 않으려면 `0`으로 설정하세요.
+  이 값보다 작은 크기로 import 되거나 참조된 에셋은 부가적인 http 요청을 피하고자 base64 URL로 인라인 처리됩니다. 만일 인라인 변환을 사용하지 않으려면 `0`으로 설정하세요.
 
   ::: tip 참고
-  `build.lib`를 지정하면, `build.assetsInlineLimit`는 무시되며 파일 크기에 관계없이 에셋이 항상 인라인 처리됩니다.
+  `build.lib`를 지정하면, `build.assetsInlineLimit`는 무시되며 파일 크기와 관계없이 에셋이 항상 인라인 처리됩니다.
   :::
 
 ### build.cssCodeSplit {#build-csscodesplit}
@@ -788,7 +788,7 @@ export default defineConfig({
 
 - **타입:** [`RollupOptions`](https://rollupjs.org/guide/en/#big-list-of-options)
 
-  기존 Rollup 번들을 커스텀합니다. 이는 Rollup 설정 파일에서 내보낼 수 있는 옵션과 동일하며 Vite의 내부 Rollup 옵션과 병합됩니다. 더 자세한 점은 [Rollup 옵션 문서](https://rollupjs.org/guide/en/#big-list-of-options)를 참고하세요.
+  기존 Rollup 번들을 커스텀합니다. 이는 Rollup 설정 파일에서 내보낼 수 있는 옵션과 같으며 Vite의 내부 Rollup 옵션과 병합됩니다. 더 자세한 점은 [Rollup 옵션 문서](https://rollupjs.org/guide/en/#big-list-of-options)를 참고하세요.
 
 ### build.commonjsOptions {#build-commonjsoptions}
 
@@ -900,7 +900,7 @@ export default defineConfig({
 - **타입:** `number`
 - **기본값:** `4173`
 
-  서버의 포트를 지정합니다. 포트가 이미 사용 중인 경우에는 Vite가 자동으로 사용 가능한 다음 포트로 설정되기에 실제 서버 포트가 아닐 수 있습니다.
+  서버의 포트를 지정합니다. 포트가 이미 사용 중이면 Vite가 자동으로 사용 가능한 다음 포트로 설정되기에 실제 서버 포트가 아닐 수 있습니다.
 
 **예제:**
 
@@ -920,7 +920,7 @@ export default defineConfig({
 - **타입:** `boolean`
 - **기본값:** [`server.strictPort`](#server_strictport)
 
-  `true`로 설정한 경우, 포트가 이미 사용 중이라면 자동으로 다른 포트로 설정되는 것이 아닌 종료 하도록 합니다.
+  `true`로 설정한 경우, 포트가 이미 사용 중일 때 자동으로 다른 포트로 설정을 시도하지 않고 종료되도록 합니다.
 
 ### preview.https {#preview-https}
 
@@ -998,7 +998,7 @@ export default defineConfig({
 
   - `external`은 생략됩니다. 이 대신 Vite의 `optimizeDeps.exclude` 옵션을 사용합니다.
   - `plugins`는 Vite의 디펜던시 플러그인과 병합됩니다.
-  - `keepNames`는 이제 더 이상 사용되지 않는 `optimizeDeps.keepNames`보다 우선시됩니다.
+  - `keepNames`는 이제 더는 사용되지 않는 `optimizeDeps.keepNames`보다 우선시됩니다.
 
 ## SSR 옵션 {#ssr-options}
 
