@@ -343,7 +343,25 @@ init({
 
 ## Web Workers {#web-workers}
 
-웹 워커의 경우 `?worker` 또는 `?sharedworker` 문자열을 붙여 Import 할 수 있습니다. 모듈의 `export default`로는 워커의 생성자가 들어가게 됩니다.
+### 생성자를 통해 가져오기 {#import-with-constructors}
+
+웹 워커 스크립트는 [`new Worker()`](https://developer.mozilla.org/en-US/docs/Web/API/Worker/Worker) 및 [`new SharedWorker()`](https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker/SharedWorker)를 통해서도 가져올 수 있습니다. 접미사를 사용하는 방식에 비해 이는 표준에 좀 더 가까우며, 일반적으로 워커를 사용할 때 **권장되는** 방식입니다.
+
+```ts
+const worker = new Worker(new URL('./worker.js', import.meta.url))
+```
+
+"모듈" 타입의 워커를 생성할 수 있도록 생성자에 옵션을 전달할 수도 있습니다:
+
+```ts
+const worker = new Worker(new URL('./worker.js', import.meta.url), {
+  type: 'module'
+})
+```
+
+### 쿼리 접미사를 통해 가져오기 {#import-with-query-suffixes}
+
+웹 워커 스크립트는 `?worker` 또는 `?sharedworker` 접미사를 붙여 가져올 수 있습니다. 모듈의 `export default` 로는 워커의 생성자가 들어가게 됩니다.
 
 ```js
 import MyWorker from './worker?worker'
