@@ -322,6 +322,14 @@ export default defineConfig(({ command, mode }) => {
   })
   ```
 
+### css.devSourcemap {#css-devsourcemap}
+
+- **실험적 기능**
+- **타입:** `boolean`
+- **기본값:** `false`
+
+  개발 중 CSS 소스 맵을 활성화할지 여부를 나타냅니다.
+
 ### json.namedExports {#json-namedexports}
 
 - **타입:** `boolean`
