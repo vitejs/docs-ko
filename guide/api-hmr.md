@@ -123,3 +123,11 @@ HMR 이벤트에 대한 핸들러를 정의합니다.
 - `'vite:error'`은 에러가 일어났을 때 호출됩니다. (e.g. syntax error)
 
 플러그인들로부터 새로운 HMR 이벤트들을 보낼 수 있습니다. 더 많은 정보는 [handleHotUpdate](./api-plugin#handlehotupdate)를 참고해 주세요.
+
+## `hot.send(event, data)` {#hot-send-event-data}
+
+커스텀 이벤트를 Vite의 개발 서버로 되돌려 보냅니다.
+
+만약 연결되기 전에 호출된다면 데이터는 버퍼에서 잠시 대기하고 이후 연결이 설정되었을 때 전송하게 됩니다.
+
+좀 더 자세한 내용은 [클라이언트-서버 커뮤니케이션](/guide/api-plugin.html#client-server-communication)을 참고해주세요.

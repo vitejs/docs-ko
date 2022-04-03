@@ -493,3 +493,71 @@ import { normalizePath } from 'vite'
 normalizePath('foo\\bar') // 'foo/bar'
 normalizePath('foo/bar') // 'foo/bar'
 ```
+
+## 클라이언트-서버 커뮤니케이션 {#client-server communication}
+
+Vite 2.9부터 클라이언트와의 통신을 처리하는 데 도움이 되는 플러그인용 유틸을 제공합니다.
+
+### 서버에서 클라이언트로 전송 {#server-to-client}
+
+플러그인 측에서는 `server.ws.send`를 사용해 이벤트를 모든 클라이언트에 전달(Broadcast)할 수 있습니다:
+
+```js
+// vite.config.js
+export default defineConfig({
+  plugins: [
+    {
+      // ...
+      configureServer(server) {
+        server.ws.send('my:greetings', { msg: 'hello' })
+      }
+    }
+  ]
+})
+```
+
+::: tip 참고
+다른 플러그인과의 충돌을 피하기 위해 이벤트 이름에 **항상 접두사를 붙이는 것** 이 좋습니다.
+:::
+
+클라이언트 측에서는 [`hot.on`](/guide/api-hmr.html#hot-on-event-cb)을 사용해 이벤트를 수신할 수 있습니다:
+
+```ts
+// client side
+if (import.meta.hot) {
+  import.meta.hot.on('my:greetings', (data) => {
+    console.log(data.msg) // hello
+  })
+}
+```
+
+### 클라이언트에서 서버로 전송 {#client-to-server}
+
+클라이언트에서 서버로 이벤트를 보낼 때는 [`hot.send`](/guide/api-hmr.html#hot-send-event-payload)를 사용할 수 있습니다:
+
+```ts
+// client side
+if (import.meta.hot) {
+  import.meta.hot.send('my:from-client', { msg: 'Hey!' })
+}
+```
+
+서버에서는 `server.ws.on`을 사용해 이벤트를 수신합니다:
+
+```js
+// vite.config.js
+export default defineConfig({
+  plugins: [
+    {
+      // ...
+      configureServer(server) {
+        server.ws.on('my:from-client', (data, client) => {
+          console.log('Message from client:', data.msg) // Hey!
+          // reply only to the client (if needed)
+          client.send('my:ack', { msg: 'Hi! I got your message!' })
+        })
+      }
+    }
+  ]
+})
+```
