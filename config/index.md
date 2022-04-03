@@ -155,6 +155,8 @@ export default defineConfig(({ command, mode }) => {
 
   - `2.0.0-beta.70` 부터는, 문자열 값이 raw 표현으로 사용될 것이므로, 만약 문자열 상수를 정의한다면, 명시적으로 인용될 필요가 있습니다. (예: `JSON.stringify` 사용)
 
+  - [esbuild](https://esbuild.github.io/api/#define)와 일관성을 유지하기 위해, 표현식은 JSON 객체(null, boolean, number, string, array, 또는 object)이거나 단일 식별자여야 합니다.
+
   - 매치되는 부분이 단어 경계 (`\b`)로 둘러쌓인 경우에만 대체가 수행됩니다.
 
   ::: warning
