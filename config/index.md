@@ -352,7 +352,7 @@ export default defineConfig(({ command, mode }) => {
 
 - **타입:** `ESBuildOptions | false`
 
-  `ESBuildOptions`는 [ESbuild 변환 옵션](https://esbuild.github.io/api/#transform-api)을 확장합니다. 가장 일반적인 사례는 JSX를 커스터마이즈하는 것입니다:
+  `ESBuildOptions`는 [esbuild 변환 옵션](https://esbuild.github.io/api/#transform-api)을 확장합니다. 가장 일반적인 사례는 JSX를 커스터마이즈하는 것입니다:
 
   ```js
   export default defineConfig({
@@ -375,7 +375,7 @@ export default defineConfig(({ command, mode }) => {
   })
   ```
 
-  ESBuild 변환을 사용하지 않으려면 `false`로 설정하세요.
+  esbuild 변환을 사용하지 않으려면 `false`로 설정하세요.
 
 ### assetsInclude {#assetsinclude}
 

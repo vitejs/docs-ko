@@ -308,7 +308,7 @@ Vercel CLI
 
 ### Vercel for Git {#vercel-for-git}
 
-1. 사용하고 있는 Git 리포지터리(GitHub, GitLab, BitBucket)으로 소스 코드를 Push 합니다.
+1. 사용하고 있는 Git 리포지터리(GitHub, GitLab, Bitbucket)으로 소스 코드를 Push 합니다.
 2. Vercel로 [Vite 프로젝트를 가져옵니다](https://vercel.com/new).
 3. Vercel은 Vite를 사용하고 있음을 감지하게 되며, 배포와 관련된 올바른 설정을 활성화합니다.
 4. 애플리케이션이 배포되었습니다! (예시: [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
