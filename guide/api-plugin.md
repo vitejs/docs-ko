@@ -561,3 +561,19 @@ export default defineConfig({
   ]
 })
 ```
+
+### 커스텀 이벤트 타입 정의 {#typescript-for-custom-events}
+
+`CustomEventMap` 인터페이스를 확장해 커스텀 이벤트에 대한 타입을 정의할 수 있습니다:
+
+```ts
+// events.d.ts
+import 'vite/types/customEvent'
+
+declare module 'vite/types/customEvent' {
+  interface CustomEventMap {
+    'custom:foo': { msg: string }
+    // 'event-key': payload
+  }
+}
+```
