@@ -348,13 +348,15 @@ init({
 웹 워커 스크립트는 [`new Worker()`](https://developer.mozilla.org/en-US/docs/Web/API/Worker/Worker) 및 [`new SharedWorker()`](https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker/SharedWorker)를 통해서도 가져올 수 있습니다. 접미사를 사용하는 방식에 비해 이는 표준에 좀 더 가까우며, 일반적으로 워커를 사용할 때 **권장되는** 방식입니다.
 
 ```ts
-const worker = new Worker(new URL('./worker.js', import.meta.url))
+const url = new URL('./worker.js', import.meta.url)
+const worker = new Worker(url)
 ```
 
 "모듈" 타입의 워커를 생성할 수 있도록 생성자에 옵션을 전달할 수도 있습니다:
 
 ```ts
-const worker = new Worker(new URL('./worker.js', import.meta.url), {
+const url = new URL('./worker.js', import.meta.url)
+const worker = new Worker(url, {
   type: 'module'
 })
 ```
