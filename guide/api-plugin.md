@@ -186,8 +186,10 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
   const partialConfigPlugin = () => ({
     name: 'return-partial',
     config: () => ({
-      alias: {
-        foo: 'bar'
+      resolve: {
+        alias: {
+          foo: 'bar'
+        }
       }
     })
   })
