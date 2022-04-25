@@ -113,7 +113,7 @@ export default function myPlugin() {
 
 ```js
 export default function myPlugin() {
-  const virtualModuleId = '@my-virtual-module'
+  const virtualModuleId = 'virtual:my-module'
   const resolvedVirtualModuleId = '\0' + virtualModuleId
 
   return {
@@ -135,7 +135,7 @@ export default function myPlugin() {
 JavaScript에서는 다음과 같이 모듈을 가져올 수 있습니다:
 
 ```js
-import { msg } from '@my-virtual-module'
+import { msg } from 'virtual:my-module'
 
 console.log(msg)
 ```
