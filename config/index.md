@@ -28,7 +28,7 @@ vite --config my-config.js
 ```
 
 ::: tip 참고
-Vite는 **CommonJS** 및 **TypeScript** 설정 파일에서 `__filename`, `__dirname` 그리고 `import.meta.url` 문자열을 대체합니다. 따라서 이러한 이름으로 변수 이름을 설정하게 되면 에러가 발생합니다:
+Vite는 설정 파일과 해당 디펜던시에서 `__filename`, `__dirname` 그리고 `import.meta.url` 문자열을 대체합니다. 따라서 이러한 이름으로 변수 이름을 설정하게 되면 에러가 발생합니다:
 
 ```js
 const __filename = "value"
