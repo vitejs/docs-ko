@@ -10,21 +10,27 @@ Vite는 HMR API 설정을 `import.meta.hot` 객체를 통해 노출합니다:
 
 ```ts
 interface ImportMeta {
-  readonly hot?: {
-    readonly data: any
+  readonly hot?: ViteHotContext
+}
 
-    accept(): void
-    accept(cb: (mod: any) => void): void
-    accept(dep: string, cb: (mod: any) => void): void
-    accept(deps: string[], cb: (mods: any[]) => void): void
+interface ViteHotContext {
+  readonly data: any
 
-    prune(cb: () => void): void
-    dispose(cb: (data: any) => void): void
-    decline(): void
-    invalidate(): void
+  accept(): void
+  accept(cb: (mod: any) => void): void
+  accept(dep: string, cb: (mod: any) => void): void
+  accept(deps: readonly string[], cb: (mods: any[]) => void): void
 
-    on(event: string, cb: (...args: any[]) => void): void
-  }
+  dispose(cb: (data: any) => void): void
+  decline(): void
+  invalidate(): void
+
+  // `InferCustomEventPayload`는 내장된(Built-in) Vite 이벤트에 대한 타입을 제공합니다
+  on<T extends string>(
+    event: T,
+    cb: (payload: InferCustomEventPayload<T>) => void
+  ): void
+  send<T extends string>(event: T, data?: InferCustomEventPayload<T>): void
 }
 ```
 
