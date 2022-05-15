@@ -273,10 +273,10 @@ for (const path in modules) {
 }
 ```
 
-기본적으로 `import.meta.glob` 함수를 이용하면, 동적(Dynamic) Import를 이용해 파일의 청크를 가져옵니다. 만약 동적으로 Import하는 것이 아니라 직접 모듈을 가져오고자 한다면 `import.meta.globEager` 함수를 이용해주세요.
+기본적으로 `import.meta.glob` 함수를 이용하면, 동적(Dynamic) Import를 이용해 파일의 청크를 가져옵니다. 만약 동적으로 Import하는 것이 아니라 직접 모듈을 가져오고자 한다면, 두 번 째 인자로 `{ eager: true }` 객체를 전달해주세요.
 
 ```js
-const modules = import.meta.globEager('./dir/*.js')
+const modules = import.meta.glob('./dir/*.js', { eager: true })
 ```
 
 위 코드는 아래와 같이 변환됩니다.
@@ -291,7 +291,9 @@ const modules = {
 }
 ```
 
-`import.meta.glob` 그리고 `import.meta.globEager`도 [문자열 형태로 에셋 가져오기](https://vitejs-kr.github.io/guide/assets.html#importing-asset-as-string) 기능과 유사하게 문자열로 파일을 가져올 수 있습니다. 이는 [Import Reflection](https://github.com/tc39/proposal-import-reflection) 구문을 사용합니다:
+### Glob Import As {#glob-import-as}
+
+`import.meta.glob` 역시 [문자열 형태로 에셋 가져오기](https://vitejs-kr.github.io/guide/assets.html#importing-asset-as-string) 기능과 유사하게 파일을 가져올 수 있습니다. 이는 [Import Reflection](https://github.com/tc39/proposal-import-reflection) 구문을 사용합니다:
 
 ```js
 const modules = import.meta.glob('./dir/*.js', { as: 'raw' })
@@ -302,18 +304,115 @@ const modules = import.meta.glob('./dir/*.js', { as: 'raw' })
 ```js
 // Vite를 통해 변환된 코드
 const modules = {
-  './dir/foo.js': '{\n  "msg": "foo"\n}\n',
-  './dir/bar.js': '{\n  "msg": "bar"\n}\n'
+  './dir/foo.js': 'export default "foo"\n',
+  './dir/bar.js': 'export default "bar"\n'
 }
 ```
 
-추가적으로, Glob 패턴과 관련하여 다음의 사항을 유의해주세요:
+URL을 통해 에셋을 가져오고자 한다면 `{ as: 'url' }`을 전달해주세요.
+
+### Glob 패턴 배열 {#multiple-patterns}
+
+첫 번째 인자는 Glob 패턴의 배열로 전달할 수 있습니다.
+
+```js
+const modules = import.meta.glob(['./dir/*.js', './another/*.js'])
+```
+
+### 네거티브 Glob 패턴 {#negative-patterns}
+
+`!` 접두사를 이용해 네거티브 Glob 패턴도 나타낼 수 있습니다. Glob 패턴 매칭 결과에서 일부 파일을 무시하고자 하는 경우, 첫 번째 인수에 제외할 네거티브 Glob 패턴을 추가해주세요:
+
+```js
+const modules = import.meta.glob(['./dir/*.js', '!**/bar.js'])
+```
+
+```js
+// 아래는 Vite에 의해 생성되는 코드입니다.
+const modules = {
+  './dir/foo.js': () => import('./dir/foo.js')
+}
+```
+
+#### Named Imports {#named-imports}
+
+`import` 옵션을 이용해 모듈의 일부만 가져올 수도 있습니다.
+
+```ts
+const modules = import.meta.glob('./dir/*.js', { import: 'setup' })
+```
+
+```ts
+// 아래는 Vite에 의해 생성되는 코드입니다.
+const modules = {
+  './dir/foo.js': () => import('./dir/foo.js').then((m) => m.setup),
+  './dir/bar.js': () => import('./dir/bar.js').then((m) => m.setup)
+}
+```
+
+`eager`와 같이 사용하면 모듈에 대한 트리 셰이킹도 가능합니다.
+
+```ts
+const modules = import.meta.glob('./dir/*.js', { import: 'setup', eager: true })
+```
+
+```ts
+// 아래는 Vite에 의해 생성되는 코드입니다:
+import { setup as __glob__0_0 } from './dir/foo.js'
+import { setup as __glob__0_1 } from './dir/bar.js'
+const modules = {
+  './dir/foo.js': __glob__0_0,
+  './dir/bar.js': __glob__0_1
+}
+```
+
+`default export`를 가져오고자 하는 경우에는 `import` 옵션 값을 `default`로 설정해주세요.
+
+```ts
+const modules = import.meta.glob('./dir/*.js', {
+  import: 'default',
+  eager: true
+})
+```
+
+```ts
+// 아래는 Vite에 의해 생성되는 코드입니다:
+import __glob__0_0 from './dir/foo.js'
+import __glob__0_1 from './dir/bar.js'
+const modules = {
+  './dir/foo.js': __glob__0_0,
+  './dir/bar.js': __glob__0_1
+}
+```
+
+#### 커스텀 쿼리 {#custom-queries}
+
+`query` 옵션은 다른 모듈을 가져올 때 사용하는 커스텀 쿼리를 지정할 수 있도록 합니다.
+
+```ts
+const modules = import.meta.glob('./dir/*.js', {
+  query: { foo: 'bar', bar: true }
+})
+```
+
+```ts
+// 아래는 Vite에 의해 생성되는 코드입니다:
+const modules = {
+  './dir/foo.js': () =>
+    import('./dir/foo.js?foo=bar&bar=true').then((m) => m.setup),
+  './dir/bar.js': () =>
+    import('./dir/bar.js?foo=bar&bar=true').then((m) => m.setup)
+}
+```
+
+### Glob Import 유의 사항 {#glob-import-caveats}
+
+Glob 패턴과 관련하여 다음의 사항을 유의해주세요:
 
 - 이 기능들은 Vite에서 제공하는 기능입니다. (ES 표준이나 웹 브라우저에서 제공하는 기능이 아니에요.)
 - Glob 패턴 사용 시, 상대 경로(`./`) 또는 절대 경로(`/`) 또는 [`resolve.alias` 옵션](/config/#resolve-alias)을 통해 별칭으로 지정된 경로 만을 이용해야 합니다.
-- Glob 패턴 매칭은 `fast-glob`을 이용합니다. 자세한 것은 [지원하는 Glob 패턴 목록](https://github.com/mrmlnc/fast-glob#pattern-syntax)을 참고해주세요.
-- Glob을 이용한 `import`는 변수를 허용하지 않기 때문에, 문자열 패턴을 직접 전달해야만 합니다.
-- Glob 패턴의 가장 외부에 위치한 따옴표는 인용 문자를 의미하는 따옴표(`'`, `"`, `` ` ``)와 같이 사용할 수 없습니다. 가령 `'/Tom\'s files/**'` 대신 `"/Tom's files/**"` 와 같이 사용해주세요.
+- Glob 패턴 매칭은 [`fast-glob`](https://github.com/mrmlnc/fast-glob)을 이용합니다. 자세한 것은 [지원하는 Glob 패턴 목록](https://github.com/mrmlnc/fast-glob#pattern-syntax)을 참고해주세요.
+- `import.meta.glob`으로 전달되는 모든 인자는 **리터럴 값을 전달해야 합니다**. 변수나 표현식을 사용할 수 없습니다.
 
 ## WebAssembly {#web-assembly}
 
