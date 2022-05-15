@@ -498,7 +498,9 @@ export default defineConfig(({ command, mode }) => {
 
   개발 서버를 위한 사용자 지정 프록시 규칙을 설정합니다. `{ key: options }` 페어의 객체 형식입니다. 키가 `^`로 시작하면, `RegExp`로 해석됩니다. `configure` 옵션을 사용하여 프록시 인스턴스에 접근할 수 있습니다.
 
-  [`http-proxy`](https://github.com/http-party/node-http-proxy)를 사용하세요. 전체 옵션은 [여기](https://github.com/http-party/node-http-proxy#options)에 있습니다.
+  [`http-proxy`](https://github.com/http-party/node-http-proxy)를 사용하며, 전체 옵션은 [여기](https://github.com/http-party/node-http-proxy#options)를 확인해주세요.
+
+  특정 상황(예: 서버 내부에서 사용되는 [connect](https://github.com/senchalabs/connect) 앱에 커스텀 미들웨어 추가)에서는 개발 서버를 직접 구성해야 할 수도 있습니다. 이를 위해서는 [플러그인](/guide/using-plugins.html)을 작성하고, [configureServer](/guide/api-plugin.html#configureserver) 훅을 이용해야 합니다. 자세한 것은 각 문서를 참고해주세요.
 
   **예제:**
 
