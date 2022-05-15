@@ -22,8 +22,8 @@ SSR은 동일한 전체 사이트를 Node.js에서 동작시키고, 이를 HTML�
 
 Vite는 서버 측 렌더링(SSR, Server-side Rendering)을 기본적으로 지원합니다. Vite 플레이그라운드에서는 SSR 설정에 대한 Vue 3 및 React 예제를 제공하고 있으며, 이를 참고할 수 있습니다.
 
-- [Vue 3](https://github.com/vitejs/vite/tree/main/packages/playground/ssr-vue)
-- [React](https://github.com/vitejs/vite/tree/main/packages/playground/ssr-react)
+- [Vue 3](https://github.com/vitejs/vite/tree/main/playground/ssr-vue)
+- [React](https://github.com/vitejs/vite/tree/main/playground/ssr-react)
 
 ## 프로젝트 구조 {#source-structure}
 
@@ -177,7 +177,7 @@ SSR 프로젝트를 프로덕션으로 제공하기 위해서는 다음이 필�
 
 - `vite` 개발 서버의 생성과 모든 사용은 개발 전용으로 구분된 조건문 아래로 이동한 다음, `dist/client`를 통해 파일을 제공할 수 있도록 미들웨어를 추가해줍니다.
 
-이 [Vue](https://github.com/vitejs/vite/tree/main/packages/playground/ssr-vue) 및 [React](https://github.com/vitejs/vite/tree/main/packages/playground/ssr-react) 데모를 참조해 자세한 프로젝트 구성을 확인할 수 있습니다.
+이 [Vue](https://github.com/vitejs/vite/tree/main/playground/ssr-vue) 및 [React](https://github.com/vitejs/vite/tree/main/playground/ssr-react) 데모를 참조해 자세한 프로젝트 구성을 확인할 수 있습니다.
 
 ## 사전 로드될 지시문 생성하기 {#generating-preload-directives}
 
@@ -201,11 +201,11 @@ const html = await vueServerRenderer.renderToString(app, ctx)
 // ctx.modules는 이제 렌더링 중에 사용된 모듈 ID의 집합(Set)입니다.
 ```
 
-`server.js`의 프로덕션 분기문에서는 매니페스트 파일을 읽고, `src/entry-server.js`에서 내보낸(Export) `render` 함수에 전달해야 합니다. 이는 비동기 라우팅에서 사용되는 파일에 대한 사전 로드 지시문(Directives)을 렌더링하기에 충분한 정보를 제공합니다. 전체 예제는 [데모 소스 코드](https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/src/entry-server.js)를 참고해주세요.
+`server.js`의 프로덕션 분기문에서는 매니페스트 파일을 읽고, `src/entry-server.js`에서 내보낸(Export) `render` 함수에 전달해야 합니다. 이는 비동기 라우팅에서 사용되는 파일에 대한 사전 로드 지시문(Directives)을 렌더링하기에 충분한 정보를 제공합니다. 전체 예제는 [데모 소스 코드](https://github.com/vitejs/vite/blob/main/playground/ssr-vue/src/entry-server.js)를 참고해주세요.
 
 ## 사전 렌더링 / SSG {#pre-rendering-ssg}
 
-만약 어떤 라우트에 필요한 경로와 데이터를 미리 알고 있는 경우, 프로덕션 SSR과 동일한 로직을 사용하여 이를 정적 HTML 파일로 미리 렌더링할 수 있습니다. 이는 SSG(정적 사이트 생성, Static-Site Generation)의 한 형태로 생각할 수 있습니다. 동작하는 예제는 [사전 렌더링 데모 스크립트](https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/prerender.js)를 참고해주세요.
+만약 어떤 라우트에 필요한 경로와 데이터를 미리 알고 있는 경우, 프로덕션 SSR과 동일한 로직을 사용하여 이를 정적 HTML 파일로 미리 렌더링할 수 있습니다. 이는 SSG(정적 사이트 생성, Static-Site Generation)의 한 형태로 생각할 수 있습니다. 동작하는 예제는 [사전 렌더링 데모 스크립트](https://github.com/vitejs/vite/blob/main/playground/ssr-vue/prerender.js)를 참고해주세요.
 
 ## SSR 외부화 {#ssr-externals}
 
