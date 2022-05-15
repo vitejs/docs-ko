@@ -89,7 +89,7 @@ async function createServer() {
     // index.html 파일을 제공합니다 - 아래에서 이를 다룰 예정입니다.
   })
 
-  app.listen(3000)
+  app.listen(5173)
 }
 
 createServer()

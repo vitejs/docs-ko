@@ -29,11 +29,11 @@
    import 'vite/modulepreload-polyfill'
    ```
 
-2. 개발을 위해 서버의 HTML 템플릿에 다음을 삽입합니다(`http://localhost:3000`을 Vite가 실행중인 로컬 URL로 대체).
+2. 개발을 위해 서버의 HTML 템플릿에 다음을 삽입합니다(`http://localhost:5173`을 Vite가 실행중인 로컬 URL로 대체).
 
    ```html
    <!-- 개발하는 경우 -->
-   <script type="module" src="http://localhost:3000/main.js"></script>
+   <script type="module" src="http://localhost:5173/main.js"></script>
    ```
 
    이후 Vite의 에셋에 접근할 수 있도록 아래 두 가지 옵션 중 하나를 선택해 적용해주세요.
@@ -47,7 +47,7 @@
 
    ```html
    <script type="module">
-     import RefreshRuntime from "http://localhost:3000/@react-refresh"
+     import RefreshRuntime from "http://localhost:5173/@react-refresh"
      RefreshRuntime.injectIntoGlobalHook(window) 
      window.$RefreshReg$ = () => {}
      window.$RefreshSig$ = () => (type) => type
