@@ -28,12 +28,14 @@ vite --config my-config.js
 ```
 
 ::: tip 참고
-Vite는 설정 파일과 해당 디펜던시에서 `__filename`, `__dirname` 그리고 `import.meta.url` 문자열을 대체합니다. 따라서 이러한 이름으로 변수 이름을 설정하게 되면 에러가 발생합니다:
+Vite는 설정 파일과 해당 디펜던시에서 `__filename`, `__dirname` 그리고 `import.meta.url` 문자열을 대체합니다. 따라서 이를 변수 이름이나 함수의 인자로 전달되는 문자열에 사용하게 되면 에러가 발생됩니다:
 
 ```js
 const __filename = "value"
 // 아래와 같이 변경됩니다
 const "path/vite.config.js" = "value"
+
+console.log("import.meta.url") // 빌드 시 에러가 발생됩니다.
 ```
 
 :::
