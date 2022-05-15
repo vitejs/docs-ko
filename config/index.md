@@ -163,7 +163,7 @@ export default defineConfig(({ command, mode }) => {
 
   - [esbuild](https://esbuild.github.io/api/#define)와 일관성을 유지하기 위해, 표현식은 JSON 객체(null, boolean, number, string, array, 또는 object)이거나 단일 식별자여야 합니다.
 
-  - 매치되는 부분이 단어 경계 (`\b`)로 둘러싸인 경우에만 대체가 수행됩니다.
+  - 매치되는 부분이 다른 문자나 숫자, `_` 또는 `$`로 둘러싸여 있지 않은 경우에만 대체됩니다.
 
   ::: warning
   이것은 아무런 구문 분석 없이 간단한 텍스트 대체로 구현되므로, 상수에만 `define` 을 사용하는 것을 추천합니다.
