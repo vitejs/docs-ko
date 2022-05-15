@@ -1018,7 +1018,6 @@ export default defineConfig({
 
   - `external`은 생략됩니다. 이 대신 Vite의 `optimizeDeps.exclude` 옵션을 사용합니다.
   - `plugins`는 Vite의 디펜던시 플러그인과 병합됩니다.
-  - `keepNames`는 이제 더는 사용되지 않는 `optimizeDeps.keepNames`보다 우선시됩니다.
 
 ## SSR 옵션 {#ssr-options}
 
