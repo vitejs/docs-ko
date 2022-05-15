@@ -414,6 +414,16 @@ Glob 패턴과 관련하여 다음의 사항을 유의해주세요:
 - Glob 패턴 매칭은 [`fast-glob`](https://github.com/mrmlnc/fast-glob)을 이용합니다. 자세한 것은 [지원하는 Glob 패턴 목록](https://github.com/mrmlnc/fast-glob#pattern-syntax)을 참고해주세요.
 - `import.meta.glob`으로 전달되는 모든 인자는 **리터럴 값을 전달해야 합니다**. 변수나 표현식을 사용할 수 없습니다.
 
+## 동적 Import {#dynamic-import}
+
+[Glob Import](#glob-import)와 마찬가지로 Vite는 변수를 사용한 동적인 Import도 지원합니다.
+
+```ts
+const module = await import(`./dir/${file}.js`)
+```
+
+변수 `file`은 깊이가 1인 파일에 대해서만 나타낼 수 있습니다. 가령 `file`이 `foo/bar`인 경우에는 Import가 실패하게 됩니다. 좀 더 다양한 기능이 필요한 경우에는 [Glob Import](#glob-import) 기능을 사용해주세요.
+
 ## WebAssembly {#webassembly}
 
 컴파일 된 `.wasm` 파일 역시 Import가 가능합니다. Wasm 파일의 `export default`로 Wasm 인스턴스에서 Export한 객체를 `Promise` 형태로 반환하는 초기화 함수가 들어가 있으며, 이를 호출하는 방식으로 사용이 가능합니다.

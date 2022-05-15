@@ -823,6 +823,7 @@ export default defineConfig({
 ### build.dynamicImportVarsOptions {#build-dynamicimportvarsoptions}
 
 - **타입:** [`RollupDynamicImportVarsOptions`](https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#options)
+- **참고:** [동적 Import](/guide/features#dynamic-import)
 
   [@rollup/plugin-dynamic-import-vars](https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars)에 전달할 옵션입니다.
 
