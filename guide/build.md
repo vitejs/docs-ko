@@ -125,7 +125,8 @@ module.exports = defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'lib/main.js'),
       name: 'MyLib',
-      fileName: (format) => `my-lib.${format}.js`
+      // 적절한 확장자가 추가됩니다.
+      fileName: 'my-lib'
     },
     rollupOptions: {
       // 라이브러리에 포함하지 않을 디펜던시를 명시해주세요
@@ -156,7 +157,7 @@ export { Foo, Bar }
 ```
 $ vite build
 building for production...
-[write] my-lib.es.js 0.08kb, brotli: 0.07kb
+[write] my-lib.es.mjs 0.08kb, brotli: 0.07kb
 [write] my-lib.umd.js 0.30kb, brotli: 0.16kb
 ```
 
@@ -167,10 +168,10 @@ building for production...
   "name": "my-lib",
   "files": ["dist"],
   "main": "./dist/my-lib.umd.js",
-  "module": "./dist/my-lib.es.js",
+  "module": "./dist/my-lib.es.mjs",
   "exports": {
     ".": {
-      "import": "./dist/my-lib.es.js",
+      "import": "./dist/my-lib.es.mjs",
       "require": "./dist/my-lib.umd.js"
     }
   }
