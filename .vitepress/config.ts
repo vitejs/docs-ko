@@ -1,9 +1,6 @@
-// @ts-check
+import { defineConfig } from 'vitepress'
 
-/**
- * @type {import('vitepress').UserConfig}
- */
-module.exports = {
+export default defineConfig({
   title: 'Vite',
   lang: 'ko',
   description: '차세대 프런트엔드 개발 툴',
@@ -66,6 +63,15 @@ module.exports = {
             text: '변경 사항',
             link:
               'https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md'
+          }
+        ]
+      },
+      {
+        text: 'v3 (next)',
+        items: [
+          {
+            text: 'v2.x (stable)',
+            link: 'https://v2.vitejs.dev'
           }
         ]
       },
@@ -176,8 +182,9 @@ module.exports = {
   },
   markdown: {
     anchor: {
+      // @ts-ignore
       renderPermalink: require('./render-permalink'),
     },
     config: md => md.use(require('./custom-anchor')),
   }
-}
+})
