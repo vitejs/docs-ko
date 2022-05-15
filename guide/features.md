@@ -273,7 +273,7 @@ for (const path in modules) {
 }
 ```
 
-기본적으로 `import.meta.glob` 함수를 이용하면, Dynamic Import를 이용해 Lazy하게 파일의 청크를 가져옵니다. 만약 동적으로(Dynamic) Import하는 것이 아니라 직접 모듈을 가져오고자 한다면, `import.meta.globEager` 함수를 이용해주세요.
+기본적으로 `import.meta.glob` 함수를 이용하면, 동적(Dynamic) Import를 이용해 파일의 청크를 가져옵니다. 만약 동적으로 Import하는 것이 아니라 직접 모듈을 가져오고자 한다면 `import.meta.globEager` 함수를 이용해주세요.
 
 ```js
 const modules = import.meta.globEager('./dir/*.js')
