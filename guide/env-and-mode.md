@@ -78,6 +78,14 @@ interface ImportMeta {
 }
 ```
 
+만약 코드가 [DOM](https://github.com/microsoft/TypeScript/blob/main/lib/lib.dom.d.ts)이나 [WebWorker](https://github.com/microsoft/TypeScript/blob/main/lib/lib.webworker.d.ts)와 같이 브라우저 환경의 타입이 필요하다면, `tsconfig.json`에서 [lib](https://www.typescriptlang.org/tsconfig#lib) 필드에 이를 명시해줄 수 있습니다.
+
+```json
+{
+  "lib": ["WebWorker"]
+}
+```
+
 ## 모드 {#modes}
 
 기본적으로, `dev` 명령으로 실행되는 개발 서버는 `development` 모드로 동작하고, `build` 명령으로 실행되는 경우에는 `production` 모드로 동작합니다.
