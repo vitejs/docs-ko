@@ -36,7 +36,12 @@
    <script type="module" src="http://localhost:3000/main.js"></script>
    ```
 
-   또한 서버가 Vite 작업 디렉토리에서 정적 에셋을 제공하도록 구성되어 있는지 확인하십시오. 그렇지 않으면 이미지와 같은 에셋이 제대로 로드되지 않습니다.
+   이후 Vite의 에셋에 접근할 수 있도록 아래 두 가지 옵션 중 하나를 선택해 적용해주세요.
+
+   - 백엔드 서버가 Vite 서버에 대한 에셋 요청을 프록시하도록 설정
+   - 에셋의 URL이 상대 경로 대신 백엔드 서버 URL을 사용해 가져와질 수 있도록 [`server.origin`](https://vitejs-kr.github.io/config/#server-origin) 옵션 값을 설정
+
+   위 옵션은 이미지와 같은 에셋이 정상적으로 로드되기 위해 반드시 필요합니다.
 
    React를 `@vitejs/plugin-react`와 함께 사용하는 경우 플러그인이 사용자가 제공하는 HTML을 수정할 수 없기 때문에 위 스크립트 이전에 이것을 추가해야 합니다.
 
