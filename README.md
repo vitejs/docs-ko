@@ -31,11 +31,13 @@ pnpm build
 
 ### 커밋
 
-커밋 시 `./scripts/verifyCommit.js` 스크립트를 기반으로 커밋 메시지 내용을 검증하게 됩니다. 따라서, 아래와 같은 형태로 커밋 메시지를 남겨주세요.
+커밋 시 `./scripts/verifyCommit.js` 스크립트를 기반으로 커밋 메시지 내용을 검증하게 됩니다. 아래와 같은 형태로 커밋 메시지를 남겨주세요.
 
 ```bash
-"docs(ko): translate <document-name>.md"
+"<Type>: Message"
 ```
+
+- Type: feat | fix | style | docs | typo | refactor | workflow | build | ci | chore | wip | deps
 
 커밋 메시지 검증과 관련되어 자세한 사항은 `verifyCommit.js` 스크립트를 참고해주세요.
 
