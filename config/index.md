@@ -179,7 +179,7 @@ export default defineConfig(({ command, mode }) => {
   예제:
 
   ```ts
-  // vite-end.d.ts
+  // vite-env.d.ts
   declare const __APP_VERSION__: string
   ```
 
