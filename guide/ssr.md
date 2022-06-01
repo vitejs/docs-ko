@@ -274,4 +274,4 @@ Vite 2.7 이전에는 `options` 객체를 사용하는 대신 `ssr` 매개변수
    SSR 미들웨어가 Vite 미들웨어 _이후에_ 실행되도록 Post 훅을 사용합니다.
    :::
 
-2. `config.spa` 설정 값을 `false`로 지정합니다. 이를 통해 개발 및 미리보기 서버가 SPA 모드에서 SSR/MPA 모드로 전환됩니다.
+2. `config.spa` 설정 값을 `false`로 지정합니다. 이를 통해 개발 및 프리뷰 서버가 SPA 모드에서 SSR/MPA 모드로 전환됩니다.

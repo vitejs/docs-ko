@@ -14,6 +14,7 @@
 |Message|메시지|
 |Monorepo|모노리포|
 |On-Demand|온디맨드|
+|Preview|프리뷰|
 |Production|프로덕션|
 |Property|프로퍼티|
 |Repository|리포지터리|
