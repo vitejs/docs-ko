@@ -426,13 +426,13 @@ const module = await import(`./dir/${file}.js`)
 
 ## WebAssembly {#webassembly}
 
-컴파일 된 `.wasm` 파일 역시 Import가 가능합니다. Wasm 파일의 `export default`로 Wasm 인스턴스에서 Export한 객체를 `Promise` 형태로 반환하는 초기화 함수가 들어가 있으며, 이를 호출하는 방식으로 사용이 가능합니다.
+사전에 컴파일 된 `.wasm` 파일 역시 `?init` 쿼리를 이용해 Import가 가능합니다. 불러와진 Wasm 모듈의 `export default`로 Wasm 인스턴스를 `Promise` 형태로 반환하는 초기화 함수가 들어가 있으며, 이를 호출하는 방식으로 사용이 가능합니다:
 
 ```js
-import init from './example.wasm'
+import init from './example.wasm?init'
 
-init().then((exports) => {
-  exports.test()
+init().then((instance) => {
+  instance.exports.test()
 })
 ```
 
@@ -451,6 +451,10 @@ init({
 ```
 
 프로덕션 빌드 시 `assetsInlineLimit` 옵션\*의 값보다 작은 `.wasm` 파일은 Base64 문자열 포맷으로 변환됩니다. 그렇지 않은 경우, `dist` 디렉터리에 파일이 복사되어 요청(Fetch) 시 불러오는 방식으로 동작하게 됩니다. (\* [`assetsInlineLimit` doc](/config/#build-assetsinlinelimit))
+
+::: warning
+[WebAssembly를 위한 ES 모듈 제안 사항](https://github.com/WebAssembly/esm-integration)은 현재 지원되지 않습니다. 이 대신 [`vite-plugin-wasm`](https://github.com/Menci/vite-plugin-wasm) 또는 기타 커뮤니티 플러그인을 사용해 이를 처리하세요.
+:::
 
 ## Web Workers {#web-workers}
 
