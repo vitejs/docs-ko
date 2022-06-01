@@ -4,21 +4,44 @@ export default defineConfig({
   title: 'Vite',
   lang: 'ko',
   description: '차세대 프런트엔드 개발 툴',
+
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
+
+    // TODO: This is neeeded to get smooth dark mode appearance on initial
+    // load. And this will be gone when VitePress figures out how to handle
+    // this in core.
+    [
+      'script',
+      {},
+      `
+        ;(() => {
+          const saved = localStorage.getItem('vitepress-theme-appearance')
+          const prefereDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          if (!saved || saved === 'auto' ? prefereDark : saved === 'dark') {
+            document.documentElement.classList.add('dark')
+          }
+        })()
+      `
+    ],
     ['script', { src: 'https://www.googletagmanager.com/gtag/js?id=G-V8ZS1G7X21' }],
     ['script', {}, `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-V8ZS1G7X21');`]
   ],
+
   vue: {
     reactivityTransform: true
   },
-  themeConfig: {
-    repo: 'vitejs-kr/vitejs-kr.github.io',
-    logo: '/logo.svg',
-    docsBranch: 'main',
-    editLinks: true,
-    editLinkText: '이 페이지 수정하기',
 
+  themeConfig: {
+    logo: '/logo.svg',
+
+    editLink: {
+      repo: 'vitejs-kr/vitejs-kr.github.io',
+      branch: 'main',
+      text: '이 페이지 수정하기'
+    },
+
+    // @ts-ignore
     algolia: {
       apiKey: 'b573aa848fd57fb47d693b531297403c',
       indexName: 'vitejs',
@@ -30,6 +53,15 @@ export default defineConfig({
     carbonAds: {
       carbon: 'CEBIEK3N',
       placement: 'vitejsdev'
+    },
+
+    localeLinks: {
+      text: '한국어',
+      items: [
+        { text: 'English', link: 'https://vitejs.dev' },
+        { text: '简体中文', link: 'https://cn.vitejs.dev' },
+        { text: '日本語', link: 'https://ja.vitejs.dev' }
+      ]
     },
 
     nav: [
@@ -74,34 +106,14 @@ export default defineConfig({
             link: 'https://v2.vitejs.dev'
           }
         ]
-      },
-      {
-        text: 'Languages',
-        items: [
-          {
-            text: 'English',
-            link: 'https://vitejs.dev'
-          },
-          {
-            text: '简体中文',
-            link: 'https://cn.vitejs.dev'
-          },
-          {
-            text: '日本語',
-            link: 'https://ja.vitejs.dev'
-          }
-        ]
       }
     ],
 
     sidebar: {
-      '/config/': 'auto',
-      '/plugins': 'auto',
-      // catch-all fallback
       '/': [
         {
           text: '가이드',
-          children: [
+          items: [
             {
               text: 'Vite를 사용해야 하는 이유',
               link: '/guide/why'
@@ -158,7 +170,7 @@ export default defineConfig({
         },
         {
           text: 'API',
-          children: [
+          items: [
             {
               text: '플러그인 API',
               link: '/guide/api-plugin'
