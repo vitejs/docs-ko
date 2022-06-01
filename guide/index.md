@@ -117,7 +117,7 @@ Vite는 정적(Static) HTTP 서버와 비슷하게 "루트 디렉터리"라는 �
 
 vite가 설치된 프로젝트는 `vite` 명령을 통해 바로 Vite를 실행할 수 있습니다. (`npx vite`을 이용해도 되구요.) 기본적으로 Vite에서 제공하는 npm 스크립트는 아래와 같습니다.
 
-```json5
+```json
 {
   "scripts": {
     "dev": "vite", // 개발 서버를 실행합니다. (`vite dev` 또는 `vite serve`로도 시작이 가능합니다.)

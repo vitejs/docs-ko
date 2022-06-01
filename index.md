@@ -1,10 +1,16 @@
 ---
 layout: home
 
+title: Vite
+titleTemplate: 차세대 프런트엔드 개발 툴
+
 hero:
   name: Vite
   text: 차세대 프런트엔드 개발 툴
-  tagline: ~
+  tagline: 당신이 원했던 개발 환경을 시작해보세요.
+  image:
+    light: /vite-splash-light.jpg
+    dark: /vite-splash-dark.jpg
   actions:
     - theme: brand
       text: 시작하기

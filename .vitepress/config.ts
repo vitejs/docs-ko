@@ -30,7 +30,6 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/vitejs/vite' },
     ],
 
-    // @ts-ignore
     algolia: {
       apiKey: 'b573aa848fd57fb47d693b531297403c',
       indexName: 'vitejs',
@@ -40,7 +39,7 @@ export default defineConfig({
     },
 
     carbonAds: {
-      carbon: 'CEBIEK3N',
+      code: 'CEBIEK3N',
       placement: 'vitejsdev'
     },
 
