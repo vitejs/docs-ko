@@ -730,7 +730,7 @@ export default defineConfig({
 
   또 다른 특수 값은 `'esnext'`입니다. 이는 네이티브 동적 가져오기가 지원되는 것으로 가정하고 가능한 한 적게 트랜스파일 됩니다:
 
-  - [`build.minify`](#build-minify) 옵션이 `'terser'` 이라면, `'esnext'`는 `'es2019'`로 다운 설정됩니다.
+  - [`build.minify`](#build-minify) 옵션이 `'terser'` 이라면, `'esnext'`는 `'es2021'`로 다운 설정됩니다.
   - 다른 경우에는, 전혀 트랜스파일이 수행되지 않습니다.
 
   변환은 esbuild로 수행되며, 값은 유효한 [esbuild 타깃 옵션](https://esbuild.github.io/api/#target)이어야 합니다. 사용자 지정 타깃은 ES 버전 (예: `es2015`)이나 버전이 있는 브라우저 (예: `chrome58`) 또는 다중 타깃 문자열의 배열이 될 수 있습니다.
