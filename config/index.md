@@ -699,7 +699,6 @@ createServer()
 
 ### server.fs.deny {#server-fs-deny}
 
-- **실험적 기능**
 - **타입**: `string[]`
 
   Vite dev 서버에서 제공되지 않기를 원하는 민감한 파일들에 대한 차단 목록입니다.

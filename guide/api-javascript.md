@@ -151,8 +151,6 @@ const { build } = require('vite')
 
 ## `preview` {#preview}
 
-**실험적 기능**
-
 **타입 시그니처:**
 
 ```ts
