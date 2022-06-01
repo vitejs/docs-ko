@@ -264,3 +264,14 @@ Vite 2.7 이전에는 `options` 객체를 사용하는 대신 `ssr` 매개변수
 
 - 모든 디펜던시를 `noExternal`로 처리합니다.
 - Node.js 내장(Built-ins) 기능을 가져오면 오류가 발생됩니다.
+
+## Vite CLI #{vite-cli}
+
+`$ vite dev` 및 `$ vite preview` CLI 명령도 SSR 애플리케이션에 대해 사용할 수 있습니다:
+
+1. SSR 미들웨어를 [`configureServer`](/guide/api-plugin#configureserver)를 이용해 개발 서버에, 그리고 [`configurePreviewServer`](/guide/api-plugin#configurepreviewserver)를 이용해 프리뷰 서버에 추가합니다.
+   :::tip 참고
+   SSR 미들웨어가 Vite 미들웨어 _이후에_ 실행되도록 Post 훅을 사용합니다.
+   :::
+
+2. `config.spa` 설정 값을 `false`로 지정합니다. 이를 통해 개발 및 미리보기 서버가 SPA 모드에서 SSR/MPA 모드로 전환됩니다.

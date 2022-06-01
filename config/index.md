@@ -443,6 +443,13 @@ export default defineConfig(({ command, mode }) => {
   `envPrefix`를 `''`로 설정해서는 안 됩니다. 이렇게 설정한 경우 모든 환경 변수가 노출되며, 이로 인해 예기치 않게 민감한 정보가 누출될 수 있습니다. 따라서 Vite는 `''`로 설정되었을 때 오류를 발생시킵니다.
   :::
 
+### spa {#spa}
+
+- **타입:** `boolean`
+- **기본값:** `true`
+
+  애플리케이션이 SPA(단일 페이지 애플리케이션)인지 여부. MPA와 같이 다른 종류의 앱에 대해서는 `false`로 값을 설정하세요. 좀 더 알고자 한다면 Vite의 [SSR 가이드](/guide/ssr#vite-cli)를 참고해주세요.
+
 ## 서버 옵션 {#server-options}
 
 ### server.host {#server-host}
