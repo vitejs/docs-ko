@@ -7,23 +7,6 @@ export default defineConfig({
 
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
-
-    // TODO: This is neeeded to get smooth dark mode appearance on initial
-    // load. And this will be gone when VitePress figures out how to handle
-    // this in core.
-    [
-      'script',
-      {},
-      `
-        ;(() => {
-          const saved = localStorage.getItem('vitepress-theme-appearance')
-          const prefereDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-          if (!saved || saved === 'auto' ? prefereDark : saved === 'dark') {
-            document.documentElement.classList.add('dark')
-          }
-        })()
-      `
-    ],
     ['script', { src: 'https://www.googletagmanager.com/gtag/js?id=G-V8ZS1G7X21' }],
     ['script', {}, `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-V8ZS1G7X21');`]
   ],
@@ -40,6 +23,12 @@ export default defineConfig({
       branch: 'main',
       text: '이 페이지 수정하기'
     },
+
+    socialLinks: [
+      { icon: 'twitter', link: 'https://twitter.com/vite_js' },
+      { icon: 'discord', link: 'https://chat.vitejs.dev' },
+      { icon: 'github', link: 'https://github.com/vitejs/vite' },
+    ],
 
     // @ts-ignore
     algolia: {
@@ -62,6 +51,11 @@ export default defineConfig({
         { text: '简体中文', link: 'https://cn.vitejs.dev' },
         { text: '日本語', link: 'https://ja.vitejs.dev' }
       ]
+    },
+
+    footer: {
+      message: 'Released under the MIT License.',
+      copyright: 'Copyright © 2019-present Evan You & Vite Contributors'
     },
 
     nav: [
@@ -110,7 +104,7 @@ export default defineConfig({
     ],
 
     sidebar: {
-      '/': [
+      '/guide/': [
         {
           text: '가이드',
           items: [

@@ -5,7 +5,7 @@ specifiers:
   '@types/node': ^17.0.33
   chalk: ^4.1.0
   gray-matter: ^4.0.3
-  vitepress: 1.0.0-draft.1
+  vitepress: 1.0.0-draft.3
   yorkie: ^2.0.0
 
 devDependencies:
@@ -13,7 +13,7 @@ devDependencies:
   '@types/node': 17.0.33
   chalk: 4.1.2
   gray-matter: 4.0.3
-  vitepress: 1.0.0-draft.1
+  vitepress: 1.0.0-draft.3
   yorkie: 2.0.0
 
 packages:
@@ -292,7 +292,7 @@ packages:
       '@vue/shared': 3.2.33
       estree-walker: 2.0.2
       magic-string: 0.25.7
-      postcss: 8.4.6
+      postcss: 8.4.14
       source-map: 0.6.1
     dev: true
 
@@ -856,15 +856,6 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
-  /postcss/8.4.6:
-    resolution: {integrity: sha512-OovjwIzs9Te46vlEx7+uXB0PLijpwjXGKXjVGGPIGubGpq7uh5Xgf6D6FiJ/SzJMBosHDp6a2hiXOS97iBXcaA==}
-    engines: {node: ^10 || ^12 || >=14}
-    dependencies:
-      nanoid: 3.3.4
-      picocolors: 1.0.0
-      source-map-js: 1.0.2
-    dev: true
-
   /preact/10.6.6:
     resolution: {integrity: sha512-dgxpTFV2vs4vizwKohYKkk7g7rmp1wOOcfd4Tz3IB3Wi+ivZzsn/SpeKJhRENSE+n8sUfsAl4S3HiCVT923ABw==}
     dev: true
@@ -996,8 +987,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitepress/1.0.0-draft.1:
-    resolution: {integrity: sha512-9tNpUu0dwd5w5DNCBlgsmw4HlEl55o8jdOk/tQIxQ2j//0UkEAPT32TL5KRuro1Bp5OM6njZ37s8Y8g26MnooQ==}
+  /vitepress/1.0.0-draft.3:
+    resolution: {integrity: sha512-DTbej4xFhfYQ0/RPjORibMXu8DC5QY0L9UjsmT6+Bes6pNULNx0k6rCRZnvv/obJD8ClEaY/CkZ7vzBK+lt+zQ==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
