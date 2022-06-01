@@ -4,11 +4,14 @@
 
 ## 브라우저 지원 현황 {#browser-compatibility}
 
-빌드된 프로덕션 버전의 경우 모던 JavaScript를 지원하는 브라우저에서 동작한다고 가정합니다. 따라서, *'기본적으로'* 모든 코드는 [네이티브 ESM 태그](https://caniuse.com/es6-module)와 [네이티브 ESM의 Dynamic Import](https://caniuse.com/es6-module-dynamic-import)를 지원하는 브라우저를 타깃으로 하고 있습니다. 참고로 Vite는 아래의 [Browserlist](https://github.com/browserslist/browserslist) 쿼리를 사용합니다.
+빌드된 프로덕션 버전의 경우 모던 JavaScript를 지원하는 브라우저에서 동작한다고 가정합니다.
 
-```
-defaults and supports es6-module and supports es6-module-dynamic-import, not opera > 0, not samsung > 0, not and_qq > 0
-```
+빌드된 프로덕션 버전은 모던 JavaScript를 지원하는 환경에서 동작한다고 가정합니다. 따라서 Vite는 기본적으로 [네이티브 ES 모듈](https://caniuse.com/es6-module), [네이티브 ESM의 동적 Import](https://caniuse.com/es6-module-dynamic-import), 그리고 [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta)를 지원하는 브라우저를 타깃으로 하고 있습니다:
+
+- Chrome >=87
+- Firefox >=78
+- Safari >=13
+- Edge >=88
 
 만약 JavaScript 타깃을 지정하고자 한다면, [`build.target` 설정](/config/#build-target)을 이용해주세요. 다만 버전은 최소한 `es2015` 이상이어야 합니다.
 

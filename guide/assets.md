@@ -111,6 +111,6 @@ function getImageUrl(name) {
 `import.meta.url`은 브라우저와 Node.js 간 서로 다른 의미를 갖기 때문에, 이 패턴은 서버-사이드 렌더링(SSR)에 Vite를 사용하는 경우 동작하지 않습니다.
 :::
 
-::: warning Esbuild 타깃 설정이 필요해요
-이 패턴은 esbuild 타깃을 `es2020` 이상으로 설정해줘야 합니다. `vite@2.x`는 `es2019`를 기본 빌드 타깃으로 사용하며, 따라서 이를 사용하기 위해 [build-target](https://vitejs-kr.github.io/config/#build-target) 그리고 [optimizedeps.esbuildoptions.target](https://vitejs-kr.github.io/config/#optimizedeps-esbuildoptions) 설정 값을 `es2020` 또는 이보다 높게 설정해주세요.
+::: warning `target`은 `es2020`보다 높아야 해요
+이 패턴은 [build-target](https://vitejs-kr.github.io/config/#build-target) 또는 [optimizedeps.esbuildoptions.target](https://vitejs-kr.github.io/config/#optimizedeps-esbuildoptions) 설정 값이 `es2020` 미만이면 동작하지 않습니다.
 :::

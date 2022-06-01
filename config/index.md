@@ -726,7 +726,7 @@ export default defineConfig({
 - **기본값:** `'modules'`
 - **참고:** [브라우저 지원 현황](/guide/build#browser-compatibility)
 
-  최종 번들을 위한 브라우저 호환성 타깃입니다. 기본값은 Vite 특수 값으로, [네이티브 ES 모듈을 지원하는 브라우저](https://caniuse.com/es6-module)를 타깃으로 하는 `'module'` 입니다.
+  최종 번들을 위한 브라우저 호환성 타깃입니다. 기본값은 Vite 특수 값으로, [네이티브 ES 모듈](https://caniuse.com/es6-module) 및 [네이티브 ESM의 동적 Import](https://caniuse.com/es6-module-dynamic-import)를 지원하는 브라우저 타깃으로 하는 `'module'` 입니다.
 
   또 다른 특수 값은 `'esnext'`입니다. 이는 네이티브 동적 가져오기가 지원되는 것으로 가정하고 가능한 한 적게 트랜스파일 됩니다:
 
