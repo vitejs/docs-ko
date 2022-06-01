@@ -148,4 +148,4 @@ pnpm link --global # 이 단계에서는 선호하는 패키지 관리자를 사
 
 ## 커뮤니티 {#community}
 
-질문이나 도움이 필요하다면, [Discord](https://discord.gg/4cmKdMfpU5) 또는 [GitHub Discussions](https://github.com/vitejs/vite/discussions)에 방문해주세요.
+질문이나 도움이 필요하다면, [Discord](https://chat.vitejs.dev) 또는 [GitHub Discussions](https://github.com/vitejs/vite/discussions)에 방문해주세요.
