@@ -163,7 +163,7 @@ export default defineConfig({
           ]
         },
         {
-          text: 'API',
+          text: 'APIs',
           items: [
             {
               text: '플러그인 API',
@@ -180,6 +180,45 @@ export default defineConfig({
             {
               text: 'Vite 설정 레퍼런스',
               link: '/config/'
+            }
+          ]
+        }
+      ],
+      '/config/': [
+        {
+          text: 'Config',
+          items: [
+            {
+              text: 'Configuring Vite',
+              link: '/config/'
+            },
+            {
+              text: 'Shared Options',
+              link: '/config/shared-options'
+            },
+            {
+              text: 'Server Options',
+              link: '/config/server-options'
+            },
+            {
+              text: 'Build Options',
+              link: '/config/build-options'
+            },
+            {
+              text: 'Preview Options',
+              link: '/config/preview-options'
+            },
+            {
+              text: 'Dep Optimization Options',
+              link: '/config/dep-optimization-options'
+            },
+            {
+              text: 'SSR Options',
+              link: '/config/ssr-options'
+            },
+            {
+              text: 'Worker Options',
+              link: '/config/worker-options'
             }
           ]
         }
