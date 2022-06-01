@@ -437,11 +437,11 @@ export default defineConfig(({ command, mode }) => {
 - **타입:** `string | string[]`
 - **기본값:** `VITE_`
 
-`envPrefix`로 시작하는 환경 변수는 import.meta.env를 통해 소스 코드에서 접근할 수 있습니다.
+  `envPrefix`로 시작하는 환경 변수는 import.meta.env를 통해 소스 코드에서 접근할 수 있습니다.
 
-:::warning 보안 권고 사항
-`envPrefix`를 `''`로 설정해서는 안 됩니다. 이렇게 설정한 경우 모든 환경 변수가 노출되며, 이로 인해 예기치 않게 민감한 정보가 누출될 수 있습니다. 따라서 Vite는 `''`로 설정되었을 때 오류를 발생시킵니다.
-:::
+  :::warning 보안 권고 사항
+  `envPrefix`를 `''`로 설정해서는 안 됩니다. 이렇게 설정한 경우 모든 환경 변수가 노출되며, 이로 인해 예기치 않게 민감한 정보가 누출될 수 있습니다. 따라서 Vite는 `''`로 설정되었을 때 오류를 발생시킵니다.
+  :::
 
 ## 서버 옵션 {#server-options}
 
