@@ -9,29 +9,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
 
-      - name: Resolve lockfile hash
-        id: lockfile-hash
-        run: echo "::set-output name=hash::${{ hashFiles('yarn.lock') }}"
-
-      - name: Caching
-        uses: actions/cache@v2
-        id: cache-deps
+      - uses: pnpm/action-setup@v2.2.1
         with:
-          path: ${{ github.workspace }}/node_modules
-          key: ${{ runner.os }}-yarn-${{ steps.lockfile-hash.outputs.hash }}
+          version: 7
 
-      - name: Install deps if not cached
-        if: steps.cache-deps.outputs.cache-hit == ''
-        run: yarn install
+      - uses: actions/cache@v3
+        id: pnpm-cache
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+      - if: steps.pnpm-cache.outputs.cache-hit != 'true'
+        run: pnpm install
 
       - name: Rewrite titles
-        run: yarn rewrite-title
+        run: pnpm run rewrite-title
 
       - name: Build
-        run: yarn build
+        run: pnpm run build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
