@@ -183,35 +183,35 @@ export default defineConfig({
           text: 'Config',
           items: [
             {
-              text: 'Configuring Vite',
+              text: 'Vite 설정하기',
               link: '/config/'
             },
             {
-              text: 'Shared Options',
+              text: '공용 옵션',
               link: '/config/shared-options'
             },
             {
-              text: 'Server Options',
+              text: '서버 옵션',
               link: '/config/server-options'
             },
             {
-              text: 'Build Options',
+              text: '빌드 옵션',
               link: '/config/build-options'
             },
             {
-              text: 'Preview Options',
+              text: '프리뷰 옵션',
               link: '/config/preview-options'
             },
             {
-              text: 'Dep Optimization Options',
+              text: '디펜던시 최적화 옵션',
               link: '/config/dep-optimization-options'
             },
             {
-              text: 'SSR Options',
+              text: 'SSR 옵션',
               link: '/config/ssr-options'
             },
             {
-              text: 'Worker Options',
+              text: '워커 옵션',
               link: '/config/worker-options'
             }
           ]
