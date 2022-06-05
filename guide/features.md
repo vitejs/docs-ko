@@ -12,7 +12,7 @@ import { someMethod } from 'my-dep'
 
 모듈의 위치를 찾을 수 없기 때문인데, vite는 다음을 기준으로 모듈을 가져오기 때문에 위 코드 역시 정상적으로 실행됩니다.
 
-1. Vite를 통해 ESM 스타일로 [사전에 번들링 된](./dep-pre-bundling) CommonJS 및 UMD\* 모듈. 이 과정은 [Esbuild](https://esbuild.github.io/)를 통해 이루어지며, JavaScript 기반의 다른 번들러보다 빠른 Cold-starting이 가능합니다. (\* Universal Module Definition: CommonJS와 AMD 스타일의 모듈을 둘 다 지원하는 모듈 형태)
+1. Vite를 통해 ESM 스타일로 [사전에 번들링 된](./dep-pre-bundling) CommonJS 및 UMD\* 모듈. 이 과정은 [Esbuild](https://esbuild.github.io/)를 통해 이루어지며, JavaScript 기반의 다른 번들러보다 빠른 콜드-스타트가 가능합니다. (\* Universal Module Definition: CommonJS와 AMD 스타일의 모듈을 둘 다 지원하는 모듈 형태)
 
 2. `/node_modules/.vite/deps/my-dep.js?v=f3sf2ebd`와 같이 URL을 이용해 ESM을 지원하는 브라우저에서 모듈을 가져올 수 있도록 `import` 구문을 수정.
 
@@ -200,6 +200,15 @@ Sass나 Less에서의 `@import` 별칭 또한 Vite에서 사용이 가능합니�
 다만 Stylus의 경우 API 충돌로 인해 Vite의 `@import` 별칭과 URL 재정의 기능이 제공되지 않습니다.
 
 물론 전처리된 CSS 역시 `style.module.scss`와 같이 CSS 모듈처럼 사용이 가능합니다. 똑같이 파일 확장자에 `.module`만 붙여주세요.
+
+### 페이지 내 CSS 주입 비활성화하기 {#disabling-css-injection-into-the-page}
+
+CSS 콘텐츠의 자동 주입은 `?inline` 쿼리 매개변수를 통해 비활성화 할 수 있습니다. 이 경우 처리된 CSS 문자열은 평소와 같이 모듈의 `default export`로 반환되나, 스타일은 페이지에 주입되지 않습니다.
+
+```js
+import styles from './foo.css' // 페이지에 스타일이 추가됨
+import otherStyles from './bar.css?inline' // 페이지에 스타일이 추가되지 않음
+```
 
 ## 정적 에셋 {#static-assets}
 

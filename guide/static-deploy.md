@@ -275,12 +275,17 @@ $ ntl deploy
 
    # 새로운 애플리케이션 생성
    $ heroku apps:create example
-
-   # 정적 사이트 배포를 위해 Buildpack 정의
-   $ heroku buildpacks:set https://github.com/heroku/heroku-buildpack-static.git
    ```
 
-6. 마지막으로, 아래 명령을 통해 사이트를 배포하게 됩니다.
+6. 빌드팩을 설정합니다. `heroku/nodejs`를 사용해 프로젝트를 빌드하고 `heroku-buildpack-static`을 사용해 이를 제공합니다.
+
+   ```bash
+   # buildpack 설정
+   $ heroku buildpacks:set heroku/nodejs
+   $ heroku buildpacks:add https://github.com/heroku/heroku-buildpack-static.git
+   ```
+
+7. 마지막으로 아래 명령을 통해 사이트를 배포합니다:
 
    ```bash
    # 사이트 배포
