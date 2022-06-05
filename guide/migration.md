@@ -19,13 +19,17 @@ Vite는 EOL(End-of-life)에 도달한 Node v12를 더 이상 지원하지 않습
 
 - 아래의 옵션은 이미 Vite v2에서 사용되지 않는 옵션이었으며, v3에서는 제거되었습니다:
 
-  - `optimizeDeps.keepNames` ([`optimizeDeps.esbuildOptions.keepNames`](../config/dep-optimization-options.md#optimizedepsesbuildoptions)로 변경)
-  - `build.base` ([`base`](../config/shared-options.md#base)로 변경)
   - `alias` ([`resolve.alias`](../config/shared-options.md#resolvealias)로 변경)
   - `dedupe` ([`resolve.dedupe`](../config/shared-options.md#resolvededupe)로 변경)
+  - `build.base` ([`base`](../config/shared-options.md#base)로 변경)
+  - `build.brotliSize` ([`build.reportCompressedSize`](../config/build-options.md#build-reportcompressedsize)로 변경)
+  - `build.cleanCssOptions` (Vite는 이제 CSS 압축 시 esbuild를 사용합니다)
   - `polyfillDynamicImport` (동적 Import를 지원하지 않는 브라우저는 [`@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 사용해주세요)
+  - `optimizeDeps.keepNames` ([`optimizeDeps.esbuildOptions.keepNames`](../config/dep-optimization-options.md#optimizedepsesbuildoptions)로 변경)
 
 ## 개발 서버 관련 변경 사항 {#dev-server-changes}
+
+Vite 개발 서버의 기본 포트 번호는 이제 5173 입니다. 물론 [`server.port`](../config/server-options.md#server-port) 옵션을 이용해 3000으로 설정할 수 있습니다.
 
 Vite는 CJS 포맷의 디펜던시를 ESM으로 변환하고 브라우저가 요청해야 하는 모듈의 개수를 줄이기 위해 esbuild를 이용해 디펜던시를 최적화합니다. 이와 관련하여, Vite v3에서는 디펜던시를 발견하고 일괄적으로 처리하는 기본 방식이 변경되었습니다. v2에서는 콜드-스타트와 관련된 디펜던시를 최적화하기 위해 esbuild로 사용자 코드를 사전에 탐색해야 했었으나, v3에서는 더 이상 이를 수행하지 않습니다. 이 대신 소스 코드 로드 시 Import 되는 모든 사용자의 모듈이 처리될 때까지 첫 번째 디펜던시 최적화 작업이 지연됩니다.
 
@@ -45,9 +49,41 @@ Vite v3는 기본적으로 SSR 빌드 시 ESM을 타깃으로 합니다. ESM을 
 
 ## 일반적인 변경 사항 {#general-changes}
 
-- [`import.meta.glob`](features.md#glob-import-as) 옵션이 `{ assert: { type: 'raw' }}`에서 `{ as: 'raw' }`으로 변경되었습니다.
-
 - SSR 및 lib 모드에서 빌드된 JS 파일의 확장자는 이제 포맷과 패키지 타입에 따라 올바른 확장자(`js`, `mjs`, 또는 `cjs`)를 갖습니다.
+
+### `import.meta.glob` {#import-meta-glob}
+
+- Raw에 대한 [`import.meta.glob`](features.md#glob-import-as) 옵션이 `{ assert: { type: 'raw' }}`에서 `{ as: 'raw' }`으로 변경되었습니다.
+- `import.meta.glob`의 키는 이제 현재 모듈에 상대적으로 설정할 수 있습니다.
+
+  ```diff
+  // 파일: /foo/index.js
+  const modules = import.meta.glob('../foo/*.js')
+
+  // 변환된 코드:
+  const modules = {
+  -  '../foo/bar.js': () => {}
+  +  './bar.js': () => {}
+  }
+  ```
+
+- `import.meta.glob`과 함께 별칭을 사용하는 경우에는 키 값이 항상 절대적인 위치를 가리키게 됩니다.
+- `import.meta.globEager` 옵션은 더 이상 사용되지 않습니다. 이 대신 `import.meta.glob('*', { eager: true })`을 사용해주세요.
+
+### WebAssembly 지원 관련 {#webassembly-support}
+
+["ESM integration for Wasm"](https://github.com/WebAssembly/esm-integration)과의 향후 충돌을 방지하지 위해 `import init from 'example.wasm'` 구문이 삭제되었습니다.
+이 대신 `?init` 접미사를 사용해주세요.
+
+```diff
+-import init from 'example.wasm'
++import init from 'example.wasm?init'
+
+-init().then((instance) => {
++init().then(({ exports }) => {
+  exports.test()
+})
+```
 
 ## v1에서 마이그레이션하기 {#migration-from-v1}
 
