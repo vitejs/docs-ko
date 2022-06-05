@@ -12,7 +12,7 @@ import { someMethod } from 'my-dep'
 
 모듈의 위치를 찾을 수 없기 때문인데, vite는 다음을 기준으로 모듈을 가져오기 때문에 위 코드 역시 정상적으로 실행됩니다.
 
-1. Vite를 통해 ESM 스타일로 [사전에 번들링 된](./dep-pre-bundling) CommonJS 및 UMD\* 모듈. 이 과정은 [Esbuild](https://esbuild.github.io/)를 통해 이루어지며, JavaScript 기반의 다른 번들러보다 빠른 Cold-starting이 가능합니다. (\* Universal Module Definition: CommonJS와 AMD 스타일의 모듈을 둘 다 지원하는 모듈 형태)
+1. Vite를 통해 ESM 스타일로 [사전에 번들링 된](./dep-pre-bundling) CommonJS 및 UMD\* 모듈. 이 과정은 [Esbuild](https://esbuild.github.io/)를 통해 이루어지며, JavaScript 기반의 다른 번들러보다 빠른 콜드-스타트가 가능합니다. (\* Universal Module Definition: CommonJS와 AMD 스타일의 모듈을 둘 다 지원하는 모듈 형태)
 
 2. `/node_modules/.vite/deps/my-dep.js?v=f3sf2ebd`와 같이 URL을 이용해 ESM을 지원하는 브라우저에서 모듈을 가져올 수 있도록 `import` 구문을 수정.
 
