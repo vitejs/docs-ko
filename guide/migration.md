@@ -24,7 +24,7 @@ Vite는 EOL(End-of-life)에 도달한 Node v12를 더 이상 지원하지 않습
   - `build.base` ([`base`](../config/shared-options.md#base)로 변경)
   - `build.brotliSize` ([`build.reportCompressedSize`](../config/build-options.md#build-reportcompressedsize)로 변경)
   - `build.cleanCssOptions` (Vite는 이제 CSS 압축 시 esbuild를 사용합니다)
-  - `polyfillDynamicImport` (동적 Import를 지원하지 않는 브라우저는 [`@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 사용해주세요)
+  - `polyfillDynamicImport` (동적 Import를 지원하지 않는 브라우저는 [`@vitejs/plugin-legacy`](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 사용해주세요)
   - `optimizeDeps.keepNames` ([`optimizeDeps.esbuildOptions.keepNames`](../config/dep-optimization-options.md#optimizedepsesbuildoptions)로 변경)
 
 ## 개발 서버 관련 변경 사항 {#dev-server-changes}
@@ -37,7 +37,7 @@ Vite는 CJS 포맷의 디펜던시를 ESM으로 변환하고 브라우저가 요
 
 ## 빌드 관련 변경 사항 {#build-changes}
 
-v3에서, Vite는 기본적으로 esbuild를 사용해 디펜던시를 최적화합니다. 이 덕분에 v2에 있었던 dev와 prod간의 중요한 차이점 중 하나가 사라지게 됩니다. esbuild는 CJS 포맷의 디펜던시를 ESM으로 변환하기 때문에 [`@rollupjs/plugin-commonjs`]는 더 이상 사용하지 않아도 됩니다.
+v3에서, Vite는 기본적으로 esbuild를 사용해 디펜던시를 최적화합니다. 이 덕분에 v2에 있었던 dev와 prod간의 중요한 차이점 중 하나가 사라지게 됩니다. esbuild는 CJS 포맷의 디펜던시를 ESM으로 변환하기 때문에 [`@rollupjs/plugin-commonjs`](https://github.com/rollup/plugins/tree/master/packages/commonjs)는 더 이상 사용하지 않아도 됩니다.
 
 만약 v2의 방식을 되돌리고자 한다면 [`optimizeDeps.disabled: 'build'`](../config/dep-optimization-options.md#optimizedepsdisabled) 옵션을 이용해주세요.
 
@@ -84,6 +84,29 @@ Vite v3는 기본적으로 SSR 빌드 시 ESM을 타깃으로 합니다. ESM을 
   exports.test()
 })
 ```
+
+## Advanced {#advanced}
+
+아래는 Vite 관련 플러그인 또는 툴 개발자에게만 영향을 미치는 몇 가지 변경 사항들에 대한 내용입니다.
+
+- [[#5868] refactor: remove deprecated api for 3.0](https://github.com/vitejs/vite/pull/5868)
+  - `printHttpServerUrls` 제거
+  - `server.app`, `server.transformWithEsbuild` 제거
+  - `import.meta.hot.acceptDeps` 제거
+- [[#7995] chore: do not fixStacktrace](https://github.com/vitejs/vite/pull/7995)
+  - `ssrLoadModule`의 `fixStacktrace` 옵션의 기본 값은 이제 `false` 입니다.
+- [[#8178] feat!: migrate to ESM](https://github.com/vitejs/vite/pull/8178)
+  - `formatPostcssSourceMap`는 이제 비동기적(async)으로 동작합니다
+  - `resolvePackageEntry` 및 `resolvePackageData`는 더 이상 CJS 빌드에서 사용할 수 없습니다. (CJS에서 사용하기 위해서는 동적 Import 기능이 필요합니다.)
+
+아래는 일부 사용자에게만 영향을 미치는 변경 사항입니다.
+
+- [[#5018] feat: enable `generatedCode: 'es2015'` for rollup build](https://github.com/vitejs/vite/pull/5018)
+  - 사용자 코드에 ES5만 포함된 경우에도 ES5로 변환하는 과정은 이제 필요합니다.
+- [[#7877] fix: vite client types](https://github.com/vitejs/vite/pull/7877)
+  - `/// <reference lib="dom" />`이 `vite/client.d.ts`에서 제거되었습니다. 따라서 `{ "lib": ["dom"] }` 또는 `{ "lib": ["webworker"] }`이 `tsconfig.json`에 명시되어야 합니다.
+- [[#8280] feat: non-blocking esbuild optimization at build time](https://github.com/vitejs/vite/pull/8280)
+  - `server.force` 옵션이 `force` 옵션 대신 제거되었습니다.
 
 ## v1에서 마이그레이션하기 {#migration-from-v1}
 
