@@ -17,7 +17,7 @@ hero:
       link: /guide/
     - theme: alt
       text: Vite를 사용해야 하는 이유
-      link: /guide/why/
+      link: /guide/why
     - theme: alt
       text: GitHub
       link: https://github.com/vitejs/vite
