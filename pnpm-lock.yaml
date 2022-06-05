@@ -5,7 +5,7 @@ specifiers:
   '@types/node': ^17.0.33
   chalk: ^4.1.0
   gray-matter: ^4.0.3
-  vitepress: 1.0.0-draft.8
+  vitepress: 1.0.0-alpha.1
   yorkie: ^2.0.0
 
 devDependencies:
@@ -13,7 +13,7 @@ devDependencies:
   '@types/node': 17.0.33
   chalk: 4.1.2
   gray-matter: 4.0.3
-  vitepress: 1.0.0-draft.8
+  vitepress: 1.0.0-alpha.1
   yorkie: 2.0.0
 
 packages:
@@ -994,8 +994,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitepress/1.0.0-draft.8:
-    resolution: {integrity: sha512-r1cphHgtJ/KFwtph3cyusGWjRyX0NHvwfBboKnG5mRJpOP/JyvX5q5+NIiRYElPgdFXU7Roxkl8BcJbxWht56Q==}
+  /vitepress/1.0.0-alpha.1:
+    resolution: {integrity: sha512-yA0QIl+mB3fQ2j+keQVa0DTT0waP2AeWM/p9VYfUAT9vOkQEGass4/oYmMGPCQrBwCaO3cpOxJL3ZFVooyvybQ==}
     engines: {node: '>=14.6.0'}
     hasBin: true
     dependencies:
