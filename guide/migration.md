@@ -1,132 +1,54 @@
-# v1에서 마이그레션하기 {#migrating-from-v1}
+# v2에서 마이그레이션하기 {#migrating-from-v2}
 
-## 설정 바꾸기 {#config-options-change}
+## 지원하는 Node 버전 {#node-support}
 
-- 아래의 옵션들은 제거되었으며, [플러그인](./api-plugin)을 통해 구현해야 합니다.
+Vite는 EOL(End-of-life)에 도달한 Node v12를 더 이상 지원하지 않습니다. Node 버전 14.6 이상을 사용해주세요.
 
-  - `resolvers`
-  - `transforms`
-  - `indexHtmlTransforms`
+## 최신 브라우저 기준 변경 {#modern-browser-baseline-change}
 
-- `jsx`와 `enableEsbuild`는 제거되었습니다. 이 대신 새로운 [`esbuild`](/config/#esbuild) 옵션을 사용해주세요.
+프로덕션 버전으로 빌드 및 번들링 시, 소스 코드가 최신 JavaScript를 지원하는 환경에서 동작한다고 가정하고 진행됩니다. 기존적으로 Vite는 [네이티브 ES 모듈](https://caniuse.com/es6-module), [네이티브 ESM의 동적 Import](https://caniuse.com/es6-module-dynamic-import), 그리고 [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta)를 지원하는 브라우저를 대상으로 하고 있습니다:
 
-- [CSS 관련 옵션](/config/#css-modules)은 이제 `css` 아래에 위치합니다.
+- Chrome >=87
+- Firefox >=78
+- Safari >=13
+- Edge >=88
 
-- 모든 [빌드별 옵션](/config/#build-options)는 이제 `build` 아래에 위치합니다.
+만약 이보다 이전 버전의 브라우저를 대상으로 한다면 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 사용해주세요. 이 플러그인은 자동으로 레거시 청크 및 ES 언어 기능에 대한 폴리필을 생성합니다.
 
-  - `rollupInputOptions`와 `rollupOutputOptions`는 [`build.rollupOptions`](/config/#build-rollupoptions)로 대체되었습니다.
-  - `esbuildTarget`은 이제 [`build.target`](/config/#build-target) 입니다.
-  - `emitManifest`는 이제 [`build.manifest`](/config/#build-manifest) 입니다.
-  - 아래의 빌드 옵션은 제거되었으나, 플러그인 훅(Hook) 또는 기타 옵션을 통해 가져올 수 있습니다.
-    - `entry`
-    - `rollupDedupe`
-    - `emitAssets`
-    - `emitIndex`
-    - `shouldPreload`
-    - `configureBuild`
+## 설정 옵션 관련 변경 사항 {#config-options-changes}
 
-- 모든 [서버별 옵션](/config/#server-options)은 이제 `server` 아래에 위치합니다.
+- 아래의 옵션은 이미 Vite v2에서 사용되지 않는 옵션이었으며, v3에서는 제거되었습니다:
 
-  - `hostname`은 이제 [`server.host`](/config/#server-host) 입니다.
-  - `httpsOptions`는 제거되었습니다. 대신, [`server.https`](/config/#server-https)가 직접 옵션 객체를 받을 수 있도록 구성되어 있습니다.
-  - `chokidarWatchOptions`는 이제 [`server.watch`](/config/#server-watch) 입니다.
+  - `optimizeDeps.keepNames` ([`optimizeDeps.esbuildOptions.keepNames`](../config/dep-optimization-options.md#optimizedepsesbuildoptions)로 변경)
+  - `build.base` ([`base`](../config/shared-options.md#base)로 변경)
+  - `alias` ([`resolve.alias`](../config/shared-options.md#resolvealias)로 변경)
+  - `dedupe` ([`resolve.dedupe`](../config/shared-options.md#resolvededupe)로 변경)
+  - `polyfillDynamicImport` (동적 Import를 지원하지 않는 브라우저는 [`@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 사용해주세요)
 
-- [`assetsInclude`](/config/#assetsinclude)는 이제 함수 대신 `string | RegExp | (string | RegExp)[]` 타입으로 설정됩니다.
+## 개발 서버 관련 변경 사항 {#dev-server-changes}
 
-- 모든 Vue 옵션은 제거되었으며, Vue 플러그인에 옵션을 전달하도록 구성해야 합니다.
+Vite는 CJS 포맷의 디펜던시를 ESM으로 변환하고 브라우저가 요청해야 하는 모듈의 개수를 줄이기 위해 esbuild를 이용해 디펜던시를 최적화합니다. 이와 관련하여, Vite v3에서는 디펜던시를 발견하고 일괄적으로 처리하는 기본 방식이 변경되었습니다. v2에서는 콜드-스타트와 관련된 디펜던시를 최적화하기 위해 esbuild로 사용자 코드를 사전에 탐색해야 했었으나, v3에서는 더 이상 이를 수행하지 않습니다. 이 대신 소스 코드 로드 시 Import 되는 모든 사용자의 모듈이 처리될 때까지 첫 번째 디펜던시 최적화 작업이 지연됩니다.
 
-## 별칭 동작 변경 {#alias-behavior-change}
+만약 v2의 방식을 되돌리고자 한다면 [`optimizeDeps.devScan`](../config/dep-optimization-options.md#optimizedepsdevscan) 옵션을 이용해주세요.
 
-[`alias`](/config/#resolve-alias)는 이제 `@rollup/plugin-alias`로 전달되고, 더 이상 경로의 시작과 끝에 슬래시가 필요하지 않습니다. 따라서, 1.0 스타일의 디렉터리 별칭 키 끝에 있는 슬래시는 제거해주세요:
+## 빌드 관련 변경 사항 {#build-changes}
 
-```diff
-- alias: { '/@foo/': path.resolve(__dirname, 'some-special-dir') }
-+ alias: { '/@foo': path.resolve(__dirname, 'some-special-dir') }
-```
+v3에서, Vite는 기본적으로 esbuild를 사용해 디펜던시를 최적화합니다. 이 덕분에 v2에 있었던 dev와 prod간의 중요한 차이점 중 하나가 사라지게 됩니다. esbuild는 CJS 포맷의 디펜던시를 ESM으로 변환하기 때문에 [`@rollupjs/plugin-commonjs`]는 더 이상 사용하지 않아도 됩니다.
 
-조금 더 세부적으로 구성하고자 한다면, `[{ find: RegExp, replacement: string }]` 형태로 이용할 수도 있습니다.
+만약 v2의 방식을 되돌리고자 한다면 [`optimizeDeps.disabled: 'build'`](../config/dep-optimization-options.md#optimizedepsdisabled) 옵션을 이용해주세요.
 
-## Vue 지원 {#vue-support}
+## SSR 관련 변경 사항 {#ssr-changes}
 
-Vite 2.0 코어는 이제 특정 프레임워크에 종속적이지 않습니다. Vue는 이제 [`@vitejs/plugin-vue`](https://github.com/vitejs/vite/tree/main/packages/plugin-vue)를 통해 제공되며, 간단하게 설치하고 아래와 같이 Vite 설정에 추가하기만 하면 됩니다.
+Vite v3는 기본적으로 SSR 빌드 시 ESM을 타깃으로 합니다. ESM을 사용하게 되면 [SSR 외부화 휴리스틱](../guide/ssr.html#ssr-externals)은 더 이상 필요하지 않기 때문이죠. [`ssr.noExternal`](../config/ssr-options.md#ssrnoexternal) 옵션을 이용해 SSR 번들에 포함될 디펜던시를 설정할 수도 있습니다.
 
-```js
-import vue from '@vitejs/plugin-vue'
-import { defineConfig } from 'vite'
+프로젝트에서 SSR용 ESM을 사용할 수 없는 경우라면, `ssr.format: 'cjs'`로 설정해 CJS 번들을 생성할 수도 있습니다. 이 경우 Vite v2와 동일한 외부화 방식이 사용됩니다.
 
-export default defineConfig({
-  plugins: [vue()]
-})
-```
+## 일반적인 변경 사항 {#general-changes}
 
-### 커스텀 블록 변환 {#custom-blocks-transforms}
+- [`import.meta.glob`](features.md#glob-import-as) 옵션이 `{ assert: { type: 'raw' }}`에서 `{ as: 'raw' }`으로 변경되었습니다.
 
-커스텀 플러그인을 사용해 아래와 같이 Vue 커스텀 블록을 변환(Transform)할 수 있습니다:
+- SSR 및 lib 모드에서 빌드된 JS 파일의 확장자는 이제 포맷과 패키지 타입에 따라 올바른 확장자(`js`, `mjs`, 또는 `cjs`)를 갖습니다.
 
-```ts
-// vite.config.js
-import vue from '@vitejs/plugin-vue'
-import { defineConfig } from 'vite'
+## v1에서 마이그레이션하기 {#migration-from-v1}
 
-const vueI18nPlugin = {
-  name: 'vue-i18n',
-  transform(code, id) {
-    if (!/vue&type=i18n/.test(id)) {
-      return
-    }
-    if (/\.ya?ml$/.test(id)) {
-      code = JSON.stringify(require('js-yaml').load(code.trim()))
-    }
-    return `export default Comp => {
-      Comp.i18n = ${code}
-    }`
-  }
-}
-
-export default defineConfig({
-  plugins: [vue(), vueI18nPlugin]
-})
-```
-
-## React 지원 {#react-support}
-
-React의 Fast Refresh는 이제 [`@vitejs/plugin-react`](https://github.com/vitejs/vite/tree/main/packages/plugin-react) 플러그인을 통해 지원됩니다.
-
-## HMR API 변경 {#hmr-api-change}
-
-`import.meta.hot.acceptDeps()`는 더 이상 사용되지 않습니다. 또한 [`import.meta.hot.accept()`](./api-hmr#hot-accept-deps-cb)는 이제 하나 이상의 디펜던시를 받을 수 있도록 구성되었습니다.
-
-## 매니페스트 포맷 변경 {#manifest-format-change}
-
-이제 빌드 매니페스트는 아래와 같은 포맷을 사용합니다:
-
-```json
-{
-  "index.js": {
-    "file": "assets/index.acaf2b48.js",
-    "imports": [...]
-  },
-  "index.css": {
-    "file": "assets/index.7b7dbd85.css"
-  }
-  "asset.png": {
-    "file": "assets/asset.0ab0f9cd.png"
-  }
-}
-```
-
-JS 청크 파일의 경우, 사전 로드 지시문(Preload Directives)을 렌더링하는 데 사용할 수 있도록 가져와진(Import) 청크도 나열됩니다.
-
-## 플러그인 개발자를 위해 {#for-plugin-authors}
-
-Vite 2는 Rollup 플러그인을 확장하는 완전히 재설계된 플러그인 인터페이스를 사용합니다. 이와 관련된 내용은 새로운 [플러그인 개발 가이드](./api-plugin)를 참고해주세요.
-
-아래는 v1 플러그인을 v2로 마이그레이션하는 방법에 대한 몇 가지 지침 사항입니다:
-
-- `resolvers` -> [`resolveId`](https://rollupjs.org/guide/en/#resolveid) 훅을 이용
-- `transforms` -> [`transform`](https://rollupjs.org/guide/en/#transform) 훅을 이용
-- `indexHtmlTransforms` -> [`transformIndexHtml`](./api-plugin#transformindexhtml) 훅을 이용
-- 가상(Virtual) 파일 제공 -> [`resolveId`](https://rollupjs.org/guide/en/#resolveid) + [`load`](https://rollupjs.org/guide/en/#load) 훅을 이용
-- `alias`, `define` 또는 기타 설정 옵션 추가 -> [`config`](./api-plugin#config) 훅을 이용
-
-대부분의 로직은 미들웨어가 아닌 플러그인 훅을 통해 이루어져야 하기 때문에, 미들웨어의 필요성은 크게 줄어들게 됩니다. 또한 Vite의 내부 서버는 이제 Koa가 아닌 [connect](https://github.com/senchalabs/connect)의 인스턴스입니다.
+[v1에서 마이그레이션하기](./migration-from-v1.md) 문서를 먼저 확인해 앱을 Vite v2로 마이그레이션 한 다음, 이 페이지에서 언급된 내용을 확인해 v3로 마이그레이션을 진행해주세요.

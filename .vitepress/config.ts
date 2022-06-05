@@ -147,9 +147,13 @@ export default defineConfig({
               link: '/guide/comparisons'
             },
             {
-              text: 'v1에서 마이그레이션하기',
+              text: 'v2에서 마이그레이션하기',
               link: '/guide/migration'
-            }
+            },
+            {
+              text: 'v1에서 마이그레이션하기',
+              link: '/guide/migration-from-v1'
+            },
           ]
         },
         {
