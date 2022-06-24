@@ -31,6 +31,8 @@ Vite는 EOL(End-of-life)에 도달한 Node v12를 더 이상 지원하지 않습
 
 Vite 개발 서버의 기본 포트 번호는 이제 5173 입니다. 물론 [`server.port`](../config/server-options.md#server-port) 옵션을 이용해 3000으로 설정할 수 있습니다.
 
+Vite 개발 서버의 기본 호스트는 이제 `localhost` 입니다. 이 역시 [`server.host`](../config/server-options.md#server-host) 옵션을 이용해 `127.0.0.1`로 설정할 수 있습니다.
+
 Vite는 CJS 포맷의 디펜던시를 ESM으로 변환하고 브라우저가 요청해야 하는 모듈의 개수를 줄이기 위해 esbuild를 이용해 디펜던시를 최적화합니다. 이와 관련하여, Vite v3에서는 디펜던시를 발견하고 일괄적으로 처리하는 기본 방식이 변경되었습니다. v2에서는 콜드-스타트와 관련된 디펜던시를 최적화하기 위해 esbuild로 사용자 코드를 사전에 탐색해야 했었으나, v3에서는 더 이상 이를 수행하지 않습니다. 이 대신 소스 코드 로드 시 Import 되는 모든 사용자의 모듈이 처리될 때까지 첫 번째 디펜던시 최적화 작업이 지연됩니다.
 
 만약 v2의 방식을 되돌리고자 한다면 [`optimizeDeps.devScan`](../config/dep-optimization-options.md#optimizedepsdevscan) 옵션을 이용해주세요.
