@@ -147,6 +147,12 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 
 참고로 `'es'`를 사용하는 Lib 모드에서 `build.minify` 옵션은 동작하지 않습니다.
 
+`'terser'`로 설정할 경우, Terser를 설치해야 합니다.
+
+```sh
+npm add -D terser
+```
+
 ## build.terserOptions {#build-terseroptions}
 
 - **타입:** `TerserOptions`
