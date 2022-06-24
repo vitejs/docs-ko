@@ -517,7 +517,7 @@ normalizePath('foo\\bar') // 'foo/bar'
 normalizePath('foo/bar') // 'foo/bar'
 ```
 
-## 클라이언트-서버 커뮤니케이션 {#client-server communication}
+## 클라이언트-서버 커뮤니케이션 {#client-server-communication}
 
 Vite 2.9부터 클라이언트와의 통신을 처리하는 데 도움이 되는 플러그인용 유틸을 제공합니다.
 
