@@ -42,3 +42,9 @@ export default defineConfig({
 
 - `external`은 생략됩니다. 이 대신 Vite의 `optimizeDeps.exclude` 옵션을 사용합니다.
 - `plugins`는 Vite의 디펜던시 플러그인과 병합됩니다.
+
+## optimizeDeps.force {#optimizedeps-force}
+
+- **타입:** `boolean`
+
+`true`로 설정하면 최적화되어 캐시된 디펜던시들을 무시하고, 디펜던시 사전 번들링을 강제로 실행합니다.

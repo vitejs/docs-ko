@@ -116,7 +116,7 @@ Vite v3는 기본적으로 SSR 빌드 시 ESM을 타깃으로 합니다. ESM을 
 - [[#8090] feat: preserve process env vars in lib build](https://github.com/vitejs/vite/pull/8090)
   - `process.env.*`는 이제 라이브러리 모드에서도 보존됩니다.
 - [[#8280] feat: non-blocking esbuild optimization at build time](https://github.com/vitejs/vite/pull/8280)
-  - `server.force` 옵션이 `force` 옵션 대신 제거되었습니다.
+  - `server.force` 옵션이 `optimizeDeps.force` 옵션 대신 제거되었습니다.
 - [[#8550] fix: dont handle sigterm in middleware mode](https://github.com/vitejs/vite/pull/8550)
   - 미들웨어 모드에서 실행할 때, Vite는 더 이상 `SIGTERM`에서 프로세스를 종료하지 않습니다.
 

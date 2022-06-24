@@ -107,13 +107,6 @@ export default defineConfig({
 
 서버 응답 헤더를 지정합니다.
 
-## server.force {#server-force}
-
-- **타입:** `boolean`
-- **참고:** [사전 번들링 된 디펜던시](/guide/dep-pre-bundling)
-
-디펜던시의 사전 번들링을 강제하려면 `true`로 설정하세요.
-
 ## server.hmr {#server-hmr}
 
 - **타입:** `boolean | { protocol?: string, host?: string, port?: number | false, path?: string, timeout?: number, overlay?: boolean, clientPort?: number, server?: Server }`
