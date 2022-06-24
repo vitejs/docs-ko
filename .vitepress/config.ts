@@ -19,8 +19,7 @@ export default defineConfig({
     logo: '/logo.svg',
 
     editLink: {
-      repo: 'vitejs-kr/vitejs-kr.github.io',
-      branch: 'main',
+      pattern: 'https://github.com/vitejs-kr/vitejs-kr.github.io/edit/main/:path',
       text: '이 페이지 수정하기'
     },
 
