@@ -63,9 +63,9 @@ declare const __APP_VERSION__: string
 
 ## plugins {#plugins}
 
-- **타입:** ` (Plugin | Plugin[])[]`
+- **타입:** ` (Plugin | Plugin[] | Promise<Plugin | Plugin[]>)[]`
 
-사용할 플러그인의 배열입니다. 잘못된 플러그인은 무시되고 플러그인의 배열은 평탄화됩니다. [플러그인 API](/guide/api-plugin)에서 Vite 플러그인에 대한 더 자세한 점을 볼 수 있습니다.
+사용할 플러그인의 배열입니다. 잘못된 플러그인은 무시되고 플러그인의 배열은 평탄화됩니다. 만약 프로미스 객체가 반환된다면, 실행되기 전 해당 데이터를 모두 가져옵니다. [플러그인 API](/guide/api-plugin)에서 Vite 플러그인에 대한 더 자세한 점을 볼 수 있습니다.
 
 ## publicDir {#publicdir}
 
