@@ -10,6 +10,13 @@
 
 CLI의 경우 `--host 0.0.0.0` 또는 `--host`로 지정이 가능합니다.
 
+::: tip 참고
+
+Vite 대신 다른 서버가 응답하는 경우가 있습니다.
+이에 대해서는 [`server.host`](./server-options#server-host)를 참고해주세요.
+
+:::
+
 ## preview.port {#preview-port}
 
 - **타입:** `number`
