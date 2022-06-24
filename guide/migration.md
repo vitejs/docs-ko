@@ -52,6 +52,10 @@ Vite v3는 기본적으로 SSR 빌드 시 ESM을 타깃으로 합니다. ESM을 
 ## 일반적인 변경 사항 {#general-changes}
 
 - SSR 및 lib 모드에서 빌드된 JS 파일의 확장자는 이제 포맷과 패키지 타입에 따라 올바른 확장자(`js`, `mjs`, 또는 `cjs`)를 갖습니다.
+- Terser는 이제 선택적인(Optional) 디펜던시입니다. 필요한 경우 `build.minify: 'terser'` 옵션과 함께 이 디펜던시를 설치해주세요.
+  ```shell
+  npm add -D terser
+  ```
 
 ### `import.meta.glob` {#import-meta-glob}
 
@@ -95,6 +99,8 @@ Vite v3는 기본적으로 SSR 빌드 시 ESM을 타깃으로 합니다. ESM을 
   - `printHttpServerUrls` 제거
   - `server.app`, `server.transformWithEsbuild` 제거
   - `import.meta.hot.acceptDeps` 제거
+- [[#6901] fix: sequential injection of tags in transformIndexHtml](https://github.com/vitejs/vite/pull/6901)
+  - `transformIndexHtml`은 이제 이전 플러그인에 의해 수정된 올바른 콘텐츠를 가져오기에, 이제 삽입된 태그의 순서가 예상과 같이 동작합니다.
 - [[#7995] chore: do not fixStacktrace](https://github.com/vitejs/vite/pull/7995)
   - `ssrLoadModule`의 `fixStacktrace` 옵션의 기본 값은 이제 `false` 입니다.
 - [[#8178] feat!: migrate to ESM](https://github.com/vitejs/vite/pull/8178)
@@ -107,8 +113,12 @@ Vite v3는 기본적으로 SSR 빌드 시 ESM을 타깃으로 합니다. ESM을 
   - 사용자 코드에 ES5만 포함된 경우에도 ES5로 변환하는 과정은 이제 필요합니다.
 - [[#7877] fix: vite client types](https://github.com/vitejs/vite/pull/7877)
   - `/// <reference lib="dom" />`이 `vite/client.d.ts`에서 제거되었습니다. 따라서 `{ "lib": ["dom"] }` 또는 `{ "lib": ["webworker"] }`이 `tsconfig.json`에 명시되어야 합니다.
+- [[#8090] feat: preserve process env vars in lib build](https://github.com/vitejs/vite/pull/8090)
+  - `process.env.*`는 이제 라이브러리 모드에서도 보존됩니다.
 - [[#8280] feat: non-blocking esbuild optimization at build time](https://github.com/vitejs/vite/pull/8280)
   - `server.force` 옵션이 `force` 옵션 대신 제거되었습니다.
+- [[#8550] fix: dont handle sigterm in middleware mode](https://github.com/vitejs/vite/pull/8550)
+  - 미들웨어 모드에서 실행할 때, Vite는 더 이상 `SIGTERM`에서 프로세스를 종료하지 않습니다.
 
 ## v1에서 마이그레이션하기 {#migration-from-v1}
 
