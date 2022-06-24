@@ -27,6 +27,19 @@ Vite는 EOL(End-of-life)에 도달한 Node v12를 더 이상 지원하지 않습
   - `polyfillDynamicImport` (동적 Import를 지원하지 않는 브라우저는 [`@vitejs/plugin-legacy`](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 사용해주세요)
   - `optimizeDeps.keepNames` ([`optimizeDeps.esbuildOptions.keepNames`](../config/dep-optimization-options.md#optimizedepsesbuildoptions)로 변경)
 
+## 아키텍처 변경과 레거시 옵션들 {#architecture-changes-and-legacy-options}
+
+이 섹션에서는 Vite v3 아키텍처에 대한 가장 큰 변경 사항에 대해 설명합니다. 만약 호환성 문제가 있는 경우, 프로젝트를 v2에서 마이그레이션 할 수 있도록 Vite v2 전략으로 되돌리는 레거시 옵션이 존재합니다.
+
+:::warning
+아래 옵션은 실험적 기능으로 표시되며 더이상 사용되지 않습니다. 시멘틱 버저닝을 따르지 않고 향후 v3 마이너 버전에서 제거될 수 있습니다. 만약 아래 옵션을 사용하고 있다면 Vite의 버전을 고정해주세요.
+
+- `legacy.devDepsScanner`
+- `legacy.buildRollupPluginCommonjs`
+- `legacy.buildSsrCjsExternalHeuristics`
+
+:::
+
 ## 개발 서버 관련 변경 사항 {#dev-server-changes}
 
 Vite 개발 서버의 기본 포트 번호는 이제 5173 입니다. 물론 [`server.port`](../config/server-options.md#server-port) 옵션을 이용해 3000으로 설정할 수 있습니다.
@@ -35,19 +48,19 @@ Vite 개발 서버의 기본 호스트는 이제 `localhost` 입니다. 이 역�
 
 Vite는 CJS 포맷의 디펜던시를 ESM으로 변환하고 브라우저가 요청해야 하는 모듈의 개수를 줄이기 위해 esbuild를 이용해 디펜던시를 최적화합니다. 이와 관련하여, Vite v3에서는 디펜던시를 발견하고 일괄적으로 처리하는 기본 방식이 변경되었습니다. v2에서는 콜드-스타트와 관련된 디펜던시를 최적화하기 위해 esbuild로 사용자 코드를 사전에 탐색해야 했었으나, v3에서는 더 이상 이를 수행하지 않습니다. 이 대신 소스 코드 로드 시 Import 되는 모든 사용자의 모듈이 처리될 때까지 첫 번째 디펜던시 최적화 작업이 지연됩니다.
 
-만약 v2의 방식을 되돌리고자 한다면 [`optimizeDeps.devScan`](../config/dep-optimization-options.md#optimizedepsdevscan) 옵션을 이용해주세요.
+만약 v2의 방식을 되돌리고자 한다면 `legacy.devDepsScanner` 옵션을 이용해주세요.
 
-## 빌드 관련 변경 사항 {#build-changes}
+### 빌드 관련 변경 사항 {#build-changes}
 
 v3에서, Vite는 기본적으로 esbuild를 사용해 디펜던시를 최적화합니다. 이 덕분에 v2에 있었던 dev와 prod간의 중요한 차이점 중 하나가 사라지게 됩니다. esbuild는 CJS 포맷의 디펜던시를 ESM으로 변환하기 때문에 [`@rollupjs/plugin-commonjs`](https://github.com/rollup/plugins/tree/master/packages/commonjs)는 더 이상 사용하지 않아도 됩니다.
 
-만약 v2의 방식을 되돌리고자 한다면 [`optimizeDeps.disabled: 'build'`](../config/dep-optimization-options.md#optimizedepsdisabled) 옵션을 이용해주세요.
+만약 v2의 방식을 되돌리고자 한다면 `legacy.buildRollupPluginCommonjs` 옵션을 이용해주세요.
 
-## SSR 관련 변경 사항 {#ssr-changes}
+### SSR 관련 변경 사항 {#ssr-changes}
 
 Vite v3는 기본적으로 SSR 빌드 시 ESM을 타깃으로 합니다. ESM을 사용하게 되면 [SSR 외부화 휴리스틱](../guide/ssr.html#ssr-externals)은 더 이상 필요하지 않기 때문이죠. [`ssr.noExternal`](../config/ssr-options.md#ssrnoexternal) 옵션을 이용해 SSR 번들에 포함될 디펜던시를 설정할 수도 있습니다.
 
-프로젝트에서 SSR용 ESM을 사용할 수 없는 경우라면, `ssr.format: 'cjs'`로 설정해 CJS 번들을 생성할 수도 있습니다. 이 경우 Vite v2와 동일한 외부화 방식이 사용됩니다.
+프로젝트에서 SSR용 ESM을 사용할 수 없는 경우라면, `legacy.buildSsrCjsExternalHeuristics` 옵션을 이용해 Vite v2와 동일한 외부화 방식을 사용하는 CJS 번들 생성이 가능합니다.
 
 ## 일반적인 변경 사항 {#general-changes}
 
