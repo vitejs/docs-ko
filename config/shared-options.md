@@ -319,9 +319,15 @@ export default defineConfig({
 `envPrefix`를 `''`로 설정해서는 안 됩니다. 이렇게 설정한 경우 모든 환경 변수가 노출되며, 이로 인해 예기치 않게 민감한 정보가 누출될 수 있습니다. 따라서 Vite는 `''`로 설정되었을 때 오류를 발생시킵니다.
 :::
 
-## spa {#spa}
+## appType {#apptype}
 
-- **타입:** `boolean`
-- **기본값:** `true`
+- **타입:** `'spa' | 'mpa' | 'custom'`
+- **기본값:** `'spa'`
 
-애플리케이션이 SPA(단일 페이지 애플리케이션)인지 여부. MPA와 같이 다른 종류의 앱에 대해서는 `false`로 값을 설정하세요. 좀 더 알고자 한다면 Vite의 [SSR 가이드](/guide/ssr#vite-cli)를 참고해주세요.
+애플리케이션이 단일 페이지 애플리케이션(SPA), [다중 페이지 애플리케이션(MPA)](../guide/build#multi-page-app), 또는 커스텀 애플리케이션(SSR 및 커스텀 HTML 처리를 하는 프레임워크)인지 여부:
+
+- `'spa'`: SPA 폴백(Fallback) 미들웨어를 포함하며, 프리뷰 모드에서 `single: true`로 [sirv](https://github.com/lukeed/sirv)를 설정합니다.
+- `'mpa'`: SPA가 아닌 HTML 미들웨어만을 포함합니다.
+- `'custom'`: HTML 미들웨어를 포함하지 않습니다.
+
+좀 더 많은 정보가 필요하다면 Vite의 [SSR 가이드](/guide/ssr#vite-cli)를 참고해주세요. [`server.middlewareMode`](./server-options#servermiddlewaremode) 옵션도 참고가 가능합니다.

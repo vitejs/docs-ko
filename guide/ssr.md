@@ -74,13 +74,11 @@ const { createServer: createViteServer } = require('vite')
 async function createServer() {
   const app = express()
 
-  // 미들웨어 모드로 Vite 서버를 생성합니다.
-  // 이는 Vite의 자체적인 HTML 제공 로직을 비활성화하고, 상위 서버가 제어하도록 합니다.
-  //
-  // 미들웨어 모드에서 Vite의 자체적인 HTML 제공 로직을 사용하고자 한다면,
-  // `middlewareMode`(https://vitejs-kr.github.io/config/#server-middlewaremode)를 `'html'`로 설정하세요.
+  // 미들웨어 모드로 Vite 서버를 생성하고 애플리케이션의 타입을 'custom'으로 설정합니다.
+  // 이는 Vite의 자체 HTML 제공 로직을 비활성화하고, 상위 서버에서 이를 제어할 수 있도록 합니다.
   const vite = await createViteServer({
-    server: { middlewareMode: 'ssr' }
+    server: { middlewareMode: 'ssr' },
+    appType: 'custom'
   })
   // Vite를 미들웨어로 사용합니다.
   app.use(vite.middlewares)
@@ -267,11 +265,8 @@ Vite 2.7 이전에는 `options` 객체를 사용하는 대신 `ssr` 매개변수
 
 ## Vite CLI #{vite-cli}
 
-`$ vite dev` 및 `$ vite preview` CLI 명령도 SSR 애플리케이션에 대해 사용할 수 있습니다:
+`$ vite dev` 및 `$ vite preview` CLI 명령도 SSR 애플리케이션에 대해 사용할 수 있습니다. SSR 미들웨어는 [`configureServer`](/guide/api-plugin#configureserver)를 사용해 개발 서버에, 그리고 [`configurePreviewServer`](/guide/api-plugin#configurepreviewserver)를 사용해 프리뷰 서버에 추가할 수 있습니다.
 
-1. SSR 미들웨어를 [`configureServer`](/guide/api-plugin#configureserver)를 이용해 개발 서버에, 그리고 [`configurePreviewServer`](/guide/api-plugin#configurepreviewserver)를 이용해 프리뷰 서버에 추가합니다.
-   :::tip 참고
-   SSR 미들웨어가 Vite 미들웨어 _이후에_ 실행되도록 Post 훅을 사용합니다.
-   :::
-
-2. `config.spa` 설정 값을 `false`로 지정합니다. 이를 통해 개발 및 프리뷰 서버가 SPA 모드에서 SSR/MPA 모드로 전환됩니다.
+:::tip 참고
+SSR 미들웨어가 Vite 미들웨어 _이후에_ 실행되기를 원한다면 포스트 훅을 사용하세요.
+:::
