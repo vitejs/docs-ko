@@ -13,7 +13,7 @@
 - Safari >=13
 - Edge >=88
 
-만약 JavaScript 타깃을 지정하고자 한다면, [`build.target` 설정](/config/#build-target)을 이용해주세요. 다만 버전은 최소한 `es2015` 이상이어야 합니다.
+만약 JavaScript 타깃을 지정하고자 한다면, [`build.target` 설정](/config/build-options.md#build-target)을 이용해주세요. 다만 버전은 최소한 `es2015` 이상이어야 합니다.
 
 위에서 언급되는 *'기본적으로'* 라는 말의 의미를 잠깐 설명하자면, Vite는 오로지 구분 변환만 진행할 뿐 **폴리필을 다루지 않는다는 말** 입니다. 따라서 만약 폴리필을 생각해야 할 경우, User Agent를 기반으로 자동으로 폴리필 번들을 생성해주는 [Polyfill.io](https://polyfill.io/v3/)를 이용해주세요.
 
@@ -23,7 +23,7 @@
 
 - [에셋 가져오기](./assets) 섹션과 관련이 있는 내용입니다.
 
-만약 배포하고자 하는 디렉터리가 루트 디렉터리가 아닌가요? 간단히 [`base` 설정](/config/#base)을 이용해 프로젝트의 루트가 될 디렉터리를 명시해 줄 수 있습니다. 또는 `vite build --base=/my/public/path` 명령과 같이 커맨드 라인에서도 지정이 가능합니다.
+만약 배포하고자 하는 디렉터리가 루트 디렉터리가 아닌가요? 간단히 [`base` 설정](/config/shared-options.md#base)을 이용해 프로젝트의 루트가 될 디렉터리를 명시해 줄 수 있습니다. 또는 `vite build --base=/my/public/path` 명령과 같이 커맨드 라인에서도 지정이 가능합니다.
 
 JS(`import`), CSS(`url()`), 그리고 `.html` 파일에서 참조되는 에셋 파일의 URL들은 빌드 시 이 Base Path를 기준으로 가져올 수 있도록 자동으로 맞춰지게 됩니다.
 
@@ -31,7 +31,7 @@ JS(`import`), CSS(`url()`), 그리고 `.html` 파일에서 참조되는 에셋 �
 
 ## 빌드 커스터마이즈하기 {#customizing-the-build}
 
-빌드와 관련된 커스터마이즈는 [build 설정](/config/#build-options)을 통해 가능합니다. 특별히 알아두어야 할 것이 하나 있는데, [Rollup 옵션](https://rollupjs.org/guide/en/#big-list-of-options)을 `build.rollupOptions`에 명시해 사용이 가능합니다.
+빌드와 관련된 커스터마이즈는 [build 설정](/config/build-options.md)을 통해 가능합니다. 특별히 알아두어야 할 것이 하나 있는데, [Rollup 옵션](https://rollupjs.org/guide/en/#big-list-of-options)을 `build.rollupOptions`에 명시해 사용이 가능합니다.
 
 ```js
 // vite.config.js
@@ -116,7 +116,7 @@ module.exports = defineConfig({
 
 만약 브라우저 기반의 라이브러리를 개발하고 있다면, 라이브러리 갱신 시마다 테스트 페이지에서 이를 불러오는 데 많은 시간을 소모할 것입니다. Vite는 `index.html`을 이용해 좀 더 나은 개발 환경(경험)을 마련해줍니다.
 
-라이브러리 배포 시점에서, [`build.lib` 설정 옵션](/config/#build-lib)을 이용해보세요. 또한 라이브러리에 포함하지 않을 디펜던시를 명시할 수도 있습니다. `vue`나 `react` 같이 말이죠.
+라이브러리 배포 시점에서, [`build.lib` 설정 옵션](/config/build-options.md#build-lib)을 이용해보세요. 또한 라이브러리에 포함하지 않을 디펜던시를 명시할 수도 있습니다. `vue`나 `react` 같이 말이죠.
 
 ```js
 // vite.config.js

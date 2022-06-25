@@ -105,7 +105,7 @@ vite는 기본적으로 Vue를 지원하고 있습니다.
 
 기존에 Vue를 사용했던 개발자들은 Vue 3에서 제공하고 있는 API(HMR, 글로벌 컴포넌트, 디렉티브 및 슬롯 등)를 위해 [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx)를 사용해야 합니다.
 
-물론 React나 Vue를 사용하지 않는다 해도, [`esbuild` 옵션](/config/#esbuild)을 이용해 `jsxFactory`나 `jsxFragment`를 커스터마이징 할 수 있습니다. Preact를 예로 들어보자면 다음과 같습니다.
+물론 React나 Vue를 사용하지 않는다 해도, [`esbuild` 옵션](/config/shared-options.md#esbuild)을 이용해 `jsxFactory`나 `jsxFragment`를 커스터마이징 할 수 있습니다. Preact를 예로 들어보자면 다음과 같습니다.
 
 ```js
 // vite.config.js
@@ -166,7 +166,7 @@ import classes from './example.module.css'
 document.getElementById('foo').className = classes.red
 ```
 
-참고로, CSS 모듈에 대한 동작 방식을 입맛대로 수정할 수 있습니다. [`css.modules` 옵션](/config/#css-modules) 옵션을 참고해주세요.
+참고로, CSS 모듈에 대한 동작 방식을 입맛대로 수정할 수 있습니다. [`css.modules` 옵션](/config/shared-options.md#css-modules) 옵션을 참고해주세요.
 
 가령 `css.modules.localsConvention` 옵션을 camelCase로 설정하게 되면(`localsConvention: 'camelCaseOnly'`), 아래와 같이 가져올 수 있게 됩니다.
 
@@ -419,7 +419,7 @@ const modules = {
 Glob 패턴과 관련하여 다음의 사항을 유의해주세요:
 
 - 이 기능들은 Vite에서 제공하는 기능입니다. (ES 표준이나 웹 브라우저에서 제공하는 기능이 아니에요.)
-- Glob 패턴 사용 시, 상대 경로(`./`) 또는 절대 경로(`/`) 또는 [`resolve.alias` 옵션](/config/#resolve-alias)을 통해 별칭으로 지정된 경로 만을 이용해야 합니다.
+- Glob 패턴 사용 시, 상대 경로(`./`) 또는 절대 경로(`/`) 또는 [`resolve.alias` 옵션](/config/shared-options.md#resolve-alias)을 통해 별칭으로 지정된 경로 만을 이용해야 합니다.
 - Glob 패턴 매칭은 [`fast-glob`](https://github.com/mrmlnc/fast-glob)을 이용합니다. 자세한 것은 [지원하는 Glob 패턴 목록](https://github.com/mrmlnc/fast-glob#pattern-syntax)을 참고해주세요.
 - `import.meta.glob`으로 전달되는 모든 인자는 **리터럴 값을 전달해야 합니다**. 변수나 표현식을 사용할 수 없습니다.
 
@@ -459,7 +459,7 @@ init({
 })
 ```
 
-프로덕션 빌드 시 `assetsInlineLimit` 옵션\*의 값보다 작은 `.wasm` 파일은 Base64 문자열 포맷으로 변환됩니다. 그렇지 않은 경우, `dist` 디렉터리에 파일이 복사되어 요청(Fetch) 시 불러오는 방식으로 동작하게 됩니다. (\* [`assetsInlineLimit` doc](/config/#build-assetsinlinelimit))
+프로덕션 빌드 시 `assetsInlineLimit` 옵션\*의 값보다 작은 `.wasm` 파일은 Base64 문자열 포맷으로 변환됩니다. 그렇지 않은 경우, `dist` 디렉터리에 파일이 복사되어 요청(Fetch) 시 불러오는 방식으로 동작하게 됩니다. (\* [`assetsInlineLimit` doc](/config/build-options.md#build-assetsinlinelimit))
 
 ::: warning
 [WebAssembly를 위한 ES 모듈 제안 사항](https://github.com/WebAssembly/esm-integration)은 현재 지원되지 않습니다. 이 대신 [`vite-plugin-wasm`](https://github.com/Menci/vite-plugin-wasm) 또는 기타 커뮤니티 플러그인을 사용해 이를 처리하세요.
@@ -509,6 +509,8 @@ import MyWorker from './worker?worker&inline'
 import MyWorker from './worker?worker&url'
 ```
 
+모든 워커에 대한 번들링 설정은 [워커 옵션](/config/worker-options.md)을 참고해주세요.
+
 ## 빌드 최적화 {#build-optimizations}
 
 > 아래는 추가적인 설정 없이 기본적으로 빌드 프로세스에 적용되는 기능들에 대한 목록입니다. 물론, 필요 시 각각의 기능들에 대한 비활성화가 가능합니다.
@@ -517,7 +519,7 @@ import MyWorker from './worker?worker&url'
 
 vite는 비동기적으로 불러와지는 청크 내에 CSS 코드가 포함된 경우, 이를 자동으로 추출해 파일로 분리합니다. 이후 해당 청크를 불러올 때 `<link>` 태그를 이용해 분리된 CSS 코드를 불러오게끔 하며, CSS가 모두 계산된 후에 청크를 렌더하도록 합니다. 굳이 왜 이렇게 복잡한 과정을 거칠까요? 바로 이 과정을 통해 CSS가 렌더링될 때 화면이 잠깐 반짝이는 [FOUC 현상](https://en.wikipedia.org/wiki/Flash_of_unstyled_content#:~:text=A%20flash%20of%20unstyled%20content,before%20all%20information%20is%20retrieved.)을 회피할 수 있게 되기 때문입니다.
 
-물론, 모든 CSS가 그냥 일반적인 각각의 파일로 저장된 경우라면 굳이 이러한 기능을 사용할 필요가 없습니다. 이러한 경우 [`build.cssCodeSplit`](/config/#build-csscodesplit) 옵션의 값을 `false`로 설정해 비활성화가 가능합니다.
+물론, 모든 CSS가 그냥 일반적인 각각의 파일로 저장된 경우라면 굳이 이러한 기능을 사용할 필요가 없습니다. 이러한 경우 [`build.cssCodeSplit`](/config/build-options.md#build-csscodesplit) 옵션의 값을 `false`로 설정해 비활성화가 가능합니다.
 
 ### Preload Directives Generation {#preload-directives-generation}
 

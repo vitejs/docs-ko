@@ -330,4 +330,4 @@ export default defineConfig({
 - `'mpa'`: SPA가 아닌 HTML 미들웨어만을 포함합니다.
 - `'custom'`: HTML 미들웨어를 포함하지 않습니다.
 
-좀 더 많은 정보가 필요하다면 Vite의 [SSR 가이드](/guide/ssr#vite-cli)를 참고해주세요. [`server.middlewareMode`](./server-options#servermiddlewaremode) 옵션도 참고가 가능합니다.
+좀 더 많은 정보가 필요하다면 Vite의 [SSR 가이드](/guide/ssr#vite-cli)를 참고해주세요. [`server.middlewareMode`](./server-options#server-middlewaremode) 옵션도 참고가 가능합니다.

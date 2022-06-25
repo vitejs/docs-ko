@@ -42,7 +42,7 @@ Pre-bundling dependencies:
 
 모노리포\* 프로젝트의 경우 디펜던시는 동일한 하나의 리포지터리에 연결된 패키지일 수 있습니다. Vite는 사용하는 디펜던시가 `node_modules`에 존재하지 않더라도 스스로 탐색하여 이를 소스 코드로 가져올 수 있지만, 이를 번들로 묶지는 않습니다. 그저 연결된 디펜던시 목록을 분석할 뿐이죠. (\* 모노리포는 두 개 이상의 리포지터리를 가지는 리포지터리입니다. 서로 관련된 리포지터리에 중복된 디펜던시가 많은 경우, 이를 하나로 통합하여 관리할 수 있다는 장점이 있습니다. 자세한 사항은 [Yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/)를 참고해주세요.)
 
-이를 위해서는 연결된 디펜던시가 ESM 형태로 내보내져야 합니다. 만약 그렇지 않다면, 해당되는 디펜던시들을 [`optimizeDeps.include`](/config/#optimizedeps-include)와 [`build.commonjsOptions.include`](/config/#build-commonjsoptions) 설정에 추가해주세요.
+이를 위해서는 연결된 디펜던시가 ESM 형태로 내보내져야 합니다. 만약 그렇지 않다면, 해당되는 디펜던시들을 [`optimizeDeps.include`](/config/dep-optimization-options.md#optimizedeps-include)와 [`build.commonjsOptions.include`](/config/build-options.md#build-commonjsoptions) 설정에 추가해주세요.
 
 ```js
 export default defineConfig({
@@ -65,7 +65,7 @@ export default defineConfig({
 
 ## 디펜던시 탐색 과정 커스터마이즈하기 {#customizing-the-behavior}
 
-기본적으로 Vite의 사전 번들링 될 디펜던시 탐색은 휴리스틱(Heuristics) 기반으로 이루어집니다. 물론 모든 상황에서 적절하게 동작할 것이라는 보장은 없죠. 만약 특정 디펜던시를 포함시키거나 포함시키지 않도록 설정하고자 한다면 [`optimizeDeps` 옵션](/config/#dep-optimization-options)을 이용해주세요.
+기본적으로 Vite의 사전 번들링 될 디펜던시 탐색은 휴리스틱(Heuristics) 기반으로 이루어집니다. 물론 모든 상황에서 적절하게 동작할 것이라는 보장은 없죠. 만약 특정 디펜던시를 포함시키거나 포함시키지 않도록 설정하고자 한다면 [`optimizeDeps` 옵션](/config/dep-optimization-options.md)을 이용해주세요.
 
 이 옵션은 일반적으로 소스 코드에서 바로 가져올 수 없는 파일에 대해 `optimizeDeps.include` 또는 `optimizeDeps.exclude`에 명시하는 방식으로 사용합니다. 플러그인을 통해 생성된 어떤 파일을 명시적으로 Import 하고자 하는 경우와 같이 말이죠. 다시말해 vite는 첫 번째 스캐닝 시 모든 디펜던시를 스캔하지 않으며, 오로지 브라우저가 요청했을 때에만 해당 디펜던시를 변환해 가져오는 방식으로 동작합닌다. 물론 서버가 이미 실행된 이후에도 말이죠.
 

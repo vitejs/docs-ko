@@ -19,13 +19,13 @@ Vite는 EOL(End-of-life)에 도달한 Node v12를 더 이상 지원하지 않습
 
 - 아래의 옵션은 이미 Vite v2에서 사용되지 않는 옵션이었으며, v3에서는 제거되었습니다:
 
-  - `alias` ([`resolve.alias`](../config/shared-options.md#resolvealias)로 변경)
-  - `dedupe` ([`resolve.dedupe`](../config/shared-options.md#resolvededupe)로 변경)
+  - `alias` ([`resolve.alias`](../config/shared-options.md#resolve-alias)로 변경)
+  - `dedupe` ([`resolve.dedupe`](../config/shared-options.md#resolve-dedupe)로 변경)
   - `build.base` ([`base`](../config/shared-options.md#base)로 변경)
   - `build.brotliSize` ([`build.reportCompressedSize`](../config/build-options.md#build-reportcompressedsize)로 변경)
   - `build.cleanCssOptions` (Vite는 이제 CSS 압축 시 esbuild를 사용합니다)
   - `polyfillDynamicImport` (동적 Import를 지원하지 않는 브라우저는 [`@vitejs/plugin-legacy`](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 사용해주세요)
-  - `optimizeDeps.keepNames` ([`optimizeDeps.esbuildOptions.keepNames`](../config/dep-optimization-options.md#optimizedepsesbuildoptions)로 변경)
+  - `optimizeDeps.keepNames` ([`optimizeDeps.esbuildOptions.keepNames`](../config/dep-optimization-options.md#optimizedeps-esbuildoptions)로 변경)
 
 ## 아키텍처 변경과 레거시 옵션들 {#architecture-changes-and-legacy-options}
 
@@ -58,7 +58,7 @@ v3에서, Vite는 기본적으로 esbuild를 사용해 디펜던시를 최적화
 
 ### SSR 관련 변경 사항 {#ssr-changes}
 
-Vite v3는 기본적으로 SSR 빌드 시 ESM을 타깃으로 합니다. ESM을 사용하게 되면 [SSR 외부화 휴리스틱](../guide/ssr.html#ssr-externals)은 더 이상 필요하지 않기 때문이죠. [`ssr.noExternal`](../config/ssr-options.md#ssrnoexternal) 옵션을 이용해 SSR 번들에 포함될 디펜던시를 설정할 수도 있습니다.
+Vite v3는 기본적으로 SSR 빌드 시 ESM을 타깃으로 합니다. ESM을 사용하게 되면 [SSR 외부화 휴리스틱](../guide/ssr.html#ssr-externals)은 더 이상 필요하지 않기 때문이죠. [`ssr.noExternal`](../config/ssr-options.md#ssr-noexternal) 옵션을 이용해 SSR 번들에 포함될 디펜던시를 설정할 수도 있습니다.
 
 프로젝트에서 SSR용 ESM을 사용할 수 없는 경우라면, `legacy.buildSsrCjsExternalHeuristics` 옵션을 이용해 Vite v2와 동일한 외부화 방식을 사용하는 CJS 번들 생성이 가능합니다.
 

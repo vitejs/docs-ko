@@ -73,7 +73,7 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 ## build.cssTarget {#build-csstarget}
 
 - **타입:** `string | string[]`
-- **기본값:** [`build.target`](/config/#build-target)과 동일합니다.
+- **기본값:** [`build.target`](#build-target)과 동일합니다.
 
 이 옵션을 사용하면 CSS 압축(Minification) 시 타깃이 되는 브라우저를 설정할 수 있습니다.
 

@@ -6,7 +6,7 @@ Vite는 **`import.meta.env`** 객체를 이용해 환경 변수에 접근할 수
 
 - **`import.meta.env.MODE`**: {string} 현재 앱이 동작하고 있는 [모드](#modes)입니다.
 
-- **`import.meta.env.BASE_URL`**: {string} 앱이 제공되는 베이스 URL이며, 이 값은 [`base` 설정](/config/#base)에 의해 결정됩니다.
+- **`import.meta.env.BASE_URL`**: {string} 앱이 제공되는 베이스 URL이며, 이 값은 [`base` 설정](/config/shared-options.md#base)에 의해 결정됩니다.
 
 - **`import.meta.env.PROD`**: {boolean} 앱이 프로덕션에서 실행 중인지 여부입니다.
 
@@ -24,7 +24,7 @@ JavaScript 문자열 및 Vue 템플릿에서도 마찬가지로 환경 변수는
 
 ## `.env` 파일들 {#env-files}
 
-Vite는 [dotenv](https://github.com/motdotla/dotenv)를 이용해 [환경 변수가 저장된 디렉터리](/config/#envdir) 내 아래의 파일에서 환경 변수를 가져옵니다.
+Vite는 [dotenv](https://github.com/motdotla/dotenv)를 이용해 [환경 변수가 저장된 디렉터리](/config/shared-options.md#envdir) 내 아래의 파일에서 환경 변수를 가져옵니다.
 
 ```
 .env                # 모든 상황에서 사용될 환경 변수

@@ -22,7 +22,7 @@
    })
    ```
 
-   만약 [Module Preload Polyfill](/config/#build-polyfillmodulepreload) 기능을 비활성화하지 않은 경우, 아래와 같이 폴리필을 가져와야만 합니다.
+   만약 [Module Preload Polyfill](/config/build-options.md#build-polyfillmodulepreload) 기능을 비활성화하지 않은 경우, 아래와 같이 폴리필을 가져와야만 합니다.
 
    ```js
    // 앱 진입점(Entry)에 추가합니다.
@@ -39,7 +39,7 @@
    이후 Vite의 에셋에 접근할 수 있도록 아래 두 가지 옵션 중 하나를 선택해 적용해주세요.
 
    - 백엔드 서버가 Vite 서버에 대한 에셋 요청을 프록시하도록 설정
-   - 에셋의 URL이 상대 경로 대신 백엔드 서버 URL을 사용해 가져와질 수 있도록 [`server.origin`](https://vitejs-kr.github.io/config/#server-origin) 옵션 값을 설정
+   - 에셋의 URL이 상대 경로 대신 백엔드 서버 URL을 사용해 가져와질 수 있도록 [`server.origin`](/config/server-options.md#server-origin) 옵션 값을 설정
 
    위 옵션은 이미지와 같은 에셋이 정상적으로 로드되기 위해 반드시 필요합니다.
 

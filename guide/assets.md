@@ -3,7 +3,7 @@
 다음 두 개의 주제와 관련있는 섹션입니다.
 
 - [Public Base Path](./build#public-base-path)
-- [`assetsInclude` 설정 옵션](/config/#assetsinclude)
+- [`assetsInclude` 설정 옵션](/config/shared-options.md#assetsinclude)
 
 ## URL을 통해 에셋 가져오기 {#importing-asset-as-url}
 
@@ -22,11 +22,11 @@ Webpack의 `file-loader`와 비슷한데, 하나 차이점이 있다면 Vite는 
 
 - 만약 Vue 플러그인을 사용한다면, [Vue SFC](https://v3.vuejs.org/guide/single-file-component.html) 에셋의 경우 자동으로 변환되어 가져와집니다.
 
-- 일반적인 이미지, 미디어, 폰트 파일 타입은 자동으로 에셋 목록에 포함됩니다. 물론 [`assetsInclude` 옵션](/config/#assetsinclude)을 이용해 더 많은 파일 타입을 포함하도록 할 수 있습니다.
+- 일반적인 이미지, 미디어, 폰트 파일 타입은 자동으로 에셋 목록에 포함됩니다. 물론 [`assetsInclude` 옵션](/config/shared-options.md#assetsinclude)을 이용해 더 많은 파일 타입을 포함하도록 할 수 있습니다.
 
 - 참조된 에셋은 빌드 에셋 그래프의 일부 요소로 포함되며, 파일 이름이 해싱되거나 최적화를 위해 플러그인으로 처리될 수 있습니다.
 
-- [`assetsInlineLimimt` 옵션](/config/#assetsinlinelimit)의 값보다 작은 에셋 파일의 경우, Base64 포맷의 데이터 URL\* 문자열로 가져옵니다. (\* [데이터 URL MDN doc](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs))
+- [`assetsInlineLimit` 옵션](/config/shared-options.md#assetsinlinelimit)의 값보다 작은 에셋 파일의 경우, Base64 포맷의 데이터 URL\* 문자열로 가져옵니다. (\* [데이터 URL MDN doc](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs))
 
 ### 접미사를 이용해 URL로 에셋 가져오기 {#explicit-url-imports}
 
@@ -78,7 +78,7 @@ import InlineWorker from './shader.js?worker&inline'
 
 `public` 디렉터리 아래에 에셋을 위치시키세요. 이 곳에 위치한 에셋은 개발 시에 `/` 경로에, 배포 시에는 `dist` 디렉터리에 위치하게 됩니다.
 
-만약 `<root>/public` 디렉터리가 아닌 다른 디렉터리를 사용하고자 하는 경우, [`publicDir` 옵션](/config/#publicdir)을 이용할 수 있습니다.
+만약 `<root>/public` 디렉터리가 아닌 다른 디렉터리를 사용하고자 하는 경우, [`publicDir` 옵션](/config/shared-options.md#publicdir)을 이용할 수 있습니다.
 
 마지막으로, 다음의 사항을 유의해주세요.
 
@@ -112,5 +112,5 @@ function getImageUrl(name) {
 :::
 
 ::: warning `target`은 `es2020`보다 높아야 해요
-이 패턴은 [build-target](https://vitejs-kr.github.io/config/#build-target) 또는 [optimizedeps.esbuildoptions.target](https://vitejs-kr.github.io/config/#optimizedeps-esbuildoptions) 설정 값이 `es2020` 미만이면 동작하지 않습니다.
+이 패턴은 [build-target](/config/build-options.md#build-target) 또는 [optimizedeps.esbuildoptions.target](/config/dep-optimization-options.md#optimizedeps-esbuildoptions) 설정 값이 `es2020` 미만이면 동작하지 않습니다.
 :::
