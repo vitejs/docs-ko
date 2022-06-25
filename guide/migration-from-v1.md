@@ -8,15 +8,15 @@
   - `transforms`
   - `indexHtmlTransforms`
 
-- `jsx`와 `enableEsbuild`는 제거되었습니다. 이 대신 새로운 [`esbuild`](/config/#esbuild) 옵션을 사용해주세요.
+- `jsx`와 `enableEsbuild`는 제거되었습니다. 이 대신 새로운 [`esbuild`](/config/shared-options.md#esbuild) 옵션을 사용해주세요.
 
-- [CSS 관련 옵션](/config/#css-modules)은 이제 `css` 아래에 위치합니다.
+- [CSS 관련 옵션](/config/shared-options.md#css-modules)은 이제 `css` 아래에 위치합니다.
 
-- 모든 [빌드별 옵션](/config/#build-options)는 이제 `build` 아래에 위치합니다.
+- 모든 [빌드별 옵션](/config/build-options.md)는 이제 `build` 아래에 위치합니다.
 
-  - `rollupInputOptions`와 `rollupOutputOptions`는 [`build.rollupOptions`](/config/#build-rollupoptions)로 대체되었습니다.
-  - `esbuildTarget`은 이제 [`build.target`](/config/#build-target) 입니다.
-  - `emitManifest`는 이제 [`build.manifest`](/config/#build-manifest) 입니다.
+  - `rollupInputOptions`와 `rollupOutputOptions`는 [`build.rollupOptions`](/config/build-options.md#build-rollupoptions)로 대체되었습니다.
+  - `esbuildTarget`은 이제 [`build.target`](/config/build-options.md#build-target) 입니다.
+  - `emitManifest`는 이제 [`build.manifest`](/config/build-options.md#build-manifest) 입니다.
   - 아래의 빌드 옵션은 제거되었으나, 플러그인 훅(Hook) 또는 기타 옵션을 통해 가져올 수 있습니다.
     - `entry`
     - `rollupDedupe`
@@ -25,19 +25,19 @@
     - `shouldPreload`
     - `configureBuild`
 
-- 모든 [서버별 옵션](/config/#server-options)은 이제 `server` 아래에 위치합니다.
+- 모든 [서버 옵션](/config/server-options.md)은 이제 `server` 아래에 위치합니다.
 
-  - `hostname`은 이제 [`server.host`](/config/#server-host) 입니다.
-  - `httpsOptions`는 제거되었습니다. 대신, [`server.https`](/config/#server-https)가 직접 옵션 객체를 받을 수 있도록 구성되어 있습니다.
-  - `chokidarWatchOptions`는 이제 [`server.watch`](/config/#server-watch) 입니다.
+  - `hostname`은 이제 [`server.host`](/config/server-options.md#server-host) 입니다.
+  - `httpsOptions`는 제거되었습니다. 대신, [`server.https`](/config/server-options.md#server-https)가 직접 옵션 객체를 받을 수 있도록 구성되어 있습니다.
+  - `chokidarWatchOptions`는 이제 [`server.watch`](/config/server-options.md#server-watch) 입니다.
 
-- [`assetsInclude`](/config/#assetsinclude)는 이제 함수 대신 `string | RegExp | (string | RegExp)[]` 타입으로 설정됩니다.
+- [`assetsInclude`](/config/shared-options.md#assetsinclude)는 이제 함수 대신 `string | RegExp | (string | RegExp)[]` 타입으로 설정됩니다.
 
 - 모든 Vue 옵션은 제거되었으며, Vue 플러그인에 옵션을 전달하도록 구성해야 합니다.
 
 ## 별칭 동작 변경 {#alias-behavior-change}
 
-[`alias`](/config/#resolve-alias)는 이제 `@rollup/plugin-alias`로 전달되고, 더 이상 경로의 시작과 끝에 슬래시가 필요하지 않습니다. 따라서, 1.0 스타일의 디렉터리 별칭 키 끝에 있는 슬래시는 제거해주세요:
+[`alias`](/config/shared-options.md#resolve-alias)는 이제 `@rollup/plugin-alias`로 전달되고, 더 이상 경로의 시작과 끝에 슬래시가 필요하지 않습니다. 따라서, 1.0 스타일의 디렉터리 별칭 키 끝에 있는 슬래시는 제거해주세요:
 
 ```diff
 - alias: { '/@foo/': path.resolve(__dirname, 'some-special-dir') }
