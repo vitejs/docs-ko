@@ -62,6 +62,8 @@ Vite v3는 기본적으로 SSR 빌드 시 ESM을 타깃으로 합니다. ESM을 
 
 프로젝트에서 SSR용 ESM을 사용할 수 없는 경우라면, `legacy.buildSsrCjsExternalHeuristics` 옵션을 이용해 Vite v2와 동일한 외부화 방식을 사용하는 CJS 번들 생성이 가능합니다.
 
+또한 [`build.rollupOptions.output.inlineDynamicImports`](https://rollupjs.org/guide/en/#outputinlinedynamicimports) 옵션은 이제 `ssr.target`이 `'node'`일 때 기본적으로 `false`가 됩니다. 따라서 Node.js 빌드 시 `inlineDynamicImports`로 인해 발생되는 실행 순서 변경이나 단일 파일로 번들링되지 않습니다.
+
 ## 일반적인 변경 사항 {#general-changes}
 
 - SSR 및 lib 모드에서 빌드된 JS 파일의 확장자는 이제 포맷과 패키지 타입에 따라 올바른 확장자(`js`, `mjs`, 또는 `cjs`)를 갖습니다.
