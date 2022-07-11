@@ -61,10 +61,10 @@ Vite는 또한 TS 설정 파일을 직접 지원합니다. `defineConfig` 도우
 
 ## 조건부 설정 {#conditional-config}
 
-만약 설정에서 명령 (`dev`/`serve` 또는 `build`) 또는 사용 중인 [모드](/guide/env-and-mode)에 따라 조건부로 옵션을 결정해야 하는 경우, 아래와 같이 함수를 내보낼 수 있습니다:
+만약 설정에서 명령(`dev`/`serve` 또는 `build`), 사용 중인 [모드](/guide/env-and-mode), 또는 SSR 빌드 여부(`ssrBuild`)에 따라 조건부로 옵션을 결정해야 하는 경우, 아래와 같이 함수를 내보낼 수 있습니다:
 
 ```js
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ command, mode, ssrBuild }) => {
   if (command === 'serve') {
     return {
       // 개발 서버 설정
@@ -78,6 +78,8 @@ export default defineConfig(({ command, mode }) => {
 ```
 
 Vite의 API에서 `command` 값은 개발 서버(참고로 CLI `vite`는 `vite dev` 및 `vite serve`의 별칭)에서 `serve`이며, 프로덕션으로 빌드 시(`vite build`)에는 `build`가 들어가게 됩니다.
+
+일반적으로 사용되는 `ssr` 플래그 대신 `ssrBuild`가 전달되는데, 이는 개발 중에는 옵션 값이 SSR 및 이를 사용하지 않는 요청을 처리할 때 공유되기 때문입니다.
 
 ## 비동기 설정 {#async-config}
 
