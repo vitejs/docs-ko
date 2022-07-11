@@ -1,5 +1,10 @@
 import { defineConfig } from 'vitepress'
 
+const ogDescription = 'Vite, 차세대 프런트엔드 개발 툴'
+const ogImage = 'https://vitejs-kr.github.io/og-image.png'
+const ogTitle = 'Vite'
+const ogUrl = 'https://vitejs-kr.github.io'
+
 export default defineConfig({
   title: 'Vite',
   lang: 'ko',
@@ -7,6 +12,15 @@ export default defineConfig({
 
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:title', content: ogTitle }],
+    ['meta', { property: 'og:image', content: ogImage }],
+    ['meta', { property: 'og:url', content: ogUrl }],
+    ['meta', { property: 'twitter:description', content: ogDescription }],
+    ['meta', { property: 'twitter:title', content: ogTitle }],
+    ['meta', { property: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { property: 'twitter:image', content: ogImage }],
+    ['meta', { property: 'twitter:url', content: ogUrl }],
     ['script', { src: 'https://www.googletagmanager.com/gtag/js?id=G-V8ZS1G7X21' }],
     ['script', {}, `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-V8ZS1G7X21');`]
   ],
