@@ -263,6 +263,8 @@ export default defineConfig({
 })
 ```
 
+[`build.minify`](./build-options.md#build-minify)가 `true`인 경우, `esbuild.minifyIdentifiers`, `esbuild.minifySyntax`, 그리고 `esbuild.minifyWhitespace` 중 하나를 `true`로 설정해 코드의 [일부분](https://esbuild.github.io/api/#minify)만 축소(Minify)하도록 구성할 수 있습니다. 참고로 `esbuild.minify` 옵션은 `build.minify`를 재정의하는 데 사용할 수 없습니다.
+
 esbuild 변환을 사용하지 않으려면 `false`로 설정하세요.
 
 ## assetsInclude {#assetsinclude}
