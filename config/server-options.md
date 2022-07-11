@@ -139,11 +139,24 @@ HMR 연결을 설정하거나 사용하지 않을 수 있습니다. (HMR 웹 소
 
 서버 오류 오버레이를 사용하지 않으려면 `server.hmr.overlay`를 `false`로 설정하세요.
 
-포트가 없는 도메인에 연결하고자 한다면 `server.hmr.port`를 `false`로 설정해주세요.
+`clientPort`는 클라이언트 측의 포트만 재정의하는 고급 옵션으로, 클라이언트 코드에서 찾는 것과 다른 포트에서 웹 소켓을 제공할 수 있습니다.
 
-`clientPort`는 클라이언트 측의 포트만 재정의하는 고급 옵션으로, 클라이언트 코드에서 찾는 것과 다른 포트에서 웹 소켓을 제공할 수 있습니다. 개발 서버의 앞단에서 SSL 프록시를 사용하는 경우에 유용합니다.
+`server.hmr.server` 옵션이 정의되면 Vite는 제공된 서버를 통해 HMR 연결 요청을 처리합니다. 미들웨어 모드가 아니라면, Vite는 기존 서버를 통해 HMR 연결 요청을 처리합니다. 이는 자체적으로 서명된 인증서를 사용하거나 단일 포트의 네트워크를 통해 Vite를 제공하려는 경우 유용합니다.
 
-`server.middlewareMode` 또는 `server.https`를 사용할 때, `server.hmr.server`를 HTTP(S) 서버로 설정하면 서버를 통해 HMR 연결 요청이 처리됩니다. 이는 자체 서명된 인증서를 사용하거나, 또는 단을 포트 네트워크를 통해 Vite에 접근이 가능하게 구성하는 경우 유용할 수 있습니다.
+::: tip 참고
+
+기본적으로 Vite는 리버스 프록시가 WebSocket 프록시를 지원한다고 가정하고 동작합니다. 만약 Vite HMR 클라이언트가 WebSocket 연결에 실패하게 되면, 클라이언트는 리버스 프록시 대신 WebSocket을 Vite HMR 서버에 직접 연결합니다:
+
+```
+Direct websocket connection fallback. Check out https://vitejs.dev/config/server-options.html#server-hmr to remove the previous connection error.
+```
+
+위와 같은 상황이 발생될 때 브라우저에 나타나는 이 오류는 무시해도 됩니다. 다만 아래의 작업들 중 하나를 통해 직접 리버스 프록시를 우회해서 오류를 나타나지 않게끔 할 수도 있습니다:
+
+- `server.strictPort` 옵션의 값을 `true`로, 그리고 `server.hmr.clientPort`를 `server.port`와 동일한 값으로 설정
+- `server.hmr.port`를 `server.port`와 다른 값으로 설정
+
+:::
 
 ## server.watch {#server-watch}
 
