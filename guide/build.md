@@ -196,45 +196,34 @@ building for production...
 - 해시화 되어 생성된 에셋 (JS, CSS, 및 이미지와 같은 여러 파일들)
 - 복사된 [Public 디렉터리 파일](assets.md#the-public-directory)
 
-이런 상황에서는 하나의 정적인 [base](#public-base-path) 만으로는 충분하지 않습니다. Vite는 실험적으로 `experimental.buildAdvancedBaseOptions`를 통해 빌드하는 동안 Base에 대한 상세 설정을 제공하고 있습니다.
+이런 상황에서는 하나의 정적인 [base](#public-base-path) 만으로는 충분하지 않습니다. Vite는 실험적으로 `experimental.renderBuiltUrl`를 통해 빌드하는 동안 Base에 대한 상세 설정을 제공하고 있습니다.
 
 ```js
-  experimental: {
-    buildAdvancedBaseOptions: {
-      // base 옵션의 값이 './' 인 것과 동일
-      // 타입: boolean, default: false
-      relative: true
-      // 정적인 base 옵션
-      // 타입: string, default: undefined
-      url: 'https://cdn.domain.com/'
-      // JS 내부에서 경로로 사용될 동적 base 값
-      // 타입: (url: string) => string, default: undefined
-      runtime: (url: string) => `window.__toCdnUrl(${url})`
-    },
+experimental: {
+  renderBuiltUrl: (filename: string, { hostType: 'js' | 'css' | 'html' }) => {
+    if (hostType === 'js') {
+      return { runtime: `window.__toCdnUrl(${JSON.stringify(filename)})` }
+    } else {
+      return { relative: true }
+    }
   }
+}
 ```
 
-`runtime` 프로퍼티에 정의된 함수는 해시된 에셋과 Public 디렉터리 파일에 대한 경로를 구할 때 사용됩니다. 생성된 CSS 및 HTML 파일 내부에서의 경로는 `url`를 사용하지만, 만약 이 값이 존재하지 않다면 `config.base`를 사용합니다.
-
-`relative`가 true이고 `url`이 정의된 경우, 동일한 그룹 내 에셋(예: JS 파일에서 참조된 해시된 이미지)에 대해 상대적인 경로가 우선적으로 적용됩니다. `url`은 HTML 항목의 경로와 다른 그룹(CSS 파일에서 참조하는 Public 디렉터리 내 파일) 간의 경로에 사용됩니다.
-
-만약 해시화된 에셋과 Public 디렉터리 내 파일이 함께 배포되지 않는 경우라면, 각 그룹에 대한 설정을 서로 다르게 지정할 수 있습니다:
+해시된 에셋과 Public 디렉터리 내 파일이 함께 배포되지 않은 경우, 함수에 전달된 세 번째 `context` 매개변수에 포함된 에셋의 `type` 프로퍼티를 이용해 각 그룹에 대한 동작을 독립적으로 정의할 수 있습니다.
 
 ```js
   experimental: {
-    buildAdvancedBaseOptions: {
-      assets: {
-        relative: true
-        url: 'https://cdn.domain.com/assets',
-        runtime: (url: string) => `window.__assetsPath(${url})`
-      },
-      public: {
-        relative: false
-        url: 'https://www.domain.com/',
-        runtime: (url: string) => `window.__publicPath + ${url}`
+    renderBuiltUrl(filename: string, { hostType: 'js' | 'css' | 'html', type: 'public' | 'asset' }) {
+      if (type === 'public') {
+        return 'https://www.domain.com/' + filename
+      }
+      else if (path.extname(importer) === '.js') {
+        return { runtime: `window.__assetsPath(${JSON.stringify(filename)})` }
+      }
+      else {
+        return 'https://cdn.domain.com/assets/' + filename
       }
     }
   }
 ```
-
-`public` 또는 `assets` 항목에 정의되지 않은 모든 옵션은 기본적으로 `buildAdvancedBaseOptions` 설정 값을 상속받습니다.
