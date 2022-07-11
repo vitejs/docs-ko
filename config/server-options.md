@@ -153,8 +153,9 @@ Direct websocket connection fallback. Check out https://vitejs.dev/config/server
 
 위와 같은 상황이 발생될 때 브라우저에 나타나는 이 오류는 무시해도 됩니다. 다만 아래의 작업들 중 하나를 통해 직접 리버스 프록시를 우회해서 오류를 나타나지 않게끔 할 수도 있습니다:
 
-- `server.strictPort` 옵션의 값을 `true`로, 그리고 `server.hmr.clientPort`를 `server.port`와 동일한 값으로 설정
-- `server.hmr.port`를 `server.port`와 다른 값으로 설정
+- WebSocket도 프록시하도록 리버스 프록시를 구성
+- [`server.strictPort` 옵션의 값을 `true`로](#server-strictport), 그리고 `server.hmr.clientPort`를 `server.port`와 동일한 값으로 설정
+- `server.hmr.port`를 [`server.port`](#server-port와 다른 값으로 설정
 
 :::
 
