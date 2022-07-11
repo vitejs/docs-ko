@@ -13,13 +13,20 @@ interface ImportMeta {
   readonly hot?: ViteHotContext
 }
 
+type ModuleNamespace = Record<string, any> & {
+  [Symbol.toStringTag]: 'Module'
+}
+
 interface ViteHotContext {
   readonly data: any
 
   accept(): void
-  accept(cb: (mod: any) => void): void
-  accept(dep: string, cb: (mod: any) => void): void
-  accept(deps: readonly string[], cb: (mods: any[]) => void): void
+  accept(cb: (mod: ModuleNamespace | undefined) => void): void
+  accept(dep: string, cb: (mod: ModuleNamespace | undefined) => void): void
+  accept(
+    deps: readonly string[],
+    cb: (mods: Array<ModuleNamespace | undefined>) => void
+  ): void
 
   dispose(cb: (data: any) => void): void
   decline(): void
@@ -53,7 +60,10 @@ export const count = 1
 
 if (import.meta.hot) {
   import.meta.hot.accept((newModule) => {
-    console.log('updated: count is now ', newModule.count)
+    if (newModule) {
+      // SyntaxError 발생 시 newModule은 undefined 값을 갖습니다.
+      console.log('updated: count is now ', newModule.count)
+    }
   })
 }
 ```
@@ -76,7 +86,7 @@ foo()
 if (import.meta.hot) {
   import.meta.hot.accept('./foo.js', (newFoo) => {
     // 콜백으로 변경된 './foo.js' 모듈을 받을 수 있습니다.
-    newFoo.foo()
+    newFoo?.foo()
   })
 
   // 또한 dep 모듈들을 어레이로 받을 수 있습니다.
