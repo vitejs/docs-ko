@@ -184,7 +184,7 @@ CSS 모듈 행동을 구성합니다. 옵션들은 [postcss-modules](https://git
 
 ## css.postcss {#css-postcss}
 
-- **타입:** `string | (postcss.ProcessOptions & { plugins?: postcss.Plugin[] })`
+- **타입:** `string | (postcss.ProcessOptions & { plugins?: postcss.AcceptedPlugin[] })`
 
 인라인 PostCSS 설정, 또는 PostCSS 설정을 검색할 사용자 지정 디렉터리(기본값은 프로젝트 루트)입니다.
 
