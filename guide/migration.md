@@ -121,6 +121,8 @@ Vite v3는 기본적으로 SSR 빌드 시 ESM을 타깃으로 합니다. ESM을 
 - [[#8178] feat!: migrate to ESM](https://github.com/vitejs/vite/pull/8178)
   - `formatPostcssSourceMap`는 이제 비동기적(async)으로 동작합니다
   - `resolvePackageEntry` 및 `resolvePackageData`는 더 이상 CJS 빌드에서 사용할 수 없습니다. (CJS에서 사용하기 위해서는 동적 Import 기능이 필요합니다.)
+- [[#8626] refactor: type client maps](https://github.com/vitejs/vite/pull/8626)
+  - `import.meta.hot.accept` 옵션의 콜백 타입이 더 엄격해졌습니다. 이제 `(mod: (Record<string, any> & { [Symbol.toStringTag]: 'Module' }) | undefined) => void` 입니다(기존 `(mod: any) => void`).
 
 아래는 일부 사용자에게만 영향을 미치는 변경 사항입니다.
 
