@@ -206,7 +206,7 @@ building for production...
       relative: true
       // 정적인 base 옵션
       // 타입: string, default: undefined
-      url: 'https:/cdn.domain.com/'
+      url: 'https://cdn.domain.com/'
       // JS 내부에서 경로로 사용될 동적 base 값
       // 타입: (url: string) => string, default: undefined
       runtime: (url: string) => `window.__toCdnUrl(${url})`
@@ -225,12 +225,12 @@ building for production...
     buildAdvancedBaseOptions: {
       assets: {
         relative: true
-        url: 'https:/cdn.domain.com/assets',
+        url: 'https://cdn.domain.com/assets',
         runtime: (url: string) => `window.__assetsPath(${url})`
       },
       public: {
         relative: false
-        url: 'https:/www.domain.com/',
+        url: 'https://www.domain.com/',
         runtime: (url: string) => `window.__publicPath + ${url}`
       }
     }
