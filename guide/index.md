@@ -74,7 +74,7 @@ npm create vite@latest my-vue-app -- --template vue
 yarn create vite my-vue-app --template vue
 
 # pnpm
-pnpm create vite my-vue-app -- --template vue
+pnpm create vite my-vue-app --template vue
 ```
 
 이와 같이 지정할 수 있습니다.
