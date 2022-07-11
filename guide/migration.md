@@ -100,7 +100,7 @@ Vite v3는 기본적으로 SSR 빌드 시 ESM을 타깃으로 합니다. ESM을 
 -import init from 'example.wasm'
 +import init from 'example.wasm?init'
 
--init().then((instance) => {
+-init().then((exports) => {
 +init().then(({ exports }) => {
   exports.test()
 })
