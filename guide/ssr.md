@@ -80,7 +80,9 @@ async function createServer() {
     server: { middlewareMode: 'ssr' },
     appType: 'custom'
   })
+
   // Vite를 미들웨어로 사용합니다.
+  // 만약 Express 라우터(express.Router())를 사용하는 경우, router.use를 사용해야 합니다.
   app.use(vite.middlewares)
 
   app.use('*', async (req, res) => {
