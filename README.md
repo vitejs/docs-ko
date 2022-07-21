@@ -1,5 +1,7 @@
 # Vitejs Document (korean)
 
+> [번역에 기여해보세요!](https://github.com/vitejs-kr/vitejs-kr.github.io/fork) 언제나 환영합니다.
+
 <p align="center">
   <img width="400" src="./docs/logo-white.png">
 </p>
@@ -42,6 +44,8 @@ pnpm build
 커밋 메시지 검증과 관련되어 자세한 사항은 `verifyCommit.js` 스크립트를 참고해주세요.
 
 ## 번역
+
+> [번역에 기여해보세요!](https://github.com/vitejs-kr/vitejs-kr.github.io/fork) 언제나 환영합니다.
 
 ### 브랜치
 
