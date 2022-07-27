@@ -196,6 +196,29 @@ $ ntl deploy
 # ntl deploy --prod
 ```
 
+## Cloudflare Pages {#cloudflare-pages}
+
+1. [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/get-started/)를 설치합니다.
+2. `wrangler login` 명령을 통해 Cloudflare 계정으로 Wrangler를 인증합니다.
+3. 프로젝트에 대한 빌드 명령을 실행합니다.
+4. `npx wrangler pages public dist`를 사용해 배포합니다.
+
+```bash
+# Wrangler CLI 설치
+$ npm install -g wrangler
+
+# Cloudflare 계정으로 로그인하기
+$ wrangler login
+
+# 빌드 명령 실행
+$ npm run build
+
+# 배포하기
+$ npx wrangler pages publish dist
+```
+
+배포 후 Cloudflare Pages 대시보드에는 해당 프로젝트가 나타나게 됩니다. 또한 Wrangler는 배포된 사이트를 검사할 수 있는 프리뷰 URL을 제공합니다.
+
 ## Google Firebase {#google-firebase}
 
 1. [firebase-tools](https://www.npmjs.com/package/firebase-tools)가 설치되어 있는지 확인해주세요.
