@@ -11,26 +11,16 @@ fs.readFile(syncFilePath, (err, file) => {
   }
 
   const octokit = new Octokit({ auth: token });
-
-  splitCommit(file.toString()).forEach(({ diff, hash, msg }) => {
-    try {
-      octokit.rest.issues.create({
-        owner: 'vitejs-kr',
-        repo: 'vitejs-kr.github.io',
-        title: `[SYNC] ${msg}`,
-        labels: ['sync'],
-        body: [
-          `${msg} ([${hash.slice(0, 7)}](https://github.com/vitejs/vite/commit/${hash}))`,
-          '',
-          '---',
-          '',
-          '````diff',
-          diff,
-          '````',
-        ].join('\n'),
-      });
-    } catch (err) {
-      console.error('Failed to create an issue', { diff, hash, msg }, err);
-    }
-  });
+  splitCommit(file.toString()).forEach(useCreateIssue(octokit));
 });
+
+const useCreateIssue =
+  octokit =>
+  ({ hash, msg }) =>
+    octokit.rest.issues.create({
+      owner: 'vitejs-kr',
+      repo: 'vitejs-kr.github.io',
+      title: `[SYNC] ${msg}`,
+      labels: ['sync'],
+      body: `${msg} ([Go to commit ${hash.slice(0, 7)}](https://github.com/vitejs/vite/commit/${hash}))`,
+    });
