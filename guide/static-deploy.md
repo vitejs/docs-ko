@@ -198,6 +198,8 @@ $ ntl deploy
 
 ## Cloudflare Pages {#cloudflare-pages}
 
+### Wrangler를 이용한 Cloudflare Pages 배포 {#cloudflare-pages-via-wrangler}
+
 1. [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/get-started/)를 설치합니다.
 2. `wrangler login` 명령을 통해 Cloudflare 계정으로 Wrangler를 인증합니다.
 3. 프로젝트에 대한 빌드 명령을 실행합니다.
@@ -218,6 +220,16 @@ $ npx wrangler pages publish dist
 ```
 
 배포 후 Cloudflare Pages 대시보드에는 해당 프로젝트가 나타나게 됩니다. 또한 Wrangler는 배포된 사이트를 검사할 수 있는 프리뷰 URL을 제공합니다.
+
+### Git을 이용한 Cloudflare Pages 배포 {#cloudflare-pages-with-git}
+
+1. Git 리포지터리(GitHub, GitLab)에 코드를 Push 합니다.
+2. Cloudflare 대시보드에 접속한 뒤 **Account Home** > **Pages** 에서 계정을 선택합니다.
+3. **Create a new Project** 및 **Connect Git** 옵션을 선택합니다.
+4. 배포할 Git 프로젝트를 선택하고 **Begin setup** 을 클릭합니다.
+5. 빌드 설정에서 Vite 프레임워크의 프리셋을 선택합니다.
+6. 저장 후 배포합니다!
+7. 애플리케이션이 배포되었습니다! (사이트는 `https://<PROJECTNAME>.pages.dev/`에서 볼 수 있습니다.)
 
 ## Google Firebase {#google-firebase}
 
