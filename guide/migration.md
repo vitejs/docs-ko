@@ -31,25 +31,11 @@ Vite는 EOL(End-of-life)에 도달한 Node v12를 더 이상 지원하지 않습
 
 이 섹션에서는 Vite v3 아키텍처에 대한 가장 큰 변경 사항에 대해 설명합니다. 만약 호환성 문제가 있는 경우, 프로젝트를 v2에서 마이그레이션 할 수 있도록 Vite v2 전략으로 되돌리는 레거시 옵션이 존재합니다.
 
-:::warning
-아래 옵션은 실험적 기능으로 표시되며 더이상 사용되지 않습니다. 시멘틱 버저닝을 따르지 않고 향후 v3 마이너 버전에서 제거될 수 있습니다. 만약 아래 옵션을 사용하고 있다면 Vite의 버전을 고정해주세요.
-
-- `legacy.buildRollupPluginCommonjs`
-- `legacy.buildSsrCjsExternalHeuristics`
-
-:::
-
 ## 개발 서버 관련 변경 사항 {#dev-server-changes}
 
 Vite 개발 서버의 기본 포트 번호는 이제 5173 입니다. 물론 [`server.port`](../config/server-options.md#server-port) 옵션을 이용해 3000으로 설정할 수 있습니다.
 
 Vite 개발 서버의 기본 호스트는 이제 `localhost` 입니다. 이 역시 [`server.host`](../config/server-options.md#server-host) 옵션을 이용해 `127.0.0.1`로 설정할 수 있습니다.
-
-### 빌드 관련 변경 사항 {#build-changes}
-
-v3에서, Vite는 기본적으로 esbuild를 사용해 디펜던시를 최적화합니다. 이 덕분에 v2에 있었던 dev와 prod간의 중요한 차이점 중 하나가 사라지게 됩니다. esbuild는 CJS 포맷의 디펜던시를 ESM으로 변환하기 때문에 [`@rollupjs/plugin-commonjs`](https://github.com/rollup/plugins/tree/master/packages/commonjs)는 더 이상 사용하지 않아도 됩니다.
-
-만약 v2의 방식을 되돌리고자 한다면 `legacy.buildRollupPluginCommonjs` 옵션을 이용해주세요.
 
 ### SSR 관련 변경 사항 {#ssr-changes}
 
@@ -112,6 +98,14 @@ export default {
   plugins: [basicSsl()]
 }
 ```
+
+## 실험적 기능 {#experimental}
+
+### 빌드 시 esbuild 디펜던시 최적화 사용하기 {#using-esbuild-deps-optimization-at-build-time}
+
+Vite v3에서는 esbuild를 사용해 빌드 시 디펜던시를 최적화할 수 있습니다. 이를 활성화하면 Vite v2에 있었던 개발 버전과 프로덕션 버전 사이의 중요한 차이점 중 하나가 사라지게 됩니다. esbuild는 CJS 포맷의 디펜던시를 ESM으로 변환하기 때문에 [`@rollupjs/plugin-commonjs`](https://github.com/rollup/plugins/tree/master/packages/commonjs)는 더 이상 사용하지 않아도 됩니다.
+
+이 빌드 방식을 사용하고자 한다면 `optimizeDeps.disabled` 옵션의 값을 `false`로 설정해주세요(v3의 기본값은 `disabled: 'build'` 입니다). `@rollup/plugin-commonjs`는 `build.commonjsOptions: { include: [] }`로 제거할 수 있습니다.
 
 ## Advanced {#advanced}
 
