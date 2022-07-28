@@ -101,6 +101,18 @@ Vite v3는 기본적으로 SSR 빌드 시 ESM을 타깃으로 합니다. ESM을 
 })
 ```
 
+### 자동으로 https 인증서 생성하기 {#automatic-https-certificate-generation}
+
+`https` 옵션을 사용할 때는 유효한 인증서가 필요합니다. Vite v2에서는 인증서가 존재하지 않은 경우 자체적으로 서명된 인증서를 만든 뒤 캐싱했었습니다. Vite v3부터는 인증서를 직접 수동으로 생성하는 것을 권고하지만, v2의 인증서 자동 생성 방식을 계속 사용하고자 한다면 프로젝트에 [@vitejs/plugin-basic-ssl](https://github.com/vitejs/vite-plugin-basic-ssl) 플러그인을 추가해주세요.
+
+```js
+import basicSsl from '@vitejs/plugin-basic-ssl'
+
+export default {
+  plugins: [basicSsl()]
+}
+```
+
 ## Advanced {#advanced}
 
 아래는 Vite 관련 플러그인 또는 툴 개발자에게만 영향을 미치는 몇 가지 변경 사항들에 대한 내용입니다.
