@@ -17,15 +17,15 @@ Vite는 EOL(End-of-life)에 도달한 Node v12를 더 이상 지원하지 않습
 
 ## 설정 옵션 관련 변경 사항 {#config-options-changes}
 
-- 아래의 옵션은 이미 Vite v2에서 사용되지 않는 옵션이었으며, v3에서는 제거되었습니다:
+아래의 옵션은 이미 Vite v2에서 사용되지 않는 옵션이었으며, v3에서는 제거되었습니다:
 
-  - `alias` ([`resolve.alias`](../config/shared-options.md#resolve-alias)로 변경)
-  - `dedupe` ([`resolve.dedupe`](../config/shared-options.md#resolve-dedupe)로 변경)
-  - `build.base` ([`base`](../config/shared-options.md#base)로 변경)
-  - `build.brotliSize` ([`build.reportCompressedSize`](../config/build-options.md#build-reportcompressedsize)로 변경)
-  - `build.cleanCssOptions` (Vite는 이제 CSS 압축 시 esbuild를 사용합니다)
-  - `polyfillDynamicImport` (동적 Import를 지원하지 않는 브라우저는 [`@vitejs/plugin-legacy`](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 사용해주세요)
-  - `optimizeDeps.keepNames` ([`optimizeDeps.esbuildOptions.keepNames`](../config/dep-optimization-options.md#optimizedeps-esbuildoptions)로 변경)
+- `alias` ([`resolve.alias`](../config/shared-options.md#resolve-alias)로 변경)
+- `dedupe` ([`resolve.dedupe`](../config/shared-options.md#resolve-dedupe)로 변경)
+- `build.base` ([`base`](../config/shared-options.md#base)로 변경)
+- `build.brotliSize` ([`build.reportCompressedSize`](../config/build-options.md#build-reportcompressedsize)로 변경)
+- `build.cleanCssOptions` (Vite는 이제 CSS 압축 시 esbuild를 사용합니다)
+- `polyfillDynamicImport` (동적 Import를 지원하지 않는 브라우저는 [`@vitejs/plugin-legacy`](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 사용해주세요)
+- `optimizeDeps.keepNames` ([`optimizeDeps.esbuildOptions.keepNames`](../config/dep-optimization-options.md#optimizedeps-esbuildoptions)로 변경)
 
 ## 아키텍처 변경과 레거시 옵션들 {#architecture-changes-and-legacy-options}
 

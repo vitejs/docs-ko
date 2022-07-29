@@ -37,7 +37,7 @@ JS(`import`), CSS(`url()`), 그리고 `.html` 파일에서 참조되는 에셋 �
 
 ```js
 // vite.config.js
-module.exports = defineConfig({
+export default defineConfig({
   build: {
     rollupOptions: {
       // https://rollupjs.org/guide/en/#big-list-of-options
@@ -55,7 +55,7 @@ module.exports = defineConfig({
 ```js
 // vite.config.js
 import { splitVendorChunkPlugin } from 'vite'
-module.exports = defineConfig({
+export default defineConfig({
   plugins: [splitVendorChunkPlugin()]
 })
 ```
@@ -68,7 +68,7 @@ module.exports = defineConfig({
 
 ```js
 // vite.config.js
-module.exports = defineConfig({
+export default defineConfig({
   build: {
     watch: {
       // https://rollupjs.org/guide/en/#watch-options
@@ -99,10 +99,10 @@ module.exports = defineConfig({
 
 ```js
 // vite.config.js
-const { resolve } = require('path')
-const { defineConfig } = require('vite')
+import { resolve } from 'path'
+import { defineConfig } from 'vite'
 
-module.exports = defineConfig({
+export default defineConfig({
   build: {
     rollupOptions: {
       input: {
@@ -122,10 +122,10 @@ module.exports = defineConfig({
 
 ```js
 // vite.config.js
-const path = require('path')
-const { defineConfig } = require('vite')
+import { resolve } from 'path'
+import { defineConfig } from 'vite'
 
-module.exports = defineConfig({
+export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, 'lib/main.js'),
@@ -200,11 +200,15 @@ building for production...
 
 ```js
 experimental: {
-  renderBuiltUrl: (filename: string, { hostType: 'js' | 'css' | 'html' }) => {
-    if (hostType === 'js') {
-      return { runtime: `window.__toCdnUrl(${JSON.stringify(filename)})` }
-    } else {
-      return { relative: true }
+  renderBuiltUrl(filename: string, { hostType: 'js' | 'css' | 'html', type: 'public' | 'asset' }) {
+    if (type === 'public') {
+      return 'https://www.domain.com/' + filename
+    }
+    else if (path.extname(importer) === '.js') {
+      return { runtime: `window.__assetsPath(${JSON.stringify(filename)})` }
+    }
+    else {
+      return 'https://cdn.domain.com/assets/' + filename
     }
   }
 }

@@ -95,13 +95,14 @@ vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 �
 
 vite는 기본적으로 Vue를 지원하고 있습니다.
 
-- Vue 3 SFC : [@vitejs/plugin-vue](https://github.com/vitejs/vite/tree/main/packages/plugin-vue)
-- Vue 3 JSX : [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx)
-- Vue 2 : [underfin/vite-plugin-vue2](https://github.com/underfin/vite-plugin-vue2)
+- Vue 3 SFC: [@vitejs/plugin-vue](https://github.com/vitejs/vite/tree/main/packages/plugin-vue)
+- Vue 3 JSX: [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx)
+- Vue 2.7: [vitejs/vite-plugin-vue2](https://github.com/vitejs/vite-plugin-vue2)
+- Vue <2.7: [underfin/vite-plugin-vue2](https://github.com/underfin/vite-plugin-vue2)
 
 ## JSX {#jsx}
 
-`.jsx`와 `.tsx` 역시 사용이 가능합니다. 마찬가지로 [esbuild](https://esbuild.github.io)를 이용해 컴파일링하며, React 16 스타일의 JSX를 기본적으로 지원합니다. React 17 스타일의 JSX는 [현재 작업 중에 있습니다](https://github.com/evanw/esbuild/issues/334).
+`.jsx`와 `.tsx` 역시 사용이 가능합니다. 마찬가지로 [esbuild](https://esbuild.github.io)를 이용해 컴파일링합니다.
 
 기존에 Vue를 사용했던 개발자들은 Vue 3에서 제공하고 있는 API(HMR, 글로벌 컴포넌트, 디렉티브 및 슬롯 등)를 위해 [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx)를 사용해야 합니다.
 

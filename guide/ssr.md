@@ -66,10 +66,10 @@ SSR 앱을 빌드할 때, 메인 서버를 완전히 제어하고 Vite를 프로
 **server.js**
 
 ```js{17-19}
-const fs = require('fs')
-const path = require('path')
-const express = require('express')
-const { createServer: createViteServer } = require('vite')
+import fs from 'fs'
+import path from 'path'
+import express from 'express'
+import {createServer as createViteServer} from 'vite'
 
 async function createServer() {
   const app = express()
@@ -153,7 +153,7 @@ app.use('*', async (req, res, next) => {
 SSR 프로젝트를 프로덕션으로 제공하기 위해서는 다음이 필요합니다:
 
 1. 클라이언트 빌드를 정상적으로 생성합니다.
-2. Vite의 `ssrLoadModule`을 거칠 필요가 없도록 `require()` 함수를 통해 직접 로드할 수 있는 SSR 빌드를 생성합니다.
+2. Vite의 `ssrLoadModule`을 거칠 필요가 없도록 `import()` 함수를 통해 직접 로드할 수 있는 SSR 빌드를 생성합니다.
 
 이를 위한 `package.json`의 스크립트는 다음과 같습니다:
 
@@ -173,7 +173,7 @@ SSR 프로젝트를 프로덕션으로 제공하기 위해서는 다음이 필�
 
 - 프로젝트 루트의 `index.html` 파일이 아닌, `dist/client/index.html`를 템플릿으로 사용하도록 합니다. 이 파일에 클라이언트 빌드에 대한 올바른 참조가 포함되어 있기 때문입니다.
 
-- `await vite.ssrLoadModule('/src/entry-server.js')` 대신, `require('./dist/server/entry-server.js')`를 사용하여 스크립트를 로드하도록 합니다. (이 파일은 SSR 빌드 결과물 입니다.)
+- `await vite.ssrLoadModule('/src/entry-server.js')` 대신, `import('./dist/server/entry-server.js')`를 사용하여 스크립트를 로드하도록 합니다. (이 파일은 SSR 빌드 결과물 입니다.)
 
 - `vite` 개발 서버의 생성과 모든 사용은 개발 전용으로 구분된 조건문 아래로 이동한 다음, `dist/client`를 통해 파일을 제공할 수 있도록 미들웨어를 추가해줍니다.
 

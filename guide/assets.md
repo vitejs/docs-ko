@@ -108,9 +108,5 @@ function getImageUrl(name) {
 프로덕션 빌드 시, Vite는 번들링 및 에셋 해싱 후에도 해당 에셋에 대한 URL을 올바르게 가리키기 위해 필요한 변환 작업을 수행합니다.
 
 ::: warning SSR과 함께 사용하지 마세요!
-`import.meta.url`은 브라우저와 Node.js 간 서로 다른 의미를 갖기 때문에, 이 패턴은 서버-사이드 렌더링(SSR)에 Vite를 사용하는 경우 동작하지 않습니다.
-:::
-
-::: warning `target`은 `es2020`보다 높아야 해요
-이 패턴은 [build-target](/config/build-options.md#build-target) 또는 [optimizedeps.esbuildoptions.target](/config/dep-optimization-options.md#optimizedeps-esbuildoptions) 설정 값이 `es2020` 미만이면 동작하지 않습니다.
+`import.meta.url`은 브라우저와 Node.js 간 서로 다른 의미를 갖기 때문에, 이 패턴은 서버-사이드 렌더링(SSR)에 Vite를 사용하는 경우 동작하지 않습니다. 또한 서버 번들은 클라이언트 호스트의 URL을 미리 결정할 수 없습니다.
 :::

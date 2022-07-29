@@ -12,6 +12,8 @@ Vite는 **`import.meta.env`** 객체를 이용해 환경 변수에 접근할 수
 
 - **`import.meta.env.DEV`**: {boolean} 앱이 개발 환경에서 실행 중인지 여부이며, 항상 `import.meta.env.PROD`와 반대되는 값을 가집니다.
 
+- **`import.meta.env.SSR`**: {boolean} 앱이 [서버](./ssr.md#conditional-logic)에서 실행 중인지 여부입니다.
+
 ### 프로덕션에서의 환경 변수 {#production-replacement}
 
 프로덕션에서는 환경 변수가 모두 **정적으로 교체됩니다**. 따라서 항상 환경 변수는 정적으로 참조해야만 하며, `import.meta.env[key]`와 같은 동적 참조는 작동하지 않습니다.
@@ -47,11 +49,16 @@ Vite는 [dotenv](https://github.com/motdotla/dotenv)를 이용해 [환경 변수
 참고로, Vite에서 접근 가능한 환경 변수는 일반 환경 변수와 구분을 위해 `VITE_` 라는 접두사를 붙여 나타냅니다. 가령, 아래와 같이 환경 변수를 정의했다면:
 
 ```
-DB_PASSWORD=foobar
 VITE_SOME_KEY=123
+DB_PASSWORD=foobar
 ```
 
 `VITE_SOME_KEY` 변수만이 `import.meta.env.VITE_SOME_KEY`로 접근이 가능합니다. (`DB_PASSWORD`는 노출되지 않습니다.)
+
+```js
+console.log(import.meta.env.VITE_SOME_KEY) // 123
+console.log(import.meta.env.DB_PASSWORD) // undefined
+```
 
 만약 환경 변수에 대한 접미사(Prefix)를 커스터마이즈 하고자 한다면, [envPrefix](/config/index#envprefix) 옵션을 참고해주세요.
 

@@ -18,7 +18,7 @@
 한 가지 유의할 점은, `vite preview` 명령은 로컬에서 어떤 형태로 빌드가 되는지 미리 확인하기 위한 용도일 뿐이며, 실제 배포용 서버를 의미하지는 않습니다.
 
 ::: tip 참고
-이 가이드는 Vite 기반의 사이트를 정적(Static)으로 배포하기 위한 방법을 설명하고 있습니다. 물론 Vite는 서버 측 렌더링(SSR, Server Side Rendering)을 지원하고 있으나, 현재는 실험적인 기능입니다. 참고로 '서버 측 렌더링'이란, Node.js를 이용해 동일한 웹 애플리케이션을 HTML로 사전에 렌더링한 뒤, 이를 클라이언트에게 제공하는 방식의 프런트엔드 프레임워크를 의미합니다. 이에 대해 더 알고자 한다면 [SSR 가이드](./ssr)를 참고해주세요. 만약 기존에 사용하고 있는 서버측 프레임워크(Ror, Laravel 등)가 있다면, [백엔드 통합 가이드](./backend-integration)를 참고해주세요.
+이 가이드는 Vite 기반의 사이트를 정적(Static)으로 배포하기 위한 방법을 설명하고 있습니다. 물론 Vite는 서버 측 렌더링(SSR, Server Side Rendering)을 지원합니다. 참고로 '서버 측 렌더링'이란, Node.js를 이용해 동일한 웹 애플리케이션을 HTML로 사전에 렌더링한 뒤, 이를 클라이언트에게 제공하는 방식의 프런트엔드 프레임워크를 의미합니다. 이에 대해 더 알고자 한다면 [SSR 가이드](./ssr)를 참고해주세요. 만약 기존에 사용하고 있는 서버측 프레임워크(Ror, Laravel 등)가 있다면, [백엔드 통합 가이드](./backend-integration)를 참고해주세요.
 :::
 
 ## 앱 빌드하기 {#building-the-app}
@@ -101,45 +101,6 @@ $ npm run preview
 물론 CI 툴을 이용해 위 스크립트 기반으로 배포가 자동으로 이루어지게끔 설정이 가능합니다.
 :::
 
-### GitHub Pages 그리고 Travis CI {#github-pages-and-travis-ci}
-
-1. `vite.config.js` 파일 내 `base` 설정 값을 적절하게 지정합니다.
-
-   만약 `https://<USERNAME or GROUP>.github.io/`와 같은 형태로 배포하고자 한다면, `base` 설정 값을 생략하거나 기본 값인 `'/'`로 지정해주세요.
-
-   만약 `https://<USERNAME or GROUP>.github.io/<REPO>/`와 같은 형태로 배포하고자 한다면, `base` 설정 값을 `'/<REPO>/'`로 지정해주세요.
-
-2. 프로젝트의 루트에 `.travis.yml` 파일을 생성해주세요(파일 내용은 아래 코드를 참고해주세요).
-
-3. `npm install` 명령을 실행한 뒤, `package-lock.json` 파일을 커밋해주세요.
-
-4. [Travis CI 문서](https://docs.travis-ci.com/user/deployment/pages/)를 참고해서 GitHub Pages 배포를 위한 설정을 진행해주세요. 예를 들어 아래와 같이 설정이 가능합니다.
-
-   ```yaml
-   language: node_js
-   node_js:
-     - lts/*
-   install:
-     - npm ci
-   script:
-     - npm run build
-   deploy:
-     provider: pages
-     skip_cleanup: true
-     local_dir: dist
-     # Travis가 리포지터리에 Push 할 수 있도록 GitHub에서 $GITHUB_TOKEN을 생성합니다.
-     # 생성한 $GITHUB_TOKEN의 값은 Travis 설정 페이지에서 환경 변수로 지정해 사용할 수 있어요.
-     github_token: $GITHUB_TOKEN
-     keep_history: true
-     on:
-       branch: main
-   ```
-
-`$GITHUB_TOKEN`과 관련한 내용은 아래 문서를 참고해주세요.
-
-- [개인 액세스 토큰 생성하기 (GitHub)](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-- [GitHub Token 설정하기 (Travis)](https://docs.travis-ci.com/user/deployment/pages/#setting-the-github-token)
-
 ## GitLab Pages 그리고 GitLab CI {#github-pages-and-gitlab-ci}
 
 1. `vite.config.js` 파일 내 `base` 설정 값을 적절하게 지정합니다.
@@ -193,8 +154,35 @@ $ ntl deploy
 
 ```bash
 # 프로덕션으로 배포
-# ntl deploy --prod
+$ ntl deploy --prod
 ```
+
+## Vercel {#vercel}
+
+### Vercel CLI {#vercel-cli}
+
+1. [Vercel CLI](https://vercel.com/cli)를 설치하고 `vercel`을 실행하여 배포합니다.
+2. Vercel은 Vite를 사용하고 있음을 감지하게 되며, 배포와 관련된 올바른 설정을 활성화합니다.
+3. 애플리케이션이 배포되었습니다! (예시: [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
+
+```bash
+$ npm i -g vercel
+$ vercel init vite
+Vercel CLI
+> Success! Initialized "vite" example in ~/your-folder.
+- To deploy, `cd vite` and run `vercel`.
+```
+
+### Vercel for Git {#vercel-for-git}
+
+1. 사용하고 있는 Git 리포지터리(GitHub, GitLab, Bitbucket)으로 소스 코드를 Push 합니다.
+2. Vercel로 [Vite 프로젝트를 가져옵니다](https://vercel.com/new).
+3. Vercel은 Vite를 사용하고 있음을 감지하게 되며, 배포와 관련된 올바른 설정을 활성화합니다.
+4. 애플리케이션이 배포되었습니다! (예시: [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
+
+Vercel로 프로젝트를 불러오고 배포까지 완료했다면, 이후 브랜치에 대한 모든 Push 동작은 애플리케이션에 대한 [프리뷰 배포](https://vercel.com/docs/concepts/deployments/environments#preview)를 생성하게 됩니다. 그리고 프로덕션용 브랜치(일반적으로 "main")에 대한 모든 변경 사항은 [프로덕션 배포](https://vercel.com/docs/concepts/deployments/environments#production)가 됩니다.
+
+이에 대해 좀 더 알고 싶다면 Vercel의 [Git](https://vercel.com/docs/concepts/git) 문서를 참고해주세요.
 
 ## Cloudflare Pages {#cloudflare-pages}
 
@@ -330,34 +318,7 @@ $ npx wrangler pages publish dist
    $ heroku open
    ```
 
-## Vercel {#vercel}
-
-### Vercel CLI {#vercel-cli}
-
-1. [Vercel CLI](https://vercel.com/cli)를 설치하고 `vercel`을 실행하여 배포합니다.
-2. Vercel은 Vite를 사용하고 있음을 감지하게 되며, 배포와 관련된 올바른 설정을 활성화합니다.
-3. 애플리케이션이 배포되었습니다! (예시: [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
-
-```bash
-$ npm i -g vercel
-$ vercel init vite
-Vercel CLI
-> Success! Initialized "vite" example in ~/your-folder.
-- To deploy, `cd vite` and run `vercel`.
-```
-
-### Vercel for Git {#vercel-for-git}
-
-1. 사용하고 있는 Git 리포지터리(GitHub, GitLab, Bitbucket)으로 소스 코드를 Push 합니다.
-2. Vercel로 [Vite 프로젝트를 가져옵니다](https://vercel.com/new).
-3. Vercel은 Vite를 사용하고 있음을 감지하게 되며, 배포와 관련된 올바른 설정을 활성화합니다.
-4. 애플리케이션이 배포되었습니다! (예시: [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
-
-Vercel로 프로젝트를 불러오고 배포까지 완료했다면, 이후 브랜치에 대한 모든 Push 동작은 애플리케이션에 대한 [프리뷰 배포](https://vercel.com/docs/concepts/deployments/environments#preview)를 생성하게 됩니다. 그리고 프로덕션용 브랜치(일반적으로 "main")에 대한 모든 변경 사항은 [프로덕션 배포](https://vercel.com/docs/concepts/deployments/environments#production)가 됩니다.
-
-이에 대해 좀 더 알고 싶다면 Vercel의 [Git](https://vercel.com/docs/concepts/git) 문서를 참고해주세요.
-
-## Azure Static Web Apps {#azure-static-web-apps}
+## Azure 정적 웹 앱 {#azure-static-web-apps}
 
 마이크로소프트 Azure 클라우드 서비스의 [Static Web Apps](https://aka.ms/staticwebapps) 서비스를 이용해 빠르게 Vite 앱을 배포할 수 있습니다.
 
