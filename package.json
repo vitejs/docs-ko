@@ -12,6 +12,7 @@
     "chalk": "^4.1.0",
     "gray-matter": "^4.0.3",
     "prettier": "^2.7.1",
+    "simple-git": "^3.12.0",
     "vite": "^2.9.12",
     "vitepress": "^1.0.0-alpha.2",
     "yorkie": "^2.0.0"

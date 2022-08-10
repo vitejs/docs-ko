@@ -1,26 +1,42 @@
-const fs = require('fs');
-const splitCommit = require('./splitCommit');
+const { simpleGit } = require('simple-git');
 const { Octokit } = require('@octokit/rest');
+const useCreateIssue = require('./useCreateIssue.js');
 
-const syncFilePath = require('path').resolve(__dirname, '..', '..', 'sync');
+const VITE_GIT = 'https://github.com/vitejs/vite.git';
+
+const git = simpleGit()
+  .addConfig(
+    'user.email',
+    '41898282+github-actions[bot]@users.noreply.github.com',
+  )
+  .addConfig('user.name', 'github-actions[bot]');
+
 const token = process.argv[2];
+const octokit = new Octokit({ auth: token });
+const createIssue = useCreateIssue(octokit);
 
-fs.readFile(syncFilePath, (err, file) => {
-  if (err) {
-    return console.error(err);
+(async () => {
+  await git.addRemote('vite', VITE_GIT);
+
+  await git.fetch(['vite']);
+  await git.fetch(['origin']);
+
+  await git.checkout(['--track', 'origin/sync']);
+
+  const { all: commitList, total } = await git.log([
+    'sync..vite/main',
+    '--',
+    'docs',
+  ]);
+
+  if (!total) {
+    return;
   }
 
-  const octokit = new Octokit({ auth: token });
-  splitCommit(file.toString()).forEach(useCreateIssue(octokit));
-});
+  console.log(commitList);
+  await Promise.all(commitList.map(createIssue));
 
-const useCreateIssue =
-  octokit =>
-  ({ hash, msg }) =>
-    octokit.rest.issues.create({
-      owner: 'vitejs-kr',
-      repo: 'vitejs-kr.github.io',
-      title: `[SYNC] ${msg}`,
-      labels: ['sync'],
-      body: `${msg} ([Go to commit ${hash.slice(0, 7)}](https://github.com/vitejs/vite/commit/${hash}))`,
-    });
+  await git.pull('vite', 'main');
+  await git.push('origin', '+sync');
+  await git.checkout('main');
+})();

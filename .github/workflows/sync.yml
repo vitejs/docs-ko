@@ -2,52 +2,35 @@ name: Sync
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: '0 0 * * *'
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           token: ${{ secrets.PAT }}
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: 16
 
-      - name: Pull changes
-        run: |
-          git remote add vite https://github.com/vitejs/vite
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+      - uses: pnpm/action-setup@v2.2.1
+        with:
+          version: 7
 
-      - name: Fetch and Checkout datas
-        run: |
-          git fetch vite
-          git fetch origin
-          git checkout --track origin/sync
+      - uses: actions/cache@v3
+        id: pnpm-cache
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
-      - name: Diff
-        run: |
-          git diff sync vite/main -- docs >> sync
-          git log sync..vite/main -- docs >> sync
-
-      - name: Merge from vite
-        run: |
-          git pull vite main
-          git push origin sync
-          git checkout main
-
-      - name: Forced merge from vite
-        if: ${{ failure() }}
-        run: |
-          git pull vite main
-          git push origin +sync
-          git checkout main
-
-      - name: Install dependencies
-        run: yarn install
+      - if: steps.pnpm-cache.outputs.cache-hit != 'true'
+        run: pnpm install
 
       - name: Run sync script
-        run: yarn sync ${{ github.token }}
+        run: pnpm run sync ${{ secrets.GITHUB_TOKEN }}
