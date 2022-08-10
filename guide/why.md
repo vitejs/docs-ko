@@ -22,7 +22,7 @@ vite는 이 문제를 **dependencies** 그리고 **source code** 두 가지 카�
 
 - **Source code**: JSX, CSS 또는 Vue/Svelte 컴포넌트와 같이 컴파일링이 필요하고, 수정 또한 매우 잦은 Non-plain JavaScript 소스 코드는 어떻게 할까요? (물론 이들 역시 특정 시점에서 모두 불러올 필요는 없습니다.)
 
-  vite는 [Native ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 이용해 소스 코드를 제공하도록 하고 있습니다. 다시말해, 브라우저가 곧 번들러라는 말이죠. vite는 그저 브라우저의 판단 아래 특정 모듈에 대한 소스 코드를 요청하면 이를 전달할 뿐입니다.
+  vite는 [Native ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 이용해 소스 코드를 제공하도록 하고 있습니다. 다시말해, 브라우저가 곧 번들러라는 말이죠. vite는 그저 브라우저의 판단 아래 특정 모듈에 대한 소스 코드를 요청하면 이를 전달할 뿐입니다. 따라서 조건부 동적 import 이후의 코드는 현재 화면에서 실제로 사용이 되어야만 처리가 됩니다.
 
   ![번들러 기반의 개발 서버](/images/bundler.png)
 
