@@ -205,17 +205,9 @@ const html = await vueServerRenderer.renderToString(app, ctx)
 
 ## SSR 외부화 {#ssr-externals}
 
-대다수의 디펜던시는 ESM과 CommonJS 파일을 모두 제공합니다. 다만, SSR을 실행할 때는 CommonJS 빌드를 제공하는 디펜던시를 Vite의 SSR 변환/모듈 시스템에서 "외부화(Externalized)"하여 개발과 빌드 속도를 높일 수 있습니다. 예를 들어, 미리 번들링 된 ESM 버전의 React를 가져온 다음 Node.js와 호환되도록 이를 다시 변환하는 대신에, 단순히 `require('react')`를 사용하도록 하는 것이 더 효율적이라는 의미입니다. 또한 이는 SSR 번들링 시에도 더 빠르게 빌드할 수 있도록 합니다.
+SSR을 실행할 때 디펜던시는 기본적으로 Vite의 SSR 변환 모듈 시스템에서 "외부화(Externalized)"됩니다. 이는 개발 및 빌드 속도를 모두 향상시킵니다.
 
-Vite는 아래와 같은 휴리스틱을 기반으로 자동화는 SSR 외부화를 수행합니다:
-
-- 만약 디펜던시가 ESM을 통해 가져와지는 경로와 Node를 통해 가져와지는 경로가 서로 다른 경우, Node의 경로는 외부화할 수 있는 CommonJS 빌드일 수 있습니다. 예를 들어, `vue`는 ESM 및 CommonJS 빌드를 모두 제공하기에 자동으로 외부화됩니다.
-
-- 그렇지 않은 경우, Vite는 패키지의 진입점에 유효한 ESM 구문이 포함되어 있는지 확인합니다. 포함되어 있지 않다면 패키지는 CommonJS일 가능성이 있으며 외부화됩니다. 예를 들어, `react-dom`은 CommonJS 형식의 단일 항목만을 제공하기에 자동으로 외부화됩니다.
-
-이 휴리스틱이 오류를 일으키면, `ssr.external`와 `ssr.noExternal` 설정을 직접 이용해 SSR 외부화를 직접 수행할 수 있습니다.
-
-향후 이러한 휴리스틱은 프로젝트에 `type: "module"`이 활성화되어 있는지 여부를 감지하도록 개선될 것이며, Vite는 SSR 과정 중 동적인 `import()`를 통해 노드와 호환되는 ESM 빌드를 제공하는 디펜던시를 외부화하도록 할 것입니다.
+만약 특정 디펜던시가 외부화를 수행하지 않기를 원한다면 [`ssr.noExternal`](../config/ssr-options.md#ssrnoexternal) 목록에 추가해주세요.
 
 :::warning 별칭을 사용하는 경우
 만약 어떤 하나의 패키지를 다른 패키지를 리다이렉트하는 별칭을 사용하는 경우, 외부화된 SSR 디펜던시에서도 사용할 수 있도록 `node_modules` 패키지에 별칭을 지정할 수 있습니다. [Yarn](https://classic.yarnpkg.com/en/docs/cli/add/#toc-yarn-add-alias)과 [pnpm](https://pnpm.js.org/en/aliases) 모두 `npm:` 접두사를 사용하여 별칭을 지정할 수 있습니다.
@@ -268,3 +260,7 @@ Vite 2.7 이전에는 `options` 객체를 사용하는 대신 `ssr` 매개변수
 :::tip 참고
 SSR 미들웨어가 Vite 미들웨어 _이후에_ 실행되기를 원한다면 포스트 훅을 사용하세요.
 :::
+
+## SSR Format
+
+By default, Vite generates the SSR bundle in ESM. There is experimental support for configuring `ssr.format`, but it isn't recommended. Future efforts around SSR development will be based on ESM, and commonjs remain available for backward compatibility. If using ESM for SSR isn't possible in your project, you can set `legacy.buildSsrCjsExternalHeuristics: true` to generate a CJS bundle using the same [externalization heuristics of Vite v2](https://vitejs-kr.github.io/guide/ssr.html#ssr-externals).
