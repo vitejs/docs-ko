@@ -2,23 +2,32 @@
 sidebar: false
 head:
   - - meta
-    - property: og:type
+    - name: og:type
       content: website
   - - meta
-    - property: og:title
+    - name: og:title
       content: Announcing Vite 3
   - - meta
-    - property: og:image
+    - name: og:image
       content: https://vitejs.dev/og-image-announcing-vite3.png
   - - meta
-    - property: og:url
+    - name: og:url
       content: https://vitejs.dev/blog/announcing-vite3
   - - meta
-    - property: og:description
+    - name: twitter:description
       content: Vite 3 Release Announcement
+  - - meta
+    - name: twitter:title
+      content: Announcing Vite 3
   - - meta
     - name: twitter:card
       content: summary_large_image
+  - - meta
+    - name: twitter:image
+      content: https://vitejs.dev/og-image-announcing-vite3.png
+  - - meta
+    - name: twitter:url
+      content: https://vitejs.dev/blog/announcing-vite3
 ---
 
 # Vite 3.0 is out!
@@ -143,7 +152,7 @@ import.meta.glob(['./dir/*.js', './another/*.js'])
 import.meta.glob(['./dir/*.js', '!**/bar.js'])
 ```
 
-[Named Imports](/guide/features.html#named-imports) can be specified to improve tree-shaking
+[Named Imports](/guide/features.html#named-imports) can be specified to improve tree-shacking
 
 ```js
 import.meta.glob('./dir/*.js', { import: 'setup' })
