@@ -16,7 +16,7 @@ Vite 대신 다른 서버가 응답하는 경우가 있습니다.
 
 첫 번째 경우는 `localhost`를 사용하는 경우입니다. Node.js 버전이 v17 미만이라면 기본적으로 DNS로 확인된 주소의 결과를 재정렬합니다. `localhost`에 접근할 때 브라우저는 DNS를 사용해 주소를 확인하며, 해당 주소는 Vite가 수신하고 있는 주소와 다를 수 있습니다.
 
-이 재정렬 동작을 비활성화하려면 [`dns.setDefaultResultOrder('verbatim')`](https://nodejs.org/api/dns.html#dns_dns_setdefaultresultorder_order)으로 설정해주세요. 또는 `server.host`를 명시적으로 `127.0.0.1`로 지정해주는 것도 방법입니다.
+이 재정렬 동작을 비활성화하려면 [`dns.setDefaultResultOrder('verbatim')`](https://nodejs.org/api/dns.html#dns_dns_setdefaultresultorder_order)으로 설정해주세요. 이 때 Vite는 주소를 `localhost`로 표기합니다.
 
 ```js
 // vite.config.js

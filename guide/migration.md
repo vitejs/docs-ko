@@ -1,8 +1,8 @@
 # v2에서 마이그레이션하기 {#migrating-from-v2}
 
-## 지원하는 Node 버전 {#node-support}
+## 지원하는 Node.js 버전 {#node-support}
 
-Vite는 EOL(End-of-life)에 도달한 Node v12를 더 이상 지원하지 않습니다. Node 버전 14.18+ 이상을 사용해주세요.
+Vite는 EOL(End-of-life)에 도달한 Node.js v12를 더 이상 지원하지 않습니다. Node.js 버전 14.18+ 이상을 사용해주세요.
 
 ## 최신 브라우저 기준 변경 {#modern-browser-baseline-change}
 
@@ -35,7 +35,9 @@ Vite는 EOL(End-of-life)에 도달한 Node v12를 더 이상 지원하지 않습
 
 Vite 개발 서버의 기본 포트 번호는 이제 5173 입니다. 물론 [`server.port`](../config/server-options.md#server-port) 옵션을 이용해 3000으로 설정할 수 있습니다.
 
-Vite 개발 서버의 기본 호스트는 이제 `localhost` 입니다. 이 역시 [`server.host`](../config/server-options.md#server-host) 옵션을 이용해 `127.0.0.1`로 설정할 수 있습니다.
+Vite's default dev server host is now `localhost`. In Vite v2, Vite was listening to `127.0.0.1` by default. Node.js under v17 normally resolves `localhost` to `127.0.0.1`, so for those versions, the host won't change. For Node.js 17+, you can use [`server.host`](../config/server-options.md#server-host) to set it to `127.0.0.1` to keep the same host as Vite v2.
+
+Note that Vite v3 now prints the correct host. This means Vite may print `127.0.0.1` as the listening host when `localhost` is used. You can set [`dns.setDefaultResultOrder('verbatim')`](https://nodejs.org/api/dns.html#dns_dns_setdefaultresultorder_order) to prevent this. See [`server.host`](../config/server-options.md#server-host) for more details.
 
 ### SSR 관련 변경 사항 {#ssr-changes}
 
