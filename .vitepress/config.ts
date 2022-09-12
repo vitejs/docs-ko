@@ -21,8 +21,15 @@ export default defineConfig({
     ['meta', { property: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { property: 'twitter:image', content: ogImage }],
     ['meta', { property: 'twitter:url', content: ogUrl }],
-    ['script', { src: 'https://www.googletagmanager.com/gtag/js?id=G-V8ZS1G7X21' }],
-    ['script', {}, `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-V8ZS1G7X21');`]
+    [
+      'script',
+      { src: 'https://www.googletagmanager.com/gtag/js?id=G-V8ZS1G7X21' }
+    ],
+    [
+      'script',
+      {},
+      `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-V8ZS1G7X21');`
+    ]
   ],
 
   vue: {
@@ -33,14 +40,15 @@ export default defineConfig({
     logo: '/logo.svg',
 
     editLink: {
-      pattern: 'https://github.com/vitejs-kr/vitejs-kr.github.io/edit/main/:path',
+      pattern:
+        'https://github.com/vitejs-kr/vitejs-kr.github.io/edit/main/:path',
       text: '이 페이지 수정하기'
     },
 
     socialLinks: [
       { icon: 'twitter', link: 'https://twitter.com/vite_js' },
       { icon: 'discord', link: 'https://chat.vitejs.dev' },
-      { icon: 'github', link: 'https://github.com/vitejs/vite' },
+      { icon: 'github', link: 'https://github.com/vitejs/vite' }
     ],
 
     algolia: {
@@ -100,8 +108,7 @@ export default defineConfig({
           },
           {
             text: '변경 사항',
-            link:
-              'https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md'
+            link: 'https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md'
           }
         ]
       }
@@ -167,7 +174,7 @@ export default defineConfig({
             {
               text: 'v1에서 마이그레이션하기',
               link: '/guide/migration-from-v1'
-            },
+            }
           ]
         },
         {
@@ -236,8 +243,8 @@ export default defineConfig({
   markdown: {
     anchor: {
       // @ts-ignore
-      renderPermalink: require('./render-permalink'),
+      renderPermalink: require('./render-permalink')
     },
-    config: md => md.use(require('./custom-anchor')),
+    config: (md) => md.use(require('./custom-anchor'))
   }
 })
