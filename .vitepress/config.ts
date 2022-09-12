@@ -84,31 +84,36 @@ export default defineConfig({
       { text: '설정', link: '/config/', activeMatch: '/config/' },
       { text: '플러그인', link: '/plugins/', activeMatch: '/plugins/' },
       {
-        text: '관련 링크',
+        text: '리소스',
         items: [
+          { text: 'Team', link: '/team' },
           {
-            text: '트위터',
-            link: 'https://twitter.com/vite_js'
-          },
-          {
-            text: '디스코드',
-            link: 'https://chat.vitejs.dev'
-          },
-          {
-            text: 'Awesome Vite',
-            link: 'https://github.com/vitejs/awesome-vite'
-          },
-          {
-            text: '개발 커뮤니티',
-            link: 'https://dev.to/t/vite'
-          },
-          {
-            text: '호환 가능한 Rollup 플러그인',
-            link: 'https://vite-rollup-plugins.patak.dev/'
-          },
-          {
-            text: '변경 사항',
-            link: 'https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md'
+            items: [
+              {
+                text: '트위터',
+                link: 'https://twitter.com/vite_js'
+              },
+              {
+                text: '디스코드',
+                link: 'https://chat.vitejs.dev'
+              },
+              {
+                text: 'Awesome Vite',
+                link: 'https://github.com/vitejs/awesome-vite'
+              },
+              {
+                text: '개발 커뮤니티',
+                link: 'https://dev.to/t/vite'
+              },
+              {
+                text: '호환 가능한 Rollup 플러그인',
+                link: 'https://vite-rollup-plugins.patak.dev/'
+              },
+              {
+                text: '변경 사항',
+                link: 'https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md'
+              }
+            ]
           }
         ]
       }
