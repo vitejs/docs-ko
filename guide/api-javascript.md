@@ -44,6 +44,13 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url))
 - `configFile`: 특정 설정 파일을 지칭할 때 사용합니다. 만약 설정이 되어있지 않다면, Vite는 자동적으로 프로젝트 루트에서 결정합니다. `false`로 설정한다면 자동 설정을 비활성화합니다.
 - `envFile`: `false` 일 때는 `.env` 파일들을 비활성화합니다.
 
+## `ResolvedConfig`
+
+The `ResolvedConfig` interface has all the same properties of a `UserConfig`, except most properties are resolved and non-undefined. It also contains utilities like:
+
+- `config.assetsInclude`: A function to check if an `id` is considered an asset.
+- `config.logger`: Vite's internal logger object.
+
 ## `ViteDevServer` {#vitedevserver}
 
 ```ts
@@ -188,11 +195,73 @@ import { preview } from 'vite'
 async function resolveConfig(
   inlineConfig: InlineConfig,
   command: 'build' | 'serve',
-  defaultMode?: string
+  defaultMode = 'development'
 ): Promise<ResolvedConfig>
 ```
 
 개발 단계에서의 `command`의 값은 `serve`입니다 (cli에서는 `vite`, `vite dev`, 그리고 `vite serve`는 전부 별칭입니다).
+
+# `mergeConfig`
+
+**Type Signature:**
+
+```ts
+function mergeConfig(
+  defaults: Record<string, any>,
+  overrides: Record<string, any>,
+  isRoot = true
+): Record<string, any>
+```
+
+Deeply merge two Vite configs. `isRoot` represents the level within the Vite config which is being merged. For example, set `false` if you're merging two `build` options.
+
+## `searchForWorkspaceRoot`
+
+**Type Signature:**
+
+```ts
+function searchForWorkspaceRoot(
+  current: string,
+  root = searchForPackageRoot(current)
+): string
+```
+
+**Related:** [server.fs.allow](/config/server-options.md#server-fs-allow)
+
+Search for the root of the potential workspace if it meets the following conditions, otherwise it would fallback to `root`:
+
+- contains `workspaces` field in `package.json`
+- contains one of the following file
+  - `lerna.json`
+  - `pnpm-workspace.yaml`
+
+## `loadEnv`
+
+**Type Signature:**
+
+```ts
+function loadEnv(
+  mode: string,
+  envDir: string,
+  prefixes: string | string[] = 'VITE_'
+): Record<string, string>
+```
+
+**Related:** [`.env` Files](./env-and-mode.md#env-files)
+
+Load `.env` files within the `envDir`. By default only env variables prefixed with `VITE_` are loaded, unless `prefixes` is changed.
+
+## `normalizePath`
+
+**Type Signature:**
+
+```ts
+function normalizePath(id: string): string
+```
+
+**Related:** [Path Normalization](./api-plugin.md#path-normalization)
+
+Normalizes a path to interoperate between Vite plugins.
 
 ## `transformWithEsbuild`
 
@@ -206,3 +275,24 @@ async function transformWithEsbuild(
   inMap?: object
 ): Promise<ESBuildTransformResult>
 ```
+
+Transform JavaScript or TypeScript with esbuild. Useful for plugins that prefers matching Vite's internal esbuild transform.
+
+## `loadConfigFromFile`
+
+**Type Signature:**
+
+```ts
+async function loadConfigFromFile(
+  configEnv: ConfigEnv,
+  configFile?: string,
+  configRoot: string = process.cwd(),
+  logLevel?: LogLevel
+): Promise<{
+  path: string
+  config: UserConfig
+  dependencies: string[]
+} | null>
+```
+
+Load a Vite config file manually with esbuild.
