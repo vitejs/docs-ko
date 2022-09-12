@@ -4,7 +4,7 @@
 
 - **타입:** `string | string[]`
 - **기본값:** `'modules'`
-- **참고:** [브라우저 지원 현황](/guide/build#browser-compatibility)
+- **관련 항목:** [브라우저 지원 현황](/guide/build#browser-compatibility)
 
 최종 번들을 위한 브라우저 호환성 타깃입니다. 기본값은 Vite 특수 값으로, [네이티브 ES 모듈](https://caniuse.com/es6-module) 및 [네이티브 ESM의 동적 Import](https://caniuse.com/es6-module-dynamic-import)를 지원하는 브라우저 타깃으로 하는 `'module'` 입니다.
 
