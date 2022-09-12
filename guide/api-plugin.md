@@ -248,7 +248,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
 - **타입:** `(server: ViteDevServer) => (() => void) | void | Promise<(() => void) | void>`
 - **종류:** `async`, `sequential`
-- **참고:** [ViteDevServer](./api-javascript#vitedevserver)
+- **관련 항목:** [ViteDevServer](./api-javascript#vitedevserver)
 
   개발 서버를 구성하기 위한 훅입니다. 일반적으로 커스텀 미들웨어를 내부의 [connect](https://github.com/senchalabs/connect) 앱에 추가하기 위해 사용합니다:
 

@@ -193,7 +193,7 @@ export default defineConfig({
 
 미들웨어 모드로 Vite 서버를 생성합니다.
 
-- **참고:** [appType](./shared-options.md#apptype), [SSR - 개발 서버 구성하기](/guide/ssr#setting-up-the-dev-server)
+- **관련 항목:** [appType](./shared-options.md#apptype), [SSR - 개발 서버 구성하기](/guide/ssr#setting-up-the-dev-server)
 
 - **예제:**
 

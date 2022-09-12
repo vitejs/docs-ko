@@ -1,6 +1,6 @@
 # 디펜던시 최적화 옵션 {#dep-optimization-options}
 
-- **참고:** [사전 번들링된 디펜던시](/guide/dep-pre-bundling)
+- **관련 항목:** [사전 번들링된 디펜던시](/guide/dep-pre-bundling)
 
 ## optimizeDeps.entries {#optimizedeps-entries}
 

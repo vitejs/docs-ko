@@ -154,7 +154,7 @@ Vite 는 "허용되는 조건들"의 목록을 가지며 이것은 허용되는 
 
 이 설정을 활성화하면 Vite가 심볼릭 링크를 따르는 실제 파일 경로 대신, 심볼릭 링크를 따르지 않는 원래 파일 경로로 파일의 ID를 결정하게 됩니다.
 
-- **참고:** [esbuild#preserve-symlinks](https://esbuild.github.io/api/#preserve-symlinks), [webpack#resolve.symlinks](https://webpack.js.org/configuration/resolve/#resolvesymlinks)
+- **관련 항목:** [esbuild#preserve-symlinks](https://esbuild.github.io/api/#preserve-symlinks), [webpack#resolve.symlinks](https://webpack.js.org/configuration/resolve/#resolvesymlinks)
 
 ## css.modules {#css-modules}
 
@@ -270,7 +270,7 @@ esbuild 변환을 사용하지 않으려면 `false`로 설정하세요.
 ## assetsInclude {#assetsinclude}
 
 - **타입:** `string | RegExp | (string | RegExp)[]`
-- **참고:** [정적 에셋 가져오기](/guide/assets)
+- **관련 항목:** [정적 에셋 가져오기](/guide/assets)
 
 정적 에셋으로 처리할 추가 [picomatch 패턴](https://github.com/micromatch/picomatch#globbing-features)을 지정합니다:
 
