@@ -128,7 +128,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'lib/main.js'),
+      entry: resolve(__dirname, 'lib/main.js'),
       name: 'MyLib',
       // 적절한 확장자가 추가됩니다.
       fileName: 'my-lib'
