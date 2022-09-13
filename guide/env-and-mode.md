@@ -60,7 +60,7 @@ console.log(import.meta.env.VITE_SOME_KEY) // 123
 console.log(import.meta.env.DB_PASSWORD) // undefined
 ```
 
-만약 환경 변수에 대한 접미사(Prefix)를 커스터마이즈 하고자 한다면, [envPrefix](/config/index#envprefix) 옵션을 참고해주세요.
+만약 환경 변수에 대한 접미사(Prefix)를 커스터마이즈 하고자 한다면, [envPrefix](/config/shared-options.html#envprefix) 옵션을 참고해주세요.
 
 :::warning 보안 권고 사항
 - `.env.*.local` 파일은 오로지 로컬에서만 접근이 가능한 파일이며, 데이터베이스 비밀번호와 같은 민감한 정보를 이 곳에 저장하도록 합니다. 또한 `.gitignore` 파일에 `*.local` 파일을 명시해 Git에 체크인되는 것을 방지하도록 합니다.
