@@ -162,8 +162,8 @@ export { Foo, Bar }
 ```
 $ vite build
 building for production...
-[write] my-lib.mjs 0.08kb, brotli: 0.07kb
-[write] my-lib.umd.js 0.30kb, brotli: 0.16kb
+dist/my-lib.js      0.08 KiB / gzip: 0.07 KiB
+dist/my-lib.umd.cjs 0.30 KiB / gzip: 0.16 KiB
 ```
 
 `package.json`에는 아래와 같이 사용할 라이브러리를 명시해주세요.
@@ -171,17 +171,22 @@ building for production...
 ```json
 {
   "name": "my-lib",
+  "type": "module",
   "files": ["dist"],
-  "main": "./dist/my-lib.umd.js",
-  "module": "./dist/my-lib.mjs",
+  "main": "./dist/my-lib.umd.cjs",
+  "module": "./dist/my-lib.js",
   "exports": {
     ".": {
-      "import": "./dist/my-lib.mjs",
-      "require": "./dist/my-lib.umd.js"
+      "import": "./dist/my-lib.js",
+      "require": "./dist/my-lib.umd.cjs"
     }
   }
 }
 ```
+
+::: tip 참고
+`package.json`에 `"type": "module"`이 명시되어 있지 않으면 Vite는 Node.js 호환성을 위해 다른 파일 확장자를 생성합니다. 즉, `.js`는 `.mjs`가 되고, `.cjs`는 `.js`가 됩니다.
+:::
 
 ## Base 옵션 상세 설정 {#advanced-base-options}
 
