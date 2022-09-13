@@ -2,7 +2,7 @@
 
 ## 지원하는 Node.js 버전 {#node-support}
 
-Vite는 EOL(End-of-life)에 도달한 Node.js v12를 더 이상 지원하지 않습니다. Node.js 버전 14.18+ 이상을 사용해주세요.
+Vite는 EOL(End-of-life)에 도달한 Node.js 12 / 13 / 15 를 더 이상 지원하지 않습니다. Node.js 버전 14.18+ 또는 16+ 을 사용해주세요.
 
 ## 최신 브라우저 기준 변경 {#modern-browser-baseline-change}
 
