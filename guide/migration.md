@@ -105,7 +105,7 @@ export default {
 
 ### 빌드 시 esbuild 디펜던시 최적화 사용하기 {#using-esbuild-deps-optimization-at-build-time}
 
-Vite v3에서는 esbuild를 사용해 빌드 시 디펜던시를 최적화할 수 있습니다. 이를 활성화하면 Vite v2에 있었던 개발 버전과 프로덕션 버전 사이의 중요한 차이점 중 하나가 사라지게 됩니다. esbuild는 CJS 포맷의 디펜던시를 ESM으로 변환하기 때문에 [`@rollupjs/plugin-commonjs`](https://github.com/rollup/plugins/tree/master/packages/commonjs)는 더 이상 사용하지 않아도 됩니다.
+Vite v3에서는 esbuild를 사용해 빌드 시 디펜던시를 최적화할 수 있습니다. 이를 활성화하면 Vite v2에 있었던 개발 버전과 프로덕션 버전 사이의 중요한 차이점 중 하나가 사라지게 됩니다. esbuild는 CJS 포맷의 디펜던시를 ESM으로 변환하기 때문에 [`@rollup/plugin-commonjs`](https://github.com/rollup/plugins/tree/master/packages/commonjs)는 더 이상 사용하지 않아도 됩니다.
 
 이 빌드 방식을 사용하고자 한다면 `optimizeDeps.disabled` 옵션의 값을 `false`로 설정해주세요(v3의 기본값은 `disabled: 'build'` 입니다). `@rollup/plugin-commonjs`는 `build.commonjsOptions: { include: [] }`로 제거할 수 있습니다.
 
