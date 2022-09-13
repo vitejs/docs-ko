@@ -530,7 +530,10 @@ vite는 빌드 시 Direct Import 구문에 대해 `<link ref="modulepreload">` �
 
 빌드 시, 때때로 Rollup은 "공통(Common)" 청크 파일을 생성합니다. 보통 두 개 이상의 모듈에서 공유되는 청크가 이러한데, 이를 Dynamic Import를 이용해 불러오는 경우 다음과 같은 상황이 발생됩니다. (\* 브라우저는 `A`와 `B` 모듈을 필요로 하며(Dynamic Import), `A`와 `B` 모듈은 공통적으로 모듈 `C`를 필요로 하는 경우(Direct Import)입니다.)
 
-![graph](/images/graph.png)
+<script setup>
+import graphSvg from '../images/graph.svg?raw'
+</script>
+<svg-image :svg="graphSvg" />
 
 최적화되지 않은 경우, 먼저 비동기적으로 `A` 청크가 불러와지게 되고, `A` 청크가 모두 파싱된 후에서야 `C` 청크가 필요하다는 사실을 알게 되기에 다음과 같은 네트워크 왕복이 필요합니다.
 
