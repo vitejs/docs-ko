@@ -23,19 +23,6 @@ export default {
 vite --config my-config.js
 ```
 
-::: tip 참고
-Vite는 설정 파일과 해당 디펜던시에서 `__filename` 및 `__dirname`을 삽입합니다. 따라서 코드 파일 내 최상위 수준에서 이러한 이름의 변수를 선언하면 오류가 발생됩니다:
-
-```js
-const __filename = 'value' // SyntaxError: Identifier '__filename' has already been declared
-
-const func = () => {
-  const __filename = 'value' // no error
-}
-```
-
-:::
-
 ## 인텔리센스 설정 {#config-intellisense}
 
 Vite는 TypeScript 형식을 포함하고 있기 때문에, jsdoc 형식의 힌트를 통해 사용자 IDE의 인텔리센스를 활용할 수 있습니다:
