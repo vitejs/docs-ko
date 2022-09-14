@@ -96,6 +96,10 @@ declare const __APP_VERSION__: string
 
 더 자세한 해결책은 [플러그인](/guide/api-plugin)에서 찾아볼 수 있습니다.
 
+::: warning Using with SSR
+If you have configured aliases for [SSR externalized dependencies](/guide/ssr.md#ssr-externals), you may want to alias the actual `node_modules` packages. Both [Yarn](https://classic.yarnpkg.com/en/docs/cli/add/#toc-yarn-add-alias) and [pnpm](https://pnpm.js.org/en/aliases) support aliasing via the `npm:` prefix.
+:::
+
 ## resolve.dedupe {#resolve-dedupe}
 
 - **타입:** `string[]`
