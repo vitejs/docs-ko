@@ -61,7 +61,7 @@ SSR 앱을 빌드할 때, 메인 서버를 완전히 제어하고 Vite를 프로
 
 **server.js**
 
-```js{17-19}
+```js{14-17}
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
