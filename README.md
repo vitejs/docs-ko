@@ -107,6 +107,7 @@ Heading 마지막에 `{#custom-anchor-name}`와 같은 형태로 커스텀 앵�
    <a target="_blank" href="https://github.com/HaJunRyu"><img width="150" src="https://github.com/HaJunRyu.png" alt="HaJunRyu"></a>
    <a target="_blank" href="https://github.com/lwamuhaji"><img width="150" src="https://github.com/lwamuhaji.png" alt="lwamuhaji"></a>
    <a target="_blank" href="https://github.com/thilllon"><img width="150" src="https://github.com/thilllon.png" alt="thilllon"></a>
+   <a target="_blank" href="https://github.com/gyeongseokKang"><img width="150" src="https://github.com/gyeongseokKang.png" alt="gyeongseokKang"></a>
  </p>
 
  기여에 감사드립니다.
