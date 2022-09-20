@@ -6,7 +6,7 @@
   <img width="400" src="./docs/logo-white.png">
 </p>
 
-[![Deploy](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/deploy.yml) [![Sync](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/sync.yml/badge.svg)](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/sync.yml)
+[![Deploy](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/deploy.yml) [![Sync](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/sync.yml/badge.svg)](https://github.com/vitejs/vite/commits/main/docs)
 
 [ViteJS 공식 문서](https://vitejs.dev/) 한글 번역 목적의 리포지터리 입니다.
 
@@ -59,8 +59,8 @@ pnpm build
 
 1. 이 리포지터리의 우측 상단에 위치한 Fork 버튼을 눌러 자신의 계정으로 리포지터리를 복사해주세요.
 2. `git clone https://github.com/<계정명>/vitejs-kr.github.io` 명령을 통해 로컬로 Fork한 리포지터리를 복사해주세요.
-3. [Issues](https://github.com/vitejs-kr/vitejs-kr.github.io/issues)를 참고해 번역되지 못한 부분을 번역해주세요.
-4. 번역을 완료한 후, 자신의 번역 리포지터리로 커밋 및 `main` 브랜치로 PR을 생성해주세요.
+3. 수정이 필요한 부분을 변경해주세요.
+4. 커밋, 그리고 자신의 번역 리포지터리로 Push 후 `main` 브랜치로 PR을 생성해주세요.
 
 ### 커스텀 앵커(Anchor)
 
@@ -110,7 +110,7 @@ Heading 마지막에 `{#custom-anchor-name}`와 같은 형태로 커스텀 앵�
    <a target="_blank" href="https://github.com/gyeongseokKang"><img width="150" src="https://github.com/gyeongseokKang.png" alt="gyeongseokKang"></a>
  </p>
 
- 기여에 감사드립니다.
+기여에 감사드립니다.
 
 ## FAQ
 
