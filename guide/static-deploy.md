@@ -175,7 +175,7 @@ Vercel CLI
 
 ### Vercel for Git {#vercel-for-git}
 
-1. 사용하고 있는 Git 리포지터리(GitHub, GitLab, Bitbucket)으로 소스 코드를 Push 합니다.
+1. 사용하고 있는 Git 리포지토리(GitHub, GitLab, Bitbucket)으로 소스 코드를 Push 합니다.
 2. Vercel로 [Vite 프로젝트를 가져옵니다](https://vercel.com/new).
 3. Vercel은 Vite를 사용하고 있음을 감지하게 되며, 배포와 관련된 올바른 설정을 활성화합니다.
 4. 애플리케이션이 배포되었습니다! (예시: [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
@@ -211,7 +211,7 @@ $ npx wrangler pages publish dist
 
 ### Git을 이용한 Cloudflare Pages 배포 {#cloudflare-pages-with-git}
 
-1. Git 리포지터리(GitHub, GitLab)에 코드를 Push 합니다.
+1. Git 리포지토리(GitHub, GitLab)에 코드를 Push 합니다.
 2. Cloudflare 대시보드에 접속한 뒤 **Account Home** > **Pages** 에서 계정을 선택합니다.
 3. **Create a new Project** 및 **Connect Git** 옵션을 선택합니다.
 4. 배포할 Git 프로젝트를 선택하고 **Begin setup** 을 클릭합니다.
@@ -286,7 +286,7 @@ $ npx wrangler pages publish dist
    }
    ```
 
-   이러한 방식으로 배포될 사이트에 대한 설정이 가능합니다. 더 많은 정보가 필요하다면 [heroku-buildpack-static](https://github.com/heroku/heroku-buildpack-static) 리포지터리를 참고해주세요.
+   이러한 방식으로 배포될 사이트에 대한 설정이 가능합니다. 더 많은 정보가 필요하다면 [heroku-buildpack-static](https://github.com/heroku/heroku-buildpack-static) 리포지토리를 참고해주세요.
 
 5. Heroku Git remote를 설정해주세요.
 

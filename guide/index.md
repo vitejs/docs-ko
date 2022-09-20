@@ -131,7 +131,7 @@ Vite CLI와 함께 `--port`, `--https`와 같은 옵션을 사용할 수 있습�
 
 ## 릴리즈되지 않은 Vite 사용하기 {#using-unreleased-commits}
 
-만약 아직 릴리즈되지 않은 Vite를 사용하고자 한다면, 먼저 [Vite 리포지터리](https://github.com/vitejs/vite)를 로컬 컴퓨터로 클론한 뒤 이를 빌드해 사용하는 방법이 있습니다. ([PNPM](https://pnpm.io/)이 필요해요.)
+만약 아직 릴리즈되지 않은 Vite를 사용하고자 한다면, 먼저 [Vite 리포지토리](https://github.com/vitejs/vite)를 로컬 컴퓨터로 클론한 뒤 이를 빌드해 사용하는 방법이 있습니다. ([PNPM](https://pnpm.io/)이 필요해요.)
 
 ```bash
 git clone https://github.com/vitejs/vite.git
