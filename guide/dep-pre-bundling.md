@@ -40,7 +40,7 @@ Pre-bundling dependencies:
 
 ## 모노리포 디펜던시 {#monorepos-and-linked-dependencies}
 
-모노리포\* 프로젝트의 경우 디펜던시는 동일한 하나의 리포지토리에 연결된 패키지일 수 있습니다. Vite는 사용하는 디펜던시가 `node_modules`에 존재하지 않더라도 스스로 탐색하여 이를 소스 코드로 가져올 수 있지만, 이를 번들로 묶지는 않습니다. 그저 연결된 디펜던시 목록을 분석할 뿐이죠. (\* 모노리포는 두 개 이상의 리포지토리를 가지는 리포지토리입니다. 서로 관련된 리포지토리에 중복된 디펜던시가 많은 경우, 이를 하나로 통합하여 관리할 수 있다는 장점이 있습니다. 자세한 사항은 [Yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/)를 참고해주세요.)
+모노리포 프로젝트의 경우 디펜던시는 동일한 하나의 리포지토리에 연결된 패키지일 수 있습니다. Vite는 사용하는 디펜던시가 `node_modules`에 존재하지 않더라도 스스로 탐색하여 이를 소스 코드로 가져올 수 있지만, 이를 번들로 묶지는 않습니다. 그저 연결된 디펜던시 목록을 분석할 뿐이죠.
 
 이를 위해서는 연결된 디펜던시가 ESM 형태로 내보내져야 합니다. 만약 그렇지 않다면, 해당되는 디펜던시들을 [`optimizeDeps.include`](/config/dep-optimization-options.md#optimizedeps-include)와 [`build.commonjsOptions.include`](/config/build-options.md#build-commonjsoptions) 설정에 추가해주세요.
 
