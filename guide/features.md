@@ -91,6 +91,20 @@ vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 �
 - Vite를 통해 주입되는 `import.meta.env`에 명시된 [환경 변수](./env-and-mode#env-variables) 타입들
 - `import.meta.hot`에 명시된 [HMR API](./api-hmr) 타입들
 
+::: tip
+타입을 재정의하고자 한다면 트리플-슬래시 지시자(Triple-slash Reference) 앞에 선언해주세요. 가령, `*.svg`의 `default import`를 React 컴포넌트로 만들고자 한다면 아래와 같이 타입을 재정의할 수 있습니다:
+
+```ts
+declare module '*.svg' {
+  const content: React.FC<React.SVGProps<SVGElement>>
+  export default content
+}
+
+/// <reference types="vite/client" />
+```
+
+:::
+
 ## Vue {#vue}
 
 vite는 기본적으로 Vue를 지원하고 있습니다.
