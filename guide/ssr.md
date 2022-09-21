@@ -212,6 +212,8 @@ SSR을 실행할 때 디펜던시는 기본적으로 Vite의 SSR 변환 모듈 �
 
 만약 특정 디펜던시가 외부화를 수행하지 않기를 원한다면 [`ssr.noExternal`](../config/ssr-options.md#ssr-noexternal) 목록에 추가해주세요.
 
+연결된 디펜던시의 경우, 기본적으로 Vite의 HMR을 활용하기 위해 외부화되지 않습니다. 만약 테스트를 위해 디펜던시가 연결되지 않은 것처럼 구성하고자 한다면 [`ssr.external`](../config/ssr-options.md#ssr-external)에 디펜던시를 추가해주세요.
+
 :::warning 별칭을 사용하는 경우
 만약 어떤 하나의 패키지를 다른 패키지를 리다이렉트하는 별칭을 사용하는 경우, 외부화된 SSR 디펜던시에서도 사용할 수 있도록 `node_modules` 패키지에 별칭을 지정할 수 있습니다. [Yarn](https://classic.yarnpkg.com/en/docs/cli/add/#toc-yarn-add-alias)과 [pnpm](https://pnpm.js.org/en/aliases) 모두 `npm:` 접두사를 사용하여 별칭을 지정할 수 있습니다.
 :::
