@@ -75,3 +75,9 @@ TLS + HTTP/2를 활성화합니다. [`server.proxy`](./server-options#server-pro
 - **기본값:** [`server.cors`](./server-options#server-cors)
 
 프리뷰 서버에 대한 CORS를 구성합니다. 기본적으로 활성화 되어 있는 옵션이며, 모든 출처를 허용하고 있습니다. 이를 설정하기 위해서는 [옵션 객체](https://github.com/expressjs/cors)를 전달하고, 비활성화하고자 한다면 `false` 값으로 설정해주세요.
+
+## preview.headers {#preview-headers}
+
+- **타입:** `OutgoingHttpHeaders`
+
+서버 응답 헤더를 지정합니다.
