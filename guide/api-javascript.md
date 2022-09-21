@@ -91,6 +91,11 @@ interface ViteDevServer {
    */
   moduleGraph: ModuleGraph
   /**
+   * 확인된 URL은 Vite가 CLI로 출력합니다.
+   * 미들웨어 모드 또는 `server.listen`이 호출되기 전에는 null 값을 갖습니다.
+   */
+  resolvedUrls: ResolvedServerUrls | null
+  /**
    * 프로그래밍 방식으로 URL을 확인, 로드 및 변환하고 http 요청 파이프 라인을 
    * 거치지 않고도 결과를 얻을 수 있습니다.
    */
