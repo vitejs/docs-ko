@@ -331,3 +331,26 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 확장 프로그램을 통해 시작된 마법사를 따라 앱 이름을 지정하고, 프레임워크에 대한 사전 설정을 선택한 뒤, 앱 루트(일반적으로 `/`) 및 빌드된 파일 위치(`/dist`)를 지정해주세요. 마법사가 실행되며 `.github` 폴더의 저장소에 GitHub Actions가 구성됩니다.
 
 새로이 구성된 GitHub Action은 앱 배포 시 동작하며(GitHub의 Actions 탭에서 확인할 수 있어요), 성공적으로 완료되면 확장 프로그램의 진행률 창에서 제공되는 'Browse Website' 버튼으로 배포된 앱을 볼 수 있게 됩니다.
+
+## Render
+
+You can deploy your Vite app as a Static Site on [Render](https://render.com/).
+
+1. Create a [Render account](https://dashboard.render.com/register).
+
+2. In the [Dashboard](https://dashboard.render.com/), click the **New** button and select **Static Site**.
+
+3. Connect your GitHub/GitLab account or use a public repository.
+
+4. Specify a project name and branch.
+
+   - **Build Command**: `npm run build`
+   - **Publish Directory**: `dist`
+
+5. Click **Create Static Site**.
+
+   Your app should be deployed at `https://<PROJECTNAME>.onrender.com/`.
+
+By default, any new commit pushed to the specified branch will automatically trigger a new deploy. [Auto-Deploy](https://render.com/docs/deploys#toggling-auto-deploy-for-a-service) can be configured in the project settings.
+
+You can also add a [custom domain](https://render.com/docs/custom-domains) to your project.
