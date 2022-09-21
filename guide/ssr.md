@@ -258,7 +258,7 @@ Vite 2.7 이전에는 `options` 객체를 사용하는 대신 `ssr` 매개변수
 - 모든 디펜던시를 `noExternal`로 처리합니다.
 - Node.js 내장(Built-ins) 기능을 가져오면 오류가 발생됩니다.
 
-## Vite CLI #{vite-cli}
+## Vite CLI {#vite-cli}
 
 `$ vite dev` 및 `$ vite preview` CLI 명령도 SSR 애플리케이션에 대해 사용할 수 있습니다. SSR 미들웨어는 [`configureServer`](/guide/api-plugin#configureserver)를 사용해 개발 서버에, 그리고 [`configurePreviewServer`](/guide/api-plugin#configurepreviewserver)를 사용해 프리뷰 서버에 추가할 수 있습니다.
 
@@ -266,6 +266,6 @@ Vite 2.7 이전에는 `options` 객체를 사용하는 대신 `ssr` 매개변수
 SSR 미들웨어가 Vite 미들웨어 _이후에_ 실행되기를 원한다면 포스트 훅을 사용하세요.
 :::
 
-## SSR Format
+## SSR Format {#ssr-format}
 
 By default, Vite generates the SSR bundle in ESM. There is experimental support for configuring `ssr.format`, but it isn't recommended. Future efforts around SSR development will be based on ESM, and CommonJS remain available for backward compatibility. If using ESM for SSR isn't possible in your project, you can set `legacy.buildSsrCjsExternalHeuristics: true` to generate a CJS bundle using the same [externalization heuristics of Vite v2](https://v2.vitejs.dev/guide/ssr.html#ssr-externals).

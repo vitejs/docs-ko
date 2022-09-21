@@ -292,7 +292,7 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 
 새로이 구성된 GitHub Action은 앱 배포 시 동작하며(GitHub의 Actions 탭에서 확인할 수 있어요), 성공적으로 완료되면 확장 프로그램의 진행률 창에서 제공되는 'Browse Website' 버튼으로 배포된 앱을 볼 수 있게 됩니다.
 
-## Render
+## Render {#render}
 
 You can deploy your Vite app as a Static Site on [Render](https://render.com/).
 
