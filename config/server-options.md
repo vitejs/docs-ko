@@ -169,8 +169,6 @@ Direct websocket connection fallback. Check out https://vitejs-kr.github.io/conf
 
 [chokidar](https://github.com/paulmillr/chokidar#api)에 전달할 파일 시스템 감시자(Watcher) 옵션입니다.
 
-Windows Subsystem for Linux(WSL) 2에서 Vite를 실행하고, 그리고 프로젝트 폴더가 Windows 파일 시스템에 존재하는 경우, `{ usePolling: true }` 옵션을 설정해줘야 합니다. 이는 Windows 파일 시스템의 [WSL2 제한사항](https://github.com/microsoft/WSL/issues/4739)으로 인한 것입니다.
-
 Vite의 서버 감시자는 기본적으로 `.git/` 및 `node_modules/` 디렉터리를 건너뜁니다. 만약 `node_modules/` 내부의 패키지를 감시하고자 한다면, 다음과 같은 Glob 패턴을 `server.watch.ignored`에 전달하면 됩니다:
 
 ```js
@@ -187,6 +185,19 @@ export default defineConfig({
   }
 })
 ```
+
+::: warning Windows Subsystem for Linux (WSL) 2 에서 Vite 사용하기
+
+WSL2에서 Vite를 실행할 때, WSL2가 아닌 타 Windows 응용 프로그램에서 파일을 편집하면 파일 시스템 변경사항 감시 기능이 정상적으로 동작하지 않습니다. 이는 [WSL2 제한사항](https://github.com/microsoft/WSL/issues/4739)으로 인한 것이며, WSL2 백엔드가 존재하는 Docker에서 실행하는 경우에도 동일합니다.
+
+이를 해결하기 위해 아래 중 하나를 시도할 수 있습니다:
+
+- **권고 사항**: WSL2 응용 프로그램을 사용해 파일을 편집
+  - 또한 WSL2에서 Windows 파일 시스템에 접근하는 것은 느리기 때문에 프로젝트 폴더를 Windows 파일 시스템 외부로 이동시키는 것이 좋습니다. 이러한 오버헤드를 제거하면 성능이 향상됩니다.
+- `{ usePolling: true }` 로 설정
+  - 참고로 [`usePolling`은 CPU 사용률을 높입니다](https://github.com/paulmillr/chokidar#performance).
+
+:::
 
 ## server.middlewareMode {#server-middlewaremode}
 

@@ -193,3 +193,10 @@ gzip 압축 크기 보고를 활성화/비활성화합니다. 큰 출력 파일�
 - **기본값:** `null`
 
 Rollup 감시자를 사용하려면 `{}`로 설정하세요. 이는 대부분 빌드 전용 플러그인 또는 통합 프로세스를 포함하는 경우에 사용됩니다.
+
+::: warning Windows Subsystem for Linux (WSL) 2 에서 Vite 사용하기
+
+파일 시스템 변경사항 감시가 WSL2에서 동작하지 않는 경우가 있습니다.
+자세한 사항은 [`server.watch`](./server-options.md#server-watch)를 참고해주세요.
+
+:::
