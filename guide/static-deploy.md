@@ -278,60 +278,6 @@ $ npx wrangler pages publish dist
 
 물론, `surge dist yourdomain.com`과 같은 명령을 이용해 [커스텀 도메인](http://surge.sh/help/adding-a-custom-domain)으로 배포할 수도 있습니다.
 
-## Heroku {#heroku}
-
-1. [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)를 설치해주세요.
-
-2. [Heroku 가입 페이지](https://signup.heroku.com)에서 계정을 만들어주세요.
-
-3. `heroku login` 명령으로 Heroku에 로그인해주세요.
-
-   ```bash
-   $ heroku login
-   ```
-
-4. 아래와 같은 내용으로 `static.json` 파일을 프로젝트 루트에 생성해주세요.
-
-   `static.json`:
-
-   ```json
-   {
-     "root": "./dist"
-   }
-   ```
-
-   이러한 방식으로 배포될 사이트에 대한 설정이 가능합니다. 더 많은 정보가 필요하다면 [heroku-buildpack-static](https://github.com/heroku/heroku-buildpack-static) 리포지토리를 참고해주세요.
-
-5. Heroku Git remote를 설정해주세요.
-
-   ```bash
-   # 버전 갱신
-   $ git init
-   $ git add .
-   $ git commit -m "My site ready for deployment."
-
-   # 새로운 애플리케이션 생성
-   $ heroku apps:create example
-   ```
-
-6. 빌드팩을 설정합니다. `heroku/nodejs`를 사용해 프로젝트를 빌드하고 `heroku-buildpack-static`을 사용해 이를 제공합니다.
-
-   ```bash
-   # buildpack 설정
-   $ heroku buildpacks:set heroku/nodejs
-   $ heroku buildpacks:add https://github.com/heroku/heroku-buildpack-static.git
-   ```
-
-7. 마지막으로 아래 명령을 통해 사이트를 배포합니다:
-
-   ```bash
-   # 사이트 배포
-   $ git push heroku main
-   
-   # Heroku CI 대시보드 열기
-   $ heroku open
-   ```
-
 ## Azure 정적 웹 앱 {#azure-static-web-apps}
 
 마이크로소프트 Azure 클라우드 서비스의 [Static Web Apps](https://aka.ms/staticwebapps) 서비스를 이용해 빠르게 Vite 앱을 배포할 수 있습니다.
