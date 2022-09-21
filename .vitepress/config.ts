@@ -172,6 +172,10 @@ export default defineConfig({
               link: '/guide/comparisons'
             },
             {
+              text: '트러블슈팅',
+              link: '/guide/troubleshooting'
+            },
+            {
               text: 'v2에서 마이그레이션하기',
               link: '/guide/migration'
             },

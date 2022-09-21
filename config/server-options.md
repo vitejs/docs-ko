@@ -145,6 +145,8 @@ HMR 연결을 설정하거나 사용하지 않을 수 있습니다. (HMR 웹 소
 
 `server.hmr.server` 옵션이 정의되면 Vite는 제공된 서버를 통해 HMR 연결 요청을 처리합니다. 미들웨어 모드가 아니라면, Vite는 기존 서버를 통해 HMR 연결 요청을 처리합니다. 이는 자체적으로 서명된 인증서를 사용하거나 단일 포트의 네트워크를 통해 Vite를 제공하려는 경우 유용합니다.
 
+예제는 [`vite-setup-catalogue`](https://github.com/sapphi-red/vite-setup-catalogue)를 참고해주세요.
+
 ::: tip 참고
 
 기본적으로 Vite는 리버스 프록시가 WebSocket 프록시를 지원한다고 가정하고 동작합니다. 만약 Vite HMR 클라이언트가 WebSocket 연결에 실패하게 되면, 클라이언트는 리버스 프록시 대신 WebSocket을 Vite HMR 서버에 직접 연결합니다:
