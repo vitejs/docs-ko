@@ -53,8 +53,10 @@ import 'vite/modulepreload-polyfill'
 
 이 값보다 작은 크기로 import 되거나 참조된 에셋은 부가적인 http 요청을 피하고자 base64 URL로 인라인 처리됩니다. 만일 인라인 변환을 사용하지 않으려면 `0`으로 설정하세요.
 
+Git LFS(Large File Storage) 자리 표시자(Placeholder)는 해당 파일의 내용을 포함하고 있지 않기에 인라인에서는 자동으로 제외됩니다.
+
 ::: tip 참고
-`build.lib`를 지정하면, `build.assetsInlineLimit`는 무시되며 파일 크기와 관계없이 에셋이 항상 인라인 처리됩니다.
+`build.lib`를 지정하면 `build.assetsInlineLimit`는 무시되며 파일 크기나 Git LFS 자리 표시자와 관계없이 에셋이 항상 인라인 처리됩니다.
 :::
 
 ## build.cssCodeSplit {#build-csscodesplit}
