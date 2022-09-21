@@ -210,7 +210,7 @@ const html = await vueServerRenderer.renderToString(app, ctx)
 
 SSR을 실행할 때 디펜던시는 기본적으로 Vite의 SSR 변환 모듈 시스템에서 "외부화(Externalized)"됩니다. 이는 개발 및 빌드 속도를 모두 향상시킵니다.
 
-만약 특정 디펜던시가 외부화를 수행하지 않기를 원한다면 [`ssr.noExternal`](../config/ssr-options.md#ssrnoexternal) 목록에 추가해주세요.
+만약 특정 디펜던시가 외부화를 수행하지 않기를 원한다면 [`ssr.noExternal`](../config/ssr-options.md#ssr-noexternal) 목록에 추가해주세요.
 
 :::warning 별칭을 사용하는 경우
 만약 어떤 하나의 패키지를 다른 패키지를 리다이렉트하는 별칭을 사용하는 경우, 외부화된 SSR 디펜던시에서도 사용할 수 있도록 `node_modules` 패키지에 별칭을 지정할 수 있습니다. [Yarn](https://classic.yarnpkg.com/en/docs/cli/add/#toc-yarn-add-alias)과 [pnpm](https://pnpm.js.org/en/aliases) 모두 `npm:` 접두사를 사용하여 별칭을 지정할 수 있습니다.
@@ -266,4 +266,4 @@ SSR 미들웨어가 Vite 미들웨어 _이후에_ 실행되기를 원한다면 �
 
 ## SSR Format
 
-By default, Vite generates the SSR bundle in ESM. There is experimental support for configuring `ssr.format`, but it isn't recommended. Future efforts around SSR development will be based on ESM, and commonjs remain available for backward compatibility. If using ESM for SSR isn't possible in your project, you can set `legacy.buildSsrCjsExternalHeuristics: true` to generate a CJS bundle using the same [externalization heuristics of Vite v2](https://vitejs-kr.github.io/guide/ssr.html#ssr-externals).
+By default, Vite generates the SSR bundle in ESM. There is experimental support for configuring `ssr.format`, but it isn't recommended. Future efforts around SSR development will be based on ESM, and CommonJS remain available for backward compatibility. If using ESM for SSR isn't possible in your project, you can set `legacy.buildSsrCjsExternalHeuristics: true` to generate a CJS bundle using the same [externalization heuristics of Vite v2](https://v2.vitejs.dev/guide/ssr.html#ssr-externals).

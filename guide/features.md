@@ -111,8 +111,9 @@ vite는 기본적으로 Vue를 지원하고 있습니다.
 
 - Vue 3 SFC: [@vitejs/plugin-vue](https://github.com/vitejs/vite/tree/main/packages/plugin-vue)
 - Vue 3 JSX: [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx)
-- Vue 2.7: [vitejs/vite-plugin-vue2](https://github.com/vitejs/vite-plugin-vue2)
-- Vue <2.7: [underfin/vite-plugin-vue2](https://github.com/underfin/vite-plugin-vue2)
+- Vue 2.7: [@vitejs/plugin-vue2](https://github.com/vitejs/vite-plugin-vue2)
+- Vue <2.7: [vite-plugin-vue2](https://github.com/underfin/vite-plugin-vue2)
+
 
 ## JSX {#jsx}
 
