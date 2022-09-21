@@ -65,7 +65,7 @@ TLS + HTTP/2를 활성화합니다. [`server.proxy`](./server-options#server-pro
 - **타입:** `Record<string, string | ProxyOptions>`
 - **기본값:** [`server.proxy`](./server-options#server-proxy)
 
-개발 서버에 대한 사용자 지정 프록시 규칙을 설정할 수 있습니다. `{ key: options }` 형태로 구성되며, 키값이 `^`로 시작하는 경우 `RegExp`로 해석됩니다. `configure` 옵션을 사용하여 프록시 인스턴스에 접근할 수 있습니다.
+프리뷰 서버에 대한 사용자 지정 프록시 규칙을 설정할 수 있습니다. `{ key: options }` 형태로 구성되며, 키값이 `^`로 시작하는 경우 `RegExp`로 해석됩니다. `configure` 옵션을 사용하여 프록시 인스턴스에 접근할 수 있습니다.
 
 이는 [`http-proxy`](https://github.com/http-party/node-http-proxy)를 사용하며, 더 많은 옵션은 [이 링크](https://github.com/http-party/node-http-proxy#options)를 참고해주세요.
 
@@ -74,4 +74,4 @@ TLS + HTTP/2를 활성화합니다. [`server.proxy`](./server-options#server-pro
 - **타입:** `boolean | CorsOptions`
 - **기본값:** [`server.cors`](./server-options#server-cors)
 
-개발 서버에 대한 CORS를 구성합니다. 기본적으로 활성화 되어 있는 옵션이며, 모든 출처를 허용하고 있습니다. 이를 설정하기 위해서는 [옵션 객체](https://github.com/expressjs/cors)를 전달하고, 비활성화하고자 한다면 `false` 값으로 설정해주세요.
+프리뷰 서버에 대한 CORS를 구성합니다. 기본적으로 활성화 되어 있는 옵션이며, 모든 출처를 허용하고 있습니다. 이를 설정하기 위해서는 [옵션 객체](https://github.com/expressjs/cors)를 전달하고, 비활성화하고자 한다면 `false` 값으로 설정해주세요.
