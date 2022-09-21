@@ -135,6 +135,8 @@ $ npm run preview
 
 ## Netlify {#netlify}
 
+### Netlify CLI {#netlify-cli}
+
 1. [Netlify CLI](https://cli.netlify.com/)를 설치해주세요.
 2. `ntl init` 또는 `netlify init` 명령으로 새로운 사이트를 생성해주세요.
 3. 이제 `ntl deploy` 명령으로 배포할 수 있습니다.
@@ -156,6 +158,18 @@ $ ntl deploy
 # 프로덕션으로 배포
 $ ntl deploy --prod
 ```
+
+### Netlify with Git {#netlify-with-git}
+
+1. 코드를 Git 리포지토리(GitHub, GitLab, BitBucket, Azure DevOps)에 Push 해주세요.
+2. Netlify에서 [프로젝트를 불러와주세요](https://app.netlify.com/start).
+3. 배포될 브랜치를 선택하고, 빌드 결과물이 들어갈 디렉터리와 필요하다면 환경 변수를 설정해주세요.
+4. **Deploy** 를 클릭해주세요.
+5. Vite 앱이 배포되었습니다!
+
+After your project has been imported and deployed, all subsequent pushes to branches other than the production branch along with pull requests will generate [Preview Deployments](https://docs.netlify.com/site-deploys/deploy-previews/), and all changes made to the Production Branch (commonly “main”) will result in a [Production Deployment](https://docs.netlify.com/site-deploys/overview/#definitions).
+
+프로젝트를 가져와 배포한 후, Pull Request와 배포용 브랜치가 아닌 다른 모든 브랜치에 새로이 Push되는 내용에 대해서는 [프리뷰 버전 배포 환경](https://docs.netlify.com/site-deploys/deploy-previews/)이 구성되며, 배포용 브랜치(일반적으로 "main")에 대한 변경 사항은 [프로덕션 버전으로 배포됩니다](https://docs.netlify.com/site-deploys/overview/#definitions).
 
 ## Vercel {#vercel}
 
