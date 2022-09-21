@@ -19,6 +19,7 @@ export default defineConfig({
     ['meta', { property: 'og:description', content: ogDescription }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:site', content: '@vite_js' }],
+    ['meta', { name: 'theme-color', content: '#646cff' }],
     [
       'script',
       { src: 'https://www.googletagmanager.com/gtag/js?id=G-V8ZS1G7X21' }
