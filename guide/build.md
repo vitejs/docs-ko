@@ -209,15 +209,11 @@ dist/my-lib.umd.cjs 0.30 KiB / gzip: 0.16 KiB
 
 ```js
 experimental: {
-  renderBuiltUrl(filename: string, { hostType: 'js' | 'css' | 'html', type: 'public' | 'asset' }) {
-    if (type === 'public') {
-      return 'https://www.domain.com/' + filename
-    }
-    else if (path.extname(importer) === '.js') {
-      return { runtime: `window.__assetsPath(${JSON.stringify(filename)})` }
-    }
-    else {
-      return 'https://cdn.domain.com/assets/' + filename
+  renderBuiltUrl(filename: string, { hostType }: { hostType: 'js' | 'css' | 'html' }) {
+    if (hostType === 'js') {
+      return { runtime: `window.__toCdnUrl(${JSON.stringify(filename)})` }
+    } else {
+      return { relative: true }
     }
   }
 }
@@ -226,17 +222,17 @@ experimental: {
 해시된 에셋과 Public 디렉터리 내 파일이 함께 배포되지 않은 경우, 함수에 전달된 세 번째 `context` 매개변수에 포함된 에셋의 `type` 프로퍼티를 이용해 각 그룹에 대한 동작을 독립적으로 정의할 수 있습니다.
 
 ```js
-  experimental: {
-    renderBuiltUrl(filename: string, { hostType: 'js' | 'css' | 'html', type: 'public' | 'asset' }) {
-      if (type === 'public') {
-        return 'https://www.domain.com/' + filename
-      }
-      else if (path.extname(importer) === '.js') {
-        return { runtime: `window.__assetsPath(${JSON.stringify(filename)})` }
-      }
-      else {
-        return 'https://cdn.domain.com/assets/' + filename
-      }
+experimental: {
+  renderBuiltUrl(filename: string, { hostId, hostType, type }: { hostId: string, hostType: 'js' | 'css' | 'html', type: 'public' | 'asset' }) {
+    if (type === 'public') {
+      return 'https://www.domain.com/' + filename
+    }
+    else if (path.extname(hostId) === '.js') {
+      return { runtime: `window.__assetsPath(${JSON.stringify(filename)})` }
+    }
+    else {
+      return 'https://cdn.domain.com/assets/' + filename
     }
   }
+}
 ```
