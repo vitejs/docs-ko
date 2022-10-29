@@ -144,6 +144,16 @@ Vite 는 "허용되는 조건들"의 목록을 가지며 이것은 허용되는 
 
 패키지의 진입점을 확인할 때 시도할 `package.json`안의 필드 목록입니다. 이것은 `exports` 필드에서 처리되는 조건부 내보내기보다 우선순위가 낮습니다: 만약 진입점이 `exports`로부터 성공적으로 확인되면, 메인 필드는 무시될 것입니다.
 
+## resolve.browserField {#resolve-browserfield}
+
+- **타입:** `boolean`
+- **기본값:** `true`
+- **사용되지 않음**
+
+`package.json` 파일의 `browser` 필드를 사용할지 여부를 나타냅니다.
+
+향후 `resolve.mainFields`의 기본값은 `['browser', 'module', 'jsnext:main', 'jsnext']`가 될 것이며, 이 옵션은 제거됩니다.
+
 ## resolve.extensions {#resolve-extensions}
 
 - **타입:** `string[]`
