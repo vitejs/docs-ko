@@ -37,7 +37,7 @@ export default defineConfig({
 ## server.port {#server-port}
 
 - **타입:** `number`
-- **기본값**: `5173`
+- **기본값:** `5173`
 
 서버 포트를 지정합니다. 포트가 이미 사용 중이라면, Vite는 자동으로 사용 가능한 다음 포트를 시도할 것이므로, 결과적으로 이 포트 번호가 서버의 수신 포트가 되지 않을 수도 있습니다.
 
@@ -192,7 +192,7 @@ WSL2에서 Vite를 실행할 때, WSL2가 아닌 타 Windows 응용 프로그램
 
 이를 해결하기 위해 아래 중 하나를 시도할 수 있습니다:
 
-- **권고 사항**: WSL2 응용 프로그램을 사용해 파일을 편집
+- **권고 사항:** WSL2 응용 프로그램을 사용해 파일을 편집
   - 또한 WSL2에서 Windows 파일 시스템에 접근하는 것은 느리기 때문에 프로젝트 폴더를 Windows 파일 시스템 외부로 이동시키는 것이 좋습니다. 이러한 오버헤드를 제거하면 성능이 향상됩니다.
 - `{ usePolling: true }` 로 설정
   - 참고로 [`usePolling`은 CPU 사용률을 높입니다](https://github.com/paulmillr/chokidar#performance).
@@ -298,11 +298,10 @@ export default defineConfig({
 
 ## server.fs.deny {#server-fs-deny}
 
-- **타입**: `string[]`
+- **타입:** `string[]`
+- **기본값:** `['.env', '.env.*', '*.{pem,crt}']`
 
-Vite dev 서버에서 제공되지 않기를 원하는 민감한 파일들에 대한 차단 목록입니다.
-
-기본적으로 `['.env', '.env.*', '*.{pem,crt}']` 파일들이 들어가 있습니다.
+Vite dev 서버에서 제공되지 않기를 원하는 민감한 파일들에 대한 차단 목록입니다. 이 옵션은 [`server.fs.allow`](#server-fs-allow)보다 높은 우선 순위를 가지며, [피코매치 패턴](https://github.com/micromatch/picomatch#globbing-features)을 사용할 수 있습니다.
 
 ## server.origin {#server-origin}
 
