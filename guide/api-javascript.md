@@ -119,6 +119,11 @@ interface ViteDevServer {
    */
   ssrFixStacktrace(e: Error): void
   /**
+   * 모듈 그래프의 모듈에 대한 HMR을 트리거합니다. `server.moduleGraph` API를 사용하여 다시 로드할 모듈을 검색할 수 있습니다.
+   * `hmr`이 false이면 아무것도 하지 않습니다.
+   */
+  reloadModule(module: ModuleNode): Promise<void>
+  /**
    * 서버 시작하기.
    */
   listen(port?: number, isRestart?: boolean): Promise<ViteDevServer>
