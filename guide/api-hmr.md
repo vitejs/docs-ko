@@ -125,7 +125,18 @@ if (import.meta.hot) {
 
 ## `hot.invalidate()` {#hot-invalidate}
 
-`import.meta.hot.invalidate()`를 호출하면 페이지가 리로드가 됩니다.
+A self-accepting module may realize during runtime that it can't handle a HMR update, and so the update needs to be forcefully propagated to importers. By calling `import.meta.hot.invalidate()`, the HMR server will invalidate the importers of the caller, as if the caller wasn't self-accepting.
+
+Note that you should always call `import.meta.hot.accept` even if you plan to call `invalidate` immediately afterwards, or else the HMR client won't listen for future changes to the self-accepting module. To communicate your intent clearly, we recommend calling `invalidate` within the `accept` callback like so:
+
+    ```ts
+    import.meta.hot.accept(module => {
+      // You may use the new module instance to decide whether to invalidate.
+      if (cannotHandleUpdate(module)) {
+        import.meta.hot.invalidate()
+      }
+    })
+    ```
 
 ## `hot.on(event, cb)` {#hot-on-event-cb}
 
@@ -136,6 +147,7 @@ HMR 이벤트에 대한 핸들러를 정의합니다.
 - `'vite:beforeUpdate'`은 변경이 적용되기 전에 호출됩니다. (e.g. 모듈이 변경될 예정일 때)
 - `'vite:beforeFullReload'`은 전체 리로드가 일어나기 전에 호출됩니다.
 - `'vite:beforePrune'`은 모듈들이 필요가 없어져서 제거될 때 호출됩니다.
+- `'vite:invalidate'` when a module is invalidated with `import.meta.hot.invalidate()`
 - `'vite:error'`은 에러가 일어났을 때 호출됩니다. (e.g. syntax error)
 
 플러그인들로부터 새로운 HMR 이벤트들을 보낼 수 있습니다. 더 많은 정보는 [handleHotUpdate](./api-plugin#handlehotupdate)를 참고해 주세요.
