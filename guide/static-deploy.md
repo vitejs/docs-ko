@@ -87,7 +87,7 @@ $ npm run preview
    # echo 'www.example.com' > CNAME
 
    git init
-   git checkout -b main
+   git checkout -B main
    git add -A
    git commit -m 'deploy'
 
