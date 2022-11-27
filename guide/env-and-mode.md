@@ -60,7 +60,18 @@ console.log(import.meta.env.VITE_SOME_KEY) // 123
 console.log(import.meta.env.DB_PASSWORD) // undefined
 ```
 
-만약 환경 변수에 대한 접미사(Prefix)를 커스터마이즈 하고자 한다면, [envPrefix](/config/shared-options.html#envprefix) 옵션을 참고해주세요.
+또한 Vite는 [dotenv-expand](https://github.com/motdotla/dotenv-expand)를 사용해 기본적으로 환경 변수를 확장합니다. 문법에 대해 더 알아보고 싶다면 [이 문서](https://github.com/motdotla/dotenv-expand#what-rules-does-the-expansion-engine-follow)를 참고하세요.
+
+참고로 만약 환경 변수의 값에 `$`를 사용하고 싶다면 `\`를 사용해야 합니다.
+
+```
+KEY=123
+NEW_KEY1=test$foo   # test
+NEW_KEY2=test\$foo  # test$foo
+NEW_KEY3=test$KEY   # test123
+```
+
+환경 변수에 대한 접미사(Prefix)를 커스터마이즈 하고자 한다면, [envPrefix](/config/shared-options.html#envprefix) 옵션을 참고해주세요.
 
 :::warning 보안 권고 사항
 - `.env.*.local` 파일은 오로지 로컬에서만 접근이 가능한 파일이며, 데이터베이스 비밀번호와 같은 민감한 정보를 이 곳에 저장하도록 합니다. 또한 `.gitignore` 파일에 `*.local` 파일을 명시해 Git에 체크인되는 것을 방지하도록 합니다.
