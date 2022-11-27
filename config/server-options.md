@@ -77,7 +77,9 @@ export default defineConfig({
 
 - **타입:** `Record<string, string | ProxyOptions>`
 
-개발 서버를 위한 사용자 지정 프록시 규칙을 설정합니다. `{ key: options }` 페어의 객체 형식입니다. 키가 `^`로 시작하면, `RegExp`로 해석됩니다. `configure` 옵션을 사용하여 프록시 인스턴스에 접근할 수 있습니다.
+개발 서버에 대한 사용자 정의 프록시 규칙을 구성합니다. `{ key: options }` 쌍의 객체를 기대합니다. 요청 경로가 해당 키로 시작하는 모든 요청은 해당 지정 대상으로 프록시됩니다. 키가 `^`로 시작하면 `RegExp`로 해석됩니다. `configure` 옵션은 프록시 인스턴스에 액세스하는 데 사용할 수 있습니다.
+
+참고로 [`base`](/config/shared-options.md#base)가 비상대적(Non-relative)인 경우, 각 키에 `base`를 접두사로 붙여야 합니다.
 
 [`http-proxy`](https://github.com/http-party/node-http-proxy)를 사용하며, 전체 옵션은 [여기](https://github.com/http-party/node-http-proxy#options)를 확인해주세요.
 
@@ -89,15 +91,15 @@ export default defineConfig({
 export default defineConfig({
   server: {
     proxy: {
-      // 문자열만
+      // 문자열만: http://localhost:5173/foo -> http://localhost:4567/foo
       '/foo': 'http://localhost:4567',
-      // 옵션과 함께
+      // 옵션과 함께: http://localhost:5173/api/bar-> http://jsonplaceholder.typicode.com/bar
       '/api': {
         target: 'http://jsonplaceholder.typicode.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       },
-      // 정규식(RegEx)과 함께
+      // 정규식(RegEx)과 함께: http://localhost:5173/fallback/ -> http://jsonplaceholder.typicode.com/
       '^/fallback/.*': {
         target: 'http://jsonplaceholder.typicode.com',
         changeOrigin: true,
@@ -111,9 +113,9 @@ export default defineConfig({
           // proxy 변수에는 'http-proxy'의 인스턴스가 전달됩니다
         }
       },
-      // 웹소켓 또는 socket.io 프록시
+      // 웹소켓 또는 socket.io 프록시: ws://localhost:5173/socket.io -> ws://localhost:5174/socket.io
       '/socket.io': {
-        target: 'ws://localhost:5173',
+        target: 'ws://localhost:5174',
         ws: true
       }
     }
