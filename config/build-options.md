@@ -209,6 +209,14 @@ Terser로 전달할 추가적인 [경량화 옵션](https://terser.org/docs/api-
 
 기본적으로 Vite는 `outDir`이 프로젝트 루트 내부에 있는 경우 빌드할 때 이 곳을 비웁니다. `outDir`가 루트 외부에 있으면 실수로 중요한 파일을 제거하지 않도록 경고 메시지가 표시됩니다. 경고를 표시하지 않도록 이 옵션을 명시적으로 설정할 수 있습니다. 명령 줄에서는 `--emptyOutDir`로 이를 사용할 수 있습니다.
 
+## build.copyPublicDir {#build-copypublicdir}
+
+- **실험적 기능**
+- **타입:** `boolean`
+- **기본값:** `true`
+
+기본적으로 Vite는 빌드할 때 `publicDir`에서 `outDir`로 파일을 복사합니다. 이를 비활성화하려면 `false`로 설정하세요.
+
 ## build.reportCompressedSize {#build-reportcompressedsize}
 
 - **타입:** `boolean`
