@@ -148,7 +148,7 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 - **타입:** `{ entry: string | string[] | { [entryAlias: string]: string }, name?: string, formats?: ('es' | 'cjs' | 'umd' | 'iife')[], fileName?: string | ((format: ModuleFormat, entryName: string) => string) }`
 - **관련 항목:** [라이브러리 모드](/guide/build#library-mode)
 
-라이브러리로 빌드합니다. 라이브러리에서 HTML을 진입점으로 사용할 수 없으므로, `entry`가 필요합니다. `name`은 노출된 전역 변수이며 `formats`가 `'umd'` 또는 `'iife'` 일 때 필요합니다. 기본 `formats`는 `['es', 'umd']` 입니다. `fileName`은 패키지 파일 출력의 이름이며, 기본값은 package.json 파일의 name 옵션입니다. 이는 `format`과 `entryAlias`를 인수로 취하는 함수로도 정의될 수 있습니다.
+라이브러리로 빌드합니다. 라이브러리에서 HTML을 진입점으로 사용할 수 없으므로, `entry`가 필요합니다. `name`은 노출된 전역 변수이며 `formats`가 `'umd'` 또는 `'iife'` 일 때 필요합니다. `formats`의 기본값은 `['es', 'umd']` 이나, 여러 `entry`가 존재하는 경우라면 `['es', 'cjs']`가 됩니다. `fileName`은 패키지 파일 출력의 이름이며, 기본값은 package.json 파일의 name 옵션입니다. 이는 `format`과 `entryAlias`를 인수로 취하는 함수로도 정의될 수 있습니다.
 
 ## build.manifest {#build-manifest}
 
