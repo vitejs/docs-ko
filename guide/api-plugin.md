@@ -595,21 +595,12 @@ export default defineConfig({
 
 ```ts
 // events.d.ts
-import 'vite'
-import 'vite/client/types'
+import 'vite/types/customEvent'
 
-interface MyCustomEventMap {
-  'custom:foo': { msg: string }
-  // 'event-key': payload
-}
-
-// 서버 측 렌더링을 위한 인터페이스 확장
-declare module 'vite' {
-  interface CustomEventMap extends MyCustomEventMap {}
-}
-
-// 클라이언트 측 렌더링을 위한 인터페이스 확장
-declare module 'vite/client/types' {
-  interface CustomEventMap extends MyCustomEventMap {}
+declare module 'vite/types/customEvent' {
+  interface CustomEventMap {
+    'custom:foo': { msg: string }
+    // 'event-key': payload
+  }
 }
 ```
