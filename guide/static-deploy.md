@@ -68,7 +68,7 @@ $ npm run preview
 
 2. 프로젝트의 루트에 아래와 같은 내용이 들어간 `deploy.sh` 파일을 생성 및 실행해주세요(하이라이트 된 라인은 필요에 따라 주석 처리를 풀어주세요).
 
-   ```bash{13,21,24}
+   ```bash{16,24,27}
    #!/usr/bin/env sh
 
    # 에러가 발생될 경우 스크립트 실행을 중지
@@ -79,6 +79,9 @@ $ npm run preview
 
    # 빌드된 파일이 존재하는 dist 디렉터리로 이동
    cd dist
+
+   # Jekyll 처리를 우회하기 위해 .nojekyll 파일 생성
+   echo > .nojekyll
 
    # CNAME 파일을 이용해 커스텀 도메인을 지정할 수도 있습니다.
    # echo 'www.example.com' > CNAME
