@@ -306,7 +306,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
 ### `configurePreviewServer` {#configurepreviewserver}
 
-- **타입:** `(server: { middlewares: Connect.Server, httpServer: http.Server | Http2SecureServer }) => (() => void) | void | Promise<(() => void) | void>`
+- **타입:** `(server: { middlewares: Connect.Server, httpServer: http.Server }) => (() => void) | void | Promise<(() => void) | void>`
 - **종류:** `async`, `sequential`
 
   [`configureServer`](/guide/api-plugin.html#configureserver)와 동일하지만, 프리뷰 서버를 위한 설정입니다. [connect](https://github.com/senchalabs/connect) 서버와 그 기반이 되는 [http server](https://nodejs.org/api/http.html)를 제공하며, `configureServer`와 유사하게 이 훅도 다른 미들웨어가 설치되기 전 호출됩니다. 또한 이 훅 내부에서 설치하는 미들웨어가 다른 미들웨어 **이후에** 위치하기를 원한다면, 이 역시 함수를 반환하는 형태로 구성해주세요:

@@ -72,7 +72,7 @@ interface ViteDevServer {
    * Native Node http 서버 인스턴스.
    * middleware 모드에서는 null이 됩니다.
    */
-  httpServer: http.Server | Http2SecureServer | null
+  httpServer: http.Server | null
   /**
    * Chokidar watcher 인스턴스.
    * https://github.com/paulmillr/chokidar#api
