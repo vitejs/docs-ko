@@ -19,7 +19,7 @@ SSR은 동일한 전체 사이트를 Node.js에서 동작시키고, 이를 HTML�
 Vite는 서버 측 렌더링(SSR, Server-side Rendering)을 기본적으로 지원합니다. Vite 플레이그라운드에서는 SSR 설정에 대한 Vue 3 및 React 예제를 제공하고 있으며, 이를 참고할 수 있습니다.
 
 - [Vue 3](https://github.com/vitejs/vite-plugin-vue/tree/main/playground/ssr-vue)
-- [React](https://github.com/vitejs/vite-plugin-vue/tree/main/playground/ssr-react)
+- [React](https://github.com/vitejs/vite-plugin-react/tree/main/playground/ssr-react)
 
 ## 프로젝트 구조 {#source-structure}
 
