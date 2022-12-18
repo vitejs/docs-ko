@@ -184,6 +184,28 @@ dist/my-lib.umd.cjs 0.30 KiB / gzip: 0.16 KiB
 }
 ```
 
+여러 진입점을 노출하는 경우는 아래와 같습니다:
+
+```json
+{
+  "name": "my-lib",
+  "type": "module",
+  "files": ["dist"],
+  "main": "./dist/my-lib.cjs",
+  "module": "./dist/my-lib.js",
+  "exports": {
+    ".": {
+      "import": "./dist/my-lib.js",
+      "require": "./dist/my-lib.cjs"
+    },
+    "./secondary": {
+      "import": "./dist/secondary.js",
+      "require": "./dist/secondary.cjs"
+    }
+  }
+}
+```
+
 ::: tip 참고
 `package.json`에 `"type": "module"`이 명시되어 있지 않으면 Vite는 Node.js 호환성을 위해 다른 파일 확장자를 생성합니다. 즉, `.js`는 `.mjs`가 되고, `.cjs`는 `.js`가 됩니다.
 :::
