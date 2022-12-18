@@ -242,7 +242,7 @@ createServer()
 
 - **타입:** `string | undefined`
 
-Vite를 하위 디렉터리로 프록시하기 위해 이 디렉터리를 http 요청 앞에 추가합니다. 시작과 끝이 모두 `/` 문자여야 합니다.
+Vite를 하위 디렉터리로 프록시하기 위해 이 디렉터리를 http 요청 앞에 추가합니다. `/` 문자로 시작해야 합니다.
 
 ## server.fs.strict {#server-fs-strict}
 
