@@ -10,7 +10,7 @@
 
 - Chrome >=87
 - Firefox >=78
-- Safari >=13
+- Safari >=14
 - Edge >=88
 
 만약 JavaScript 타깃을 지정하고자 한다면, [`build.target` 설정](/config/build-options.md#build-target)을 이용해주세요. 다만 버전은 최소한 `es2015` 이상이어야 합니다.
