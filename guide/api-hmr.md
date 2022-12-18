@@ -93,7 +93,8 @@ if (import.meta.hot) {
   import.meta.hot.accept(
     ['./foo.js', './bar.js'],
     ([newFooModule, newBarModule]) => {
-      // 콜백으로 변경된 모듈들을 어레이로 받을 수 있습니다.
+      // 콜백은 업데이트된 모듈의 배열을 전달받습니다. 이 때 모듈은 null 값을 가질 수 없
+      // 업데이트가 성공적이지 않다면 (예를 들어, 문법 에러), 배열은 비어있습니다.
     }
   )
 }
