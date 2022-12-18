@@ -37,19 +37,19 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url))
 `createServer`와 `build`는 `mode` 설정 옵션과 `process.env.`<wbr>`NODE_ENV`에 의존해 관련 동작을 수행합니다. 따라서 동일한 Node.js 프로세스에서 이 두 함수를 사용하는 경우 충돌이 발생될 수 있으며, 이를 방지하고자 한다면 두 API의 `process.env.`<wbr>`NODE_ENV` 또는 `mode` 설정 옵션을 `development`로 설정하세요. 아니면 하위 프로세스를 만들어 API를 각각 실행하는 방법도 있습니다.
 :::
 
-## `InlineConfig` {#inline-config}
+## `InlineConfig` {#inlineconfig}
 
 `InlineConfig` 인터페이스는 `UserConfig`의 추가적인 속성들로 확장됩니다:
 
 - `configFile`: 특정 설정 파일을 지칭할 때 사용합니다. 만약 설정이 되어있지 않다면, Vite는 자동적으로 프로젝트 루트에서 결정합니다. `false`로 설정한다면 자동 설정을 비활성화합니다.
 - `envFile`: `false` 일 때는 `.env` 파일들을 비활성화합니다.
 
-## `ResolvedConfig`
+## `ResolvedConfig` {#resolvedconfig}
 
-The `ResolvedConfig` interface has all the same properties of a `UserConfig`, except most properties are resolved and non-undefined. It also contains utilities like:
+`ResolvedConfig` 인터페이스는 `UserConfig`의 모든 속성들을 가지고 있지만, 대부분의 속성들은 실제 값을 가지고 있으며 `undefined`가 아닙니다. 또한 다음과 같은 유틸리티들도 포함합니다:
 
-- `config.assetsInclude`: A function to check if an `id` is considered an asset.
-- `config.logger`: Vite's internal logger object.
+- `config.assetsInclude`: `id`가 asset으로 간주되는지 확인하는 함수입니다.
+- `config.logger`: Vite의 내부 로거(Logger) 객체입니다.
 
 ## `ViteDevServer` {#vitedevserver}
 
@@ -211,9 +211,9 @@ async function resolveConfig(
 
 개발 단계에서의 `command`의 값은 `serve`입니다 (cli에서는 `vite`, `vite dev`, 그리고 `vite serve`는 전부 별칭입니다).
 
-# `mergeConfig`
+## `mergeConfig` {#mergeconfig}
 
-**Type Signature:**
+**타입 시그니처:**
 
 ```ts
 function mergeConfig(
@@ -223,11 +223,11 @@ function mergeConfig(
 ): Record<string, any>
 ```
 
-Deeply merge two Vite configs. `isRoot` represents the level within the Vite config which is being merged. For example, set `false` if you're merging two `build` options.
+Vite 설정을 깊이(Deep) 병합합니다. `isRoot`는 병합되는 Vite 설정의 레벨을 나타냅니다. 예를 들어, `build` 옵션을 두 개 병합한다면 `false`로 설정합니다.
 
-## `searchForWorkspaceRoot`
+## `searchForWorkspaceRoot` {#searchforworkspaceroot}
 
-**Type Signature:**
+**타입 시그니처:**
 
 ```ts
 function searchForWorkspaceRoot(
@@ -236,18 +236,19 @@ function searchForWorkspaceRoot(
 ): string
 ```
 
-**Related:** [server.fs.allow](/config/server-options.md#server-fs-allow)
+**관련 문서:** [server.fs.allow](/config/server-options.md#server-fs-allow)
 
 Search for the root of the potential workspace if it meets the following conditions, otherwise it would fallback to `root`:
+-> 만약 다음 조건을 만족한다면, 작업 공간의 루트를 찾습니다. 아니라면 `root`를 반환합니다:
 
-- contains `workspaces` field in `package.json`
-- contains one of the following file
+- `package.json`에 `workspaces` 필드가 있음
+- 다음 파일 중 하나가 존재
   - `lerna.json`
   - `pnpm-workspace.yaml`
 
-## `loadEnv`
+## `loadEnv` {#loadenv}
 
-**Type Signature:**
+**타입 시그니처:**
 
 ```ts
 function loadEnv(
@@ -257,23 +258,23 @@ function loadEnv(
 ): Record<string, string>
 ```
 
-**Related:** [`.env` Files](./env-and-mode.md#env-files)
+**관련 문서:** [`.env` Files](./env-and-mode.md#env-files)
 
-Load `.env` files within the `envDir`. By default only env variables prefixed with `VITE_` are loaded, unless `prefixes` is changed.
+`envDir` 내부의 `.env` 파일을 로드합니다. 기본적으로 `VITE_`로 시작하는 환경 변수만 로드되나, `prefixes`를 통해 이를 변경할 수 있습니다.
 
-## `normalizePath`
+## `normalizePath` {#normalizepath}
 
-**Type Signature:**
+**타입 시그니처:**
 
 ```ts
 function normalizePath(id: string): string
 ```
 
-**Related:** [Path Normalization](./api-plugin.md#path-normalization)
+**관련 문서:** [Path Normalization](./api-plugin.md#path-normalization)
 
-Normalizes a path to interoperate between Vite plugins.
+Vite 플러그인 간에 상호 작용할 수 있도록 경로를 정규화합니다.
 
-## `transformWithEsbuild`
+## `transformWithEsbuild` {#transformwitesbuild}
 
 **타입 시그니처:**
 
@@ -286,11 +287,11 @@ async function transformWithEsbuild(
 ): Promise<ESBuildTransformResult>
 ```
 
-Transform JavaScript or TypeScript with esbuild. Useful for plugins that prefers matching Vite's internal esbuild transform.
+esbuild를 사용하여 JavaScript 또는 TypeScript를 변환합니다. Vite의 내부 esbuild 변환 과정과 동일하게 수행하고자 하는 플러그인 작성 시 유용합니다.
 
-## `loadConfigFromFile`
+## `loadConfigFromFile` {#loadconfigfromfile}
 
-**Type Signature:**
+**타입 시그니처:**
 
 ```ts
 async function loadConfigFromFile(
@@ -305,4 +306,4 @@ async function loadConfigFromFile(
 } | null>
 ```
 
-Load a Vite config file manually with esbuild.
+esbuild를 사용하여 Vite 설정 파일을 수동으로 로드합니다.
