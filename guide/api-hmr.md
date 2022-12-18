@@ -29,6 +29,7 @@ interface ViteHotContext {
   ): void
 
   dispose(cb: (data: any) => void): void
+  prune(cb: (data: any) => void): void
   decline(): void
   invalidate(message?: string): void
 
@@ -102,7 +103,7 @@ if (import.meta.hot) {
 
 ## `hot.dispose(cb)` {#hot-dispose-cb}
 
-스스로 수용하는 모듈 혹은 다른 것에 의해 수용될 모듈은 변경된 복사본으로 인한 지속적인 부작용을 정리하기 위해 `hot.dispose`를 사용할 수 있습니다:
+스스로 수용하는 모듈 혹은 다른 것에 의해 수용될 모듈은 변경된 복사본으로 인한 지속적인 사이드 이펙트를 정리하기 위해 `hot.dispose`를 사용할 수 있습니다:
 
 ```js
 function setupSideEffect() {}
@@ -112,6 +113,18 @@ setupSideEffect()
 if (import.meta.hot) {
   import.meta.hot.dispose((data) => {
     // side effect를 처리함
+  })
+}
+```
+
+## `hot.prune(cb)` {#hot-prune-cb}
+
+모듈이 페이지에서 더 이상 import되지 않을 때 호출되는 콜백을 등록합니다. 이는 스타일 삽입과 같은 사이드 이펙트를 정리하는데 사용될 수 있습니다. Vite는 `.css` import에 대해서 이미 이를 사용하고 있습니다.
+
+```js
+if (import.meta.hot) {
+  import.meta.hot.prune((data) => {
+    // 사이드 이펙트를 정리
   })
 }
 ```
