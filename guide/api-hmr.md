@@ -30,7 +30,7 @@ interface ViteHotContext {
 
   dispose(cb: (data: any) => void): void
   decline(): void
-  invalidate(): void
+  invalidate(message?: string): void
 
   // `InferCustomEventPayload`는 내장된(Built-in) Vite 이벤트에 대한 타입을 제공합니다
   on<T extends string>(
@@ -123,9 +123,9 @@ if (import.meta.hot) {
 
 `import.meta.hot.decline()`은 해당 모듈이 hot-업데이트가 불가능함을 가리키고 만약 이 모듈이 변경이 되어야 한다면 브라우저 전체 리로드가 실행이 되어야 함을 알려줍니다. 
 
-## `hot.invalidate()` {#hot-invalidate}
+## `hot.invalidate(message?: string)` {#hot-invalidate-message-string}
 
-A self-accepting module may realize during runtime that it can't handle a HMR update, and so the update needs to be forcefully propagated to importers. By calling `import.meta.hot.invalidate()`, the HMR server will invalidate the importers of the caller, as if the caller wasn't self-accepting.
+A self-accepting module may realize during runtime that it can't handle a HMR update, and so the update needs to be forcefully propagated to importers. By calling `import.meta.hot.invalidate()`, the HMR server will invalidate the importers of the caller, as if the caller wasn't self-accepting. This will log a message both in the browser console and in the terminal. You can pass a message to give some context on why the invalidation happened.
 
 Note that you should always call `import.meta.hot.accept` even if you plan to call `invalidate` immediately afterwards, or else the HMR client won't listen for future changes to the self-accepting module. To communicate your intent clearly, we recommend calling `invalidate` within the `accept` callback like so:
 
