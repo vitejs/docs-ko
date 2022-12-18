@@ -30,6 +30,8 @@ Webpack의 `file-loader`와 비슷한데, 하나 차이점이 있다면 Vite는 
 
 - Git LFS 자리 표시자는 파일 내용을 포함하지 않기에 인라인에서 자동으로 제외됩니다. 만약 이 역시 인라인에 포함하고자 한다면 빌드하기 전 Git LFS를 통해 파일을 다운로드해주세요.
 
+- TypeScript의 경우, 기본적으로 정적 에셋 가져오기를 유효한 모듈로 인식하지 않습니다. 이를 해결하려면 [`vite/client`](./features#client-types)를 포함해주세요.
+
 ### 접미사를 이용해 URL로 에셋 가져오기 {#explicit-url-imports}
 
 `assetsInclude` 옵션 또는 URL로 가져오도록 Vite 내부적으로 설정된 리스트에 포함되지 않은 에셋의 경우에도 URL 포맷으로 에셋을 가져오도록 지정할 수 있습니다. `?url` 접미사(Suffix)를 붙여 에셋을 가져오면 되는데, 예를 하나 들어보자면 다음과 같습니다.
