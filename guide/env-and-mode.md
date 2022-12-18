@@ -115,22 +115,22 @@ interface ImportMeta {
 VITE_APP_TITLE=My App
 ```
 
-앱 내에서는 `My App` 이라는 문자열이 `import.meta.env.VITE_APP_TITLE` 환경 변수를 통해 나타나지게 됩니다.
-
-이 **모드** 라는 개념은 단지 개발(`development`) 모드나 프로덕션(`production`) 모드 뿐만 아니라 더 넓은 개념을 다루고 있습니다. 가령, 프로덕션 모드와 비슷한(그러나 일부 다른 환경 변수를 갖는) "staging" 이라는 모드가 필요하다면 어떻게 해야 할까요?
-
-방법은 간단하게도, 그저 `--mode` 옵션을 전달해 사용할 모드를 지정하면 됩니다. 예를 들어 "staging" 모드로 서버를 동작(배포)하고 싶다면 아래와 같이 명령을 실행해주면 됩니다.
+특정 상황에서는 `vite build` 명령을 실행할 때 다른 모드를 사용하여 다른 타이틀을 렌더링하고 싶을 수 있습니다. `--mode` 옵션 플래그를 통해 기본 동작을 덮어쓸 수 있습니다. 예를 들어, "staging" 모드를 위해 앱을 빌드하고 싶다면 다음과 같이 실행할 수 있습니다:
 
 ```bash
 vite build --mode staging
 ```
 
-"staging" 모드에서 사용될 환경 변수는 `.env.staging` 파일에 정의합니다.
+그리고 `.env.staging` 파일을 생성합니다:
 
 ```
 # .env.staging
-NODE_ENV=production
 VITE_APP_TITLE=My App (staging)
 ```
 
-위와 같이 환경 변수를 설정하게 되면 "staging" 모드에서는 `My App (staging)` 이라는 문자열이 `import.meta.env.VITE_APP_TITLE` 환경 변수를 통해 나타나지게 됩니다.
+`vite build` 명령은 기본적으로 `production` 모드로 동작하기 때문에, 다른 모드와 `.env` 파일 설정을 통해 `development` 모드로 빌드를 실행할 수 있습니다:
+
+```
+# .env.testing
+NODE_ENV=development
+```
