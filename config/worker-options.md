@@ -1,5 +1,7 @@
 # 워커 옵션 {#worker-options}
 
+웹 워커와 관련된 옵션입니다.
+
 ## worker.format {#worker-format}
 
 - **타입:** `'es' | 'iife'`
