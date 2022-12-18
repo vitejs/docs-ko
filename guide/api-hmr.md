@@ -119,9 +119,13 @@ if (import.meta.hot) {
 
 ## `hot.prune(cb)` {#hot-prune-cb}
 
-모듈이 페이지에서 더 이상 import되지 않을 때 호출되는 콜백을 등록합니다. 이는 스타일 삽입과 같은 사이드 이펙트를 정리하는데 사용될 수 있습니다. Vite는 `.css` import에 대해서 이미 이를 사용하고 있습니다.
+모듈이 페이지에서 더 이상 import 되지 않을 때 호출되는 콜백을 등록합니다. `hot.dispose`와 비교했을 때, 소스 코드 업데이트 시 자체적으로 또는 페이지에서 제거될 때 사이드 이펙트를 정리하는 경우 사용할 수 있습니다. Vite는 현재 `.css` import에 대해 이를 사용하고 있습니다.
 
 ```js
+function setupOrReuseSideEffect() {}
+
+setupOrReuseSideEffect()
+
 if (import.meta.hot) {
   import.meta.hot.prune((data) => {
     // 사이드 이펙트를 정리
