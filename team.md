@@ -16,18 +16,16 @@ import { core, emeriti } from './_data/team'
 
 <VPTeamPage>
   <VPTeamPageTitle>
-    <template #title>Meet the Team</template>
+    <template #title>팀 소개</template>
     <template #lead>
-      The development of Vite is guided by an international team, some of whom
-      have chosen to be featured below.
+      Vite 개발은 국제적인 팀에 의해 진행되며, 그들 중 일부를 소개합니다.
     </template>
   </VPTeamPageTitle>
   <VPTeamMembers :members="core" />
   <VPTeamPageSection>
-    <template #title>Team Emeriti</template>
+    <template #title>명예 팀원</template>
     <template #lead>
-      Here we honor some no-longer-active team members who have made valuable
-      contributions in the past.
+      더 이상 활동하지는 않지만, 과거에 귀중한 공헌을 했던 팀원들을 소개합니다.
     </template>
     <template #members>
       <VPTeamMembers size="small" :members="emeriti" />
