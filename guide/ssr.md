@@ -161,7 +161,7 @@ SSR 프로젝트를 프로덕션으로 제공하기 위해서는 다음이 필�
   "scripts": {
     "dev": "node server",
     "build:client": "vite build --outDir dist/client",
-    "build:server": "vite build --outDir dist/server --ssr src/entry-server.js "
+    "build:server": "vite build --outDir dist/server --ssr src/entry-server.js"
   }
 }
 ```
