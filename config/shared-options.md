@@ -342,8 +342,8 @@ export default defineConfig({
 
 애플리케이션이 단일 페이지 애플리케이션(SPA), [다중 페이지 애플리케이션(MPA)](../guide/build#multi-page-app), 또는 커스텀 애플리케이션(SSR 및 커스텀 HTML 처리를 하는 프레임워크)인지 여부:
 
-- `'spa'`: SPA 폴백(Fallback) 미들웨어를 포함하며, 프리뷰 모드에서 `single: true`로 [sirv](https://github.com/lukeed/sirv)를 설정합니다.
-- `'mpa'`: SPA가 아닌 HTML 미들웨어만을 포함합니다.
+- `'spa'`: HTML 미들웨어와 SPA 폴백(Fallback)을 사용합니다. 프리뷰 모드에서 `single: true`로 [sirv](https://github.com/lukeed/sirv)를 설정합니다.
+- `'mpa'`: HTML 미들웨어를 포함합니다.
 - `'custom'`: HTML 미들웨어를 포함하지 않습니다.
 
 좀 더 많은 정보가 필요하다면 Vite의 [SSR 가이드](/guide/ssr#vite-cli)를 참고해주세요. [`server.middlewareMode`](./server-options#server-middlewaremode) 옵션도 참고가 가능합니다.
