@@ -1,6 +1,6 @@
 const position = {
   false: 'push',
-  true: 'unshift'
+  true: 'unshift',
 }
 
 module.exports = (slug, options, state, permalink) => {
@@ -25,13 +25,13 @@ module.exports = (slug, options, state, permalink) => {
             ? [['class', options.permalinkClass]]
             : []),
           ['href', options.permalinkHref(slug, state)],
-          ...Object.entries(options.permalinkAttrs(slug, state))
-        ]
+          ...Object.entries(options.permalinkAttrs(slug, state)),
+        ],
       }),
       Object.assign(new state.Token('html_block', '', 0), {
-        content: options.permalinkSymbol
+        content: options.permalinkSymbol,
       }),
-      new state.Token('link_close', 'a', -1)
+      new state.Token('link_close', 'a', -1),
     ]
 
     if (options.permalinkSpace) {
@@ -39,7 +39,7 @@ module.exports = (slug, options, state, permalink) => {
     }
 
     state.tokens[permalink + 1].children[position[options.permalinkBefore]](
-      ...linkTokens
+      ...linkTokens,
     )
   } catch (err) {
     console.log(err)

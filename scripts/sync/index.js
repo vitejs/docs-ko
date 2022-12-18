@@ -7,7 +7,7 @@ const VITE_GIT = 'https://github.com/vitejs/vite.git'
 const git = simpleGit()
   .addConfig(
     'user.email',
-    '41898282+github-actions[bot]@users.noreply.github.com'
+    '41898282+github-actions[bot]@users.noreply.github.com',
   )
   .addConfig('user.name', 'github-actions[bot]')
 
@@ -26,7 +26,7 @@ const createIssue = useCreateIssue(octokit)
   const { all: commitList, total } = await git.log([
     'sync..vite/main',
     '--',
-    'docs'
+    'docs',
   ])
 
   if (!total) {

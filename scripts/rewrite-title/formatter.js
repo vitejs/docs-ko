@@ -23,5 +23,5 @@ module.exports = {
         console.warn(`${this.filePath} - Saving file with matter failed`)
       }
     })
-  }
+  },
 }

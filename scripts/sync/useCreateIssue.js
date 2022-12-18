@@ -10,7 +10,7 @@ module.exports =
           repo: 'vitejs-kr.github.io',
           title: `[SYNC] ${message}`,
           labels: ['sync'],
-          body: `[${date}] ${message} ([Go to commit ${slicedHash}](https://github.com/vitejs/vite/commit/${hash}))`
+          body: `[${date}] ${message} ([Go to commit ${slicedHash}](https://github.com/vitejs/vite/commit/${hash}))`,
         })
 
         resolve()
@@ -18,7 +18,7 @@ module.exports =
         console.error(
           'Failed to create GitHub Issues',
           { date, hash, message },
-          error
+          error,
         )
 
         reject(error)
