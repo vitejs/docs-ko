@@ -137,6 +137,10 @@ export default defineConfig({
               link: '/guide/features'
             },
             {
+              text: 'CLI',
+              link: '/guide/cli'
+            },
+            {
               text: '플러그인 사용하기',
               link: '/guide/using-plugins'
             },
