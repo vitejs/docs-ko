@@ -79,7 +79,7 @@ pnpm create vite my-vue-app --template vue
 
 이와 같이 지정할 수 있습니다.
 
-[create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite) 섹션에서는 더욱 다양한 템플릿들에 대해 다루고 있습니다: `vanilla`, `vanilla-ts`, `vue`, `vue-ts`, `react`, `react-ts`, `preact`, `preact-ts`, `lit`, `lit-ts`, `svelte`, `svelte-ts`
+또한 [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)에서 더욱 다양한 템플릿들에 대해 다루고 있습니다: `vanilla`, `vanilla-ts`, `vue`, `vue-ts`, `react`, `react-ts`, `react-swc`, `react-swc-ts`, `preact`, `preact-ts`, `lit`, `lit-ts`, `svelte`, `svelte-ts`.
 
 ## 커뮤니티 템플릿 {#community-templates}
 
