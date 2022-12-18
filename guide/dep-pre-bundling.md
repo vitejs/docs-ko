@@ -77,9 +77,10 @@ export default defineConfig({
 
 Vite는 사전 번들링 된 디펜던시를 `node_modules/.vite` 디렉터리 내에 캐시하고 있습니다. 다만 이를 다시 번들링하는 경우가 있는데, 다음과 같습니다.
 
-- `package.json` 내 `dependencies` 리스트가 변경되었을 때
-- `package-lock.json`, `yarn.lock` 또는 `pnpm-lock.yaml` 파일과 같은 패키지 매니저의 Lock 파일이 변경되었을 때
+- 패키지 매니저의 락파일 내용, 예를 들어 `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml` 또는 `bun.lockb`
+- 폴더의 수정 시간을 패치
 - `vite.config.js`와 관련되어 있는 필드가 변경되었을 때
+- `NODE_ENV` 값
 
 위의 변경 사항이 발생된 경우 사전 번들링 과정을 다시 시작하게 됩니다.
 
