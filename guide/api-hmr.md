@@ -139,7 +139,7 @@ if (import.meta.hot) {
 
 ## `hot.decline()` {#hot-decline}
 
-`import.meta.hot.decline()`은 해당 모듈이 hot-업데이트가 불가능함을 가리키고 만약 이 모듈이 변경이 되어야 한다면 브라우저 전체 리로드가 실행이 되어야 함을 알려줍니다. 
+이는 현재 무시되고 있으며, 이전 버전과의 호환성을 위해 존재합니다. 만약 새로운 사용법이 생긴다면, 이는 변경될 수 있습니다. 모듈이 Hot 업데이트가 불가능함을 알리기 위해서는 `hot.invalidate()`를 사용하세요.
 
 ## `hot.invalidate(message?: string)` {#hot-invalidate-message-string}
 
