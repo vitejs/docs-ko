@@ -30,11 +30,16 @@ import cssString from './global.css'
 import stuff from './global.css?inline'
 ```
 
-### `dotenv` 업데이트 {#dotenv-update}
+### 환경 변수 {#environment-variables}
 
-Vite는 이제 dotenv 16과 dotenv-expand 9를 사용합니다(이전에는 dotenv 14와 dotenv-expand 5를 사용했습니다).
+Vite는 이제 `dotenv` 16과 `dotenv-expand` 9를 사용합니다(이전에는 `dotenv` 14와 `dotenv-expand` 5를 사용했습니다). `#` 또는 `` ` ``를 포함하는 값이 있다면, 이 값을 따옴표로 감싸주세요.
 
-만약 `#` 또는 `` ` ``를 포함하는 값이 있다면, 이를 따옴표로 감싸야 합니다. 자세한 내용은 변경사항을 참고하세요([`dotenv`](https://github.com/motdotla/dotenv/blob/master/CHANGELOG.md), [`dotenv-expand`](https://github.com/motdotla/dotenv-expand/blob/master/CHANGELOG.md)).
+```diff
+-VITE_APP=ab#cd`ef
++VITE_APP="ab#cd`ef"
+```
+
+자세한 내용은 [`dotenv`](https://github.com/motdotla/dotenv/blob/master/CHANGELOG.md)과 [`dotenv-expand` CHANGELOG](https://github.com/motdotla/dotenv-expand/blob/master/CHANGELOG.md)를 참고해주세요.
 
 ## Advanced {#advanced}
 
