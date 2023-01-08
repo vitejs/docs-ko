@@ -32,7 +32,7 @@ import 'vite/modulepreload-polyfill'
 
 폴리필은 `{ polyfill: false }`를 사용하여 비활성 할 수 있습니다.
 
-각 동적 가져오기를 위한 사전로드의 청크 리스트는 Vite에서 산출합니다. 기본적으로, 이러한 디펜던시를 로드할 때 `base`를 포함하는 하나의 절대경로가 사용됩니다. `base`가 상대적인 경우 (`''` or `'./'`), 절대 경로가 최종 배포되는 base에 의존하지 않도록 `import.meta.url`이 런타임에 사용됩니다.
+각 동적 가져오기를 위한 사전로드의 청크 목록은 Vite에서 산출합니다. 기본적으로, 이러한 디펜던시를 로드할 때 `base`를 포함하는 하나의 절대경로가 사용됩니다. `base`가 상대적인 경우 (`''` or `'./'`), 절대 경로가 최종 배포되는 base에 의존하지 않도록 `import.meta.url`이 런타임에 사용됩니다.
 
 디펜던시 목록 및 그 경로에 대한 세밀한 제어를 위해 `resolveDependencies` 함수를 사용한 실험적인 지원사항이 있습니다. type `ResolveModulePreloadDependenciesFn` 함수가 그것입니다:
 
@@ -46,7 +46,7 @@ type ResolveModulePreloadDependenciesFn = (
 ) => (string | { runtime?: string })[]
 ```
 
-`resolveDependencies` 함수는 그것이 종속된 청크 목록과 함께 각 동적 가져오기를 위해 호출되며, 또한 엔트리 HTML 파일 상에 가져와진 각 청크를 위해 호출됩니다. 필터링되었거나 더 많은 디펜던시가 주입되었거나 경로가 수정되면 새로운 디펜던시 배열이 반환될 수 있습니다. `deps` 경로는 `build.outDir`에 상대적입니다. `hostType === 'js'`를 위해 `hostId`로 상대 경로를 반환하는 것이 허용되며, 이 경우 HTML 헤드에서 모듈 사전로드를 주입할 때 절대 경로를 가져오기 위해 `new URL(dep, import.meta.url)`이 사용됩니다.
+`resolveDependencies` 함수는 종속된 청크 목록과 함께 각 동적 가져오기를 위해 호출되며, 또한 엔트리 HTML 파일 상에 가져와진 각 청크를 위해 호출됩니다. 필터링되었거나 더 많은 디펜던시가 주입되었거나 경로가 수정되면 새로운 디펜던시 배열이 반환될 수 있습니다. `deps` 경로는 `build.outDir`에 상대적입니다. `hostType === 'js'`를 위해 `hostId`로 상대 경로를 반환하는 것이 허용되며, 이 경우 HTML 헤드에서 해당 모듈 사전로드를 주입할 때 절대 경로를 가져오기 위해 `new URL(dep, import.meta.url)`이 사용됩니다.
 
 ```js
 modulePreload: {
