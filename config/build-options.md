@@ -22,7 +22,7 @@
 - **타입:** `boolean | { polyfill?: boolean, resolveDependencies?: ResolveModulePreloadDependenciesFn }`
 - **기본값:** `true`
 
-By default, a [module preload polyfill](https://guybedford.com/es-module-preloading-integrity#modulepreload-polyfill) is automatically injected. The polyfill is auto injected into the proxy module of each `index.html` entry. If the build is configured to use a non-HTML custom entry via `build.rollupOptions.input`, then it is necessary to manually import the polyfill in your custom entry:
+기본적으로, [모듈 사전로드 폴리필](https://guybedford.com/es-module-preloading-integrity#modulepreload-polyfill)이 자동으로 주입됩니다. 폴리필은 각 `index.html` 엔트리의 프락시 모듈에 자동 주입됩니다. 빌드가 `build.rollupOptions.input`을 통해 HTML이 아닌 커스텀 엔트리를 사용하도록 설정된 경우, 커스텀 엔트리에 직접 폴리필을 가져와야 합니다:
 
 ```js
 import 'vite/modulepreload-polyfill'
@@ -30,11 +30,11 @@ import 'vite/modulepreload-polyfill'
 
 참고: 폴리필은 [라이브러리 모드](/guide/build#library-mode)에 적용되지 **않습니다**. 네이티브 동적 가져오기 없이 브라우저를 지원해야 한다면, 아마도 라이브러리에서 이것을 사용하지 않는 것이 좋습니다.
 
-The polyfill can be disabled using `{ polyfill: false }`.
+폴리필은 `{ polyfill: false }`를 사용하여 비활성 할 수 있습니다.
 
-The list of chunks to preload for each dynamic import is computed by Vite. By default, an absolute path including the `base` will be used when loading these dependencies. If the `base` is relative (`''` or `'./'`), `import.meta.url` is used at runtime to avoid absolute paths that depend on the final deployed base.
+각 동적 가져오기를 위한 사전로드의 청크 리스트는 Vite에서 산출합니다. 기본적으로, 이러한 디펜던시를 로드할 때 `base`를 포함하는 하나의 절대경로가 사용됩니다. `base`가 상대적인 경우 (`''` or `'./'`), 절대 경로가 최종 배포되는 base에 의존하지 않도록 `import.meta.url`이 런타임에 사용됩니다.
 
-There is experimental support for fine grained control over the dependencies list and their paths using the `resolveDependencies` function. It expects a function of type `ResolveModulePreloadDependenciesFn`:
+디펜던시 목록 및 그 경로에 대한 세밀한 제어를 위해 `resolveDependencies` 함수를 사용한 실험적인 지원사항이 있습니다. type `ResolveModulePreloadDependenciesFn` 함수가 그것입니다:
 
 ```ts
 type ResolveModulePreloadDependenciesFn = (
@@ -46,7 +46,7 @@ type ResolveModulePreloadDependenciesFn = (
 ) => (string | { runtime?: string })[]
 ```
 
-The `resolveDependencies` function will be called for each dynamic import with a list of the chunks it depends on, and it will also be called for each chunk imported in entry HTML files. A new dependencies array can be returned with these filtered or more dependencies injected, and their paths modified. The `deps` paths are relative to the `build.outDir`. Returning a relative path to the `hostId` for `hostType === 'js'` is allowed, in which case `new URL(dep, import.meta.url)` is used to get an absolute path when injecting this module preload in the HTML head.
+`resolveDependencies` 함수는 그것이 종속된 청크 목록과 함께 각 동적 가져오기를 위해 호출되며, 또한 엔트리 HTML 파일 상에 가져와진 각 청크를 위해 호출됩니다. 필터링되었거나 더 많은 디펜던시가 주입되었거나 경로가 수정되면 새로운 디펜던시 배열이 반환될 수 있습니다. `deps` 경로는 `build.outDir`에 상대적입니다. `hostType === 'js'`를 위해 `hostId`로 상대 경로를 반환하는 것이 허용되며, 이 경우 HTML 헤드에서 모듈 사전로드를 주입할 때 절대 경로를 가져오기 위해 `new URL(dep, import.meta.url)`이 사용됩니다.
 
 ```js
 modulePreload: {
@@ -56,7 +56,7 @@ modulePreload: {
 }
 ```
 
-The resolved dependency paths can be further modified using [`experimental.renderBuiltUrl`](../guide/build.md#advanced-base-options).
+결정된 디펜던시 경로는 [`experimental.renderBuiltUrl`](../guide/build.md#advanced-base-options)를 사용하여 추가로 수정될 수 있습니다.
 
 ## build.polyfillModulePreload {#build-polyfillmodulepreload}
 
