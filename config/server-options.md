@@ -77,7 +77,7 @@ export default defineConfig({
 
 - **타입:** `Record<string, string | ProxyOptions>`
 
-개발 서버에 대한 사용자 정의 프록시 규칙을 구성합니다. `{ key: options }` 쌍의 객체를 기대합니다. 요청 경로가 해당 키로 시작하는 모든 요청은 해당 지정 대상으로 프록시됩니다. 키가 `^`로 시작하면 `RegExp`로 해석됩니다. `configure` 옵션은 프록시 인스턴스에 액세스하는 데 사용할 수 있습니다.
+개발 서버에 대한 사용자 정의 프락시 규칙을 구성합니다. `{ key: options }` 쌍의 객체를 기대합니다. 요청 경로가 해당 키로 시작하는 모든 요청은 해당 지정 대상으로 프락시됩니다. 키가 `^`로 시작하면 `RegExp`로 해석됩니다. `configure` 옵션은 프락시 인스턴스에 액세스하는 데 사용할 수 있습니다.
 
 참고로 [`base`](/config/shared-options.md#base)가 비상대적(Non-relative)인 경우, 각 키에 `base`를 접두사로 붙여야 합니다.
 
@@ -105,7 +105,7 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/fallback/, '')
       },
-      // 프록시 인스턴스 사용
+      // 프락시 인스턴스 사용
       '/api': {
         target: 'http://jsonplaceholder.typicode.com',
         changeOrigin: true,
@@ -113,7 +113,7 @@ export default defineConfig({
           // proxy 변수에는 'http-proxy'의 인스턴스가 전달됩니다
         }
       },
-      // 웹소켓 또는 socket.io 프록시: ws://localhost:5173/socket.io -> ws://localhost:5174/socket.io
+      // 웹소켓 또는 socket.io 프락시: ws://localhost:5173/socket.io -> ws://localhost:5174/socket.io
       '/socket.io': {
         target: 'ws://localhost:5174',
         ws: true
@@ -151,15 +151,15 @@ HMR 연결을 설정하거나 사용하지 않을 수 있습니다. (HMR 웹 소
 
 ::: tip 참고
 
-기본적으로 Vite는 리버스 프록시가 WebSocket 프록시를 지원한다고 가정하고 동작합니다. 만약 Vite HMR 클라이언트가 WebSocket 연결에 실패하게 되면, 클라이언트는 리버스 프록시 대신 WebSocket을 Vite HMR 서버에 직접 연결합니다:
+기본적으로 Vite는 리버스 프락시가 WebSocket 프락시를 지원한다고 가정하고 동작합니다. 만약 Vite HMR 클라이언트가 WebSocket 연결에 실패하게 되면, 클라이언트는 리버스 프락시 대신 WebSocket을 Vite HMR 서버에 직접 연결합니다:
 
 ```
 Direct websocket connection fallback. Check out https://vitejs-kr.github.io/config/server-options.html#server-hmr to remove the previous connection error.
 ```
 
-위와 같은 상황이 발생될 때 브라우저에 나타나는 이 오류는 무시해도 됩니다. 다만 아래의 작업들 중 하나를 통해 직접 리버스 프록시를 우회해서 오류를 나타나지 않게끔 할 수도 있습니다:
+위와 같은 상황이 발생될 때 브라우저에 나타나는 이 오류는 무시해도 됩니다. 다만 아래의 작업들 중 하나를 통해 직접 리버스 프락시를 우회해서 오류를 나타나지 않게끔 할 수도 있습니다:
 
-- WebSocket도 프록시하도록 리버스 프록시를 구성
+- WebSocket도 프락시하도록 리버스 프락시를 구성
 - [`server.strictPort` 옵션의 값을 `true`로](#server-strictport), 그리고 `server.hmr.clientPort`를 `server.port`와 동일한 값으로 설정
 - `server.hmr.port`를 [`server.port`](#server-port와 다른 값으로 설정
 
@@ -242,7 +242,7 @@ createServer()
 
 - **타입:** `string | undefined`
 
-Vite를 하위 디렉터리로 프록시하기 위해 이 디렉터리를 http 요청 앞에 추가합니다. `/` 문자로 시작해야 합니다.
+Vite를 하위 디렉터리로 프락시하기 위해 이 디렉터리를 http 요청 앞에 추가합니다. `/` 문자로 시작해야 합니다.
 
 ## server.fs.strict {#server-fs-strict}
 
