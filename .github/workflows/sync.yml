@@ -2,7 +2,7 @@ name: Sync
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 jobs:
   sync:
@@ -13,9 +13,6 @@ jobs:
           token: ${{ secrets.PAT }}
 
       - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
       - uses: pnpm/action-setup@v2.2.1
         with:
           version: 7
