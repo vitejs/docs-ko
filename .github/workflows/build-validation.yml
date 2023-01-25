@@ -6,16 +6,17 @@ jobs:
   build:
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v2.2.1
         with:
-          node-version: '14'
+          version: 7
 
       - name: Install dependencies
-        run: yarn install
+        run: pnpm install
 
       - name: Rewrite titles
-        run: yarn rewrite-title
+        run: pnpm run rewrite-title
 
       - name: Build
-        run: yarn build
+        run: pnpm run build
