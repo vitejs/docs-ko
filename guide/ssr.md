@@ -200,7 +200,7 @@ const html = await vueServerRenderer.renderToString(app, ctx)
 // ctx.modules는 이제 렌더링 중에 사용된 모듈 ID의 집합(Set)입니다.
 ```
 
-`server.js`의 프로덕션 분기문에서는 매니페스트 파일을 읽고, `src/entry-server.js`에서 내보낸(Export) `render` 함수에 전달해야 합니다. 이는 비동기 라우팅에서 사용되는 파일에 대한 사전 로드 지시문(Directives)을 렌더링하기에 충분한 정보를 제공합니다. 전체 예제는 [데모 소스 코드](https://github.com/vitejs/vite-plugin-vue/blob/main/playground/ssr-vue/src/entry-server.js)를 참고해주세요.
+`server.js`의 프로덕션 분기문에서는 매니페스트 파일을 읽고, `src/entry-server.js`에서 내보낸(Export) `render` 함수에 전달해야 합니다. 이는 비동기 라우팅에서 사용되는 파일에 대한 사전 로드 지시문(Directives)을 렌더링하기에 충분한 정보를 제공합니다. 전체 예제는 [데모 소스 코드](https://github.com/vitejs/vite-plugin-vue/blob/main/playground/ssr-vue/src/entry-server.js)를 참고해주세요. 추가로 이 정보를 이용해 [103 Early Hints](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103)를 사용할 수도 있습니다.
 
 ## 사전 렌더링 / SSG {#pre-rendering-ssg}
 
