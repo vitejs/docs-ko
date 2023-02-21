@@ -61,7 +61,9 @@ TLS + HTTP/2를 사용합니다. [`server.proxy` 옵션](#server-proxy)이 사�
 
 - **타입:** `boolean | string`
 
-서버가 시작될 때 자동으로 브라우저에서 앱을 보여줍니다. 값이 문자열이면 URL의 경로명으로 사용됩니다. 원하는 특정 브라우저에서 열기를 원한다면, `process.env.BROWSER` (예: `firefox`) 환경 변수를 설정할 수 있습니다. 더 자세한 점을 알려면 [`open` 패키지](https://github.com/sindresorhus/open#app)를 확인하세요.
+서버가 시작될 때 자동으로 브라우저에서 앱을 보여줍니다. 값이 문자열이면 URL의 경로명으로 사용됩니다. 원하는 특정 브라우저에서 열기를 원한다면, `process.env.BROWSER` (예: `firefox`) 환경 변수를 설정할 수 있습니다. `process.env.BROWSER_ARGS` 환경 변수를 통해 추가적인 인자를 전달할 수도 있습니다. (예: `--incognito`)
+
+추가로 이 `BROWSER`와 `BROWSER_ARGS`는 `.env` 파일에서 설정이 가능합니다. 자세한 내용은 [`open` 패키지 문서](https://github.com/sindresorhus/open#app)를 참고해주세요.
 
 **예제:**
 
