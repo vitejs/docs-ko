@@ -33,7 +33,7 @@
 
 ## define {#define}
 
-- **타입:** `Record<string, string>`
+- **타입:** `Record<string, any>`
 
 전역 상수 대체를 정의합니다. 진입점은 개발 중에는 전역으로 정의될 것이며, 빌드 시에는 정적으로 대체될 것입니다.
 
