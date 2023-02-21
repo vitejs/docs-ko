@@ -16,6 +16,10 @@
 
 - Vue 3 JSX 지원을 제공합니다. ([전용 `Babel` 변형](https://github.com/vuejs/jsx-next)을 통해)
 
+### [@vitejs/plugin-vue2](https://github.com/vitejs/vite-plugin-vue2) {#vitejs-plugin-vue2}
+
+- Vue 2 단일 파일 컴포넌트(SFC)를 지원합니다.
+
 ### [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react) {#vitejs-plugin-react}
 
 - esbuild와 Babel을 사용하여 작은 패키지 크기와 Babel 변형 파이프라인의 유연성을 통해 빠른 HMR을 달성합니다.
@@ -24,7 +28,7 @@
 
 - 빌드 시에는 esbuild를 사용하지만 개발 중에는 Babel 대신 SWC를 사용합니다. 비표준 React 확장이 필요하지 않은 대규모 프로젝트의 경우, 콜드 스타트와 Hot Module Replacement(HMR)이 훨씬 빠르게 작동할 수 있습니다.
 
-### [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)
+### [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) {#vitejs-plugin-legacy}
 
 - 프로덕션 빌드를 위한 이전 브라우저 지원을 제공합니다.
 
