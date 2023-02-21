@@ -17,6 +17,6 @@
 
 ## worker.rollupOptions {#worker-rollupoptions}
 
-- **타입:** [`RollupOptions`](https://rollupjs.org/guide/en/#big-list-of-options)
+- **타입:** [`RollupOptions`](https://rollupjs.org/configuration-options/)
 
 워커 번들 빌드 시 Rollup 옵션입니다.

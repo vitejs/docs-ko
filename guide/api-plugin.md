@@ -2,7 +2,7 @@
 
 Vite의 플러그인은 Rollup의 멋진 플러그인 인터페이스에 몇 가지 Vite 특정 옵션을 추가한 형태로 구성하였습니다. 그리고 결과적으로, Vite의 플러그인은 한 번 작성되면 개발 및 빌드 시 모두 사용이 가능하다는 장점이 있죠.
 
-**아래 내용은 [Rollup의 플러그인 문서](https://rollupjs.org/guide/en/#plugin-development)를 읽었다는 전제 하에 진행합니다.**
+**아래 내용은 [Rollup의 플러그인 문서](https://rollupjs.org/plugin-development/)를 읽었다는 전제 하에 진행합니다.**
 
 ## 플러그인 만들기 {#authoring-a-plugin}
 
@@ -17,7 +17,7 @@ Vite는 확립된 패턴을 제공하기 위해 노력하고 있습니다. 따�
 
 ## 플러그인 작성 규칙 {#conventions}
 
-만약 플러그인이 Vite에서 제공하는 훅을 사용하지 않고, 또 [호환되는 Rollup 플러그인](#rollup-plugin-compatibility)으로 구성될 수 있는 경우에는 [Rollup 플러그인 명명 규칙](https://rollupjs.org/guide/en/#conventions)을 따르는 것이 좋습니다.
+만약 플러그인이 Vite에서 제공하는 훅을 사용하지 않고, 또 [호환되는 Rollup 플러그인](#rollup-plugin-compatibility)으로 구성될 수 있는 경우에는 [Rollup 플러그인 명명 규칙](https://rollupjs.org/plugin-development/#conventions)을 따르는 것이 좋습니다.
 
 - Rollup 플러그인은 `rollup-plugin-` 접두사가 있는 명확한 이름을 갖습니다.
 - package.json 파일의 `keywords` 항목에는 `rollup-plugin` 및 `vite-plugin`을 포함시키도록 합니다.
@@ -140,33 +140,33 @@ import { msg } from 'virtual:my-module'
 console.log(msg)
 ```
 
-[가상 모듈](https://rollupjs.org/guide/en/#a-simple-example)은 Vite와 Rollup에서 `virtual:` 접두사를 붙여 표현 및 사용합니다. 또한, 가능한 플러그인의 이름을 네임스페이스로 사용하여 다른 플러그인과의 충돌을 방지해야 합니다. 가령 `vite-plugin-posts` 라는 이름을 가진 플러그인이 있고, 이 플러그인을 사용하는 사용자는 가상 모듈을 포함(Import)해야 한다고 가정하겠습니다. 이 때 가상 모듈의 이름은 `virtual:posts` 또는 `virtual:posts/helpers`와 같이 플러그인 이름인 `posts`를 사용하는 것이 적절합니다. 그리고 이름 규칙에 대해 내부적으로 보자면, 가상 모듈을 사용하는 플러그인은 Rollup의 규칙과 같이 모듈의 ID를 확인하는 과정에서 ID 앞에 `\0`을 붙여줘야 합니다. 이는 다른 플러그인이 노드를 확인하는 작업(Node Resolution) 등과 같이 가상 모듈의 ID를 처리하는 것을 방지하고, 또 소스 맵과 같은 핵심 기능에서는 가상 모듈과 일반 모듈을 구별하기 위해 사용하기 때문입니다. 다만 `\0`은 `import` 시 사용되는 URL에서 허용되는 문자가 아니기에, `import` 분석 중에는 이 문자열을 대체해줘야 합니다. 브라우저에서는 `\0{id}` 라는 ID가 `/@id/__x00__{id}`로 인코딩되며, 이 ID는 플러그인 파이프라인을 진행하기 전 다시 디코딩되기에 플러그인 훅 내부에서는 이를 볼 수 없습니다.
+[가상 모듈](https://rollupjs.org/plugin-development/#a-simple-example)은 Vite와 Rollup에서 `virtual:` 접두사를 붙여 표현 및 사용합니다. 또한, 가능한 플러그인의 이름을 네임스페이스로 사용하여 다른 플러그인과의 충돌을 방지해야 합니다. 가령 `vite-plugin-posts` 라는 이름을 가진 플러그인이 있고, 이 플러그인을 사용하는 사용자는 가상 모듈을 포함(Import)해야 한다고 가정하겠습니다. 이 때 가상 모듈의 이름은 `virtual:posts` 또는 `virtual:posts/helpers`와 같이 플러그인 이름인 `posts`를 사용하는 것이 적절합니다. 그리고 이름 규칙에 대해 내부적으로 보자면, 가상 모듈을 사용하는 플러그인은 Rollup의 규칙과 같이 모듈의 ID를 확인하는 과정에서 ID 앞에 `\0`을 붙여줘야 합니다. 이는 다른 플러그인이 노드를 확인하는 작업(Node Resolution) 등과 같이 가상 모듈의 ID를 처리하는 것을 방지하고, 또 소스 맵과 같은 핵심 기능에서는 가상 모듈과 일반 모듈을 구별하기 위해 사용하기 때문입니다. 다만 `\0`은 `import` 시 사용되는 URL에서 허용되는 문자가 아니기에, `import` 분석 중에는 이 문자열을 대체해줘야 합니다. 브라우저에서는 `\0{id}` 라는 ID가 `/@id/__x00__{id}`로 인코딩되며, 이 ID는 플러그인 파이프라인을 진행하기 전 다시 디코딩되기에 플러그인 훅 내부에서는 이를 볼 수 없습니다.
 
 단일 파일 컴포넌트(Single File Component, .vue 나 .svelte 확장자가 붙은)와 같이 실제 파일을 기반으로 만들어진 모듈의 경우에는 위 규칙을 따를 필요가 없습니다. 특히 SFC는 일반적으로 하위 모듈들을 생성하는 방식으로 처리되나, 이들의 코드는 파일 시스템에 다시 매핑될 수 있습니다. 이 하위 모듈에 `\0`을 사용하게 되면 소스 맵이 정상적으로 동작하지 않습니다.
 
 ## 범용 훅 {#universal-hooks}
 
-개발 시, Vite 개발 서버는 Rollup과 동일한 방식으로 [Rollup 빌드 훅](https://rollupjs.org/guide/en/#build-hooks)을 호출하는 플러그인 컨테이너를 생성합니다.
+개발 시, Vite 개발 서버는 Rollup과 동일한 방식으로 [Rollup 빌드 훅](https://rollupjs.org/plugin-development/#build-hooks)을 호출하는 플러그인 컨테이너를 생성합니다.
 
 아래의 훅은 서버 시작 시 호출됩니다:
 
-- [`options`](https://rollupjs.org/guide/en/#options)
-- [`buildStart`](https://rollupjs.org/guide/en/#buildstart)
+- [`options`](https://rollupjs.org/plugin-development/#options)
+- [`buildStart`](https://rollupjs.org/plugin-development/#buildstart)
 
 아래의 훅은 모듈을 요청할 때마다 호출됩니다:
 
-- [`resolveId`](https://rollupjs.org/guide/en/#resolveid)
-- [`load`](https://rollupjs.org/guide/en/#load)
-- [`transform`](https://rollupjs.org/guide/en/#transform)
+- [`resolveId`](https://rollupjs.org/plugin-development/#resolveid)
+- [`load`](https://rollupjs.org/plugin-development/#load)
+- [`transform`](https://rollupjs.org/plugin-development/#transform)
 
 아래의 훅은 서버가 종료될 때 호출됩니다:
 
-- [`buildEnd`](https://rollupjs.org/guide/en/#buildend)
-- [`closeBundle`](https://rollupjs.org/guide/en/#closebundle)
+- [`buildEnd`](https://rollupjs.org/plugin-development/#buildend)
+- [`closeBundle`](https://rollupjs.org/plugin-development/#closebundle)
 
-참고로 Vite는 더 효율적인 동작을 위해 전체 소스에 대한 AST 구문 분석을 진행하지 않기에, [`moduleParsed`](https://rollupjs.org/guide/en/#moduleparsed) 훅은 **개발 과정에서 호출되지 않습니다**.
+참고로 Vite는 더 효율적인 동작을 위해 전체 소스에 대한 AST 구문 분석을 진행하지 않기에, [`moduleParsed`](https://rollupjs.org/plugin-development/#moduleparsed) 훅은 **개발 과정에서 호출되지 않습니다**.
 
-[Output Generation Hooks](https://rollupjs.org/guide/en/#output-generation-hooks) 또한 `closeBundle`을 제외하고 **개발 과정에서는 호출되지 않습니다**. Vite의 개발 서버가 `bundle.generate()`를 호출하지 않고 `rollup.rollup()`만을 호출한다는 것으로 생각하면 됩니다.
+[Output Generation Hooks](https://rollupjs.org/plugin-development/#output-generation-hooks) 또한 `closeBundle`을 제외하고 **개발 과정에서는 호출되지 않습니다**. Vite의 개발 서버가 `bundle.generate()`를 호출하지 않고 `rollup.rollup()`만을 호출한다는 것으로 생각하면 됩니다.
 
 ## Vite 전용 훅 {#vite-specific-hooks}
 

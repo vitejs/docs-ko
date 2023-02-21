@@ -126,9 +126,9 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 
 ## build.rollupOptions {#build-rollupoptions}
 
-- **타입:** [`RollupOptions`](https://rollupjs.org/guide/en/#big-list-of-options)
+- **타입:** [`RollupOptions`](https://rollupjs.org/configuration-options/)
 
-기존 Rollup 번들을 커스텀합니다. 이는 Rollup 설정 파일에서 내보낼 수 있는 옵션과 같으며 Vite의 내부 Rollup 옵션과 병합됩니다. 더 자세한 점은 [Rollup 옵션 문서](https://rollupjs.org/guide/en/#big-list-of-options)를 참고하세요.
+기존 Rollup 번들을 커스텀합니다. 이는 Rollup 설정 파일에서 내보낼 수 있는 옵션과 같으며 Vite의 내부 Rollup 옵션과 병합됩니다. 더 자세한 점은 [Rollup 옵션 문서](https://rollupjs.org/configuration-options/)를 참고하세요.
 
 ## build.commonjsOptions {#build-commonjsoptions}
 
@@ -233,7 +233,7 @@ gzip 압축 크기 보고를 활성화/비활성화합니다. 큰 출력 파일�
 
 ## build.watch {#build-watch}
 
-- **타입:** [`WatcherOptions`](https://rollupjs.org/guide/en/#watch-options)`| null`
+- **타입:** [`WatcherOptions`](https://rollupjs.org/configuration-options/#watch)`| null`
 - **기본값:** `null`
 
 Rollup 감시자를 사용하려면 `{}`로 설정하세요. 이는 대부분 빌드 전용 플러그인 또는 통합 프로세스를 포함하는 경우에 사용됩니다.

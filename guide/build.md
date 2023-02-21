@@ -33,14 +33,14 @@ JS(`import`), CSS(`url()`), 그리고 `.html` 파일에서 참조되는 에셋 �
 
 ## 빌드 커스터마이즈하기 {#customizing-the-build}
 
-빌드와 관련된 커스터마이즈는 [build 설정](/config/build-options.md)을 통해 가능합니다. 특별히 알아두어야 할 것이 하나 있는데, [Rollup 옵션](https://rollupjs.org/guide/en/#big-list-of-options)을 `build.rollupOptions`에 명시해 사용이 가능합니다.
+빌드와 관련된 커스터마이즈는 [build 설정](/config/build-options.md)을 통해 가능합니다. 특별히 알아두어야 할 것이 하나 있는데, [Rollup 옵션](https://rollupjs.org/configuration-options/)을 `build.rollupOptions`에 명시해 사용이 가능합니다.
 
 ```ts
 // vite.config.js
 export default defineConfig({
   build: {
     rollupOptions: {
-      // https://rollupjs.org/guide/en/#big-list-of-options
+      // https://rollupjs.org/configuration-options/
     }
   }
 })
@@ -50,7 +50,7 @@ export default defineConfig({
 
 ## 청크를 만드는 방식 {#chunking-strategy}
 
-`build.rollupOptions.output.manualChunks`를 사용해 청크를 분할하는 방식을 구성할 수 있습니다(자세한 사항은 [Rollup 문서](https://rollupjs.org/guide/en/#outputmanualchunks)를 참고해주세요). Vite 2.8 까지는 청크를 만들 때 기본적으로 `index`와 `vendor`를 기준으로 분할했습니다. 이 방식은 일부 SPA를 대상으로는 잘 동작했으나, Vite가 지원하고자 하는 모든 사례에 대해서 범용적으로 적용하기는 어려웠습니다. 따라서 Vite 2.9부터 `manualChunks`는 더 이상 기본적으로 수정하지 않습니다. 만약 계속 `manualChunks`를 수정하기 원한다면 `splitVendorChunkPlugin`을 사용해주세요.
+`build.rollupOptions.output.manualChunks`를 사용해 청크를 분할하는 방식을 구성할 수 있습니다(자세한 사항은 [Rollup 문서](https://rollupjs.org/configuration-options/#output-manualchunks)를 참고해주세요). Vite 2.8 까지는 청크를 만들 때 기본적으로 `index`와 `vendor`를 기준으로 분할했습니다. 이 방식은 일부 SPA를 대상으로는 잘 동작했으나, Vite가 지원하고자 하는 모든 사례에 대해서 범용적으로 적용하기는 어려웠습니다. 따라서 Vite 2.9부터 `manualChunks`는 더 이상 기본적으로 수정하지 않습니다. 만약 계속 `manualChunks`를 수정하기 원한다면 `splitVendorChunkPlugin`을 사용해주세요.
 
 ```js
 // vite.config.js
@@ -64,14 +64,14 @@ export default defineConfig({
 
 ## 파일 변경 시 다시 빌드하기 {#rebuild-on-files-changes}
 
-`vite build --watch` 명령을 통해 Rollup Watcher를 활성화 할 수 있습니다. 또는, `build.watch` 옵션에서 [`WatcherOptions`](https://rollupjs.org/guide/en/#watch-options)를 직접 명시할 수도 있습니다.
+`vite build --watch` 명령을 통해 Rollup Watcher를 활성화 할 수 있습니다. 또는, `build.watch` 옵션에서 [`WatcherOptions`](https://rollupjs.org/configuration-options/#watch)를 직접 명시할 수도 있습니다.
 
 ```ts
 // vite.config.js
 export default defineConfig({
   build: {
     watch: {
-      // https://rollupjs.org/guide/en/#watch-options
+      // https://rollupjs.org/configuration-options/#watch
     }
   }
 })
