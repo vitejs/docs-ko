@@ -20,7 +20,7 @@
 ## build.modulePreload {#build-modulepreload}
 
 - **타입:** `boolean | { polyfill?: boolean, resolveDependencies?: ResolveModulePreloadDependenciesFn }`
-- **기본값:** `true`
+- **기본값:** `{ polyfill: true }`
 
 기본적으로, [모듈 사전로드 폴리필](https://guybedford.com/es-module-preloading-integrity#modulepreload-polyfill)이 자동으로 주입됩니다. 폴리필은 각 `index.html` 엔트리의 프락시 모듈에 자동 주입됩니다. 빌드가 `build.rollupOptions.input`을 통해 HTML이 아닌 커스텀 엔트리를 사용하도록 설정된 경우, 커스텀 엔트리에 직접 폴리필을 가져와야 합니다:
 
@@ -169,7 +169,7 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 ## build.ssr {#build-ssr}
 
 - **타입:** `boolean | string`
-- **기본값:** `undefined`
+- **기본값:** `false`
 - **관련 항목:** [서버 측 렌더링](/guide/ssr)
 
 서버 측 렌더링으로 빌드합니다. 설정 값은 SSR 항목을 직접 지정하는 문자열이거나, `rollupOptions.input`을 통해 SSR 항목을 지정해야 하는 `true`가 될 수 있습니다.
