@@ -54,7 +54,7 @@ if (import.meta.hot) {
 
 ## `hot.accept(cb)` {#hot-accept-cb}
 
-스스로 수용하는 모듈을 위해 변경된 모듈을 인자로 받는 콜백과 함께 `import.meta.hot.accpet`를 사용하세요:
+모듈 자신에 대한 HMR을 확인하기 위해서는 `import.meta.hot.accept`를 사용하고 업데이트된 모듈을 받는 콜백을 전달합니다:
 
 ```js
 export const count = 1
@@ -69,11 +69,11 @@ if (import.meta.hot) {
 }
 ```
 
-Hot updates를 "수용한" 모듈은 **HMR 범위**로 간주됩니다.
+이렇게 Hot updates를 "허용한" 모듈은 **HMR 범위**로 간주됩니다.
 
-Vite은 처음에 불러온 모듈을 교환하지 않습니다: 만약에 HMR 범위의 모듈이 디펜던시로부터 imports를 다시 exports 한다면, 해당 re-exports를 업데이트할 책임이 있습니다 (그리고 그러한 exports는 `let`을 사용하였을 것입니다). 게다가 경계 모듈에서 체인 위에 있는 importers에게는 변화가 되었다고 알리지 않습니다.
+Vite의 HMR은 처음에 불러온 모듈을 교체하지 않습니다: 만약에 HMR 범위의 모듈이 디펜던시로부터 imports를 다시 exports 한다면, 해당 re-exports를 업데이트할 책임이 있습니다 (그리고 그러한 exports는 `let`을 사용했을 것입니다). 또한, 경계 모듈에서 체인 위에 있는 importers에게는 변화가 되었다고 알리지 않습니다. 이렇게 간소화된 HMR 구현은 대부분의 개발 환경에서 충분하며, 프락시 모듈을 생성하는 것과 같이 비용이 큰 작업을 생략할 수 있도록 합니다.
 
-Vite의 간소화된 HMR 기능은 프락시 모듈을 생산하는 것과 같은 비용이 큰일을 하지 않고서 대부분의 개발 환경에서 충분합니다.
+모듈이 업데이트를 수용하고자 한다면, 이 함수에 대한 호출이 소스 코드에서 `import.meta.hot.accept(` (공백 구분)로 나타나야 합니다. 이는 Vite가 HMR 범위를 추적할 수 있도록 합니다.
 
 ## `hot.accept(deps, cb)` {#hot-accept-deps-cb}
 
