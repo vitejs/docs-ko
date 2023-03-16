@@ -66,43 +66,61 @@ $ npm run preview
 
    만약 `https://<USERNAME>.github.io/<REPO>/`와 같은 형태로 배포하고자 한다면, `base` 설정 값을 `'/<REPO>/'`로 지정해주세요.
 
-2. 프로젝트의 루트에 아래와 같은 내용이 들어간 `deploy.sh` 파일을 생성 및 실행해주세요(하이라이트 된 라인은 필요에 따라 주석 처리를 풀어주세요).
+2. 리포지토리 설정 페이지에서 GitHub Pages 설정으로 이동한 후, 배포 소스를 "GitHub Actions"로 지정해주세요. 이를 통해 프로젝트를 빌드하고 배포하는 워크플로우를 생성할 수 있습니다. 아래는 npm을 이용해 의존성을 설치하고 빌드하는 예시입니다:
 
-   ```bash{16,24,27}
-   #!/usr/bin/env sh
+   ```yml
+   # GitHub Pages에 정적 콘텐츠를 배포하기 위한 간단한 워크플로우
+   name: Deploy static content to Pages
 
-   # 에러가 발생될 경우 스크립트 실행을 중지
-   set -e
+   on:
+     # 기본 브랜치에 대한 푸시 이벤트 발생 시 실행
+     push:
+       branches: ['main']
 
-   # 앱 빌드
-   npm run build
+     # Actions 탭에서 수동으로 워크플로우를 실행할 수 있도록 구성
+     workflow_dispatch:
 
-   # 빌드된 파일이 존재하는 dist 디렉터리로 이동
-   cd dist
+   # GITHUB_TOKEN의 권한을 설정하여 GitHub Pages에 배포할 수 있도록 함
+   permissions:
+     contents: read
+     pages: write
+     id-token: write
 
-   # Jekyll 처리를 우회하기 위해 .nojekyll 파일 생성
-   echo > .nojekyll
+   # 동시에 하나의 배포만 허용하도록 구성
+   concurrency:
+     group: 'pages'
+     cancel-in-progress: true
 
-   # CNAME 파일을 이용해 커스텀 도메인을 지정할 수도 있습니다.
-   # echo 'www.example.com' > CNAME
-
-   git init
-   git checkout -B main
-   git add -A
-   git commit -m 'deploy'
-
-   # https://<USERNAME>.github.io 에 배포
-   # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git main
-
-   # https://<USERNAME>.github.io/<REPO> 에 배포
-   # git push -f git@github.com:<USERNAME>/<REPO>.git main:gh-pages
-
-   cd -
+   jobs:
+     # 단순히 배포만 수행하기에 하나의 잡으로만 구성
+     deploy:
+       environment:
+         name: github-pages
+         url: ${{ steps.deployment.outputs.page_url }}
+       runs-on: ubuntu-latest
+       steps:
+         - name: Checkout
+           uses: actions/checkout@v3
+         - name: Set up Node
+           uses: actions/setup-node@v3
+           with:
+             node-version: 18
+             cache: 'npm'
+         - name: Install dependencies
+           run: npm install
+         - name: Build
+           run: npm run build
+         - name: Setup Pages
+           uses: actions/configure-pages@v3
+         - name: Upload artifact
+           uses: actions/upload-pages-artifact@v1
+           with:
+             # dist 디렉터리 업로드
+             path: './dist'
+         - name: Deploy to GitHub Pages
+           id: deployment
+           uses: actions/deploy-pages@v1
    ```
-
-::: tip
-물론 CI 툴을 이용해 위 스크립트 기반으로 배포가 자동으로 이루어지게끔 설정이 가능합니다.
-:::
 
 ## GitLab Pages 그리고 GitLab CI {#github-pages-and-gitlab-ci}
 
