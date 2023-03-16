@@ -81,7 +81,7 @@ export default defineConfig(async ({ command, mode }) => {
 })
 ```
 
-## 환경 변수 {#environment-variables}
+## 설정에서 환경 변수 사용하기 {#using-environment-variables-in-config}
 
 환경 변수 역시 `process.env` 객체를 통해 가져올 수 있습니다.
 
