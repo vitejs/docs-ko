@@ -1,4 +1,6 @@
 import { defineConfig } from 'vitepress'
+import markdownItCustomAnchor from './markdown-it-custom-anchor'
+import renderPermalink from './render-permalink'
 
 const ogDescription = 'Vite, 차세대 프런트엔드 개발 툴'
 const ogImage = 'https://vitejs-kr.github.io/og-image.png'
@@ -260,8 +262,8 @@ export default defineConfig({
   markdown: {
     anchor: {
       // @ts-ignore
-      renderPermalink: require('./render-permalink'),
+      renderPermalink,
     },
-    config: (md) => md.use(require('./custom-anchor')),
+    config: (md) => md.use(markdownItCustomAnchor),
   },
 })
