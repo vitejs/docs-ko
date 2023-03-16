@@ -33,6 +33,14 @@ export default defineConfig({
     ],
   ],
 
+  locales: {
+    root: { label: '한국어' },
+    en: { label: 'English', link: 'https://vitejs.dev' },
+    zh: { label: '简体中文', link: 'https://cn.vitejs.dev' },
+    ja: { label: '日本語', link: 'https://ja.vitejs.dev' },
+    es: { label: 'Español', link: 'https://es.vitejs.dev' },
+  },
+
   vue: {
     reactivityTransform: true,
   },
@@ -64,16 +72,6 @@ export default defineConfig({
     carbonAds: {
       code: 'CEBIEK3N',
       placement: 'vitejsdev',
-    },
-
-    localeLinks: {
-      text: '한국어',
-      items: [
-        { text: 'English', link: 'https://vitejs.dev' },
-        { text: '简体中文', link: 'https://cn.vitejs.dev' },
-        { text: '日本語', link: 'https://ja.vitejs.dev' },
-        { text: 'Español', link: 'https://es.vitejs.dev' },
-      ],
     },
 
     footer: {
