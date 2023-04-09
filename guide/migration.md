@@ -4,7 +4,7 @@
 
 Vite는 이제 [Rollup 3](https://github.com/vitejs/vite/issues/9870)을 사용하며, Vite의 내부 에셋 처리를 단순화하고 많은 개선이 있습니다. 자세한 것은 [Rollup 3 릴리스 노트](https://github.com/rollup/rollup/releases/tag/v3.0.0)를 참고해주세요.
 
-Rollup 3는 많은 부분에서 Rollup 2와 호환됩니다. 만약 커스텀 [`rollupOptions`](../config/build-options.md#build-rollupoptions)를 사용하는 프로젝트에서 문제가 발생된다면, [Rollup 마이그레이션 가이드](https://rollupjs.org/guide/en/#migration)를 참고하여 설정을 업그레이드하세요.
+Rollup 3는 많은 부분에서 Rollup 2와 호환됩니다. 만약 커스텀 [`rollupOptions`](../config/build-options.md#build-rollupoptions)를 사용하는 프로젝트에서 문제가 발생된다면, [Rollup 마이그레이션 가이드](https://rollupjs.org/migration/)를 참고하여 설정을 업그레이드하세요.
 
 ## 모던 브라우저 표준 변경 {#modern-browser-baseline-change}
 
