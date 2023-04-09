@@ -159,6 +159,8 @@ console.log(msg)
 - [`load`](https://rollupjs.org/plugin-development/#load)
 - [`transform`](https://rollupjs.org/plugin-development/#transform)
 
+훅에는 Vite 전용 속성을 추가로 가진 확장된 `options` 매개변수도 있습니다. 자세한 내용은 [SSR 문서](/guide/ssr#ssr-specific-plugin-logic)를 참고해주세요.
+
 아래의 훅은 서버가 종료될 때 호출됩니다:
 
 - [`buildEnd`](https://rollupjs.org/plugin-development/#buildend)
