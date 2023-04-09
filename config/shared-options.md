@@ -96,8 +96,8 @@ declare const __APP_VERSION__: string
 
 더 자세한 해결책은 [플러그인](/guide/api-plugin)에서 찾아볼 수 있습니다.
 
-::: warning Using with SSR
-If you have configured aliases for [SSR externalized dependencies](/guide/ssr.md#ssr-externals), you may want to alias the actual `node_modules` packages. Both [Yarn](https://classic.yarnpkg.com/en/docs/cli/add/#toc-yarn-add-alias) and [pnpm](https://pnpm.js.org/en/aliases) support aliasing via the `npm:` prefix.
+::: warning SSR 사용 시 주의사항
+[SSR 외부화된 디펜던시](/guide/ssr.md#ssr-externals)를 위해 별칭을 사용했다면, 기존의 실제 `node_modules` 패키지도 별칭으로 설정하는 것이 좋습니다. [Yarn](https://classic.yarnpkg.com/en/docs/cli/add/#toc-yarn-add-alias)과 [pnpm](https://pnpm.js.org/en/aliases) 모두 `npm:` 접두사를 통해 별칭을 지원합니다.
 :::
 
 ## resolve.dedupe {#resolve-dedupe}
