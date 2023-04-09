@@ -240,9 +240,13 @@ Sass나 Less에서의 `@import` 별칭 또한 Vite에서 사용이 가능합니�
 CSS 콘텐츠의 자동 주입은 `?inline` 쿼리 매개변수를 통해 비활성화 할 수 있습니다. 이 경우 처리된 CSS 문자열은 평소와 같이 모듈의 `default export`로 반환되나, 스타일은 페이지에 주입되지 않습니다.
 
 ```js
-import styles from './foo.css' // 페이지에 스타일이 추가됨
+import './foo.css' // 페이지에 스타일이 추가됨
 import otherStyles from './bar.css?inline' // 스타일이 추가되지 않음
 ```
+
+::: tip 참고
+CSS 파일에서의 기본 및 명명된 Import(`import style from './foo.css'`)는 Vite 4부터 사용할 수 없습니다. 이 대신 `?inline` 쿼리를 사용해주세요.
+:::
 
 ## 정적 에셋 {#static-assets}
 
