@@ -93,9 +93,17 @@ vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 �
 /// <reference types="vite/client" />
 ```
 
-또는 `tsconfig` 내 `compilerOptions.types` 옵션에 `vite/client`를 명시해 줄 수도 있습니다.
+또는 `tsconfig.json` 내 `compilerOptions.types` 옵션에 `vite/client`를 명시해 줄 수도 있습니다:
 
-이를 통해 다음에 대한 Shim이 제공됩니다.
+```json
+{
+  "compilerOptions": {
+    "types": ["vite/client"]
+  }
+}
+```
+
+이를 통해 다음에 대한 Shim이 제공됩니다:
 
 - `.svg`와 같은 에셋
 - Vite를 통해 주입되는 `import.meta.env`에 명시된 [환경 변수](./env-and-mode#env-variables) 타입들
