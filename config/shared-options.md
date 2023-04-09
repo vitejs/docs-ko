@@ -212,17 +212,33 @@ CSS 모듈 행동을 구성합니다. 옵션들은 [postcss-modules](https://git
 
 - **타입:** `Record<string, object>`
 
-CSS 전처리기로 전달할 옵션을 지정합니다. 예제:
+CSS 전처리기에 전달할 옵션을 지정합니다. 파일 확장자는 옵션의 키로 사용됩니다. 전처리기에 대한 지원되는 옵션은 각각의 문서에서 찾을 수 있습니다:
+
+- `sass`/`scss` - [옵션](https://sass-lang.com/documentation/js-api/interfaces/LegacyStringOptions).
+- `less` - [옵션](https://lesscss.org/usage/#less-options).
+- `styl`/`stylus` - [`define`](https://stylus-lang.com/docs/js.html#define-name-node)만 지원되며, 객체로 전달할 수 있습니다.
+
+모든 전처리기 옵션은 `additionalData` 옵션을 지원하며, 각 스타일 내용에 추가 코드를 주입하는 데 사용할 수 있습니다.
+
+예:
 
 ```js
 export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `$injectedColor: orange;`
-      }
-    }
-  }
+        additionalData: `$injectedColor: orange;`,
+      },
+      less: {
+        math: 'parens-division',
+      },
+      styl: {
+        define: {
+          $specialColor: new stylus.nodes.RGBA(51, 197, 255, 1),
+        },
+      },
+    },
+  },
 })
 ```
 
