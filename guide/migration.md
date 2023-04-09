@@ -49,7 +49,7 @@ Vite는 이제 `dotenv` 16과 `dotenv-expand` 9를 사용합니다(이전에는 
 
 자세한 내용은 [`dotenv`](https://github.com/motdotla/dotenv/blob/master/CHANGELOG.md)과 [`dotenv-expand` CHANGELOG](https://github.com/motdotla/dotenv-expand/blob/master/CHANGELOG.md)를 참고해주세요.
 
-## Advanced {#advanced}
+## 고급 {#advanced}
 
 플러그인/툴 개발자에게만 영향을 미치는 변경사항이 있습니다.
 
@@ -70,4 +70,4 @@ Vite는 이제 `dotenv` 16과 `dotenv-expand` 9를 사용합니다(이전에는 
 
 ## v2에서 마이그레이션하기 {#migration-from-v2}
 
--> [v2에서 마이그레이션하기 가이드](./migration-from-v2.md)를 먼저 확인하여 앱을 Vite v3로 포팅하기 위해 필요한 변경사항을 확인한 다음 이 페이지의 변경사항을 진행하세요.
+[v2에서 마이그레이션하기 가이드](./migration-from-v2.md)를 먼저 확인하여 앱을 Vite v3로 포팅하기 위해 필요한 변경사항을 확인한 다음 이 페이지의 변경사항을 진행하세요.

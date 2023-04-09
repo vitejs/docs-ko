@@ -109,7 +109,7 @@ Vite v3에서는 esbuild를 사용해 빌드 시 디펜던시를 최적화할 �
 
 이 빌드 방식을 사용하고자 한다면 `optimizeDeps.disabled` 옵션의 값을 `false`로 설정해주세요(v3의 기본값은 `disabled: 'build'` 입니다). `@rollup/plugin-commonjs`는 `build.commonjsOptions: { include: [] }`로 제거할 수 있습니다.
 
-## Advanced {#advanced}
+## 고급 {#advanced}
 
 아래는 Vite 관련 플러그인 또는 툴 개발자에게만 영향을 미치는 몇 가지 변경 사항들에 대한 내용입니다.
 
