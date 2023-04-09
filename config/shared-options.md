@@ -218,7 +218,7 @@ CSS 전처리기에 전달할 옵션을 지정합니다. 파일 확장자는 옵
 - `less` - [옵션](https://lesscss.org/usage/#less-options).
 - `styl`/`stylus` - [`define`](https://stylus-lang.com/docs/js.html#define-name-node)만 지원되며, 객체로 전달할 수 있습니다.
 
-모든 전처리기 옵션은 `additionalData` 옵션을 지원하며, 각 스타일 내용에 추가 코드를 주입하는 데 사용할 수 있습니다.
+모든 전처리기 옵션은 `additionalData` 옵션을 지원하며, 각 스타일 내용에 추가 코드를 주입하는 데 사용할 수 있습니다. 참고로 변수가 아닌 실제 스타일을 포함한다면 최종 번들 결과에 중복되어 포함된다는 점에 유의하세요.
 
 예:
 
