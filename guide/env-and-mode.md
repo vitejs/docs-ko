@@ -104,6 +104,17 @@ interface ImportMeta {
 }
 ```
 
+## HTML 환경 변수 대체 {#html-env-replacement}
+
+Vite는 HTML 파일에서 환경 변수를 대체하는 기능도 지원합니다. `import.meta.env`의 모든 속성은 특수한 `%ENV_NAME%` 구문을 사용해 HTML 파일에서도 사용할 수 있습니다.
+
+```html
+<h1>Vite is running in %MODE%</h1>
+<p>Using data from %VITE_API_URL%</p>
+```
+
+다만 환경 변수가 `import.meta.env`에 존재하지 않는다면 HTML에서는 무시되고 대체되지 않습니다. 예를 들어 `%NON_EXISTENT%`라는 환경 변수가 `import.meta.env`에 존재하지 않는다면, JS에서는 `import.meta.env.NON_EXISTENT`가 `undefined`로 대체되지만, HTML에서는 무시되고 대체되지 않습니다.
+
 ## 모드 {#modes}
 
 기본적으로, `dev` 명령으로 실행되는 개발 서버는 `development` 모드로 동작하고, `build` 명령으로 실행되는 경우에는 `production` 모드로 동작합니다.
