@@ -51,6 +51,7 @@ export default defineConfig({
 
 ## optimizeDeps.disabled {#optimizedeps-disabled}
 
+- **실험적 기능**
 - **타입:** `boolean | 'build' | 'dev'`
 - **기본값:** `'build'`
 
