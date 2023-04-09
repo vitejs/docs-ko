@@ -266,6 +266,6 @@ Vite 2.7 이전에는 `options` 객체를 사용하는 대신 `ssr` 매개변수
 SSR 미들웨어가 Vite 미들웨어 _이후에_ 실행되기를 원한다면 포스트 훅을 사용하세요.
 :::
 
-## SSR Format {#ssr-format}
+## SSR 포맷 {#ssr-format}
 
-By default, Vite generates the SSR bundle in ESM. There is experimental support for configuring `ssr.format`, but it isn't recommended. Future efforts around SSR development will be based on ESM, and CommonJS remain available for backward compatibility. If using ESM for SSR isn't possible in your project, you can set `legacy.buildSsrCjsExternalHeuristics: true` to generate a CJS bundle using the same [externalization heuristics of Vite v2](https://v2.vitejs.dev/guide/ssr.html#ssr-externals).
+기본적으로 Vite는 SSR 번들을 ESM 형식으로 생성합니다. `ssr.format`을 구성하는 실험적인 옵션은 있지만, 권장되는 방법은 아닙니다. 앞으로도 SSR은 ESM을 제공하도록 개발할 것이며, CommonJS는 하위 호환성을 위해 사용할 수 있게끔 제공할 예정입니다. 만약 SSR에 대해 ESM을 사용할 수 없는 경우 `legacy.buildSsrCjsExternalHeuristics: true`를 설정하여 동일한 [Vite v2의 외부화 휴리스틱](https://v2.vitejs.dev/guide/ssr.html#ssr-externals)을 사용하여 CJS 번들을 생성할 수 있습니다.
