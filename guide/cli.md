@@ -24,7 +24,7 @@ vite [root]
 | `--strictPort`           | 포트가 이미 사용중인 경우 종료 (`boolean`)         |
 | `--force`                | 캐시를 무시하고 다시 번들링 (`boolean`)            |
 | `-c, --config <file>`    | 설정 파일 지정 (`string`)                          |
-| `--base <path>`          | `base` 옵션 위치 지정 (default: `/`) (`string`)    |
+| `--base <path>`          | `base` 옵션 위치 지정 (기본값: `/`) (`string`)    |
 | `-l, --logLevel <level>` | Info \| warn \| error \| silent (`string`)         |
 | `--clearScreen`          | 로깅 시 화면을 지우는 것을 허용/비허용 (`boolean`) |
 | `-d, --debug [feat]`     | 디버그 로그 표시 (`string \| boolean`)             |
@@ -49,20 +49,20 @@ vite build [root]
 
 | Options                        |                                                                                                                        |
 | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
-| `--target <target>`            | 트랜스파일 대상 (default: `"modules"`) (`string`)                                                                      |
-| `--outDir <dir>`               | 빌드 결과 디렉터리 지정 (default: `dist`) (`string`)                                                                   |
-| `--assetsDir <dir>`            | outDir 내부의 에셋이 위치할 디렉터리 (default: `"assets"`) (`string`)                                                  |
-| `--assetsInlineLimit <number>` | base64로 인라인되는 에셋의 바이트 임계값 (default: `4096`) (`number`)                                                  |
+| `--target <target>`            | 트랜스파일 대상 (기본값: `"modules"`) (`string`)                                                                      |
+| `--outDir <dir>`               | 빌드 결과 디렉터리 지정 (기본값: `dist`) (`string`)                                                                   |
+| `--assetsDir <dir>`            | outDir 내부의 에셋이 위치할 디렉터리 (기본값: `"assets"`) (`string`)                                                  |
+| `--assetsInlineLimit <number>` | base64로 인라인되는 에셋의 바이트 임계값 (기본값: `4096`) (`number`)                                                  |
 | `--ssr [entry]`                | 지정된 엔트리를 서버 사이드 렌더링을 위해 빌드 (`string`)                                                              |
-| `--sourcemap [output]`         | 빌드에 소스 맵 포함 (default: `false`) (`boolean \| "inline" \| "hidden"`)                                 |
-| `--minify [minifier]`          | minify 옵션을 활성화/비활성화하거나 사용할 minifier를 지정 (default: `"esbuild"`) (`boolean \| "terser" \| "esbuild"`) |
+| `--sourcemap [output]`         | 빌드에 소스 맵 포함 (기본값: `false`) (`boolean \| "inline" \| "hidden"`)                                 |
+| `--minify [minifier]`          | minify 옵션을 활성화/비활성화하거나 사용할 minifier를 지정 (기본값: `"esbuild"`) (`boolean \| "terser" \| "esbuild"`) |
 | `--manifest [name]`            | 빌드 매니페스트 JSON 내보내기 (`boolean \| string`)                                                                    |
 | `--ssrManifest [name]`         | SSR 매니페스트 JSON 내보내기 (`boolean \| string`)                                                                     |
 | `--force`                      | 캐시를 무시하고 다시 번들링 (실험적 기능)(`boolean`)                                                                   |
 | `--emptyOutDir`                | outDir가 프로젝트 루트 밖에 있을 때 강제로 outDir 디렉터리를 비우기 (`boolean`)                                        |
 | `-w, --watch`                  | 디스크의 모듈이 변경되면 다시 빌드 (`boolean`)                                                                         |
 | `-c, --config <file>`          | 설정 파일 지정 (`string`)                                                                                              |
-| `--base <path>`                | `base` 옵션 위치 지정 (default: `/`) (`string`)                                                                        |
+| `--base <path>`                | `base` 옵션 위치 지정 (기본값: `/`) (`string`)                                                                        |
 | `-l, --logLevel <level>`       | Info \| warn \| error \| silent (`string`)                                                                             |
 | `--clearScreen`                | 로깅 시 화면을 지우는 것을 허용/비허용 (`boolean`)                                                                     |
 | `-d, --debug [feat]`           | 디버그 로그 표시 (`string \| boolean`)                                                                                 |
@@ -88,7 +88,7 @@ vite optimize [root]
 | ------------------------ | -------------------------------------------------- |
 | `--force`                | 캐시를 무시하고 다시 번들링 (`boolean`)            |
 | `-c, --config <file>`    | 설정 파일 지정 (`string`)                          |
-| `--base <path>`          | `base` 옵션 위치 지정 (default: `/`) (`string`)    |
+| `--base <path>`          | `base` 옵션 위치 지정 (기본값: `/`) (`string`)    |
 | `-l, --logLevel <level>` | Info \| warn \| error \| silent (`string`)         |
 | `--clearScreen`          | 로깅 시 화면을 지우는 것을 허용/비허용 (`boolean`) |
 | `-d, --debug [feat]`     | 디버그 로그 표시 (`string \| boolean`)             |
@@ -115,9 +115,9 @@ vite preview [root]
 | `--strictPort`           | 포트가 이미 사용중인 경우 종료 (`boolean`)          |
 | `--https`                | TLS + HTTP/2 사용 (`boolean`)                       |
 | `--open [path]`          | 시작 시 브라우저 열기 (`boolean \| string`)         |
-| `--outDir <dir>`         | 빌드 결과 디렉터리 지정 (default: `dist`)(`string`) |
+| `--outDir <dir>`         | 빌드 결과 디렉터리 지정 (기본값: `dist`)(`string`) |
 | `-c, --config <file>`    | 설정 파일 지정 (`string`)                           |
-| `--base <path>`          | `base` 옵션 위치 지정 (default: `/`) (`string`)     |
+| `--base <path>`          | `base` 옵션 위치 지정 (기본값: `/`) (`string`)     |
 | `-l, --logLevel <level>` | Info \| warn \| error \| silent (`string`)          |
 | `--clearScreen`          | 로깅 시 화면을 지우는 것을 허용/비허용 (`boolean`)  |
 | `-d, --debug [feat]`     | 디버그 로그 표시 (`string \| boolean`)              |
