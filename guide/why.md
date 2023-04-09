@@ -51,7 +51,9 @@ import esmSvg from '../images/esm.svg?raw'
 
 ## 왜 번들링 시에는 Esbuild를 사용하지 않나요? {#why-not-bundle-with-esbuild}
 
-`Esbuild`는 극단적이게 빠른 속도로 번들링이 가능하다는 장점이 있으나, 번들링에 필수적으로 요구되는 기능인 코드 분할(Code-splitting) 및 CSS와 관련된 처리가 아직 미비합니다. Vite에서 사용중인 Rollup은 이에 대해 조금 더 검증되었고 유연한 처리가 가능하게끔 구현되어 있기에 현재로서는 이를 사용하고 있으며, 향후 `Esbuild`가 안정화 되었을 때 어떤 프로덕션 번들링 도구가 적절할 것인지 다시 논의할 예정입니다.
+Vite의 현재 플러그인 API는 `esbuild`를 번들러로 사용하는 것과 호환되지 않습니다. `esbuild`가 더 빠르지만, Vite가 Rollup의 유연한 플러그인 API 및 인프라를 적극적으로 채택한 것은 생태계에서의 성공에 큰 기여를 했습니다. 현재로서는 Rollup이 성능 대 유연성 트레이드오프에서 더 나은 선택이라고 믿습니다.
+
+다만 `esbuild`는 지난 몇 년 동안 많은 진전을 이루었고, 향후 프로덕션 빌드에서 `esbuild`를 사용할 가능성도 배제하지 않을 것입니다. JS 및 CSS 축소 기능을 통해 Vite 생태계와 조화롭게 성능 향상을 이루었듯이, `esbuild`가 새로운 기능을 출시할 때마다 이를 활용할 것입니다.
 
 ## Vite와 다른 도구의 차이점 {#how-is-vite-different-from-x}
 
