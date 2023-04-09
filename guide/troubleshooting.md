@@ -121,7 +121,13 @@ HTML 파일 출력이 `file` 프로토콜로 열린 경우 다음 오류와 함�
 
 `http` 프로토콜로 파일에 액세스해야 합니다. 이를 달성하는 가장 쉬운 방법은 `npx vite preview`를 실행하는 것입니다.
 
-## Others {#others}
+## 디펜던시 최적화 {#optimized-dependencies}
+
+### 링크된 로컬 패키지의 경우 사전 번들링 된 디펜던시가 갱신되지 않음 {#outdated-pre-bundled-deps-when-linking-to-a-local-package}
+
+최적화된 디펜던시를 무효화하는 데 사용되는 해시 키는 패키지 락 내용, 디펜던시에 적용된 패치, 그리고 노드 모듈 번들링에 영향을 미치는 Vite 설정 파일의 옵션에 따라 달라집니다. 이는 Vite가 [npm overrides](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#overrides)와 같은 기능을 사용하여 디펜던시를 덮어쓸 때 디펜던시를 다시 번들링하고 다음 서버 시작 시에 감지할 수 있다는 것을 의미합니다. 다만 Vite는 [npm link](https://docs.npmjs.com/cli/v9/commands/npm-link)와 같은 기능을 사용할 때는 디펜던시를 무효화하지 않습니다. 따라서 디펜던시를 링크하거나 링크 해제하는 경우 `vite --force`를 사용하여 다음 서버 시작 시에 강제로 다시 최적화해야 합니다. 우리는 대신 모든 패키지 매니저에서 지원하는 오버라이드 기능을 사용하는 것을 권장합니다([pnpm overrides](https://pnpm.io/package_json#pnpmoverrides) 및 [yarn resolutions](https://yarnpkg.com/configuration/manifest/#resolutions)를 참고하세요).
+
+## 그 외 {#others}
 
 
 ### 브라우저 호환성을 위해 외부화된 모듈 {#module-externalized-for-browser-compatibility}
