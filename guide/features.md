@@ -87,13 +87,13 @@ Vite 2.5.0 부터는 TypeScript의 변환 대상이 `ESNext` 또는 `ES2022` 이
 
 ### Client Types {#client-types}
 
-vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 있습니다. 따라서 Client-side의 환경을 위해 Shim을 구성하고자 한다면, `d.ts` 선언 파일을 추가해주세요.
+vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 있습니다. 따라서 클라이언트 측의 환경을 위해 Shim을 구성하고자 한다면 아래와 같이 `d.ts` 선언 파일을 추가해주세요.
 
 ```typescript
 /// <reference types="vite/client" />
 ```
 
-또는, `tsconfig` 내 `compilerOptions.types` 옵션에 `vite/client`를 명시해 줄 수도 있습니다.
+또는 `tsconfig` 내 `compilerOptions.types` 옵션에 `vite/client`를 명시해 줄 수도 있습니다.
 
 이를 통해 다음에 대한 Shim이 제공됩니다.
 
@@ -102,16 +102,22 @@ vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 �
 - `import.meta.hot`에 명시된 [HMR API](./api-hmr) 타입들
 
 ::: tip
-타입을 재정의하고자 한다면 트리플-슬래시 지시자(Triple-slash Reference) 앞에 선언해주세요. 가령, `*.svg`의 `default import`를 React 컴포넌트로 만들고자 한다면 아래와 같이 타입을 재정의할 수 있습니다:
+기본 타입을 재정의하기 위해서는, 타이핑이 포함된 타입 정의 파일을 만든 뒤 `vite/client` 위에 해당 타입 파일에 대한 참조를 추가해야 합니다.
 
-```ts
-declare module '*.svg' {
-  const content: React.FC<React.SVGProps<SVGElement>>
-  export default content
-}
+가령 `*.svg`의 기본적인 import 결과를 React 컴포넌트로 만들기 위해서는 다음과 같이 작업해야 합니다:
 
-/// <reference types="vite/client" />
-```
+- `vite-env-override.d.ts` (타이핑을 포함하는 파일):
+  ```ts
+  declare module '*.svg' {
+    const content: React.FC<React.SVGProps<SVGElement>>
+    export default content
+  }
+  ```
+- `vite/client`에 대한 참조를 포함하는 파일:
+  ```ts
+  /// <reference types="./vite-env-override.d.ts" />
+  /// <reference types="vite/client" />
+  ```
 
 :::
 
