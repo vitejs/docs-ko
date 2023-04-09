@@ -115,7 +115,7 @@ app.use('*', async (req, res, next) => {
     template = await vite.transformIndexHtml(url, template)
 
     // 3. 서버의 진입점(Entry)을 로드합니다.
-    //    vite.ssrLoadModule은 Node.js에서 사용할 수 있도록 ESM 소스 코드를 자동으로 변환합니다.
+    //    ssrLoadModule은 Node.js에서 사용할 수 있도록 ESM 소스 코드를 자동으로 변환합니다.
     //    추가적인 번들링이 필요하지 않으며, HMR과 유사한 동작을 수행합니다.
     const { render } = await vite.ssrLoadModule('/src/entry-server.js')
 

@@ -241,7 +241,7 @@ CSS 콘텐츠의 자동 주입은 `?inline` 쿼리 매개변수를 통해 비활
 
 ```js
 import styles from './foo.css' // 페이지에 스타일이 추가됨
-import otherStyles from './bar.css?inline' // 페이지에 스타일이 추가되지 않음
+import otherStyles from './bar.css?inline' // 스타일이 추가되지 않음
 ```
 
 ## 정적 에셋 {#static-assets}
@@ -396,7 +396,10 @@ const modules = {
 `eager`와 같이 사용하면 모듈에 대한 트리 셰이킹도 가능합니다.
 
 ```ts
-const modules = import.meta.glob('./dir/*.js', { import: 'setup', eager: true })
+const modules = import.meta.glob('./dir/*.js', {
+  import: 'setup',
+  eager: true,
+})
 ```
 
 ```ts
