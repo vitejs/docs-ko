@@ -536,7 +536,10 @@ export default defineConfig({
     {
       // ...
       configureServer(server) {
-        server.ws.send('my:greetings', { msg: 'hello' })
+        // 예: 클라이언트가 연결될 때까지 메시지 전송 대기
+        server.ws.on('connection', () => {
+          server.ws.send('my:greetings', { msg: 'hello' })
+        })
       }
     }
   ]
@@ -550,7 +553,7 @@ export default defineConfig({
 클라이언트 측에서는 [`hot.on`](/guide/api-hmr.html#hot-on-event-cb)을 사용해 이벤트를 수신할 수 있습니다:
 
 ```ts
-// client side
+// 클라이언트 측
 if (import.meta.hot) {
   import.meta.hot.on('my:greetings', (data) => {
     console.log(data.msg) // hello
@@ -563,7 +566,7 @@ if (import.meta.hot) {
 클라이언트에서 서버로 이벤트를 보낼 때는 [`hot.send`](/guide/api-hmr.html#hot-send-event-payload)를 사용할 수 있습니다:
 
 ```ts
-// client side
+// 클라이언트 측
 if (import.meta.hot) {
   import.meta.hot.send('my:from-client', { msg: 'Hey!' })
 }
@@ -580,7 +583,7 @@ export default defineConfig({
       configureServer(server) {
         server.ws.on('my:from-client', (data, client) => {
           console.log('Message from client:', data.msg) // Hey!
-          // reply only to the client (if needed)
+          // 클라이언트에게만 응답(필요한 경우)
           client.send('my:ack', { msg: 'Hi! I got your message!' })
         })
       }
