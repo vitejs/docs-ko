@@ -54,7 +54,7 @@ vite build [root]
 | `--assetsDir <dir>`            | outDir 내부의 에셋이 위치할 디렉터리 (default: `"assets"`) (`string`)                                                  |
 | `--assetsInlineLimit <number>` | base64로 인라인되는 에셋의 바이트 임계값 (default: `4096`) (`number`)                                                  |
 | `--ssr [entry]`                | 지정된 엔트리를 서버 사이드 렌더링을 위해 빌드 (`string`)                                                              |
-| `--sourcemap`                  | 빌드에 소스 맵 포함 (default: `false`) (`boolean`)                                                                     |
+| `--sourcemap [output]`         | 빌드에 소스 맵 포함 (default: `false`) (`boolean \| "inline" \| "hidden"`)                                 |
 | `--minify [minifier]`          | minify 옵션을 활성화/비활성화하거나 사용할 minifier를 지정 (default: `"esbuild"`) (`boolean \| "terser" \| "esbuild"`) |
 | `--manifest [name]`            | 빌드 매니페스트 JSON 내보내기 (`boolean \| string`)                                                                    |
 | `--ssrManifest [name]`         | SSR 매니페스트 JSON 내보내기 (`boolean \| string`)                                                                     |
