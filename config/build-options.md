@@ -78,7 +78,7 @@ Whether to automatically inject a [module preload polyfill](https://guybedford.c
 - **타입:** `string`
 - **기본값:** `assets`
 
-생성된 에셋을 (`build.outDir`에 상대적으로) 저장할 디렉터리를 지정합니다.
+생성된 에셋을 (`build.outDir`에 상대적으로) 저장할 디렉터리를 지정합니다. [라이브러리 모드](/guide/build#library-mode)에서는 사용되지 않습니다.
 
 ## build.assetsInlineLimit {#build-assetsinlinelimit}
 
