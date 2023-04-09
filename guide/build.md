@@ -211,7 +211,7 @@ dist/my-lib.umd.cjs 0.30 KiB / gzip: 0.16 KiB
 :::
 
 ::: tip 환경 변수
-라이브러리 모드에서 모든 `import.meta.env.*`는 프로덕션용으로 빌드 시 정적으로 대체됩니다. 그러나 `process.env.*`는 그렇지 않기에 라이브러리를 사용하는 측에서 이를 동적으로 변경할 수 있습니다. 만약 이 역시 정적으로 대체되길 원한다면 `define: { 'process.env.`<wbr>`NODE_ENV': '"production"' }` 와 같이 설정해주세요.
+라이브러리 모드에서 모든 `import.meta.env.*`는 프로덕션용으로 빌드 시 정적으로 대체됩니다. 그러나 `process.env.*`는 그렇지 않기에 라이브러리를 사용하는 측에서 이를 동적으로 변경할 수 있습니다. 만약 이 역시 정적으로 대체되길 원한다면 `define: { 'process.env.NODE_ENV': '"production"' }` 와 같이 설정해주세요.
 :::
 
 ## Base 옵션 상세 설정 {#advanced-base-options}

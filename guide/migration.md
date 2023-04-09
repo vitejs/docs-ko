@@ -34,7 +34,7 @@ import stuff from './global.css?inline'
 
 `vite build`는 이제 전달된 `--mode`에 관계없이 항상 프로덕션 빌드를 수행합니다. 이전에는 `mode`를 `production` 이외의 다른 값으로 변경하면 개발 모드로 빌드가 수행되었습니다. 이제 개발 모드 빌드를 수행하려면 `.env.{mode}` 파일에서 `NODE_ENV=development`를 설정하면 됩니다.
 
-이 변경 사항의 일부로, `vite dev`와 `vite build`는 이미 정의된 경우 `process.env.`<wbr>`NODE_ENV`를 더 이상 덮어쓰지 않습니다. 따라서 `process.env.`<wbr>`NODE_ENV = 'development'`를 빌드하기 전에 설정했다면 개발 모드로 빌드할 수 있습니다. 이렇게 하면 여러 빌드 또는 병렬로 실행되는 개발 서버를 실행할 때 더 많은 제어를 할 수 있습니다.
+이 변경 사항의 일부로, `vite dev`와 `vite build`는 이미 정의된 경우 `process.env.NODE_ENV`를 더 이상 덮어쓰지 않습니다. 따라서 `process.env.NODE_ENV = 'development'`를 빌드하기 전에 설정했다면 개발 모드로 빌드할 수 있습니다. 이렇게 하면 여러 빌드 또는 병렬로 실행되는 개발 서버를 실행할 때 더 많은 제어를 할 수 있습니다.
 
 더 자세한 정보는 [모드](./env-and-mode.md#modes) 문서를 참조하세요.
 
