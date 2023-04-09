@@ -308,10 +308,11 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
 ### `configurePreviewServer` {#configurepreviewserver}
 
-- **타입:** `(server: { middlewares: Connect.Server, httpServer: http.Server }) => (() => void) | void | Promise<(() => void) | void>`
+- **타입:** `(server: PreviewServerForHook) => (() => void) | void | Promise<(() => void) | void>`
 - **종류:** `async`, `sequential`
+- **관련 항목:** [PreviewServerForHook](./api-javascript#previewserverforhook)
 
-  [`configureServer`](/guide/api-plugin.html#configureserver)와 동일하지만, 프리뷰 서버를 위한 설정입니다. [connect](https://github.com/senchalabs/connect) 서버와 그 기반이 되는 [http server](https://nodejs.org/api/http.html)를 제공하며, `configureServer`와 유사하게 이 훅도 다른 미들웨어가 설치되기 전 호출됩니다. 또한 이 훅 내부에서 설치하는 미들웨어가 다른 미들웨어 **이후에** 위치하기를 원한다면, 이 역시 함수를 반환하는 형태로 구성해주세요:
+  [`configureServer`](/guide/api-plugin.html#configureserver)와 같지만 프리뷰 서버에 대한 것입니다. `configureServer`와 마찬가지로 `configurePreviewServer` 훅은 다른 미들웨어가 설치되기 전에 호출됩니다. 만약 다른 미들웨어가 설치된 **이후에** 커스텀 미들웨어를 호출하고자 한다면, `configurePreviewServer`의 반환 값으로 함수를 반환해주세요. 이렇게 하면 내부 미들웨어가 설치된 후에 호출됩니다:
 
   ```js
   const myPlugin = () => ({

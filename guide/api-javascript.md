@@ -197,6 +197,45 @@ import { preview } from 'vite'
 })()
 ```
 
+## `PreviewServer` {#previewserver}
+
+```ts
+interface PreviewServer extends PreviewServerForHook {
+  resolvedUrls: ResolvedServerUrls
+}
+```
+
+## `PreviewServerForHook` {#previewserverforhook}
+
+```ts
+interface PreviewServerForHook {
+  /**
+   * 해석된 Vite 설정 객체
+   */
+  config: ResolvedConfig
+  /**
+   * connect 앱 인스턴스.
+   * - 커스텀 미들웨어를 프리뷰 서버에 연결할 수 있습니다.
+   * - 또한 커스텀 http 서버의 핸들러 함수 또는 connect 스타일의 Node.js 프레임워크의 미들웨어로 사용할 수 있습니다.
+   *
+   * https://github.com/senchalabs/connect#use-middleware
+   */
+  middlewares: Connect.Server
+  /**
+   * 네이티브 Node http 서버 인스턴스
+   */
+  httpServer: http.Server
+  /**
+   * Vite가 CLI에 출력하는 해석된 URL
+   */
+  resolvedUrls: ResolvedServerUrls | null
+  /**
+   * 서버 URL 출력하기
+   */
+  printUrls(): void
+}
+```
+
 ## `resolveConfig` {#resolveconfig}
 
 **타입 시그니처:**
