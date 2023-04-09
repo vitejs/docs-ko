@@ -109,13 +109,20 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 ## build.cssTarget {#build-csstarget}
 
 - **타입:** `string | string[]`
-- **기본값:** [`build.target`](#build-target)과 동일합니다.
+- **기본값:** [`build.target`](#build-target)과 동일
 
 이 옵션을 사용하면 CSS 압축(Minification) 시 타깃이 되는 브라우저를 설정할 수 있습니다.
 
 일반적으로 비주류 브라우저를 대상으로 하는 경우에만 사용되며, Android WeChat WebView를 예로 들 수 있습니다.
 이 브라우저는 대부분의 최신 JavaScript 문법을 지원하지만 [16진수 CSS 색상 표기법인 `#RGBA`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb_colors)를 지원하지 않습니다.
 이 경우, Vite가 `rgba()` 색상을 `#RGBA` 16진수 표기법으로 변환하는 것을 방지하기 위해 `build.cssTarget`을 `chrome61`로 설정해줘야 합니다.
+
+## build.cssMinify {#build-cssminify}
+
+- **타입:** `boolean`
+- **기본값:** [`build.minify`](#build-minify)와 동일
+
+이 옵션을 사용하면 기본값이 `build.minify`로 설정되는 대신 CSS 축소화를 구체적으로 재정의할 수 있으므로 JS와 CSS를 별도로 축소화할 수 있습니다. Vite는 CSS를 축소화하기 위해 `esbuild`를 사용합니다.
 
 ## build.sourcemap {#build-sourcemap}
 
