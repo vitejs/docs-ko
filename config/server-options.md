@@ -320,3 +320,21 @@ export default defineConfig({
   }
 })
 ```
+
+## server.sourcemapIgnoreList {#server-sourcemapignorelist}
+
+- **타입:** `false | (sourcePath: string, sourcemapPath: string) => boolean`
+- **기본값:** `(sourcePath) => sourcePath.includes('node_modules')`
+
+서버 소스맵에서 소스 파일을 무시할지 여부로, [`x_google_ignoreList` 소스 맵 확장](https://developer.chrome.com/blog/devtools-better-angular-debugging/#the-x_google_ignorelist-source-map-extension) 필드를 채워넣는 데 사용됩니다.
+
+기본적으로 `node_modules`가 포함된 경로를 모두 제외합니다. 이 동작을 비활성화하려면 `false`를 전달하거나, 함수를 전달해 소스와 소스맵 경로를 받아 소스 경로를 무시할지 여부를 반환할 수 있습니다.
+
+```js
+export default defineConfig({
+  server: {
+    // 이는 기본 값으로, node_modules가 경로에 포함된 모든 파일을 무시할 목록에 추가합니다.
+    sourcemapIgnoreList: (sourcePath, sourcemapPath) => sourcePath.includes('node_modules')
+  }
+};
+```
