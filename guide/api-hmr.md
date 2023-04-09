@@ -52,6 +52,14 @@ if (import.meta.hot) {
 }
 ```
 
+## IntelliSense for TypeScript {#intellisense-for-typescript}
+
+Vite는 [`vite/client.d.ts`](https://github.com/vitejs/vite/blob/main/packages/vite/client.d.ts)을 통해 `import.meta.hot`에 대한 타입 정의를 제공하고 있습니다. `src` 디렉터리 아래에 `env.d.ts`를 생성해 TypeScript가 타입 정의를 찾을 수 있도록 할 수 있습니다:
+
+```ts
+/// <reference types="vite/client" />
+```
+
 ## `hot.accept(cb)` {#hot-accept-cb}
 
 모듈 자신에 대한 HMR을 확인하기 위해서는 `import.meta.hot.accept`를 사용하고 업데이트된 모듈을 받는 콜백을 전달합니다:
