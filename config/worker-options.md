@@ -5,7 +5,7 @@
 ## worker.format {#worker-format}
 
 - **타입:** `'es' | 'iife'`
-- **기본값:** `iife`
+- **기본값:** `'iife'`
 
 워커 번들에 대한 포맷입니다.
 
