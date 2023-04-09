@@ -29,3 +29,4 @@
 | Worker         | 워커           |
 | Side effect    | 사이드 이펙트  |
 | Proxy          | 프락시         |
+| Minification   | 축소화         |
