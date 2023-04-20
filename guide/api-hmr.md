@@ -151,13 +151,13 @@ if (import.meta.hot) {
 
 ## `hot.invalidate(message?: string)` {#hot-invalidate-message-string}
 
-A self-accepting module may realize during runtime that it can't handle a HMR update, and so the update needs to be forcefully propagated to importers. By calling `import.meta.hot.invalidate()`, the HMR server will invalidate the importers of the caller, as if the caller wasn't self-accepting. This will log a message both in the browser console and in the terminal. You can pass a message to give some context on why the invalidation happened.
+실행 중인 자체 수용 모듈(self-accepting module)은 HMR 업데이트를 처리할 수 없음을 인지할 수 있고, 이에 따라 업데이트를 강제로 가져오는(importers) 모듈에 전파되어야 합니다. `import.meta.hot.invalidate()`를 호출함으로써 HMR 서버는 호출자의 가져오기(importers)를 무효화하며, 마치 호출자가 자체 수용 모듈이 아닌 것처럼 처리됩니다. 이 결과, 브라우저 콘솔과 터미널에 메시지가 기록됩니다. 무효화가 발생한 이유에 대한 문맥을 제공하기 위해 메시지를 전달할 수 있습니다.
 
-Note that you should always call `import.meta.hot.accept` even if you plan to call `invalidate` immediately afterwards, or else the HMR client won't listen for future changes to the self-accepting module. To communicate your intent clearly, we recommend calling `invalidate` within the `accept` callback like so:
+자체 수용 모듈에 대한 향후 변경 사항을 수신하려면 항상 `import.meta.hot.accept`를 호출해야 하며, 그 직후에 `invalidate`를 호출할 계획이라도 이 작업을 수행해야 합니다. 의도를 명확하게 전달하기 위해, 다음과 같이 `accept` 콜백 내에서 `invalidate`를 호출하는 것이 좋습니다:
 
 ```js
 import.meta.hot.accept(module => {
-  // You may use the new module instance to decide whether to invalidate.
+  // 새로운 모듈 인스턴스를 사용하여 무효화할지 결정할 수 있습니다.
   if (cannotHandleUpdate(module)) {
     import.meta.hot.invalidate()
   }
