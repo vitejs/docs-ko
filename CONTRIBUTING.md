@@ -157,3 +157,15 @@ Heading 마지막에 `{#custom-anchor-name}`와 같은 형태로 커스텀 앵�
 ViteJS **공식** 문서의 검색 기능은 [Algolia DocSearch](https://docsearch.algolia.com/) 서비스를 이용해 제공되고 있습니다. 이 서비스는 API Key를 발급받아 사용이 가능하며, 신청한 순서에 따라 차례대로 발급이 진행됩니다.
 
 본 번역 프로젝트 또한 2월 경 신청하였으며, 향후 API Key를 발급받게 되면 프로젝트에 적용할 예정입니다.
+
+## 🍍 그 외
+
+### 문서 최신화 방법
+
+본 리포지토리는 매일 원본이 되는 [vitejs/vite](https://github.com/vitejs/vite) 리포지토리의 `docs` 디렉터리와의 Sync 작업을 수행합니다. 이 작업은 GitHub Actions를 통해 진행되며([sync.yml](https://github.com/vitejs-kr/vitejs-kr.github.io/blob/main/.github/workflows/sync.yml)), 원본 문서에 변경사항이 생길 경우 이를 커밋 단위로 GitHub Issues에 남겨 알리도록 구성되어 있습니다.
+
+Issue 제목은 `[SYNC] <커밋 타이틀>` 형태로 만들어지며, 본문에 해당 커밋에 대한 링크가 포함되어 있습니다. 이를 통해 변경사항을 확인하고, 번역 문서에 반영할 수 있습니다.
+
+- [Issue 예시](https://github.com/vitejs-kr/vitejs-kr.github.io/issues/545)
+- [GitHub Actions 워크플로우](https://github.com/vitejs-kr/vitejs-kr.github.io/blob/main/.github/workflows/sync.yml)
+- [Sync 스크립트](https://github.com/vitejs-kr/vitejs-kr.github.io/blob/main/scripts/sync/index.js)
