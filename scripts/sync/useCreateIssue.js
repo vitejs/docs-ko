@@ -6,8 +6,8 @@ module.exports =
         const slicedHash = hash.slice(0, 7)
 
         octokit.rest.issues.create({
-          owner: 'vitejs-kr',
-          repo: 'vitejs-kr.github.io',
+          owner: 'vitejs',
+          repo: 'docs-ko',
           title: `[SYNC] ${message}`,
           labels: ['sync'],
           body: `[${date}] ${message} ([Go to commit ${slicedHash}](https://github.com/vitejs/vite/commit/${hash}))`,
