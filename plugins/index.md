@@ -18,7 +18,11 @@
 
 ### [@vitejs/plugin-vue2](https://github.com/vitejs/vite-plugin-vue2) {#vitejs-plugin-vue2}
 
-- Vue 2 단일 파일 컴포넌트(SFC)를 지원합니다.
+- Vue 2.7 단일 파일 컴포넌트(SFC)를 지원합니다.
+
+### [@vitejs/plugin-vue2-jsx](https://github.com/vitejs/vite-plugin-vue2-jsx) {#vitejs-plugin-vue2-jsx}
+
+- [전용 바벨 프리셋](https://github.com/vuejs/jsx-vue2/)을 통해 Vue 2.7 JSX를 지원합니다
 
 ### [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react) {#vitejs-plugin-react}
 
