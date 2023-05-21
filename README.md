@@ -4,8 +4,6 @@
   <img width="400" src="./docs/logo-white.png">
 </p>
 
-[![Sync](https://github.com/vitejs/docs-ko/actions/workflows/sync.yml/badge.svg)](https://github.com/vitejs/docs-ko/actions/workflows/sync.yml)
-
 [ViteJS 공식 문서](https://vitejs.dev/) 한글 번역 목적의 리포지토리 입니다.
 
 - [번역에 기여하는 방법](./CONTRIBUTING.md)
