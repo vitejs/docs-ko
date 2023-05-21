@@ -64,7 +64,7 @@ modulePreload: {
 - **기본값:** `true`
 - **Deprecated** use `build.modulePreload.polyfill` instead
 
-Whether to automatically inject a [module preload polyfill](https://guybedford.com/es-module-preloading-integrity#modulepreload-polyfill).
+[module preload polyfill](https://guybedford.com/es-module-preloading-integrity#modulepreload-polyfill)을 자동으로 주입할지 여부입니다.
 
 ## build.outDir {#build-outdir}
 
