@@ -4,13 +4,13 @@
   <img width="400" src="./docs/logo-white.png">
 </p>
 
-[![Deploy](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/deploy.yml) [![Sync](https://github.com/vitejs-kr/vitejs-kr.github.io/actions/workflows/sync.yml/badge.svg)](https://github.com/vitejs/vite/commits/main/docs)
+[![Sync](https://github.com/vitejs/docs-ko/actions/workflows/sync.yml/badge.svg)](https://github.com/vitejs/docs-ko/actions/workflows/sync.yml)
 
 [ViteJS 공식 문서](https://vitejs.dev/) 한글 번역 목적의 리포지토리 입니다.
 
 - [번역에 기여하는 방법](./CONTRIBUTING.md)
-- [번역이 필요한 문서 목록](https://github.com/vitejs-kr/vitejs-kr.github.io/issues?q=is%3Aopen+is%3Aissue+label%3Async)
-- [번역된 문서 보러가기](https://vitejs-kr.github.io/)
+- [번역이 필요한 문서 목록](https://github.com/vitejs/docs-ko/issues?q=is%3Aopen+is%3Aissue+label%3Async)
+- [번역된 문서 보러가기](https://ko.vitejs.dev/)
 
 ## 기여해 주신 분들
 
