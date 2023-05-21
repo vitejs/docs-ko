@@ -65,6 +65,14 @@ pnpm build
 
 용어집은 [TERMINOLOGY.md](./TERMINOLOGY.md) 문서에서 관리하고 있습니다.
 
+### 원본 문서와의 차이점
+
+- 본 프로젝트는 최신 버전의 Vite 문서를 번역하는 것을 목표로 하고 있습니다. 따라서, 번역 문서는 원본 문서의 최신 버전을 기준으로 작성합니다.
+  - 이전 버전의 Vite 문서를 참조하는 경우에는 원본 문서를 참조하도록 합니다. ([예시](https://github.com/vitejs-kr/vitejs-kr.github.io/blob/c3253e123c15eb537e77b806f2e14ef9d6447307/guide/ssr.md?plain=1#L271))
+- 번역 문서는 원본 문서와 동일한 디렉터리 구조를 가지고 있습니다.
+- 번역 문서는 원본 문서의 파일명을 그대로 사용합니다.
+  - 예외: 마이그레이션 가이드의 경우 [v2](https://github.com/vitejs-kr/vitejs-kr.github.io/blob/153b953b172136625d7e22ba496deee7f537525c/guide/migration-from-v1.md), [v3](https://github.com/vitejs-kr/vitejs-kr.github.io/blob/3457619fe9ab99fa70cb385220a8e6c4d13ad562/guide/migration-from-v2.md) 문서가 추가로 존재합니다.
+
 ## 🤝 컨벤션
 
 ### PR 및 커밋 타이틀
