@@ -315,23 +315,23 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 
 ## Render {#render}
 
-You can deploy your Vite app as a Static Site on [Render](https://render.com/).
+[Render](https://render.com/)를 이용해 Vite 앱을 정적 웹 사이트로 배포할 수 있습니다.
 
-1. Create a [Render account](https://dashboard.render.com/register).
+1. [Render 계정](https://dashboard.render.com/register)을 생성합니다.
 
-2. In the [Dashboard](https://dashboard.render.com/), click the **New** button and select **Static Site**.
+2. [대시보드](https://dashboard.render.com/)에서 **New** 버튼을 클릭한 뒤 **Static Site**를 선택합니다.
 
-3. Connect your GitHub/GitLab account or use a public repository.
+3. GitHub/GitLab 계정을 연결하거나, 공개 리포지토리를 사용합니다.
 
-4. Specify a project name and branch.
+4. 프로젝트 이름과 브랜치를 지정합니다.
 
    - **Build Command**: `npm run build`
    - **Publish Directory**: `dist`
 
-5. Click **Create Static Site**.
+5. **Create Static Site**를 클릭합니다.
 
-   Your app should be deployed at `https://<PROJECTNAME>.onrender.com/`.
+   앱은 `https://<PROJECTNAME>.onrender.com/` 경로로 배포됩니다.
 
-By default, any new commit pushed to the specified branch will automatically trigger a new deploy. [Auto-Deploy](https://render.com/docs/deploys#toggling-auto-deploy-for-a-service) can be configured in the project settings.
+기본적으로 지정된 브랜치에 새로운 커밋이 Push되면 자동으로 새로운 배포가 트리거됩니다. [자동 배포](https://render.com/docs/deploys#toggling-auto-deploy-for-a-service)는 프로젝트 설정에서 구성할 수 있습니다.
 
-You can also add a [custom domain](https://render.com/docs/custom-domains) to your project.
+프로젝트에 [커스텀 도메인](https://render.com/docs/custom-domains)을 추가할 수도 있습니다.
