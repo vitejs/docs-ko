@@ -1,0 +1,151 @@
+# ViteJS 한국어 번역 가이드
+
+ViteJS 한국어 번역 리포지토리에 오신 것을 환영합니다. 이 문서는 ViteJS 한국어 번역에 기여하시는 분들을 위한 가이드입니다.
+
+## 🚀 시작하기
+
+### 설치
+
+이 프로젝트는 [Node.js](https://nodejs.org/ko) 및 [PNPM](https://pnpm.io/ko/)을 이용합니다.
+
+```bash
+# 1. 이 리포지토리를 클론합니다.
+git clone https://github.com/vitejs-kr/vitejs-kr.github.io
+cd vitejs-kr.github.io
+
+# 2. 모듈을 설치합니다.
+pnpm install
+
+# 3. 개발 서버를 시작합니다. (http://localhost:5173/)
+pnpm dev
+
+# 4. 프로젝트를 빌드합니다. (dist 디렉터리에 빌드 결과물이 위치합니다)
+pnpm build
+```
+
+### 브랜치
+
+- `main` 브랜치는 번역 작업을 진행하는 목적으로 사용됩니다.
+- `sync` 브랜치는 매일 원본 문서와의 동기화를 진행하는 목적으로 사용됩니다.
+- `gh-pages` 브랜치는 https://vitejs-kr.github.io/ 사이트 소스로 사용됩니다.
+
+### 기여하기
+
+번역에 기여해 주신 모든 분께 감사드립니다.
+
+1. [GitHub Issues](https://github.com/vitejs-kr/vitejs-kr.github.io/issues?q=is%3Aopen+is%3Aissue+label%3Async)에서 아직 할당되지 않은 번역 작업을 **오래된 것부터** 찾아주세요. 최신 문서를 번역하는 경우 충돌이 발생될 수 있습니다. 번역이 필요한 작업은 일반적으로 Sync 태그가 붙어있습니다.
+1. 해당 Issue에서 "번역 작업을 진행하겠습니다"와 같은 코멘트를 남겨 작업을 진행하겠다는 의사를 표현해주세요. 승인된 경우, 번역 담당자로 자신이 Assign 된 것을 확인할 수 있습니다. (메인테이너의 경우 Self-Assign 기능을 이용할 수 있습니다.)
+1. 이 리포지토리를 Fork하고, 브랜치를 생성한 후, 번역 작업을 진행합니다. (작업을 진행하며 `pnpm dev` 명령을 통해 브라우저에서 실시간으로 확인할 수 있습니다.)
+1. 커밋, 그리고 자신의 번역 리포지토리로 Push 후, 이 리포지토리의 `main` 브랜치로 PR을 생성해주세요.
+1. 리뷰 단계에서 수정이 필요한 부분이 있을 경우 해당 부분을 수정하고 다시 Push 합니다.
+1. 더 이상 수정이 필요하지 않으면 메인테이너가 브랜치를 병합합니다. 감사합니다! 🎉
+
+## 📄 번역 스타일
+
+### 번역 규칙
+
+- 경어체를 사용합니다.
+- PR 전 [맞춤법 검사기](http://speller.cs.pusan.ac.kr/)를 사용해 문서를 검사합니다.
+- 줄 바꿈 및 단락은 원본 문서와 가능한 동일하게 유지합니다.
+- 공백(` `), 큰따옴표(`""`), 작은따옴표(`''`), 대시(`-`), 백틱(`` ` ``) 등 모든 특수문자는 최대한 남겨 수정합니다.
+- 소스 코드는 주석만 번역하며, 나머지는 원본 문서와 동일하게 유지합니다. 에러 내용은 번역하지 않습니다.
+- ko.javascript.info의 [번역 모법 사례](https://github.com/javascript-tutorial/ko.javascript.info/wiki/%EB%B2%88%EC%97%AD-%EB%AA%A8%EB%B2%94-%EC%82%AC%EB%A1%80)를 읽고 작업에 참여해주세요.
+- 원문에는 없으나 이해를 돕기 위해 추가하고자 하는 내용은 문장 중간이나 끝에 `(... - 옮긴이)` 형태로 작성해주세요.
+
+### 번역 팁
+
+- 번역은 단어를 그대로 옮기는 것이 아니라 의미를 전달하는 것이 목적입니다. 누락, 오역, 번역투가 아닌 문장이면 좋습니다.
+
+### 번역 시 참고할 수 있는 자료
+
+- [국립국어원 외래어 표기법 용례](https://kornorms.korean.go.kr//example/exampleList.do)
+- [마이크로소프트 용어 검색](https://www.microsoft.com/en-us/language/Search)
+
+### 용어집
+
+용어집은 [TERMINOLOGY.md](./TERMINOLOGY.md) 문서에서 관리하고 있습니다.
+
+## 🤝 컨벤션
+
+### PR 및 커밋 타이틀
+
+PR과 커밋 타이틀은 [시멘틱 커밋 메시지](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716)를 기반으로 합니다:
+
+```
+<type>(<scope>): <subject>
+```
+
+- **type**: 커밋의 타입을 나타냅니다.
+  - `docs`: 문서 수정
+  - `feat`: 새로운 기능 추가
+  - `fix`: 버그 수정
+  - `style`: 코드 포맷팅, 세미콜론 누락, 코드 변경이 없는 경우
+  - `refactor`: 코드 리팩토링
+  - `test`: 테스트 코드, 리팩토링 테스트 코드 추가
+  - `chore`: 빌드 및 패키지 매니저 수정
+- **scope**: 커밋의 범위를 나타냅니다. (선택사항)
+- **subject**: 커밋의 제목을 나타냅니다.
+
+### PR 규칙
+
+- 논의가 필요한 PR은 수정 요청을 할 수 있습니다.
+- PR 생성 시 체크리스트를 확인해주세요.
+
+### 커스텀 앵커
+
+본 리포지토리는 올바른 앵커 참조를 위해 커스텀 앵커를 사용하고 있습니다.
+
+Heading 마지막에 `{#custom-anchor-name}`와 같은 형태로 커스텀 앵커의 지정이 가능하며, 앵커 이름은 원본 문서를 기준으로 합니다.
+
+가령, 아래와 같은 문서를 번역한다고 했을 때:
+
+```
+# Getting Started
+```
+
+아래와 같이 커스텀 앵커를 지정해주세요.
+
+```
+# 시작하기 {#getting-started}
+```
+
+위 앵커는 다음과 같이 참조가 가능합니다.
+
+```
+[시작하기](#getting-started)
+```
+
+커스텀 앵커를 이용하기에 일반적으로 원본 Vite 문서에 대한 한글 문서는 도메인 네임만 `vitejs-kr.github.io`로 바꿔주면 참조가 가능합니다:
+
+- 원본: https://vitejs.dev/guide/ssr.html#generating-preload-directives
+- 한글 문서: https://vitejs-kr.github.io/guide/ssr.html#generating-preload-directives
+
+[guide/cli.md](https://github.com/vitejs-kr/vitejs-kr.github.io/blob/main/guide/cli.md) 문서에서와 같이 중복된 타이틀이 존재할 수 있습니다. 이 경우 중복되는 타이틀에는 `{#title-1}` 형태로 커스텀 앵커를 지정해주세요:
+
+```md
+## 옵선 {#options}
+
+...
+
+## 옵션 {#options-1}
+
+...
+
+## 옵션 {#options-2}
+
+...
+```
+
+## 🤨 FAQ
+
+### 광고가 보여요
+
+본 번역 프로젝트는 영리 목적으로 시작된 것이 아니며, 어떠한 방식으로도 수익을 내지 않습니다. 또한 앞으로도 그럴 계획이 없습니다.
+
+프로젝트는 [ViteJS 리포지토리](https://github.com/vitejs/vite)를 포크해 시작했습니다. 이 과정에서 대부분의 설정 값을 그대로 사용하게 되었고, 광고와 관련된 설정 또한 원본과 동일하게 유지했습니다([config.js](https://github.com/vitejs-kr/vitejs-kr.github.io/blob/eae7c247bfc1ad0056428987f4f781eef762d6b5/.vitepress/config.js#L26)). 이로 인해 [ViteJS 번역 문서](https://vitejs-kr.github.io/)에서 광고가 나타나게 되었으며 광고의 설정 및 내용은 [ViteJS 공식 문서](https://vitejs.dev/)와 동일합니다.
+
+### 검색 기능이 제대로 동작하지 않아요
+
+ViteJS **공식** 문서의 검색 기능은 [Algolia DocSearch](https://docsearch.algolia.com/) 서비스를 이용해 제공되고 있습니다. 이 서비스는 API Key를 발급받아 사용이 가능하며, 신청한 순서에 따라 차례대로 발급이 진행됩니다.
+
+본 번역 프로젝트 또한 2월 경 신청하였으며, 향후 API Key를 발급받게 되면 프로젝트에 적용할 예정입니다.
