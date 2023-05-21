@@ -85,6 +85,7 @@ export default defineConfig({
         text: '리소스',
         items: [
           { text: 'Vite 팀', link: '/team' },
+          { text: '릴리스', link: '/releases' },
           {
             items: [
               {

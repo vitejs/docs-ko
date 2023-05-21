@@ -343,6 +343,6 @@ export default defineConfig({
 };
 ```
 
-::: tip Note
+::: tip 참고
 [`server.sourcemapIgnoreList`](#server-sourcemapignorelist)와 [`build.rollupOptions.output.sourcemapIgnoreList`](https://rollupjs.org/configuration-options/#output-sourcemapignorelist)는 독립적으로 설정해야 합니다. `server.sourcemapIgnoreList`는 서버 전용 구성이며 정의된 rollup 옵션에서 기본값을 가져오지 않습니다.
 :::

@@ -30,3 +30,4 @@
 | Side effect    | 사이드 이펙트  |
 | Proxy          | 프락시         |
 | Minification   | 축소화         |
+| Release        | 릴리스         |
