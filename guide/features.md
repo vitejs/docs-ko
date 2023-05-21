@@ -71,7 +71,7 @@ Vite 2.5.0 부터는 TypeScript의 변환 대상이 `ESNext` 또는 `ES2022` 이
 
 그러나 다른 프로그래밍 언어나 이전 버전의 TypeScript를 사용하던 사람들에게는 직관적이지 않은 내용일 수 있습니다. 이에 대한 자세한 정보는 [TypeScript 3.7 릴리스 노트](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#the-usedefineforclassfields-flag-and-the-declare-property-modifier)를 참고할 수 있습니다.
 
-또한, [MobX](https://mobx.js.org/installation.html#use-spec-compliant-transpilation-for-class-properties)나 [Vue 클래스 컴포넌트 8.X](https://github.com/vuejs/vue-class-component/issues/465)와 같은 대부분의 라이브러리는 `"useDefineForClassFields": true`인 것으로 가정하고 동작합니다. 따라서 만약 클래스의 필드에 크게 의존하는 라이브러리를 사용하는 경우라면, 이러한 라이브러리를 사용하는 것에 대해 옵션을 수정하는 경우 상당한 주의를 기울어야 합니다.
+또한, [MobX](https://mobx.js.org/installation.html#use-spec-compliant-transpilation-for-class-properties)와 같은 대부분의 라이브러리는 `"useDefineForClassFields": true`인 것으로 가정하고 동작합니다. 따라서 만약 클래스의 필드에 크게 의존하는 라이브러리를 사용하는 경우라면, 이러한 라이브러리를 사용하는 것에 대해 옵션을 수정하는 경우 상당한 주의를 기울어야 합니다.
 
 다만 [`lit-element`](https://github.com/lit/lit-element/issues/1030)를 포함해 일부 라이브러리는 아직 이 새로운 기본값이 적용되지 않았습니다. 이러한 경우에는 `useDefineForClassFields`의 값을 `false`로 설정해주세요.
 
