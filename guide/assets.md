@@ -14,7 +14,7 @@ import imgUrl from './img.png'
 document.getElementById('hero-img').src = imgUrl
 ```
 
-예를 들어, `imgUrl` 객체는 개발 시 `/img.png` 값으로 할당되겠으나, 실제 프로덕션 버전에서는 `/assets/img.2d8efhg.png`와 같은 값\*이 할당됩니다. (\* 여기서 `2d8efhg`는 해시 값을 의미합니다.)
+예를 들어, `imgUrl` 객체는 개발 시 `/img.png` 값으로 할당되겠으나, 실제 프로덕션 버전에서는 `/assets/img.2d8efhg.png`와 같은 값이 할당됩니다. (여기서 `2d8efhg`는 해시 값을 의미합니다. - 옮긴이)
 
 Webpack의 `file-loader`와 비슷한데, 하나 차이점이 있다면 Vite는 절대 경로와 상대 경로 둘 다 사용할 수 있습니다.
 
@@ -26,7 +26,7 @@ Webpack의 `file-loader`와 비슷한데, 하나 차이점이 있다면 Vite는 
 
 - 참조된 에셋은 빌드 에셋 그래프의 일부 요소로 포함되며, 파일 이름이 해싱되거나 최적화를 위해 플러그인으로 처리될 수 있습니다.
 
-- [`assetsInlineLimit` 옵션](/config/shared-options.md#assetsinlinelimit)의 값보다 작은 에셋 파일의 경우, Base64 포맷의 데이터 URL\* 문자열로 가져옵니다. (\* [데이터 URL MDN doc](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs))
+- [`assetsInlineLimit` 옵션](/config/shared-options.md#assetsinlinelimit)의 값보다 작은 에셋 파일의 경우, Base64 포맷의 데이터 URL 문자열로 가져옵니다.
 
 - Git LFS 자리 표시자는 파일 내용을 포함하지 않기에 인라인에서 자동으로 제외됩니다. 만약 이 역시 인라인에 포함하고자 한다면 빌드하기 전 Git LFS를 통해 파일을 다운로드해주세요.
 

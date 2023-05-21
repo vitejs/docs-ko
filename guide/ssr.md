@@ -53,7 +53,7 @@ if (import.meta.env.SSR) {
 }
 ```
 
-이러한 코드는 빌드 중에 정적으로 대체되기에, 사용하지 않는 분기문에 대해서는 트리-쉐이킹\*을 적용합니다. (\* 트리 셰이킹: Tree-shaking, 사용하지 않는 코드를 제거하는 기법 / [참고](https://webpack.js.org/guides/tree-shaking/))
+이러한 코드는 빌드 중에 정적으로 대체되기에, 사용하지 않는 분기문에 대해서는 트리 셰이킹을 적용합니다.
 
 ## 개발 서버 구성하기 {#setting-up-the-dev-server}
 
