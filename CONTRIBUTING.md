@@ -128,7 +128,7 @@ Heading 마지막에 `{#custom-anchor-name}`와 같은 형태로 커스텀 앵�
 - 원본: https://vitejs.dev/guide/ssr.html#generating-preload-directives
 - 한글 문서: https://vitejs-kr.github.io/guide/ssr.html#generating-preload-directives
 
-[guide/cli.md](https://github.com/vitejs-kr/vitejs-kr.github.io/blob/main/guide/cli.md) 문서에서와 같이 중복된 타이틀이 존재할 수 있습니다. 이 경우 중복되는 타이틀에는 `{#title-1}` 형태로 커스텀 앵커를 지정해주세요:
+[guide/cli.md](https://github.com/vitejs-kr/vitejs-kr.github.io/blob/75e154e4267399895028d7f007419bd83833f445/guide/cli.md) 문서에서와 같이 중복된 타이틀이 존재할 수 있습니다. 이 경우 중복되는 타이틀에는 `{#title-1}` 형태로 커스텀 앵커를 지정해주세요:
 
 ```md
 ## 옵선 {#options}
