@@ -26,13 +26,12 @@ pnpm build
 ### 브랜치
 
 - `main` 브랜치는 번역 작업을 진행하는 목적으로 사용됩니다.
-- `sync` 브랜치는 매일 원본 문서와의 동기화를 진행하는 목적으로 사용됩니다.
 
 ### 기여하기
 
 번역에 기여해 주신 모든 분께 감사드립니다.
 
-1. [GitHub Issues](https://github.com/vitejs/docs-ko/issues?q=is%3Aopen+is%3Aissue+label%3Async)에서 아직 할당되지 않은 번역 작업을 **오래된 것부터** 찾아주세요. 최신 문서를 번역하는 경우 충돌이 발생될 수 있습니다. 번역이 필요한 작업은 일반적으로 Sync 태그가 붙어있습니다.
+1. [GitHub Issues](https://github.com/vitejs/docs-ko/issues)에서 아직 할당되지 않은 번역 작업을 **오래된 것부터** 찾아주세요. 최신 문서를 번역하는 경우 충돌이 발생될 수 있습니다.
 1. 해당 Issue에서 "번역 작업을 진행하겠습니다"와 같은 코멘트를 남겨 작업을 진행하겠다는 의사를 표현해주세요. 승인된 경우, 번역 담당자로 자신이 Assign 된 것을 확인할 수 있습니다. (메인테이너의 경우 Self-Assign 기능을 이용할 수 있습니다.)
 1. 이 리포지토리를 Fork하고, 브랜치를 생성한 후, 번역 작업을 진행합니다. (작업을 진행하며 `pnpm dev` 명령을 통해 브라우저에서 실시간으로 확인할 수 있습니다.)
 1. 커밋, 그리고 자신의 번역 리포지토리로 Push 후, 이 리포지토리의 `main` 브랜치로 PR을 생성해주세요.
@@ -164,10 +163,4 @@ ViteJS **공식** 문서의 검색 기능은 [Algolia DocSearch](https://docsear
 
 ### 문서 최신화 방법
 
-본 리포지토리는 매일 원본이 되는 [vitejs/vite](https://github.com/vitejs/vite) 리포지토리의 `docs` 디렉터리와의 Sync 작업을 수행합니다. 이 작업은 GitHub Actions를 통해 진행되며([sync.yml](https://github.com/vitejs/docs-ko/blob/main/.github/workflows/sync.yml)), 원본 문서에 변경사항이 생길 경우 이를 커밋 단위로 GitHub Issues에 남겨 알리도록 구성되어 있습니다.
-
-Issue 제목은 `[SYNC] <커밋 타이틀>` 형태로 만들어지며, 본문에 해당 커밋에 대한 링크가 포함되어 있습니다. 이를 통해 변경사항을 확인하고, 번역 문서에 반영할 수 있습니다.
-
-- [Issue 예시](https://github.com/vitejs-kr/vitejs-kr.github.io/issues/545)
-- [GitHub Actions 워크플로우](https://github.com/vitejs/docs-ko/blob/main/.github/workflows/sync.yml)
-- [Sync 스크립트](https://github.com/vitejs/docs-ko/blob/main/scripts/sync/index.js)
+본 리포지토리는 매 10분마다 원본이 되는 [vitejs/vite](https://github.com/vitejs/vite) 리포지토리의 `docs` 디렉터리의 변경 사항을 추적합니다. 이 작업은 [GitHub Actions](./.github/workflows/sync.yml)를 통해 진행되며, [ryu-cho](https://github.com/vuejs-translations/ryu-cho) 오픈소스를 사용합니다. 원본 문서에 변경사항이 생길 경우 이를 GitHub Issues에 남겨 알리도록 구성되어 있습니다.
