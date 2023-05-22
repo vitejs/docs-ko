@@ -6,7 +6,7 @@ Vite의 플러그인은 Rollup의 멋진 플러그인 인터페이스에 몇 가
 
 ## 플러그인 만들기 {#authoring-a-plugin}
 
-Vite는 확립된 패턴을 제공하기 위해 노력하고 있습니다. 따라서 새 플러그인을 만들기 전 [Vite에서 지원하는 기능들](https://ko.vitejs.dev/guide/features), [호환되는 Rollup 플러그인](https://github.com/rollup/awesome), 그리고 [Vite 플러그인](https://github.com/vitejs/awesome-vite#plugins)을 확인하여 사용 가능한 것이 있는지 확인해주세요.
+Vite는 확립된 패턴을 제공하기 위해 노력하고 있습니다. 따라서 새 플러그인을 만들기 전 [Vite에서 지원하는 기능들](https://kr.vitejs.dev/guide/features), [호환되는 Rollup 플러그인](https://github.com/rollup/awesome), 그리고 [Vite 플러그인](https://github.com/vitejs/awesome-vite#plugins)을 확인하여 사용 가능한 것이 있는지 확인해주세요.
 
 플러그인을 만들 때는 굳이 새로운 패키지를 만들지 않고 `vite.config.js`에 직접 작성할 수도 있습니다. 만약 작성한 플러그인이 프로젝트에서 유용하다고 생각된다면, [Vite를 사용하는 다른 사람들과 공유해보세요](https://chat.vitejs.dev).
 
