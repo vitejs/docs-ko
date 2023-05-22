@@ -2,32 +2,24 @@ name: Sync
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "*/5 * * * *"
 
 jobs:
-  sync:
+  ryu-cho:
+    name: Ryu Cho
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: vuejs-translations/ryu-cho@v1
         with:
-          token: ${{ secrets.PAT }}
+          access-token: ${{ secrets.GITHUB_TOKEN }}
+          username: github-actions
+          email: "action@github.com"
 
-      - uses: actions/setup-node@v3
-      - uses: pnpm/action-setup@v2.2.1
-        with:
-          version: 7
+          upstream-repo: https://github.com/vitejs-kr/vitejs-kr.github.io.git
+          upstream-repo-branch: main
 
-      - uses: actions/cache@v3
-        id: pnpm-cache
-        with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
-      - if: steps.pnpm-cache.outputs.cache-hit != 'true'
-        run: pnpm install
-
-      - name: Run sync script
-        run: pnpm run sync ${{ secrets.GITHUB_TOKEN }}
+          head-repo: https://github.com/vitejs/vite
+          head-repo-branch: main
+          track-from: 0cbd81895ecb462f93b4cb9522576b305f984f3f
+          path-starts-with: docs/
+          workflow-name: ryu-cho
