@@ -3,9 +3,9 @@ import markdownItCustomAnchor from './markdown-it-custom-anchor'
 import renderPermalink from './render-permalink'
 
 const ogDescription = 'Vite, 차세대 프런트엔드 개발 툴'
-const ogImage = 'https://ko.vitejs.dev/og-image.png'
+const ogImage = 'https://vitejs-kr.github.io/og-image.png'
 const ogTitle = 'Vite'
-const ogUrl = 'https://ko.vitejs.dev'
+const ogUrl = 'https://vitejs-kr.github.io'
 
 export default defineConfig({
   title: 'Vite',
@@ -46,7 +46,7 @@ export default defineConfig({
     logo: '/logo.svg',
 
     editLink: {
-      pattern: 'https://github.com/vitejs/docs-ko/edit/main/:path',
+      pattern: 'https://github.com/vitejs-kr.github.io/docs-ko/edit/main/:path',
       text: '이 페이지 수정하기',
     },
 
