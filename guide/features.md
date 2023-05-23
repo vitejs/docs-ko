@@ -348,7 +348,7 @@ const modules = {
 
 ### Glob Import As {#glob-import-as}
 
-`import.meta.glob` 역시 [문자열 형태로 에셋 가져오기](https://kr.vitejs.dev/guide/assets.html#importing-asset-as-string) 기능과 유사하게 파일을 가져올 수 있습니다. 이는 [Import Reflection](https://github.com/tc39/proposal-import-reflection) 구문을 사용합니다:
+`import.meta.glob` 역시 [문자열 형태로 에셋 가져오기](https://ko.vitejs.dev/guide/assets.html#importing-asset-as-string) 기능과 유사하게 파일을 가져올 수 있습니다. 이는 [Import Reflection](https://github.com/tc39/proposal-import-reflection) 구문을 사용합니다:
 
 ```js
 const modules = import.meta.glob('./dir/*.js', { as: 'raw', eager: true })

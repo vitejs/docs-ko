@@ -15,7 +15,7 @@ jobs:
           username: github-actions
           email: "action@github.com"
 
-          upstream-repo: https://github.com/vitejs/docs-kr.git
+          upstream-repo: https://github.com/vitejs/docs-ko.git
           upstream-repo-branch: main
 
           head-repo: https://github.com/vitejs/vite
