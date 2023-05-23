@@ -7,8 +7,8 @@
 [ViteJS 공식 문서](https://vitejs.dev/) 한글 번역 목적의 리포지토리 입니다.
 
 - [번역에 기여하는 방법](./CONTRIBUTING.md)
-- [번역이 필요한 문서 목록](https://github.com/vitejs/docs-kr/issues)
-- [번역된 문서 보러가기](https://kr.vitejs.dev/)
+- [번역이 필요한 문서 목록](https://github.com/vitejs/docs-ko/issues)
+- [번역된 문서 보러가기](https://ko.vitejs.dev/)
 
 ## 기여해 주신 분들
 

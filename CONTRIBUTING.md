@@ -10,8 +10,8 @@ ViteJS 한국어 번역 리포지토리에 오신 것을 환영합니다. 이 �
 
 ```bash
 # 1. 이 리포지토리를 클론합니다.
-git clone https://github.com/vitejs/docs-kr
-cd docs-kr
+git clone https://github.com/vitejs/docs-ko
+cd docs-ko
 
 # 2. 모듈을 설치합니다.
 pnpm install
@@ -31,7 +31,7 @@ pnpm build
 
 번역에 기여해 주신 모든 분께 감사드립니다.
 
-1. [GitHub Issues](https://github.com/vitejs/docs-kr/issues)에서 아직 할당되지 않은 번역 작업을 **오래된 것부터** 찾아주세요. 최신 문서를 번역하는 경우 충돌이 발생할 수 있습니다.
+1. [GitHub Issues](https://github.com/vitejs/docs-ko/issues)에서 아직 할당되지 않은 번역 작업을 **오래된 것부터** 찾아주세요. 최신 문서를 번역하는 경우 충돌이 발생할 수 있습니다.
 1. 해당 Issue에서 "번역 작업을 진행하겠습니다"와 같은 코멘트를 남겨 작업을 진행하겠다는 의사를 표현해주세요. 승인된 경우, 번역 담당자로 자신이 Assign 된 것을 확인할 수 있습니다. (메인테이너의 경우 Self-Assign 기능을 이용할 수 있습니다.)
 1. 이 리포지토리를 Fork하고, 브랜치를 생성한 후, 번역 작업을 진행합니다. (작업을 진행하며 `pnpm dev` 명령을 통해 브라우저에서 실시간으로 확인할 수 있습니다.)
 1. 커밋, 그리고 자신의 번역 리포지토리로 Push 후, 이 리포지토리의 `main` 브랜치로 PR을 생성해주세요.
@@ -72,7 +72,7 @@ pnpm build
     ```
 - 번역 문서는 원본 문서와 동일한 디렉터리 구조를 가지고 있습니다.
 - 번역 문서는 원본 문서의 파일명을 그대로 사용합니다.
-  - 예외: 마이그레이션 가이드의 경우 [v2](https://github.com/vitejs/docs-kr/blob/main/guide/migration-from-v1.md), [v3](https://github.com/vitejs/docs-kr/blob/main/guide/migration-from-v2.md) 문서가 추가로 존재합니다.
+  - 예외: 마이그레이션 가이드의 경우 [v2](https://github.com/vitejs/docs-ko/blob/main/guide/migration-from-v1.md), [v3](https://github.com/vitejs/docs-ko/blob/main/guide/migration-from-v2.md) 문서가 추가로 존재합니다.
 
 ## 🤝 컨벤션
 
@@ -124,12 +124,12 @@ Heading 마지막에 `{#custom-anchor-name}`와 같은 형태로 커스텀 앵�
 [시작하기](#getting-started)
 ```
 
-커스텀 앵커를 이용하기에 일반적으로 원본 Vite 문서에 대한 한글 문서는 도메인 네임만 `kr.vitejs.dev`로 바꿔주면 참조가 가능합니다:
+커스텀 앵커를 이용하기에 일반적으로 원본 Vite 문서에 대한 한글 문서는 도메인 네임만 `ko.vitejs.dev`로 바꿔주면 참조가 가능합니다:
 
 - 원본: https://vitejs.dev/guide/ssr.html#generating-preload-directives
-- 한글 문서: https://kr.vitejs.dev/guide/ssr.html#generating-preload-directives
+- 한글 문서: https://ko.vitejs.dev/guide/ssr.html#generating-preload-directives
 
-[guide/cli.md](https://github.com/vitejs/docs-kr/blob/main/guide/cli.md) 문서에서와 같이 중복된 타이틀이 존재할 수 있습니다. 이 경우 중복되는 타이틀에는 `{#title-1}` 형태로 커스텀 앵커를 지정해주세요:
+[guide/cli.md](https://github.com/vitejs/docs-ko/blob/main/guide/cli.md) 문서에서와 같이 중복된 타이틀이 존재할 수 있습니다. 이 경우 중복되는 타이틀에는 `{#title-1}` 형태로 커스텀 앵커를 지정해주세요:
 
 ```md
 ## 옵선 {#options}
@@ -151,7 +151,7 @@ Heading 마지막에 `{#custom-anchor-name}`와 같은 형태로 커스텀 앵�
 
 본 번역 프로젝트는 영리 목적으로 시작된 것이 아니며, 어떠한 방식으로도 수익을 내지 않습니다. 또한 앞으로도 그럴 계획이 없습니다.
 
-프로젝트는 [ViteJS 리포지토리](https://github.com/vitejs/vite)를 포크해 시작했습니다. 이 과정에서 대부분의 설정값을 그대로 사용하게 되었고, 광고와 관련된 설정 또한 원본과 동일하게 유지했습니다. 이로 인해 [ViteJS 번역 문서](https://kr.vitejs.dev/)에서 광고가 나타나게 되었으며 광고의 설정 및 내용은 [ViteJS 공식 문서](https://vitejs.dev/)와 동일합니다.
+프로젝트는 [ViteJS 리포지토리](https://github.com/vitejs/vite)를 포크해 시작했습니다. 이 과정에서 대부분의 설정값을 그대로 사용하게 되었고, 광고와 관련된 설정 또한 원본과 동일하게 유지했습니다. 이로 인해 [ViteJS 번역 문서](https://ko.vitejs.dev/)에서 광고가 나타나게 되었으며 광고의 설정 및 내용은 [ViteJS 공식 문서](https://vitejs.dev/)와 동일합니다.
 
 ### 검색 기능이 제대로 동작하지 않아요
 
