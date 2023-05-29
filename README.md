@@ -38,15 +38,16 @@ Vite(프랑스어로 '빠른'을 의미하며 [`/vit/`](https://cdn.jsdelivr.net
 
 ## 패키지
 
-| Package                                         | Version (변경로그를 보려면 클릭)                                                                                                    |
-| ----------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
-| [vite](packages/vite)                           | [![vite version](https://img.shields.io/npm/v/vite.svg?label=%20)](packages/vite/CHANGELOG.md)                                    |
-| [@vitejs/plugin-legacy](packages/plugin-legacy) | [![plugin-legacy version](https://img.shields.io/npm/v/@vitejs/plugin-legacy.svg?label=%20)](packages/plugin-legacy/CHANGELOG.md) |
-| [create-vite](packages/create-vite)             | [![create-vite version](https://img.shields.io/npm/v/create-vite.svg?label=%20)](packages/create-vite/CHANGELOG.md)               |
+| Package                                                                                  | Version (변경로그를 보려면 클릭)                                                                                                                                           |
+| ---------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [vite](https://github.com/vitejs/vite/tree/main/packages/vite)                           | [![vite version](https://img.shields.io/npm/v/vite.svg?label=%20)](https://github.com/vitejs/vite/tree/main/packages/vite/CHANGELOG.md)                                    |
+| [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) | [![plugin-legacy version](https://img.shields.io/npm/v/@vitejs/plugin-legacy.svg?label=%20)](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy/CHANGELOG.md) |
+| [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)             | [![create-vite version](https://img.shields.io/npm/v/create-vite.svg?label=%20)](https://github.com/vitejs/vite/tree/main/packages/create-vite/CHANGELOG.md)               |
 
 ## 기여 방법
 
- [가이드라인](./CONTRIBUTING.md)을 확인해 주세요.
+[가이드라인](./CONTRIBUTING.md)을 확인해 주세요.
+
 - [번역이 필요한 문서 목록](https://github.com/vitejs/docs-ko/issues)
 
 ## 기여해 주신 분들
