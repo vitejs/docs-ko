@@ -10,5 +10,5 @@ resolved #
 
 ## 체크리스트
 
-- [ ] [번역 가이드](../CONTRIBUTING.md)를 준수했습니다.
+- [ ] [번역 가이드](https://github.com/vitejs/docs-ko/blob/main/CONTRIBUTING.md)를 준수했습니다.
 - [ ] [맞춤법 검사기](http://speller.cs.pusan.ac.kr/)를 통해 문서를 검사했습니다.
