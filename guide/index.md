@@ -61,7 +61,7 @@ $ pnpm create vite
 
 이후에는 프롬프트 창에 출력된 메시지를 따라주세요.
 
-물론 프로젝트의 이름이나 템플릿을 지정해 프로젝트를 만들 수 있습니다. 가령, Vite를 이용해 Vue 프로젝트를 만들자고 한다면:
+프로젝트의 이름이나 사용하려는 템플릿을 직접 지정할 수도 있습니다. 예를 들어, Vite + Vue 프로젝트를 만들고 싶다면 다음과 같이 입력해주세요:
 
 ```bash
 # npm 6.x
@@ -76,8 +76,6 @@ yarn create vite my-vue-app --template vue
 # pnpm
 pnpm create vite my-vue-app --template vue
 ```
-
-이와 같이 지정할 수 있습니다.
 
 또한 [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)에서 더욱 다양한 템플릿들에 대해 다루고 있습니다: `vanilla`, `vanilla-ts`, `vue`, `vue-ts`, `react`, `react-ts`, `react-swc`, `react-swc-ts`, `preact`, `preact-ts`, `lit`, `lit-ts`, `svelte`, `svelte-ts`.
 
