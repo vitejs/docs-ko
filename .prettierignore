@@ -4,3 +4,7 @@ docs/
 guide/
 team.md
 releases.md
+.vitepress
+_data
+public
+plugins
