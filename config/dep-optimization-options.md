@@ -22,10 +22,11 @@ CommonJS 디펜던시는 최적화에서 제외돼서는 안 됩니다. ESM 디�
 ```js
 export default defineConfig({
   optimizeDeps: {
-    include: ['esm-dep > cjs-dep']
-  }
+    include: ['esm-dep > cjs-dep'],
+  },
 })
 ```
+
 :::
 
 ## optimizeDeps.include {#optimizedeps-include}
@@ -38,7 +39,9 @@ export default defineConfig({
 
 - **타입:** [`EsbuildBuildOptions`](https://esbuild.github.io/api/#simple-options)
 
-디펜던시 스캐닝 및 최적화 중 Esbuild에 전달할 옵션입니다. 특정 옵션은 Vite의 디펜던시 최적화와 호환되지 않기에 생략되었습니다.
+디펜던시 스캐닝 및 최적화 중 Esbuild에 전달할 옵션입니다.
+
+특정 옵션은 Vite의 디펜던시 최적화와 호환되지 않기에 생략되었습니다.
 
 - `external`은 생략됩니다. 이 대신 Vite의 `optimizeDeps.exclude` 옵션을 사용합니다.
 - `plugins`는 Vite의 디펜던시 플러그인과 병합됩니다.
@@ -62,3 +65,10 @@ export default defineConfig({
 
 만약 빌드 시에도 이 전략을 사용하고 싶다면 `optimizeDeps.disabled: false`로 설정해주세요. `@rollup/plugin-commonjs`는 `build.commonjsOptions: { include: [] }`를 전달함으로써 제거할 수 있습니다.
 :::
+
+## optimizeDeps.needsInterop {#optimizedeps-needsinterop}
+
+- **실험적 기능**
+- **타입:** `string[]`
+
+명시된 디펜던시를 가져올 때 ESM 상호 운용을 강제합니다. Vite는 디펜던시가 상호 운용 필요한지를 정확하게 감지할 수 있기 때문에 이 옵션은 일반적으로 필요하지 않습니다. 그러나 디펜던시들의 다양한 조합에 따라 이들 중 일부는 사전 번들링이 다르게 적용될 수 있습니다. 이 패키지들을 `needsInterop`에 추가하면 전체 페이지에 대한 리로드를 피하고 콜드 스타트를 가속할 수 있습니다. 만약 사용하는 디펜던시가 이 상황에 해당한다면, 설정 파일에 이 패키지 이름을 추가하라는 경고가 표시됩니다.
