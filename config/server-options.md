@@ -34,6 +34,13 @@ export default defineConfig({
 
 :::
 
+::: tip LAN에서 WSL2의 서버에 액세스하기
+
+WSL2에서 Vite를 실행할 때, `host: true`를 설정하는 것만으로는 LAN에서 서버에 접근할 수 없습니다.
+[WSL 문서](https://learn.microsoft.com/en-us/windows/wsl/networking#accessing-a-wsl-2-distribution-from-your-local-area-network-lan)를 참고하세요.
+
+:::
+
 ## server.port {#server-port}
 
 - **타입:** `number`
