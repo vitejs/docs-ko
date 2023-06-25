@@ -170,12 +170,14 @@ HMR 이벤트에 대한 핸들러를 정의합니다.
 
 다음 HMR 이벤트들은 Vite에서 자동적으로 호출됩니다:
 
-- `'vite:beforeUpdate'`은 변경이 적용되기 전에 호출됩니다. (e.g. 모듈이 변경될 예정일 때)
+- `'vite:beforeUpdate'`는 변경이 적용되기 전에 호출됩니다. (e.g. 모듈이 변경될 예정일 때)
 - `'vite:afterUpdate'`는 변경이 적용된 후에 호출됩니다. (e.g. 모듈이 변경된 후)
-- `'vite:beforeFullReload'`은 전체 리로드가 일어나기 전에 호출됩니다.
+- `'vite:beforeFullReload'`는 전체 리로드가 일어나기 전에 호출됩니다.
 - `'vite:beforePrune'`은 모듈들이 필요가 없어져서 제거될 때 호출됩니다.
-- `'vite:invalidate'` when a module is invalidated with `import.meta.hot.invalidate()`
-- `'vite:error'`은 에러가 일어났을 때 호출됩니다. (e.g. syntax error)
+- `'vite:invalidate'`는 모듈이 `import.meta.hot.invalidate()`로 무효화될 때 호출됩니다.
+- `'vite:error'`는 에러가 일어났을 때 호출됩니다. (e.g. 구문 오류)
+- `'vite:ws:disconnect'`는 WebSocket 연결이 끊어졌을 때 호출됩니다.
+- `'vite:ws:connect'`는 WebSocket 연결이 (다시)설정되었을 때 호출됩니다.
 
 플러그인들로부터 새로운 HMR 이벤트들을 보낼 수 있습니다. 더 많은 정보는 [handleHotUpdate](./api-plugin#handlehotupdate)를 참고해 주세요.
 
