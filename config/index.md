@@ -4,7 +4,7 @@ title: Vite 설정하기
 
 # Vite 설정하기 {#configuring-vite}
 
-명령 줄에서 `vite`를 실행시킬 때, Vite는 자동으로 [프로젝트 루트](/guide/#index-html-and-project-root)의 `vite.config.js` 파일 확인을 시도합니다.
+명령 줄에서 `vite`를 실행시킬 때, Vite는 자동으로 [프로젝트 루트](/guide/#index-html-and-project-root)의 `vite.config.js` 파일 확인을 시도합니다. (다른 JS 및 TS 확장도 지원)
 
 가장 기본적인 설정 파일의 내용은 다음과 같습니다:
 
