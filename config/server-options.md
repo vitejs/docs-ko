@@ -266,6 +266,8 @@ Vite를 하위 디렉터리로 프락시하기 위해 이 디렉터리를 http �
 
 `/@fs/`를 통해 제공될 수 있는 파일을 제한합니다. `server.fs.strict`가 `true`로 설정된 경우, 이 목록에 포함되지 않았으며 허용된 파일에서 `import` 되는 것도 아닌 외부 파일에 접근하면 403 결과를 반환합니다.
 
+디렉터리와 파일 모두 제공될 수 있습니다.
+
 Vite는 잠재적인 작업 공간의 루트를 검색하여 기본값으로 사용합니다. 유효한 작업 공간은 다음 조건을 충족합니다. 그렇지 않으면 [프로젝트 루트](/guide/#index-html-and-project-root)로 대체됩니다.
 
 - `package.json`에 `workspaces` 필드가 포함됨
@@ -298,7 +300,8 @@ export default defineConfig({
         // 작업 공간(Workspace)의 루트를 지정
         searchForWorkspaceRoot(process.cwd()),
         // 커스텀 allow 옵션 규칙
-        '/path/to/custom/allow'
+        '/path/to/custom/allow_directory',
+        '/path/to/custom/allow_file.demo',
       ]
     }
   }
