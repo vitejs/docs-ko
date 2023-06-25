@@ -255,7 +255,6 @@ Vite를 하위 디렉터리로 프락시하기 위해 이 디렉터리를 http �
 
 ## server.fs.strict {#server-fs-strict}
 
-- **실험적 기능**
 - **타입:** `boolean`
 - **기본값:** `true` (Vite 2.7에서 기본적으로 활성화되도록 변경되었습니다.)
 
@@ -263,7 +262,6 @@ Vite를 하위 디렉터리로 프락시하기 위해 이 디렉터리를 http �
 
 ## server.fs.allow {#server-fs-allow}
 
-- **실험적 기능**
 - **타입:** `string[]`
 
 `/@fs/`를 통해 제공될 수 있는 파일을 제한합니다. `server.fs.strict`가 `true`로 설정된 경우, 이 목록에 포함되지 않았으며 허용된 파일에서 `import` 되는 것도 아닌 외부 파일에 접근하면 403 결과를 반환합니다.
@@ -342,7 +340,8 @@ export default defineConfig({
 ```js
 export default defineConfig({
   server: {
-    // 이는 기본 값으로, node_modules가 경로에 포함된 모든 파일의 경로를 무시할 목록에 추가합니다.
+    // 이는 기본 값으로, node_modules가 경로에 포함된 모든 파일의 경로를
+    // 무시할 목록에 추가합니다.
     sourcemapIgnoreList(sourcePath, sourcemapPath) {
       sourcePath.includes('node_modules')
     }
