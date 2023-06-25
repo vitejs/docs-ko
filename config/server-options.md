@@ -247,12 +247,6 @@ async function createServer() {
 createServer()
 ```
 
-## server.base {#server-base}
-
-- **타입:** `string | undefined`
-
-Vite를 하위 디렉터리로 프락시하기 위해 이 디렉터리를 http 요청 앞에 추가합니다. `/` 문자로 시작해야 합니다.
-
 ## server.fs.strict {#server-fs-strict}
 
 - **타입:** `boolean`
