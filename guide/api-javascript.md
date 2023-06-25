@@ -87,7 +87,8 @@ interface ViteDevServer {
    */
   pluginContainer: PluginContainer
   /**
-   * Url로 파일이 맵핑되어 있고 hmr 상태들의 import 관계들을 볼 수 있는 모듈 그래프.
+   * Url로 파일이 맵핑되어 있고 hmr 상태들의 import 관계들을 볼 수 있는
+   * 모듈 그래프.
    */
   moduleGraph: ModuleGraph
   /**
@@ -216,7 +217,8 @@ interface PreviewServerForHook {
   /**
    * connect 앱 인스턴스.
    * - 커스텀 미들웨어를 프리뷰 서버에 연결할 수 있습니다.
-   * - 또한 커스텀 http 서버의 핸들러 함수 또는 connect 스타일의 Node.js 프레임워크의 미들웨어로 사용할 수 있습니다.
+   * - 또한 커스텀 http 서버의 핸들러 함수 또는 connect 스타일의 Node.js 프레임워크의
+   *   미들웨어로 사용할 수 있습니다.
    *
    * https://github.com/senchalabs/connect#use-middleware
    */
@@ -263,6 +265,10 @@ function mergeConfig(
 ```
 
 Vite 설정을 깊이(Deep) 병합합니다. `isRoot`는 병합되는 Vite 설정의 레벨을 나타냅니다. 예를 들어, `build` 옵션을 두 개 병합한다면 `false`로 설정합니다.
+
+::: tip 참고
+`mergeConfig` 함수는 오직 객체 형태의 설정만 전달받습니다. 만약 콜백 형태의 설정이 있다면, `mergeConfig`에 전달하기 전에 호출해야 합니다.
+:::
 
 ## `searchForWorkspaceRoot` {#searchforworkspaceroot}
 
