@@ -71,7 +71,7 @@ Vite의 API에서 `command` 값은 개발 서버(참고로 CLI `vite`는 `vite d
 
 ## 비동기 설정 {#async-config}
 
-만약 설정에서 비동기(async) 함수를 호출해야 한다면, async 함수를 내보낼 수 있습니다:
+만약 설정에서 비동기 함수를 호출해야 하는 경우, 이 대신 비동기 함수를 내보낼 수 있습니다. 또한 이 비동기 함수는 인텔리센스 지원을 위해 `defineConfig`를 통해 전달할 수도 있습니다:
 
 ```js
 export default defineConfig(async ({ command, mode }) => {
