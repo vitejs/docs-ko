@@ -12,7 +12,9 @@ Vite(프랑스어로 "빠르다(Quick)"를 의미하며, 발음은 "veet"와 비
 
 - 번들링 시, [Rollup](https://rollupjs.org) 기반의 다양한 빌드 커맨드를 사용할 수 있습니다. 이는 높은 수준으로 최적화된 정적(Static) 리소스들을 배포할 수 있게끔 하며, 미리 정의된 설정(Pre-configured)을 제공합니다.
 
-vite는 기본적으로 최적화 된 설정을 제공하지만, [Plugin API](./api-plugin) 또는 [JavaScript API](./api-javascript)를 이용할 수 있습니다. (물론 TypeScript 역시 지원하구요.)
+Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./features)에서 더 자세히 알아보세요. 프레임워크 지원이나 다른 도구와의 통합은 [플러그인](./using-plugins)을 통해 가능합니다. [Vite 설정하기 섹션](../config/)에서는 필요에 따라 프로젝트에 Vite를 적용하는 방법을 설명합니다.
+
+또한 Vite는 타입이 완벽하게 제공되는 [플러그인 API](./api-plugin)와 [JavaScript API](./api-javascript)를 통해 높은 수준의 확장성을 제공합니다.
 
 왜 Vite를 만들게 되었는지 알고 싶다면 [Vite를 사용해야 하는 이유](./why) 섹션을 참고해주세요.
 
