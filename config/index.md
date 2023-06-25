@@ -57,6 +57,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
       // 개발 서버 설정
     }
   } else {
+    // command === 'build'
     return {
       // 빌드 설정
     }
