@@ -60,6 +60,10 @@ export default defineConfig({
 
 이러한 방식은 사용자 정의 로직을 사용한 구성이 필요한 경우를 대비해 `splitVendorChunk({ cache: SplitVendorChunkCache })` 팩토리 함수로도 제공됩니다. 이 때, 빌드 감시 모드가 정상적으로 작동하기 위해서는 `cache.reset()`을 `buildStart` 훅에서 호출해야 합니다.
 
+::: warning
+이 플러그인을 사용할 때는 `build.rollupOptions.output.manualChunks` 설정의 함수 형태로 사용해야 합니다. 객체 형태로 사용할 경우, 플러그인이 아무런 효과를 내지 못합니다. (`output.manualChunks` 옵션은 Rollup에서 [함수와 객체 두 가지 형태를 지원](https://rollupjs.org/configuration-options/#output-manualchunks)합니다. Vite는 이 중 [함수 형태만을 지원](https://github.com/vitejs/vite/pull/13431/files#diff-bb20feac020e4628912d91c673ef1c4fef4ffd1ae5241a7af1842dd1e1bbaec9R111)합니다. - 옮긴이)
+:::
+
 ## 파일 변경 시 다시 빌드하기 {#rebuild-on-files-changes}
 
 `vite build --watch` 명령을 통해 Rollup Watcher를 활성화 할 수 있습니다. 또는, `build.watch` 옵션에서 [`WatcherOptions`](https://rollupjs.org/configuration-options/#watch)를 직접 명시할 수도 있습니다.
