@@ -13,7 +13,24 @@
 다음 중 하나를 수행해야 합니다:
 
 - 다른 패키지 매니저로 교체하세요 (e.g. `pnpm`, `yarn`)
-- 프로젝트의 경로에서 `&` 을 제거하세요 
+- 프로젝트의 경로에서 `&` 을 제거하세요
+
+## 설정 {#config}
+
+### 이 패키지는 ESM만 지원합니다 {#this-package-is-esm-only}
+
+ESM만 지원하는 패키지를 `require`로 불러올 때 다음과 같은 에러가 발생합니다.
+
+> Failed to resolve "foo". This package is ESM only but it was tried to load by `require`.
+
+> "foo" resolved to an ESM file. ESM file cannot be loaded by `require`.
+
+ESM 파일은 [`require`](<https://nodejs.org/docs/latest-v18.x/api/esm.html#require:~:text=Using%20require%20to%20load%20an%20ES%20module%20is%20not%20supported%20because%20ES%20modules%20have%20asynchronous%20execution.%20Instead%2C%20use%20import()%20to%20load%20an%20ES%20module%20from%20a%20CommonJS%20module.>)로 불러올 수 없습니다.
+
+다음과 같이 설정을 ESM으로 변환하는 것을 권장합니다:
+
+- 가장 가까운 `package.json`에 `"type": "module"`을 추가합니다.
+- `vite.config.js`/`vite.config.ts`를 `vite.config.mjs`/`vite.config.mts`로 이름을 변경합니다.
 
 ## 개발 서버 {#dev-server}
 
