@@ -256,6 +256,24 @@ import otherStyles from './bar.css?inline' // 스타일이 추가되지 않음
 CSS 파일에서의 기본 및 명명된 Import(`import style from './foo.css'`)는 Vite 4부터 사용할 수 없습니다. 이 대신 `?inline` 쿼리를 사용해주세요.
 :::
 
+### Lightning CSS {#lightning-css}
+
+Vite 4.4부터 [Lightning CSS](https://lightningcss.dev/)를 실험적으로 지원합니다. 사용하고자 한다면 [`css.transformer: 'lightningcss'`](../config/shared-options.md#css-transformer)로 설정하고, [`lightningcss`](https://www.npmjs.com/package/lightningcss)를 설치해 주세요:
+
+```bash
+npm add -D lightningcss
+```
+
+이 옵션을 활성화하면 CSS 파일이 PostCSS가 아닌 Lightning CSS로 처리됩니다. [`css.lightingcss`](../config/shared-options.md#css-lightningcss) 옵션에 Lightning CSS의 옵션을 전달해 이를 설정할 수 있습니다.
+
+CSS 모듈의 설정은 [`css.modules`](../config/shared-options.md#css-modules)(PostCSS가 CSS 모듈을 어떻게 처리하는지에 대한 설정) 대신 [`css.lightningcss.cssModules`](https://lightningcss.dev/css-modules.html)를 사용합니다.
+
+기본적으로 Vite는 CSS를 축소하기 위해 esbuild를 사용합니다. Lightning CSS는 [`build.cssMinify: 'lightningcss'`](../config/build-options.md#css-minify)를 통해 CSS 축소기로도 사용할 수도 있습니다.
+
+::: tip 참고
+Lightning CSS를 사용하는 경우 [CSS 전처리기](/#css-pre-processors)는 지원되지 않습니다.
+:::
+
 ## 정적 에셋 {#static-assets}
 
 정적 에셋을 Import 하는 경우, 이에 대한 Public URL이 반환됩니다.

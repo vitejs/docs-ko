@@ -210,6 +210,8 @@ interface CSSModulesOptions {
 
 CSS 모듈에 대한 설정입니다. 옵션들은 [postcss-modules](https://github.com/css-modules/postcss-modules)로 전달됩니다.
 
+[Lightning CSS](../guide/features.md#lightning-css)를 사용할 때 이 옵션은 어떠한 효과도 없습니다. Lightning CSS가 활성화된 경우, [`css.lightningcss.cssModules`](https://lightningcss.dev/css-modules.html)를 이 대신 사용해야 합니다.
+
 ## css.postcss {#css-postcss}
 
 - **타입:** `string | (postcss.ProcessOptions & { plugins?: postcss.AcceptedPlugin[] })`
@@ -263,6 +265,46 @@ export default defineConfig({
 - **기본값:** `false`
 
 개발 중 CSS 소스 맵을 활성화할지 여부를 나타냅니다.
+
+## css.transformer {#css-transformer}
+
+- **실험적 기능**
+- **타입:** `'postcss' | 'lightningcss'`
+- **기본값:** `'postcss'`
+
+CSS 처리에 사용되는 엔진을 선택합니다. 자세한 내용은 [Lightning CSS](../guide/features.md#lightning-css)를 참고해 주세요.
+
+## css.lightningcss {#css-lightningcss}
+
+- **실험적 기능**
+- **타입:**
+
+```js
+import type {
+  CSSModulesConfig,
+  Drafts,
+  Features,
+  NonStandard,
+  PseudoClasses,
+  Targets,
+} from 'lightningcss'
+```
+
+```js
+{
+  targets?: Targets
+  include?: Features
+  exclude?: Features
+  drafts?: Drafts
+  nonStandard?: NonStandard
+  pseudoClasses?: PseudoClasses
+  unusedSymbols?: string[]
+  cssModules?: CSSModulesConfig,
+  // ...
+}
+```
+
+Lightning CSS 옵션입니다. 전체 변환 옵션은 [Lightning CSS 리포지토리](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts)에서 찾을 수 있습니다.
 
 ## json.namedExports {#json-namedexports}
 
