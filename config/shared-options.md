@@ -35,18 +35,18 @@
 
 - **타입:** `Record<string, any>`
 
-전역 상수 대체를 정의합니다. 진입점은 개발 중에는 전역으로 정의될 것이며, 빌드 시에는 정적으로 대체될 것입니다.
+전역 상수로 대체되는 값을 정의합니다. 정의된 내용들은 개발 중에는 전역으로 정의되나, 빌드 중에는 정적으로 대체됩니다.
 
-- 문자열 값은 원시 표현식으로 사용되기에, 만약 문자열 상수를 정의하고자 한다면 **명시적으로 인용될 필요가 있습니다**. (예: `JSON.stringify` 사용)
+- 문자열 값은 원시 표현식으로 사용되기에, 만약 문자열 상수를 정의하고자 한다면 **명시적으로 따옴표로 묶어야 합니다**. (예: `JSON.stringify` 사용)
 
 - [esbuild](https://esbuild.github.io/api/#define)와 일관성을 유지하기 위해, 표현식은 JSON 객체(null, boolean, number, string, array, 또는 object)이거나 단일 식별자여야 합니다.
 
 - 매치되는 부분이 다른 문자나 숫자, `_` 또는 `$`로 둘러싸여 있지 않은 경우에만 대체됩니다.
 
 ::: warning
-이것은 아무런 구문 분석 없이 간단한 텍스트 대체로 구현되므로, 상수에만 `define` 을 사용하는 것을 추천합니다.
+구분 분석 없이 간단한 텍스트 치환으로 구현되기에, 상수에만 `define`을 사용하는 것이 좋습니다.
 
-예를 들어, `process.env.FOO` 와 `__APP_VERSION__` 는 서로 잘 맞습니다. 하지만 `process` 또는 `global` 을 이 옵션에 넣어서는 안됩니다. 대신에 변수를 끼워넣거나 폴리필로 사용할 수 있습니다.
+예를 들어 `process.env.FOO` 및 `__APP_VERSION__`과 같은 값이 적절합니다. 그러나 `process` 또는 `global`을 이 옵션에 넣어서는 안 됩니다. 대신 변수를 끼워 넣거나 폴리필로 사용할 수 있습니다.
 :::
 
 ::: tip 참고
@@ -194,7 +194,7 @@ interface CSSModulesOptions {
 }
 ```
 
-CSS 모듈 행동을 구성합니다. 옵션들은 [postcss-modules](https://github.com/css-modules/postcss-modules)로 전달됩니다.
+CSS 모듈에 대한 설정입니다. 옵션들은 [postcss-modules](https://github.com/css-modules/postcss-modules)로 전달됩니다.
 
 ## css.postcss {#css-postcss}
 
