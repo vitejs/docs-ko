@@ -61,6 +61,20 @@ declare const __APP_VERSION__: string
 
 :::
 
+::: tip 참고
+개발과 빌드는 `define`을 다르게 구현하기에, 일관성을 유지하기 위해 몇몇 사용 사례를 피해야 합니다.
+
+예제:
+
+```js
+const obj = {
+  __NAME__, // 객체 프로퍼티 축약 표현을 사용하지 마세요.
+  __KEY__: value, // 오브젝트 키로 사용하지 마세요.
+}
+```
+
+:::
+
 ## plugins {#plugins}
 
 - **타입:** ` (Plugin | Plugin[] | Promise<Plugin | Plugin[]>)[]`
