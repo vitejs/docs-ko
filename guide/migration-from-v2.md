@@ -23,7 +23,7 @@ Vite는 EOL(End-of-life)에 도달한 Node.js 12 / 13 / 15 를 더 이상 지원
 - `dedupe` ([`resolve.dedupe`](../config/shared-options.md#resolve-dedupe)로 변경)
 - `build.base` ([`base`](../config/shared-options.md#base)로 변경)
 - `build.brotliSize` ([`build.reportCompressedSize`](../config/build-options.md#build-reportcompressedsize)로 변경)
-- `build.cleanCssOptions` (Vite는 이제 CSS 압축 시 esbuild를 사용합니다)
+- `build.cleanCssOptions` (Vite는 이제 CSS 축소 시 esbuild를 사용합니다)
 - `polyfillDynamicImport` (동적 Import를 지원하지 않는 브라우저는 [`@vitejs/plugin-legacy`](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 사용해주세요)
 - `optimizeDeps.keepNames` ([`optimizeDeps.esbuildOptions.keepNames`](../config/dep-optimization-options.md#optimizedeps-esbuildoptions)로 변경)
 
