@@ -37,6 +37,7 @@ Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./feat
 |     [lit](https://vite.new/lit)     |     [lit-ts](https://vite.new/lit-ts)     |
 |  [svelte](https://vite.new/svelte)  |  [svelte-ts](https://vite.new/svelte-ts)  |
 |   [solid](https://vite.new/solid)   |   [solid-ts](https://vite.new/solid-ts)   |
+|    [qwik](https://vite.new/qwik)    |    [qwik-ts](https://vite.new/qwik-ts)    |
 
 ## 첫 Vite 프로젝트 만들어보기 {#scaffolding-your-first-vite-project}
 
@@ -80,7 +81,7 @@ yarn create vite my-vue-app --template vue
 pnpm create vite my-vue-app --template vue
 ```
 
-또한 [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)에서 더욱 다양한 템플릿들에 대해 다루고 있습니다: `vanilla`, `vanilla-ts`, `vue`, `vue-ts`, `react`, `react-ts`, `react-swc`, `react-swc-ts`, `preact`, `preact-ts`, `lit`, `lit-ts`, `svelte`, `svelte-ts`, `solid`, `solid-ts`.
+또한 [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)에서 더욱 다양한 템플릿들에 대해 다루고 있습니다: `vanilla`, `vanilla-ts`, `vue`, `vue-ts`, `react`, `react-ts`, `react-swc`, `react-swc-ts`, `preact`, `preact-ts`, `lit`, `lit-ts`, `svelte`, `svelte-ts`, `solid`, `solid-ts`, `qwik`, `qwik-ts`.
 
 ## 커뮤니티 템플릿 {#community-templates}
 
