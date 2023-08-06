@@ -560,7 +560,7 @@ import MyWorker from './worker?worker'
 const worker = new MyWorker()
 ```
 
-워커 스크립트에서 `importScripts()` 대신 ESM `import` 구문을 사용할 수도 있습니다. **참고**: 개발 서버에서는 [브라우저 네이티브 API](https://caniuse.com/?search=module%20worker)(Firefox에서는 지원하지 않음)에 의존하지만, 프로덕션 빌드에서는 다양한 브라우저를 지원하도록 컴파일됩니다.
+워커 스크립트에서 `importScripts()` 대신 ESM `import` 구문을 사용할 수도 있습니다. **참고**: 개발 서버에서는 [브라우저 네이티브 API](https://caniuse.com/?search=module%20worker)에 의존하지만, 프로덕션 빌드에서는 다양한 브라우저를 지원하도록 컴파일됩니다.
 
 마지막으로, 기본적으로 워커의 경우 프로덕션 빌드 분리된 청크로 컴파일됩니다. 만약 분리된 청크가 아니라 Base64 포맷의 문자열로 이를 사용하고자 한다면, `inline` 쿼리를 이용해주세요:
 
