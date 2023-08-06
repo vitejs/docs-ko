@@ -3,14 +3,14 @@ lockfileVersion: 5.4
 specifiers:
   '@types/node': ^17.0.33
   gray-matter: ^4.0.3
-  prettier: ^2.7.1
+  prettier: 3.0.0
   vite: ^2.9.12
   vitepress: 1.0.0-alpha.60
 
 devDependencies:
   '@types/node': 17.0.33
   gray-matter: 4.0.3
-  prettier: 2.7.1
+  prettier: 3.0.0
   vite: 2.9.12
   vitepress: 1.0.0-alpha.60_rt3lerpeymp5njqwf5wzix6qje
 
@@ -918,9 +918,9 @@ packages:
     resolution: {integrity: sha512-KyoXVDU5OqTpG9LXlB3+y639JAGzl8JSBXLn1J9HTSB3gbKcuInga7bZnXLlxmK94ntTs1EFeZp0lrja2AuBYQ==}
     dev: true
 
-  /prettier/2.7.1:
-    resolution: {integrity: sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==}
-    engines: {node: '>=10.13.0'}
+  /prettier/3.0.0:
+    resolution: {integrity: sha512-zBf5eHpwHOGPC47h0zrPyNn+eAEIdEzfywMoYn2XPi0P44Zp0tSq64rq0xAREh4auw2cJZHo9QUob+NqCQky4g==}
+    engines: {node: '>=14'}
     hasBin: true
     dev: true
 
