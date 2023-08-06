@@ -6,6 +6,7 @@
   "author": "Evan You",
   "license": "MIT",
   "private": true,
+  "packageManager": "pnpm@8.6.11",
   "devDependencies": {
     "@types/node": "^17.0.33",
     "gray-matter": "^4.0.3",
