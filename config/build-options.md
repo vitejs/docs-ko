@@ -122,8 +122,6 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 - **타입:** `boolean | 'esbuild' | 'lightningcss'`
 - **기본값:** [`build.minify`](#build-minify)와 동일
 
-이 옵션을 사용하면 기본값이 `build.minify`로 설정되는 대신 CSS 축소화를 구체적으로 재정의할 수 있으므로 JS와 CSS를 별도로 축소화할 수 있습니다. Vite는 CSS를 축소화하기 위해 `esbuild`를 사용합니다.
-
 이 옵션을 사용하면 기본값이 `build.minify`로 설정되는 대신 CSS 축소화를 구체적으로 재정의할 수 있으므로, JS와 CSS를 별도로 축소화할 수 있습니다. Vite는 기본적으로 `esbuild`를 사용해 CSS를 축소화하지만, 옵션을 `'lightningcss'`로 설정하면 [Lightning CSS](https://lightningcss.dev/minification.html)를 사용할 수도 있습니다. 이를 선택한 경우, [`css.lightningcss`](./shared-options.md#css-lightningcss)를 통해 설정이 가능합니다.
 
 ## build.sourcemap {#build-sourcemap}
