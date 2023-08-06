@@ -34,7 +34,7 @@ import 'vite/modulepreload-polyfill'
 
 각 동적 가져오기를 위한 사전 로드되는 청크 목록은 Vite에서 산출합니다. 기본적으로, 이러한 디펜던시를 로드할 때 `base`를 포함하는 하나의 절대경로가 사용됩니다. `base`가 상대적인 경우 (`''` or `'./'`), 절대 경로가 최종 배포되는 base에 의존하지 않도록 `import.meta.url`이 런타임에 사용됩니다.
 
-디펜던시 목록 및 그 경로에 대한 세밀한 제어를 위해 `resolveDependencies` 함수를 사용한 실험적인 지원사항이 있습니다. `ResolveModulePreloadDependenciesFn` 유형의 함수가 그것입니다:
+디펜던시 목록 및 그 경로에 대한 세밀한 제어를 위해 `resolveDependencies` 함수를 사용한 실험적인 지원사항이 있습니다. [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/13841). `ResolveModulePreloadDependenciesFn` 유형의 함수가 그것입니다:
 
 ```ts
 type ResolveModulePreloadDependenciesFn = (
@@ -218,7 +218,7 @@ Terser로 전달할 추가적인 [경량화 옵션](https://terser.org/docs/api-
 
 ## build.copyPublicDir {#build-copypublicdir}
 
-- **실험적 기능**
+- **실험적 기능:** [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/13807)
 - **타입:** `boolean`
 - **기본값:** `true`
 

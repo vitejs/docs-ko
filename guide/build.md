@@ -225,7 +225,7 @@ dist/my-lib.umd.cjs 0.30 KiB / gzip: 0.16 KiB
 ## Base 옵션 상세 설정 {#advanced-base-options}
 
 ::: warning
-이 기능은 실험적이며, 시멘틱 버전을 따르지 않고 향후 마이너 버전에서 API가 변경될 수 있습니다. 사용 시 Vite를 마이너 버전으로 고정해주세요.
+이 기능은 실험적입니다. [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/13834).
 :::
 
 이미 배포된 에셋과 Public 디렉터리에 위치한 파일이 서로 다른 경로에 있을 수 있습니다. 이 경우 각각에 대해 다른 캐시 전략을 사용하고자 할 수 있는데, 이 때 Base 옵션에 대한 상세 설정이 필요합니다.

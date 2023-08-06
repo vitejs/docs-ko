@@ -23,7 +23,7 @@ SSR 서버를 위한 빌드 타깃입니다.
 
 ## ssr.format {#ssr-format}
 
-- **실험적 기능**
+- **실험적 기능:** [CJS 지원은 Vite 5에서 제거 예정](https://github.com/vitejs/vite/discussions/13816)
 - **사용 중단** Vite 5에서는 ESM 빌드만 지원합니다.
 - **타입:** `'esm' | 'cjs'`
 - **기본값:** `esm`

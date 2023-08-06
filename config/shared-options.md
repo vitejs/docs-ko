@@ -260,7 +260,7 @@ export default defineConfig({
 
 ## css.devSourcemap {#css-devsourcemap}
 
-- **실험적 기능**
+- **실험적 기능:** [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/13845)
 - **타입:** `boolean`
 - **기본값:** `false`
 
@@ -268,7 +268,7 @@ export default defineConfig({
 
 ## css.transformer {#css-transformer}
 
-- **실험적 기능**
+- **실험적 기능:** [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/13835)
 - **타입:** `'postcss' | 'lightningcss'`
 - **기본값:** `'postcss'`
 
@@ -276,7 +276,7 @@ CSS 처리에 사용되는 엔진을 선택합니다. 자세한 내용은 [Light
 
 ## css.lightningcss {#css-lightningcss}
 
-- **실험적 기능**
+- **실험적 기능:** [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/13835)
 - **타입:**
 
 ```js
