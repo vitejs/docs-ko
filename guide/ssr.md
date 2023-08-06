@@ -270,3 +270,7 @@ SSR 미들웨어가 Vite 미들웨어 _이후에_ 실행되기를 원한다면 �
 ## SSR 포맷 {#ssr-format}
 
 기본적으로 Vite는 SSR 번들을 ESM 형식으로 생성합니다. `ssr.format`을 구성하는 실험적인 옵션은 있지만, 권장되는 방법은 아닙니다. 앞으로도 SSR은 ESM을 제공하도록 개발할 것이며, CommonJS는 하위 호환성을 위해 사용할 수 있게끔 제공할 예정입니다. 만약 SSR에 대해 ESM을 사용할 수 없는 경우 `legacy.buildSsrCjsExternalHeuristics: true`를 설정하여 동일한 [Vite v2의 외부화 휴리스틱](https://v2.vitejs.dev/guide/ssr.html#ssr-externals)을 사용하여 CJS 번들을 생성할 수 있습니다.
+
+:::warning 주의
+실험적인 기능인 `legacy.buildSsrCjsExternalHeuristics`와 `ssr.format: 'cjs'`는 Vite 5에서 제거될 예정입니다. [이 토론](https://github.com/vitejs/vite/discussions/13816)에서 더 많은 정보를 확인하고 피드백을 남겨주세요.
+:::
