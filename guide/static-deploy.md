@@ -333,3 +333,7 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 기본적으로 지정된 브랜치에 새로운 커밋이 Push되면 자동으로 새로운 배포가 트리거됩니다. [자동 배포](https://render.com/docs/deploys#toggling-auto-deploy-for-a-service)는 프로젝트 설정에서 구성할 수 있습니다.
 
 프로젝트에 [커스텀 도메인](https://render.com/docs/custom-domains)을 추가할 수도 있습니다.
+
+## Flightcontrol {#flightcontrol}
+
+[이 문서](https://www.flightcontrol.dev/docs/reference/examples/vite?ref=docs-vite)를 따라 [Flightcontrol](https://www.flightcontrol.dev/?ref=docs-vite)을 이용해 정적 사이트를 배포할 수 있습니다.
