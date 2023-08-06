@@ -54,10 +54,6 @@ $ npm run preview
 
 이렇게 설정한 경우 `http://localhost:8080` 을 기준으로 `preview` 명령이 실행됩니다.
 
-::: tip 참고
-`serve`에서 `preview`로 스크립트의 이름을 바꾸는 경우, 일부 패키지 매니저에서 [Pre & Post 스크립트](https://docs.npmjs.com/cli/v7/using-npm/scripts#pre--post-scripts)를 처리하는 방식으로 인해 문제가 발생될 수 있습니다.
-:::
-
 ## GitHub Pages {#github-pages}
 
 1. `vite.config.js` 파일 내 `base` 설정 값을 적절하게 설정합니다.
@@ -188,8 +184,6 @@ $ ntl deploy --prod
 4. **Deploy** 를 클릭해주세요.
 5. Vite 앱이 배포되었습니다!
 
-After your project has been imported and deployed, all subsequent pushes to branches other than the production branch along with pull requests will generate [Preview Deployments](https://docs.netlify.com/site-deploys/deploy-previews/), and all changes made to the Production Branch (commonly “main”) will result in a [Production Deployment](https://docs.netlify.com/site-deploys/overview/#definitions).
-
 프로젝트를 가져와 배포한 후, Pull Request와 배포용 브랜치가 아닌 다른 모든 브랜치에 새로이 Push되는 내용에 대해서는 [프리뷰 버전 배포 환경](https://docs.netlify.com/site-deploys/deploy-previews/)이 구성되며, 배포용 브랜치(일반적으로 "main")에 대한 변경 사항은 [프로덕션 버전으로 배포됩니다](https://docs.netlify.com/site-deploys/overview/#definitions).
 
 ## Vercel {#vercel}
@@ -253,6 +247,10 @@ $ npx wrangler pages publish dist
 5. 빌드 설정에서 Vite 프레임워크의 프리셋을 선택합니다.
 6. 저장 후 배포합니다!
 7. 애플리케이션이 배포되었습니다! (사이트는 `https://<PROJECTNAME>.pages.dev/`에서 볼 수 있습니다.)
+
+프로젝트를 가져와 배포한 후, 해당 브랜치에 대한 모든 Push 동작은 [브랜치 빌드 컨트롤](https://developers.cloudflare.com/pages/platform/branch-build-controls/)에서 지정하지 않는 한 애플리케이션에 대한 [프리뷰 배포](https://developers.cloudflare.com/pages/platform/preview-deployments/)를 생성하게 됩니다. 프로덕션용 브랜치(일반적으로 "main")에 대한 모든 변경 사항은 [프로덕션 배포](https://developers.cloudflare.com/pages/platform/production-deployments/)가 됩니다.
+
+커스텀 도메인을 추가하거나 커스텀 빌드 설정을 처리할 수도 있습니다. 자세한 내용은 [Cloudflare Pages Git Integration](https://developers.cloudflare.com/pages/get-started/#manage-your-site) 문서를 참고해 주세요.
 
 ## Google Firebase {#google-firebase}
 
