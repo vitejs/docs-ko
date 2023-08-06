@@ -179,6 +179,10 @@ export default defineConfig({
               link: '/guide/troubleshooting',
             },
             {
+              text: '프로젝트 철학',
+              link: '/guide/philosophy',
+            },
+            {
               text: 'v3에서 마이그레이션하기',
               link: '/guide/migration',
             },
@@ -233,10 +237,6 @@ export default defineConfig({
             {
               text: '빌드 옵션',
               link: '/config/build-options',
-            },
-            {
-              text: '프로젝트 철학',
-              link: '/guide/philosophy',
             },
             {
               text: '프리뷰 옵션',
