@@ -62,7 +62,7 @@ modulePreload: {
 
 - **타입:** `boolean`
 - **기본값:** `true`
-- **Deprecated** use `build.modulePreload.polyfill` instead
+- **사용 중단** `build.modulePreload.polyfill`을 사용하세요.
 
 [module preload polyfill](https://guybedford.com/es-module-preloading-integrity#modulepreload-polyfill)을 자동으로 주입할지 여부입니다.
 

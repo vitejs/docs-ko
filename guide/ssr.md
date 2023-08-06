@@ -61,7 +61,7 @@ SSR 앱을 빌드할 때, 메인 서버를 완전히 제어하고 Vite를 프로
 
 **server.js**
 
-```js{14-17}
+```js{15-18}
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -74,7 +74,8 @@ async function createServer() {
   const app = express()
 
   // 미들웨어 모드로 Vite 서버를 생성하고 애플리케이션의 타입을 'custom'으로 설정합니다.
-  // 이는 Vite의 자체 HTML 제공 로직을 비활성화하고, 상위 서버에서 이를 제어할 수 있도록 합니다.
+  // 이는 Vite의 자체 HTML 제공 로직을 비활성화하고,
+  // 상위 서버에서 이를 제어할 수 있도록 합니다.
   const vite = await createViteServer({
     server: { middlewareMode: 'ssr' },
     appType: 'custom'
