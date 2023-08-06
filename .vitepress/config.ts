@@ -235,6 +235,10 @@ export default defineConfig({
               link: '/config/build-options',
             },
             {
+              text: '프로젝트 철학',
+              link: '/guide/philosophy',
+            },
+            {
               text: '프리뷰 옵션',
               link: '/config/preview-options',
             },
