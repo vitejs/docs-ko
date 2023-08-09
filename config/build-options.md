@@ -6,7 +6,7 @@
 - **기본값:** `'modules'`
 - **관련 항목:** [브라우저 지원 현황](/guide/build#browser-compatibility)
 
-최종 번들을 위한 브라우저 호환성 타깃입니다. 기본값은 Vite에서만 사용 가능한 `'module'` 이며, [네이티브 ES 모듈](https://caniuse.com/es6-module), [네이티브 ESM의 동적 Import](https://caniuse.com/es6-module-dynamic-import), 그리고 [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta)를 지원하는 브라우저를 타깃으로 합니다. 즉, Vite는 `'modules'`를 `['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14']`로 대체합니다.
+최종 번들을 위한 브라우저 호환성 타깃입니다. 기본값은 Vite에서만 사용 가능한 `'modules'` 이며, [네이티브 ES 모듈](https://caniuse.com/es6-module), [네이티브 ESM의 동적 Import](https://caniuse.com/es6-module-dynamic-import), 그리고 [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta)를 지원하는 브라우저를 타깃으로 합니다. 즉, Vite는 `'modules'`를 `['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14']`로 대체합니다.
 
 또 다른 특수 값은 `'esnext'`입니다. 이는 네이티브 동적 가져오기가 지원되는 것으로 가정하고 가능한 한 적게 트랜스파일 됩니다:
 
