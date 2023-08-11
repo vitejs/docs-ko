@@ -12,7 +12,8 @@
     "gray-matter": "^4.0.3",
     "prettier": "3.0.0",
     "vite": "^2.9.12",
-    "vitepress": "1.0.0-alpha.60"
+    "vitepress": "1.0.0-alpha.60",
+    "vue": "^3.3.4"
   },
   "scripts": {
     "dev": "vitepress dev .",
