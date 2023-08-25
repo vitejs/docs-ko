@@ -104,24 +104,26 @@ PR과 커밋 타이틀은 [시멘틱 커밋 메시지](https://gist.github.com/j
 
 본 리포지토리는 올바른 앵커 참조를 위해 커스텀 앵커를 사용하고 있습니다.
 
-Heading 마지막에 `{#custom-anchor-name}`와 같은 형태로 커스텀 앵커의 지정이 가능하며, 앵커 이름은 원본 문서를 기준으로 합니다.
+제목 마지막에 `{#custom-anchor-name}`와 같은 형태로 커스텀 앵커의 지정이 가능하며, 앵커 이름은 원본 문서를 기준으로 합니다. 예를 들면 다음과 같습니다:
 
-가령, 아래와 같은 문서를 번역한다고 했을 때:
+```md
+<!-- 원본 -->
 
-```
-# Getting Started
-```
-
-아래와 같이 커스텀 앵커를 지정해주세요.
-
-```
-# 시작하기 {#getting-started}
+# Get Started with Node.js
 ```
 
-위 앵커는 다음과 같이 참조가 가능합니다.
+```md
+<!-- 한글 번역 -->
+
+# Node.js 시작하기 {#get-started-with-node-js}
+```
+
+규칙은 [Vitepress에서 사용하는](https://github.com/vuejs/vitepress/blob/00dc1e6742273fe6fde74e7abbd160bd7724af4d/src/node/markdown/index.ts#L13) [`@mdit-vue/shared` 패키지의 `slugify` 함수](https://github.com/mdit-vue/mdit-vue/blob/main/packages/shared/src/slugify.ts)와 동일합니다. [이 곳에서](https://stackblitz.com/edit/stackblitz-starters-e8bzip?file=index.js) 직접 테스트해 볼 수도 있습니다.
+
+이렇게 지정된 앵커는 다음과 같이 참조가 가능합니다:
 
 ```
-[시작하기](#getting-started)
+[Node.js 시작하기](#get-started-with-node-js)
 ```
 
 커스텀 앵커를 이용하기에 일반적으로 원본 Vite 문서에 대한 한글 문서는 도메인 네임만 `ko.vitejs.dev`로 바꿔주면 참조가 가능합니다:
