@@ -1,3 +1,7 @@
+---
+outline: [2, 3]
+---
+
 # 에셋 가져오기 {#static-asset-handling}
 
 다음 두 개의 주제와 관련있는 섹션입니다.
