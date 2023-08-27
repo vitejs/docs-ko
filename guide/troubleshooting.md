@@ -144,8 +144,29 @@ HTML 파일 출력이 `file` 프로토콜로 열린 경우 다음 오류와 함�
 
 최적화된 디펜던시를 무효화하는 데 사용되는 해시 키는 패키지 락 내용, 디펜던시에 적용된 패치, 그리고 노드 모듈 번들링에 영향을 미치는 Vite 설정 파일의 옵션에 따라 달라집니다. 이는 Vite가 [npm overrides](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#overrides)와 같은 기능을 사용하여 디펜던시를 덮어쓸 때 디펜던시를 다시 번들링하고 다음 서버 시작 시에 감지할 수 있다는 것을 의미합니다. 다만 Vite는 [npm link](https://docs.npmjs.com/cli/v9/commands/npm-link)와 같은 기능을 사용할 때는 디펜던시를 무효화하지 않습니다. 따라서 디펜던시를 링크하거나 링크 해제하는 경우 `vite --force`를 사용하여 다음 서버 시작 시에 강제로 다시 최적화해야 합니다. 우리는 대신 모든 패키지 매니저에서 지원하는 오버라이드 기능을 사용하는 것을 권장합니다([pnpm overrides](https://pnpm.io/package_json#pnpmoverrides) 및 [yarn resolutions](https://yarnpkg.com/configuration/manifest/#resolutions)를 참고하세요).
 
-## 그 외 {#others}
+## 성능 병목현상
 
+성능 병목현상으로 인해 앱의 로드 시간이 저하되는 경우, Vite 개발 서버 또는 프로덕션 빌드 시 Node.js 내장 인스펙터를 사용하여 CPU 프로파일링이 가능합니다:
+
+::: code-group
+
+```bash [개발 서버]
+vite --profile --open
+```
+
+```bash [빌드]
+vite build --profile
+```
+
+:::
+
+::: tip Vite 개발 서버에서의 사용법
+브라우저에서 앱을 열고 로드가 완료될 때까지 기다린 후 터미널로 돌아가 `p` 키를 누르세요(Node.js 인스펙터를 중지합니다). 이후 `q` 키를 눌러 개발 서버를 중지하세요.
+:::
+
+Node.js 인스펙터가 루트 폴더에 `vite-profile-0.cpuprofile`을 생성합니다. https://www.speedscope.app/ 에서 `BROWSE` 버튼을 눌러 CPU 프로파일을 업로드하고 결과를 확인하세요.
+
+## 그 외 {#others}
 
 ### 브라우저 호환성을 위해 외부화된 모듈 {#module-externalized-for-browser-compatibility}
 
