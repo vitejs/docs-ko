@@ -8,7 +8,7 @@ Vite는 **`import.meta.env`** 객체를 이용해 환경 변수에 접근할 수
 
 - **`import.meta.env.BASE_URL`**: {string} 앱이 제공되는 베이스 URL이며, 이 값은 [`base` 설정](/config/shared-options.md#base)에 의해 결정됩니다.
 
-- **`import.meta.env.PROD`**: {boolean} 앱이 프로덕션에서 실행 중인지 여부입니다(개발 서버 실행 시 `NODE_ENV='production'` 설정 혹은 프로덕션 빌드 시 `NODE_ENV='production'`) 설정.
+- **`import.meta.env.PROD`**: {boolean} 앱이 프로덕션에서 실행 중인지 여부입니다(개발 서버 실행 혹은 프로덕션 빌드 시 `NODE_ENV='production'`로 설정).
 
 - **`import.meta.env.DEV`**: {boolean} 앱이 개발 환경에서 실행 중인지 여부이며, 항상 `import.meta.env.PROD`와 반대되는 값을 가집니다.
 
