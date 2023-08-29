@@ -201,15 +201,7 @@ import { preview } from 'vite'
 ## `PreviewServer` {#previewserver}
 
 ```ts
-interface PreviewServer extends PreviewServerForHook {
-  resolvedUrls: ResolvedServerUrls
-}
-```
-
-## `PreviewServerForHook` {#previewserverforhook}
-
-```ts
-interface PreviewServerForHook {
+interface PreviewServer {
   /**
    * 해석된 Vite 설정 객체
    */
@@ -229,6 +221,8 @@ interface PreviewServerForHook {
   httpServer: http.Server
   /**
    * Vite가 CLI에 출력하는 해석된 URL
+   * 서버가 시작되기 전에는 null입니다.
+   * 
    */
   resolvedUrls: ResolvedServerUrls | null
   /**

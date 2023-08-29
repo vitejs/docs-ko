@@ -310,9 +310,9 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
 ### `configurePreviewServer` {#configurepreviewserver}
 
-- **타입:** `(server: PreviewServerForHook) => (() => void) | void | Promise<(() => void) | void>`
+- **타입:** `(server: PreviewServer) => (() => void) | void | Promise<(() => void) | void>`
 - **종류:** `async`, `sequential`
-- **관련 항목:** [PreviewServerForHook](./api-javascript#previewserverforhook)
+- **관련 항목:** [PreviewServer](./api-javascript#previewserver)
 
   [`configureServer`](/guide/api-plugin.html#configureserver)와 같지만 프리뷰 서버에 대한 것입니다. `configureServer`와 마찬가지로 `configurePreviewServer` 훅은 다른 미들웨어가 설치되기 전에 호출됩니다. 만약 다른 미들웨어가 설치된 **이후에** 커스텀 미들웨어를 호출하고자 한다면, `configurePreviewServer`의 반환 값으로 함수를 반환해주세요. 이렇게 하면 내부 미들웨어가 설치된 후에 호출됩니다:
 
