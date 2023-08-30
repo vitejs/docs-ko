@@ -45,23 +45,21 @@ Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./feat
 Vite는 버전 14.18+ 또는 16+ 의 [Node.js](https://nodejs.org/)를 요구합니다. 다만 일부 템플릿의 경우 더 높은 버전의 Node.js를 요구할 수 있습니다.
 :::
 
-NPM:
+::: code-group
 
-```bash
+```bash [NPM]
 $ npm create vite@latest
 ```
 
-Yarn:
-
-```bash
+```bash [Yarn]
 $ yarn create vite
 ```
 
-PNPM:
-
-```bash
+```bash [PNPM]
 $ pnpm create vite
 ```
+
+:::
 
 이후에는 프롬프트 창에 출력된 메시지를 따라주세요.
 

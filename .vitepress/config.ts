@@ -111,6 +111,10 @@ export default defineConfig({
                 text: '변경 사항',
                 link: 'https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md',
               },
+              {
+                text: '기여하기',
+                link: 'https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md',
+              },
             ],
           },
         ],
