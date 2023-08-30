@@ -326,7 +326,7 @@ Lightning CSS 옵션입니다. 전체 변환 옵션은 [Lightning CSS 리포지�
 
 - **타입:** `ESBuildOptions | false`
 
-`ESBuildOptions`는 [esbuild 변환 옵션](https://esbuild.github.io/api/#transform-api)을 확장합니다. 가장 일반적인 사례는 JSX를 커스터마이즈하는 것입니다:
+`ESBuildOptions`는 [esbuild 변환 옵션](https://esbuild.github.io/api/#transform)을 확장합니다. 가장 일반적인 사례는 JSX를 커스터마이즈하는 것입니다:
 
 ```js
 export default defineConfig({
