@@ -262,6 +262,15 @@ Vite 설정을 깊이(Deep) 병합합니다. `isRoot`는 병합되는 Vite 설�
 
 ::: tip 참고
 `mergeConfig` 함수는 오직 객체 형태의 설정만 전달받습니다. 만약 콜백 형태의 설정이 있다면, `mergeConfig`에 전달하기 전에 호출해야 합니다.
+
+`defineConfig` 함수를 통해 콜백 형태로 다른 설정을 병합할 수 있습니다:
+
+```ts
+export default defineConfig((configEnv) =>
+  mergeConfig(configAsCallback(configEnv), configAsObject),
+)
+```
+
 :::
 
 ## `searchForWorkspaceRoot` {#searchforworkspaceroot}
