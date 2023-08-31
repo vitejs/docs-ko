@@ -83,7 +83,7 @@ modulePreload: {
 ## build.assetsInlineLimit {#build-assetsinlinelimit}
 
 - **타입:** `number`
-- **기본값:** `4096` (4kb)
+- **기본값:** `4096` (4KiB)
 
 이 값보다 작은 크기로 import 되거나 참조된 에셋은 부가적인 http 요청을 피하고자 base64 URL로 인라인 처리됩니다. 만일 인라인 변환을 사용하지 않으려면 `0`으로 설정하세요.
 
@@ -236,7 +236,7 @@ gzip 압축 크기 보고를 활성화/비활성화합니다. 큰 출력 파일�
 - **타입:** `number`
 - **기본값:** `500`
 
-경고를 표시할 청크 크기의 경계(단위: KB). [자바스크립트 크기 자체가 실행 시간과 관련이 있기 때문에](https://v8.dev/blog/cost-of-javascript-2019), 압축되지 않은 청크 크기를 기준으로 비교합니다.
+경고를 표시할 청크 크기의 경계(단위: kB). [자바스크립트 크기 자체가 실행 시간과 관련이 있기 때문에](https://v8.dev/blog/cost-of-javascript-2019), 압축되지 않은 청크 크기를 기준으로 비교합니다.
 
 ## build.watch {#build-watch}
 
