@@ -218,7 +218,6 @@ Terser로 전달할 추가적인 [경량화 옵션](https://terser.org/docs/api-
 
 ## build.copyPublicDir {#build-copypublicdir}
 
-- **실험적 기능:** [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/13807)
 - **타입:** `boolean`
 - **기본값:** `true`
 
