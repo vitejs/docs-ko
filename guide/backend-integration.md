@@ -44,7 +44,7 @@
 
    위 옵션은 이미지와 같은 에셋이 정상적으로 로드되기 위해 반드시 필요합니다.
 
-   React를 `@vitejs/plugin-react`와 함께 사용하는 경우 플러그인이 사용자가 제공하는 HTML을 수정할 수 없기 때문에 위 스크립트 이전에 이것을 추가해야 합니다.
+   React를 `@vitejs/plugin-react`와 함께 사용하는 경우 플러그인이 사용자가 제공하는 HTML을 수정할 수 없기 때문에 위 스크립트 이전에 이것을 추가해야 합니다 (`http://localhost:5173`를 Vite가 실행 중인 로컬 URL로 대체 하십시오).
 
    ```html
    <script type="module">
