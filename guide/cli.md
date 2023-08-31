@@ -29,7 +29,7 @@ vite [root]
 | `--force`                | 캐시를 무시하고 다시 번들링 (`boolean`)|
 | `-c, --config <file>`    | 설정 파일 지정 (`string`)|
 | `--base <path>`          | `base` 옵션 위치 지정 (기본값: `/`) (`string`)|
-| `-l, --logLevel <level>` | Info \| warn \| error \| silent (`string`)|
+| `-l, --logLevel <level>` | info \| warn \| error \| silent (`string`)|
 | `--clearScreen`          | 로깅 시 화면을 지우는 것을 허용/비허용 (`boolean`)|
 | `--profile`              | Node.js 인스펙터 실행 ([성능 병목현상](/guide/troubleshooting#performance-bottlenecks))|
 | `-d, --debug [feat]`     | 디버그 로그 표시 (`string \| boolean`)|
