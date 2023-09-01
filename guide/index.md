@@ -66,9 +66,6 @@ $ pnpm create vite
 프로젝트의 이름이나 사용하려는 템플릿을 직접 지정할 수도 있습니다. 예를 들어, Vite + Vue 프로젝트를 만들고 싶다면 다음과 같이 입력해주세요:
 
 ```bash
-# npm 6.x
-npm create vite@latest my-vue-app --template vue
-
 # npm 7+, '--'를 반드시 붙여주세요
 npm create vite@latest my-vue-app -- --template vue
 
