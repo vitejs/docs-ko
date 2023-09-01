@@ -500,7 +500,8 @@ const module = await import(`./dir/${file}.js`)
 
 ## WebAssembly {#webassembly}
 
-사전에 컴파일 된 `.wasm` 파일 역시 `?init` 쿼리를 이용해 Import가 가능합니다. 불러와진 Wasm 모듈의 `export default`로 Wasm 인스턴스를 `Promise` 형태로 반환하는 초기화 함수가 들어가 있으며, 이를 호출하는 방식으로 사용이 가능합니다:
+사전에 컴파일 된 `.wasm` 파일 역시 `?init` 쿼리를 이용해 가져올 수 있습니다.
+불러와진 모듈의 `export default`는 [`WebAssembly.Instance`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/Instance)의 `Promise`를 반환하는 초기화 함수가 들어가 있습니다:
 
 ```js
 import init from './example.wasm?init'
@@ -510,7 +511,7 @@ init().then((instance) => {
 })
 ```
 
-참고로 초기화 함수를 호출할 때 `imports` 옵션을 사용할 수 있는데, 이 값은 `WebAssembly.instantiate` 함수의 두 번째 인자 값으로 전달됩니다.
+초기화 함수를 호출할 때 `imports` 옵션을 사용할 수도 있는데, 이 값은 [`WebAssembly.instantiate`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate) 함수의 두 번째 인자인 importObject로 전달됩니다:
 
 ```js
 init({
@@ -524,11 +525,53 @@ init({
 })
 ```
 
-프로덕션 빌드 시 `assetsInlineLimit` 옵션의 값보다 작은 `.wasm` 파일은 Base64 문자열 포맷으로 변환됩니다. 그렇지 않은 경우, `dist` 디렉터리에 파일이 복사되어 요청(Fetch) 시 불러오는 방식으로 동작하게 됩니다.
+프로덕션 빌드 시 `assetsInlineLimit` 옵션의 값보다 작은 크기를 갖는 `.wasm` 파일은 Base64 문자열 포맷으로 변환됩니다. 파일의 크기가 그보다 크다면 [정적 에셋](./assets)으로 처리되어 요청(Fetch) 시 이를 가져오는 방식으로 동작합니다.
 
-::: warning
-[WebAssembly를 위한 ES 모듈 제안 사항](https://github.com/WebAssembly/esm-integration)은 현재 지원되지 않습니다. 이 대신 [`vite-plugin-wasm`](https://github.com/Menci/vite-plugin-wasm) 또는 기타 커뮤니티 플러그인을 사용해 이를 처리하세요.
+::: tip 참고
+[WebAssembly를 위한 ES 모듈 제안 사항](https://github.com/WebAssembly/esm-integration)은 현재 지원되지 않습니다.
+이 대신 [`vite-plugin-wasm`](https://github.com/Menci/vite-plugin-wasm) 또는 기타 커뮤니티 플러그인을 사용해 이를 처리하세요.
 :::
+
+### WebAssembly 모듈에 접근하기 {#accessing-the-webassembly-module}
+
+여러 번 인스턴스화 하는 등의 이유로 `Module` 객체에 대한 접근이 필요하다면, [URL 접미사를 이용해](./assets#explicit-url-imports) 에셋을 가져오고, 이를 이용해 인스턴스화를 수행해 주세요:
+
+```js
+import wasmUrl from 'foo.wasm?url'
+
+const main = async () => {
+  const responsePromise = fetch(wasmUrl)
+  const { module, instance } = await WebAssembly.instantiateStreaming(
+    responsePromise,
+  )
+  /* ... */
+}
+
+main()
+```
+
+### Node.js에서 모듈 가져오기 {#fetching-the-module-in-node-js}
+
+SSR에서 `?init`을 이용해 `fetch()`를 수행하는 경우, `TypeError: Invalid URL` 에러가 발생할 수 있습니다.
+[Support wasm in SSR](https://github.com/vitejs/vite/issues/8882) 이슈를 참고해주세요.
+
+아래는 이에 대한 대안이며, 프로젝트의 기본 디렉터리는 현재 위치한 디렉터리입니다:
+
+```js
+import wasmUrl from 'foo.wasm?url'
+import { readFile } from 'node:fs/promises'
+
+const main = async () => {
+  const resolvedUrl = (await import('./test/boot.test.wasm?url')).default
+  const buffer = await readFile('.' + resolvedUrl)
+  const { instance } = await WebAssembly.instantiate(buffer, {
+    /* ... */
+  })
+  /* ... */
+}
+
+main()
+```
 
 ## Web Workers {#web-workers}
 
