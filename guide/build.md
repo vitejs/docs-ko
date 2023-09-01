@@ -214,12 +214,16 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
 }
 ```
 
-::: tip 참고
+::: tip 파일 확장자
 `package.json`에 `"type": "module"`이 명시되어 있지 않으면 Vite는 Node.js 호환성을 위해 다른 파일 확장자를 생성합니다. 즉, `.js`는 `.mjs`가 되고, `.cjs`는 `.js`가 됩니다.
 :::
 
 ::: tip 환경 변수
 라이브러리 모드에서 모든 `import.meta.env.*`는 프로덕션용으로 빌드 시 정적으로 대체됩니다. 그러나 `process.env.*`는 그렇지 않기에 라이브러리를 사용하는 측에서 이를 동적으로 변경할 수 있습니다. 만약 이 역시 정적으로 대체되길 원한다면 `define: { 'process.env.NODE_ENV': '"production"' }` 와 같이 설정해주세요.
+:::
+
+::: warning 심화 활용법
+라이브러리 모드는 브라우저 지향의 JS 프레임워크 라이브러리를 위한 간단하고 명확한 설정들을 포함합니다. 제작 중이신 라이브러리가 브라우저 대상이 아니거나 고도의 빌드 플로우가 요구된다면 [Rollup](https://rollupjs.org) 또는 [esbuild](https://esbuild.github.io)를 사용해 주세요.
 :::
 
 ## Base 옵션 상세 설정 {#advanced-base-options}
