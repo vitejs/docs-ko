@@ -33,3 +33,4 @@
 | Proxy          | 프락시         |
 | Minification   | 축소화         |
 | Release        | 릴리스         |
+| Asset          | 에셋           |

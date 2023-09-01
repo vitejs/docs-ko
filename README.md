@@ -30,7 +30,7 @@ Vite(프랑스어로 '빠른'을 의미하며 [`/vit/`](https://cdn.jsdelivr.net
 
 - [풍부한 내장 기능](https://ko.vitejs.dev/guide/features.html)과 놀랍도록 빠른 [HMR(Hot Module Replacement)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 사용하여 [네이티브 ES 모듈](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 통해 소스 파일을 제공하는 개발 서버입니다.
 
-- 프로덕션을 위해 고도로 최적화된 정적 자산을 출력하도록 사전 구성된 [Rollup](https://rollupjs.org)과 함께 코드를 번들로 제공하는 [빌드 명령](https://ko.vitejs.dev/guide/build.html)입니다.
+- 프로덕션을 위해 고도로 최적화된 정적 에셋을 출력하도록 사전 구성된 [Rollup](https://rollupjs.org)과 함께 코드를 번들로 제공하는 [빌드 명령](https://ko.vitejs.dev/guide/build.html)입니다.
 
 또한 Vite는 [플러그인 API](https://ko.vitejs.dev/guide/api-plugin.html) 및 [JavaScript API](https://ko.vitejs.dev/guide/api-javascript.html)를 통해 완벽하게 타이핑을 지원하는 확장성이 뛰어납니다.
 
