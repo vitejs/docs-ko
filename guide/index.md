@@ -42,7 +42,7 @@ Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./feat
 ## 첫 Vite 프로젝트 만들어보기 {#scaffolding-your-first-vite-project}
 
 ::: tip 호환성
-Vite는 버전 14.18+ 또는 16+ 의 [Node.js](https://nodejs.org/)를 요구합니다. 다만 일부 템플릿의 경우 더 높은 버전의 Node.js를 요구할 수 있습니다.
+Vite는 버전 18+ 또는 20+ 의 [Node.js](https://nodejs.org/)를 요구합니다. 다만 일부 템플릿의 경우 더 높은 버전의 Node.js를 요구할 수 있습니다.
 :::
 
 ::: code-group
