@@ -223,8 +223,7 @@ dist/my-lib.umd.cjs 0.30 KiB / gzip: 0.16 KiB
 :::
 
 ::: warning 심화 활용법
-라이브러리 모드는 브라우저 지향의 JS 프레임워크 라이브러리를 위한 간단하고 명확한 설정들을 포함합니다.
-제작 중이신 라이브러리가 브라우저 대상이 아니거나 고도의 빌드 플로우가 요구된다면 [Rollup](https://rollupjs.org) 또는 [esbuild](https://esbuild.github.io)를 사용해 주세요.
+라이브러리 모드는 브라우저 지향의 JS 프레임워크 라이브러리를 위한 간단하고 명확한 설정들을 포함합니다. 제작 중이신 라이브러리가 브라우저 대상이 아니거나 고도의 빌드 플로우가 요구된다면 [Rollup](https://rollupjs.org) 또는 [esbuild](https://esbuild.github.io)를 사용해 주세요.
 :::
 
 ## Base 옵션 상세 설정 {#advanced-base-options}
