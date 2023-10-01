@@ -30,6 +30,7 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url))
   await server.listen()
 
   server.printUrls()
+  server.bindCLIShortcuts({ print: true })
 })()
 ```
 
@@ -138,6 +139,10 @@ interface ViteDevServer {
    * 서버 멈추기.
    */
   close(): Promise<void>
+  /**
+   * CLI 단축키 바인딩하기
+   */
+  bindCLIShortcuts(options?: BindCLIShortcutsOptions<ViteDevServer>): void
 }
 ```
 
@@ -195,6 +200,7 @@ import { preview } from 'vite'
   })
 
   previewServer.printUrls()
+  previewServer.bindCLIShortcuts({ print: true })
 })()
 ```
 
@@ -222,13 +228,16 @@ interface PreviewServer {
   /**
    * Vite가 CLI에 출력하는 해석된 URL
    * 서버가 시작되기 전에는 null입니다.
-   * 
    */
   resolvedUrls: ResolvedServerUrls | null
   /**
    * 서버 URL 출력하기
    */
   printUrls(): void
+  /**
+   * CLI 단축키 바인딩하기
+   */
+  bindCLIShortcuts(options?: BindCLIShortcutsOptions<PreviewServer>): void
 }
 ```
 
