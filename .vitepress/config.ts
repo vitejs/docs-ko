@@ -187,8 +187,12 @@ export default defineConfig({
               link: '/guide/philosophy',
             },
             {
-              text: 'v3에서 마이그레이션하기',
+              text: 'v4에서 마이그레이션하기',
               link: '/guide/migration',
+            },
+            {
+              text: 'v3에서 마이그레이션하기',
+              link: '/guide/migration-from-v3',
             },
             {
               text: 'v2에서 마이그레이션하기',
