@@ -259,6 +259,10 @@ Vite 2.7 이전에는 `options` 객체를 사용하는 대신 `ssr` 매개변수
 - 모든 디펜던시를 `noExternal`로 처리합니다.
 - Node.js 내장(Built-ins) 기능을 가져오면 오류가 발생됩니다.
 
+## SSR Resolve 조건 {#ssr-resolve-conditions}
+
+기본적으로 패키지 진입점 해석은 SSR 빌드에 대해 [`resolve.conditions`](../config/shared-options.md#resolve-conditions)에 설정된 조건을 사용합니다. [`ssr.resolve.conditions`](../config/ssr-options.md#ssr-resolve-conditions) 및 [`ssr.resolve.externalConditions`](../config/ssr-options.md#ssr-resolve-externalconditions)를 사용하여 이 동작을 커스터마이징할 수 있습니다.
+
 ## Vite CLI {#vite-cli}
 
 `$ vite dev` 및 `$ vite preview` CLI 명령도 SSR 애플리케이션에 대해 사용할 수 있습니다. SSR 미들웨어는 [`configureServer`](/guide/api-plugin#configureserver)를 사용해 개발 서버에, 그리고 [`configurePreviewServer`](/guide/api-plugin#configurepreviewserver)를 사용해 프리뷰 서버에 추가할 수 있습니다.
