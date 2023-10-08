@@ -181,6 +181,13 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 
 서버 측 렌더링으로 빌드합니다. 설정 값은 SSR 항목을 직접 지정하는 문자열이거나, `rollupOptions.input`을 통해 SSR 항목을 지정해야 하는 `true`가 될 수 있습니다.
 
+## build.ssrEmitAssets {#build-ssremitassets}
+
+- **타입:** `boolean`
+- **기본값:** `false`
+
+SSR 빌드 중에는 정적 에셋이 따로 생성되지 않는데, 이는 클라이언트 빌드의 일부에 포함될 것으로 간주하기 때문입니다. 다만 필요한 경우 이 옵션을 사용하여 클라이언트와 SSR 빌드 모두에서 에셋을 생성하도록 강제할 수 있습니다. 이 경우 프레임워크는 빌드 이후 단계에서 에셋을 병합하는 것이 필요합니다.
+
 ## build.minify {#build-minify}
 
 - **타입:** `boolean | 'terser' | 'esbuild'`
