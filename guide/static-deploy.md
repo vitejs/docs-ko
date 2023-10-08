@@ -220,7 +220,7 @@ Vercel로 프로젝트를 불러오고 배포까지 완료했다면, 이후 브�
 1. [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/get-started/)를 설치합니다.
 2. `wrangler login` 명령을 통해 Cloudflare 계정으로 Wrangler를 인증합니다.
 3. 프로젝트에 대한 빌드 명령을 실행합니다.
-4. `npx wrangler pages public dist`를 사용해 배포합니다.
+4. `npx wrangler pages deploy dist`를 사용해 배포합니다.
 
 ```bash
 # Wrangler CLI 설치
