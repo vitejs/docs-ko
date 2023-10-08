@@ -69,11 +69,14 @@ export type { T }
 
 Vite 2.5.0 부터는 TypeScript의 변환 대상이 `ESNext` 또는 `ES2022` 이상인 경우, 기본 값을 `true`로 설정합니다. 이는 [`tsc` 버전 4.3.2 이상](https://github.com/microsoft/TypeScript/pull/42663) 및 ECMAScript 표준을 따르도록 하는 설정입니다.
 
-그러나 다른 프로그래밍 언어나 이전 버전의 TypeScript를 사용하던 사람들에게는 직관적이지 않은 내용일 수 있습니다. 이에 대한 자세한 정보는 [TypeScript 3.7 릴리스 노트](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#the-usedefineforclassfields-flag-and-the-declare-property-modifier)를 참고할 수 있습니다.
+그러나 다른 프로그래밍 언어나 이전 버전의 TypeScript를 사용하던 사람들에게는 직관적이지 않은 내용일 수 있습니다.
+이에 대한 자세한 정보는 [TypeScript 3.7 릴리스 노트](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#the-usedefineforclassfields-flag-and-the-declare-property-modifier)를 참고할 수 있습니다.
 
-또한, [MobX](https://mobx.js.org/installation.html#use-spec-compliant-transpilation-for-class-properties)와 같은 대부분의 라이브러리는 `"useDefineForClassFields": true`인 것으로 가정하고 동작합니다. 따라서 만약 클래스의 필드에 크게 의존하는 라이브러리를 사용하는 경우라면, 이러한 라이브러리를 사용하는 것에 대해 옵션을 수정하는 경우 상당한 주의를 기울어야 합니다.
+만약 클래스의 필드에 크게 의존하는 라이브러리를 사용하는 경우라면, 이러한 라이브러리를 사용하는 것에 대해 옵션을 수정하는 경우 상당한 주의를 기울어야 합니다.
 
-다만 [`lit-element`](https://github.com/lit/lit-element/issues/1030)를 포함해 일부 라이브러리는 아직 이 새로운 기본값이 적용되지 않았습니다. 이러한 경우에는 `useDefineForClassFields`의 값을 `false`로 설정해주세요.
+가령 [MobX](https://mobx.js.org/installation.html#use-spec-compliant-transpilation-for-class-properties)와 같은 대부분의 라이브러리는 `"useDefineForClassFields": true`인 것으로 가정하고 동작합니다.
+
+그러나 [`lit-element`](https://github.com/lit/lit-element/issues/1030)를 포함해 일부 라이브러리는 아직 이 새로운 기본값이 적용되지 않았습니다. 이러한 경우에는 `useDefineForClassFields`의 값을 `false`로 설정해주세요.
 
 #### 빌드 결과에 영향을 미치는 또 다른 컴파일러 옵션들 {#other-compiler-options-affecting-the-build-result}
 
@@ -138,22 +141,23 @@ vite는 기본적으로 Vue를 지원하고 있습니다.
 - Vue 2.7 SFC: [@vitejs/plugin-vue2](https://github.com/vitejs/vite-plugin-vue2)
 - Vue 2.7 JSX: [@vitejs/plugin-vue2-jsx](https://github.com/vitejs/vite-plugin-vue2-jsx)
 
-
 ## JSX {#jsx}
 
 `.jsx`와 `.tsx` 역시 사용이 가능합니다. 마찬가지로 [esbuild](https://esbuild.github.io)를 이용해 컴파일링합니다.
 
-기존에 Vue를 사용했던 개발자들은 Vue 3에서 제공하고 있는 API(HMR, 글로벌 컴포넌트, 디렉티브 및 슬롯 등)를 위해 [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx)를 사용해야 합니다.
+Vue를 사용자들은 HMR, 글로벌 컴포넌트, 디렉티브 및 슬롯 등 Vue 3에서 제공하고 있는 API를 위해 [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx)를 사용해야 합니다.
 
-물론 React나 Vue를 사용하지 않는다 해도, [`esbuild` 옵션](/config/shared-options.md#esbuild)을 이용해 `jsxFactory`나 `jsxFragment`를 커스터마이징 할 수 있습니다. Preact를 예로 들어보자면 다음과 같습니다.
+React나 Vue를 사용하지 않는다 해도, [`esbuild` 옵션](/config/shared-options.md#esbuild)을 이용해 `jsxFactory`나 `jsxFragment`를 커스터마이징 할 수 있습니다. Preact를 예로 들어보자면 다음과 같습니다:
 
 ```js
 // vite.config.js
+import { defineConfig } from 'vite'
+
 export default defineConfig({
   esbuild: {
     jsxFactory: 'h',
-    jsxFragment: 'Fragment'
-  }
+    jsxFragment: 'Fragment',
+  },
 })
 ```
 
@@ -163,22 +167,18 @@ export default defineConfig({
 
 ```js
 // vite.config.js
+import { defineConfig } from 'vite'
+
 export default defineConfig({
   esbuild: {
-    jsxInject: `import React from 'react'`
-  }
+    jsxInject: `import React from 'react'`,
+  },
 })
 ```
 
 ## CSS {#css}
 
 `.css` 파일을 Import 할 때, 기본적으로 HMR을 위해 `<style>` 태그로 변환되어 불러와지게 됩니다. 물론 String 타입의 모듈로 가져올 수도 있구요.
-
-```js
-import style from './style.css'
-
-console.log(style) // 정의한 CSS를 문자열로 가져옵니다.
-```
 
 ### CSS `@import` 그리고 URL 재정의(Rebasing) {#import-inlining-and-rebasing}
 
@@ -580,16 +580,14 @@ main()
 웹 워커 스크립트는 [`new Worker()`](https://developer.mozilla.org/en-US/docs/Web/API/Worker/Worker) 및 [`new SharedWorker()`](https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker/SharedWorker)를 통해서도 가져올 수 있습니다. 접미사를 사용하는 방식에 비해 이는 표준에 좀 더 가까우며, 일반적으로 워커를 사용할 때 **권장되는** 방식입니다.
 
 ```ts
-const url = new URL('./worker.js', import.meta.url)
-const worker = new Worker(url)
+const worker = new Worker(new URL('./worker.js', import.meta.url))
 ```
 
-"모듈" 타입의 워커를 생성할 수 있도록 생성자에 옵션을 전달할 수도 있습니다:
+"module" 타입의 워커를 생성할 수 있도록 생성자에 옵션을 전달할 수도 있습니다:
 
 ```ts
-const url = new URL('./worker.js', import.meta.url)
-const worker = new Worker(url, {
-  type: 'module'
+const worker = new Worker(new URL('./worker.js', import.meta.url), {
+  type: 'module',
 })
 ```
 
