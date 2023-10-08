@@ -12,7 +12,7 @@
    // vite.config.js
    export default defineConfig({
      build: {
-       // outDir에서 manifest.json을 생성합니다.
+       // outDir에서 .vite/manifest.json을 생성합니다.
        manifest: true,
        rollupOptions: {
          // 기본 .html 항목을 덮어씁니다.
@@ -56,7 +56,7 @@
    </script>
    ```
 
-3. 프로덕션 빌드 : `vite build`를 실행한 후에 `manifest.json`파일은 다른 에셋 파일과 함께 생성됩니다. 매니페스트 파일 예시는 다음과 같습니다.
+3. 프로덕션 빌드 : `vite build`를 실행한 후에 `.vite/manifest.json`파일은 다른 에셋 파일과 함께 생성됩니다. 매니페스트 파일 예시는 다음과 같습니다.
 
    ```json
    {
