@@ -1,7 +1,3 @@
----
-outline: [2, 3]
----
-
 # Vite를 사용해야 하는 이유 {#why-vite}
 
 ## 이런 문제점이 있었어요 {#the-problems}
