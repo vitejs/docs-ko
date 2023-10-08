@@ -209,6 +209,8 @@ npm add -D terser
 
 Terser로 전달할 추가적인 [경량화 옵션](https://terser.org/docs/api-reference#minify-options)입니다.
 
+`maxWorkers: number` 옵션을 전달하여 생성할 최대 워커 수를 지정할 수도 있습니다. 기본값은 CPU 수에서 1을 뺀 값입니다.
+
 ## build.write {#build-write}
 
 - **타입:** `boolean`
