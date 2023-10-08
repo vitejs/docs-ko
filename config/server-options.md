@@ -180,24 +180,15 @@ Direct websocket connection fallback. Check out https://vitejs.dev/config/server
 
 [chokidar](https://github.com/paulmillr/chokidar#api)에 전달할 파일 시스템 감시자(Watcher) 옵션입니다.
 
-Vite의 서버 감시자는 기본적으로 `.git/` 및 `node_modules/` 디렉터리를 건너뜁니다. 만약 `node_modules/` 내부의 패키지를 감시하고자 한다면, 다음과 같은 Glob 패턴을 `server.watch.ignored`에 전달하면 됩니다:
-
-```js
-export default defineConfig({
-  server: {
-    watch: {
-      ignored: ['!**/node_modules/your-package-name/**']
-    }
-  },
-  // 감시 중인 패키지는 최적화에서 제외되어야,
-  // 디펜던시 그래프에 나타나고 핫 리로드를 트리거 할 수 있게 됩니다.
-  optimizeDeps: {
-    exclude: ['your-package-name']
-  }
-})
-```
+Vite 서버 감시자는 기본적으로 `root`를 감시하고, `.git/`과 `node_modules/` 디렉터리는 건너뜁니다. 감시하는 파일을 업데이트하면, Vite는 HMR을 적용하고, 필요한 경우에만 페이지를 업데이트합니다.
 
 `null`로 설정하면 어떤 파일도 감시하지 않습니다. `server.watcher`는 기존과 동일한 API를 갖는 이벤트 이미터(Emitter)를 제공하지만, `add` 또는 `unwatch`를 호출해도 아무런 영향을 미치지 않습니다.
+
+::: warning `node_modules` 디렉터리에서 파일 감시하기
+
+현재 `node_modules` 디렉터리의 파일과 패키지는 감시할 수 없습니다. 더 많은 진행 상황과 해결 방법은 [#8619 이슈](https://github.com/vitejs/vite/issues/8619)를 참고해 주세요.
+
+:::
 
 ::: warning Windows Subsystem for Linux (WSL) 2 에서 Vite 사용하기
 
