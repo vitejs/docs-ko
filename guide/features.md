@@ -178,7 +178,7 @@ export default defineConfig({
 
 ## CSS {#css}
 
-`.css` 파일을 Import 할 때, 기본적으로 HMR을 위해 `<style>` 태그로 변환되어 불러와지게 됩니다. 물론 String 타입의 모듈로 가져올 수도 있구요.
+`.css` 파일을 가져오면 HMR을 지원하는 `<style>` 태그를 통해 페이지에 해당 콘텐츠가 주입됩니다.
 
 ### CSS `@import` 그리고 URL 재정의(Rebasing) {#import-inlining-and-rebasing}
 
@@ -253,7 +253,7 @@ import otherStyles from './bar.css?inline' // 스타일이 추가되지 않음
 ```
 
 ::: tip 참고
-CSS 파일에서의 기본 및 명명된 Import(`import style from './foo.css'`)는 Vite 4부터 사용할 수 없습니다. 이 대신 `?inline` 쿼리를 사용해주세요.
+CSS 파일에서의 기본 및 명명된 Import(`import style from './foo.css'`)는 Vite 5에서 제거되었습니다. 이 대신 `?inline` 쿼리를 사용해주세요.
 :::
 
 ### Lightning CSS {#lightning-css}
