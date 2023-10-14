@@ -57,13 +57,8 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/vitejs/vite' },
     ],
 
-    algolia: {
-      appId: '7H67QR5P0A',
-      apiKey: 'deaab78bcdfe96b599497d25acc6460e',
-      indexName: 'vitejs',
-      searchParameters: {
-        facetFilters: ['tags:en'],
-      },
+    search: {
+      provider: 'local',
     },
 
     carbonAds: {
