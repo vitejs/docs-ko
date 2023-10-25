@@ -16,10 +16,16 @@ SSR은 동일한 전체 사이트를 Node.js에서 동작시키고, 이를 HTML�
 
 ## 예제 프로젝트 {#example-projects}
 
-Vite는 서버 측 렌더링(SSR, Server-side Rendering)을 기본적으로 지원합니다. Vite 플레이그라운드에서는 SSR 설정에 대한 Vue 3 및 React 예제를 제공하고 있으며, 이를 참고할 수 있습니다.
+Vite는 서버 측 렌더링(SSR, Server-side Rendering)을 기본적으로 지원합니다. [`create-vite-extra`](https://github.com/bluwy/create-vite-extra) 리포지토리에서 이 가이드의 참고 자료로 사용할 수 있는 SSR 설정에 대한 예제를 볼 수 있습니다:
 
-- [Vue 3](https://github.com/vitejs/vite-plugin-vue/tree/main/playground/ssr-vue)
-- [React](https://github.com/vitejs/vite-plugin-react/tree/main/playground/ssr-react)
+- [Vanilla](https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-vanilla)
+- [Vue](https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-vue)
+- [React](https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-react)
+- [Preact](https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-preact)
+- [Svelte](https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-svelte)
+- [Solid](https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-solid)
+
+[create-vite를 실행하고](./index.md#scaffolding-your-first-vite-project) 프레임워크 옵션에서 `Others > create-vite-extra`를 선택하면 이 프로젝트들을 로컬에서도 생성할 수 있습니다.
 
 ## 프로젝트 구조 {#source-structure}
 
@@ -177,7 +183,7 @@ SSR 프로젝트를 프로덕션으로 제공하기 위해서는 다음이 필�
 
 - `vite` 개발 서버의 생성과 모든 사용은 개발 전용으로 구분된 조건문 아래로 이동한 다음, `dist/client`를 통해 파일을 제공할 수 있도록 미들웨어를 추가해줍니다.
 
-이 [Vue](https://github.com/vitejs/vite-plugin-vue/tree/main/playground/ssr-vue) 및 [React](https://github.com/vitejs/vite-plugin-react/tree/main/playground/ssr-react) 데모를 참조해 자세한 프로젝트 구성을 확인할 수 있습니다.
+자세한 프로젝트 구성은 [예제 프로젝트](#example-projects)를 참고해주세요.
 
 ## 사전 로드될 지시문 생성하기 {#generating-preload-directives}
 
