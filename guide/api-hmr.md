@@ -30,7 +30,6 @@ interface ViteHotContext {
 
   dispose(cb: (data: any) => void): void
   prune(cb: (data: any) => void): void
-  decline(): void
   invalidate(message?: string): void
 
   // `InferCustomEventPayload`는 내장된(Built-in) Vite 이벤트에 대한 타입을 제공합니다
