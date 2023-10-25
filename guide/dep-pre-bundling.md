@@ -52,10 +52,6 @@ export default defineConfig({
 
 설정 값 변경 이후 `--force` 플래그를 이용해 개발 서버를 다시 시작하게 되면 해당 내용이 적용됩니다.
 
-::: warning 중복 제거
-디펜던시를 찾는 과정의 차이로 인해 중복된 디펜던시가 잘못 제거되어 런타임에서 문제가 발생될 수 있습니다. 만약 이런 문제가 발생된다면 연결된 모든 디펜던시에 대해 `npm pack` 명령을 사용해주세요.
-:::
-
 ## 디펜던시 탐색 과정 커스터마이즈하기 {#customizing-the-behavior}
 
 Vite의 디펜던시 탐색 휴리스틱이 항상 바람직한 것은 아닙니다. 만약 특정 디펜던시를 명시적으로 포함시키거나 포함시키지 않도록 설정하고자 한다면 [`optimizeDeps` 옵션](/config/dep-optimization-options.md)을 이용해주세요.
