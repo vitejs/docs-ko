@@ -40,6 +40,29 @@ CLI 단축키(예: 개발 서버를 재시작하는 `r`)는 이제 명시적으�
 
 이 변경으로 Vite가 OS별 단축키를 무시하고 제어하는 것을 방지하며, Vite 개발 서버를 다른 프로세스와 결합할 때 더 나은 호환성을 제공할 수 있게 되고, [이전의 주의 사항](https://github.com/vitejs/vite/pull/14342)을 피할 수 있습니다.
 
+### `resolvePackageEntry`와 `resolvePackageData` API 제거 {#remove-resolvepackageentry-and-resolvepackagedata-apis}
+
+`resolvePackageEntry`와 `resolvePackageData` API는 Vite의 내부를 노출해 Vite 4.3의 최적화를 잠재적으로 가로막았기에 제거되었습니다. 이 API는 다음과 같은 서드파티 패키지로 대체할 수 있습니다:
+
+- `resolvePackageEntry`: [`import.meta.resolve`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta/resolve) 또는 [`import-meta-resolve`](https://github.com/wooorm/import-meta-resolve) 패키지.
+- `resolvePackageData`: 위와 동일하며, 패키지 디렉터리를 크롤링하여 루트의 `package.json`을 가져옵니다. [`vitefu`](https://github.com/svitejs/vitefu) 커뮤니티 패키지를 사용할 수도 있습니다.
+
+```js
+import { resolve } from 'import-meta-env'
+import { findDepPkgJsonPath } from 'vitefu'
+import fs from 'node:fs'
+
+const pkg = 'my-lib'
+const basedir = process.cwd()
+
+// `resolvePackageEntry`:
+const packageEntry = resolve(pkg, basedir)
+
+// `resolvePackageData`:
+const packageJsonPath = findDepPkgJsonPath(pkg, basedir)
+const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
+```
+
 ## 사용되지 않는 API 제거 {#removed-deprecated-apis}
 
 - CSS 파일의 기본 내보내기 (예: `import style from './foo.css'`): 이 대신 `?inline` 쿼리를 사용
