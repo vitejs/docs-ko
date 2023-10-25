@@ -35,7 +35,11 @@ interface ViteHotContext {
   // `InferCustomEventPayload`는 내장된(Built-in) Vite 이벤트에 대한 타입을 제공합니다
   on<T extends string>(
     event: T,
-    cb: (payload: InferCustomEventPayload<T>) => void
+    cb: (payload: InferCustomEventPayload<T>) => void,
+  ): void
+  off<T extends string>(
+    event: T,
+    cb: (payload: InferCustomEventPayload<T>) => void,
   ): void
   send<T extends string>(event: T, data?: InferCustomEventPayload<T>): void
 }
@@ -102,7 +106,8 @@ if (import.meta.hot) {
     ['./foo.js', './bar.js'],
     ([newFooModule, newBarModule]) => {
       // 콜백은 null이 아닌 값을 갖는 업데이트된 모듈에 대한 배열을 전달받습니다.
-      // 구문 오류와 같이 만약 업데이트가 성공하지 않았다면 배열은 비어있습니다.
+      // 구문 오류와 같이 만약 업데이트가 성공하지 않았다면
+      // 배열은 비어있습니다.
     }
   )
 }
@@ -179,6 +184,10 @@ HMR 이벤트에 대한 핸들러를 정의합니다.
 - `'vite:ws:connect'`는 WebSocket 연결이 (다시)설정되었을 때 호출됩니다.
 
 플러그인들로부터 새로운 HMR 이벤트들을 보낼 수 있습니다. 더 많은 정보는 [handleHotUpdate](./api-plugin#handlehotupdate)를 참고해 주세요.
+
+## `hot.off(event, cb)` {#hot-off-event-cb}
+
+이벤트 리스너에서 콜백을 제거합니다.
 
 ## `hot.send(event, data)` {#hot-send-event-data}
 
