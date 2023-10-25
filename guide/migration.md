@@ -81,6 +81,10 @@ const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
   - 빌드 시 최상위 `this`가 기본적으로 `globalThis`로 재작성되었는데, 이 동작은 이제 제거되었습니다.
 - [[#14231] feat!: add extension to internal virtual modules](https://github.com/vitejs/vite/pull/14231)
   - 내부 가상 모듈의 id에 확장자(`.js`)가 추가되었습니다.
+- [[#14583] refactor!: remove exporting internal APIs](https://github.com/vitejs/vite/pull/14583)
+  - 실수로 Export 한 내부 API를 제거했습니다: `isDepsOptimizerEnabled`와 `getDepOptimizationConfig`
+  - Export 한 내부 API를 제거했습니다: `DepOptimizationResult`, `DepOptimizationProcessing`, 그리고 `DepsOptimizer`
+  - `ResolveWorkerOptions` 타입을 `ResolvedWorkerOptions`로 이름을 변경했습니다.
 - [[#5657] fix: return 404 for resources requests outside the base path](https://github.com/vitejs/vite/pull/5657)
   - 과거 Vite가 `Accept: text/html`이 아닌 기본(Base) 경로 외부의 요청에 대해, 마치 기본 경로로 요청된 것처럼 응답했습니다. 이제 더 이상 그렇게 하지 않고 404로 응답합니다.
 
