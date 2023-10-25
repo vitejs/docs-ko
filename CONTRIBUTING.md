@@ -160,3 +160,5 @@ PR과 커밋 타이틀은 [시멘틱 커밋 메시지](https://gist.github.com/j
 ### 문서 최신화 방법
 
 본 리포지토리는 매 10분마다 원본이 되는 [vitejs/vite](https://github.com/vitejs/vite) 리포지토리의 `docs` 디렉터리의 변경 사항을 추적합니다. 이 작업은 [GitHub Actions](./.github/workflows/sync.yml)를 통해 진행되며, [ryu-cho](https://github.com/vuejs-translations/ryu-cho) 오픈소스를 사용합니다. 원본 문서에 변경 사항이 생길 경우 이를 GitHub Issues에 남겨 알리도록 구성되어 있습니다.
+
+다만, 간혹 커밋 순서가 잘못되는 경우가 있습니다(예: [#686 및 #687](https://github.com/vitejs/docs-ko/issues/686)). 이는 번역 시 줄 수가 맞지 않는 것으로 확인할 수 있으며, 해당 이슈의 코멘트로 남겨 알려주시기를 부탁드립니다(예: [#686 코멘트](https://github.com/vitejs/docs-ko/issues/686#issuecomment-1779351146)).
