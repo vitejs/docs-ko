@@ -233,7 +233,7 @@ $ wrangler login
 $ npm run build
 
 # 배포하기
-$ npx wrangler pages publish dist
+$ npx wrangler pages deploy dist
 ```
 
 배포 후 Cloudflare Pages 대시보드에는 해당 프로젝트가 나타나게 됩니다. 또한 Wrangler는 배포된 사이트를 검사할 수 있는 프리뷰 URL을 제공합니다.
