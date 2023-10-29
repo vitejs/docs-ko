@@ -4,6 +4,17 @@
 
 Vite는 더 이상 EOL에 도달한 Node.js 14 / 16 / 17 / 19를 지원하지 않습니다. Node.js 18 / 20+이 필요합니다.
 
+## Rollup 4 {#rollup-4}
+
+Vite는 이제 Rollup 4를 사용하며, 이 변경 사항은 특정 부분에 영향을 끼칠 수 있습니다.    
+
+- Import assertion(`assertions` 속성)은 import attributes(`attributes` 속성)으로 표현을 바꾸었습니다.
+- Acorn 플러그인을 더 이상 지원하지 않습니다.
+- Vite 플러그인의 `this.resolve` `skipSelf` 옵션은 이제 기본적으로 `true`입니다.
+- Vite 플러그인의 `this.parse`는 현재 일시적으로 `allowReturnOutsideFunction` 옵션만을 지원합니다.  
+
+`build.rollupOptions`에서 빌드와 관련되어 바뀐 부분을 확인하려면, [Rollup 4 릴리즈 노트](https://github.com/rollup/rollup/releases/tag/v4.0.0)의 변경 사항을 참고해 주세요.
+
 ## CJS Node API 사용 중단 {#deprecate-cjs-node-api}
 
 Vite의 CJS Node API는 더 이상 제공되지 않습니다. `require('vite')` 호출 시 경고가 나타나며, 이 대신 파일이나 프레임워크를 업데이트하여 Vite의 ESM 빌드를 가져오도록 해야 합니다.
