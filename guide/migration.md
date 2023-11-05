@@ -30,7 +30,7 @@ Vite의 CJS Node API는 더 이상 제공되지 않습니다. `require('vite')` 
 - **CJS를 기본값으로 유지하고, 필요한 경우 ESM을 사용:** 프로젝트 `package.json`에 `"type": "module"`이 없다면, 모든 `*.js` 파일은 CJS로 해석됩니다. 다만 확장자가 `.mjs`인 파일은 ESM으로 해석됩니다.
 - **Vite를 동적으로 임포트:** CJS를 계속 사용해야 하는 경우, `import('vite')`를 사용하여 Vite를 동적으로 임포트할 수 있습니다. 이를 위해 코드가 `async` 컨텍스트에서 작성되어야 하지만, Vite의 API가 대부분 비동기적이기 때문에 일반적으로 문제가 되지 않습니다.
 
-자세한 내용은 [트러블슈팅 가이드](https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated)를 참조하세요.
+자세한 내용은 [트러블슈팅 가이드](/guide/troubleshooting.html#vite-cjs-node-api-deprecated)를 참조하세요.
 
 ## 일반 변경 사항 {#general-changes}
 
