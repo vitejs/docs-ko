@@ -18,7 +18,6 @@ vite [root]
 | ------------------------ | -------------------------------------------------- |
 | `--host [host]`          | 호스트 이름 지정 (`string`)|
 | `--port <port>`          | 포트 번호 지정 (`number`)|
-| `--https`                | TLS + HTTP/2 사용 (`boolean`)|
 | `--open [path]`          | 시작 시 브라우저 열기 (`boolean \| string`)|
 | `--cors`                 | CORS 활성화 (`boolean`)|
 | `--strictPort`           | 포트가 이미 사용중인 경우 종료 (`boolean`)|
@@ -115,7 +114,6 @@ vite preview [root]
 | `--host [host]`          | 호스트 이름 지정 (`string`)                         |
 | `--port <port>`          | 포트 번호 지정 (`number`)                           |
 | `--strictPort`           | 포트가 이미 사용중인 경우 종료 (`boolean`)          |
-| `--https`                | TLS + HTTP/2 사용 (`boolean`)                       |
 | `--open [path]`          | 시작 시 브라우저 열기 (`boolean \| string`)         |
 | `--outDir <dir>`         | 빌드 결과 디렉터리 지정 (기본값: `dist`)(`string`) |
 | `-c, --config <file>`    | 설정 파일 지정 (`string`)                           |

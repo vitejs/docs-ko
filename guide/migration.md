@@ -51,6 +51,11 @@ CLI 단축키(예: 개발 서버를 재시작하는 `r`)는 이제 명시적으�
 
 이 변경으로 Vite가 OS별 단축키를 무시하고 제어하는 것을 방지하며, Vite 개발 서버를 다른 프로세스와 결합할 때 더 나은 호환성을 제공할 수 있게 되고, [이전의 주의 사항](https://github.com/vitejs/vite/pull/14342)을 피할 수 있습니다.
 
+### `--https` 플래그 및 `https: true` 설정 제거 {#remove-https-flag-and-https-true}
+
+`--https` 플래그는 `https: true`를 설정합니다. 이 설정은 [Vite 3에서 삭제되었던](https://v3.vitejs.dev/guide/migration.html#automatic-https-certificate-generation) HTTPS 인증서 자동 생성 기능과 함께 사용하기 위해 만들어졌습니다. 이 설정을 적용해도 Vite는 인증서 없이 HTTPS 서버를 시작하므로, 더 이상 의미가 없습니다.
+[`@vitejs/plugin-basic-ssl`](https://github.com/vitejs/vite-plugin-basic-ssl)와 [`vite-plugin-mkcert`](https://github.com/liuweiGL/vite-plugin-mkcert) 모두 `https` 설정을 `https` 값과 상관없이 설정하므로, `--https`와 `https: true`를 모두 제거해도 됩니다.
+
 ### `resolvePackageEntry`와 `resolvePackageData` API 제거 {#remove-resolvepackageentry-and-resolvepackagedata-apis}
 
 `resolvePackageEntry`와 `resolvePackageData` API는 Vite의 내부를 노출해 Vite 4.3의 최적화를 잠재적으로 가로막았기에 제거되었습니다. 이 API는 다음과 같은 서드파티 패키지로 대체할 수 있습니다:
