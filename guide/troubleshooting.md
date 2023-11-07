@@ -33,6 +33,8 @@ VITE_CJS_TRACE=true vite dev
 VITE_CJS_IGNORE_WARNING=true vite dev
 ```
 
+참고로 postcss 설정 파일은 아직 ESM + TypeScript(`.mts` 또는 `"type": "module"` 에서의 `.ts`)를 지원하지 않습니다. 만약 확장자가 `.ts`인 postcss 설정 파일이 존재하고 package.json에 `"type": "module"`로 지정한 경우, postcss 설정 파일의 확장자를 `.cts`로 변경해주세요.
+
 ## CLI {#cli}
 
 ### `Error: Cannot find module 'C:\foo\bar&baz\vite\bin\vite.js'` {#error-cannot-find-module-c-foo-bar-baz-vite-bin-vite-js}
