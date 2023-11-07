@@ -133,6 +133,8 @@ const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
   - `ResolveWorkerOptions` 타입을 `ResolvedWorkerOptions`로 이름을 변경했습니다.
 - [[#5657] fix: return 404 for resources requests outside the base path](https://github.com/vitejs/vite/pull/5657)
   - 과거 Vite가 `Accept: text/html`이 아닌 기본(Base) 경로 외부의 요청에 대해, 마치 기본 경로로 요청된 것처럼 응답했습니다. 이제 더 이상 그렇게 하지 않고 404로 응답합니다.
+- [[#14723] fix(resolve)!: remove special .mjs handling](https://github.com/vitejs/vite/pull/14723)
+  - 과거 라이브러리의 `"exports"` 필드가 `.mjs` 파일을 매핑하는 경우, Vite는 특정 라이브러리와의 호환성을 유지하기 위해 `"browser"`와 `"module"` 필드를 일치시키려고 시도했습니다. 이 동작은 이제 Export 식별 알고리즘과 일치하도록 제거되었습니다.
 
 ## v3에서 마이그레이션하기 {#migration-from-v3}
 
