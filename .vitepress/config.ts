@@ -95,7 +95,11 @@ export default defineConfig({
                 link: 'https://github.com/vitejs/awesome-vite',
               },
               {
-                text: '개발 커뮤니티',
+                text: 'ViteConf',
+                link: 'https://viteconf.org',
+              },
+              {
+                text: 'DEV 커뮤니티',
                 link: 'https://dev.to/t/vite',
               },
               {
