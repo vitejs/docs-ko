@@ -34,6 +34,10 @@ Vite의 CJS Node API는 더 이상 제공되지 않습니다. `require('vite')` 
 
 ## 일반 변경 사항 {#general-changes}
 
+### `worker.plugins` 옵션은 이제 함수를 전달받음 {#worker-plugins-is-now-a-function}
+
+Vite 4에서의 `worker.plugins` 옵션은 플러그인의 배열(`(Plugin | Plugin[])[]`)을 전달받았습니다. Vite 5에서는 플러그인의 배열을 반환하는 함수(`() => (Plugin | Plugin[])[]`)를 전달해야 합니다. 병렬 워커 빌드를 보다 일관되고 예측 가능하게 실행하기 위해 이와 같이 변경되었습니다.
+
 ### `.`를 포함하는 경로가 index.html로 폴백되도록 허용 {#allow-path-containing-to-fallback-to-index-html}
 
 Vite 4에서 `appType`이 `'SPA'`(기본값)로 설정되어 있더라도 `.`를 포함하는 경로에 접근하면 index.html로 폴백되지 않았습니다.
