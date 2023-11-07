@@ -34,6 +34,32 @@ Vite의 CJS Node API는 더 이상 제공되지 않습니다. `require('vite')` 
 
 ## 일반 변경 사항 {#general-changes}
 
+### 이제 SSR 외부화 모듈은 프로덕션과 일치 {#ssr-externalized-modules-value-now-matches-production}
+
+Vite 4에서는 상호 운용성을 위해 SSR 외부화 모듈이 `.default`와 `.__esModule`로 접근하도록 래핑 되었으나, 이는 런타임 환경(예: Note.js)에서 로드될 때 프로덕션에서의 동작과 일치하지 않았기에, 일관성 측면에서 파악하기 어려운 문제를 발생시켰습니다. 참고로 기본적으로 링크되지 않은 모든 프로젝트 디펜던시는 SSR 외부화됩니다.
+
+Vite 5에서는 프로덕션과 일치하도록 `.default` 및 `.__esModule` 처리를 제거했습니다. 일반적으로 올바르게 패키징된 디펜던시에는 영향을 미치지 않으나, 모듈 로드에 문제가 발생하는 경우 다음 방법을 시도해 볼 수 있습니다:
+
+```js
+// Before:
+import { foo } from 'bar'
+
+// After:
+import _bar from 'bar'
+const { foo } = _bar
+```
+
+```js
+// Before:
+import foo from 'bar'
+
+// After:
+import * as _foo from 'bar'
+const foo = _foo.default
+```
+
+이 변경 사항은 Node.js 동작과 일치하므로, Node.js에서 임포트해 테스트할 수도 있습니다. 만약 이전 동작을 유지하고자 한다면, `legacy.proxySsrExternalModules`를 `true`로 설정하세요.
+
 ### `worker.plugins` 옵션은 이제 함수를 전달받음 {#worker-plugins-is-now-a-function}
 
 Vite 4에서의 `worker.plugins` 옵션은 플러그인의 배열(`(Plugin | Plugin[])[]`)을 전달받았습니다. Vite 5에서는 플러그인의 배열을 반환하는 함수(`() => (Plugin | Plugin[])[]`)를 전달해야 합니다. 병렬 워커 빌드를 보다 일관되고 예측 가능하게 실행하기 위해 이와 같이 변경되었습니다.
