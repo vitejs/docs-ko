@@ -177,26 +177,20 @@ Direct websocket connection fallback. Check out https://vitejs.dev/config/server
 ## server.warmup {#server-warmup}
 
 - **타입:** `{ clientFiles?: string[], ssrFiles?: string[] }`
+- **관련 항목:** [Warm Up Frequently Used Files](/guide/performance.html#warm-up-frequently-used-files)
 
-워밍업으로 미리 변환하고 그 결과물을 캐시할 파일 목록입니다. 이는 서버 시작 시 초기 페이지 로드를 개선하고 폭포수처럼 수행되는 변환 과정을 방지합니다.
+미리 변환하고 그 결과물을 캐시할 파일 목록입니다. 서버 시작 시 초기 페이지 로드를 개선하고 변환 워터폴(변환이 순차적으로 이루어지는 현상 - 옮긴이)을 방지합니다.
 
-`clientFiles`와 `ssrFiles` 옵션은 `root`를 기준으로, 파일 경로 또는 glob 패턴의 배열을 전달받습니다. 다만 변환 과정을 느리게 만들 수 있으므로, 핫 코드(애플리케이션 실행 중에 자주 호출될 가능성이 높으며, 성능에 중대한 영향을 끼치는 코드 - 옮긴이)인 파일만을 추가해야 합니다.
+옵션의 `clientFiles`는 클라이언트에서만, `ssrFiles`는 SSR에서만 사용되는 파일 목록입니다. `root`를 기준으로 하는 파일 경로 또는 [`fast-glob`](https://github.com/mrmlnc/fast-glob) 패턴의 배열을 받습니다.
 
-워밍업이 유용한 이유를 이해하기 위해, 예시를 하나 들어보겠습니다. 아래는 왼쪽 파일이 오른쪽 파일을 Import 하는 모듈 그래프입니다:
-
-```
-main.js -> Component.vue -> big-file.js -> large-data.json
-```
-
-Import 된 ID는 파일이 변환된 후에만 알 수 있습니다. 따라서 만약 `Component.vue`가 변환되는 데 적지 않은 시간이 걸린다면, `big-file.js`는 그만큼 더 기다려야만 합니다. 이는 내부적으로 폭포수처럼 작동합니다.
-
-`big-file.js`나 앱에서 핫 패스(애플리케이션 실행 중에 자주 호출될 가능성이 높으며, 성능에 중대한 영향을 끼치는 코드의 경로 - 옮긴이)라고 알고 있는 파일을 워밍업하면, 이들은 캐시되고 즉시 제공될 수 있습니다.
+Vite 개발 서버 시작 시 과부하가 걸리지 않도록 자주 사용되는 파일만 추가해주세요.
 
 ```js
 export default defineConfig({
   server: {
     warmup: {
-      clientFiles: ['./src/big-file.js', './src/components/*.vue'],
+      clientFiles: ['./src/components/*.vue', './src/utils/big-utils.js'],
+      ssrFiles: ['./src/server/modules/*.js'],
     },
   },
 })

@@ -182,6 +182,10 @@ export default defineConfig({
               link: '/guide/troubleshooting',
             },
             {
+              text: '퍼포먼스',
+              link: '/guide/performance',
+            },
+            {
               text: '프로젝트 철학',
               link: '/guide/philosophy',
             },
