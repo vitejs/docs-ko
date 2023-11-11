@@ -251,10 +251,12 @@ async function resolveConfig(
   inlineConfig: InlineConfig,
   command: 'build' | 'serve',
   defaultMode = 'development'
+  defaultNodeEnv = 'development',
+  isPreview = false,
 ): Promise<ResolvedConfig>
 ```
 
-개발 단계에서의 `command`의 값은 `serve`입니다 (cli에서는 `vite`, `vite dev`, 그리고 `vite serve`는 전부 별칭입니다).
+프리뷰와 개발 단계에서의 `command`의 값은 `serve`이며, 프로덕션 빌드 시에는 `build`가 됩니다.
 
 ## `mergeConfig` {#mergeconfig}
 

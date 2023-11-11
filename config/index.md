@@ -48,10 +48,10 @@ Vite는 또한 TS 설정 파일을 직접 지원합니다. `defineConfig` 도우
 
 ## 조건부 설정 {#conditional-config}
 
-만약 설정에서 명령(`dev`/`serve` 또는 `build`), 사용 중인 [모드](/guide/env-and-mode), 또는 SSR 빌드 여부(`ssrBuild`)에 따라 조건부로 옵션을 결정해야 하는 경우, 아래와 같이 함수를 내보낼 수 있습니다:
+만약 설정에서 명령(`serve` 또는 `build`), 사용 중인 [모드](/guide/env-and-mode), SSR 빌드 여부(`isSsrBuild`), 또는 빌드 프리뷰(`isPreview`) 여부에 따라 조건부로 옵션을 결정해야 하는 경우, 아래와 같이 함수를 내보낼 수 있습니다:
 
 ```js
-export default defineConfig(({ command, mode, ssrBuild }) => {
+export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
   if (command === 'serve') {
     return {
       // 개발 서버 설정
@@ -67,7 +67,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
 
 Vite의 API에서 `command` 값은 개발 서버(참고로 CLI `vite`는 `vite dev` 및 `vite serve`의 별칭)에서 `serve`이며, 프로덕션으로 빌드 시(`vite build`)에는 `build`가 들어가게 됩니다.
 
-`ssrBuild`는 실험적인 기능입니다. 개발 중에는 옵션 값이 SSR 및 이를 사용하지 않는 비-SSR(Non-SSR) 요청이 단일 서버에서 공유되기에, 빌드 시에는 보다 일반적인 의미를 담고 있는 `ssr` 플래그를 대신해 사용할 수 있습니다. 브라우저 및 SSR 빌드에 대한 별도의 명령을 지정하지 않은 경우, 값이 `undefined`로 정의될 수 있기 때문에 `true` 및 `false` 값을 이용해 명시적으로 비교해주세요.
+`isSsrBuild`와 `isPreview`는 각각 `build`와 `serve` 명령을 구분하기 위한 추가적인 선택적 플래그입니다. Vite 설정을 불러오는 일부 툴은 이러한 플래그를 지원하지 않을 수 있으며, 이 경우에는 `undefined`를 전달합니다. 따라서 `true`와 `false`에 대한 명시적인 비교를 사용하는 것이 좋습니다.
 
 ## 비동기 설정 {#async-config}
 

@@ -221,6 +221,8 @@ const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
   - 과거 라이브러리의 `"exports"` 필드가 `.mjs` 파일을 매핑하는 경우, Vite는 특정 라이브러리와의 호환성을 유지하기 위해 `"browser"`와 `"module"` 필드를 일치시키려고 시도했습니다. 이 동작은 이제 Export 식별 알고리즘과 일치하도록 제거되었습니다.
 - [[#14733] feat(resolve)!: remove `resolve.browserField`](https://github.com/vitejs/vite/pull/14733)
   - `resolve.browserField` 필드는 Vite 3부터 [`resolve.mainFields`](/config/shared-options.md#resolve-mainfields)의 기본값인 `['browser', 'module', 'jsnext:main', 'jsnext']`로 대체되었습니다.
+- [[#14855] feat!: add isPreview to ConfigEnv and resolveConfig](https://github.com/vitejs/vite/pull/14855)
+  - `ConfigEnv` 객체의 `ssrBuild`의 이름을 `isSsrBuild`로 변경했습니다.
 
 ## v3에서 마이그레이션하기 {#migration-from-v3}
 
