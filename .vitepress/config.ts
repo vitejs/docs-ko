@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitepress'
+import { DefaultTheme, defineConfig } from 'vitepress'
 import markdownItCustomAnchor from './markdown-it-custom-anchor'
 import renderPermalink from './render-permalink'
 
@@ -6,6 +6,61 @@ const ogDescription = 'Vite, 차세대 프런트엔드 개발 툴'
 const ogImage = 'https://ko.vitejs.dev/og-image.png'
 const ogTitle = 'Vite'
 const ogUrl = 'https://ko.vitejs.dev'
+
+// netlify envs
+const deployURL = process.env.DEPLOY_PRIME_URL || ''
+const commitRef = process.env.COMMIT_REF?.slice(0, 8) || 'dev'
+
+const deployType = (() => {
+  switch (deployURL) {
+    case 'https://main--vite-docs-ko.netlify.app':
+      return 'main'
+    case '':
+      return 'local'
+    default:
+      return 'release'
+  }
+})()
+const additionalTitle = ((): string => {
+  switch (deployType) {
+    case 'main':
+      return ' (main branch)'
+    case 'local':
+      return ' (local)'
+    case 'release':
+      return ''
+  }
+})()
+const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
+  const oldVersions: DefaultTheme.NavItemWithLink[] = [
+    {
+      text: 'Vite 4 문서',
+      link: 'https://v4.vitejs.dev',
+    },
+    {
+      text: 'Vite 3 문서',
+      link: 'https://v3.vitejs.dev',
+    },
+    {
+      text: 'Vite 2 문서',
+      link: 'https://v2.vitejs.dev',
+    },
+  ]
+
+  switch (deployType) {
+    case 'main':
+    case 'local':
+      return [
+        {
+          text: 'Vite 5 문서 (릴리즈)',
+          link: 'https://ko.vitejs.dev',
+        },
+        ...oldVersions,
+      ]
+    case 'release':
+      return oldVersions
+  }
+})()
 
 export default defineConfig({
   title: 'Vite',
@@ -118,6 +173,10 @@ export default defineConfig({
             ],
           },
         ],
+      },
+      {
+        text: '버전',
+        items: versionLinks,
       },
     ],
 
