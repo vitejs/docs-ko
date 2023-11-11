@@ -14,16 +14,6 @@ Vite는 **`import.meta.env`** 객체를 이용해 환경 변수에 접근할 수
 
 - **`import.meta.env.SSR`**: {boolean} 앱이 [서버](./ssr.md#conditional-logic)에서 실행 중인지 여부입니다.
 
-### 프로덕션에서의 환경 변수 {#production-replacement}
-
-프로덕션에서는 환경 변수가 모두 **정적으로 교체됩니다**. 따라서 항상 환경 변수는 정적으로 참조해야만 하며, `import.meta.env[key]`와 같은 동적 참조는 작동하지 않습니다.
-
-JavaScript 문자열 및 Vue 템플릿에서도 마찬가지로 환경 변수는 모두 정적으로 교체됩니다. 이로 인해 환경 변수와 동일한 네이밍을 갖지만 실제로는 환경 변수가 아닌 경우, 의도하지 않은 동작이 발생될 수 있습니다. 가령 `"process.env.NODE_ENV"`가 `""development": "`로 교체되는 경우, `Missing Semicolon` 또는 `Unexpected token`과 같은 오류가 표시됩니다.
-
-- JavaScript 문자열의 경우, `'import.meta\u200b.env.MODE'`와 같이 너비가 0인 공백으로 문자열을 분리
-
-- Vue 템플릿 또는 JavaScript 문자열로 컴파일되는 HTML의 경우, [`<wbr>` 태그](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/wbr)를 이용 (`import.meta.<wbr>env.MODE`)
-
 ## `.env` 파일들 {#env-files}
 
 Vite는 [dotenv](https://github.com/motdotla/dotenv)를 이용해 [환경 변수가 저장된 디렉터리](/config/shared-options.md#envdir) 내 아래의 파일에서 환경 변수를 가져옵니다.
