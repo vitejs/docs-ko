@@ -13,7 +13,7 @@ Vite는 이제 Rollup 4를 사용하며, 이 변경 사항은 특정 부분에 �
 - Vite 플러그인의 `this.resolve` `skipSelf` 옵션은 이제 기본적으로 `true`입니다.
 - Vite 플러그인의 `this.parse`는 현재 일시적으로 `allowReturnOutsideFunction` 옵션만을 지원합니다.  
 
-`build.rollupOptions`에서 빌드와 관련되어 바뀐 부분을 확인하려면, [Rollup 4 릴리즈 노트](https://github.com/rollup/rollup/releases/tag/v4.0.0)의 변경 사항을 참고해 주세요.
+[`build.rollupOptions`](/config/build-options.md#build-rollupoptions)에서 빌드와 관련되어 바뀐 부분을 확인하려면, [Rollup 4 릴리즈 노트](https://github.com/rollup/rollup/releases/tag/v4.0.0)의 변경 사항을 참고해 주세요.
 
 ## CJS Node API 사용 중단 {#deprecate-cjs-node-api}
 
@@ -34,7 +34,7 @@ Vite의 CJS Node API는 더 이상 제공되지 않습니다. `require('vite')` 
 
 ## `define` 및 `import.meta.env.*` 치환 방식 변경 {#rework-define-and-import-meta-env-replacement-strategy}
 
-Vite 4에서 `define` 및 `import.meta.env.*` 기능은 개발과 빌드 단계에서 서로 다른 치환 방식을 사용하고 있습니다:
+Vite 4에서 [`define`](/config/shared-options.md#define) 및 [`import.meta.env.*`](/guide/env-and-mode.md#env-variables) 기능은 개발과 빌드 단계에서 서로 다른 치환 방식을 사용하고 있습니다:
 
 - 개발 단계에서는 두 기능 모두 `globalThis`와 `import.meta`에 전역 변수로 주입됩니다.
 - 빌드 단계에서는 두 기능 모두 정규식을 사용하여 정적으로 치환됩니다.
@@ -98,11 +98,11 @@ const foo = _foo.default
 
 ### `worker.plugins` 옵션은 이제 함수를 전달받음 {#worker-plugins-is-now-a-function}
 
-Vite 4에서의 `worker.plugins` 옵션은 플러그인의 배열(`(Plugin | Plugin[])[]`)을 전달받았습니다. Vite 5에서는 플러그인의 배열을 반환하는 함수(`() => (Plugin | Plugin[])[]`)를 전달해야 합니다. 병렬 워커 빌드를 보다 일관되고 예측 가능하게 실행하기 위해 이와 같이 변경되었습니다.
+Vite 4에서의 [`worker.plugins`](/config/worker-options.md#worker-plugins) 옵션은 플러그인의 배열(`(Plugin | Plugin[])[]`)을 전달받았습니다. Vite 5에서는 플러그인의 배열을 반환하는 함수(`() => (Plugin | Plugin[])[]`)를 전달해야 합니다. 병렬 워커 빌드를 보다 일관되고 예측 가능하게 실행하기 위해 이와 같이 변경되었습니다.
 
 ### `.`를 포함하는 경로가 index.html로 폴백되도록 허용 {#allow-path-containing-to-fallback-to-index-html}
 
-Vite 4에서는 `appType`이 기본값인 `spa`로 설정되어 있더라도 `.`을 포함하는 경로에 접근하면 index.html로 폴백되지 않았습니다. Vite 5에서는 index.html로 폴백됩니다.
+Vite 4에서는 [`appType`](/config/shared-options.md#apptype)이 기본값인 `spa`로 설정되어 있더라도 `.`을 포함하는 경로에 접근하면 index.html로 폴백되지 않았습니다. Vite 5에서는 index.html로 폴백됩니다.
 
 이미지 경로를 존재하지 않는 파일(예: `<img src="./file-does-not-exist.png">`)로 지정해도 더 이상 브라우저에서 404 에러 메시지를 콘솔에 표시하지 않습니다.
 
@@ -128,7 +128,7 @@ Vite 4에서는 디렉터리 구조와 끝 슬래시에 따라 개발 서버와 
 
 ### 매니페스트 파일은 이제 기본적으로 `.vite` 디렉터리에 생성됨 {#manifest-files-are-now-generated-in-vite-directory-by-default}
 
-Vite 4에서는 매니페스트 파일(`build.manifest`, `build.ssrManifest`)이 기본적으로 `build.outDir`의 루트에 생성되었습니다. Vite 5에서는 `build.outDir`의 `.vite` 디렉터리에 생성됩니다.
+Vite 4에서는 매니페스트 파일([`build.manifest`](/config/build-options.md#build-manifest), [`build.ssrManifest`](/config/build-options.md#build-ssrmanifest))이 기본적으로 `build.outDir`의 루트에 생성되었습니다. Vite 5에서는 [`build.outDir`](/config/build-options.md#build-outdir)의 `.vite` 디렉터리에 생성됩니다.
 
 ### CLI 단축키는 `Enter`를 눌러 실행해야 함 {#cli-shortcuts-require-an-additional-enter-press}
 
@@ -138,7 +138,7 @@ CLI 단축키(예: 개발 서버를 재시작하는 `r`)는 이제 명시적으�
 
 ### `experimentalDecorators` 및 `useDefineForClassFields` TypeScript 동작 변경 {#update-experimentaldecorators-and-usedefineforclassfields-typescript-behaviour}
 
-Vite 5는 esbuild 0.19를 사용하며, esbuild 0.18의 호환성 계층도 제거해 `experimentalDecorators`와 `useDefineForClassFields`가 처리되는 방식이 변경되었습니다.
+Vite 5는 esbuild 0.19를 사용하며, esbuild 0.18의 호환성 계층도 제거해 [`experimentalDecorators`](https://www.typescriptlang.org/tsconfig#experimentalDecorators)와 [`useDefineForClassFields`](https://www.typescriptlang.org/tsconfig#useDefineForClassFields)가 처리되는 방식이 변경되었습니다.
 
 - **`experimentalDecorators`는 기본적으로 활성화되지 않습니다.**
 
@@ -217,7 +217,7 @@ const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
 - [[#14723] fix(resolve)!: remove special .mjs handling](https://github.com/vitejs/vite/pull/14723)
   - 과거 라이브러리의 `"exports"` 필드가 `.mjs` 파일을 매핑하는 경우, Vite는 특정 라이브러리와의 호환성을 유지하기 위해 `"browser"`와 `"module"` 필드를 일치시키려고 시도했습니다. 이 동작은 이제 Export 식별 알고리즘과 일치하도록 제거되었습니다.
 - [[#14733] feat(resolve)!: remove `resolve.browserField`](https://github.com/vitejs/vite/pull/14733)
-  - `resolve.browserField` 필드는 Vite 3부터 `resolve.mainFields`의 기본값인 `['browser', 'module', 'jsnext:main', 'jsnext']`로 대체되었습니다.
+  - `resolve.browserField` 필드는 Vite 3부터 [`resolve.mainFields`](/config/shared-options.md#resolve-mainfields)의 기본값인 `['browser', 'module', 'jsnext:main', 'jsnext']`로 대체되었습니다.
 
 ## v3에서 마이그레이션하기 {#migration-from-v3}
 
