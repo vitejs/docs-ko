@@ -102,10 +102,29 @@ Vite 4에서의 `worker.plugins` 옵션은 플러그인의 배열(`(Plugin | Plu
 
 ### `.`를 포함하는 경로가 index.html로 폴백되도록 허용 {#allow-path-containing-to-fallback-to-index-html}
 
-Vite 4에서 `appType`이 `'SPA'`(기본값)로 설정되어 있더라도 `.`를 포함하는 경로에 접근하면 index.html로 폴백되지 않았습니다.
-Vite 5에서는 index.html로 폴백됩니다.
+Vite 4에서는 `appType`이 기본값인 `spa`로 설정되어 있더라도 `.`을 포함하는 경로에 접근하면 index.html로 폴백되지 않았습니다. Vite 5에서는 index.html로 폴백됩니다.
 
 이미지 경로를 존재하지 않는 파일(예: `<img src="./file-does-not-exist.png">`)로 지정해도 더 이상 브라우저에서 404 에러 메시지를 콘솔에 표시하지 않습니다.
+
+### 개발 및 프리뷰 단계에서의 HTML 동작 일치 {#align-dev-and-preview-html-serving-behaviour}
+
+Vite 4에서는 디렉터리 구조와 끝 슬래시에 따라 개발 서버와 프리뷰 서버가 HTML을 다르게 제공합니다. 이는 빌드된 앱을 테스트할 때 일관성을 떨어뜨리기 때문에, Vite 5에서는 하나의 동작으로 리팩토링 되었습니다. 예를 들어 다음과 같은 파일 구조가 있다고 가정했을 때, 아래 표와 같이 동작합니다:
+
+```
+├── index.html
+├── file.html
+└── dir
+    └── index.html
+```
+
+| 요청               | 이전 (개발)                    | 이전 (프리뷰)        | 이후 (개발 & 프리뷰)             |
+| ----------------- | ---------------------------- | ----------------- | ---------------------------- |
+| `/dir/index.html` | `/dir/index.html`            | `/dir/index.html` | `/dir/index.html`            |
+| `/dir`            | `/index.html` (SPA 폴백)      | `/dir/index.html` | `/dir.html` (SPA 폴백)        |
+| `/dir/`           | `/dir/index.html`            | `/dir/index.html` | `/dir/index.html`            |
+| `/file.html`      | `/file.html`                 | `/file.html`      | `/file.html`                 |
+| `/file`           | `/index.html` (SPA 폴백)      | `/file.html`      | `/file.html`                 |
+| `/file/`          | `/index.html` (SPA 폴백)      | `/file.html`      | `/index.html` (SPA 폴백)      |
 
 ### 매니페스트 파일은 이제 기본적으로 `.vite` 디렉터리에 생성됨 {#manifest-files-are-now-generated-in-vite-directory-by-default}
 
