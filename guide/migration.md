@@ -150,6 +150,7 @@ const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
 - CSS 파일의 기본 내보내기 (예: `import style from './foo.css'`): 이 대신 `?inline` 쿼리를 사용
 - `import.meta.globEager`: 이 대신 `import.meta.glob('*', { eager: true })`를 사용
 - `ssr.format: 'cjs`' 및 `legacy.buildSsrCjsExternalHeuristics` ([#13816](https://github.com/vitejs/vite/discussions/13816))
+- `server.middlewareMode: 'ssr'` 및 `server.middlewareMode: 'html'`: 이 대신 [`appType`](/config/shared-options.md#apptype) + [`server.middlewareMode: true`](/config/server-options.md#server-middlewaremode) 를 사용 ([#8452](https://github.com/vitejs/vite/pull/8452))
 
 ## 고급 {#advanced}
 
