@@ -136,6 +136,31 @@ CLI 단축키(예: 개발 서버를 재시작하는 `r`)는 이제 명시적으�
 
 이 변경으로 Vite가 OS별 단축키를 무시하고 제어하는 것을 방지하며, Vite 개발 서버를 다른 프로세스와 결합할 때 더 나은 호환성을 제공할 수 있게 되고, [이전의 주의 사항](https://github.com/vitejs/vite/pull/14342)을 피할 수 있습니다.
 
+### `experimentalDecorators` 및 `useDefineForClassFields` TypeScript 동작 변경 {#update-experimentaldecorators-and-usedefineforclassfields-typescript-behaviour}
+
+Vite 5는 esbuild 0.19를 사용하며, esbuild 0.18의 호환성 계층도 제거해 `experimentalDecorators`와 `useDefineForClassFields`가 처리되는 방식이 변경되었습니다.
+
+- **`experimentalDecorators`는 기본적으로 활성화되지 않습니다.**
+
+  데코레이터를 사용하려면 `tsconfig.json`의 `compilerOptions.experimentalDecorators`를 `true`로 설정해야 합니다.
+
+- **`useDefineForClassFields`의 기본값은 TypeScript `target` 값에 따라 달라집니다.**
+
+  `target`이 `ESNext` 또는 `ES2022` 이상이 아니거나, `tsconfig.json` 파일이 존재하지 않는 경우, `useDefineForClassFields`는 기본적으로 `false`로 설정되는데, 이를 `esbuild.target`의 기본값인 `esnext`와 함께 사용할 경우 문제가 발생할 수 있습니다. 이는 [정적 초기화 블록](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks#browser_compatibility)으로 트랜스파일링되어 브라우저에서 지원되지 않을 수 있기 때문입니다.
+
+  따라서, `target`을 `ESNext` 또는 `ES2022` 이상으로 설정하거나, `tsconfig.json`을 구성할 때 `useDefineForClassFields`를 명시적으로 `true`로 설정하는 것을 권장합니다.
+
+```jsonc
+{
+  "compilerOptions": {
+    // 데코레이터를 사용하는 경우 true로 설정
+    "experimentalDecorators": true,
+    // 브라우저에서 구문 분석 오류가 발생하는 경우 true로 설정
+    "useDefineForClassFields": true
+  }
+}
+```
+
 ### `--https` 플래그 및 `https: true` 설정 제거 {#remove-https-flag-and-https-true}
 
 `--https` 플래그는 `https: true`를 설정합니다. 이 설정은 [Vite 3에서 삭제되었던](https://v3.vitejs.dev/guide/migration.html#automatic-https-certificate-generation) HTTPS 인증서 자동 생성 기능과 함께 사용하기 위해 만들어졌습니다. 이 설정을 적용해도 Vite는 인증서 없이 HTTPS 서버를 시작하므로, 더 이상 의미가 없습니다.

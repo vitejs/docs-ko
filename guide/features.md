@@ -57,6 +57,8 @@ export type { T }
 
 #### `isolatedModules` {#isolatedmodules}
 
+- [TypeScript 문서](https://www.typescriptlang.org/tsconfig#isolatedModules)
+
 `true`로 설정해주세요.
 
 `esbuild`는 타입에 대한 정보 없이 변환(Transpilation)만을 수행하기에, const enum 또는 암시적으로 타입만을 가져오는 것과 같은 특정 기능을 지원하지 않습니다.
@@ -67,7 +69,11 @@ export type { T }
 
 #### `useDefineForClassFields` {#usedefineforclassfields}
 
+- [TypeScript 문서](https://www.typescriptlang.org/tsconfig#useDefineForClassFields)
+
 Vite 2.5.0 부터는 TypeScript의 변환 대상이 `ESNext` 또는 `ES2022` 이상인 경우, 기본 값을 `true`로 설정합니다. 이는 [`tsc` 버전 4.3.2 이상](https://github.com/microsoft/TypeScript/pull/42663) 및 ECMAScript 표준을 따르도록 하는 설정입니다.
+
+그 외의 TypeScript 변환 대상은 `false`로 설정됩니다.
 
 그러나 다른 프로그래밍 언어나 이전 버전의 TypeScript를 사용하던 사람들에게는 직관적이지 않은 내용일 수 있습니다.
 이에 대한 자세한 정보는 [TypeScript 3.7 릴리스 노트](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#the-usedefineforclassfields-flag-and-the-declare-property-modifier)를 참고할 수 있습니다.
@@ -78,13 +84,32 @@ Vite 2.5.0 부터는 TypeScript의 변환 대상이 `ESNext` 또는 `ES2022` 이
 
 그러나 [`lit-element`](https://github.com/lit/lit-element/issues/1030)를 포함해 일부 라이브러리는 아직 이 새로운 기본값이 적용되지 않았습니다. 이러한 경우에는 `useDefineForClassFields`의 값을 `false`로 설정해주세요.
 
+#### `target` {#target}
+
+- [TypeScript 문서](https://www.typescriptlang.org/tsconfig#target)
+
+Vite는 `esbuild`와 동일하게 기본적으로 설정된 `target` 값으로 TypeScript를 트랜스파일하지 않습니다.
+
+이 대신 [`esbuild.target`](/config/shared-options.html#esbuild) 옵션을 사용할 수 있으며, 이는 최소한의 트랜스파일링을 위해 `esnext`로 기본 설정되어 있습니다. 빌드 시, 높은 우선순위를 갖는 [`build.target`](/config/build-options.html#build-target) 옵션을 사용할 수도 있습니다.
+
+::: warning `useDefineForClassFields`
+`target`이 `ESNext` 또는 `ES2022` 이상이 아니거나, `tsconfig.json` 파일이 존재하지 않는 경우, `useDefineForClassFields`는 기본적으로 `false`로 설정되는데, 이를 `esbuild.target`의 기본값인 `esnext`와 함께 사용할 경우 문제가 발생할 수 있습니다. 이는 [정적 초기화 블록](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks#browser_compatibility)으로 트랜스파일링되어 브라우저에서 지원되지 않을 수 있기 때문입니다.
+
+따라서, `target`을 `ESNext` 또는 `ES2022` 이상으로 설정하거나, `tsconfig.json`을 구성할 때 `useDefineForClassFields`를 명시적으로 `true`로 설정하는 것을 권장합니다.
+:::
+
 #### 빌드 결과에 영향을 미치는 또 다른 컴파일러 옵션들 {#other-compiler-options-affecting-the-build-result}
 
 - [`extends`](https://www.typescriptlang.org/tsconfig#extends)
 - [`importsNotUsedAsValues`](https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues)
 - [`preserveValueImports`](https://www.typescriptlang.org/tsconfig#preserveValueImports)
+- [`verbatimModuleSyntax`](https://www.typescriptlang.org/tsconfig#verbatimModuleSyntax)
+- [`jsx`](https://www.typescriptlang.org/tsconfig#jsx)
 - [`jsxFactory`](https://www.typescriptlang.org/tsconfig#jsxFactory)
 - [`jsxFragmentFactory`](https://www.typescriptlang.org/tsconfig#jsxFragmentFactory)
+- [`jsxImportSource`](https://www.typescriptlang.org/tsconfig#jsxImportSource)
+- [`experimentalDecorators`](https://www.typescriptlang.org/tsconfig#experimentalDecorators)
+- [`alwaysStrict`](https://www.typescriptlang.org/tsconfig#alwaysStrict)
 
 다만 `"isolatedModules": true`로 마이그레이션 할 수 없다면, [rollup-plugin-friendly-type-imports](https://www.npmjs.com/package/rollup-plugin-friendly-type-imports)와 같은 써드 파티 플러그인을 사용하는 방법도 있습니다. 그러나 이러한 접근 방식은 Vite에서 공식적으로 지원하는 방법은 아닙니다.
 
