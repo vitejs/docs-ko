@@ -120,7 +120,7 @@ Vite 4에서는 디렉터리 구조와 끝 슬래시에 따라 개발 서버와 
 | 요청               | 이전 (개발)                    | 이전 (프리뷰)        | 이후 (개발 & 프리뷰)             |
 | ----------------- | ---------------------------- | ----------------- | ---------------------------- |
 | `/dir/index.html` | `/dir/index.html`            | `/dir/index.html` | `/dir/index.html`            |
-| `/dir`            | `/index.html` (SPA 폴백)      | `/dir/index.html` | `/dir.html` (SPA 폴백)        |
+| `/dir`            | `/index.html` (SPA 폴백)      | `/dir/index.html` | `/index.html` (SPA 폴백)      |
 | `/dir/`           | `/dir/index.html`            | `/dir/index.html` | `/dir/index.html`            |
 | `/file.html`      | `/file.html`                 | `/file.html`      | `/file.html`                 |
 | `/file`           | `/index.html` (SPA 폴백)      | `/file.html`      | `/file.html`                 |
@@ -128,7 +128,9 @@ Vite 4에서는 디렉터리 구조와 끝 슬래시에 따라 개발 서버와 
 
 ### 매니페스트 파일은 이제 기본적으로 `.vite` 디렉터리에 생성됨 {#manifest-files-are-now-generated-in-vite-directory-by-default}
 
-Vite 4에서는 매니페스트 파일([`build.manifest`](/config/build-options.md#build-manifest), [`build.ssrManifest`](/config/build-options.md#build-ssrmanifest))이 기본적으로 `build.outDir`의 루트에 생성되었습니다. Vite 5에서는 [`build.outDir`](/config/build-options.md#build-outdir)의 `.vite` 디렉터리에 생성됩니다.
+Vite 4에서는 매니페스트 파일([`build.manifest`](/config/build-options.md#build-manifest)와 [`build.ssrManifest`](/config/build-options.md#build-ssrmanifest))이 기본적으로 `build.outDir`의 루트에 생성되었습니다.
+
+Vite 5에서는 [`build.outDir`](/config/build-options.md#build-outdir)의 `.vite` 디렉터리에 생성됩니다. 이 변경 사항은 동일한 매니페스트 파일 이름을 가진 public 파일이 `build.outDir`로 복사될 때 충돌을 방지하는 데 도움이 됩니다.
 
 ### CLI 단축키는 `Enter`를 눌러 실행해야 함 {#cli-shortcuts-require-an-additional-enter-press}
 
@@ -163,8 +165,9 @@ Vite 5는 esbuild 0.19를 사용하며, esbuild 0.18의 호환성 계층도 제�
 
 ### `--https` 플래그 및 `https: true` 설정 제거 {#remove-https-flag-and-https-true}
 
-`--https` 플래그는 `https: true`를 설정합니다. 이 설정은 [Vite 3에서 삭제되었던](https://v3.vitejs.dev/guide/migration.html#automatic-https-certificate-generation) HTTPS 인증서 자동 생성 기능과 함께 사용하기 위해 만들어졌습니다. 이 설정을 적용해도 Vite는 인증서 없이 HTTPS 서버를 시작하므로, 더 이상 의미가 없습니다.
-[`@vitejs/plugin-basic-ssl`](https://github.com/vitejs/vite-plugin-basic-ssl)와 [`vite-plugin-mkcert`](https://github.com/liuweiGL/vite-plugin-mkcert) 모두 `https` 설정을 `https` 값과 상관없이 설정하므로, `--https`와 `https: true`를 모두 제거해도 됩니다.
+`--https` 플래그는 내부적으로 `server.https: true`와 `preview.https: true`를 설정합니다. 이 설정은 [Vite 3에서 삭제되었던](https://v3.vitejs.dev/guide/migration.html#automatic-https-certificate-generation) HTTPS 인증서 자동 생성 기능과 함께 사용하기 위해 만들어졌는데, 이를 적용해도 Vite는 인증서 없이 HTTPS 서버를 시작하므로, 더 이상 의미가 없습니다.
+
+[`@vitejs/plugin-basic-ssl`](https://github.com/vitejs/vite-plugin-basic-ssl) 또는 [`vite-plugin-mkcert`](https://github.com/liuweiGL/vite-plugin-mkcert)를 사용하고 있다면, 이미 내부적으로 `https` 설정이 되어 있으므로, `--https`, `server.https: true`, `preview.https: true`를 제거해도 됩니다.
 
 ### `resolvePackageEntry`와 `resolvePackageData` API 제거 {#remove-resolvepackageentry-and-resolvepackagedata-apis}
 
