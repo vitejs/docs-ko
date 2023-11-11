@@ -58,7 +58,9 @@ TLS + HTTP/2를 활성화합니다. [`server.proxy`](./server-options#server-pro
 - **타입:** `boolean | string`
 - **기본값:** [`server.open`](./server-options#server-open)
 
-서버 시작 시 자동으로 브라우저를 열도록 설정할 수 있습니다. 값이 문자열인 경우 URL 경로를 의미하며, 원하는 특정 브라우저를 열고자 하는 경우에는 `process.env.BROWSER` 환경 변수를 `firefox`와 같은 값으로 설정합니다. `process.env.BROWSER_ARGS` 환경 변수를 통해 추가적인 인자를 전달할 수도 있습니다. (예: `--incognito`)
+서버 시작 시 자동으로 브라우저를 열도록 설정할 수 있습니다. 값이 문자열인 경우 URL 경로를 의미하며, 원하는 특정 브라우저를 열고자 하는 경우에는 `process.env.BROWSER` 환경 변수를 `firefox`와 같은 값으로 설정하면 됩니다. `process.env.BROWSER_ARGS` 환경 변수를 통해 추가적인 인자를 전달할 수도 있습니다(예: `--incognito`).
+
+`BROWSER`와 `BROWSER_ARGS`는 `.env` 파일에서 설정할 수 있는 특별한 환경 변수입니다. 자세한 내용은 [`open` 패키지](https://github.com/sindresorhus/open#app)를 참고해주세요.
 
 ## preview.proxy {#preview-proxy}
 

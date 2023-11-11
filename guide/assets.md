@@ -1,9 +1,7 @@
 # 에셋 가져오기 {#static-asset-handling}
 
-다음 두 개의 주제와 관련있는 섹션입니다.
-
-- [Public Base Path](./build#public-base-path)
-- [`assetsInclude` 설정 옵션](/config/shared-options.md#assetsinclude)
+- 관련 항목: [Public Base Path](./build#public-base-path)
+- 관련 항목: [`assetsInclude` 설정 옵션](/config/shared-options.md#assetsinclude)
 
 ## URL을 통해 에셋 가져오기 {#importing-asset-as-url}
 
@@ -110,6 +108,11 @@ function getImageUrl(name) {
 ```
 
 프로덕션 빌드 시, Vite는 번들링 및 에셋 해싱 후에도 해당 에셋에 대한 URL을 올바르게 가리키기 위해 필요한 변환 작업을 수행합니다.
+
+```js
+// Vite는 아래 코드를 변환하지 않음
+const imgUrl = new URL(imagePath, import.meta.url).href
+```
 
 ::: warning SSR과 함께 사용하지 마세요!
 `import.meta.url`은 브라우저와 Node.js 간 서로 다른 의미를 갖기 때문에, 이 패턴은 서버-사이드 렌더링(SSR)에 Vite를 사용하는 경우 동작하지 않습니다. 또한 서버 번들은 클라이언트 호스트의 URL을 미리 결정할 수 없습니다.
