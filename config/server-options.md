@@ -56,7 +56,7 @@ WSL2에서 Vite를 실행할 때, `host: true`를 설정하는 것만으로는 L
 
 ## server.https {#server-https}
 
-- **타입:** `boolean | https.ServerOptions`
+- **타입:** `https.ServerOptions`
 
 TLS + HTTP/2를 사용합니다. [`server.proxy` 옵션](#server-proxy)이 사용된다면, 이 옵션은 오직 TLS만 사용하는 것으로 다운그레이드됩니다.
 
