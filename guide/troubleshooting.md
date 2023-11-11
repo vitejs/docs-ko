@@ -145,15 +145,11 @@ import './Foo.js' // './foo.js' 이어야 합니다.
 
 WSL2로 Vite를 실행하는 경우 일부 조건에서는 파일 변경 사항을 볼 수 없습니다. [`server.watch` option](/config/server-options.md#server-watch)를 참고하세요.
 
-### HMR 대신 전체 리 로드가 발생합니다. {#a-full-reload-happens-instead-of-hmr}
+### HMR 대신 전체 리 로드가 발생됨 {#a-full-reload-happens-instead-of-hmr}
 
-Vite 또는 플러그인에서 HMR을 처리하지 않으면 전체 리 로드가 발생합니다.
+Vite 또는 플러그인에서 HMR을 처리하지 않으면, 전체 리 로드를 통해 상태를 갱신합니다.
 
-또한 의존성 루프가 있는 경우 전체 리 로드가 발생합니다. 이 문제를 해결하려면 루프를 제거해 보세요.
-
-### 콘솔에서 많은 수의 HMR 업데이트 {#high-number-of-hmr-updates-in-console}
-
-이는 상호참조 때문에 발생할 수 있습니다. 이 문제를 해결하려면 상호참조를 끊어보세요.
+HMR이 처리되지만 순환 참조 내부에 있는 경우에도 실행 순서를 복구하기 위해 전체 리로드가 발생합니다. 이를 해결하려면 순환 참조 관계를 끊는 방법밖에는 없습니다. 파일 변경으로 인해 순환 참조 관계가 발생하면 `vite --debug hmr`을 실행하여 경로에 대한 로그를 확인할 수 있습니다.
 
 ## 빌드 {#build}
 
