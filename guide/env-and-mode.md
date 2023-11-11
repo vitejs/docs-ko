@@ -64,10 +64,11 @@ NEW_KEY3=test$KEY   # test123
 환경 변수에 대한 접미사(Prefix)를 커스터마이즈 하고자 한다면, [envPrefix](/config/shared-options.html#envprefix) 옵션을 참고해주세요.
 
 :::warning 보안 권고 사항
+
 - `.env.*.local` 파일은 오로지 로컬에서만 접근이 가능한 파일이며, 데이터베이스 비밀번호와 같은 민감한 정보를 이 곳에 저장하도록 합니다. 또한 `.gitignore` 파일에 `*.local` 파일을 명시해 Git에 체크인되는 것을 방지하도록 합니다.
 
 - Vite 소스 코드에 노출되는 모든 환경 변수는 번들링 시 포함되게 됩니다. 따라서, `VITE_*` 환경 변수에는 민감한 정보들이 _포함되어서는 안됩니다_.
-:::
+  :::
 
 ### TypeScript를 위한 인텔리센스 {#intellisense-for-typescript}
 
@@ -76,6 +77,8 @@ NEW_KEY3=test$KEY   # test123
 `src` 디렉터리 내 `env.d.ts` 파일을 생성한 후, 아래와 같이 `ImportMetaEnv`를 정의하여 `VITE_` 환경 변수에 대한 타입을 정의할 수 있습니다.
 
 ```typescript
+/// <reference types="vite/client" />
+
 interface ImportMetaEnv {
   readonly VITE_APP_TITLE: string
   // 다른 환경 변수들에 대한 타입 정의...
