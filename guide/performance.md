@@ -55,14 +55,14 @@ TypeScript를 사용한다면, `tsconfig.json`의 `compilerOptions`에 `"moduleR
 
 ```js
 // src/utils/index.js
-export * from './color'
-export * from './dom'
-export * from './string'
+export * from './color.js'
+export * from './dom.js'
+export * from './string.js'
 ```
 
-배럴 파일에 있는 모든 파일이 임포트되고 변환되어야 하므로, `import { slash } from './utils'`와 같이 개별 API만 임포트하는 경우에도 해당 배럴 파일의 모든 파일이 가져와지고 변환되며, 이 중에는 `slash` API와 초기화 시 실행되는 사이드 이펙트가 포함될 수도 있습니다. 이는 초기 페이지 로드 시 필요한 것보다 더 많은 파일을 로드하게 되어 결과적으로 페이지 로드가 느려지게 됩니다.
+배럴 파일에 있는 모든 파일이 임포트되고 변환되어야 하므로, `import { slash } from './utils.js'`와 같이 개별 API만 임포트하는 경우에도 해당 배럴 파일의 모든 파일이 가져와지고 변환되며, 이 중에는 `slash` API와 초기화 시 실행되는 사이드 이펙트가 포함될 수도 있습니다. 이는 초기 페이지 로드 시 필요한 것보다 더 많은 파일을 로드하게 되어 결과적으로 페이지 로드가 느려지게 됩니다.
 
-가능하다면, `import { slash } from './utils/slash'`와 같이 배럴 파일을 피하고 개별 API를 직접 임포트해야 합니다. 더 자세한 내용은 [#8237 이슈](https://github.com/vitejs/vite/issues/8237)를 참고해 주세요.
+가능하다면, `import { slash } from './utils/slash.js'`와 같이 배럴 파일을 피하고 개별 API를 직접 임포트해야 합니다. 더 자세한 내용은 [#8237 이슈](https://github.com/vitejs/vite/issues/8237)를 참고해 주세요.
 
 ## 자주 사용되는 파일 워밍업 {#warm-up-frequently-used-files}
 
@@ -102,3 +102,20 @@ export default defineConfig({
 참고로 Vite 개발 서버를 시작할 때 과부하가 걸리지 않도록 자주 사용되는 파일만 워밍업해야 합니다. 자세한 내용은 [`server.warmup`](/config/server-options.md#server-warmup) 옵션을 확인해 주세요.
 
 [`--open` 또는 `server.open`](/config/server-options.html#server-open)을 사용하면 Vite가 앱의 진입점이나 제공된 URL을 자동으로 워밍업하기 때문에 성능을 향상시킬 수 있습니다.
+
+## 작업량을 줄이거나 네이티브 툴링 사용하기 {#use-lesser-or-native-tooling}
+
+코드베이스가 커져도 Vite를 빠르게 유지하는 방법은 소스 파일(JS/TS/CSS)의 작업량을 줄이는 것입니다.
+
+이에 대한 예시는 다음과 같습니다:
+
+- 가능하다면 Sass/Less/Stylus 대신 CSS를 사용하세요. 중첩된 스타일은 PostCSS에서 처리할 수 있습니다.
+- SVG를 UI 프레임워크 컴포넌트(React, Vue 등)로 변환하지 마세요. 대신 문자열이나 URL로 임포트하세요.
+- `@vitejs/plugin-react`를 사용하는 경우, 빌드 중 변환을 수행하지 않기 위해 Babel 옵션을 구성하지 마세요. 이 경우 esbuild만 사용됩니다.
+
+네이티브 툴링을 사용하는 예시:
+
+네이티브 툴링을 사용하면 설치 시 크기가 커지는 경우가 많으므로 새로운 Vite 프로젝트를 시작할 때는 기본적으로 사용되지 않습니다. 그러나 대규모 애플리케이션의 경우에는 그 비용을 감당할 가치가 있을 수 있습니다.
+
+- 실험적으로 도입된 [LightningCSS](https://github.com/vitejs/vite/discussions/13835)를 사용해 보세요.
+- `@vitejs/plugin-react` 대신 [`@vitejs/plugin-react-swc`](https://github.com/vitejs/vite-plugin-react-swc)를 사용하세요.
