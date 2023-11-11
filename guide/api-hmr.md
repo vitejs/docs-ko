@@ -149,6 +149,16 @@ if (import.meta.hot) {
 
 `import.meta.hot.data` 객체는 같이 변경된 각기 다른 모듈들의 인스턴스들에서 지속됩니다. 해당 객체는 전 버전의 모듈 정보를 다음 버전의 모듈에게 전달할 수 있습니다.
 
+`data` 자체에 대한 재할당은 지원되지 않습니다. 이 대신 다른 핸들러에서 추가된 정보가 유지되도록 `data` 객체의 속성을 변경해야 합니다.
+
+```js
+// ok
+import.meta.hot.data.someValue = 'hello'
+
+// 지원되지 않음
+import.meta.hot.data = { someValue: 'hello' }
+```
+
 ## `hot.decline()` {#hot-decline}
 
 이는 현재 무시되고 있으며, 이전 버전과의 호환성을 위해 존재합니다. 만약 새로운 사용법이 생긴다면, 이는 변경될 수 있습니다. 모듈이 Hot 업데이트가 불가능함을 알리기 위해서는 `hot.invalidate()`를 사용하세요.
