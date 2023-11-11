@@ -201,6 +201,9 @@ const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
 플러그인/도구 개발자에게만 영향을 미치는 변경 사항입니다.
 
 - [[#14119] refactor!: merge `PreviewServerForHook` into `PreviewServer` type](https://github.com/vitejs/vite/pull/14119)
+  - `configurePreviewServer` 훅은 이제 `PreviewServerForHook` 타입이 아닌 `PreviewServer` 타입을 받습니다.
+- [[#14818] refactor(preview)!: use base middleware](https://github.com/vitejs/vite/pull/14818)
+  - `configurePreviewServer`의 반환 함수에서 추가된 미들웨어는 이제 `req.url` 값을 비교할 때 `base`에 접근할 수 없습니다. 이는 개발 서버와 일관된 동작을 할 수 있도록 합니다. 필요한 경우에는 `configResolved` 훅에서 `base`를 확인할 수 있습니다.
 
 이 외로, 몇몇 사용자에게만 영향을 미치는 변경 사항도 있습니다.
 
