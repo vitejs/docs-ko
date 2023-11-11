@@ -298,8 +298,7 @@ function searchForWorkspaceRoot(
 
 **관련 문서:** [server.fs.allow](/config/server-options.md#server-fs-allow)
 
-Search for the root of the potential workspace if it meets the following conditions, otherwise it would fallback to `root`:
--> 만약 다음 조건을 만족한다면, 작업 공간의 루트를 찾습니다. 아니라면 `root`를 반환합니다:
+다음 조건을 만족하여 워크스페이스가 될 수 있는 루트를 검색합니다. 그렇지 않다면 `root`를 반환합니다:
 
 - `package.json`에 `workspaces` 필드가 있음
 - 다음 파일 중 하나가 존재

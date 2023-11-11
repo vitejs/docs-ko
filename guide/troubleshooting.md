@@ -204,7 +204,9 @@ Node.js 인스펙터가 루트 폴더에 `vite-profile-0.cpuprofile`을 생성�
 > Module "fs" has been externalized for browser compatibility. Cannot access "fs.readFile" in client code.
 This is because Vite does not automatically polyfill Node.js modules.
 
-polyfill을 수동으로 추가할 수 있지만 번들 크기를 줄이기 위해서 브라우저 코드에 Node.js 모듈을 사용하지 않는 것이 좋습니다. 외부 라이브러리(브라우저에서 사용됨)에서 모듈을 가져온 경우 해당 라이브러리에 문제를 보고하는 것이 좋습니다.
+이는 Vite가 Node.js 모듈을 자동으로 폴리필하지 않기 때문입니다.
+
+수동으로 폴리필을 추가할 수 있지만 번들 크기를 줄이기 위해서 브라우저 코드에는 Node.js 모듈을 사용하지 않는 것이 좋습니다. 만약 외부 라이브러리에서 모듈을 가져와 브라우저에서 사용하는 경우에는, 해당 라이브러리에 문제를 보고하는 것이 좋습니다.
 
 ### Syntax Error / Type Error 발생 {#syntax-error-type-error-happens}
 
