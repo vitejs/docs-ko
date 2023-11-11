@@ -89,7 +89,13 @@ async function createServer() {
 
   // Vite를 미들웨어로 사용합니다.
   // 만약 Express 라우터(express.Router())를 사용하는 경우, router.use를 사용해야 합니다.
-  app.use(vite.middlewares)
+  app.use((req, res, next) => {
+    // 사용자가 vite.config.js를 수정한 후와 같이,
+    // 서버가 재시작되면 `vite.middlewares`가 재할당됩니다.
+    // 래퍼 핸들러 내에서 `vite.middlewares`를 호출하면
+    // 항상 최신 Vite 미들웨어를 사용할 수 있습니다.
+    vite.middlewares.handle(req, res, next)
+  })
 
   app.use('*', async (req, res) => {
     // index.html 파일을 제공합니다 - 아래에서 이를 다룰 예정입니다.
