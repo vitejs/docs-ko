@@ -108,6 +108,8 @@ Vite는 HTML 파일에서 환경 변수를 대체하는 기능도 지원합니�
 
 다만 환경 변수가 `import.meta.env`에 존재하지 않는다면 HTML에서는 무시되고 대체되지 않습니다. 예를 들어 `%NON_EXISTENT%`라는 환경 변수가 `import.meta.env`에 존재하지 않는다면, JS에서는 `import.meta.env.NON_EXISTENT`가 `undefined`로 대체되지만, HTML에서는 무시되고 대체되지 않습니다.
 
+Vite는 많은 프레임워크에서 사용되고 있기 때문에, 조건문과 같은 복잡한 대체에 대해서는 의도적으로 의견을 제시하지 않고 있습니다. [기존의 커뮤니티 플러그인](https://github.com/vitejs/awesome-vite#transformers) 또는 [`transformIndexHtml` 훅](./api-plugin#transformindexhtml)을 구현한 커스텀 플러그인을 통해 Vite를 확장할 수 있습니다.
+
 ## 모드 {#modes}
 
 기본적으로, `dev` 명령으로 실행되는 개발 서버는 `development` 모드로 동작하고, `build` 명령으로 실행되는 경우에는 `production` 모드로 동작합니다.
