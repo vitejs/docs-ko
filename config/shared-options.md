@@ -37,17 +37,18 @@
 
 전역 상수로 대체되는 값을 정의합니다. 정의된 내용들은 개발 중에는 전역으로 정의되나, 빌드 중에는 정적으로 대체됩니다.
 
-- 문자열 값은 원시 표현식으로 사용되기에, 만약 문자열 상수를 정의하고자 한다면 **명시적으로 따옴표로 묶어야 합니다**. (예: `JSON.stringify` 사용)
+Vite는 [esbuild defines](https://esbuild.github.io/api/#define)를 사용해 치환을 수행하므로, 값 표현식은 JSON 직렬화할 수 있는 값(null, boolean, number, string, array, 또는 object) 또는 단일 식별자인 문자열이어야 합니다. 만약 문자열이 아니라면, Vite는 `JSON.stringify`를 통해 자동으로 문자열로 변환합니다.
 
-- [esbuild](https://esbuild.github.io/api/#define)와 일관성을 유지하기 위해, 표현식은 JSON 객체(null, boolean, number, string, array, 또는 object)이거나 단일 식별자여야 합니다.
+**예시:**
 
-- 매치되는 부분이 다른 문자나 숫자, `_` 또는 `$`로 둘러싸여 있지 않은 경우에만 대체됩니다.
-
-::: warning
-구분 분석 없이 간단한 텍스트 치환으로 구현되기에, 상수에만 `define`을 사용하는 것이 좋습니다.
-
-예를 들어 `process.env.FOO` 및 `__APP_VERSION__`과 같은 값이 적절합니다. 그러나 `process` 또는 `global`을 이 옵션에 넣어서는 안 됩니다. 대신 변수를 끼워 넣거나 폴리필로 사용할 수 있습니다.
-:::
+```js
+export default defineConfig({
+  define: {
+    __APP_VERSION__: JSON.stringify('v1.0.0'),
+    __API_URL__: 'window.__backend_api_url',
+  },
+})
+```
 
 ::: tip 참고
 TypeScript를 사용할 때 타입 체크 및 인텔리센스를 활성화하고자 한다면, `env.d.ts` 또는 `vite-env.d.ts` 파일에 해당 타입을 선언해줘야 합니다.
@@ -57,20 +58,6 @@ TypeScript를 사용할 때 타입 체크 및 인텔리센스를 활성화하고
 ```ts
 // vite-env.d.ts
 declare const __APP_VERSION__: string
-```
-
-:::
-
-::: tip 참고
-개발과 빌드는 `define`을 다르게 구현하기에, 일관성을 유지하기 위해 몇몇 사용 사례를 피해야 합니다.
-
-예제:
-
-```js
-const obj = {
-  __NAME__, // 객체 프로퍼티 축약 표현을 사용하지 마세요.
-  __KEY__: value, // 오브젝트 키로 사용하지 마세요.
-}
 ```
 
 :::

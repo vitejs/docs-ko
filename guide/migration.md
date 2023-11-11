@@ -32,6 +32,42 @@ Vite의 CJS Node API는 더 이상 제공되지 않습니다. `require('vite')` 
 
 자세한 내용은 [트러블슈팅 가이드](/guide/troubleshooting.html#vite-cjs-node-api-deprecated)를 참조하세요.
 
+## `define` 및 `import.meta.env.*` 치환 방식 변경 {#rework-define-and-import-meta-env-replacement-strategy}
+
+Vite 4에서 `define` 및 `import.meta.env.*` 기능은 개발과 빌드 단계에서 서로 다른 치환 방식을 사용하고 있습니다:
+
+- 개발 단계에서는 두 기능 모두 `globalThis`와 `import.meta`에 전역 변수로 주입됩니다.
+- 빌드 단계에서는 두 기능 모두 정규식을 사용하여 정적으로 치환됩니다.
+
+이에 따라 변수 접근 시 개발과 빌드 단계에서 일관성이 없어지며, 때로는 빌드가 실패하기도 합니다. 예를 들어:
+
+```js
+// vite.config.js
+export default defineConfig({
+  define: {
+    __APP_VERSION__: JSON.stringify('1.0.0'),
+  },
+})
+```
+
+```js
+const data = { __APP_VERSION__ }
+// dev: { __APP_VERSION__: "1.0.0" } ✅
+// build: { "1.0.0" } ❌
+
+const docs = 'I like import.meta.env.MODE'
+// dev: "I like import.meta.env.MODE" ✅
+// build: "I like "production"" ❌
+```
+
+Vite 5에서는 `esbuild`를 사용해 빌드 시 치환하는 방식으로 일관성을 유지하도록 하였습니다.
+
+이 변경 사항은 대부분의 환경설정에는 영향을 미치지 않습니다. 이미 `define` 값은 esbuild의 문법을 따라야 한다는 사실이 문서화되어 있기 때문입니다:
+
+> esbuild와의 일관성을 유지하기 위해, 표현식은 JSON 객체(null, boolean, number, string, array, 또는 object)이거나 단일 식별자여야 합니다.
+
+만약 값을 직접 정적으로 치환하는 것을 선호한다면, [`@rollup/plugin-replace`](https://github.com/rollup/plugins/tree/master/packages/replace) 플러그인을 사용해 주세요.
+
 ## 일반 변경 사항 {#general-changes}
 
 ### 이제 SSR 외부화 모듈은 프로덕션과 일치 {#ssr-externalized-modules-value-now-matches-production}
