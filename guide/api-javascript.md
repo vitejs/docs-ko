@@ -38,6 +38,41 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url))
 `createServer`와 `build`는 `mode` 설정 옵션과 `process.env.NODE_ENV`에 의존해 관련 동작을 수행합니다. 따라서 동일한 Node.js 프로세스에서 이 두 함수를 사용하는 경우 충돌이 발생될 수 있으며, 이를 방지하고자 한다면 두 API의 `process.env.NODE_ENV` 또는 `mode` 설정 옵션을 `development`로 설정하세요. 아니면 하위 프로세스를 만들어 API를 각각 실행하는 방법도 있습니다.
 :::
 
+::: tip 참고
+[미들웨어 모드](/config/server-options.md#server-middlewaremode)와 [WebSocket용 프록시 설정](/config/server-options.md#server-proxy)을 함께 사용할 때, 프록시를 올바르게 바인딩하려면 부모 http 서버를 `middlewareMode`에 전달해야 합니다.
+
+<details>
+<summary>예시</summary>
+
+```ts
+import http from 'http'
+import { createServer } from 'vite'
+
+const parentServer = http.createServer() // 또는 express, koa 등
+
+const vite = await createServer({
+  server: {
+    // 미들웨어 모드 활성화
+    middlewareMode: {
+      // 프록시 WebSocket을 위해 부모 http 서버 제공
+      server: parentServer,
+    },
+  },
+  proxy: {
+    '/ws': {
+      target: 'ws://localhost:3000',
+      // WebSocket 프록시
+      ws: true,
+    },
+  },
+})
+
+server.use(vite.middlewares)
+```
+
+</details>
+:::
+
 ## `InlineConfig` {#inlineconfig}
 
 `InlineConfig` 인터페이스는 `UserConfig`의 추가적인 속성들로 확장됩니다:
