@@ -20,7 +20,9 @@ Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./feat
 
 ## 지원하는 브라우저 {#browser-support}
 
-기본적으로 [네이티브 ES 모듈](https://caniuse.com/es6-module), [네이티브 ESM의 동적 Import](https://caniuse.com/es6-module-dynamic-import), 그리고 [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta)를 지원하는 브라우저를 타깃으로 빌드를 수행합니다. 레거시 브라우저는 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 통해 지원이 가능합니다. 이와 관련해 좀 더 자세한 사항은 [프로덕션 버전으로 빌드하기](./build) 섹션에서 다룹니다.
+개발 단계에서, Vite는 모든 최신 JavaScript 및 CSS 기능을 지원하는 브라우저를 사용하고 있다고 가정하고 [`esnext`를 변환 대상으로 설정](https://esbuild.github.io/api/#target)해 빌드를 수행합니다. 이는 하위 호환을 생각하지 않아도 되며, Vite가 원본 소스 코드와 최대한 가깝게 모듈을 제공할 수 있도록 합니다.
+
+프로덕션 빌드의 경우, 기본적으로 Vite는 [네이티브 ES Module](https://caniuse.com/es6-module), [네이티브 ESM 동적 임포트](https://caniuse.com/es6-module-dynamic-import), 그리고 [`import.meta`](https://caniuse.com/mdn-javascript_operators_import_meta)를 지원하는 브라우저를 대상으로 빌드를 수행합니다. 레거시 브라우저는 공식 플러그인인 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)를 통해 지원이 가능합니다. 이에 대한 더 자세한 내용은 [프로덕션 빌드](./build) 섹션을 참고해 주세요.
 
 ## 온라인에서 Vite 체험해보기 {#trying-vite-online}
 

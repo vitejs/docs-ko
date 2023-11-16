@@ -60,7 +60,7 @@ Vite의 디펜던시 탐색 휴리스틱이 항상 바람직한 것은 아닙니
 
 이를 해결하기 위해 `include`와 `exclude` 옵션 둘 다 사용될 수 있습니다. 만약 디펜던시가 크거나(내부 모듈이 많은 경우) CommonJS 포맷이라면 `include` 옵션에 명시해야 합니다. 만약 디펜던시가 작고 이미 ESM 스타일로 작성되어 있다면 `exclude` 옵션에 명시해 브라우저에서 바로 불러올 수 있도록 설정할 수 있습니다.
 
-또한 [`optimizeDeps.esbuildOptions` 옵션](/config/dep-optimization-options.md#optimizedeps-esbuildoptions)을 통해 esbuild를 더욱 세밀하게 커스터마이즈할 수 있습니다. 예를 들어, 특정 파일을 디펜던시에서 처리하기 위한 esbuild 플러그인을 추가하는 것 또한 이 옵션을 통해 가능합니다.
+또한 [`optimizeDeps.esbuildOptions` 옵션](/config/dep-optimization-options.md#optimizedeps-esbuildoptions)을 통해 esbuild를 더욱 세밀하게 커스터마이즈할 수 있습니다. 예를 들어, 특정 파일을 디펜던시에서 처리하기 위한 esbuild 플러그인을 추가하거나, [빌드 `target`](https://esbuild.github.io/api/#target)을 변경할 수 있습니다.
 
 ## 캐싱 {#caching}
 
