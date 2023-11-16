@@ -57,7 +57,6 @@ pnpm build
 ### 번역 시 참고할 수 있는 자료
 
 - [국립국어원 외래어 표기법 용례](https://kornorms.korean.go.kr//example/exampleList.do)
-- [마이크로소프트 용어 검색](https://www.microsoft.com/en-us/language/Search)
 
 ### 용어집
 
