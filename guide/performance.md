@@ -57,10 +57,10 @@ TypeScript를 사용한다면, `tsconfig.json`의 `compilerOptions`에 `"moduleR
 // src/utils/index.js
 export * from './color.js'
 export * from './dom.js'
-export * from './string.js'
+export * from './slash.js'
 ```
 
-배럴 파일에 있는 모든 파일이 임포트되고 변환되어야 하므로, `import { slash } from './utils.js'`와 같이 개별 API만 임포트하는 경우에도 해당 배럴 파일의 모든 파일이 가져와지고 변환되며, 이 중에는 `slash` API와 초기화 시 실행되는 사이드 이펙트가 포함될 수도 있습니다. 이는 초기 페이지 로드 시 필요한 것보다 더 많은 파일을 로드하게 되어 결과적으로 페이지 로드가 느려지게 됩니다.
+배럴 파일에 있는 모든 파일이 임포트되고 변환되어야 하므로, `import { slash } from './utils'`와 같이 개별 API만 임포트하는 경우에도 해당 배럴 파일의 모든 파일이 가져와지고 변환되며, 이 중에는 `slash` API와 초기화 시 실행되는 사이드 이펙트가 포함될 수도 있습니다. 이는 초기 페이지 로드 시 필요한 것보다 더 많은 파일을 로드하게 되어 결과적으로 페이지 로드가 느려지게 됩니다.
 
 가능하다면, `import { slash } from './utils/slash.js'`와 같이 배럴 파일을 피하고 개별 API를 직접 임포트해야 합니다. 더 자세한 내용은 [#8237 이슈](https://github.com/vitejs/vite/issues/8237)를 참고해 주세요.
 
