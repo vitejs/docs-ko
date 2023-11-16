@@ -53,7 +53,7 @@ import esmSvg from '../images/esm.svg?raw'
 
 Vite의 현재 플러그인 API는 `esbuild`를 번들러로 사용하는 것과 호환되지 않습니다. `esbuild`가 더 빠르지만, Vite가 Rollup의 유연한 플러그인 API 및 인프라를 적극적으로 채택한 것은 생태계에서의 성공에 큰 기여를 했습니다. 현재로서는 Rollup이 성능 대 유연성 트레이드오프에서 더 나은 선택이라고 믿습니다.
 
-다만 `esbuild`는 지난 몇 년 동안 많은 진전을 이루었고, 향후 프로덕션 빌드에서 `esbuild`를 사용할 가능성도 배제하지 않을 것입니다. JS 및 CSS 축소 기능을 통해 Vite 생태계와 조화롭게 성능 향상을 이루었듯이, `esbuild`가 새로운 기능을 출시할 때마다 이를 활용할 것입니다.
+Rollup은 [v4에서 파서를 SWC로 전환](https://github.com/rollup/rollup/pull/5073)하는 등 성능 개선을 위해 노력해 왔습니다. 또한 Rollup의 Rust 포팅인 Rolldown을 만드는 작업이 진행 중입니다. Rolldown이 준비되면 Rollup과 esbuild를 모두 대체하여 빌드 성능을 크게 향상시키고 개발과 빌드 사이의 불일치를 제거할 수 있습니다. [Evan You의 ViteConf 2023 키노트](https://youtu.be/hrdwQHoAp0M)에서 자세한 내용을 확인할 수 있습니다.
 
 ## Vite와 다른 도구의 차이점 {#how-is-vite-different-from-x}
 
