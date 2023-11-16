@@ -142,3 +142,35 @@ VITE_APP_TITLE=My App (staging)
 # .env.testing
 NODE_ENV=development
 ```
+
+## NODE_ENV 그리고 모드 {#node-env-and-modes}
+
+`NODE_ENV`(`process.env.NODE_ENV`)와 모드는 서로 다른 개념임을 유의해야 합니다. 아래는 명령어가 `NODE_ENV`와 모드에 어떤 영향을 미치는지 보여줍니다:
+
+| 명령                                                  | NODE_ENV        | 모드             |
+| ---------------------------------------------------- | --------------- | --------------- |
+| `vite build`                                         | `"production"`  | `"production"`  |
+| `vite build --mode development`                      | `"production"`  | `"development"` |
+| `NODE_ENV=development vite build`                    | `"development"` | `"production"`  |
+| `NODE_ENV=development vite build --mode development` | `"development"` | `"development"` |
+
+`NODE_ENV`와 모드의 차이점은 `import.meta.env` 속성에도 반영됩니다:
+
+| 명령                    | `import.meta.env.PROD` | `import.meta.env.DEV` |
+| ---------------------- | ---------------------- | --------------------- |
+| `NODE_ENV=production`  | `true`                 | `false`               |
+| `NODE_ENV=development` | `false`                | `true`                |
+| `NODE_ENV=other`       | `false`                | `true`                |
+
+| 명령                  | `import.meta.env.MODE` |
+| -------------------- | ---------------------- |
+| `--mode production`  | `"production"`         |
+| `--mode development` | `"development"`        |
+| `--mode staging`     | `"staging"`            |
+
+:::tip `.env` 파일에서의 `NODE_ENV`
+
+`NODE_ENV=...`는 명령뿐 아니라, `.env` 파일에서도 설정할 수 있습니다. 따라서 만약 `.env.[mode]` 파일에서 `NODE_ENV`가 설정되어 있다면, 모드를 통해서도 이를 제어할 수 있습니다. 그러나 `NODE_ENV`와 모드는 여전히 두 개의 다른 개념이라는 것을 유의하세요.
+
+명령에서 `NODE_ENV=...`를 사용하는 주된 이점은, Vite가 그 값을 조기에 감지할 수 있다는 것입니다. Vite는 설정 파일이 평가되기 전에는 `.env` 파일을 로드할 수 없기 때문에, 이 대신 명령을 이용하면 Vite 설정 파일에서 `process.env.NODE_ENV`에 접근할 수 있습니다.
+:::
