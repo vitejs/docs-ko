@@ -4,12 +4,6 @@ Vite 릴리스는 [시멘틱 버저닝](https://semver.org/)을 따릅니다. �
 
 이전 릴리스의 전체 변경 사항은 [GitHub](https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md)에서 확인할 수 있습니다.
 
-::: tip 참고
-다음 Vite 메이저 버전 릴리스는 9월에 있을 Node 16 EOL 이후에 진행될 예정입니다.
-
-자세한 내용은 [Vite 5 토론](https://github.com/vitejs/vite/discussions/12466)에서 확인할 수 있습니다.
-:::
-
 ## 릴리스 주기 {#release-cycle}
 
 Vite는 정해진 릴리스 주기가 없습니다.
