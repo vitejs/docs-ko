@@ -38,6 +38,12 @@ pnpm build
 1. 리뷰 단계에서 수정이 필요한 부분이 있을 경우 해당 부분을 수정하고 다시 Push 합니다.
 1. 더 이상 수정이 필요하지 않으면 메인테이너가 브랜치를 병합합니다. 감사합니다! 🎉
 
+### 번역 대상
+
+번역은 번경 사항 중 `docs` 디렉터리에 있는 파일을 대상으로 진행합니다(예: `docs/guide/index.md`). 다만 다음의 파일은 일반적으로 최신 내용만 유지하며, 번역하지 않습니다:
+
+- `blogs/*.md`
+
 ## 📄 번역 스타일
 
 ### 번역 규칙
@@ -72,8 +78,6 @@ pnpm build
 - 번역 문서는 원본 문서와 동일한 디렉터리 구조를 가지고 있습니다.
 - 번역 문서는 원본 문서의 파일명을 그대로 사용합니다.
   - 예외: 마이그레이션 가이드의 경우 [v2](https://github.com/vitejs/docs-ko/blob/main/guide/migration-from-v1.md), [v3](https://github.com/vitejs/docs-ko/blob/main/guide/migration-from-v2.md) 문서가 추가로 존재합니다.
-- 다음의 파일은 최신 내용만 유지하며, 번역하지 않습니다.
-  - `blogs/*.md`
 
 #### 공식적으로 배포되지 않은 다음 버전의 Vite 문서를 번역하는 경우
 
