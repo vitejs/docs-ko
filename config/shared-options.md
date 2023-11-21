@@ -168,21 +168,31 @@ Vite 는 "허용되는 조건들"의 목록을 가지며 이것은 허용되는 
 
 ```ts
 interface CSSModulesOptions {
+  getJSON?: (
+    cssFileName: string,
+    json: Record<string, string>,
+    outputFileName: string,
+  ) => void
   scopeBehaviour?: 'global' | 'local'
   globalModulePaths?: RegExp[]
+  exportGlobals?: boolean
   generateScopedName?:
     | string
     | ((name: string, filename: string, css: string) => string)
   hashPrefix?: string
   /**
-   * 기본값: null
+   * 기본값: undefined
     */
   localsConvention?:
     | 'camelCase'
     | 'camelCaseOnly'
     | 'dashes'
     | 'dashesOnly'
-    | null
+    | ((
+        originalClassName: string,
+        generatedClassName: string,
+        inputFile: string,
+      ) => string)
 }
 ```
 
