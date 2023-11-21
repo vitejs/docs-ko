@@ -13,7 +13,7 @@ Node API를 이용한 CJS 빌드는 더 이상 지원되지 않으며 Vite 6에�
 표준 Vite 프로젝트에서 다음을 확인해 주세요:
 
 1. `vite.config.js` 파일에서 ESM 문법을 사용하고 있습니다.
-2. 가장 가까운 `package.json` 파일에 `"type": "module"`이 있거나 `.mjs` 확장자(예: `vite.config.mjs`)를 사용하고 있습니다.
+2. 가장 가까운 `package.json` 파일에 `"type": "module"`이 있거나 `.mjs`/`.mts` 확장자(예: `vite.config.mjs` 또는 `vite.config.mts`)를 사용하고 있습니다.
 
 다른 프로젝트의 경우, 몇 가지 일반적인 접근 방식이 있습니다:
 
