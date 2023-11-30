@@ -89,20 +89,18 @@ bunx create-vite my-vue-app --template vue
 
 ## 커뮤니티 템플릿 {#community-templates}
 
-Vite에서 제공하고 있는 템플릿 말고도 [Awesome-vite templates](https://github.com/vitejs/awesome-vite#templates)와 같이 다양한 도구와 프레임워크를 타겟으로 하는 커뮤니티 템플릿들이 있습니다. `create-vite`은 이러한 템플릿을 기반으로도 빠르게 프로젝트를 구성할 수 있도록 지원하고 있으며, [degit](https://github.com/Rich-Harris/degit)을 이용합니다.
+create-vite는 인기 있는 프레임워크로 작성된 템플릿을 기반으로 프로젝트를 빠르게 시작할 수 있는 도구입니다. 이 외에도 [Awesome Vite의 templates 항목](https://github.com/vitejs/awesome-vite#templates)에서 다양한 도구와 프레임워크를 타겟으로 하는 커뮤니티 템플릿들을 확인할 수 있습니다.
+
+템플릿이 `https://github.com/user/project`와 같이 GitHub에 호스팅되어 있다면, `https://github.stackblitz.com/user/project`로 접속해 온라인에서 템플릿을 체험해 볼 수 있습니다. (프로젝트 URL의 `github` 뒷부분에 `.stackblitz`를 붙여주세요.)
+
+[degit](https://github.com/Rich-Harris/degit)을 이용하는 방법도 있습니다. 마찬가지로 프로젝트가 GitHub에 호스팅되어 있고 `main`을 기본 브랜치로 사용한다면, 다음과 같이 로컬에 프로젝트를 구성할 수 있습니다:
 
 ```bash
-npx degit user/project my-project
+npx degit user/project#main my-project
 cd my-project
 
 npm install
 npm run dev
-```
-
-만약 특정 브랜치에서 시작하고 싶다면, `#` 접미사(Suffix)를 붙여 브랜치를 명시해주세요. 가령 `main` 브랜치에서 시작하고자 한다면, `#main`과 같이 말이죠.
-
-```bash
-npx degit user/project#main my-project
 ```
 
 ## `index.html` 그리고 프로젝트의 루트 {#index-html-and-project-root}
