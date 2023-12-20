@@ -134,6 +134,14 @@ Vite 4에서는 매니페스트 파일([`build.manifest`](/config/build-options.
 
 Vite 5에서는 [`build.outDir`](/config/build-options.md#build-outdir)의 `.vite` 디렉터리에 생성됩니다. 이 변경 사항은 동일한 매니페스트 파일 이름을 가진 public 파일이 `build.outDir`로 복사될 때 충돌을 방지하는 데 도움이 됩니다.
 
+### 매니페스트 파일의 최상위 항목으로 CSS 파일이 존재하지 않음 {#corresponding-css-files-are-not-listed-as-top-level-entry-in-manifest-json-file}
+
+Vite 4에서는 JavaScript 엔트리 포인트에 해당하는 CSS 파일이 매니페스트 파일([`build.manifest`](/config/build-options.md#build-manifest))의 최상위 항목으로도 존재했습니다. 이는 의도한 것이 아니며, 구조가 단순한 경우에만 정상적으로 동작합니다.
+
+Vite 5에서 해당 CSS 파일은 JavaScript 엔트리 파일 섹션 내에서만 찾을 수 있습니다(이해를 돕기 위해 동작하는 예시를 함께 첨부합니다. [Vite 4](https://stackblitz.com/edit/vitejs-vite-bydk8m?file=src%2Fmain.js&view=editor) / [Vite 5](https://stackblitz.com/edit/vitejs-vite-tuare3?file=src%2Fmain.js&view=editor) - 옮긴이).
+또한 JS 파일을 추가할 때, 관련된 CSS 파일도 [함께 추가되어야 합니다](/guide/backend-integration.md#:~:text=%3C!%2D%2D%20if%20production%20%2D%2D%3E%0A%3Clink%20rel%3D%22stylesheet%22%20href%3D%22/assets/%7B%7B%20manifest%5B%27main.js%27%5D.css%20%7D%7D%22%20/%3E%0A%3Cscript%20type%3D%22module%22%20src%3D%22/assets/%7B%7B%20manifest%5B%27main.js%27%5D.file%20%7D%7D%22%3E%3C/script%3E).
+만약 CSS 파일을 별도로 추가하는 경우, 별도의 엔트리 포인트를 이용해 주세요.
+
 ### CLI 단축키는 `Enter`를 눌러 실행해야 함 {#cli-shortcuts-require-an-additional-enter-press}
 
 CLI 단축키(예: 개발 서버를 재시작하는 `r`)는 이제 명시적으로 `Enter`를 눌러야 실행됩니다. 예를 들어, 개발 서버를 재시작하려면 `r + Enter`를 누르면 됩니다.
@@ -230,6 +238,8 @@ const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
   - `resolve.browserField` 필드는 Vite 3부터 [`resolve.mainFields`](/config/shared-options.md#resolve-mainfields)의 기본값인 `['browser', 'module', 'jsnext:main', 'jsnext']`로 대체되었습니다.
 - [[#14855] feat!: add isPreview to ConfigEnv and resolveConfig](https://github.com/vitejs/vite/pull/14855)
   - `ConfigEnv` 객체의 `ssrBuild`의 이름을 `isSsrBuild`로 변경했습니다.
+- [[#14945] fix(css): correctly set manifest source name and emit CSS file](https://github.com/vitejs/vite/pull/14945)
+  - CSS 파일 이름은 이제 청크 이름을 기반으로 생성됩니다.
 
 ## v3에서 마이그레이션하기 {#migration-from-v3}
 
