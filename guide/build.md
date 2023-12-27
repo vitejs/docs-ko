@@ -64,6 +64,18 @@ export default defineConfig({
 이 플러그인을 사용할 때는 `build.rollupOptions.output.manualChunks` 설정의 함수 형태로 사용해야 합니다. 객체 형태로 사용할 경우, 플러그인이 아무런 효과를 내지 못합니다. (`output.manualChunks` 옵션은 Rollup에서 [함수와 객체 두 가지 형태를 지원](https://rollupjs.org/configuration-options/#output-manualchunks)합니다. Vite는 이 중 [함수 형태만을 지원](https://github.com/vitejs/vite/pull/13431/files#diff-bb20feac020e4628912d91c673ef1c4fef4ffd1ae5241a7af1842dd1e1bbaec9R111)합니다. - 옮긴이)
 :::
 
+## 로드 에러 처리하기 {#load-error-handling}
+
+Vite는 동적 임포트에 실패했을 때 `vite:preloadError` 이벤트를 발생시킵니다. `event.payload`에는 원본 임포트 에러가 포함되어 있으며, `event.preventDefault()`를 호출하면 에러가 발생하지 않습니다.
+
+```js
+window.addEventListener('vite:preloadError', (event) => {
+  window.reload() // 예: 페이지 새로고침
+})
+```
+
+새로운 배포가 시작되면 호스팅 서비스에서 이전에 배포된 에셋을 삭제할 가능성이 있습니다. 그 결과, 새로운 배포 이전에 사이트를 방문했던 사용자는 임포트 에러를 마주할 수 있습니다. 이 에러는 사용자의 기기에 존재하는 에셋이 만료되었음에도, 이에 대응하는 이전의 청크를 임포트하려고 하기 때문에 발생합니다. 위 이벤트는 이러한 상황을 해결하는 데 사용이 가능합니다.
+
 ## 파일 변경 시 다시 빌드하기 {#rebuild-on-files-changes}
 
 `vite build --watch` 명령을 통해 Rollup Watcher를 활성화 할 수 있습니다. 또는, `build.watch` 옵션에서 [`WatcherOptions`](https://rollupjs.org/configuration-options/#watch)를 직접 명시할 수도 있습니다.
