@@ -46,9 +46,14 @@ DB_PASSWORD=foobar
 `VITE_SOME_KEY` 변수만이 `import.meta.env.VITE_SOME_KEY`로 접근이 가능합니다. (`DB_PASSWORD`는 노출되지 않습니다.)
 
 ```js
-console.log(import.meta.env.VITE_SOME_KEY) // 123
+console.log(import.meta.env.VITE_SOME_KEY) // "123"
 console.log(import.meta.env.DB_PASSWORD) // undefined
 ```
+
+:::tip 환경 변수 파싱
+
+위와 같이, `VITE_SOME_KEY`는 숫자이지만 파싱 시 문자열로 반환됩니다. 불리얼 환경 변수에 대해서도 동일하게 적용되며, 코드에서 사용할 때는 원하는 타입으로 변환해야 합니다.
+:::
 
 또한 Vite는 [dotenv-expand](https://github.com/motdotla/dotenv-expand)를 사용해 기본적으로 환경 변수를 확장합니다. 문법에 대해 더 알아보고 싶다면 [이 문서](https://github.com/motdotla/dotenv-expand#what-rules-does-the-expansion-engine-follow)를 참고하세요.
 
@@ -74,7 +79,7 @@ NEW_KEY3=test$KEY   # test123
 
 기본적으로, Vite는 [`vite/client.d.ts`](https://github.com/vitejs/vite/blob/main/packages/vite/client.d.ts)의 `import.meta.env`에 대한 타입 정의를 제공하고 있습니다. 물론 `.env.[mode]` 파일에서 더 많은 사용자 정의 환경 변수를 정의할 수 있으며, `VITE_` 접두사가 붙은 사용자 정의 환경 변수에 대해서는 TypeScript 인텔리센스 정의가 가능합니다.
 
-`src` 디렉터리 내 `env.d.ts` 파일을 생성한 후, 아래와 같이 `ImportMetaEnv`를 정의하여 `VITE_` 환경 변수에 대한 타입을 정의할 수 있습니다.
+`src` 디렉터리 내 `vite-env.d.ts` 파일을 생성한 후, 아래와 같이 `ImportMetaEnv`를 정의하여 `VITE_` 환경 변수에 대한 타입을 정의할 수 있습니다.
 
 ```typescript
 /// <reference types="vite/client" />
@@ -96,6 +101,11 @@ interface ImportMeta {
   "lib": ["WebWorker"]
 }
 ```
+
+:::warning `import`는 타입 확장을 동작하지 않도록 합니다
+
+만약 `ImportMetaEnv`가 정의되지 않는다면, `vite-env.d.ts`에 `import` 구문이 없는지 확인해 주세요. 더 자세한 내용은 [TypeScript 문서](https://www.typescriptlang.org/docs/handbook/2/modules.html#how-javascript-modules-are-defined)에서 확인할 수 있습니다.
+:::
 
 ## HTML 환경 변수 대체 {#html-env-replacement}
 
