@@ -249,9 +249,7 @@ async function createServer() {
     appType: 'custom' // Vite의 기본 HTML 처리용 미들웨어를 사용하지 마세요
   })
   // Vite의 연결(Connect) 인스턴스를 미들웨어로 사용
-  app.use((req, res, next) => {
-    vite.middlewares.handle(req, res, next)
-  })
+  app.use(vite.middlewares)
 
   app.use('*', async (req, res) => {
     // `appType`은 `'custom'`이므로 여기에서 반환될 데이터(Response)를 제공해야 합니다.
