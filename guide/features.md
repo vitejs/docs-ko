@@ -391,26 +391,6 @@ const modules = {
 }
 ```
 
-### Glob Import As {#glob-import-as}
-
-`import.meta.glob` 역시 [문자열 형태로 에셋 가져오기](https://ko.vitejs.dev/guide/assets.html#importing-asset-as-string) 기능과 유사하게 파일을 가져올 수 있습니다. 이는 [Import Reflection](https://github.com/tc39/proposal-import-reflection) 구문을 사용합니다:
-
-```js
-const modules = import.meta.glob('./dir/*.js', { as: 'raw', eager: true })
-```
-
-위 코드는 다음과 같이 변환됩니다:
-
-```js
-// Vite를 통해 변환된 코드
-const modules = {
-  './dir/foo.js': 'export default "foo"\n',
-  './dir/bar.js': 'export default "bar"\n'
-}
-```
-
-URL을 통해 에셋을 가져오고자 한다면 `{ as: 'url' }`을 전달해주세요.
-
 ### Glob 패턴 배열 {#multiple-patterns}
 
 첫 번째 인자는 Glob 패턴의 배열로 전달할 수 있습니다.
@@ -490,20 +470,37 @@ const modules = {
 
 #### 커스텀 쿼리 {#custom-queries}
 
-`query` 옵션은 다른 모듈을 가져올 때 사용하는 커스텀 쿼리를 지정할 수 있도록 합니다.
+`query` 옵션을 이용해 Import에 대한 쿼리를 작성할 수 있습니다. 예를 들어, [문자열 형태](https://ko.vitejs.dev/guide/assets.html#importing-asset-as-string) 또는 [URL 형태](https://ko.vitejs.dev/guide/assets.html#importing-asset-as-url)로 에셋을 가져올 수 있습니다:
 
 ```ts
-const modules = import.meta.glob('./dir/*.js', {
-  query: { foo: 'bar', bar: true }
+const moduleStrings = import.meta.glob('./dir/*.svg', {
+  query: '?raw',
+  import: 'default',
+})
+const moduleUrls = import.meta.glob('./dir/*.svg', {
+  query: '?url',
+  import: 'default',
 })
 ```
 
 ```ts
 // 아래는 Vite에 의해 생성되는 코드입니다:
-const modules = {
-  './dir/foo.js': () => import('./dir/foo.js?foo=bar&bar=true'),
-  './dir/bar.js': () => import('./dir/bar.js?foo=bar&bar=true'),
+const moduleStrings = {
+  './dir/foo.svg': () => import('./dir/foo.js?raw').then((m) => m['default']),
+  './dir/bar.svg': () => import('./dir/bar.js?raw').then((m) => m['default']),
 }
+const moduleUrls = {
+  './dir/foo.svg': () => import('./dir/foo.js?url').then((m) => m['default']),
+  './dir/bar.svg': () => import('./dir/bar.js?url').then((m) => m['default']),
+}
+```
+
+다른 플러그인에서 사용할 목적으로 커스텀 쿼리를 작성할 수도 있습니다:
+
+```ts
+const modules = import.meta.glob('./dir/*.js', {
+  query: { foo: 'bar', bar: true },
+})
 ```
 
 ### Glob Import 유의 사항 {#glob-import-caveats}
