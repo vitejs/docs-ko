@@ -2,17 +2,25 @@
 
 ## ssr.external {#ssr-external}
 
-- **타입:** `string[]`
+- **타입:** `string[] | true`
 - **관련 항목:** [SSR Externals](/guide/ssr#ssr-externals)
 
-SSR을 위한 디펜던시를 강제로 외부화합니다.
+SSR을 위한 디펜던시와 이들의 전이 디펜던시(설치한 디펜던시가 갖고 있는 디펜던시 - 옮긴이)를 외부화합니다. 기본적으로 (HMR을 위해)링크된 디펜던시를 제외한 모든 디펜던시가 외부화됩니다. 만약 링크된 디펜던시를 외부화하길 원한다면, 이 옵션에 디펜던시 이름을 전달해 주세요.
+
+`true`인 경우, 링크된 디펜던시를 포함한 모든 디펜던시가 외부화됩니다.
+
+`string[]` 타입을 사용한 경우, `ssr.noExternal`에 해당 디펜던시가 어떤 타입으로 존재하더라도 항상 우선권을 갖습니다.
 
 ## ssr.noExternal {#ssr-noexternal}
 
 - **타입:** `string | RegExp | (string | RegExp)[] | true`
 - **관련 항목:** [SSR Externals](/guide/ssr#ssr-externals)
 
-SSR을 위한 디펜던시 중에 이 목록에 있는 디펜던시는 외부화되는 것이 방지됩니다. 만약 `true`인 경우, 어떠한 디펜던시도 외부화되지 않음을 의미합니다.
+이 옵션으로 전달된 디펜던시는 SSR을 위해 외부화되지 않고 빌드 시 번들로 제공됩니다. 기본적으로 (HMR을 위해)링크된 디펜던시만 외부화되지 않습니다. 만약 링크된 디펜던시를 외부화하길 원한다면, `ssr.external` 옵션에 디펜던시 이름을 전달해 주세요.
+
+`true`인 경우, 모든 디펜던시가 외부화되지 않습니다. 다만 `ssr.external`에 `string[]` 타입으로 나열된 디펜던시는 우선권을 갖고 외부화됩니다.
+
+만약 `ssr.noExternal: true`와 `ssr.external: true`가 모두 설정되어 있다면, `ssr.noExternal`이 우선권을 갖고 모든 디펜던시가 외부화되지 않습니다.
 
 ## ssr.target {#ssr-target}
 
