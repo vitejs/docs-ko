@@ -64,16 +64,17 @@ export default defineConfig({
 
 ## optimizeDeps.disabled {#optimizedeps-disabled}
 
+- **지원 중단 예정**
 - **실험적 기능:** [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/13839)
 - **타입:** `boolean | 'build' | 'dev'`
 - **기본값:** `'build'`
 
-디펜던시 최적화를 비활성화합니다. `true`로 설정하면 빌드 및 개발 모드에서 최적화가 비활성화됩니다. `'build'` 또는 `'dev'`를 전달하여 빌드 또는 개발 중에만 비활성화할 수도 있습니다. 디펜던시 최적화는 기본적으로 개발 모드에서만 활성화됩니다.
+이 옵션은 더 이상 사용되지 않습니다. Vite 5.1부터 빌드 중 수행되는 디펜던시 사전 번들링이 제거되었습니다. `optimizeDeps.disabled`를 `true` 또는 `'dev'`로 설정하면 최적화가 비활성화되고, `false` 또는 `'build'`로 설정하면 개발 모드에서 최적화가 활성화됩니다.
+
+최적화를 완전히 비활성화하려면, `optimizeDeps.noDiscovery: true`를 사용해 디펜던시 자동 탐색을 허용하지 않고, `optimizeDeps.include`를 정의하지 않거나 비워두세요.
 
 :::warning
-빌드 모드에서 디펜던시 최적화는 **실험적**입니다. 활성화하면 개발 모드와 프로덕션 모드 사이의 가장 중요한 차이점 중 하나가 사라지게 됩니다. 이 경우 esbuild가 CJS 전용 디펜던시를 ESM으로 변환하기 때문에 [`@rollup/plugin-commonjs`](https://github.com/rollup/plugins/tree/master/packages/commonjs)가 더 이상 필요하지 않습니다.
-
-만약 빌드 시에도 이 전략을 사용하고 싶다면 `optimizeDeps.disabled: false`로 설정해주세요. `@rollup/plugin-commonjs`는 `build.commonjsOptions: { include: [] }`를 전달함으로써 제거할 수 있습니다.
+빌드 중 디펜던시를 최적화하는 것은 **실험적** 기능이었습니다. 이 전략을 시도하는 프로젝트는 `build.commonjsOptions: { include: [] }`를 사용해 `@rollup/plugin-commonjs`를 제거해야 합니다. 이렇게 했다면 번들링 중 CJS 패키지를 지원하기 위해 다시 활성화하도록 안내하는 경고가 표시됩니다.
 :::
 
 ## optimizeDeps.needsInterop {#optimizedeps-needsinterop}
