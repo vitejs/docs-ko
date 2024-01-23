@@ -168,8 +168,8 @@ Vite 5는 esbuild 0.19를 사용하며, esbuild 0.18의 호환성 계층도 제�
     // 데코레이터를 사용하는 경우 true로 설정
     "experimentalDecorators": true,
     // 브라우저에서 구문 분석 오류가 발생하는 경우 true로 설정
-    "useDefineForClassFields": true
-  }
+    "useDefineForClassFields": true,
+  },
 }
 ```
 
