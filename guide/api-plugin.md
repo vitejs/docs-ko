@@ -423,11 +423,11 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
   - 영향을 받는 모듈 목록을 필터링하고 범위를 좁혀 더 정확하게 HMR이 동작하도록 구성합니다.
 
-  - 사용자가 직접 HMR 처리를 수행하도록 빈 배열을 반환하고 커스텀 이벤트를 호출합니다:
+  - 사용자가 직접 HMR 처리를 수행하도록 빈 배열을 반환하고 커스텀 이벤트를 호출합니다(예시에서는 Vite 5.1에서 도입된 `server.hot`을 사용하며, 하위 버전을 지원하는 경우 `server.ws`를 사용할 수 있습니다):
 
     ```js
     handleHotUpdate({ server }) {
-      server.ws.send({
+      server.hot.send({
         type: 'custom',
         event: 'special-update',
         data: {}
@@ -482,8 +482,6 @@ apply(config, { command }) {
 
 ## Rollup 플러그인 호환성 {#rollup-plugin-compatibility}
 
-
-
 `@rollup/plugin-alias` 또는 `@rollup/plugin-json`과 같이 상당한 수의 Rollup 플러그인이 Vite 플러그인으로도 사용될 수 있으나, 일부 Rollup 플러그인 훅의 경우 번들되지 않은 개발 서버에서는 의미가 없기에 전부 Vite 플러그인으로 사용할 수 있지는 않습니다.
 
 일반적으로, Rollup 플러그인이 다음 기준에 부합한다면 Vite 플러그인으로도 사용이 가능합니다:
@@ -536,7 +534,7 @@ Vite 2.9부터 클라이언트와의 통신을 처리하는 데 도움이 되는
 
 ### 서버에서 클라이언트로 전송 {#server-to-client}
 
-플러그인 측에서는 `server.ws.send`를 사용해 이벤트를 모든 클라이언트에 전달(Broadcast)할 수 있습니다:
+플러그인 측에서는 Vite 5.1에서 도입된 `server.hot.send` 또는 `server.ws.send`를 사용해 이벤트를 모든 클라이언트에 전달(Broadcast)할 수 있습니다:
 
 ```js
 // vite.config.js
@@ -546,8 +544,8 @@ export default defineConfig({
       // ...
       configureServer(server) {
         // 예: 클라이언트가 연결될 때까지 메시지 전송 대기
-        server.ws.on('connection', () => {
-          server.ws.send('my:greetings', { msg: 'hello' })
+        server.hot.on('connection', () => {
+          server.hot.send('my:greetings', { msg: 'hello' })
         })
       }
     }
@@ -581,7 +579,7 @@ if (import.meta.hot) {
 }
 ```
 
-서버에서는 `server.ws.on`을 사용해 이벤트를 수신합니다:
+서버에서는 Vite 5.1에서 도입된 `server.hot.on` 또는 `server.ws.on`을 사용해 이벤트를 수신합니다:
 
 ```js
 // vite.config.js
@@ -590,7 +588,7 @@ export default defineConfig({
     {
       // ...
       configureServer(server) {
-        server.ws.on('my:from-client', (data, client) => {
+        server.hot.on('my:from-client', (data, client) => {
           console.log('Message from client:', data.msg) // Hey!
           // 클라이언트에게만 응답(필요한 경우)
           client.send('my:ack', { msg: 'Hi! I got your message!' })
