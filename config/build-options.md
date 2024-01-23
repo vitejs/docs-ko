@@ -82,10 +82,12 @@ modulePreload: {
 
 ## build.assetsInlineLimit {#build-assetsinlinelimit}
 
-- **타입:** `number`
+- **타입:** `number` | `((filePath: string, content: Buffer) => boolean | undefined)`
 - **기본값:** `4096` (4KiB)
 
 이 값보다 작은 크기로 import 되거나 참조된 에셋은 부가적인 http 요청을 피하고자 base64 URL로 인라인 처리됩니다. 만일 인라인 변환을 사용하지 않으려면 `0`으로 설정하세요.
+
+콜백이 전달되면, boolean을 반환하여 opt-in 또는 opt-out 할 수 있습니다(여기서 opt-in은 인라인을, opt-out은 기본값을 사용합니다. 자세한 구현 사항은 [커밋](https://github.com/vitejs/vite/commit/4d1342ebe0969cbcfc9c6d7fc5347f85df07df7f#diff-91776e7c6039d23a070162f02a69cd46046a2095bd5ecb384ae9e27f2ea5288fR414-R416)을 참고해 주세요. - 옮긴이). 반환되는 값이 없으면 기본 로직이 적용됩니다.
 
 Git LFS(Large File Storage) 자리 표시자(Placeholder)는 해당 파일의 내용을 포함하고 있지 않기에 인라인에서는 자동으로 제외됩니다.
 
