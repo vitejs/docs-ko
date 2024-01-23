@@ -275,13 +275,14 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
   const myPlugin = () => ({
     name: 'configure-server',
     configureServer(server) {
-      // 내부 미들웨어가 설치된 후 실행될 훅을 반환합니다
+      // 내부 미들웨어가 설치된 후
+      // 실행될 훅을 반환합니다
       return () => {
         server.middlewares.use((req, res, next) => {
           // 이 곳에서 원하는 방식으로 요청을 핸들링 할 수 있습니다
         })
       }
-    }
+    },
   })
   ```
 
@@ -320,13 +321,14 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
   const myPlugin = () => ({
     name: 'configure-preview-server',
     configurePreviewServer(server) {
-      // 다른 미들웨어가 설치된 후 호출되는 함수를 반환합니다.
+      // 다른 미들웨어가 설치된 후 호출되는 함수를 
+      // 반환합니다
       return () => {
         server.middlewares.use((req, res, next) => {
           // 요청에 대한 커스텀 핸들러 코드
         })
       }
-    }
+    },
   })
   ```
 
@@ -356,7 +358,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
           /<title>(.*?)<\/title>/,
           `<title>Title replaced!</title>`
         )
-      }
+      },
     }
   }
   ```
