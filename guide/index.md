@@ -62,7 +62,7 @@ $ pnpm create vite
 ```
 
 ```bash [Bun]
-$ bunx create-vite
+$ bun create vite
 ```
 
 :::
@@ -82,7 +82,7 @@ yarn create vite my-vue-app --template vue
 pnpm create vite my-vue-app --template vue
 
 # bun
-bunx create-vite my-vue-app --template vue
+bun create vite my-vue-app --template vue
 ```
 
 또한 [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)에서 더욱 다양한 템플릿들에 대해 다루고 있습니다: `vanilla`, `vanilla-ts`, `vue`, `vue-ts`, `react`, `react-ts`, `react-swc`, `react-swc-ts`, `preact`, `preact-ts`, `lit`, `lit-ts`, `svelte`, `svelte-ts`, `solid`, `solid-ts`, `qwik`, `qwik-ts`.
