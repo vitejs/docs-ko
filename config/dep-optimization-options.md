@@ -62,6 +62,14 @@ export default defineConfig({
 
 `true`로 설정하면 최적화되어 캐시된 디펜던시들을 무시하고, 디펜던시 사전 번들링을 강제로 실행합니다.
 
+## optimizeDeps.holdUntilCrawlEnd {#optimizedeps-holduntilcrawlend}
+
+- **실험적 기능**
+- **타입:** `boolean`
+- **기본값:** `true`
+
+이 옵션이 활성화되어 있으면 콜드 스타트 시 모든 정적 에셋이 크롤링될 때까지 디펜던시 최적화가 완료되지 않습니다. 이는 크롤링 도중 새로운 디펜던시가 발견되어 공통 청크를 다시 만들어야 하는 경우 전체 페이지를 다시 로드해야 하는 상황을 피할 수 있습니다(자세한 설명은 [이 코멘트](https://github.com/vitejs/vite/pull/8869#issuecomment-1172902125)를 참고해 주세요. - 옮긴이). 만약 디펜던시 스캐너로 `include`에 정의된 목록을 포함해 모든 디펜던시를 찾을 수 있다면, 브라우저가 병렬로 더 많은 요청을 처리할 수 있도록 이 옵션을 비활성화하는 것이 좋습니다.
+
 ## optimizeDeps.disabled {#optimizedeps-disabled}
 
 - **지원 중단 예정**
