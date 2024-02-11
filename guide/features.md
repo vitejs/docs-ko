@@ -614,6 +614,8 @@ const worker = new Worker(new URL('./worker.js', import.meta.url), {
 })
 ```
 
+워커 탐지는 `new Worker()` 선언 내부에서 직접 `new URL()` 생성자를 사용할 때만 작동합니다. 또한 모든 옵션 매개변수는 정적 값(예: 문자열 리터럴)이어야 합니다.
+
 ### 쿼리 접미사를 통해 가져오기 {#import-with-query-suffixes}
 
 웹 워커 스크립트는 `?worker` 또는 `?sharedworker` 접미사를 붙여 가져올 수 있습니다. 모듈의 `export default` 로는 워커의 생성자가 들어가게 됩니다.
