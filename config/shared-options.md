@@ -263,7 +263,7 @@ export default defineConfig({
 
 ## css.preprocessorMaxWorkers {#css-preprocessormaxworkers}
 
-- **실험적 기능:** [이 곳에 피드백을 남겨주세요](TODO: update)
+- **실험적 기능:** [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/15835)
 - **타입:** `number | true`
 - **기본값:** `0` (워커를 생성하지 않고 메인 스레드에서 실행)
 

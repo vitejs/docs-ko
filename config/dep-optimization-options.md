@@ -35,7 +35,7 @@ export default defineConfig({
 
 기본적으로 `node_modules` 내부에 없는 연결된 패키지들은 미리 번들로 제공되지 않습니다. 이 옵션을 사용하여 연결된 패키지를 미리 번들로 묶을 수 있습니다.
 
-많은 수의 라이브러리를 디렉터리 깊은 곳에서까지 가져와야 하는 경우, 끝에 Glob 패턴을 지정해 모든 라이브러리를 한 번에 사전 번들로 묶을 수 있습니다. 이렇게 하면 유사한 라이브러리를 가져올 때마다 반복적으로 사전 번들링을 수행하는 것을 피할 수 있습니다. 예를 들어 다음과 같이 사용할 수 있습니다:
+많은 수의 라이브러리를 디렉터리 깊은 곳에서까지 가져와야 하는 경우, 끝에 Glob 패턴을 지정해 모든 라이브러리를 한 번에 사전 번들로 묶을 수 있습니다. 이렇게 하면 유사한 라이브러리를 가져올 때마다 반복적으로 사전 번들링을 수행하는 것을 피할 수 있습니다. [이에 대한 피드백은 여기에 남겨주세요](https://github.com/vitejs/vite/discussions/15833). 예를 들어 다음과 같이 사용할 수 있습니다:
 
 ```js
 export default defineConfig({
@@ -64,7 +64,7 @@ export default defineConfig({
 
 ## optimizeDeps.holdUntilCrawlEnd {#optimizedeps-holduntilcrawlend}
 
-- **실험적 기능**
+- **실험적 기능**: [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/15834)
 - **타입:** `boolean`
 - **기본값:** `true`
 
