@@ -58,7 +58,6 @@ vite build [root]
 | `--minify [minifier]`          | minify 옵션을 활성화/비활성화하거나 사용할 minifier를 지정 (기본값: `"esbuild"`) (`boolean \| "terser" \| "esbuild"`)|
 | `--manifest [name]`            | 빌드 매니페스트 JSON 내보내기 (`boolean \| string`)|
 | `--ssrManifest [name]`         | SSR 매니페스트 JSON 내보내기 (`boolean \| string`)|
-| `--force`                      | 캐시를 무시하고 다시 번들링 (실험적 기능)(`boolean`)|
 | `--emptyOutDir`                | outDir가 프로젝트 루트 밖에 있을 때 강제로 outDir 디렉터리를 비우기 (`boolean`)|
 | `-w, --watch`                  | 디스크의 모듈이 변경되면 다시 빌드 (`boolean`)|
 | `-c, --config <file>`          | 설정 파일 지정 (`string`)|
