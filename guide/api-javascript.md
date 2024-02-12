@@ -144,7 +144,11 @@ interface ViteDevServer {
   /**
    * Vite 빌트인 HTML 변환 및 플러그인 HTML 변환을 적용합니다.
    */
-  transformIndexHtml(url: string, html: string): Promise<string>
+  transformIndexHtml(
+    url: string,
+    html: string,
+    originalUrl?: string,
+  ): Promise<string>
   /**
    * 주어진 URL을 SSR을 위해 인스턴스화 된 모듈로 로드합니다.
    */
