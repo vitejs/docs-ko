@@ -48,16 +48,16 @@ export default defineConfig({
 ## optimizeDeps.esbuildOptions {#optimizedeps-esbuildoptions}
 
 - **타입:** [`Omit`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys)`<`[`EsbuildBuildOptions`](https://esbuild.github.io/api/#simple-options)`,
-  | 'bundle'
-  | 'entryPoints'
-  | 'external'
-  | 'write'
-  | 'watch'
-  | 'outdir'
-  | 'outfile'
-  | 'outbase'
-  | 'outExtension'
-  | 'metafile'>`
+| 'bundle'
+| 'entryPoints'
+| 'external'
+| 'write'
+| 'watch'
+| 'outdir'
+| 'outfile'
+| 'outbase'
+| 'outExtension'
+| 'metafile'>`
 
 디펜던시 스캐닝 및 최적화 중 Esbuild에 전달할 옵션입니다.
 
