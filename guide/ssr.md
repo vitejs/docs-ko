@@ -125,10 +125,16 @@ app.use('*', async (req, res, next) => {
     //    (예시: @vitejs/plugin-react의 Global Preambles)
     template = await vite.transformIndexHtml(url, template)
 
-    // 3. 서버의 진입점(Entry)을 로드합니다.
+    // 3a. 서버의 진입점(Entry)을 로드합니다.
     //    ssrLoadModule은 Node.js에서 사용할 수 있도록 ESM 소스 코드를 자동으로 변환합니다.
     //    추가적인 번들링이 필요하지 않으며, HMR과 유사한 동작을 수행합니다.
     const { render } = await vite.ssrLoadModule('/src/entry-server.js')
+    // 3b. Vite 5.1부터는 createViteRuntime API를 사용할 수도 있습니다.
+    //    이는 HMR을 완벽하게 지원하며, ssrLoadModule과 유사한 방식으로 동작합니다.
+    //    고급 사용 예시는 ViteRuntime 클래스를 사용해 별도의 스레드 또는
+    //    다른 머신에서 런타임을 생성할 수 있습니다.
+    const runtime = await vite.createViteRuntime(server)
+    const { render } = await runtime.executeEntrypoint('/src/entry-server.js')
 
     // 4. 앱의 HTML을 렌더링합니다.
     //    이는 entry-server.js에서 내보낸(Export) `render` 함수가
@@ -163,7 +169,7 @@ app.use('*', async (req, res, next) => {
 SSR 프로젝트를 프로덕션으로 제공하기 위해서는 다음이 필요합니다:
 
 1. 클라이언트 빌드를 정상적으로 생성합니다.
-2. Vite의 `ssrLoadModule`을 거칠 필요가 없도록 `import()` 함수를 통해 직접 로드할 수 있는 SSR 빌드를 생성합니다.
+2. Vite의 `ssrLoadModule` 또는 `runtime.executeEntrypoint`를 거칠 필요가 없도록 `import()` 함수를 통해 직접 로드할 수 있는 SSR 빌드를 생성합니다.
 
 이를 위한 `package.json`의 스크립트는 다음과 같습니다:
 
@@ -183,7 +189,7 @@ SSR 프로젝트를 프로덕션으로 제공하기 위해서는 다음이 필�
 
 - 프로젝트 루트의 `index.html` 파일이 아닌, `dist/client/index.html`를 템플릿으로 사용하도록 합니다. 이 파일에 클라이언트 빌드에 대한 올바른 참조가 포함되어 있기 때문입니다.
 
-- `await vite.ssrLoadModule('/src/entry-server.js')` 대신, `import('./dist/server/entry-server.js')`를 사용하여 스크립트를 로드하도록 합니다. (이 파일은 SSR 빌드 결과물 입니다.)
+- `await vite.ssrLoadModule('/src/entry-server.js')` 또는 `await runtime.executeEntrypoint('/src/entry-server.js')` 대신, `import('./dist/server/entry-server.js')`를 사용하여 스크립트를 로드하도록 합니다. (이 파일은 SSR 빌드 결과물 입니다.)
 
 - `vite` 개발 서버의 생성과 모든 사용은 개발 전용으로 구분된 조건문 아래로 이동한 다음, `dist/client`를 통해 파일을 제공할 수 있도록 미들웨어를 추가해줍니다.
 
