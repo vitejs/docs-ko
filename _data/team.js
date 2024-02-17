@@ -22,6 +22,7 @@ export const core = [
     links: [
       { icon: 'github', link: 'https://github.com/patak-dev' },
       { icon: 'twitter', link: 'https://twitter.com/patak_dev' },
+      { icon: 'mastodon', link: 'https://elk.zone/m.webtoo.ls/@patak' },
     ],
     sponsor: 'https://github.com/sponsors/patak-dev',
   },
@@ -35,6 +36,7 @@ export const core = [
     links: [
       { icon: 'github', link: 'https://github.com/antfu' },
       { icon: 'twitter', link: 'https://twitter.com/antfu7' },
+      { icon: 'mastodon', link: 'https://elk.zone/m.webtoo.ls/@antfu' },
     ],
     sponsor: 'https://github.com/sponsors/antfu',
   },
@@ -46,6 +48,7 @@ export const core = [
     links: [
       { icon: 'github', link: 'https://github.com/bluwy' },
       { icon: 'twitter', link: 'https://twitter.com/bluwyoo' },
+      { icon: 'mastodon', link: 'https://elk.zone/m.webtoo.ls/@bluwy' },
     ],
     sponsor: 'https://bjornlu.com/sponsor',
   },
@@ -53,7 +56,7 @@ export const core = [
     avatar: 'https://github.com/sapphi-red.png',
     name: 'green',
     title: 'Web Developer',
-    desc: 'Vite core member. Call me sapphi or green or midori ;)',
+    desc: 'Vite core team member. Call me sapphi or green or midori ;)',
     links: [
       { icon: 'github', link: 'https://github.com/sapphi-red' },
       { icon: 'twitter', link: 'https://twitter.com/sapphi_red' },
@@ -71,6 +74,7 @@ export const core = [
     links: [
       { icon: 'github', link: 'https://github.com/sodatea' },
       { icon: 'twitter', link: 'https://twitter.com/haoqunjiang' },
+      { icon: 'mastodon', link: 'https://elk.zone/m.webtoo.ls/@haoqun' },
     ],
     sponsor: 'https://github.com/sponsors/sodatea',
   },
@@ -113,7 +117,11 @@ export const core = [
     name: 'Arnaud Barré',
     title: 'Frontend Developer',
     desc: 'Passionate by tooling around TypeScript and React.',
-    links: [{ icon: 'github', link: 'https://github.com/ArnaudBarre' }],
+    links: [
+      { icon: 'github', link: 'https://github.com/ArnaudBarre' },
+      { icon: 'twitter', link: 'https://twitter.com/_ArnaudBarre' },
+      { icon: 'mastodon', link: 'https://elk.zone/m.webtoo.ls/@ArnaudBarre' },
+    ],
     sponsor: 'https://github.com/sponsors/ArnaudBarre',
   },
   {
