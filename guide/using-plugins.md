@@ -34,7 +34,7 @@ export default defineConfig({
 Vite는 웹 개발 시 일반적으로 필요한 대부분의 기능들을 제공하고 있습니다. 따라서 Vite 또는 호환되는 Rollup 플러그인을 검색하기 전, [지원하는 기능들](../guide/features.md) 섹션을 먼저 확인해주세요. Rollup으로 프로젝트를 구성할 때 필요했던 플러그인 대부분은 이미 Vite에서 자체적으로 제공하고 있습니다.
 :::
 
-공식 플러그인에 대한 정보는 [플러그인 섹션](../plugins/)을 참고해주세요. Vite 커뮤니티 플러그인은 [awesome-vite](https://github.com/vitejs/awesome-vite#plugins)에서 볼 수 있습니다. 호환되는 Rollup 플러그인의 경우 [Vite Rollup Plugins](https://vite-rollup-plugins.patak.dev)에서 사용법과 함께 제공되고 있습니다. 만약 이 목록에 없다면 [Rollup 플러그인 호환성 섹션](../guide/api-plugin#rollup-plugin-compatibility)을 참고해주세요.
+공식 플러그인에 대한 정보는 [플러그인 섹션](../plugins/)을 참고해주세요. Vite 커뮤니티 플러그인은 [awesome-vite](https://github.com/vitejs/awesome-vite#plugins)에서 볼 수 있습니다.
 
 플러그인이 [권장 규칙](./api-plugin.md#conventions)을 따르는 경우에는, Vite 플러그인의 경우 [npm에서 vite-plugin을](https://www.npmjs.com/search?q=vite-plugin&ranking=popularity), Rollup 플러그인의 경우 [npm에서 rollup-plugin을 검색](https://www.npmjs.com/search?q=rollup-plugin&ranking=popularity)해 찾을 수 있습니다.
 
@@ -61,7 +61,7 @@ export default defineConfig({
 })
 ```
 
-이에 대해 좀 더 자세한 내용은 [플러그인 API 가이드](./api-plugin.md#plugin-ordering)를 확인해주세요. [Vite Rollup Plugins](https://vite-rollup-plugins.patak.dev) 목록에서도 `enforce` 레이블과 사용 지침을 통해 이와 관련된 내용을 확인할 수 있습니다.
+이에 대해 좀 더 자세한 내용은 [플러그인 API 가이드](./api-plugin.md#plugin-ordering)를 확인해주세요.
 
 ## 조건부 플러그인 {#conditional-application}
 
