@@ -165,10 +165,6 @@ export default defineConfig({
                 link: 'https://dev.to/t/vite',
               },
               {
-                text: '호환 가능한 Rollup 플러그인',
-                link: 'https://vite-rollup-plugins.patak.dev/',
-              },
-              {
                 text: '변경 사항',
                 link: 'https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md',
               },
