@@ -129,7 +129,8 @@ app.use('*', async (req, res, next) => {
     //    ssrLoadModule은 Node.js에서 사용할 수 있도록 ESM 소스 코드를 자동으로 변환합니다.
     //    추가적인 번들링이 필요하지 않으며, HMR과 유사한 동작을 수행합니다.
     const { render } = await vite.ssrLoadModule('/src/entry-server.js')
-    // 3b. Vite 5.1부터는 createViteRuntime API를 사용할 수도 있습니다.
+    // 3b. Vite 5.1부터는 createViteRuntime API를 사용할 수도
+    //    있습니다.
     //    이는 HMR을 완벽하게 지원하며, ssrLoadModule과 유사한 방식으로 동작합니다.
     //    고급 사용 예시는 ViteRuntime 클래스를 사용해 별도의 스레드 또는
     //    다른 머신에서 런타임을 생성할 수 있습니다.
