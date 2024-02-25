@@ -402,6 +402,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 ### `handleHotUpdate` {#handlehotupdate}
 
 - **타입:** `(ctx: HmrContext) => Array<ModuleNode> | void | Promise<Array<ModuleNode> | void>`
+- **관련 항목:** [HMR API](./api-hmr)
 
   사용자가 지정한 방식대로 HMR 업데이트를 수행합니다. 이 훅은 아래와 같은 컨텍스트 객체를 전달받습니다:
 
@@ -419,14 +420,35 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
   - `read`는 파일을 읽어 그 내용을 반환하는 비동기 함수입니다. 일부 시스템에서 핫 리로딩 시 파일 변경 콜백이 너무 이르게 호출되어 `fs.readFile`로 빈 콘텐츠가 반환될 수 있기에(더 자세한 내용은 [hmr.ts](https://github.com/vitejs/vite/blob/5a111cedf31f579e3b8c8af5c4442d2e0cd5aa12/packages/vite/src/node/server/hmr.ts#L443) 파일을 참고해주세요. - 옮긴이), 이 함수를 통해 정상적으로 파일을 읽을 수 있도록 제공하고 있습니다.
 
-  이 훅은 다음과 같은 동작을 할 수 있습니다:
+  이 훅은 다음 동작을 할 수 있습니다:
 
-  - 영향을 받는 모듈 목록을 필터링하고 범위를 좁혀 더 정확하게 HMR이 동작하도록 구성합니다.
+  - 영향을 받는 모듈 목록을 필터링하고 범위를 좁혀 더 정확하게 HMR이 동작하도록 구성
 
-  - 사용자가 직접 HMR 처리를 수행하도록 빈 배열을 반환하고 커스텀 이벤트를 호출합니다(예시에서는 Vite 5.1에서 도입된 `server.hot`을 사용하며, 하위 버전을 지원하는 경우 `server.ws`를 사용할 수 있습니다):
+  - 빈 배열을 반환하고 전체 리로드를 수행:
+
+    ```js
+    handleHotUpdate({ server, modules, timestamp }) {
+      // Vite 5.1 이전 버전을 지원하고자 한다면 `server.ws.send`를 사용하세요
+      server.hot.send({ type: 'full-reload' })
+      // 모듈을 수동으로 무효화합니다
+      const invalidatedModules = new Set()
+      for (const mod of modules) {
+        server.moduleGraph.invalidateModule(
+          mod,
+          invalidatedModules,
+          timestamp,
+          true
+        )
+      }
+      return []
+    }
+    ```
+
+  - 빈 배열을 반환하고 클라이언트에게 커스텀 이벤트를 전송하여, 완전한 커스텀 HMR 처리를 수행:
 
     ```js
     handleHotUpdate({ server }) {
+      // Vite 5.1 이전 버전을 지원하고자 한다면 `server.ws.send`를 사용하세요
       server.hot.send({
         type: 'custom',
         event: 'special-update',
@@ -436,7 +458,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
     }
     ```
 
-    위의 커스텀 이벤트는 [HMR API](./api-hmr)를 사용하여 핸들러를 등록해야 합니다(이는 동일한 플러그인의 `transform` 훅에 주입될 수 있습니다):
+    위 커스텀 이벤트는 [HMR API](./api-hmr)를 사용하여 핸들러를 등록해야 합니다(이는 동일한 플러그인의 `transform` 훅에 주입될 수 있습니다):
 
     ```js
     if (import.meta.hot) {
