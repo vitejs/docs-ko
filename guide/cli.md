@@ -4,7 +4,7 @@
 
 ### `vite` {#vite}
 
-현재 디렉토리에서 Vite 개발 서버를 시작합니다.
+현재 디렉토리에서 Vite 개발 서버를 시작합니다. `vite dev` 및 `vite serve`는 `vite`의 별칭입니다.
 
 #### 사용 방법 {#usage}
 
