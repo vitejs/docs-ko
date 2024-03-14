@@ -30,6 +30,16 @@ Webpack의 `file-loader`와 비슷한데, 하나 차이점이 있다면 Vite는 
 
 - TypeScript의 경우, 기본적으로 정적 에셋 가져오기를 유효한 모듈로 인식하지 않습니다. 이를 해결하려면 [`vite/client`](./features#client-types)를 포함해주세요.
 
+::: tip `url()`을 통해 SVG 인라이닝하기
+JS를 통해 직접 `url()`로 SVG URL을 전달하는 경우, 변수는 반드시 큰따옴표로 감싸져야 합니다.
+
+```js
+import imgUrl from './img.svg'
+document.getElementById('hero-img').style.background = `url("${imgUrl}")`
+```
+
+:::
+
 ### 접미사를 이용해 URL로 에셋 가져오기 {#explicit-url-imports}
 
 `assetsInclude` 옵션 또는 URL로 가져오도록 Vite 내부적으로 설정된 리스트에 포함되지 않은 에셋의 경우에도 URL 포맷으로 에셋을 가져오도록 지정할 수 있습니다. `?url` 접미사(Suffix)를 붙여 에셋을 가져오면 되는데, 예를 하나 들어보자면 다음과 같습니다.
