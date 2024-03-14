@@ -70,7 +70,7 @@ Vite는 동적 임포트에 실패했을 때 `vite:preloadError` 이벤트를 �
 
 ```js
 window.addEventListener('vite:preloadError', (event) => {
-  window.reload() // 예: 페이지 새로고침
+  window.location.reload() // 예: 페이지 새로고침
 })
 ```
 
