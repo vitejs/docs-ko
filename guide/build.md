@@ -241,7 +241,7 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
 ## Base 옵션 상세 설정 {#advanced-base-options}
 
 ::: warning
-이 기능은 실험적입니다. [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/13834).
+실험적인 기능입니다. [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/13834).
 :::
 
 이미 배포된 에셋과 Public 디렉터리에 위치한 파일이 서로 다른 경로에 있을 수 있습니다. 이 경우 각각에 대해 다른 캐시 전략을 사용하고자 할 수 있는데, 이 때 Base 옵션에 대한 상세 설정이 필요합니다.
@@ -282,3 +282,5 @@ experimental: {
   }
 }
 ```
+
+Vite는 렌더링 시 자동으로 URL 인코딩을 수행합니다. 따라서 함수로 전달되는 `filename`은 모두 디코딩된 URL이며, 함수에서 반환하는 URL 문자열도 디코딩된 URL이어야 합니다. 다만 `runtime`을 포함한 객체를 반환하는 경우에는 명시된 코드가 그대로 렌더링 되기에 이를 사용하는 곳에서 인코딩을 직접 처리해 줘야 합니다.
