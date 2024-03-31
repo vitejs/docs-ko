@@ -160,7 +160,15 @@ Vite 는 "허용되는 조건들"의 목록을 가지며 이것은 허용되는 
 
 이 설정을 활성화하면 Vite가 심볼릭 링크를 따르는 실제 파일 경로 대신, 심볼릭 링크를 따르지 않는 원래 파일 경로로 파일의 ID를 결정하게 됩니다.
 
-- **관련 항목:** [esbuild#preserve-symlinks](https://esbuild.github.io/api/#preserve-symlinks), [webpack#resolve.symlinks](https://webpack.js.org/configuration/resolve/#resolvesymlinks)
+- **관련 항목:** [esbuild#preserve-symlinks](https://esbuild.github.io/api/#preserve-symlinks), [webpack#resolve.symlinks
+  ](https://webpack.js.org/configuration/resolve/#resolvesymlinks)
+
+## html.cspNonce {#html-cspnonce}
+
+- **타입:** `string`
+- **관련 항목:** [콘텐츠 보안 정책 (Content Security Policy, CSP)](/guide/features#content-security-policy-csp)
+
+스크립트 및 스타일 태그를 생성할 때 사용되는 nonce 값에 대한 자리 표시자입니다. 이 값을 설정하면 nonce 값을 가진 메타 태그도 생성됩니다.
 
 ## css.modules {#css-modules}
 

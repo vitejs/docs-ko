@@ -642,6 +642,28 @@ import MyWorker from './worker?worker&url'
 
 모든 워커에 대한 번들링 설정은 [워커 옵션](/config/worker-options.md)을 참고해주세요.
 
+## 콘텐츠 보안 정책 (Content Security Policy, CSP) {#content-security-policy-csp}
+
+CSP를 배포하려면 Vite 내부적으로 특정 지시문 또는 구성을 설정해야 합니다.
+
+### [`'nonce-{RANDOM}'`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/Sources#nonce-base64-value) {#nonce-random}
+
+[`html.cspNonce`](/config/shared-options#html-cspnonce) 옵션이 설정되면, Vite는 스크립트 및 스타일 시트에 대한 링크 태그를 생성할 때 nonce 속성을 추가합니다. `<style>`과 같은 다른 태그에는 nonce 속성을 추가하지 않습니다. 이 옵션이 설정되면 Vite는 메타 태그(`<meta property="csp-nonce" nonce="PLACEHOLDER" />`)를 주입합니다.
+
+`property="csp-nonce"` 속성을 가진 메타 태그의 nonce 값은 개발 중 또는 빌드 후 필요에 따라 Vite에서 사용합니다.
+
+:::warning
+각 요청마다 자리 표시자를 고유한 값으로 대체해야 합니다. 이를 따르지 않으면 리소스 정책은 쉽게 우회될 수 있습니다. (자세한 내용은 Vite CSP 플레이그라운드의 [vite.config.js 파일](https://github.com/vitejs/vite/blob/1d5eec477e5f1951e024e2105fd4a7ad536cb48b/playground/csp/vite.config.js)을 참고해 주세요. - 옮긴이)
+:::
+
+### [`data:`](<https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/Sources#scheme-source:~:text=schemes%20(not%20recommended).-,data%3A,-Allows%20data%3A>) {#data}
+
+빌드 시, Vite는 일정 크기 이하의 에셋을 데이터 URI로 인라인합니다. 관련 지시문(예: [`img-src`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/img-src), [`font-src`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/font-src))에 `data:`를 허용하거나, [`build.assetsInlineLimit: 0`](/config/build-options#build-assetsinlinelimit)으로 설정하여 인라인을 비활성화해야 합니다.
+
+:::warning
+[`script-src`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src)에 `data:`를 허용하지 마세요. 임의 스크립트 삽입을 허용하게 됩니다.
+:::
+
 ## 빌드 최적화 {#build-optimizations}
 
 > 아래는 추가적인 설정 없이 기본적으로 빌드 프로세스에 적용되는 기능들에 대한 목록입니다. 물론, 필요 시 각각의 기능들에 대한 비활성화가 가능합니다.
