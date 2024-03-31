@@ -65,7 +65,7 @@ export type { T }
 
 이를 감지하기 위해 `tsconfig.json` 내 `compilerOptions` 설정을 `"isolatedModules": true`와 같이 설정해줘야만 하며, 이 설정으로 TS가 위와 같은 상황에서 작동하지 않는 기능들에 대해 경고할 수 있게 됩니다.
 
-그러나 [`vue`](https://github.com/vuejs/core/issues/1228)와 같은 일부 라이브러리는 `"isolatedModules": true`로 설정할 경우 타입 체크가 정상적으로 동작하지 않습니다. 이러한 경우에는 해당 모듈이 이슈를 수정할 때 까지 `"skipLibCheck": true`를 사용해 오류가 발생되지 않도록 해주세요.
+일부 라이브러리는 `"isolatedModules": true`로 설정할 경우 타입 체크가 정상적으로 동작하지 않습니다. 이러한 경우에는 해당 모듈이 이슈를 수정할 때 까지 `"skipLibCheck": true`를 사용해 오류가 발생되지 않도록 해주세요.
 
 #### `useDefineForClassFields` {#usedefineforclassfields}
 
