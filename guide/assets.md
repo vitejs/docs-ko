@@ -7,7 +7,9 @@
 
 정적 에셋을 가져오게 되면 에셋에 접근할 수 있는 URL이 반환됩니다.
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 import imgUrl from './img.png'
 document.getElementById('hero-img').src = imgUrl
 ```
@@ -33,7 +35,9 @@ Webpack의 `file-loader`와 비슷한데, 하나 차이점이 있다면 Vite는 
 ::: tip `url()`을 통해 SVG 인라이닝하기
 JS를 통해 직접 `url()`로 SVG URL을 전달하는 경우, 변수는 반드시 큰따옴표로 감싸져야 합니다.
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 import imgUrl from './img.svg'
 document.getElementById('hero-img').style.background = `url("${imgUrl}")`
 ```
@@ -44,7 +48,9 @@ document.getElementById('hero-img').style.background = `url("${imgUrl}")`
 
 `assetsInclude` 옵션 또는 URL로 가져오도록 Vite 내부적으로 설정된 리스트에 포함되지 않은 에셋의 경우에도 URL 포맷으로 에셋을 가져오도록 지정할 수 있습니다. `?url` 접미사(Suffix)를 붙여 에셋을 가져오면 되는데, 예를 하나 들어보자면 다음과 같습니다.
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 import workletURL from 'extra-scalloped-border/worklet.js?url'
 CSS.paintWorklet.addModule(workletURL)
 ```
@@ -53,7 +59,9 @@ CSS.paintWorklet.addModule(workletURL)
 
 `?raw` 접미사를 붙여 가져오는 에셋은 문자열 형태로 가져와지게 됩니다.
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 import shaderString from './shader.glsl?raw'
 ```
 
@@ -61,19 +69,25 @@ import shaderString from './shader.glsl?raw'
 
 스크립트는 웹 워커로 가져올 수 있는데, 이 때는 `?worker` 접미사를 이용합니다.
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 // 프로덕션 빌드 시에는 청크로 분리됩니다.
 import Worker from './shader.js?worker'
 const worker = new Worker()
 ```
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 // sharedworker
 import SharedWorker from './shader.js?sharedworker'
 const sharedWorker = new SharedWorker()
 ```
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 // `inline` 접미사는 Base64 포맷의 문자열로 에셋을 가져옵니다.
 import InlineWorker from './shader.js?worker&inline'
 ```

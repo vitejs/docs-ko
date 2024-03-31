@@ -34,7 +34,6 @@ JS(`import`), CSS(`url()`), 그리고 `.html` 파일에서 참조되는 에셋 �
 빌드와 관련된 커스터마이즈는 [build 설정](/config/build-options.md)을 통해 가능합니다. 특별히 알아두어야 할 것이 하나 있는데, [Rollup 옵션](https://rollupjs.org/configuration-options/)을 `build.rollupOptions`에 명시해 사용이 가능합니다.
 
 ```ts
-// vite.config.js
 export default defineConfig({
   build: {
     rollupOptions: {
@@ -68,7 +67,7 @@ export default defineConfig({
 
 Vite는 동적 임포트에 실패했을 때 `vite:preloadError` 이벤트를 발생시킵니다. `event.payload`에는 원본 임포트 에러가 포함되어 있으며, `event.preventDefault()`를 호출하면 에러가 발생하지 않습니다.
 
-```js
+```js twoslash
 window.addEventListener('vite:preloadError', (event) => {
   window.location.reload() // 예: 페이지 새로고침
 })
@@ -111,7 +110,7 @@ export default defineConfig({
 
 빌드 시에는, 사용자가 접근할 수 있는 모든 `.html` 파일에 대해 아래와 같이 빌드 진입점이라 명시해줘야만 합니다.
 
-```js
+```js twoslash
 // vite.config.js
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
@@ -138,7 +137,7 @@ HTML 파일의 경우, Vite는 `rollupOptions.input` 객체에 명시된 엔트�
 
 라이브러리 배포 시점에서, [`build.lib` 설정 옵션](/config/build-options.md#build-lib)을 이용해보세요. 또한 라이브러리에 포함하지 않을 디펜던시를 명시할 수도 있습니다. `vue`나 `react` 같이 말이죠.
 
-```js
+```js twoslash
 // vite.config.js
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
@@ -253,33 +252,44 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
 
 이런 상황에서는 하나의 정적인 [base](#public-base-path) 만으로는 충분하지 않습니다. Vite는 실험적으로 `experimental.renderBuiltUrl`를 통해 빌드하는 동안 Base에 대한 상세 설정을 제공하고 있습니다.
 
-```js
+<!-- prettier-ignore-start -->
+```ts twoslash
+import type { UserConfig } from 'vite'
+const config: UserConfig = {
+// ---cut-before---
 experimental: {
-  renderBuiltUrl(filename: string, { hostType }: { hostType: 'js' | 'css' | 'html' }) {
+  renderBuiltUrl(filename, { hostType }) {
     if (hostType === 'js') {
       return { runtime: `window.__toCdnUrl(${JSON.stringify(filename)})` }
     } else {
       return { relative: true }
     }
-  }
+  },
+},
+// ---cut-after---
 }
 ```
+<!-- prettier-ignore-end -->
 
 해시된 에셋과 Public 디렉터리 내 파일이 함께 배포되지 않은 경우, 함수에 전달된 두 번째 `context` 매개변수에 포함된 에셋의 `type` 프로퍼티를 이용해 각 그룹에 대한 동작을 독립적으로 정의할 수 있습니다.
 
-```js
-experimental: {
-  renderBuiltUrl(filename: string, { hostId, hostType, type }: { hostId: string, hostType: 'js' | 'css' | 'html', type: 'public' | 'asset' }) {
-    if (type === 'public') {
-      return 'https://www.domain.com/' + filename
-    }
-    else if (path.extname(hostId) === '.js') {
-      return { runtime: `window.__assetsPath(${JSON.stringify(filename)})` }
-    }
-    else {
-      return 'https://cdn.domain.com/assets/' + filename
-    }
-  }
+```ts twoslash
+import type { UserConfig } from 'vite'
+import path from 'node:path'
+const config: UserConfig = {
+  // ---cut-before---
+  experimental: {
+    renderBuiltUrl(filename, { hostId, hostType, type }) {
+      if (type === 'public') {
+        return 'https://www.domain.com/' + filename
+      } else if (path.extname(hostId) === '.js') {
+        return { runtime: `window.__assetsPath(${JSON.stringify(filename)})` }
+      } else {
+        return 'https://cdn.domain.com/assets/' + filename
+      }
+    },
+  },
+  // ---cut-after---
 }
 ```
 

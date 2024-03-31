@@ -176,7 +176,7 @@ Vue를 사용자들은 HMR, 글로벌 컴포넌트, 디렉티브 및 슬롯 등 
 
 React나 Vue를 사용하지 않는다 해도, [`esbuild` 옵션](/config/shared-options.md#esbuild)을 이용해 `jsxFactory`나 `jsxFragment`를 커스터마이징 할 수 있습니다. Preact를 예로 들어보자면 다음과 같습니다:
 
-```js
+```js twoslash
 // vite.config.js
 import { defineConfig } from 'vite'
 
@@ -192,7 +192,7 @@ export default defineConfig({
 
 참고로, Vite에서만 제공되는 옵션인 `jsxInject`를 이용해 JSX에 대한 헬퍼를 사용할 수도 있습니다.
 
-```js
+```js twoslash
 // vite.config.js
 import { defineConfig } from 'vite'
 
@@ -230,7 +230,9 @@ vite는 `postcss-import`를 이용해 CSS의 `@import`를 처리합니다. 또�
 }
 ```
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 import classes from './example.module.css'
 document.getElementById('foo').className = classes.red
 ```
@@ -239,7 +241,9 @@ document.getElementById('foo').className = classes.red
 
 가령 `css.modules.localsConvention` 옵션을 camelCase로 설정하게 되면(`localsConvention: 'camelCaseOnly'`), 아래와 같이 가져올 수 있게 됩니다.
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 // .apply-color -> applyColor
 import { applyColor } from './example.module.css'
 document.getElementById('foo').className = applyColor
@@ -274,7 +278,9 @@ Sass나 Less에서의 `@import` 별칭 또한 Vite에서 사용이 가능합니�
 
 CSS 콘텐츠의 자동 주입은 `?inline` 쿼리 매개변수를 통해 비활성화 할 수 있습니다. 이 경우 처리된 CSS 문자열은 평소와 같이 모듈의 `default export`로 반환되나, 스타일은 페이지에 주입되지 않습니다.
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 import './foo.css' // 페이지에 스타일이 추가됨
 import otherStyles from './bar.css?inline' // 스타일이 추가되지 않음
 ```
@@ -305,29 +311,39 @@ Lightning CSS를 사용하는 경우 [CSS 전처리기](#css-pre-processors)는 
 
 정적 에셋을 Import 하는 경우, 이에 대한 Public URL이 반환됩니다.
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 import imgUrl from './img.png'
 document.getElementById('hero-img').src = imgUrl
 ```
 
 URL 쿼리를 이용해 에셋을 가져올 때 어떻게 이를 가져올 것인지 명시할 수도 있습니다.
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 // URL로 에셋 가져오기
 import assetAsURL from './asset.js?url'
 ```
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 // String 타입으로 에셋 가져오기
 import assetAsString from './shader.glsl?raw'
 ```
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 // 웹 워커 가져오기
 import Worker from './worker.js?worker'
 ```
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 // Base64 포맷의 문자열 형태로 웹 워커 가져오기
 import InlineWorker from './worker.js?worker&inline'
 ```
@@ -338,7 +354,9 @@ import InlineWorker from './worker.js?worker&inline'
 
 JSON 파일은 바로 Import가 가능합니다. 물론, 가져올 필드를 지정할 수도 있습니다.
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 // 객체 형태로 가져오기
 import json from './example.json'
 // 필드를 지정해 가져오기 (트리 셰이킹 됩니다.)
@@ -349,7 +367,9 @@ import { field } from './example.json'
 
 vite는 `import.meta.glob` 함수를 이용해 여러 모듈을 한 번에 가져올 수 있도록 지원하고 있습니다. 이 때, Glob 패턴을 이용합니다.
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 const modules = import.meta.glob('./dir/*.js')
 ```
 
@@ -375,7 +395,9 @@ for (const path in modules) {
 
 기본적으로 `import.meta.glob` 함수를 이용하면, 동적(Dynamic) Import를 이용해 파일의 청크를 가져옵니다. 만약 동적으로 Import하는 것이 아니라 직접 모듈을 가져오고자 한다면, 두 번 째 인자로 `{ eager: true }` 객체를 전달해주세요.
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 const modules = import.meta.glob('./dir/*.js', { eager: true })
 ```
 
@@ -395,7 +417,9 @@ const modules = {
 
 첫 번째 인자는 Glob 패턴의 배열로 전달할 수 있습니다.
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 const modules = import.meta.glob(['./dir/*.js', './another/*.js'])
 ```
 
@@ -403,7 +427,9 @@ const modules = import.meta.glob(['./dir/*.js', './another/*.js'])
 
 `!` 접두사를 이용해 네거티브 Glob 패턴도 나타낼 수 있습니다. Glob 패턴 매칭 결과에서 일부 파일을 무시하고자 하는 경우, 첫 번째 인수에 제외할 네거티브 Glob 패턴을 추가해주세요:
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 const modules = import.meta.glob(['./dir/*.js', '!**/bar.js'])
 ```
 
@@ -418,7 +444,9 @@ const modules = {
 
 `import` 옵션을 이용해 모듈의 일부만 가져올 수도 있습니다.
 
-```ts
+```ts twoslash
+import 'vite/client'
+// ---cut---
 const modules = import.meta.glob('./dir/*.js', { import: 'setup' })
 ```
 
@@ -432,7 +460,9 @@ const modules = {
 
 `eager`와 같이 사용하면 모듈에 대한 트리 셰이킹도 가능합니다.
 
-```ts
+```ts twoslash
+import 'vite/client'
+// ---cut---
 const modules = import.meta.glob('./dir/*.js', {
   import: 'setup',
   eager: true,
@@ -451,7 +481,9 @@ const modules = {
 
 `default export`를 가져오고자 하는 경우에는 `import` 옵션 값을 `default`로 설정해주세요.
 
-```ts
+```ts twoslash
+import 'vite/client'
+// ---cut---
 const modules = import.meta.glob('./dir/*.js', {
   import: 'default',
   eager: true
@@ -472,7 +504,9 @@ const modules = {
 
 `query` 옵션을 이용해 Import에 대한 쿼리를 작성할 수 있습니다. 예를 들어, [문자열 형태](https://ko.vitejs.dev/guide/assets.html#importing-asset-as-string) 또는 [URL 형태](https://ko.vitejs.dev/guide/assets.html#importing-asset-as-url)로 에셋을 가져올 수 있습니다:
 
-```ts
+```ts twoslash
+import 'vite/client'
+// ---cut---
 const moduleStrings = import.meta.glob('./dir/*.svg', {
   query: '?raw',
   import: 'default',
@@ -497,7 +531,9 @@ const moduleUrls = {
 
 다른 플러그인에서 사용할 목적으로 커스텀 쿼리를 작성할 수도 있습니다:
 
-```ts
+```ts twoslash
+import 'vite/client'
+// ---cut---
 const modules = import.meta.glob('./dir/*.js', {
   query: { foo: 'bar', bar: true },
 })
@@ -527,7 +563,9 @@ const module = await import(`./dir/${file}.js`)
 사전에 컴파일 된 `.wasm` 파일 역시 `?init` 쿼리를 이용해 가져올 수 있습니다.
 불러와진 모듈의 `export default`는 [`WebAssembly.Instance`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/Instance)의 `Promise`를 반환하는 초기화 함수가 들어가 있습니다:
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 import init from './example.wasm?init'
 
 init().then((instance) => {
@@ -537,7 +575,10 @@ init().then((instance) => {
 
 초기화 함수를 호출할 때 `imports` 옵션을 사용할 수도 있는데, 이 값은 [`WebAssembly.instantiate`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate) 함수의 두 번째 인자인 importObject로 전달됩니다:
 
-```js
+```js twoslash
+import 'vite/client'
+import init from './example.wasm?init'
+// ---cut---
 init({
   imports: {
     someFunc: () => {
@@ -560,7 +601,9 @@ init({
 
 여러 번 인스턴스화 하는 등의 이유로 `Module` 객체에 대한 접근이 필요하다면, [URL 접미사를 이용해](./assets#explicit-url-imports) 에셋을 가져오고, 이를 이용해 인스턴스화를 수행해 주세요:
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 import wasmUrl from 'foo.wasm?url'
 
 const main = async () => {
@@ -580,7 +623,9 @@ SSR에서 `?init`을 이용해 `fetch()`를 수행하는 경우, `TypeError: Inv
 
 아래는 이에 대한 대안이며, 프로젝트의 기본 디렉터리는 현재 위치한 디렉터리입니다:
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 import wasmUrl from 'foo.wasm?url'
 import { readFile } from 'node:fs/promises'
 
@@ -620,7 +665,9 @@ const worker = new Worker(new URL('./worker.js', import.meta.url), {
 
 웹 워커 스크립트는 `?worker` 또는 `?sharedworker` 접미사를 붙여 가져올 수 있습니다. 모듈의 `export default` 로는 워커의 생성자가 들어가게 됩니다.
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 import MyWorker from './worker?worker'
 
 const worker = new MyWorker()
@@ -630,13 +677,17 @@ const worker = new MyWorker()
 
 마지막으로, 기본적으로 워커의 경우 프로덕션 빌드 분리된 청크로 컴파일됩니다. 만약 분리된 청크가 아니라 Base64 포맷의 문자열로 이를 사용하고자 한다면, `inline` 쿼리를 이용해주세요:
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 import MyWorker from './worker?worker&inline'
 ```
 
 만약 워커를 URL로 검색하고자 한다면, `url` 쿼리를 추가해주세요:
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 import MyWorker from './worker?worker&url'
 ```
 

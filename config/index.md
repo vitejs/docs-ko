@@ -50,7 +50,9 @@ Vite는 또한 TS 설정 파일을 직접 지원합니다. `defineConfig` 도우
 
 만약 설정에서 명령(`serve` 또는 `build`), 사용 중인 [모드](/guide/env-and-mode), SSR 빌드 여부(`isSsrBuild`), 또는 빌드 프리뷰(`isPreview`) 여부에 따라 조건부로 옵션을 결정해야 하는 경우, 아래와 같이 함수를 내보낼 수 있습니다:
 
-```js
+```js twoslash
+import { defineConfig } from 'vite'
+// ---cut---
 export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
   if (command === 'serve') {
     return {
@@ -73,7 +75,9 @@ Vite의 API에서 `command` 값은 개발 서버(CLI [`vite`](/guide/cli#vite)�
 
 만약 설정에서 비동기 함수를 호출해야 하는 경우, 이 대신 비동기 함수를 내보낼 수 있습니다. 또한 이 비동기 함수는 인텔리센스 지원을 위해 `defineConfig`를 통해 전달할 수도 있습니다:
 
-```js
+```js twoslash
+import { defineConfig } from 'vite'
+// ---cut---
 export default defineConfig(async ({ command, mode }) => {
   const data = await asyncFunction()
   return {
@@ -88,7 +92,7 @@ export default defineConfig(async ({ command, mode }) => {
 
 참고로 Vite는 Vite의 설정을 끝마친 뒤 어떻게 파일을 불러올 것인지 알 수 있기 때문에, 기본적으로 `.env` 파일을 로드하지 않습니다. 가령 `root` 또는 `envDir` 설정 값에 따라 어떻게 파일을 불러올 것인지 달라집니다. 다만 필요하다면 `loadEnv` 헬퍼를 사용해 `.env` 파일을 불러올 수도 있습니다.
 
-```js
+```js twoslash
 import { defineConfig, loadEnv } from 'vite'
 
 export default defineConfig(({ command, mode }) => {

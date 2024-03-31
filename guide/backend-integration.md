@@ -8,7 +8,9 @@
 
 1. Vite 설정 파일에서, 진입점(Entry)을 설정하고 매니페스트를 활성화합니다:
 
-   ```js
+   ```js twoslash
+   import { defineConfig } from 'vite'
+   // ---cut---
    // vite.config.js
    export default defineConfig({
      build: {

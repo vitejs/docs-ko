@@ -8,13 +8,13 @@ HMR API 설정은 기본적으로 프레임워크나 Vite 지원 도구 원작�
 
 Vite는 HMR API 설정을 `import.meta.hot` 객체를 통해 노출합니다:
 
-```ts
+```ts twoslash
+import type { ModuleNamespace } from 'vite/types/hot.d.ts'
+import type { InferCustomEventPayload } from 'vite/types/customEvent.d.ts'
+
+// ---cut---
 interface ImportMeta {
   readonly hot?: ViteHotContext
-}
-
-type ModuleNamespace = Record<string, any> & {
-  [Symbol.toStringTag]: 'Module'
 }
 
 interface ViteHotContext {
@@ -32,7 +32,6 @@ interface ViteHotContext {
   prune(cb: (data: any) => void): void
   invalidate(message?: string): void
 
-  // `InferCustomEventPayload`는 내장된(Built-in) Vite 이벤트에 대한 타입을 제공합니다
   on<T extends string>(
     event: T,
     cb: (payload: InferCustomEventPayload<T>) => void,
@@ -67,7 +66,9 @@ Vite는 [`vite/client.d.ts`](https://github.com/vitejs/vite/blob/main/packages/v
 
 모듈 자신에 대한 HMR을 확인하기 위해서는 `import.meta.hot.accept`를 사용하고 업데이트된 모듈을 받는 콜백을 전달합니다:
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 export const count = 1
 
 if (import.meta.hot) {
@@ -90,7 +91,13 @@ Vite의 HMR은 처음에 불러온 모듈을 교체하지 않습니다: 만약�
 
 모듈은 자체적으로 리로딩을 하지 않고 직접적인 의존성으로 변경을 수락할 수 있습니다:
 
-```js
+```js twoslash
+// @filename: /foo.d.ts
+export declare const foo: () => void
+
+// @filename: /example.js
+import 'vite/client'
+// ---cut---
 import { foo } from './foo.js'
 
 foo()
@@ -117,7 +124,9 @@ if (import.meta.hot) {
 
 자체적으로 업데이트를 수락하는 모듈 혹은 다른 변경 사항에 의해 수락될 모듈은 변경된 복사본으로 인한 지속적인 사이드 이펙트를 정리하기 위해 `hot.dispose`를 사용할 수 있습니다:
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 function setupSideEffect() {}
 
 setupSideEffect()
@@ -133,7 +142,9 @@ if (import.meta.hot) {
 
 모듈이 페이지에서 더 이상 import 되지 않을 때 호출되는 콜백을 등록합니다. `hot.dispose`와 비교했을 때, 소스 코드 업데이트 시 자체적으로 또는 페이지에서 제거될 때 사이드 이펙트를 정리하는 경우 사용할 수 있습니다. Vite는 현재 `.css` import에 대해 이를 사용하고 있습니다.
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 function setupOrReuseSideEffect() {}
 
 setupOrReuseSideEffect()
@@ -151,7 +162,9 @@ if (import.meta.hot) {
 
 `data` 자체에 대한 재할당은 지원되지 않습니다. 이 대신 다른 핸들러에서 추가된 정보가 유지되도록 `data` 객체의 속성을 변경해야 합니다.
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 // ok
 import.meta.hot.data.someValue = 'hello'
 
@@ -169,7 +182,9 @@ import.meta.hot.data = { someValue: 'hello' }
 
 자체 수용 모듈에 대한 향후 변경 사항을 수신하려면 항상 `import.meta.hot.accept`를 호출해야 하며, 그 직후에 `invalidate`를 호출할 계획이라도 이 작업을 수행해야 합니다. 의도를 명확하게 전달하기 위해, 다음과 같이 `accept` 콜백 내에서 `invalidate`를 호출하는 것이 좋습니다:
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 import.meta.hot.accept(module => {
   // 새로운 모듈 인스턴스를 사용하여 무효화할지 결정할 수 있습니다.
   if (cannotHandleUpdate(module)) {

@@ -10,7 +10,7 @@ Vite는 몇 가지 추가적인 Vite 전용 옵션과 함께 잘 설계된 Rollu
 $ npm add -D @vitejs/plugin-legacy
 ```
 
-```js
+```js twoslash
 // vite.config.js
 import legacy from '@vitejs/plugin-legacy'
 import { defineConfig } from 'vite'
@@ -46,7 +46,7 @@ Vite는 웹 개발 시 일반적으로 필요한 대부분의 기능들을 제�
 - default: Vite의 코어 플러그인 이후에 실행하고자 하는 플러그인
 - `post`: Vite의 빌드 플러그인 이후에 실행하고자 하는 플러그인
 
-```js
+```js twoslash
 // vite.config.js
 import image from '@rollup/plugin-image'
 import { defineConfig } from 'vite'
@@ -67,7 +67,7 @@ export default defineConfig({
 
 기본적으로 플러그인은 개발 서버(`'serve'`)와 빌드(`'build'`) 시 모두 동작합니다. 만약 조건부로 동작하기를 원한다면, `apply` 프로퍼티를 이용해 `'build'` 또는 `'serve'` 중에만 플러그인이 동작하도록 할 수 있습니다:
 
-```js
+```js twoslash
 // vite.config.js
 import typescript2 from 'rollup-plugin-typescript2'
 import { defineConfig } from 'vite'

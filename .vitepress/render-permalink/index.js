@@ -3,7 +3,7 @@ const position = {
   true: 'unshift',
 }
 
-module.exports = (slug, options, state, permalink) => {
+export default (slug, options, state, permalink) => {
   try {
     const tokens = state.tokens
     const token = tokens[permalink]

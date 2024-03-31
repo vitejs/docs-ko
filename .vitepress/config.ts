@@ -1,5 +1,8 @@
 import { DefaultTheme, defineConfig } from 'vitepress'
+import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
+// @ts-ignore
 import markdownItCustomAnchor from './markdown-it-custom-anchor'
+// @ts-ignore
 import renderPermalink from './render-permalink'
 
 const ogDescription = 'Vite, 차세대 프런트엔드 개발 툴'
@@ -352,6 +355,7 @@ export default defineConfig({
     return pageData
   },
   markdown: {
+    codeTransformers: [transformerTwoslash()],
     anchor: {
       // @ts-ignore
       renderPermalink,

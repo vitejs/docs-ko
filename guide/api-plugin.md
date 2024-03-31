@@ -579,7 +579,9 @@ export default defineConfig({
 
 클라이언트 측에서는 [`hot.on`](/guide/api-hmr.html#hot-on-event-cb)을 사용해 이벤트를 수신할 수 있습니다:
 
-```ts
+```ts twoslash
+import 'vite/client'
+// ---cut---
 // 클라이언트 측
 if (import.meta.hot) {
   import.meta.hot.on('my:greetings', (data) => {

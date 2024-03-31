@@ -53,7 +53,9 @@ Vite는 서버 측 렌더링(SSR, Server-side Rendering)을 기본적으로 지�
 
 만약 SSR 또는 CSR(클라이언트 측 렌더링, Client-side Rendering) 여부에 따라 다른 코드를 실행하고자 하는 경우, 아래와 같이 조건부 논리 코드를 사용할 수 있습니다:
 
-```js
+```js twoslash
+import 'vite/client'
+// ---cut---
 if (import.meta.env.SSR) {
   // ... SSR 에서만 작동하는 코드
 }
@@ -67,10 +69,10 @@ SSR 앱을 빌드할 때, 메인 서버를 완전히 제어하고 Vite를 프로
 
 **server.js**
 
-```js{15-18}
-import fs from 'fs'
-import path from 'path'
-import { fileURLToPath } from 'url'
+```js{15-18} twoslash
+import fs from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import express from 'express'
 import { createServer as createViteServer } from 'vite'
 
@@ -109,7 +111,18 @@ createServer()
 
 다음 단계는 서버에서 렌더링된 HTML을 제공하기 위해 `*` 핸들러를 구현하는 것입니다:
 
-```js
+```js twoslash
+// @noErrors
+import fs from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+/** @type {import('express').Express} */
+var app
+/** @type {import('vite').ViteDevServer}  */
+var vite
+
+// ---cut---
 app.use('*', async (req, res, next) => {
   const url = req.originalUrl
 
@@ -246,7 +259,9 @@ Vue 또는 Svelte와 같은 일부 프레임워크는 클라이언트 또는 SSR
 
 **예제:**
 
-```js
+```js twoslash
+/** @type {() => import('vite').Plugin} */
+// ---cut---
 export function mySSRPlugin() {
   return {
     name: 'my-ssr',

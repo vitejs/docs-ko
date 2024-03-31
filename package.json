@@ -5,20 +5,23 @@
   "repository": "https://github.com/vitejs/docs-ko",
   "author": "Evan You",
   "license": "MIT",
+  "type": "module",
   "private": true,
   "packageManager": "pnpm@8.6.11",
   "devDependencies": {
+    "@shikijs/vitepress-twoslash": "^1.1.7",
     "@types/node": "^17.0.33",
     "feed": "^4.2.2",
     "gray-matter": "^4.0.3",
     "prettier": "3.0.0",
-    "vitepress": "1.0.0-beta.6",
-    "vue": "^3.3.4"
+    "vite": "^5.2.7",
+    "vitepress": "1.0.0-rc.45",
+    "vue": "^3.4.21"
   },
   "scripts": {
-    "dev": "vitepress dev .",
-    "build": "vitepress build .",
-    "serve": "vitepress serve .",
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "serve": "vitepress serve",
     "rewrite-title": "node scripts/rewrite-title"
   }
 }

@@ -173,36 +173,35 @@ Vite 는 "허용되는 조건들"의 목록을 가지며 이것은 허용되는 
 ## css.modules {#css-modules}
 
 - **타입:**
-
-```ts
-interface CSSModulesOptions {
-  getJSON?: (
-    cssFileName: string,
-    json: Record<string, string>,
-    outputFileName: string,
-  ) => void
-  scopeBehaviour?: 'global' | 'local'
-  globalModulePaths?: RegExp[]
-  exportGlobals?: boolean
-  generateScopedName?:
-    | string
-    | ((name: string, filename: string, css: string) => string)
-  hashPrefix?: string
-  /**
-   * 기본값: undefined
-    */
-  localsConvention?:
-    | 'camelCase'
-    | 'camelCaseOnly'
-    | 'dashes'
-    | 'dashesOnly'
-    | ((
-        originalClassName: string,
-        generatedClassName: string,
-        inputFile: string,
-      ) => string)
-}
-```
+  ```ts
+  interface CSSModulesOptions {
+    getJSON?: (
+      cssFileName: string,
+      json: Record<string, string>,
+      outputFileName: string,
+    ) => void
+    scopeBehaviour?: 'global' | 'local'
+    globalModulePaths?: RegExp[]
+    exportGlobals?: boolean
+    generateScopedName?:
+      | string
+      | ((name: string, filename: string, css: string) => string)
+    hashPrefix?: string
+    /**
+     * 기본값: undefined
+     */
+    localsConvention?:
+      | 'camelCase'
+      | 'camelCaseOnly'
+      | 'dashes'
+      | 'dashesOnly'
+      | ((
+          originalClassName: string,
+          generatedClassName: string,
+          inputFile: string,
+        ) => string)
+  }
+  ```
 
 CSS 모듈에 대한 설정입니다. 옵션들은 [postcss-modules](https://github.com/css-modules/postcss-modules)로 전달됩니다.
 
@@ -416,7 +415,7 @@ export default defineConfig({
 
 커스텀 로거를 사용하여 메시지를 로그로 남깁니다. `createLogger` API를 사용해 Vite의 로거를 가져와 메시지를 변경하거나 특정 경고를 필터링하는 등의 작업을 수행할 수 있습니다.
 
-```js
+```js twoslash
 import { createLogger, defineConfig } from 'vite'
 
 const logger = createLogger()

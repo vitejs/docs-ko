@@ -18,10 +18,10 @@ Vite 대신 다른 서버가 응답하는 경우가 있습니다.
 
 이 재정렬 동작을 비활성화하려면 [`dns.setDefaultResultOrder('verbatim')`](https://nodejs.org/api/dns.html#dns_dns_setdefaultresultorder_order)으로 설정해주세요. 이 때 Vite는 주소를 `localhost`로 표기합니다.
 
-```js
+```js twoslash
 // vite.config.js
 import { defineConfig } from 'vite'
-import dns from 'dns'
+import dns from 'node:dns'
 
 dns.setDefaultResultOrder('verbatim')
 
@@ -238,7 +238,7 @@ WSL2에서 Vite를 실행할 때, WSL2가 아닌 타 Windows 응용 프로그램
 
 - **예제:**
 
-```js
+```js twoslash
 import express from 'express'
 import { createServer as createViteServer } from 'vite'
 
@@ -351,16 +351,16 @@ export default defineConfig({
 
 기본적으로 `node_modules`가 포함된 경로를 모두 제외합니다. 이 동작을 비활성화하려면 `false`를 전달하거나, 함수를 전달해 소스와 소스맵 경로를 받아 소스 경로를 무시할지 여부를 반환할 수 있습니다.
 
-```js
+```js twoslash
 export default defineConfig({
   server: {
     // 이는 기본 값으로, node_modules가 경로에 포함된 모든 파일의 경로를
     // 무시할 목록에 추가합니다.
     sourcemapIgnoreList(sourcePath, sourcemapPath) {
       sourcePath.includes('node_modules')
-    }
-  }
-};
+    },
+  },
+})
 ```
 
 ::: tip 참고
