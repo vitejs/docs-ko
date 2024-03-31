@@ -37,3 +37,4 @@
 | Runner         | 실행자         |
 | Example Usage  | 사용 예제      |
 | Type Signature | 타입 시그니처  |
+| Placeholder    | 자리 표시자    |

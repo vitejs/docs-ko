@@ -40,7 +40,7 @@ Vite는 서버 측 렌더링(SSR, Server-side Rendering)을 기본적으로 지�
   - entry-server.js  # 프레임워크의 SSR API를 사용해 앱을 렌더링하는 스크립트
 ```
 
-`index.html`은 `entry-client.js`를 반드시 참조해야 하며, 서버에서 렌더링된 페이지를 삽입해야 하는 자리 표시자(Placeholder)를 포함해야 합니다:
+`index.html`은 `entry-client.js`를 반드시 참조해야 하며, 서버에서 렌더링된 페이지를 삽입해야 하는 자리 표시자를 포함해야 합니다:
 
 ```html
 <div id="app"><!--ssr-outlet--></div>
