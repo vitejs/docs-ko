@@ -66,7 +66,8 @@
        "isEntry": true,
        "dynamicImports": ["views/foo.js"],
        "css": ["assets/main.b82dbe22.css"],
-       "assets": ["assets/asset.0ab0f9cd.png"]
+       "assets": ["assets/asset.0ab0f9cd.png"],
+       "imports": ["_shared.83069a53.js"]
      },
      "views/foo.js": {
        "file": "assets/foo.869aea0d.js",
@@ -75,7 +76,8 @@
        "imports": ["_shared.83069a53.js"]
      },
      "_shared.83069a53.js": {
-       "file": "assets/shared.83069a53.js"
+       "file": "assets/shared.83069a53.js",
+       "css": ["assets/shared.a834bfc3.css"]
      }
    }
    ```
@@ -85,10 +87,54 @@
    - 진입점이 아닌 청크의 경우, 키는 `_`로 접두사가 붙은 파일명이 됩니다.
    - 청크에는 정적 및 동적 임포트에 대한 정보(둘 다 매니페스트에서 해당 청크를 매핑하는 키)와 CSS 및 에셋 파일(있는 경우)이 포함됩니다.
 
-   해시된 파일 이름으로 링크를 렌더링하거나 지시문을 미리 로드하기 위해 이 파일을 사용할 수 있습니다(참고 : 여기에 있는 구문은 설명하기 위한 용도이며 서버 템플릿 언어로 대체합니다).
+4. 해시된 파일 이름으로 링크를 렌더링하거나 지시문을 미리 로드하기 위해 이 파일을 사용할 수 있습니다.
+
+   아래는 올바른 링크를 렌더링하는 HTML 템플릿 예시입니다.
+   여기서 사용된 구문은 설명을 위한 것이므로, 실제 사용 시에는 서버 템플릿 언어로 대체해 주세요.
+   `importedChunks` 함수 역시 예시를 위한 것이며, Vite에서 제공하지 않습니다.
 
    ```html
-   <!-- 프로덕션 빌드 -->
-   <link rel="stylesheet" href="/assets/{{ manifest['main.js'].css }}" />
-   <script type="module" src="/assets/{{ manifest['main.js'].file }}"></script>
+   <!-- 프로덕션 (아래는 `for ... of` 구문입니다 - 옮긴이) -->
+
+   <!-- for cssFile of manifest[name].css -->
+   <link rel="stylesheet" href="/{{ cssFile }}" />
+
+   <!-- for chunk of importedChunks(manifest, name)) -->
+   <!-- for cssFile of chunk.css -->
+   <link rel="stylesheet" href="/{{ cssFile }}" />
+
+   <script type="module" src="/{{ manifest[name].file }}"></script>
+
+   <!-- for chunk of importedChunks(manifest, name) -->
+   <link rel="modulepreload" src="/{{ chunk.file }}" />
+   ```
+
+   구체적으로, HTML을 생성하는 백엔드는 매니페스트 파일과 진입점이 주어졌을 때
+   다음 태그를 포함해야 합니다:
+
+   - 진입점 청크의 `css` 목록에 있는 각 파일에 대한 `<link rel="stylesheet">` 태그
+   - 진입점의 `imports` 목록에 있는 모든 청크를 재귀적으로 따라가며,
+     임포트된 청크 내 css 파일에 대한 `<link rel="stylesheet">` 태그
+   - 진입점 청크의 `file` 키에 대한 태그
+     (Javascript는 `<script type="module">`, css는 `<link rel="stylesheet">`)
+   - 선택 사항으로, 진입점의 `imports` 목록에 있는 Javascript 청크를 재귀적으로 따라가며,
+     임포트된 청크의 `file`에 대한 `<link rel="modulepreload">` 태그
+
+   위 예시 매니페스트를 예로 들자면, 진입점 `main.js`에 대해 다음 태그가 포함되어야 합니다.
+
+   ```html
+   <link rel="stylesheet" href="assets/main.b82dbe22.css" />
+   <link rel="stylesheet" href="assets/shared.a834bfc3.css" />
+   <script type="module" src="assets/main.4889e940.js"></script>
+   <!-- 선택 사항 -->
+   <link rel="modulepreload" src="assets/shared.83069a53.js" />
+   ```
+
+   진입점 `views/foo.js`에 대해서는 아래 코드가 포함되어야 합니다.
+
+   ```html
+   <link rel="stylesheet" href="assets/shared.a834bfc3.css" />
+   <script type="module" src="assets/foo.869aea0d.js"></script>
+   <!-- 선택 사항 -->
+   <link rel="modulepreload" src="assets/shared.83069a53.js" />
    ```
