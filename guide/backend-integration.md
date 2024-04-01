@@ -108,7 +108,7 @@
    <script type="module" src="/{{ manifest[name].file }}"></script>
 
    <!-- for chunk of importedChunks(manifest, name) -->
-   <link rel="modulepreload" src="/{{ chunk.file }}" />
+   <link rel="modulepreload" href="/{{ chunk.file }}" />
    ```
 
    구체적으로, HTML을 생성하는 백엔드는 매니페스트 파일과 진입점이 주어졌을 때
@@ -129,7 +129,7 @@
    <link rel="stylesheet" href="assets/shared.a834bfc3.css" />
    <script type="module" src="assets/main.4889e940.js"></script>
    <!-- 선택 사항 -->
-   <link rel="modulepreload" src="assets/shared.83069a53.js" />
+   <link rel="modulepreload" href="assets/shared.83069a53.js" />
    ```
 
    진입점 `views/foo.js`에 대해서는 아래 코드가 포함되어야 합니다.
@@ -138,5 +138,5 @@
    <link rel="stylesheet" href="assets/shared.a834bfc3.css" />
    <script type="module" src="assets/foo.869aea0d.js"></script>
    <!-- 선택 사항 -->
-   <link rel="modulepreload" src="assets/shared.83069a53.js" />
+   <link rel="modulepreload" href="assets/shared.83069a53.js" />
    ```
