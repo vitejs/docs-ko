@@ -1,10 +1,11 @@
-blog/
-config/
-docs/
-guide/
+blog/*
+config/*
+docs/*
+guide/*
 team.md
 releases.md
-.vitepress
+.vitepress/*
+!.vitepress/config.ts
 _data
 public
 plugins

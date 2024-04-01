@@ -4,6 +4,7 @@ import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
 import markdownItCustomAnchor from './markdown-it-custom-anchor'
 // @ts-ignore
 import renderPermalink from './render-permalink'
+import markdownItFootnote from 'markdown-it-footnote'
 
 const ogDescription = 'Vite, 차세대 프런트엔드 개발 툴'
 const ogImage = 'https://ko.vitejs.dev/og-image.png'
@@ -360,6 +361,9 @@ export default defineConfig({
       // @ts-ignore
       renderPermalink,
     },
-    config: (md) => md.use(markdownItCustomAnchor),
+    config: (md) => {
+      md.use(markdownItCustomAnchor)
+      md.use(markdownItFootnote)
+    },
   },
 })
