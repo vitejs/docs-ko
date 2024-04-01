@@ -480,6 +480,8 @@ Vite 플러그인은 Webpack 로더와 유사한 `enforce` 프로퍼티를 추�
 - `enforce: 'post'`로 지정된 플러그인
 - 빌드 후 실행되는 Vite의 플러그인 (minify, manifest, reporting)
 
+참고로 이는 훅 순서를 지정하는 것과는 별개이며, [Rollup 훅](https://rollupjs.org/plugin-development/#build-hooks)과 같이 `order` 속성이 별도로 적용된다는 점에 유의하세요.
+
 ## 조건부 애플리케이션 {#conditional-application}
 
 기본적으로 플러그인은 개발 서버 및 빌드 시 모두 호출됩니다. 만약 플러그인이 개발 조건부로 호출되어야 하는 경우, `apply` 프로퍼티를 사용하여 `'build'` 또는 `'serve'` 중에만 플러그인이 호출되도록 구성해주세요:
