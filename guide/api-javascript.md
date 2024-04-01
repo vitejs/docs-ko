@@ -156,7 +156,7 @@ interface ViteDevServer {
     options?: { fixStacktrace?: boolean }
   ): Promise<Record<string, any>>
   /**
-   * SSR 에러 stacktrace 수정하기
+   * SSR 에러 stacktrace 수정
    */
   ssrFixStacktrace(e: Error): void
   /**
@@ -165,28 +165,28 @@ interface ViteDevServer {
    */
   reloadModule(module: ModuleNode): Promise<void>
   /**
-   * 서버 시작하기.
+   * 서버 시작
    */
   listen(port?: number, isRestart?: boolean): Promise<ViteDevServer>
   /**
-   * 서버 재시작하기.
+   * 서버 재시작
    *
    * @param forceOptimize - optimizer가 re-bundle를 강제시킵니다. --force cli flag를 쓴 것과 똑같습니다.
    */
   restart(forceOptimize?: boolean): Promise<void>
   /**
-   * 서버 멈추기.
+   * 서버 종료
    */
   close(): Promise<void>
   /**
-   * CLI 단축키 바인딩하기
+   * CLI 단축키 바인딩
    */
   bindCLIShortcuts(options?: BindCLIShortcutsOptions<ViteDevServer>): void
   /**
-   * Calling `await server.waitForRequestsIdle(id)` will wait until all static imports
-   * are processed. If called from a load or transform plugin hook, the id needs to be
-   * passed as a parameter to avoid deadlocks. Calling this function after the first
-   * static imports section of the module graph has been processed will resolve immediately.
+   * `await server.waitForRequestsIdle(id)`를 호출하면 모든 정적 임포트가 처리될 때까지
+   * 대기합니다. 로드 또는 변환 플러그인 훅에서 호출하는 경우, 교착 상태를 피하기 위해 id를
+   * 매개변수로 전달해야 합니다. 모듈 그래프의 첫 번째 정적 임포트를 처리한 후 이 함수를 호출하면
+   * 즉시 처리됩니다.
    * @experimental
    */
   waitForRequestsIdle: (ignoredId?: string) => Promise<void>
@@ -194,7 +194,7 @@ interface ViteDevServer {
 ```
 
 :::info
-`waitForRequestsIdle` is meant to be used as a escape hatch to improve DX for features that can't be implemented following the on-demand nature of the Vite dev server. It can be used during startup by tools like Tailwind to delay generating the app CSS classes until the app code has been seen, avoiding flashes of style changes. When this function is used in a load or transform hook, and the default HTTP1 server is used, one of the six http channels will be blocked until the server processes all static imports. Vite's dependency optimizer currently uses this function to avoid full-page reloads on missing dependencies by delaying loading of pre-bundled dependencies until all imported dependencies have been collected from static imported sources. Vite may switch to a different strategy in a future major release, setting `optimizeDeps.crawlUntilStaticImports: false` by default to avoid the performance hit in large applications during cold start.
+`waitForRequestsIdle`은 Vite 개발 서버가 갖는 온디맨드 특성(요청 시 소스 코드를 실시간으로 변환하여 제공하는 방식을 예로 들 수 있습니다. - 옮긴이)을 따르기 어려운 기능들에 대한 DX를 개선하기 위해 사용이 가능합니다. 가령 Tailwind는 코드를 확인할 때까지 CSS 클래스 생성을 지연시켜야 스타일 변경으로 인한 깜빡이는 현상을 피할 수 있는데, 이러한 상황에서 도움이 될 수 있습니다(실제 동작하는 예시는 [Vite Tailwind 플레이그라운드](https://github.com/vitejs/vite/blob/98888439e07c1dc6425deea3474330ad27b8bf33/playground/tailwind/vite.config.ts#L12-L16)에서 확인이 가능합니다 - 옮긴이). 만약 이 함수가 로드 또는 변환 훅에서 호출되고, 이와 함께 기본적으로 제공되는 HTTP1 서버를 사용한다면, 모든 정적 임포트를 처리할 때까지 여섯 개의 http 채널 중 하나가 차단됩니다. 또한 현재 Vite 디펜던시 최적화 방식 중, 디펜던시 누락으로 인해 전체 페이지에 대한 리로드를 피하기 위해 이 함수를 사용하고 있습니다. 이를 통해 정적으로 임포트된 소스로부터 가져와지는 모든 디펜던시가 처리될 때까지 사전 번들링된 디펜던시 로딩을 지연시켜 리로드를 피할 수 있게 됩니다. 마지막으로 Vite는 향후 메이저 버전 업데이트에서 대규모 애플리케이션의 콜드 스타트 시 발생할 수 있는 성능 저하를 피하기 위해 `optimizeDeps.crawlUntilStaticImports: false`를 기본값으로 설정할 수 있습니다.
 :::
 
 ## `build` {#build}

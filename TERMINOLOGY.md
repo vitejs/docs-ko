@@ -38,3 +38,7 @@
 | Example Usage  | 사용 예제      |
 | Type Signature | 타입 시그니처  |
 | Placeholder    | 자리 표시자    |
+| Import         | 임포트         |
+| Export         | 익스포트       |
+| Load           | 로드           |
+| Transform      | 변환           |
