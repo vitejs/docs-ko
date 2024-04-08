@@ -153,6 +153,10 @@ export default defineConfig({
                 link: 'https://twitter.com/vite_js',
               },
               {
+                text: '마스토돈',
+                link: 'https://elk.zone/m.webtoo.ls/@vite',
+              },
+              {
                 text: '디스코드',
                 link: 'https://chat.vitejs.dev',
               },
