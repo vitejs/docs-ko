@@ -292,6 +292,10 @@ export default defineConfig({
 
 CSS 처리에 사용되는 엔진을 선택합니다. 자세한 내용은 [Lightning CSS](../guide/features.md#lightning-css)를 참고해 주세요.
 
+::: info 중복된 `@import`
+postcss(postcss-import)는 중복된 `@import`에 대해 브라우저와는 다른 동작을 합니다. 자세한 내용은 [postcss/postcss-import#462](https://github.com/postcss/postcss-import/issues/462)를 참고해 주세요.
+:::
+
 ## css.lightningcss {#css-lightningcss}
 
 - **실험적 기능:** [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/13835)
