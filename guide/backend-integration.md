@@ -116,10 +116,10 @@
 
    - 진입점 청크의 `css` 목록에 있는 각 파일에 대한 `<link rel="stylesheet">` 태그
    - 진입점의 `imports` 목록에 있는 모든 청크를 재귀적으로 따라가며,
-     임포트된 청크 내 css 파일에 대한 `<link rel="stylesheet">` 태그
+     임포트된 청크 내 CSS 파일에 대한 `<link rel="stylesheet">` 태그
    - 진입점 청크의 `file` 키에 대한 태그
-     (Javascript는 `<script type="module">`, css는 `<link rel="stylesheet">`)
-   - 선택 사항으로, 진입점의 `imports` 목록에 있는 Javascript 청크를 재귀적으로 따라가며,
+     (JavaScript는 `<script type="module">`, CSS는 `<link rel="stylesheet">`)
+   - 선택 사항으로, 진입점의 `imports` 목록에 있는 JavaScript 청크를 재귀적으로 따라가며,
      임포트된 청크의 `file`에 대한 `<link rel="modulepreload">` 태그
 
    위 예시 매니페스트를 예로 들자면, 진입점 `main.js`에 대해 다음 태그가 포함되어야 합니다.
