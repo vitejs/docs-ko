@@ -47,21 +47,7 @@ export default defineConfig({
 
 ## 청크를 만드는 방식 {#chunking-strategy}
 
-`build.rollupOptions.output.manualChunks`를 사용해 청크를 분할하는 방식을 구성할 수 있습니다(자세한 사항은 [Rollup 문서](https://rollupjs.org/configuration-options/#output-manualchunks)를 참고해주세요). Vite 2.8 까지는 청크를 만들 때 기본적으로 `index`와 `vendor`를 기준으로 분할했습니다. 이 방식은 일부 SPA를 대상으로는 잘 동작했으나, Vite가 지원하고자 하는 모든 사례에 대해서 범용적으로 적용하기는 어려웠습니다. 따라서 Vite 2.9부터 `manualChunks`는 더 이상 기본적으로 수정하지 않습니다. 만약 계속 `manualChunks`를 수정하기 원한다면 `splitVendorChunkPlugin`을 사용해주세요.
-
-```js
-// vite.config.js
-import { splitVendorChunkPlugin } from 'vite'
-export default defineConfig({
-  plugins: [splitVendorChunkPlugin()]
-})
-```
-
-이러한 방식은 사용자 정의 로직을 사용한 구성이 필요한 경우를 대비해 `splitVendorChunk({ cache: SplitVendorChunkCache })` 팩토리 함수로도 제공됩니다. 이 때, 빌드 감시 모드가 정상적으로 작동하기 위해서는 `cache.reset()`을 `buildStart` 훅에서 호출해야 합니다.
-
-::: warning
-이 플러그인을 사용할 때는 `build.rollupOptions.output.manualChunks` 설정의 함수 형태로 사용해야 합니다. 객체 형태로 사용할 경우, 플러그인이 아무런 효과를 내지 못합니다. (`output.manualChunks` 옵션은 Rollup에서 [함수와 객체 두 가지 형태를 지원](https://rollupjs.org/configuration-options/#output-manualchunks)합니다. Vite는 이 중 [함수 형태만을 지원](https://github.com/vitejs/vite/pull/13431/files#diff-bb20feac020e4628912d91c673ef1c4fef4ffd1ae5241a7af1842dd1e1bbaec9R111)합니다. - 옮긴이)
-:::
+`build.rollupOptions.output.manualChunks`를 사용해 청크를 분할하는 방식을 구성할 수 있습니다([Rollup 문서](https://rollupjs.org/configuration-options/#output-manualchunks)를 참고해 주세요). 프레임워크를 사용하는 경우, 청크 분할 방식 구성은 해당 프레임워크 문서를 참고해 주세요.
 
 ## 로드 에러 처리하기 {#load-error-handling}
 
