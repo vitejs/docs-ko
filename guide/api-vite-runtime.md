@@ -1,7 +1,9 @@
 # Vite 런타임 API {#vite-runtime-api}
 
 :::warning 저수준 API
-이 API는 [피드백 수집을 위해](https://github.com/vitejs/vite/discussions/15774) Vite 5.1에서 실험적으로 추가되었습니다. Vite 5.2에서는 변경될 가능성이 있으므로, 사용 시 Vite 버전을 `~5.1.0`으로 고정해 주세요. 이 API는 라이브러리 및 프레임워크 작성을 위한 저수준 API입니다. 애플리케이션을 만들고자 한다면, [Awesome Vite SSR 섹션](https://github.com/vitejs/awesome-vite#ssr)에서 더 높은 수준을 가진 SSR 플러그인 및 도구를 먼저 확인해 주세요.
+이 API는 실험적인 기능으로, [피드백을 수집](https://github.com/vitejs/vite/discussions/15774)하기 위해 Vite 5.1에서 도입되었습니다. 향후 변경 사항이 있을 수 있으므로, 사용 시 Vite 버전을 `~5.1.0`으로 고정해 주세요. 또한 이는 라이브러리 및 프레임워크 개발자를 위한 저수준 API입니다. 애플리케이션을 만들고자 한다면, 먼저 [Awesome Vite SSR 섹션](https://github.com/vitejs/awesome-vite#ssr)에서 높은 추상화 수준의 SSR 플러그인 및 도구를 확인해 주세요.
+
+현재 이 API는 `^6.0.0-alpha.0`에서 릴리즈된 [Environment API](https://github.com/vitejs/vite/discussions/16358)로 개정 중입니다.
 :::
 
 "Vite 런타임"은 어떤 코드든 Vite 플러그인을 통해 먼저 처리한 후 실행할 수 있게 해주는 도구입니다. 런타임 구현이 서버와 분리되어 있다는 점에서 `server.ssrLoadModule`과는 다릅니다. 이를 통해 라이브러리 및 프레임워크 개발자는 서버와 런타임 사이에서 자체적인 통신 계층을 구현할 수 있습니다.
