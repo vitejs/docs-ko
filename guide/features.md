@@ -699,7 +699,7 @@ CSP를 배포하려면 Vite 내부적으로 특정 지시문 또는 구성을 �
 
 ### [`'nonce-{RANDOM}'`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/Sources#nonce-base64-value) {#nonce-random}
 
-[`html.cspNonce`](/config/shared-options#html-cspnonce) 옵션이 설정되면, Vite는 스크립트 및 스타일 시트에 대한 링크 태그를 생성할 때 nonce 속성을 추가합니다. `<style>`과 같은 다른 태그에는 nonce 속성을 추가하지 않습니다. 이 옵션이 설정되면 Vite는 메타 태그(`<meta property="csp-nonce" nonce="PLACEHOLDER" />`)를 주입합니다.
+[`html.cspNonce`](/config/shared-options#html-cspnonce) 옵션이 설정되면, Vite는 스타일시트 및 모듈 프리로드를 위한 `<script>`, `<style>` 그리고 `<link>` 태그에 지정된 nonce 속성을 추가합니다. 이 옵션이 설정되면 Vite는 메타 태그(`<meta property="csp-nonce" nonce="PLACEHOLDER" />`)를 주입합니다.
 
 `property="csp-nonce"` 속성을 가진 메타 태그의 nonce 값은 개발 중 또는 빌드 후 필요에 따라 Vite에서 사용합니다.
 
