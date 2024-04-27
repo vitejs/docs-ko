@@ -6,7 +6,12 @@ ViteJS 한국어 번역 리포지토리에 오신 것을 환영합니다. 이 �
 
 ### 설치
 
-이 프로젝트는 [Node.js](https://nodejs.org/ko) 및 [PNPM](https://pnpm.io/ko/)을 이용합니다.
+요구 사항:
+
+- Node.js: `>=20.0.0`
+- PNPM: `>=8.0.0`
+
+이 프로젝트는 [Node.js@20](https://nodejs.org/ko) 및 [PNPM@8](https://pnpm.io/ko/)을 이용합니다. PNPM은 [Node Corepack](https://nodejs.org/api/corepack.html)을 이용합니다. 자세한 설정은 [package.json](./package.json) 파일을 참고해 주세요.
 
 ```bash
 # 1. 이 리포지토리를 클론합니다.
@@ -14,6 +19,7 @@ git clone https://github.com/vitejs/docs-ko
 cd docs-ko
 
 # 2. 모듈을 설치합니다.
+corepack enable # 만약 Corepack이 활성화 되어있지 않다면 이 명령어를 실행해 주세요.
 pnpm install
 
 # 3. 개발 서버를 시작합니다. (http://localhost:5173/)
