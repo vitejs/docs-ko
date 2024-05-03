@@ -45,3 +45,16 @@ features:
     title: 완전한 유형의 API
     details: 유연하게 작성된 API는 TypeScript 역시 완벽하게 지원해요.
 ---
+
+<script setup>
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  const urlParams = new URLSearchParams(window.location.search)
+  if (urlParams.get('uwu') != null) {
+    const img = document.querySelector('.VPHero .VPImage.image-src')
+    img.src = '/logo-uwu.png'
+    img.alt = 'Vite Kawaii Logo by @icarusgkx'
+  }
+})
+</script>
