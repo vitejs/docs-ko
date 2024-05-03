@@ -21,9 +21,9 @@ hero:
     - theme: alt
       text: GitHub
       link: https://github.com/vitejs/vite
-    - theme: alt
-      text: 📅 Vite Meetup SF
-      link: https://lu.ma/vite
+    - theme: brand
+      text: 🎉 ViteConf 23!
+      link: https://viteconf.org/23/replay?utm=vite-homepage
 
 features:
   - icon: 💡
@@ -45,12 +45,3 @@ features:
     title: 완전한 유형의 API
     details: 유연하게 작성된 API는 TypeScript 역시 완벽하게 지원해요.
 ---
-
-<style>
-.VPButton.alt[href="https://lu.ma/vite"] {
-  background: var(--vp-home-hero-name-background);
-  border: none;
-  padding: 1px 21px;
-  color: #fff !important;
-}
-</style>
