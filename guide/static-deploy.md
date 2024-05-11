@@ -345,3 +345,7 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 ## Kinsta 정적 사이트 호스팅 {#kinsta-static-site-hosting}
 
 [이 문서](https://kinsta.com/docs/react-vite-example/)를 통해 [Kinsta](https://kinsta.com/static-site-hosting/)에 정적 사이트로 Vite 앱을 배포할 수 있습니다.
+
+## xmit 정적 사이트 호스팅 {#xmit-static-site-hosting}
+
+[xmit](https://xmit.co)를 사용하여 정적 사이트를 배포하려면 이 [가이드](https://xmit.dev/posts/vite-quickstart/)를 따라주세요.
