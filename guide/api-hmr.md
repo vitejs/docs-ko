@@ -220,7 +220,7 @@ HMR 이벤트에 대한 핸들러를 정의합니다.
 
 만약 연결되기 전에 호출된다면 데이터는 버퍼에서 잠시 대기하고 이후 연결이 설정되었을 때 전송하게 됩니다.
 
-좀 더 자세한 내용은 [클라이언트-서버 커뮤니케이션](/guide/api-plugin.html#client-server-communication)을 참고해주세요.
+[커스텀 이벤트 타입 정의](/guide/api-plugin.html#typescript-for-custom-events)에 대한 섹션을 포함한 자세한 내용은 [클라이언트-서버 커뮤니케이션](/guide/api-plugin.html#client-server-communication)을 참고해 주세요.
 
 ## Further Reading {#further-reading}
 
