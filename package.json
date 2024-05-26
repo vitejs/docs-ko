@@ -16,7 +16,7 @@
     "pnpm": ">=8.0.0"
   },
   "devDependencies": {
-    "@shikijs/vitepress-twoslash": "^1.4.0",
+    "@shikijs/vitepress-twoslash": "^1.5.0",
     "@types/markdown-it-footnote": "^3.0.4",
     "@types/node": "^20.12.7",
     "feed": "^4.2.2",

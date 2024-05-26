@@ -238,9 +238,9 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
 
 이런 상황에서는 하나의 정적인 [base](#public-base-path) 만으로는 충분하지 않습니다. Vite는 실험적으로 `experimental.renderBuiltUrl`를 통해 빌드하는 동안 Base에 대한 상세 설정을 제공하고 있습니다.
 
-<!-- prettier-ignore-start -->
 ```ts twoslash
 import type { UserConfig } from 'vite'
+// prettier-ignore
 const config: UserConfig = {
 // ---cut-before---
 experimental: {
@@ -255,14 +255,13 @@ experimental: {
 // ---cut-after---
 }
 ```
-<!-- prettier-ignore-end -->
 
 해시된 에셋과 Public 디렉터리 내 파일이 함께 배포되지 않은 경우, 함수에 전달된 두 번째 `context` 매개변수에 포함된 에셋의 `type` 프로퍼티를 이용해 각 그룹에 대한 동작을 독립적으로 정의할 수 있습니다.
 
-<!-- prettier-ignore-start -->
 ```ts twoslash
 import type { UserConfig } from 'vite'
 import path from 'node:path'
+// prettier-ignore
 const config: UserConfig = {
 // ---cut-before---
 experimental: {
@@ -279,6 +278,5 @@ experimental: {
 // ---cut-after---
 }
 ```
-<!-- prettier-ignore-end -->
 
 Vite는 렌더링 시 자동으로 URL 인코딩을 수행합니다. 따라서 함수로 전달되는 `filename`은 모두 디코딩된 URL이며, 함수에서 반환하는 URL 문자열도 디코딩된 URL이어야 합니다. 다만 `runtime`을 포함한 객체를 반환하는 경우에는 명시된 코드가 그대로 렌더링 되기에 이를 사용하는 곳에서 인코딩을 직접 처리해 줘야 합니다.
