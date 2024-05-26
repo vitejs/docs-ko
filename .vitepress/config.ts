@@ -353,10 +353,10 @@ export default defineConfig({
       .replace(/\/index\.md$/, '/')
       .replace(/\.md$/, '/')
     pageData.frontmatter.head ??= []
-    pageData.frontmatter.head.unshift([
-      'link',
-      { rel: 'canonical', href: canonicalUrl },
-    ])
+    pageData.frontmatter.head.unshift(
+      ['link', { rel: 'canonical', href: canonicalUrl }],
+      ['meta', { property: 'og:title', content: pageData.title }],
+    )
     return pageData
   },
   markdown: {
