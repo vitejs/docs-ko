@@ -428,8 +428,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
     ```js
     handleHotUpdate({ server, modules, timestamp }) {
-      // Vite 5.1 이전 버전을 지원하고자 한다면 `server.ws.send`를 사용하세요
-      server.hot.send({ type: 'full-reload' })
+      server.ws.send({ type: 'full-reload' })
       // 모듈을 수동으로 무효화합니다
       const invalidatedModules = new Set()
       for (const mod of modules) {
@@ -448,8 +447,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
     ```js
     handleHotUpdate({ server }) {
-      // Vite 5.1 이전 버전을 지원하고자 한다면 `server.ws.send`를 사용하세요
-      server.hot.send({
+      server.ws.send({
         type: 'custom',
         event: 'special-update',
         data: {}
@@ -556,7 +554,7 @@ Vite 2.9부터 클라이언트와의 통신을 처리하는 데 도움이 되는
 
 ### 서버에서 클라이언트로 전송 {#server-to-client}
 
-플러그인 측에서는 Vite 5.1에서 도입된 `server.hot.send` 또는 `server.ws.send`를 사용해 이벤트를 모든 클라이언트에 전달(Broadcast)할 수 있습니다:
+플러그인 측에서는 `server.ws.send`를 사용해 이벤트를 클라이언트에게 브로드캐스트 할 수 있습니다:
 
 ```js
 // vite.config.js
@@ -565,9 +563,8 @@ export default defineConfig({
     {
       // ...
       configureServer(server) {
-        // 예: 클라이언트가 연결될 때까지 메시지 전송 대기
-        server.hot.on('connection', () => {
-          server.hot.send('my:greetings', { msg: 'hello' })
+        server.ws.on('connection', () => {
+          server.ws.send('my:greetings', { msg: 'hello' })
         })
       }
     }
@@ -603,7 +600,7 @@ if (import.meta.hot) {
 }
 ```
 
-서버에서는 Vite 5.1에서 도입된 `server.hot.on` 또는 `server.ws.on`을 사용해 이벤트를 수신합니다:
+서버에서는 `server.ws.on`을 사용해 이벤트를 수신합니다:
 
 ```js
 // vite.config.js
@@ -612,7 +609,7 @@ export default defineConfig({
     {
       // ...
       configureServer(server) {
-        server.hot.on('my:from-client', (data, client) => {
+        server.ws.on('my:from-client', (data, client) => {
           console.log('Message from client:', data.msg) // Hey!
           // 클라이언트에게만 응답(필요한 경우)
           client.send('my:ack', { msg: 'Hi! I got your message!' })
