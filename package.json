@@ -16,15 +16,15 @@
     "pnpm": ">=8.0.0"
   },
   "devDependencies": {
-    "@shikijs/vitepress-twoslash": "^1.5.1",
+    "@shikijs/vitepress-twoslash": "^1.6.0",
     "@types/markdown-it-footnote": "^3.0.4",
-    "@types/node": "^20.12.11",
+    "@types/node": "^20.12.12",
     "feed": "^4.2.2",
     "gray-matter": "^4.0.3",
     "markdown-it-footnote": "^4.0.0",
     "prettier": "3.2.5",
     "vite": "^5.2.11",
-    "vitepress": "1.1.4",
+    "vitepress": "1.2.0",
     "vue": "^3.4.27"
   },
   "scripts": {
