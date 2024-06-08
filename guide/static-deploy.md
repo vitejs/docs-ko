@@ -36,7 +36,6 @@ $ npm run build
 한 번 빌드된 앱은 `npm run preview` 명령으로 로컬에서 테스트가 가능합니다.
 
 ```bash
-$ npm run build
 $ npm run preview
 ```
 
