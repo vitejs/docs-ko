@@ -1,4 +1,5 @@
-import { DefaultTheme, defineConfig } from 'vitepress'
+import type { DefaultTheme } from 'vitepress'
+import { defineConfig } from 'vitepress'
 import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
 // @ts-ignore
 import markdownItCustomAnchor from './markdown-it-custom-anchor'
@@ -367,6 +368,7 @@ export default defineConfig({
     },
     config: (md) => {
       md.use(markdownItCustomAnchor)
+      // @ts-ignore
       md.use(markdownItFootnote)
     },
   },
