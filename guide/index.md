@@ -87,6 +87,8 @@ bun create vite my-vue-app --template vue
 
 또한 [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)에서 더욱 다양한 템플릿들에 대해 다루고 있습니다: `vanilla`, `vanilla-ts`, `vue`, `vue-ts`, `react`, `react-ts`, `react-swc`, `react-swc-ts`, `preact`, `preact-ts`, `lit`, `lit-ts`, `svelte`, `svelte-ts`, `solid`, `solid-ts`, `qwik`, `qwik-ts`.
 
+현재 디렉터리에 프로젝트를 생성하려면 프로젝트 이름으로 `.`을 사용하세요.
+
 ## 커뮤니티 템플릿 {#community-templates}
 
 create-vite는 인기 있는 프레임워크로 작성된 템플릿을 기반으로 프로젝트를 빠르게 시작할 수 있는 도구입니다. 이 외에도 [Awesome Vite의 templates 항목](https://github.com/vitejs/awesome-vite#templates)에서 다양한 도구와 프레임워크를 타겟으로 하는 커뮤니티 템플릿들을 확인할 수 있습니다.
