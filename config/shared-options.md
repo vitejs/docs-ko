@@ -18,7 +18,7 @@
 개발 또는 프로덕션 모드에서 사용되는 Public Base Path 입니다. 유효한 값은 다음과 같습니다:
 
 - 절대 URL 경로명, 예) `/foo/`
-- 전체 URL, 예) `https://foo.com/` (URL Origin 부분은 개발에서 사용되지 않습니다)
+- 전체 URL, 예) `https://bar.com/foo/` (URL Origin 부분은 사용되지 않으므로 `/foo/`와 같습니다.)
 - 빈 문자열 또는 `./`
 
 [Public Base Path](/guide/build#public-base-path)에서 더 자세한 점을 볼 수 있습니다.
