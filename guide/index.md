@@ -105,6 +105,44 @@ npm install
 npm run dev
 ```
 
+## Manual Installation {#manual-installation}
+
+프로젝트 내에서 `vite` CLI를 설치할 수 있습니다:
+
+::: code-group
+
+```bash [NPM]
+$ npm install -D vite
+```
+
+```bash [Yarn]
+$ yarn add -D vite
+```
+
+```bash [PNPM]
+$ pnpm add -D vite
+```
+
+```bash [Bun]
+$ bun add -D vite
+```
+
+:::
+
+그리고 다음과 같이 `index.html` 파일을 생성해주세요:
+
+```html
+<p>Hello Vite!</p>
+```
+
+이후 터미널에서 `vite` CLI를 실행해주세요:
+
+```bash
+vite
+```
+
+이제 `http://localhost:5173`에서 `index.html` 파일을 확인할 수 있습니다.
+
 ## `index.html` 그리고 프로젝트의 루트 {#index-html-and-project-root}
 
 만들어진 Vite 프로젝트를 유심히 보면 `index.html` 파일이 `public` 디렉터리가 아닌 프로젝트의 루트에 위치해 있다는 것을 발견할 수 있습니다. 의도적으로 이렇게 위치시킨 것인데, 추가적인 번들링 과정 없이 `index.html` 파일이 앱의 진입점이 되게끔 하기 위함입니다.
