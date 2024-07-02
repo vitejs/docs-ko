@@ -187,7 +187,7 @@ Vite 5는 esbuild 0.19를 사용하며, esbuild 0.18의 호환성 계층도 제�
 - `resolvePackageData`: 위와 동일하며, 패키지 디렉터리를 크롤링하여 루트의 `package.json`을 가져옵니다. [`vitefu`](https://github.com/svitejs/vitefu) 커뮤니티 패키지를 사용할 수도 있습니다.
 
 ```js
-import { resolve } from 'import-meta-env'
+import { resolve } from 'import-meta-resolve'
 import { findDepPkgJsonPath } from 'vitefu'
 import fs from 'node:fs'
 
