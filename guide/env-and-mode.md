@@ -94,7 +94,7 @@ interface ImportMeta {
 }
 ```
 
-만약 코드가 [DOM](https://github.com/microsoft/TypeScript/blob/main/lib/lib.dom.d.ts)이나 [WebWorker](https://github.com/microsoft/TypeScript/blob/main/lib/lib.webworker.d.ts)와 같이 브라우저 환경의 타입이 필요하다면, `tsconfig.json`에서 [lib](https://www.typescriptlang.org/tsconfig#lib) 필드에 이를 명시해줄 수 있습니다.
+만약 코드가 [DOM](https://github.com/microsoft/TypeScript/blob/main/src/lib/dom.generated.d.ts)이나 [WebWorker](https://github.com/microsoft/TypeScript/blob/main/src/lib/webworker.generated.d.ts)와 같이 브라우저 환경의 타입이 필요하다면, `tsconfig.json`에서 [lib](https://www.typescriptlang.org/tsconfig#lib) 필드에 이를 명시해줄 수 있습니다.
 
 ```json
 {
