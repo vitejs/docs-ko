@@ -2,9 +2,9 @@
 
 ## WMR {#wmr}
 
-Preact 팀의 [WMR](https://github.com/preactjs/wmr)은 유사한 기능 세트를 제공하며, Rollup의 플러그인 인터페이스에 대한 Vite 2.0의 지원은 그것에 영감을 받았습니다.
+Preact 팀이 제공하는 [WMR](https://github.com/preactjs/wmr)도 비슷한 기능을 제공하고자 했습니다. Vite 개발 및 빌드를 위한 범용 Rollup 플러그인 API는 여기에서 영감을 받았습니다.
 
-WMR은 주로 [Preact](https://preactjs.com/) 프로젝트를 위해 설계되었으며, 사전 렌더링과 같은 보다 통합된 기능을 제공합니다. 범위 측면에서는 Preact 자체와 같이 컴팩트한 크기를 강조하는 Preact 메타 프레임워크에 더 가깝습니다. Preact를 사용한다면, WMR은 보다 더 미세하게 조정된 경험을 제공할 것입니다. 그러나 WMR이 다른 프레임워크에 대한 지원 우선순위를 정할 것 같지는 않습니다.
+다만 WMR은 더 이상 관리되지 않습니다. Preact 팀에서는 Vite와 함께 [@preactjs/preset-vite](https://github.com/preactjs/preset-vite) 플러그인 사용을 권장하고 있습니다.
 
 ## @web/dev-server {#web-dev-server}
 
