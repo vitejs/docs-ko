@@ -25,7 +25,7 @@ vite --config my-config.js
 
 ## 인텔리센스 설정 {#config-intellisense}
 
-Vite는 TypeScript 형식을 포함하고 있기 때문에, jsdoc 형식의 힌트를 통해 사용자 IDE의 인텔리센스를 활용할 수 있습니다:
+Vite는 TypeScript 타입을 포함하고 있기 때문에, jsdoc 힌트를 통해 IDE 인텔리센스를 활용할 수 있습니다:
 
 ```js
 /** @type {import('vite').UserConfig} */
@@ -34,7 +34,7 @@ export default {
 }
 ```
 
-대안으로 jsdoc 주석이 없어도 인텔리센스가 제공되는 `defineConfig` 도우미 함수를 사용할 수도 있습니다:
+또는, jsdoc 대신 `defineConfig` 도우미 함수를 통해 인텔리센스를 활용할 수 있습니다:
 
 ```js
 import { defineConfig } from 'vite'
@@ -44,7 +44,15 @@ export default defineConfig({
 })
 ```
 
-Vite는 또한 TS 설정 파일을 직접 지원합니다. `defineConfig` 도우미 함수와 함께 `vite.config.ts` 를 사용할 수 있습니다.
+TypeScript 설정 파일 또한 지원합니다. 위 `defineConfig` 도우미 함수 또는 `satisfies` 연산자를 사용해 `vite.config.ts` 파일을 사용할 수 있습니다:
+
+```ts
+import type { UserConfig } from 'vite'
+
+export default {
+  // ...
+} satisfies UserConfig
+```
 
 ## 조건부 설정 {#conditional-config}
 
