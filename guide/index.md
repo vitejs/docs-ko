@@ -71,19 +71,26 @@ $ bun create vite
 
 프로젝트의 이름이나 사용하려는 템플릿을 직접 지정할 수도 있습니다. 예를 들어, Vite + Vue 프로젝트를 만들고 싶다면 다음과 같이 입력해주세요:
 
-```bash
-# npm 7+, '--'를 반드시 붙여주세요
-npm create vite@latest my-vue-app -- --template vue
+::: code-group
 
-# yarn
-yarn create vite my-vue-app --template vue
-
-# pnpm
-pnpm create vite my-vue-app --template vue
-
-# bun
-bun create vite my-vue-app --template vue
+```bash [NPM]
+# npm v7 이상에서는 `--` 를 반드시 붙여주세요:
+$ npm create vite@latest my-vue-app -- --template vue
 ```
+
+```bash [Yarn]
+$ yarn create vite my-vue-app --template vue
+```
+
+```bash [PNPM]
+$ pnpm create vite my-vue-app --template vue
+```
+
+```bash [Bun]
+$ bun create vite my-vue-app --template vue
+```
+
+:::
 
 또한 [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)에서 더욱 다양한 템플릿들에 대해 다루고 있습니다: `vanilla`, `vanilla-ts`, `vue`, `vue-ts`, `react`, `react-ts`, `react-swc`, `react-swc-ts`, `preact`, `preact-ts`, `lit`, `lit-ts`, `svelte`, `svelte-ts`, `solid`, `solid-ts`, `qwik`, `qwik-ts`.
 
