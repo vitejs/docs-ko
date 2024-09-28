@@ -57,7 +57,7 @@ const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
     case 'local':
       return [
         {
-          text: 'Vite 5 문서 (릴리즈)',
+          text: 'Vite 5 문서 (릴리스)',
           link: 'https://ko.vitejs.dev',
         },
         ...oldVersions,

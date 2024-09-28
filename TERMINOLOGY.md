@@ -42,3 +42,4 @@
 | Export         | 익스포트       |
 | Load           | 로드           |
 | Transform      | 변환           |
+| Release        | 릴리스         |

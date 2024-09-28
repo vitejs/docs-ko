@@ -13,7 +13,7 @@ Vite는 이제 Rollup 4를 사용하며, 이 변경 사항은 특정 부분에 �
 - Vite 플러그인의 `this.resolve` `skipSelf` 옵션은 이제 기본적으로 `true`입니다.
 - Vite 플러그인의 `this.parse`는 현재 일시적으로 `allowReturnOutsideFunction` 옵션만을 지원합니다.  
 
-[`build.rollupOptions`](/config/build-options.md#build-rollupoptions)에서 빌드와 관련되어 바뀐 부분을 확인하려면, [Rollup 4 릴리즈 노트](https://github.com/rollup/rollup/releases/tag/v4.0.0)의 변경 사항을 참고해 주세요.
+[`build.rollupOptions`](/config/build-options.md#build-rollupoptions)에서 빌드와 관련되어 바뀐 부분을 확인하려면, [Rollup 4 릴리스 노트](https://github.com/rollup/rollup/releases/tag/v4.0.0)의 변경 사항을 참고해 주세요.
 
 TypeScript를 사용한다면, Rollup 4에서 요구하는 것과 같이 `moduleResolution: 'bundler'` (또는 `node16`/`nodenext`)를 설정해 주세요. 또는 `skipLibCheck: true`를 설정할 수도 있습니다.
 
