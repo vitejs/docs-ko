@@ -225,7 +225,7 @@ CSS 모듈에 대한 설정입니다. 옵션들은 [postcss-modules](https://git
 
 CSS 전처리기에 전달할 옵션을 지정합니다. 파일 확장자는 옵션의 키로 사용됩니다. 전처리기에 대한 지원되는 옵션은 각각의 문서에서 찾을 수 있습니다:
 
-- `sass`/`scss` - [옵션](https://sass-lang.com/documentation/js-api/interfaces/LegacyStringOptions).
+- `sass`/`scss` - 최상위 옵션 `api: "legacy" | "modern"`(기본값: `"legacy"`)을 통해 사용할 sass API를 선택할 수 있습니다. [`legacy` 옵션](https://sass-lang.com/documentation/js-api/interfaces/LegacyStringOptions), [`modern` 옵션](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/).
 - `less` - [옵션](https://lesscss.org/usage/#less-options).
 - `styl`/`stylus` - [`define`](https://stylus-lang.com/docs/js.html#define-name-node)만 지원되며, 객체로 전달할 수 있습니다.
 
@@ -242,6 +242,12 @@ export default defineConfig({
         define: {
           $specialColor: new stylus.nodes.RGBA(51, 197, 255, 1),
         },
+      },
+      scss: {
+        api: 'modern', // 또는 "legacy"
+        importers: [
+          // ...
+        ],
       },
     },
   },
