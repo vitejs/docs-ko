@@ -108,7 +108,7 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       },
-      // 정규식(RegEx)과 함께: http://localhost:5173/fallback/ -> http://jsonplaceholder.typicode.com/
+      // 정규식(RegExp)과 함께: http://localhost:5173/fallback/ -> http://jsonplaceholder.typicode.com/
       '^/fallback/.*': {
         target: 'http://jsonplaceholder.typicode.com',
         changeOrigin: true,
