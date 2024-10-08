@@ -328,6 +328,14 @@ export default defineConfig({
 
 Vite dev 서버에서 제공되지 않기를 원하는 민감한 파일들에 대한 차단 목록입니다. 이 옵션은 [`server.fs.allow`](#server-fs-allow)보다 높은 우선 순위를 가지며, [피코매치 패턴](https://github.com/micromatch/picomatch#globbing-features)을 사용할 수 있습니다.
 
+## server.fs.cachedChecks {#server-fs-cachedchecks}
+
+- **타입:** `boolean`
+- **기본값:** `false`
+- **실험적 기능**
+
+접근한 디렉터리 내 파일 이름을 캐시해 반복적인 파일 시스템 작업을 피합니다. 특히 Windows에서는 성능이 향상이 있을 수 있습니다. 캐시된 디렉터리에서 파일을 작성한 후 이를 즉시 가져오는 경우 발생하는 예외 상황으로 인해, 기본적으로는 비활성화되어 있습니다.
+
 ## server.origin {#server-origin}
 
 - **타입:** `string`
