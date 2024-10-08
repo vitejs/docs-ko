@@ -108,7 +108,7 @@ $ npm run preview
          - name: Setup Pages
            uses: actions/configure-pages@v4
          - name: Upload artifact
-           uses: actions/upload-pages-artifact@v2
+           uses: actions/upload-pages-artifact@v3
            with:
              # dist 디렉터리 업로드
              path: './dist'
