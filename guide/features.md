@@ -256,13 +256,13 @@ vite는 모던 브라우저만을 타깃으로 하기에, 표준을 준수하도
 다시 말해, vite는 기본적으로 `.scss`, `.sass`, `.less`, `.styl`, `.stylus`와 CSS 전처리기가 필요한 파일을 지원하지 않습니다. 다만 필요한 경우 어렵지 않게 설치해 바로 사용할 수 있습니다.
 
 ```bash
-# .scss 그리고 .sass
-npm add -D sass
+# .scss 및 .sass
+npm add -D sass-embedded # 또는 sass
 
 # .less
 npm add -D less
 
-# .styl 그리고 .stylus
+# .styl 및 .stylus
 npm add -D stylus
 ```
 
