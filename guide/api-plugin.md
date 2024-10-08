@@ -432,7 +432,6 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
     ```js
     handleHotUpdate({ server, modules, timestamp }) {
-      server.ws.send({ type: 'full-reload' })
       // 모듈을 수동으로 무효화합니다
       const invalidatedModules = new Set()
       for (const mod of modules) {
@@ -443,6 +442,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
           true
         )
       }
+      server.ws.send({ type: 'full-reload' })
       return []
     }
     ```
