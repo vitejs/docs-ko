@@ -167,7 +167,7 @@ HMR 연결을 설정하거나 사용하지 않을 수 있습니다. (HMR 웹 소
 기본적으로 Vite는 리버스 프락시가 WebSocket 프락시를 지원한다고 가정하고 동작합니다. 만약 Vite HMR 클라이언트가 WebSocket 연결에 실패하게 되면, 클라이언트는 리버스 프락시 대신 WebSocket을 Vite HMR 서버에 직접 연결합니다:
 
 ```
-Direct websocket connection fallback. Check out https://vitejs.dev/config/server-options.html#server-hmr to remove the previous connection error.
+Direct websocket connection fallback. Check out https://vite.dev/config/server-options.html#server-hmr to remove the previous connection error.
 ```
 
 위와 같은 상황이 발생될 때 브라우저에 나타나는 이 오류는 무시해도 됩니다. 다만 아래의 작업들 중 하나를 통해 직접 리버스 프락시를 우회해서 오류를 나타나지 않게끔 할 수도 있습니다:

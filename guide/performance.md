@@ -29,7 +29,7 @@ Vite의 내부 및 공식 플러그인은 가능한 최소한의 작업을 수�
    `vite --debug plugin-transform` 또는 [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect)를 활용해 파일 변환에 걸리는 시간을 확인할 수 있습니다. 비동기 작업은 정확하지 않은 시간을 제공하는 경향이 있기에 이 수치는 대략적인 추정치로 취급해야 하지만, 그래도 더 많은 비용이 드는 연산을 확인할 수 있습니다.
 
 ::: tip 프로파일링
-`vite --profile`을 실행하면, 사이트에 접속 후 터미널에서 `p + enter`를 눌러 `.cpuprofile`을 녹화할 수 있습니다. 이후 [speedscope](https://www.speedscope.app)와 같은 도구를 사용해 녹화된 프로파일을 검사하고 병목 지점을 식별할 수 있습니다. [프로파일을 공유해](https://chat.vitejs.dev) Vite 팀이 성능 문제를 식별하는 데 도움을 줄 수도 있습니다.
+`vite --profile`을 실행하면, 사이트에 접속 후 터미널에서 `p + enter`를 눌러 `.cpuprofile`을 녹화할 수 있습니다. 이후 [speedscope](https://www.speedscope.app)와 같은 도구를 사용해 녹화된 프로파일을 검사하고 병목 지점을 식별할 수 있습니다. [프로파일을 공유해](https://chat.vite.dev) Vite 팀이 성능 문제를 식별하는 데 도움을 줄 수도 있습니다.
 :::
 
 ## 식별 작업 줄이기 {#reduce-resolve-operations}

@@ -26,7 +26,7 @@ Vite 팀이 지원하는 Vite 버전 범위는 아래 규칙에 따라 자동으
 - 보안 패치도 `vite@3` 및 `vite@5.1`로 백포트됩니다.
 - `vite@2` 및 `vite@5.0`은 더 이상 지원하지 않습니다. 필요하다면 더 높은 버전을 사용해야 합니다.
 
-따라서 정기적인 Vite 업데이트를 권장합니다. 메이저 버전 업데이트 시에는 [마이그레이션 가이드](https://ko.vitejs.dev/guide/migration.html)를 참고해 주세요. Vite 팀은 새 버전에 대한 품질을 보장하기 위해 생태계 내 주요 프로젝트와 긴밀하게 협력하고 있습니다. 새로운 Vite 버전은 출시 전 [vite-ecosystem-ci 프로젝트](https://github.com/vitejs/vite-ecosystem-ci)를 통해 테스트하기에, Vite를 사용하는 생태계 내 프로젝트 대부분은 출시 직후 이를 신속하게 지원하거나 마이그레이션을 제공할 수 있습니다.
+따라서 정기적인 Vite 업데이트를 권장합니다. 메이저 버전 업데이트 시에는 [마이그레이션 가이드](https://ko.vite.dev/guide/migration.html)를 참고해 주세요. Vite 팀은 새 버전에 대한 품질을 보장하기 위해 생태계 내 주요 프로젝트와 긴밀하게 협력하고 있습니다. 새로운 Vite 버전은 출시 전 [vite-ecosystem-ci 프로젝트](https://github.com/vitejs/vite-ecosystem-ci)를 통해 테스트하기에, Vite를 사용하는 생태계 내 프로젝트 대부분은 출시 직후 이를 신속하게 지원하거나 마이그레이션을 제공할 수 있습니다.
 
 ## 시멘틱 버저닝 예외 사항 {#semantic-versioning-edge-cases}
 
@@ -54,7 +54,7 @@ LTS가 아닌 Node.js 버전(홀수)은 Vite CI의 대상으로 테스트되지 
 
 ## 사용 중단 {#deprecations}
 
-더 나은 대안으로 대체된 기능은 마이너 릴리스에서 주기적으로 사용이 중단됩니다. 사용이 중단된 기능은 타입이나 경고 로그와 함께 계속 작동은 하지만, 다음 메이저 릴리스에서 제거됩니다. 사용이 중단된 기능에 대한 목록과 마이그레이션 가이드는 각 메이저 버전의 [마이그레이션 가이드](https://ko.vitejs.dev/guide/migration.html)에서 확인할 수 있습니다.
+더 나은 대안으로 대체된 기능은 마이너 릴리스에서 주기적으로 사용이 중단됩니다. 사용이 중단된 기능은 타입이나 경고 로그와 함께 계속 작동은 하지만, 다음 메이저 릴리스에서 제거됩니다. 사용이 중단된 기능에 대한 목록과 마이그레이션 가이드는 각 메이저 버전의 [마이그레이션 가이드](https://ko.vite.dev/guide/migration.html)에서 확인할 수 있습니다.
 
 ## 실험적 기능 {#experimental-features}
 

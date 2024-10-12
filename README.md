@@ -1,8 +1,8 @@
 # ViteJS Document (Korean)
 
 <p align="center">
-  <a href="https://vitejs.dev" target="_blank" rel="noopener noreferrer">
-    <img width="180" src="https://vitejs.dev/logo.svg" alt="Vite logo">
+  <a href="https://vite.dev" target="_blank" rel="noopener noreferrer">
+    <img width="180" src="https://vite.dev/logo.svg" alt="Vite logo">
   </a>
 </p>
 <br/>
@@ -11,7 +11,7 @@
   <a href="https://nodejs.org/en/about/releases/"><img src="https://img.shields.io/node/v/vite.svg" alt="node compatibility"></a>
   <a href="https://github.com/vitejs/vite/actions/workflows/ci.yml"><img src="https://github.com/vitejs/vite/actions/workflows/ci.yml/badge.svg?branch=main" alt="build status"></a>
   <a href="https://pr.new/vitejs/vite"><img src="https://developer.stackblitz.com/img/start_pr_dark_small.svg" alt="Start new PR in StackBlitz Codeflow"></a>
-  <a href="https://chat.vitejs.dev"><img src="https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord" alt="discord chat"></a>
+  <a href="https://chat.vite.dev"><img src="https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord" alt="discord chat"></a>
 </p>
 <br/>
 
@@ -28,13 +28,13 @@
 
 Vite(프랑스어로 '빠른'을 의미하며 [`/vit/`](https://cdn.jsdelivr.net/gh/vitejs/vite@main/docs/public/vite.mp3), "veet"로 발음)는 프런트엔드 개발 경험을 크게 향상시키는 새로운 프런트엔드 빌드 툴입니다. 두 가지 주요 부분으로 구성됩니다.
 
-- [풍부한 내장 기능](https://ko.vitejs.dev/guide/features.html)과 놀랍도록 빠른 [HMR(Hot Module Replacement)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 사용하여 [네이티브 ES 모듈](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 통해 소스 파일을 제공하는 개발 서버입니다.
+- [풍부한 내장 기능](https://ko.vite.dev/guide/features.html)과 놀랍도록 빠른 [HMR(Hot Module Replacement)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 사용하여 [네이티브 ES 모듈](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 통해 소스 파일을 제공하는 개발 서버입니다.
 
-- 프로덕션을 위해 고도로 최적화된 정적 에셋을 출력하도록 사전 구성된 [Rollup](https://rollupjs.org)과 함께 코드를 번들로 제공하는 [빌드 명령](https://ko.vitejs.dev/guide/build.html)입니다.
+- 프로덕션을 위해 고도로 최적화된 정적 에셋을 출력하도록 사전 구성된 [Rollup](https://rollupjs.org)과 함께 코드를 번들로 제공하는 [빌드 명령](https://ko.vite.dev/guide/build.html)입니다.
 
-또한 Vite는 [플러그인 API](https://ko.vitejs.dev/guide/api-plugin.html) 및 [JavaScript API](https://ko.vitejs.dev/guide/api-javascript.html)를 통해 완벽하게 타이핑을 지원하는 확장성이 뛰어납니다.
+또한 Vite는 [플러그인 API](https://ko.vite.dev/guide/api-plugin.html) 및 [JavaScript API](https://ko.vite.dev/guide/api-javascript.html)를 통해 완벽하게 타이핑을 지원하는 확장성이 뛰어납니다.
 
-[자세한 내용은 문서 읽기](https://ko.vitejs.dev)
+[자세한 내용은 문서 읽기](https://ko.vite.dev)
 
 ## 패키지
 

@@ -502,7 +502,7 @@ const modules = {
 
 #### 커스텀 쿼리 {#custom-queries}
 
-`query` 옵션을 이용해 Import에 대한 쿼리를 작성할 수 있습니다. 예를 들어, [문자열 형태](https://ko.vitejs.dev/guide/assets.html#importing-asset-as-string) 또는 [URL 형태](https://ko.vitejs.dev/guide/assets.html#importing-asset-as-url)로 에셋을 가져올 수 있습니다:
+`query` 옵션을 이용해 Import에 대한 쿼리를 작성할 수 있습니다. 예를 들어, [문자열 형태](https://ko.vite.dev/guide/assets.html#importing-asset-as-string) 또는 [URL 형태](https://ko.vite.dev/guide/assets.html#importing-asset-as-url)로 에셋을 가져올 수 있습니다:
 
 ```ts twoslash
 import 'vite/client'

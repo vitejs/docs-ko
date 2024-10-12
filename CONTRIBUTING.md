@@ -84,7 +84,7 @@ pnpm build
 - 본 프로젝트는 마지막으로 배포된 공식 배포 버전의 Vite 문서를 번역하는 것을 목표로 하고 있습니다. 따라서, 번역 문서는 원본 문서의 마지막 공식 배포 버전을 기준으로 작성합니다.
   - 이전 버전의 Vite 문서를 참조하는 경우에는 원본 문서를 참조하도록 합니다:
     ```md
-    ... 설정하여 동일한 [Vite v2 외부화 휴리스틱](https://v2.vitejs.dev/guide/ssr.html#ssr-externals)을 사용하여 ...
+    ... 설정하여 동일한 [Vite v2 외부화 휴리스틱](https://v2.vite.dev/guide/ssr.html#ssr-externals)을 사용하여 ...
     ```
 - 번역 문서는 원본 문서와 동일한 디렉터리 구조를 가지고 있습니다.
 - 번역 문서는 원본 문서의 파일명을 그대로 사용합니다.
@@ -158,10 +158,10 @@ PR과 커밋 타이틀은 [시멘틱 커밋 메시지](https://gist.github.com/j
 [Node.js 시작하기](#get-started-with-node-js)
 ```
 
-커스텀 앵커를 이용하기에 일반적으로 원본 Vite 문서에 대한 한글 문서는 도메인 네임만 `ko.vitejs.dev`로 바꿔주면 참조가 가능합니다:
+커스텀 앵커를 이용하기에 일반적으로 원본 Vite 문서에 대한 한글 문서는 도메인 네임만 `ko.vite.dev`로 바꿔주면 참조가 가능합니다:
 
-- 원본: https://vitejs.dev/guide/ssr.html#generating-preload-directives
-- 한글 문서: https://ko.vitejs.dev/guide/ssr.html#generating-preload-directives
+- 원본: https://vite.dev/guide/ssr.html#generating-preload-directives
+- 한글 문서: https://ko.vite.dev/guide/ssr.html#generating-preload-directives
 
 [guide/cli.md](https://github.com/vitejs/docs-ko/blob/main/guide/cli.md) 문서에서와 같이 중복된 타이틀이 존재할 수 있습니다. 이 경우 중복되는 타이틀에는 `{#title-1}` 형태로 커스텀 앵커를 지정해주세요:
 
@@ -185,7 +185,7 @@ PR과 커밋 타이틀은 [시멘틱 커밋 메시지](https://gist.github.com/j
 
 본 번역 프로젝트는 영리 목적으로 시작된 것이 아니며, 어떠한 방식으로도 수익을 내지 않습니다. 또한 앞으로도 그럴 계획이 없습니다.
 
-프로젝트는 [ViteJS 리포지토리](https://github.com/vitejs/vite)를 포크해 시작했습니다. 이 과정에서 대부분의 설정값을 그대로 사용하게 되었고, 광고와 관련된 설정 또한 원본과 동일하게 유지했습니다. 이로 인해 [ViteJS 번역 문서](https://ko.vitejs.dev/)에서 광고가 나타나게 되었으며 광고의 설정 및 내용은 [ViteJS 공식 문서](https://vitejs.dev/)와 동일합니다.
+프로젝트는 [ViteJS 리포지토리](https://github.com/vitejs/vite)를 포크해 시작했습니다. 이 과정에서 대부분의 설정값을 그대로 사용하게 되었고, 광고와 관련된 설정 또한 원본과 동일하게 유지했습니다. 이로 인해 [ViteJS 번역 문서](https://ko.vite.dev/)에서 광고가 나타나게 되었으며 광고의 설정 및 내용은 [ViteJS 공식 문서](https://vite.dev/)와 동일합니다.
 
 ## 🍍 그 외
 

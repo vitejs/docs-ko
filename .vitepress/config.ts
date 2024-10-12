@@ -8,9 +8,9 @@ import renderPermalink from './render-permalink'
 import markdownItFootnote from 'markdown-it-footnote'
 
 const ogDescription = 'Vite, 프런트엔드 개발의 새로운 기준'
-const ogImage = 'https://ko.vitejs.dev/og-image.png'
+const ogImage = 'https://ko.vite.dev/og-image.png'
 const ogTitle = 'Vite'
-const ogUrl = 'https://ko.vitejs.dev'
+const ogUrl = 'https://ko.vite.dev'
 
 // netlify envs
 const deployURL = process.env.DEPLOY_PRIME_URL || ''
@@ -40,15 +40,15 @@ const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
   const oldVersions: DefaultTheme.NavItemWithLink[] = [
     {
       text: 'Vite 4 문서',
-      link: 'https://v4.vitejs.dev',
+      link: 'https://v4.vite.dev',
     },
     {
       text: 'Vite 3 문서',
-      link: 'https://v3.vitejs.dev',
+      link: 'https://v3.vite.dev',
     },
     {
       text: 'Vite 2 문서',
-      link: 'https://v2.vitejs.dev',
+      link: 'https://v2.vite.dev',
     },
   ]
 
@@ -58,7 +58,7 @@ const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
       return [
         {
           text: 'Vite 5 문서 (릴리스)',
-          link: 'https://ko.vitejs.dev',
+          link: 'https://ko.vite.dev',
         },
         ...oldVersions,
       ]
@@ -124,12 +124,12 @@ export default defineConfig({
 
   locales: {
     root: { label: '한국어' },
-    en: { label: 'English', link: 'https://vitejs.dev' },
-    zh: { label: '简体中文', link: 'https://cn.vitejs.dev' },
-    ja: { label: '日本語', link: 'https://ja.vitejs.dev' },
-    es: { label: 'Español', link: 'https://es.vitejs.dev' },
-    pt: { label: 'Português', link: 'https://pt.vitejs.dev' },
-    de: { label: 'Deutsch', link: 'https://de.vitejs.dev' },
+    en: { label: 'English', link: 'https://vite.dev' },
+    zh: { label: '简体中文', link: 'https://cn.vite.dev' },
+    ja: { label: '日本語', link: 'https://ja.vite.dev' },
+    es: { label: 'Español', link: 'https://es.vite.dev' },
+    pt: { label: 'Português', link: 'https://pt.vite.dev' },
+    de: { label: 'Deutsch', link: 'https://de.vite.dev' },
   },
 
   themeConfig: {
@@ -143,7 +143,7 @@ export default defineConfig({
     socialLinks: [
       { icon: 'mastodon', link: 'https://elk.zone/m.webtoo.ls/@vite' },
       { icon: 'twitter', link: 'https://twitter.com/vite_js' },
-      { icon: 'discord', link: 'https://chat.vitejs.dev' },
+      { icon: 'discord', link: 'https://chat.vite.dev' },
       { icon: 'github', link: 'https://github.com/vitejs/vite' },
     ],
 
@@ -183,7 +183,7 @@ export default defineConfig({
               },
               {
                 text: '디스코드',
-                link: 'https://chat.vitejs.dev',
+                link: 'https://chat.vite.dev',
               },
               {
                 text: 'Awesome Vite',

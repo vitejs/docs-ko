@@ -175,7 +175,7 @@ Vite 5는 esbuild 0.19를 사용하며, esbuild 0.18의 호환성 계층도 제�
 
 ### `--https` 플래그 및 `https: true` 설정 제거 {#remove-https-flag-and-https-true}
 
-`--https` 플래그는 내부적으로 `server.https: true`와 `preview.https: true`를 설정합니다. 이 설정은 [Vite 3에서 삭제되었던](https://v3.vitejs.dev/guide/migration.html#automatic-https-certificate-generation) HTTPS 인증서 자동 생성 기능과 함께 사용하기 위해 만들어졌는데, 이를 적용해도 Vite는 인증서 없이 HTTPS 서버를 시작하므로, 더 이상 의미가 없습니다.
+`--https` 플래그는 내부적으로 `server.https: true`와 `preview.https: true`를 설정합니다. 이 설정은 [Vite 3에서 삭제되었던](https://v3.vite.dev/guide/migration.html#automatic-https-certificate-generation) HTTPS 인증서 자동 생성 기능과 함께 사용하기 위해 만들어졌는데, 이를 적용해도 Vite는 인증서 없이 HTTPS 서버를 시작하므로, 더 이상 의미가 없습니다.
 
 [`@vitejs/plugin-basic-ssl`](https://github.com/vitejs/vite-plugin-basic-ssl) 또는 [`vite-plugin-mkcert`](https://github.com/liuweiGL/vite-plugin-mkcert)를 사용하고 있다면, 이미 내부적으로 `https` 설정이 되어 있으므로, `--https`, `server.https: true`, `preview.https: true`를 제거해도 됩니다.
 
