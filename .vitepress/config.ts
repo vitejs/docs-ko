@@ -8,7 +8,7 @@ import renderPermalink from './render-permalink'
 import markdownItFootnote from 'markdown-it-footnote'
 
 const ogDescription = 'Vite, 프런트엔드 개발의 새로운 기준'
-const ogImage = 'https://ko.vite.dev/og-image.png'
+const ogImage = 'https://ko.vite.dev/og-image.jpg'
 const ogTitle = 'Vite'
 const ogUrl = 'https://ko.vite.dev'
 
