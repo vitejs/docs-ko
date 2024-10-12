@@ -7,7 +7,7 @@ import markdownItCustomAnchor from './markdown-it-custom-anchor'
 import renderPermalink from './render-permalink'
 import markdownItFootnote from 'markdown-it-footnote'
 
-const ogDescription = 'Vite, 차세대 프런트엔드 개발 툴'
+const ogDescription = 'Vite, 프런트엔드 개발의 새로운 기준'
 const ogImage = 'https://ko.vitejs.dev/og-image.png'
 const ogTitle = 'Vite'
 const ogUrl = 'https://ko.vitejs.dev'
@@ -70,13 +70,37 @@ const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
 export default defineConfig({
   title: 'Vite',
   lang: 'ko',
-  description: '차세대 프런트엔드 개발 툴',
+  description: '프런트엔드 개발의 새로운 기준',
 
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
     [
       'link',
       { rel: 'alternate', type: 'application/rss+xml', href: '/blog.rss' },
+    ],
+    ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
+    [
+      'link',
+      {
+        rel: 'preconnect',
+        href: 'https://fonts.gstatic.com',
+        crossorigin: 'true',
+      },
+    ],
+    [
+      'link',
+      {
+        rel: 'preload',
+        href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600&family=IBM+Plex+Mono:wght@400&display=swap',
+        as: 'style',
+      },
+    ],
+    [
+      'link',
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600&family=IBM+Plex+Mono:wght@400&display=swap',
+      },
     ],
     ['link', { rel: 'me', href: 'https://m.webtoo.ls/@vite' }],
     ['meta', { property: 'og:type', content: 'website' }],
@@ -134,7 +158,8 @@ export default defineConfig({
 
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2019-present Evan You & Vite Contributors',
+      copyright:
+        'Copyright © 2019-present Yuxi (Evan) You & Vite Contributors',
     },
 
     nav: [

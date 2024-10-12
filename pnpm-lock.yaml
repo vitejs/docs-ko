@@ -20,6 +20,9 @@ devDependencies:
   gray-matter:
     specifier: ^4.0.3
     version: 4.0.3
+  gsap:
+    specifier: ^3.12.5
+    version: 3.12.5
   markdown-it-footnote:
     specifier: ^4.0.0
     version: 4.0.0
@@ -1188,6 +1191,10 @@ packages:
       kind-of: 6.0.3
       section-matter: 1.0.0
       strip-bom-string: 1.0.0
+    dev: true
+
+  /gsap@3.12.5:
+    resolution: {integrity: sha512-srBfnk4n+Oe/ZnMIOXt3gT605BX9x5+rh/prT2F1SsNJsU1XuMiP0E2aptW481OnonOGACZWBqseH5Z7csHxhQ==}
     dev: true
 
   /hast-util-to-html@9.0.3:

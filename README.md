@@ -17,16 +17,16 @@
 
 # Vite ⚡
 
-> 차세대 프런트엔드 개발 툴
+> 프런트엔드 개발의 새로운 기준
 
-- 💡 즉각적인 서버 시작
-- ⚡️ 번개처럼 빠른 HMR
+- 💡 즉각적인 서버 구동
+- ⚡️ 빛처럼 빠른 HMR
 - 🛠️ 풍부한 기능
 - 📦 최적화된 빌드
-- 🔩 범용 플러그인
-- 🔑 완전한 유형의 API
+- 🔩 유연한 플러그인 시스템
+- 🔑 타입 안전한 API
 
-Vite(프랑스어로 '빠른'을 의미하며 [`/vit/`](https://cdn.jsdelivr.net/gh/vitejs/vite@main/docs/public/vite.mp3), "veet"로 발음)는 프론트엔드 개발 경험을 크게 향상시키는 새로운 프론트엔드 빌드 툴입니다. 두 가지 주요 부분으로 구성됩니다.
+Vite(프랑스어로 '빠른'을 의미하며 [`/vit/`](https://cdn.jsdelivr.net/gh/vitejs/vite@main/docs/public/vite.mp3), "veet"로 발음)는 프런트엔드 개발 경험을 크게 향상시키는 새로운 프런트엔드 빌드 툴입니다. 두 가지 주요 부분으로 구성됩니다.
 
 - [풍부한 내장 기능](https://ko.vitejs.dev/guide/features.html)과 놀랍도록 빠른 [HMR(Hot Module Replacement)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 사용하여 [네이티브 ES 모듈](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 통해 소스 파일을 제공하는 개발 서버입니다.
 
