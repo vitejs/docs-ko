@@ -1,4 +1,4 @@
-# ViteJS Document (Korean)
+# Vite Document (Korean)
 
 <p align="center">
   <a href="https://vite.dev" target="_blank" rel="noopener noreferrer">
