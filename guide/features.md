@@ -88,12 +88,13 @@ Vite 2.5.0 부터는 TypeScript의 변환 대상이 `ESNext` 또는 `ES2022` 이
 
 - [TypeScript 문서](https://www.typescriptlang.org/tsconfig#target)
 
-Vite는 `esbuild`와 동일하게 기본적으로 설정된 `target` 값으로 TypeScript를 트랜스파일하지 않습니다.
+Vite는 `esbuild`와 동일하게 `tsconfig.json` 내 `target` 값을 무시합니다.
 
-이 대신 [`esbuild.target`](/config/shared-options.html#esbuild) 옵션을 사용할 수 있으며, 이는 최소한의 트랜스파일링을 위해 `esnext`로 기본 설정되어 있습니다. 빌드 시, 높은 우선순위를 갖는 [`build.target`](/config/build-options.html#build-target) 옵션을 사용할 수도 있습니다.
+개발 시 `target`을 지정하고자 한다면 [`esbuild.target`](/config/shared-options.html#esbuild) 옵션을 사용할 수 있으며, 최소한의 트랜스파일링을 위해 `esnext`로 기본 설정되어 있습니다. 빌드 시 `esbuild.target`보다 높은 우선순위를 갖는 [`build.target`](/config/build-options.html#build-target) 옵션을 사용할 수도 있습니다.
 
 ::: warning `useDefineForClassFields`
-`target`이 `ESNext` 또는 `ES2022` 이상이 아니거나, `tsconfig.json` 파일이 존재하지 않는 경우, `useDefineForClassFields`는 기본적으로 `false`로 설정되는데, 이를 `esbuild.target`의 기본값인 `esnext`와 함께 사용할 경우 문제가 발생할 수 있습니다. 이는 [정적 초기화 블록](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks#browser_compatibility)으로 트랜스파일링되어 브라우저에서 지원되지 않을 수 있기 때문입니다.
+
+If `target` in `tsconfig.json` is not `ESNext` or `ES2022` or newer, or if there's no `tsconfig.json` file, `useDefineForClassFields` will default to `false` which can be problematic with the default `esbuild.target` value of `esnext`. It may transpile to [static initialization blocks](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks#browser_compatibility) which may not be supported in your browser.
 
 따라서, `target`을 `ESNext` 또는 `ES2022` 이상으로 설정하거나, `tsconfig.json`을 구성할 때 `useDefineForClassFields`를 명시적으로 `true`로 설정하는 것을 권장합니다.
 :::
