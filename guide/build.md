@@ -29,6 +29,16 @@ JS(`import`), CSS(`url()`), 그리고 `.html` 파일에서 참조되는 에셋 �
 
 더욱 상세한 설정이 필요하다면 [Base 옵션 상세 설정](#advanced-base-options) 섹션을 참고해주세요.
 
+### Relative base {#relative-base}
+
+If you don't know the base path in advance, you may set a relative base path with `"base": "./"` or `"base": ""`. This will make all generated URLs to be relative to each file.
+
+:::warning Support for older browsers when using relative bases
+
+`import.meta` support is required for relative bases. If you need to support [browsers that do not support `import.meta`](https://caniuse.com/mdn-javascript_operators_import_meta), you can use [the `legacy` plugin](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy).
+
+:::
+
 ## 빌드 커스터마이즈하기 {#customizing-the-build}
 
 빌드와 관련된 커스터마이즈는 [build 설정](/config/build-options.md)을 통해 가능합니다. 특별히 알아두어야 할 것이 하나 있는데, [Rollup 옵션](https://rollupjs.org/configuration-options/)을 `build.rollupOptions`에 명시해 사용이 가능합니다.
