@@ -6,6 +6,11 @@ import markdownItCustomAnchor from './markdown-it-custom-anchor'
 // @ts-ignore
 import renderPermalink from './render-permalink'
 import markdownItFootnote from 'markdown-it-footnote'
+import {
+  groupIconMdPlugin,
+  groupIconVitePlugin,
+} from 'vitepress-plugin-group-icons'
+import { buildEnd } from './buildEnd.config'
 
 const ogDescription = 'Vite, 프런트엔드 개발의 새로운 기준'
 const ogImage = 'https://ko.vite.dev/og-image.jpg'
@@ -26,16 +31,7 @@ const deployType = (() => {
       return 'release'
   }
 })()
-const additionalTitle = ((): string => {
-  switch (deployType) {
-    case 'main':
-      return ' (main branch)'
-    case 'local':
-      return ' (local)'
-    case 'release':
-      return ''
-  }
-})()
+
 const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
   const oldVersions: DefaultTheme.NavItemWithLink[] = [
     {
@@ -446,6 +442,19 @@ export default defineConfig({
       md.use(markdownItCustomAnchor)
       // @ts-ignore
       md.use(markdownItFootnote)
+      // @ts-ignore
+      md.use(groupIconMdPlugin)
     },
   },
+  vite: {
+    plugins: [
+      groupIconVitePlugin({
+        customIcon: {
+          firebase: 'vscode-icons:file-type-firebase',
+          '.gitlab-ci.yml': 'vscode-icons:file-type-gitlab',
+        },
+      }),
+    ],
+  },
+  buildEnd,
 })

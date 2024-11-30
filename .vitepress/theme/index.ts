@@ -7,6 +7,7 @@ import './styles/vars.css'
 import './styles/landing.css'
 import AsideSponsors from './components/AsideSponsors.vue'
 import SvgImage from './components/SvgImage.vue'
+import 'virtual:group-icons.css'
 
 export default {
   extends: DefaultTheme,

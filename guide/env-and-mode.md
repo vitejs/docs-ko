@@ -38,7 +38,7 @@ Vite는 [dotenv](https://github.com/motdotla/dotenv)를 이용해 [환경 변수
 
 참고로, Vite에서 접근 가능한 환경 변수는 일반 환경 변수와 구분을 위해 `VITE_` 라는 접두사를 붙여 나타냅니다. 가령, 아래와 같이 환경 변수를 정의했다면:
 
-```
+```[.env]
 VITE_SOME_KEY=123
 DB_PASSWORD=foobar
 ```
@@ -59,7 +59,7 @@ console.log(import.meta.env.DB_PASSWORD) // undefined
 
 참고로 만약 환경 변수의 값에 `$`를 사용하고 싶다면 `\`를 사용해야 합니다.
 
-```
+```[.env]
 KEY=123
 NEW_KEY1=test$foo   # test
 NEW_KEY2=test\$foo  # test$foo
@@ -81,7 +81,7 @@ NEW_KEY3=test$KEY   # test123
 
 `src` 디렉터리 내 `vite-env.d.ts` 파일을 생성한 후, 아래와 같이 `ImportMetaEnv`를 정의하여 `VITE_` 환경 변수에 대한 타입을 정의할 수 있습니다.
 
-```typescript
+```typescript [vite-env.d.ts]
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
@@ -96,7 +96,7 @@ interface ImportMeta {
 
 만약 코드가 [DOM](https://github.com/microsoft/TypeScript/blob/main/src/lib/dom.generated.d.ts)이나 [WebWorker](https://github.com/microsoft/TypeScript/blob/main/src/lib/webworker.generated.d.ts)와 같이 브라우저 환경의 타입이 필요하다면, `tsconfig.json`에서 [lib](https://www.typescriptlang.org/tsconfig#lib) 필드에 이를 명시해줄 수 있습니다.
 
-```json
+```json [tsconfig.json]
 {
   "lib": ["WebWorker"]
 }

@@ -125,7 +125,7 @@ vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 �
 
 또는 `tsconfig.json` 내 `compilerOptions.types` 옵션에 `vite/client`를 명시해 줄 수도 있습니다:
 
-```json
+```json [tsconfig.json]
 {
   "compilerOptions": {
     "types": ["vite/client"]
@@ -176,8 +176,7 @@ Vue를 사용자들은 HMR, 글로벌 컴포넌트, 디렉티브 및 슬롯 등 
 
 React나 Vue를 사용하지 않는다 해도, [`esbuild` 옵션](/config/shared-options.md#esbuild)을 이용해 `jsxFactory`나 `jsxFragment`를 커스터마이징 할 수 있습니다. Preact를 예로 들어보자면 다음과 같습니다:
 
-```js twoslash
-// vite.config.js
+```js twoslash [vite.config.js]
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -192,8 +191,7 @@ export default defineConfig({
 
 참고로, Vite에서만 제공되는 옵션인 `jsxInject`를 이용해 JSX에 대한 헬퍼를 사용할 수도 있습니다.
 
-```js twoslash
-// vite.config.js
+```js twoslash [vite.config.js]
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -223,8 +221,7 @@ vite는 `postcss-import`를 이용해 CSS의 `@import`를 처리합니다. 또�
 
 `.module.css` 확장자로 끝나는 모든 CSS 파일들은 [CSS 모듈 파일](https://github.com/css-modules/css-modules)로 취급되며, 일반적인 JavaScript 모듈처럼 사용이 가능합니다.
 
-```css
-/* example.module.css */
+```css [example.module.css]
 .red {
   color: red;
 }

@@ -33,7 +33,7 @@ JS(`import`), CSS(`url()`), 그리고 `.html` 파일에서 참조되는 에셋 �
 
 빌드와 관련된 커스터마이즈는 [build 설정](/config/build-options.md)을 통해 가능합니다. 특별히 알아두어야 할 것이 하나 있는데, [Rollup 옵션](https://rollupjs.org/configuration-options/)을 `build.rollupOptions`에 명시해 사용이 가능합니다.
 
-```ts
+```ts [vite.config.js]
 export default defineConfig({
   build: {
     rollupOptions: {
@@ -65,8 +65,7 @@ window.addEventListener('vite:preloadError', (event) => {
 
 `vite build --watch` 명령을 통해 Rollup Watcher를 활성화 할 수 있습니다. 또는, `build.watch` 옵션에서 [`WatcherOptions`](https://rollupjs.org/configuration-options/#watch)를 직접 명시할 수도 있습니다.
 
-```ts
-// vite.config.js
+```ts [vite.config.js]
 export default defineConfig({
   build: {
     watch: {
@@ -96,8 +95,7 @@ export default defineConfig({
 
 빌드 시에는, 사용자가 접근할 수 있는 모든 `.html` 파일에 대해 아래와 같이 빌드 진입점이라 명시해줘야만 합니다.
 
-```js twoslash
-// vite.config.js
+```js twoslash [vite.config.js]
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
@@ -123,8 +121,7 @@ HTML 파일의 경우, Vite는 `rollupOptions.input` 객체에 명시된 엔트�
 
 라이브러리 배포 시점에서, [`build.lib` 설정 옵션](/config/build-options.md#build-lib)을 이용해보세요. 또한 라이브러리에 포함하지 않을 디펜던시를 명시할 수도 있습니다. `vue`나 `react` 같이 말이죠.
 
-```js twoslash
-// vite.config.js
+```js twoslash [vite.config.js]
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
@@ -155,8 +152,7 @@ export default defineConfig({
 
 패키지의 진입점이 되는 파일에는 패키지의 사용자가 `import` 할 수 있도록 `export` 구문이 포함되게 됩니다:
 
-```js
-// lib/main.js
+```js [lib/main.js]
 import Foo from './Foo.vue'
 import Bar from './Bar.vue'
 export { Foo, Bar }
@@ -173,7 +169,7 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
 
 `package.json`에는 아래와 같이 사용할 라이브러리를 명시해주세요.
 
-```json
+```json [package.json]
 {
   "name": "my-lib",
   "type": "module",
@@ -191,7 +187,7 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
 
 여러 진입점을 노출하는 경우는 아래와 같습니다:
 
-```json
+```json [package.json]
 {
   "name": "my-lib",
   "type": "module",

@@ -44,7 +44,7 @@ Vite는 서버 측 렌더링(SSR, Server-side Rendering)을 기본적으로 지�
 
 `index.html`은 `entry-client.js`를 반드시 참조해야 하며, 서버에서 렌더링된 페이지를 삽입해야 하는 자리 표시자를 포함해야 합니다:
 
-```html
+```html [index.html]
 <div id="app"><!--ssr-outlet--></div>
 <script type="module" src="/src/entry-client.js"></script>
 ```
@@ -69,9 +69,7 @@ if (import.meta.env.SSR) {
 
 SSR 앱을 빌드할 때, 메인 서버를 완전히 제어하고 Vite를 프로덕션 환경에서 분리하고자 한다면 어떻게 해야 할까요? 가장 좋은 방법은, Vite를 미들웨어 모드로 사용하는 것입니다. 가령 [Express](https://expressjs.com/)를 예로 들자면:
 
-**server.js**
-
-```js{15-18} twoslash
+```js{15-18} twoslash [server.js]
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -113,7 +111,7 @@ createServer()
 
 다음 단계는 서버에서 렌더링된 HTML을 제공하기 위해 `*` 핸들러를 구현하는 것입니다:
 
-```js twoslash
+```js twoslash [server.js]
 // @noErrors
 import fs from 'node:fs'
 import path from 'node:path'
@@ -166,7 +164,7 @@ app.use('*', async (req, res, next) => {
 
 `package.json`의 `dev` 스크립트도 서버 스크립트를 사용하도록 변경해줍니다:
 
-```diff
+```diff [package.json]
   "scripts": {
 -   "dev": "vite"
 +   "dev": "node server"
@@ -182,7 +180,7 @@ SSR 프로젝트를 프로덕션으로 제공하기 위해서는 다음이 필�
 
 이를 위한 `package.json`의 스크립트는 다음과 같습니다:
 
-```json
+```json [package.json]
 {
   "scripts": {
     "dev": "node server",
@@ -219,8 +217,7 @@ SSR 프로젝트를 프로덕션으로 제공하기 위해서는 다음이 필�
 
 `@vitejs/plugin-vue`는 이를 이미 지원하고 있으며, 사용된 컴포넌트의 모듈 ID를 연결된 Vue SSR 컨텍스트에 자동으로 등록하도록 합니다:
 
-```js
-// src/entry-server.js
+```js [src/entry-server.js]
 const ctx = {}
 const html = await vueServerRenderer.renderToString(app, ctx)
 // ctx.modules는 이제 렌더링 중에 사용된 모듈 ID의 집합(Set)입니다.

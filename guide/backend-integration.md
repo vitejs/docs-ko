@@ -8,10 +8,9 @@
 
 1. Vite 설정 파일에서, 진입점(Entry)을 설정하고 매니페스트를 활성화합니다:
 
-   ```js twoslash
+   ```js twoslash [vite.config.js]
    import { defineConfig } from 'vite'
    // ---cut---
-   // vite.config.js
    export default defineConfig({
      build: {
        // outDir 위치에 .vite/manifest.json 파일을 생성
@@ -60,7 +59,7 @@
 
 3. 프로덕션 빌드 단계: `vite build`를 실행하게 되면 `.vite/manifest.json` 파일이 에셋 파일과 함께 생성됩니다. 매니페스트 파일은 다음과 같은 구조를 가집니다:
 
-   ```json
+   ```json [.vite/manifest.json]
    {
      "_shared-!~{003}~.js": {
        "file": "assets/shared-ChJ_j-JJ.css",
