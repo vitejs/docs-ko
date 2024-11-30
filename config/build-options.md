@@ -1,5 +1,7 @@
 # 빌드 옵션 {#build-options}
 
+Unless noted, the options in this section are only applied to build.
+
 ## build.target {#build-target}
 
 - **타입:** `string | string[]`

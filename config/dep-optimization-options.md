@@ -2,6 +2,8 @@
 
 - **관련 항목:** [사전 번들링된 디펜던시](/guide/dep-pre-bundling)
 
+Unless noted, the options in this section are only applied to the dependency optimizer, which is only used in dev.
+
 ## optimizeDeps.entries {#optimizedeps-entries}
 
 - **타입:** `string | string[]`

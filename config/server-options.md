@@ -1,5 +1,7 @@
 # 서버 옵션 {#server-options}
 
+Unless noted, the options in this section are only applied to dev.
+
 ## server.host {#server-host}
 
 - **타입:** `string | boolean`

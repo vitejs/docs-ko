@@ -1,5 +1,7 @@
 # 공용 옵션 {#shared-options}
 
+Unless noted, the options in this section are applied to all dev, build, and preview.
+
 ## root {#root}
 
 - **타입:** `string`

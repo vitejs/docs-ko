@@ -1,5 +1,7 @@
 # SSR 옵션 {#ssr-options}
 
+Unless noted, the options in this section are applied to both dev and build.
+
 ## ssr.external {#ssr-external}
 
 - **타입:** `string[] | true`
