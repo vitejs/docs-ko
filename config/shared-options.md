@@ -490,3 +490,12 @@ define: {
 - `'custom'`: HTML 미들웨어를 포함하지 않습니다.
 
 좀 더 많은 정보가 필요하다면 Vite의 [SSR 가이드](/guide/ssr#vite-cli)를 참고해주세요. [`server.middlewareMode`](./server-options#server-middlewaremode) 옵션도 참고가 가능합니다.
+
+## future {#future}
+
+- **Type:** `Record<string, 'warn' | undefined>`
+- **Related:** [Breaking Changes](/changes/)
+
+Enable future breaking changes to prepare for a smooth migration to the next major version of Vite. The list may be updated, added, or removed at any time as new features are developed.
+
+See the [Breaking Changes](/changes/) page for details of the possible options.

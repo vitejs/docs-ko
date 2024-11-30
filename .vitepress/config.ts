@@ -290,8 +290,12 @@ export default defineConfig({
               link: '/guide/philosophy',
             },
             {
-              text: 'v4에서 마이그레이션하기',
+              text: 'Migration from v5',
               link: '/guide/migration',
+            },
+            {
+              text: 'v4에서 마이그레이션하기',
+              link: '/guide/migration-from-v4',
             },
             {
               text: 'v3에서 마이그레이션하기',
@@ -304,6 +308,10 @@ export default defineConfig({
             {
               text: 'v1에서 마이그레이션하기',
               link: '/guide/migration-from-v1',
+            },
+            {
+              text: 'Breaking Changes',
+              link: '/changes/',
             },
           ],
         },
@@ -323,8 +331,8 @@ export default defineConfig({
               link: '/guide/api-javascript',
             },
             {
-              text: 'Vite 런타임 API',
-              link: '/guide/api-vite-runtime',
+              text: 'Environment API',
+              link: '/guide/api-environment',
             },
             {
               text: 'Vite 설정 레퍼런스',
@@ -370,6 +378,45 @@ export default defineConfig({
               link: '/config/worker-options',
             },
           ],
+        },
+      ],
+      '/changes/': [
+        {
+          text: 'Breaking Changes',
+          link: '/changes/',
+        },
+        {
+          text: 'Current',
+          items: [],
+        },
+        {
+          text: 'Future',
+          items: [
+            {
+              text: 'this.environment in Hooks',
+              link: '/changes/this-environment-in-hooks',
+            },
+            {
+              text: 'HMR hotUpdate Plugin Hook',
+              link: '/changes/hotupdate-hook',
+            },
+            {
+              text: 'Move to per-environment APIs',
+              link: '/changes/per-environment-apis',
+            },
+            {
+              text: 'SSR using ModuleRunner API',
+              link: '/changes/ssr-using-modulerunner',
+            },
+            {
+              text: 'Shared plugins during build',
+              link: '/changes/shared-plugins-during-build',
+            },
+          ],
+        },
+        {
+          text: 'Past',
+          items: [],
         },
       ],
     },
