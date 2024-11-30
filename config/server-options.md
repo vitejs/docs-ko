@@ -85,7 +85,7 @@ export default defineConfig({
 
 - **타입:** `Record<string, string | ProxyOptions>`
 
-개발 서버에 대한 사용자 정의 프락시 규칙을 구성합니다. `{ key: options }` 쌍의 객체를 기대합니다. 요청 경로가 해당 키로 시작하는 모든 요청은 해당 지정 대상으로 프락시됩니다. 키가 `^`로 시작하면 `RegExp`로 해석됩니다. `configure` 옵션은 프락시 인스턴스에 액세스하는 데 사용할 수 있습니다.
+개발 서버에 대한 사용자 정의 프락시 규칙을 구성합니다. `{ key: options }` 쌍의 객체를 기대합니다. 요청 경로가 해당 키로 시작하는 모든 요청은 해당 지정 대상으로 프락시됩니다. 키가 `^`로 시작하면 `RegExp`로 해석됩니다. `configure` 옵션은 프락시 인스턴스에 액세스하는 데 사용할 수 있습니다. If a request matches any of the configured proxy rules, the request won't be transformed by Vite.
 
 참고로 [`base`](/config/shared-options.md#base)가 비상대적(Non-relative)인 경우, 각 키에 `base`를 접두사로 붙여야 합니다.
 
