@@ -131,14 +131,15 @@ HTML 파일의 경우, Vite는 `rollupOptions.input` 객체에 명시된 엔트�
 
 라이브러리 배포 시점에서, [`build.lib` 설정 옵션](/config/build-options.md#build-lib)을 이용해보세요. 또한 라이브러리에 포함하지 않을 디펜던시를 명시할 수도 있습니다. `vue`나 `react` 같이 말이죠.
 
-```js twoslash [vite.config.js]
+::: code-group
+
+```js twoslash [vite.config.js (single entry)]
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
   build: {
     lib: {
-      // 여러 진입점은 객체 또는 배열로 지정할 수 있습니다.
       entry: resolve(__dirname, 'lib/main.js'),
       name: 'MyLib',
       // 적절한 확장자가 추가됩니다.
@@ -160,6 +161,37 @@ export default defineConfig({
 })
 ```
 
+```js twoslash [vite.config.js (multiple entries)]
+import { resolve } from 'path'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  build: {
+    lib: {
+      entry: {
+        'my-lib': resolve(__dirname, 'lib/main.js'),
+        secondary: resolve(__dirname, 'lib/secondary.js'),
+      },
+      name: 'MyLib',
+    },
+    rollupOptions: {
+      // make sure to externalize deps that shouldn't be bundled
+      // into your library
+      external: ['vue'],
+      output: {
+        // Provide global variables to use in the UMD build
+        // for externalized deps
+        globals: {
+          vue: 'Vue',
+        },
+      },
+    },
+  },
+})
+```
+
+:::
+
 패키지의 진입점이 되는 파일에는 패키지의 사용자가 `import` 할 수 있도록 `export` 구문이 포함되게 됩니다:
 
 ```js [lib/main.js]
@@ -179,7 +211,9 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
 
 `package.json`에는 아래와 같이 사용할 라이브러리를 명시해주세요.
 
-```json [package.json]
+::: code-group
+
+```json [package.json (single entry)]
 {
   "name": "my-lib",
   "type": "module",
@@ -195,9 +229,7 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
 }
 ```
 
-여러 진입점을 노출하는 경우는 아래와 같습니다:
-
-```json [package.json]
+```json [package.json (multiple entries)]
 {
   "name": "my-lib",
   "type": "module",
@@ -216,6 +248,8 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
   }
 }
 ```
+
+:::
 
 ::: tip 파일 확장자
 `package.json`에 `"type": "module"`이 명시되어 있지 않으면 Vite는 Node.js 호환성을 위해 다른 파일 확장자를 생성합니다. 즉, `.js`는 `.mjs`가 되고, `.cjs`는 `.js`가 됩니다.
