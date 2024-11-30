@@ -16,17 +16,17 @@
     "pnpm": ">=8.0.0"
   },
   "devDependencies": {
-    "@shikijs/vitepress-twoslash": "^1.16.1",
+    "@shikijs/vitepress-twoslash": "^1.24.0",
     "@types/markdown-it-footnote": "^3.0.4",
-    "@types/node": "^20.16.3",
+    "@types/node": "^20.16.15",
     "feed": "^4.2.2",
     "gray-matter": "^4.0.3",
     "gsap": "^3.12.5",
     "markdown-it-footnote": "^4.0.0",
-    "prettier": "3.3.3",
-    "vite": "^5.4.2",
+    "prettier": "3.4.1",
+    "vite": "^5.4.11",
     "vitepress": "^1.5.0",
-    "vue": "^3.5.12"
+    "vue": "^3.5.13"
   },
   "scripts": {
     "dev": "vitepress dev",
