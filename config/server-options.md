@@ -184,7 +184,7 @@ Direct websocket connection fallback. Check out https://vite.dev/config/server-o
 
 미리 변환하고 그 결과물을 캐시할 파일 목록입니다. 서버 시작 시 초기 페이지 로드를 개선하고 변환 워터폴(변환이 순차적으로 이루어지는 현상 - 옮긴이)을 방지합니다.
 
-옵션의 `clientFiles`는 클라이언트에서만, `ssrFiles`는 SSR에서만 사용되는 파일 목록입니다. `root`를 기준으로 하는 파일 경로 또는 [`fast-glob`](https://github.com/mrmlnc/fast-glob) 패턴의 배열을 받습니다.
+옵션의 `clientFiles`는 클라이언트에서만, `ssrFiles`는 SSR에서만 사용되는 파일 목록입니다. `root`를 기준으로 하는 파일 경로 또는 [`tinyglobby`](https://github.com/SuperchupuDev/tinyglobby) 패턴의 배열을 받습니다.
 
 Vite 개발 서버 시작 시 과부하가 걸리지 않도록 자주 사용되는 파일만 추가해주세요.
 
