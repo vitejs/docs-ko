@@ -142,11 +142,27 @@ $ bun add -D vite
 <p>Hello Vite!</p>
 ```
 
-이후 터미널에서 `vite` CLI를 실행해주세요:
+Then run the appropriate CLI command in your terminal:
 
-```bash
-vite
+::: code-group
+
+```bash [NPM]
+$ npx vite
 ```
+
+```bash [Yarn]
+$ yarn vite
+```
+
+```bash [PNPM]
+$ pnpm vite
+```
+
+```bash [Bun]
+$ bunx vite
+```
+
+:::
 
 이제 `http://localhost:5173`에서 `index.html` 파일을 확인할 수 있습니다.
 
