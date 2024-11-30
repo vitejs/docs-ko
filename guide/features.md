@@ -2,7 +2,7 @@
 
 기본적으로 vite는 여타 정적 파일 서버와 크게 다르지 않습니다. 다만, vite는 네이티브 ESM 말고도 기존 번들러에서 제공하던 기능을 대부분 지원한다는 차이점이 있습니다.
 
-## NPM을 이용한 디펜던시 `import` 그리고 사전 번들링 {#npm-dependency-resolving-and-pre-building}
+## npm을 이용한 디펜던시 `import` 그리고 사전 번들링 {#npm-dependency-resolving-and-pre-building}
 
 다음 코드는 네이티브 ES에서 정상적으로 실행되지 않습니다:
 

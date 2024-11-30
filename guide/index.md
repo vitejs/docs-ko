@@ -49,7 +49,7 @@ Vite는 버전 18+ 또는 20+ 의 [Node.js](https://nodejs.org/)를 요구합니
 
 ::: code-group
 
-```bash [NPM]
+```bash [npm]
 $ npm create vite@latest
 ```
 
@@ -57,7 +57,7 @@ $ npm create vite@latest
 $ yarn create vite
 ```
 
-```bash [PNPM]
+```bash [pnpm]
 $ pnpm create vite
 ```
 
@@ -73,7 +73,7 @@ $ bun create vite
 
 ::: code-group
 
-```bash [NPM]
+```bash [npm]
 # npm v7 이상에서는 `--` 를 반드시 붙여주세요:
 $ npm create vite@latest my-vue-app -- --template vue
 ```
@@ -82,7 +82,7 @@ $ npm create vite@latest my-vue-app -- --template vue
 $ yarn create vite my-vue-app --template vue
 ```
 
-```bash [PNPM]
+```bash [pnpm]
 $ pnpm create vite my-vue-app --template vue
 ```
 
@@ -118,7 +118,7 @@ npm run dev
 
 ::: code-group
 
-```bash [NPM]
+```bash [npm]
 $ npm install -D vite
 ```
 
@@ -126,7 +126,7 @@ $ npm install -D vite
 $ yarn add -D vite
 ```
 
-```bash [PNPM]
+```bash [pnpm]
 $ pnpm add -D vite
 ```
 
@@ -146,7 +146,7 @@ Then run the appropriate CLI command in your terminal:
 
 ::: code-group
 
-```bash [NPM]
+```bash [npm]
 $ npx vite
 ```
 
@@ -154,7 +154,7 @@ $ npx vite
 $ yarn vite
 ```
 
-```bash [PNPM]
+```bash [pnpm]
 $ pnpm vite
 ```
 
