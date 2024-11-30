@@ -322,7 +322,7 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 
 4. 프로젝트 이름과 브랜치를 지정합니다.
 
-   - **Build Command**: `npm run build`
+   - **Build Command**: `npm install && npm run build`
    - **Publish Directory**: `dist`
 
 5. **Create Static Site**를 클릭합니다.
