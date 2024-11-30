@@ -29,7 +29,7 @@ Vite는 [dotenv](https://github.com/motdotla/dotenv)를 이용해 [환경 변수
 
 `.env.production`과 같이 특정 모드에 대한 환경 변수는 일반적인 환경 변수(`.env`)보다 높은 우선순위를 갖습니다.
 
-또한 Vite가 실행될 때 이미 존재하던 환경 변수는 가장 높은 우선 순위를 가지며, `.env` 파일로 인해 덮어씌워지지 않습니다. 가령 `VITE_SOME_KEY=123 vite build` 와 같이 말이죠.
+Vite가 실행될 때 이미 존재하던 환경 변수는 가장 높은 우선 순위를 가지며, `.env` 파일로 인해 덮어씌워지지 않습니다. 가령 `VITE_SOME_KEY=123 vite build` 와 같이 말이죠.
 
 `.env` 파일은 Vite가 시작될 때 가져와집니다. 따라서 파일을 변경했다면 서버를 재시작해주세요.
 :::
@@ -55,9 +55,9 @@ console.log(import.meta.env.DB_PASSWORD) // undefined
 위와 같이, `VITE_SOME_KEY`는 숫자이지만 파싱 시 문자열로 반환됩니다. 불리얼 환경 변수에 대해서도 동일하게 적용되며, 코드에서 사용할 때는 원하는 타입으로 변환해야 합니다.
 :::
 
-또한 Vite는 [dotenv-expand](https://github.com/motdotla/dotenv-expand)를 사용해 기본적으로 환경 변수를 확장합니다. 문법에 대해 더 알아보고 싶다면 [이 문서](https://github.com/motdotla/dotenv-expand#what-rules-does-the-expansion-engine-follow)를 참고하세요.
+또한 Vite는 [dotenv-expand](https://github.com/motdotla/dotenv-expand)를 사용해 env 파일에 작성된 환경 변수를 확장합니다. 문법에 대해 더 알아보고 싶다면 [이 문서](https://github.com/motdotla/dotenv-expand#what-rules-does-the-expansion-engine-follow)를 참고하세요.
 
-참고로 만약 환경 변수의 값에 `$`를 사용하고 싶다면 `\`를 사용해야 합니다.
+만약 환경 변수의 값에 `$`를 사용하고 싶다면 `\`를 사용해야 합니다.
 
 ```[.env]
 KEY=123
