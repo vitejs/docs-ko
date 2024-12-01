@@ -96,20 +96,17 @@ import InlineWorker from './shader.js?worker&inline'
 
 ## `public` 디렉터리 {#the-public-directory}
 
-다음 에셋의 경우
+아래와 같은 에셋은:
 
 - `robots.txt`와 같이 소스 코드에서 참조되지 않는 에셋
-- 해싱 없이 항상 같은 이름을 갖는 에셋
-- 또는 URL을 얻기 위해 굳이 `import` 할 필요 없는 에셋
+- 해싱을 거치지 않고 항상 같은 이름을 가져야 하는 에셋
+- ...또는 URL을 얻기 위해 `import` 할 필요 없는 에셋
 
-`public` 디렉터리 아래에 에셋을 위치시키세요. 이 곳에 위치한 에셋은 개발 시에 `/` 경로에, 배포 시에는 `dist` 디렉터리에 위치하게 됩니다.
+`public` 디렉터리 아래에 에셋을 위치시키세요. 이 곳에 위치한 에셋은 개발 시 `/` 경로에, 배포 시 `dist` 디렉터리에 위치하게 됩니다.
 
-만약 `<root>/public` 디렉터리가 아닌 다른 디렉터리를 사용하고자 하는 경우, [`publicDir` 옵션](/config/shared-options.md#publicdir)을 이용할 수 있습니다.
+만약 `<root>/public` 이 아닌 다른 디렉터리를 사용하고자 하는 경우, [`publicDir` 옵션](/config/shared-options.md#publicdir)을 이용할 수 있습니다.
 
-마지막으로, 다음의 사항을 유의해주세요.
-
-- `public` 디렉터리에 위치해 있는 에셋을 가져오고자 하는 경우, 항상 루트를 기준으로 하는 절대 경로로 가져와야만 합니다. ( `public/icon.png` 에셋은 소스 코드에서 `/icon.png`으로 접근이 가능합니다.)
-- `public` 디렉터리에 위치한 에셋은 JavaScript 코드로 가져올 수 없습니다.
+참고로 `public` 디렉터리에 위치해 있는 에셋을 가져오고자 하는 경우, 항상 루트를 기준으로 하는 절대 경로로 가져와야 합니다. (예: `public/icon.png` 에셋은 소스 코드에서 `/icon.png`으로 접근이 가능)
 
 ## new URL(url, import.meta.url) {#new-url-url-import-meta-url}
 
