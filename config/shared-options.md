@@ -345,12 +345,12 @@ Lightning CSS 옵션입니다. 전체 변환 옵션은 [Lightning CSS 리포지�
 
 ## json.stringify {#json-stringify}
 
-- **타입:** `boolean`
-- **기본값:** `false`
+- **타입:** `boolean | 'auto'`
+- **기본값:** `'auto'`
 
 `true`로 지정한다면, 가져온 JSON 은 특히 JSON 파일이 클 때 객체 리터럴보다 성능이 월등히 뛰어난 `export default JSON.parse("...")`으로 변환됩니다.
 
-이 옵션을 사용하면 명명된 가져오기가 비활성화됩니다.
+If set to `'auto'`, the data will be stringified only if [the data is bigger than 10kB](https://v8.dev/blog/cost-of-javascript-2019#json:~:text=A%20good%20rule%20of%20thumb%20is%20to%20apply%20this%20technique%20for%20objects%20of%2010%20kB%20or%20larger).
 
 ## esbuild {#esbuild}
 
