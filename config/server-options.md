@@ -325,7 +325,7 @@ export default defineConfig({
 ## server.fs.deny {#server-fs-deny}
 
 - **타입:** `string[]`
-- **기본값:** `['.env', '.env.*', '*.{crt,pem}']`
+- **기본값:** `['.env', '.env.*', '*.{crt,pem}', '**/.git/**']`
 
 Vite dev 서버에서 제공되지 않기를 원하는 민감한 파일들에 대한 차단 목록입니다. 이 옵션은 [`server.fs.allow`](#server-fs-allow)보다 높은 우선 순위를 가지며, [피코매치 패턴](https://github.com/micromatch/picomatch#globbing-features)을 사용할 수 있습니다.
 
