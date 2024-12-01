@@ -137,6 +137,7 @@ export default defineConfig({
     },
 
     socialLinks: [
+      // @ts-ignore
       { icon: 'bluesky', link: 'https://bsky.app/profile/vite.dev' },
       { icon: 'mastodon', link: 'https://elk.zone/m.webtoo.ls/@vite' },
       { icon: 'x', link: 'https://x.com/vite_js' },
@@ -455,6 +456,21 @@ export default defineConfig({
         },
       }),
     ],
+    // @ts-ignore
+    environments: {
+      client: {
+        dev: {
+          optimizeDeps: {
+            include: [
+              '@shikijs/vitepress-twoslash/client',
+              'gsap',
+              'gsap/dist/ScrollTrigger',
+              'gsap/dist/MotionPathPlugin',
+            ],
+          },
+        },
+      },
+    },
   },
   buildEnd,
 })
