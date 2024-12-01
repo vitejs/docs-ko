@@ -69,7 +69,7 @@ vite build [root]
 | `-f, --filter <filter>`        | 디버그 로그 필터 (`string`)|
 | `-m, --mode <mode>`            | env 모드 설정 (`string`)|
 | `-h, --help`                   | 사용 가능한 CLI 옵션 표시|
-| `--app`                        | Build all environments, same as `builder.entireApp` (`boolean`, experimental)|
+| `--app`                        | Build all environments, same as `builder: {}` (`boolean`, experimental)                                             |
 
 ## Others {#others}
 
