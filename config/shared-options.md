@@ -227,9 +227,12 @@ CSS 모듈에 대한 설정입니다. 옵션들은 [postcss-modules](https://git
 
 CSS 전처리기에 전달할 옵션을 지정합니다. 파일 확장자는 옵션의 키로 사용됩니다. 전처리기에 대한 지원되는 옵션은 각각의 문서에서 찾을 수 있습니다:
 
-- `sass`/`scss` - 최상위 옵션 `api: "legacy" | "modern" | "modern-compiler"`(기본값: `"legacy"`)을 통해 사용할 sass API를 선택할 수 있습니다. 최대한 성능을 끌어올리려면 `sass-embedded` 패키지와 함께 `api: "modern-compiler"`를 사용하세요. [`legacy` 옵션](https://sass-lang.com/documentation/js-api/interfaces/LegacyStringOptions), [`modern` 옵션](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/)
-- `less` - [옵션](https://lesscss.org/usage/#less-options).
-- `styl`/`stylus` - [`define`](https://stylus-lang.com/docs/js.html#define-name-node)만 지원되며, 객체로 전달할 수 있습니다.
+- `sass`/`scss`:
+  - Select the sass API to use with `api: "modern-compiler" | "modern" | "legacy"` (default `"modern-compiler"` if `sass-embedded` is installed, otherwise `"modern"`). For the best performance, it's recommended to use `api: "modern-compiler"` with the `sass-embedded` package. The `"legacy"` API is deprecated and will be removed in Vite 7.
+  - [옵션 (modern)](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/)
+  - [옵션 (legacy)](https://sass-lang.com/documentation/js-api/interfaces/LegacyStringOptions).
+- `less`: [옵션](https://lesscss.org/usage/#less-options).
+- `styl`/`stylus`: [`define`](https://stylus-lang.com/docs/js.html#define-name-node)만 지원되며, 객체로 전달할 수 있습니다.
 
 **예시**:
 
