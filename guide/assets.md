@@ -55,6 +55,17 @@ import workletURL from 'extra-scalloped-border/worklet.js?url'
 CSS.paintWorklet.addModule(workletURL)
 ```
 
+### Explicit Inline Handling {#explicit-inline-handling}
+
+Assets can be explicitly imported with inlining or no inlining using the `?inline` or `?no-inline` suffix respectively.
+
+```js twoslash
+import 'vite/client'
+// ---cut---
+import imgUrl1 from './img.svg?no-inline'
+import imgUrl2 from './img.png?inline'
+```
+
 ### 문자열 형태로 에셋 가져오기 {#importing-asset-as-string}
 
 `?raw` 접미사를 붙여 가져오는 에셋은 문자열 형태로 가져와지게 됩니다.
