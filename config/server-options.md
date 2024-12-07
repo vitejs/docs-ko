@@ -101,15 +101,21 @@ export default defineConfig({
 export default defineConfig({
   server: {
     proxy: {
-      // 문자열만: http://localhost:5173/foo -> http://localhost:4567/foo
+      // 문자열만:
+      // http://localhost:5173/foo
+      //   -> http://localhost:4567/foo
       '/foo': 'http://localhost:4567',
-      // 옵션과 함께: http://localhost:5173/api/bar-> http://jsonplaceholder.typicode.com/bar
+      // 옵션과 함께:
+      // http://localhost:5173/api/bar
+      //   -> http://jsonplaceholder.typicode.com/bar
       '/api': {
         target: 'http://jsonplaceholder.typicode.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       },
-      // 정규식(RegExp)과 함께: http://localhost:5173/fallback/ -> http://jsonplaceholder.typicode.com/
+      // 정규식(RegExp)과 함께:
+      // http://localhost:5173/fallback/
+      //   -> http://jsonplaceholder.typicode.com/
       '^/fallback/.*': {
         target: 'http://jsonplaceholder.typicode.com',
         changeOrigin: true,
@@ -123,8 +129,11 @@ export default defineConfig({
           // proxy 변수에는 'http-proxy'의 인스턴스가 전달됩니다
         }
       },
-      // 웹소켓 또는 socket.io 프락시: ws://localhost:5173/socket.io -> ws://localhost:5174/socket.io
-      // `rewriteWsOrigin`을 사용할 때는 주의하세요. CSRF 공격에 노출될 수 있습니다.
+      // 웹소켓 또는 socket.io 프락시:
+      // ws://localhost:5173/socket.io
+      //   -> ws://localhost:5174/socket.io
+      // `rewriteWsOrigin`을 사용할 때는 주의하세요.
+      // CSRF 공격에 노출될 수 있습니다.
       '/socket.io': {
         target: 'ws://localhost:5174',
         ws: true,
@@ -251,13 +260,14 @@ async function createServer() {
   // 미들웨어 모드에서 Vite 서버를 생성합니다
   const vite = await createViteServer({
     server: { middlewareMode: 'ssr' },
-    appType: 'custom' // Vite의 기본 HTML 처리용 미들웨어를 사용하지 마세요
+    // Vite의 기본 HTML 처리 미들웨어를 포함하지 않음
+    appType: 'custom'
   })
   // Vite의 연결(Connect) 인스턴스를 미들웨어로 사용
   app.use(vite.middlewares)
 
   app.use('*', async (req, res) => {
-    // `appType`은 `'custom'`이므로 여기에서 반환될 데이터(Response)를 제공해야 합니다.
+    // `appType`은 `'custom'`이므로, 여기에서 응답을 전달해야 합니다.
     // 참고: `appType`이 `'spa'` 또는 `'mpa'`인 경우,
     // Vite는 HTML 요청과 404를 처리하는 미들웨어를 포함하므로
     // Vite의 미들웨어가 적용되기 전에 사용자 미들웨어를 추가해야 합니다.
