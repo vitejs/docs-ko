@@ -117,6 +117,7 @@ SSR 빌드의 경우, `build.rollupOptions.output`을 통해 구성된 ESM 빌�
 ## resolve.conditions {#resolve-conditions}
 
 - **타입:** `string[]`
+- **기본값:** `['module', 'browser', 'development|production']`
 
 패키지로부터 [조건부 내보내기](https://nodejs.org/api/packages.html#packages_conditional_exports)를 할 때, 추가적으로 허용되는 조건입니다.
 
@@ -135,7 +136,9 @@ SSR 빌드의 경우, `build.rollupOptions.output`을 통해 구성된 ESM 빌�
 
 여기에, `import`와 `require`는 "조건"입니다. 조건은 중첩될 수 있으며 구체적인 조건부터 덜 구체적인 조건까지 다양하게 지정될 수 있습니다.
 
-Vite 는 "허용되는 조건들"의 목록을 가지며 이것은 허용되는 목록 안의 첫 번째 조건과 매치됩니다. 기본적으로 허용되는 조건들은 `import`, `module`, `browser`, `default`, 그리고 현재 모드를 기반으로 한 `production/development` 입니다. `resolve.conditions` 설정 옵션은 추가로 허용되는 조건들을 지정하는 것을 허용합니다.
+`development|production` is a special value that is replaced with `production` or `development` depending on the value of `process.env.NODE_ENV`. It is replaced with `production` when `process.env.NODE_ENV === 'production'` and `development` otherwise.
+
+Note that `import`, `require`, `default` conditions are always applied if the requirements are met.
 
 :::warning 하위 경로 내보내기 키값
 "/"로 끝나는 `exports` 객체의 키값은 Node에서 더는 사용되지 않기 때문에 제대로 작동하지 않을 수 있습니다. 이 대신 [`*` 하위 경로 패턴](https://nodejs.org/api/packages.html#package-entry-points)을 사용할 수 있도록 사용하고 있는 패키지의 관리자에게 문의해주세요.
