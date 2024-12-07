@@ -27,7 +27,9 @@ Vite는 [dotenv](https://github.com/motdotla/dotenv)를 이용해 [환경 변수
 
 :::tip 환경 변수 우선순위
 
-`.env.production`과 같이 특정 모드에 대한 환경 변수는 일반적인 환경 변수(`.env`)보다 높은 우선순위를 갖습니다.
+`.env.production`과 같이 특정 모드에 대한 환경 변수는 일반적인 환경 변수(예: `.env`)보다 높은 우선순위를 갖습니다.
+
+Vite는 모드별 `.env.[mode]` 파일 외에도 항상 `.env`와 `.env.local` 파일을 로드합니다. 모드별 파일에 선언된 변수는 일반 파일에 있는 변수보다 우선하지만, `.env`나 `.env.local`에만 정의된 변수도 여전히 환경 변수로 사용할 수 있습니다.
 
 Vite가 실행될 때 이미 존재하던 환경 변수는 가장 높은 우선 순위를 가지며, `.env` 파일로 인해 덮어씌워지지 않습니다. 가령 `VITE_SOME_KEY=123 vite build` 와 같이 말이죠.
 
