@@ -44,4 +44,12 @@ SSR 서버를 위한 빌드 타깃입니다.
 - **타입:** `string[]`
 - **기본값:** `['node']`
 
-외부화된 디펜던시를 SSR로 임포트(`ssrLoadModule` 포함)할 때 사용되는 조건들입니다.
+Conditions that are used during ssr import (including `ssrLoadModule`) of externalized direct dependencies (external dependencies imported by Vite).
+
+:::tip
+
+When using this option, make sure to run Node with [`--conditions` flag](https://nodejs.org/docs/latest/api/cli.html#-c-condition---conditionscondition) with the same values in both dev and build to get a consistent behavior.
+
+For example, when setting `['node', 'custom']`, you should run `NODE_OPTIONS='--conditions custom' vite` in dev and `NODE_OPTIONS="--conditions custom" node ./dist/server.js` after build.
+
+:::
