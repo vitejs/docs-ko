@@ -14,7 +14,7 @@ import imgUrl from './img.png'
 document.getElementById('hero-img').src = imgUrl
 ```
 
-예를 들어, `imgUrl` 객체는 개발 시 `/img.png` 값으로 할당되겠으나, 실제 프로덕션 버전에서는 `/assets/img.2d8efhg.png`와 같은 값이 할당됩니다. (여기서 `2d8efhg`는 해시 값을 의미합니다. - 옮긴이)
+예를 들어 `imgUrl` 객체는 개발 시 `/src/img.png` 값으로 할당되지만, 프로덕션에서는 `/assets/img.2d8efhg.png`와 같은 값이 할당됩니다.
 
 Webpack의 `file-loader`와 비슷한데, 하나 차이점이 있다면 Vite는 절대 경로와 상대 경로 둘 다 사용할 수 있습니다.
 
