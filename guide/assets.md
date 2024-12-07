@@ -135,6 +135,7 @@ document.getElementById('hero-img').src = imgUrl
 
 ```js
 function getImageUrl(name) {
+  // note that this does not include files in subdirectories
   return new URL(`./dir/${name}.png`, import.meta.url).href
 }
 ```
@@ -145,6 +146,25 @@ function getImageUrl(name) {
 // Vite는 아래 코드를 변환하지 않음
 const imgUrl = new URL(imagePath, import.meta.url).href
 ```
+
+::: details How it works
+
+Vite will transform the `getImageUrl` function to:
+
+```js
+import __img0png from './dir/img0.png'
+import __img1png from './dir/img1.png'
+
+function getImageUrl(name) {
+  const modules = {
+    './dir/img0.png': __img0png,
+    './dir/img1.png': __img1png,
+  }
+  return new URL(modules[`./dir/${name}.png`], import.meta.url).href
+}
+```
+
+:::
 
 ::: warning SSR과 함께 사용하지 마세요!
 `import.meta.url`은 브라우저와 Node.js 간 서로 다른 의미를 갖기 때문에, 이 패턴은 서버-사이드 렌더링(SSR)에 Vite를 사용하는 경우 동작하지 않습니다. 또한 서버 번들은 클라이언트 호스트의 URL을 미리 결정할 수 없습니다.
