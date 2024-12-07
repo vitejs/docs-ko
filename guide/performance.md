@@ -52,7 +52,7 @@ Vite의 내부 및 공식 플러그인은 가능한 최소한의 작업을 수�
 플러그인 개발자라면 위의 검사 횟수를 줄이기 위해서 필요할 때만 [`this.resolve`](https://rollupjs.org/plugin-development/#this-resolve)를 호출하는지 확인하세요.
 
 ::: tip TypeScript
-TypeScript를 사용한다면, `tsconfig.json`의 `compilerOptions`에 `"moduleResolution": "Bundler"`와 `"allowImportingTsExtensions": true`를 추가해 `.ts`와 `.tsx` 확장자를 코드에서 바로 사용할 수 있습니다.
+TypeScript를 사용한다면, `tsconfig.json`의 `compilerOptions`에 `"moduleResolution": "bundler"`와 `"allowImportingTsExtensions": true`를 추가해 `.ts`와 `.tsx` 확장자를 코드에서 바로 사용할 수 있습니다.
 :::
 
 ## 배럴 파일 피하기 {#avoid-barrel-files}
