@@ -34,7 +34,7 @@ SSR 서버를 위한 빌드 타깃입니다.
 ## ssr.resolve.conditions {#ssr-resolve-conditions}
 
 - **타입:** `string[]`
-- **기본값:** `['module', 'node', 'development|production']` (`ssr.target === 'webworker'` 이면 `['module', 'browser', 'development|production']`)
+- **기본값:** `['module', 'node', 'development|production']` (`defaultClientConditions`) (`ssr.target === 'webworker'` 이면 `['module', 'browser', 'development|production']` (`defaultClientConditions`))
 - **관련 항목:** [Resolve Conditions](./shared-options.md#resolve-conditions)
 
 이 조건은 플러그인 파이프라인에서 사용되며, SSR 빌드 중에 외부화되지 않은 디펜던시에만 영향을 미칩니다. 외부화된 임포트에 영향을 미치려면 `ssr.resolve.externalConditions`를 사용하세요.

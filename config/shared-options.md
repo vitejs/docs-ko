@@ -117,7 +117,7 @@ SSR 빌드의 경우, `build.rollupOptions.output`을 통해 구성된 ESM 빌�
 ## resolve.conditions {#resolve-conditions}
 
 - **타입:** `string[]`
-- **기본값:** `['module', 'browser', 'development|production']`
+- **기본값:** `['module', 'browser', 'development|production']` (`defaultClientConditions`)
 
 패키지로부터 [조건부 내보내기](https://nodejs.org/api/packages.html#packages_conditional_exports)를 할 때, 추가적으로 허용되는 조건입니다.
 
@@ -147,7 +147,7 @@ Note that `import`, `require`, `default` conditions are always applied if the re
 ## resolve.mainFields {#resolve-mainfields}
 
 - **타입:** `string[]`
-- **기본값:** `['browser', 'module', 'jsnext:main', 'jsnext']`
+- **기본값:** `['browser', 'module', 'jsnext:main', 'jsnext']` (`defaultClientConditions`)
 
 패키지의 진입점을 확인할 때 시도할 `package.json`안의 필드 목록입니다. 이것은 `exports` 필드에서 처리되는 조건부 내보내기보다 우선순위가 낮습니다: 만약 진입점이 `exports`로부터 성공적으로 확인되면, 메인 필드는 무시될 것입니다.
 
