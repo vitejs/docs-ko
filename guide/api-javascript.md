@@ -109,9 +109,9 @@ interface ViteDevServer {
    */
   httpServer: http.Server | null
   /**
-   * Chokidar watcher 인스턴스. 만약 `config.server.watch`가 `null` 이라면,
-   * NOOP(아무런 일도 수행하지 않는 - 옮긴이) 이벤트 이미터를 반환합니다.
-   * https://github.com/paulmillr/chokidar#api
+   * Chokidar watcher 인스턴스. `config.server.watch`가 `null` 이라면
+   * 어떠한 파일도 감시하지 않으며, `add`를 호출해도 아무런 효과가 없습니다.
+   * https://github.com/paulmillr/chokidar#getting-started
    */
   watcher: FSWatcher
   /**

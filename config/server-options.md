@@ -205,11 +205,11 @@ export default defineConfig({
 
 - **타입:** `object | null`
 
-[chokidar](https://github.com/paulmillr/chokidar#api)에 전달할 파일 시스템 감시자(Watcher) 옵션입니다.
+[chokidar](https://github.com/paulmillr/chokidar#getting-started)에 전달할 파일 시스템 감시자(Watcher) 옵션입니다. `ignored` 옵션이 전달되면, Vite는 모든 문자열을 [picomatch 패턴](https://github.com/micromatch/picomatch#globbing-features)으로 자동 변환합니다.
 
 Vite 서버 감시자는 기본적으로 `root`를 감시하고, `.git/`, `node_modules/`, 그리고 Vite의 `cacheDir` 및 `build.outDir` 디렉터리는 건너뜁니다. 감시하는 파일을 업데이트하면, Vite는 HMR을 적용하고, 필요한 경우에만 페이지를 업데이트합니다.
 
-`null`로 설정하면 어떤 파일도 감시하지 않습니다. `server.watcher`는 기존과 동일한 API를 갖는 이벤트 이미터(Emitter)를 제공하지만, `add` 또는 `unwatch`를 호출해도 아무런 영향을 미치지 않습니다.
+`null`로 설정하면 파일을 감시하지 않습니다. 즉 `server.watcher`는 어떠한 파일도 감시하지 않으며, `add`를 호출해도 아무런 효과가 없습니다.
 
 ::: warning `node_modules` 디렉터리에서 파일 감시하기
 
