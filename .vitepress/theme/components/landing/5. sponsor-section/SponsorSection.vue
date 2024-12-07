@@ -1,5 +1,5 @@
 <script setup>
-import { useSponsor } from '../../../composables/sponsor'
+import { useSponsor, voidZero } from '../../../composables/sponsor'
 import { VPSponsors } from 'vitepress/theme'
 
 const { data } = useSponsor()
@@ -52,10 +52,10 @@ const { data } = useSponsor()
       커뮤니티의 기여와 다음 기업들의 지원으로 가능했습니다:
     </h4>
 
-    <h4>다음 기업과 함께합니다</h4>
+    <h4>제공</h4>
     <div class="voidzero">
-      <a href="https://voidzero.dev" target="_blank">
-        <img src="./voidzero.svg" />
+      <a :href="voidZero.url" target="_blank">
+        <img :src="voidZero.img" />
       </a>
     </div>
 
@@ -121,6 +121,7 @@ const { data } = useSponsor()
       position: relative;
       display: inline-block;
       max-width: 260px;
+      filter: grayscale(1) invert(1);
     }
   }
 
