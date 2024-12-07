@@ -149,7 +149,7 @@ app.use('*', async (req, res, next) => {
     const appHtml = await render(url)
 
     // 5. 렌더링된 HTML을 템플릿에 주입합니다.
-    const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+    const html = template.replace(`<!--ssr-outlet-->`, () => appHtml)
 
     // 6. 렌더링된 HTML을 응답으로 전송합니다.
     res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
