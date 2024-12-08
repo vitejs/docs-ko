@@ -8,10 +8,10 @@ Vite 한국어 번역 리포지토리에 오신 것을 환영합니다. 이 문�
 
 요구 사항:
 
-- Node.js: `>=20.0.0`
-- PNPM: `>=8.0.0`
+- Node.js: `>=22`
+- PNPM: `9.14.4`
 
-이 프로젝트는 [Node.js@20](https://nodejs.org/ko) 및 [PNPM@8](https://pnpm.io/ko/)을 이용합니다. PNPM은 [Node Corepack](https://nodejs.org/api/corepack.html)을 이용합니다. 자세한 설정은 [package.json](./package.json) 파일을 참고해 주세요.
+이 프로젝트는 [Node.js@22](https://nodejs.org/ko) 및 [PNPM@9.14.4](https://pnpm.io/ko/)를 이용합니다. PNPM은 [Node Corepack](https://nodejs.org/api/corepack.html)을 이용합니다. 자세한 설정은 [package.json](./package.json) 파일을 참고해 주세요.
 
 ```bash
 # 1. 이 리포지토리를 클론합니다.

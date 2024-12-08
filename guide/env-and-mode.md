@@ -27,9 +27,11 @@ Vite는 [dotenv](https://github.com/motdotla/dotenv)를 이용해 [환경 변수
 
 :::tip 환경 변수 우선순위
 
-`.env.production`과 같이 특정 모드에 대한 환경 변수는 일반적인 환경 변수(`.env`)보다 높은 우선순위를 갖습니다.
+`.env.production`과 같이 특정 모드에 대한 환경 변수는 일반적인 환경 변수(예: `.env`)보다 높은 우선순위를 갖습니다.
 
-또한 Vite가 실행될 때 이미 존재하던 환경 변수는 가장 높은 우선 순위를 가지며, `.env` 파일로 인해 덮어씌워지지 않습니다. 가령 `VITE_SOME_KEY=123 vite build` 와 같이 말이죠.
+Vite는 모드별 `.env.[mode]` 파일 외에도 항상 `.env`와 `.env.local` 파일을 로드합니다. 모드별 파일에 선언된 변수는 일반 파일에 있는 변수보다 우선하지만, `.env`나 `.env.local`에만 정의된 변수도 여전히 환경 변수로 사용할 수 있습니다.
+
+Vite가 실행될 때 이미 존재하던 환경 변수는 가장 높은 우선 순위를 가지며, `.env` 파일로 인해 덮어씌워지지 않습니다. 가령 `VITE_SOME_KEY=123 vite build` 와 같이 말이죠.
 
 `.env` 파일은 Vite가 시작될 때 가져와집니다. 따라서 파일을 변경했다면 서버를 재시작해주세요.
 :::
@@ -38,7 +40,7 @@ Vite는 [dotenv](https://github.com/motdotla/dotenv)를 이용해 [환경 변수
 
 참고로, Vite에서 접근 가능한 환경 변수는 일반 환경 변수와 구분을 위해 `VITE_` 라는 접두사를 붙여 나타냅니다. 가령, 아래와 같이 환경 변수를 정의했다면:
 
-```
+```[.env]
 VITE_SOME_KEY=123
 DB_PASSWORD=foobar
 ```
@@ -55,11 +57,11 @@ console.log(import.meta.env.DB_PASSWORD) // undefined
 위와 같이, `VITE_SOME_KEY`는 숫자이지만 파싱 시 문자열로 반환됩니다. 불리얼 환경 변수에 대해서도 동일하게 적용되며, 코드에서 사용할 때는 원하는 타입으로 변환해야 합니다.
 :::
 
-또한 Vite는 [dotenv-expand](https://github.com/motdotla/dotenv-expand)를 사용해 기본적으로 환경 변수를 확장합니다. 문법에 대해 더 알아보고 싶다면 [이 문서](https://github.com/motdotla/dotenv-expand#what-rules-does-the-expansion-engine-follow)를 참고하세요.
+또한 Vite는 [dotenv-expand](https://github.com/motdotla/dotenv-expand)를 사용해 env 파일에 작성된 환경 변수를 확장합니다. 문법에 대해 더 알아보고 싶다면 [이 문서](https://github.com/motdotla/dotenv-expand#what-rules-does-the-expansion-engine-follow)를 참고하세요.
 
-참고로 만약 환경 변수의 값에 `$`를 사용하고 싶다면 `\`를 사용해야 합니다.
+만약 환경 변수의 값에 `$`를 사용하고 싶다면 `\`를 사용해야 합니다.
 
-```
+```[.env]
 KEY=123
 NEW_KEY1=test$foo   # test
 NEW_KEY2=test\$foo  # test$foo
@@ -81,7 +83,7 @@ NEW_KEY3=test$KEY   # test123
 
 `src` 디렉터리 내 `vite-env.d.ts` 파일을 생성한 후, 아래와 같이 `ImportMetaEnv`를 정의하여 `VITE_` 환경 변수에 대한 타입을 정의할 수 있습니다.
 
-```typescript
+```typescript [vite-env.d.ts]
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
@@ -96,7 +98,7 @@ interface ImportMeta {
 
 만약 코드가 [DOM](https://github.com/microsoft/TypeScript/blob/main/src/lib/dom.generated.d.ts)이나 [WebWorker](https://github.com/microsoft/TypeScript/blob/main/src/lib/webworker.generated.d.ts)와 같이 브라우저 환경의 타입이 필요하다면, `tsconfig.json`에서 [lib](https://www.typescriptlang.org/tsconfig#lib) 필드에 이를 명시해줄 수 있습니다.
 
-```json
+```json [tsconfig.json]
 {
   "lib": ["WebWorker"]
 }

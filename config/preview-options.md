@@ -1,5 +1,7 @@
 # 프리뷰 옵션 {#preview-options}
 
+Unless noted, the options in this section are only applied to preview.
+
 ## preview.host {#preview-host}
 
 - **타입:** `string | boolean`

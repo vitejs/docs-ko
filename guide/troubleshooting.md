@@ -50,18 +50,19 @@ VITE_CJS_IGNORE_WARNING=true vite dev
 
 ### 이 패키지는 ESM만 지원합니다 {#this-package-is-esm-only}
 
-ESM만 지원하는 패키지를 `require`로 불러올 때 다음과 같은 에러가 발생합니다.
+ESM만 지원하는 패키지를 `require`로 불러올 때 아래와 같은 에러가 발생합니다.
 
 > Failed to resolve "foo". This package is ESM only but it was tried to load by `require`.
 
-> "foo" resolved to an ESM file. ESM file cannot be loaded by `require`.
+> Error [ERR_REQUIRE_ESM]: require() of ES Module /path/to/dependency.js from /path/to/vite.config.js not supported.
+> Instead change the require of index.js in /path/to/vite.config.js to a dynamic import() which is available in all CommonJS modules.
 
-ESM 파일은 [`require`](<https://nodejs.org/docs/latest-v18.x/api/esm.html#require:~:text=Using%20require%20to%20load%20an%20ES%20module%20is%20not%20supported%20because%20ES%20modules%20have%20asynchronous%20execution.%20Instead%2C%20use%20import()%20to%20load%20an%20ES%20module%20from%20a%20CommonJS%20module.>)로 불러올 수 없습니다.
+Node.js <=22 환경에서, ESM 파일은 기본적으로 [`require`](https://nodejs.org/docs/latest-v22.x/api/esm.html#require)를 통해 불러올 수 없습니다.
 
-다음과 같이 설정을 ESM으로 변환하는 것을 권장합니다:
+[`--experimental-require-module`](https://nodejs.org/docs/latest-v22.x/api/modules.html#loading-ecmascript-modules-using-require) 옵션이나 Node.js >22 환경, 또는 다른 런타임을 이용할 수도 있겠지만, 다음과 같이 설정을 ESM으로 변환하기를 권장합니다:
 
 - 가장 가까운 `package.json`에 `"type": "module"`을 추가합니다.
-- `vite.config.js`/`vite.config.ts`를 `vite.config.mjs`/`vite.config.mts`로 이름을 변경합니다.
+- `vite.config.js`/`vite.config.ts`를 `vite.config.mjs`/`vite.config.mts`로 변경합니다.
 
 ## 개발 서버 {#dev-server}
 

@@ -49,7 +49,7 @@ Vite는 버전 18+ 또는 20+ 의 [Node.js](https://nodejs.org/)를 요구합니
 
 ::: code-group
 
-```bash [NPM]
+```bash [npm]
 $ npm create vite@latest
 ```
 
@@ -57,7 +57,7 @@ $ npm create vite@latest
 $ yarn create vite
 ```
 
-```bash [PNPM]
+```bash [pnpm]
 $ pnpm create vite
 ```
 
@@ -73,7 +73,7 @@ $ bun create vite
 
 ::: code-group
 
-```bash [NPM]
+```bash [npm]
 # npm v7 이상에서는 `--` 를 반드시 붙여주세요:
 $ npm create vite@latest my-vue-app -- --template vue
 ```
@@ -82,7 +82,7 @@ $ npm create vite@latest my-vue-app -- --template vue
 $ yarn create vite my-vue-app --template vue
 ```
 
-```bash [PNPM]
+```bash [pnpm]
 $ pnpm create vite my-vue-app --template vue
 ```
 
@@ -118,7 +118,7 @@ npm run dev
 
 ::: code-group
 
-```bash [NPM]
+```bash [npm]
 $ npm install -D vite
 ```
 
@@ -126,7 +126,7 @@ $ npm install -D vite
 $ yarn add -D vite
 ```
 
-```bash [PNPM]
+```bash [pnpm]
 $ pnpm add -D vite
 ```
 
@@ -142,11 +142,27 @@ $ bun add -D vite
 <p>Hello Vite!</p>
 ```
 
-이후 터미널에서 `vite` CLI를 실행해주세요:
+Then run the appropriate CLI command in your terminal:
 
-```bash
-vite
+::: code-group
+
+```bash [npm]
+$ npx vite
 ```
+
+```bash [Yarn]
+$ yarn vite
+```
+
+```bash [pnpm]
+$ pnpm vite
+```
+
+```bash [Bun]
+$ bunx vite
+```
+
+:::
 
 이제 `http://localhost:5173`에서 `index.html` 파일을 확인할 수 있습니다.
 
@@ -170,7 +186,7 @@ Vite는 정적(Static) HTTP 서버와 비슷하게 "루트 디렉터리"라는 �
 vite가 설치된 프로젝트는 `vite` 명령을 통해 바로 Vite를 실행할 수 있습니다. (`npx vite`을 이용해도 되구요.) 기본적으로 Vite에서 제공하는 npm 스크립트는 아래와 같습니다.
 
 <!-- prettier-ignore -->
-```json
+```json [package.json]
 {
   "scripts": {
     "dev": "vite", // 개발 서버를 실행합니다. (`vite dev` 또는 `vite serve`로도 시작이 가능합니다.)

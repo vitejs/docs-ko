@@ -6,6 +6,11 @@ import markdownItCustomAnchor from './markdown-it-custom-anchor'
 // @ts-ignore
 import renderPermalink from './render-permalink'
 import markdownItFootnote from 'markdown-it-footnote'
+import {
+  groupIconMdPlugin,
+  groupIconVitePlugin,
+} from 'vitepress-plugin-group-icons'
+import { buildEnd } from './buildEnd.config'
 
 const ogDescription = 'Vite, 프런트엔드 개발의 새로운 기준'
 const ogImage = 'https://ko.vite.dev/og-image.jpg'
@@ -26,18 +31,13 @@ const deployType = (() => {
       return 'release'
   }
 })()
-const additionalTitle = ((): string => {
-  switch (deployType) {
-    case 'main':
-      return ' (main branch)'
-    case 'local':
-      return ' (local)'
-    case 'release':
-      return ''
-  }
-})()
+
 const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
   const oldVersions: DefaultTheme.NavItemWithLink[] = [
+    {
+      text: 'Vite 5 문서',
+      link: 'https://v5.vite.dev',
+    },
     {
       text: 'Vite 4 문서',
       link: 'https://v4.vite.dev',
@@ -57,7 +57,7 @@ const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
     case 'local':
       return [
         {
-          text: 'Vite 5 문서 (릴리스)',
+          text: 'Vite 6 문서 (릴리스)',
           link: 'https://ko.vite.dev',
         },
         ...oldVersions,
@@ -141,6 +141,7 @@ export default defineConfig({
     },
 
     socialLinks: [
+      // @ts-ignore
       { icon: 'bluesky', link: 'https://bsky.app/profile/vite.dev' },
       { icon: 'mastodon', link: 'https://elk.zone/m.webtoo.ls/@vite' },
       { icon: 'x', link: 'https://x.com/vite_js' },
@@ -290,8 +291,12 @@ export default defineConfig({
               link: '/guide/philosophy',
             },
             {
-              text: 'v4에서 마이그레이션하기',
+              text: 'Migration from v5',
               link: '/guide/migration',
+            },
+            {
+              text: 'v4에서 마이그레이션하기',
+              link: '/guide/migration-from-v4',
             },
             {
               text: 'v3에서 마이그레이션하기',
@@ -304,6 +309,10 @@ export default defineConfig({
             {
               text: 'v1에서 마이그레이션하기',
               link: '/guide/migration-from-v1',
+            },
+            {
+              text: 'Breaking Changes',
+              link: '/changes/',
             },
           ],
         },
@@ -323,12 +332,33 @@ export default defineConfig({
               link: '/guide/api-javascript',
             },
             {
-              text: 'Vite 런타임 API',
-              link: '/guide/api-vite-runtime',
-            },
-            {
               text: 'Vite 설정 레퍼런스',
               link: '/config/',
+            },
+          ],
+        },
+        {
+          text: 'Environment API',
+          items: [
+            {
+              text: 'Introduction',
+              link: '/guide/api-environment',
+            },
+            {
+              text: 'Environment instances',
+              link: '/guide/api-environment-instances',
+            },
+            {
+              text: 'Plugins',
+              link: '/guide/api-environment-plugins',
+            },
+            {
+              text: 'Frameworks',
+              link: '/guide/api-environment-frameworks',
+            },
+            {
+              text: 'Runtimes',
+              link: '/guide/api-environment-runtimes',
             },
           ],
         },
@@ -372,6 +402,45 @@ export default defineConfig({
           ],
         },
       ],
+      '/changes/': [
+        {
+          text: 'Breaking Changes',
+          link: '/changes/',
+        },
+        {
+          text: 'Current',
+          items: [],
+        },
+        {
+          text: 'Future',
+          items: [
+            {
+              text: 'this.environment in Hooks',
+              link: '/changes/this-environment-in-hooks',
+            },
+            {
+              text: 'HMR hotUpdate Plugin Hook',
+              link: '/changes/hotupdate-hook',
+            },
+            {
+              text: 'Move to per-environment APIs',
+              link: '/changes/per-environment-apis',
+            },
+            {
+              text: 'SSR using ModuleRunner API',
+              link: '/changes/ssr-using-modulerunner',
+            },
+            {
+              text: 'Shared plugins during build',
+              link: '/changes/shared-plugins-during-build',
+            },
+          ],
+        },
+        {
+          text: 'Past',
+          items: [],
+        },
+      ],
     },
 
     outline: {
@@ -399,6 +468,27 @@ export default defineConfig({
       md.use(markdownItCustomAnchor)
       // @ts-ignore
       md.use(markdownItFootnote)
+      // @ts-ignore
+      md.use(groupIconMdPlugin)
     },
   },
+  vite: {
+    plugins: [
+      groupIconVitePlugin({
+        customIcon: {
+          firebase: 'vscode-icons:file-type-firebase',
+          '.gitlab-ci.yml': 'vscode-icons:file-type-gitlab',
+        },
+      }),
+    ],
+    optimizeDeps: {
+      include: [
+        '@shikijs/vitepress-twoslash/client',
+        'gsap',
+        'gsap/dist/ScrollTrigger',
+        'gsap/dist/MotionPathPlugin',
+      ],
+    },
+  },
+  buildEnd,
 })
