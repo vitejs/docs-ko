@@ -30,7 +30,7 @@
 
 ### [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) {#vitejs-plugin-react-swc}
 
-- 개발 중에는 Babel 대신 SWC를 사용합니다. 빌드 중 플러그인을 사용하게 된다면 SWC+esbuild를 사용하고, 그렇지 않다면 esbuild만을 사용합니다. 비표준 React 확장이 필요하지 않은 대규모 프로젝트의 경우, 콜드 스타트와 Hot Module Replacement(HMR)이 훨씬 빠르게 작동할 수 있습니다.
+- 개발 중에는 Babel 대신 SWC를 사용합니다. 프로덕션 빌드 중 플러그인을 사용하게 된다면 SWC+esbuild를 사용하고, 그렇지 않다면 esbuild만을 사용합니다. 비표준 React 확장이 필요하지 않은 대규모 프로젝트의 경우, 콜드 스타트와 Hot Module Replacement(HMR)이 훨씬 빠르게 작동할 수 있습니다.
 
 ### [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) {#vitejs-plugin-legacy}
 

@@ -2,6 +2,7 @@ blog/*
 config/*
 docs/*
 guide/*
+changes/*
 team.md
 releases.md
 .vitepress/*

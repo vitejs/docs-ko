@@ -8,10 +8,9 @@
 
 1. Vite 설정 파일에서, 진입점(Entry)을 설정하고 매니페스트를 활성화합니다:
 
-   ```js twoslash
+   ```js twoslash [vite.config.js]
    import { defineConfig } from 'vite'
    // ---cut---
-   // vite.config.js
    export default defineConfig({
      build: {
        // outDir 위치에 .vite/manifest.json 파일을 생성
@@ -60,16 +59,16 @@
 
 3. 프로덕션 빌드 단계: `vite build`를 실행하게 되면 `.vite/manifest.json` 파일이 에셋 파일과 함께 생성됩니다. 매니페스트 파일은 다음과 같은 구조를 가집니다:
 
-   ```json
+   ```json [.vite/manifest.json]
    {
-     "_shared-!~{003}~.js": {
-       "file": "assets/shared-ChJ_j-JJ.css",
-       "src": "_shared-!~{003}~.js"
-     },
      "_shared-B7PI925R.js": {
        "file": "assets/shared-B7PI925R.js",
        "name": "shared",
        "css": ["assets/shared-ChJ_j-JJ.css"]
+     },
+     "_shared-ChJ_j-JJ.css": {
+       "file": "assets/shared-ChJ_j-JJ.css",
+       "src": "_shared-ChJ_j-JJ.css"
      },
      "baz.js": {
        "file": "assets/baz-B2H3sXNv.js",
@@ -100,6 +99,7 @@
    - 진입점 또는 동적 진입점의 청크는 프로젝트 루트로부터의 상대적인 src 경로를 가집니다.
    - 진입점이 아닌 청크의 경우, 키는 `_`로 접두사가 붙은 파일명이 됩니다.
    - 청크에는 정적 및 동적 임포트에 대한 정보(둘 다 매니페스트에서 해당 청크를 매핑하는 키)와 CSS 및 에셋 파일(있는 경우)이 포함됩니다.
+   - [build.cssCodeSplit](/config/build-options.md#build-csscodesplit)이 `false`일 때 생성되는 CSS 파일 키는 `style.css` 입니다.
 
 4. 해시된 파일 이름으로 링크를 렌더링하거나 지시문을 미리 로드하기 위해 이 파일을 사용할 수 있습니다.
 
@@ -152,3 +152,38 @@
    <!-- 선택 사항 -->
    <link rel="modulepreload" href="assets/shared-B7PI925R.js" />
    ```
+
+   ::: details Pseudo implementation of `importedChunks`
+   An example pseudo implementation of `importedChunks` in TypeScript (This will
+   need to be adapted for your programming language and templating language):
+
+   ```ts
+   import type { Manifest, ManifestChunk } from 'vite'
+
+   export default function importedChunks(
+     manifest: Manifest,
+     name: string,
+   ): ManifestChunk[] {
+     const seen = new Set<string>()
+
+     function getImportedChunks(chunk: ManifestChunk): ManifestChunk[] {
+       const chunks: ManifestChunk[] = []
+       for (const file of chunk.imports ?? []) {
+         const importee = manifest[file]
+         if (seen.has(file)) {
+           continue
+         }
+         seen.add(file)
+
+         chunks.push(...getImportedChunks(importee))
+         chunks.push(importee)
+       }
+
+       return chunks
+     }
+
+     return getImportedChunks(manifest[name])
+   }
+   ```
+
+   :::

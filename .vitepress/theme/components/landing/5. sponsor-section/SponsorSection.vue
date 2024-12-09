@@ -1,5 +1,5 @@
 <script setup>
-import { useSponsor } from '../../../composables/sponsor'
+import { useSponsor, voidZero } from '../../../composables/sponsor'
 import { VPSponsors } from 'vitepress/theme'
 
 const { data } = useSponsor()
@@ -48,13 +48,14 @@ const { data } = useSponsor()
     />
     <h2>자유롭게 사용할 수 있는 오픈 소스</h2>
     <h4>
-      Vite는 MIT 라이선스를 따르며, 자유롭게 사용할 수 있는 오픈 소스입니다. 이는 커뮤니티의 기여와 다음 기업들의 지원으로 가능했습니다:
+      Vite는 MIT 라이선스를 따르며, 자유롭게 사용할 수 있는 오픈 소스입니다. 이는 
+      커뮤니티의 기여와 다음 기업들의 지원으로 가능했습니다:
     </h4>
 
-    <h4>다음 기업과 함께합니다</h4>
+    <h4>제공</h4>
     <div class="voidzero">
-      <a href="https://voidzero.dev" target="_blank">
-        <img src="./voidzero.svg" />
+      <a :href="voidZero.url" target="_blank">
+        <img :src="voidZero.img" />
       </a>
     </div>
 
@@ -69,7 +70,7 @@ const { data } = useSponsor()
         href="https://github.com/sponsors/vitejs"
         target="_blank"
         class="btn btn--outline btn--rounded"
-        >Become a Sponsor</a
+        >스폰서로 참여하기</a
       >
     </div>
   </div>
@@ -120,6 +121,7 @@ const { data } = useSponsor()
       position: relative;
       display: inline-block;
       max-width: 260px;
+      filter: grayscale(1) invert(1);
     }
   }
 
@@ -132,9 +134,10 @@ const { data } = useSponsor()
     font-weight: 400;
     line-height: 150%; /* 24px */
     letter-spacing: -0.32px;
-    width: 480px;
+    width: 520px;
     max-width: 100%;
     margin: 0 auto 40px;
+    padding: 0 20px;
   }
 
   .sponsor-grid {
