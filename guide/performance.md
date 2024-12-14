@@ -59,8 +59,7 @@ TypeScript를 사용한다면, `tsconfig.json`의 `compilerOptions`에 `"moduleR
 
 배럴 파일은 같은 디렉터리에 있는 다른 파일의 API를 다시 내보내는 파일입니다. 예를 들어 다음과 같습니다:
 
-```js
-// src/utils/index.js
+```js [src/utils/index.js]
 export * from './color.js'
 export * from './dom.js'
 export * from './slash.js'
@@ -92,7 +91,7 @@ vite:transform 62.95ms /src/components/BigComponent.vue +1ms
 vite:transform 102.54ms /src/utils/big-utils.js +1ms
 ```
 
-```js
+```js [vite.config.js]
 export default defineConfig({
   server: {
     warmup: {

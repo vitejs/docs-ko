@@ -1,6 +1,6 @@
 # 워커 옵션 {#worker-options}
 
-웹 워커와 관련된 옵션입니다.
+Unless noted, the options in this section are applied to all dev, build, and preview.
 
 ## worker.format {#worker-format}
 
