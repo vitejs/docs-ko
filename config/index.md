@@ -8,8 +8,7 @@ title: Vite 설정하기
 
 가장 기본적인 설정 파일의 내용은 다음과 같습니다:
 
-```js
-// vite.config.js
+```js [vite.config.js]
 export default {
   // 설정 옵션들
 }
