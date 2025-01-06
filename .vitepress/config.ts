@@ -17,7 +17,7 @@ const ogImage = 'https://ko.vite.dev/og-image.jpg'
 const ogTitle = 'Vite'
 const ogUrl = 'https://ko.vite.dev'
 
-// netlify envs
+// netlify 환경 변수
 const deployURL = process.env.DEPLOY_PRIME_URL || ''
 const commitRef = process.env.COMMIT_REF?.slice(0, 8) || 'dev'
 
@@ -188,7 +188,7 @@ export default defineConfig({
                 link: 'https://x.com/vite_js',
               },
               {
-                text: 'Discord Chat',
+                text: 'Discord',
                 link: 'https://chat.vite.dev',
               },
               {
@@ -200,7 +200,7 @@ export default defineConfig({
                 link: 'https://viteconf.org',
               },
               {
-                text: 'DEV 커뮤니티',
+                text: 'DEV',
                 link: 'https://dev.to/t/vite',
               },
               {
@@ -291,7 +291,7 @@ export default defineConfig({
               link: '/guide/philosophy',
             },
             {
-              text: 'Migration from v5',
+              text: 'v5에서 마이그레이션하기',
               link: '/guide/migration',
             },
             {
@@ -311,7 +311,7 @@ export default defineConfig({
               link: '/guide/migration-from-v1',
             },
             {
-              text: 'Breaking Changes',
+              text: '주요 변경 사항',
               link: '/changes/',
             },
           ],
@@ -338,26 +338,26 @@ export default defineConfig({
           ],
         },
         {
-          text: 'Environment API',
+          text: '환경 API',
           items: [
             {
-              text: 'Introduction',
+              text: '환경 API',
               link: '/guide/api-environment',
             },
             {
-              text: 'Environment instances',
+              text: '환경 인스턴스',
               link: '/guide/api-environment-instances',
             },
             {
-              text: 'Plugins',
+              text: '플러그인',
               link: '/guide/api-environment-plugins',
             },
             {
-              text: 'Frameworks',
+              text: '프레임워크',
               link: '/guide/api-environment-frameworks',
             },
             {
-              text: 'Runtimes',
+              text: '런타임',
               link: '/guide/api-environment-runtimes',
             },
           ],
@@ -365,7 +365,7 @@ export default defineConfig({
       ],
       '/config/': [
         {
-          text: 'Config',
+          text: '설정',
           items: [
             {
               text: 'Vite 설정하기',
@@ -404,40 +404,40 @@ export default defineConfig({
       ],
       '/changes/': [
         {
-          text: 'Breaking Changes',
+          text: '주요 변경 사항',
           link: '/changes/',
         },
         {
-          text: 'Current',
+          text: '최신 버전',
           items: [],
         },
         {
-          text: 'Future',
+          text: '예정된 변경 사항',
           items: [
             {
-              text: 'this.environment in Hooks',
+              text: '훅에서의 this.environment',
               link: '/changes/this-environment-in-hooks',
             },
             {
-              text: 'HMR hotUpdate Plugin Hook',
+              text: 'HMR hotUpdate 플러그인 훅',
               link: '/changes/hotupdate-hook',
             },
             {
-              text: 'Move to per-environment APIs',
+              text: '환경별 API로 마이그레이션',
               link: '/changes/per-environment-apis',
             },
             {
-              text: 'SSR using ModuleRunner API',
+              text: 'ModuleRunner API를 사용한 SSR',
               link: '/changes/ssr-using-modulerunner',
             },
             {
-              text: 'Shared plugins during build',
+              text: '빌드 중 공유되는 플러그인',
               link: '/changes/shared-plugins-during-build',
             },
           ],
         },
         {
-          text: 'Past',
+          text: '지난 변경 사항',
           items: [],
         },
       ],
