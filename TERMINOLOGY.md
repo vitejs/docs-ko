@@ -34,7 +34,6 @@
 | Minification   | 축소화         |
 | Release        | 릴리스         |
 | Asset          | 에셋           |
-| Runner         | 실행자         |
 | Example Usage  | 사용 예제      |
 | Type Signature | 타입 시그니처  |
 | Placeholder    | 자리 표시자    |
