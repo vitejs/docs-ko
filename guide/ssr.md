@@ -1,4 +1,4 @@
-# 서버 측 렌더링 (SSR) {#server-side-rendering}
+# 서버 측 렌더링 (SSR) {#server-side-rendering-ssr}
 
 :::tip 참고
 SSR은 동일한 전체 사이트를 Node.js에서 동작시키고, 이를 HTML로 사전 렌더링 한 후, 마지막으로 이를 클라이언트의 프런트엔드 프레임워크(가령 React, Preact, Vue 및 Svelte와 같은)에서 가져오도록 하는 기능입니다. 만약 기존에 사용하고 있었던 서버 사이드 프레임워크와의 연동을 원한다면 [백엔드 프레임워크와 함께 사용하기](./backend-integration)를 참고하시기 바랍니다.
