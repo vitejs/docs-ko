@@ -6,7 +6,7 @@
 만약 이를 직접 구성하고자 한다면, 아래의 가이드를 따라 진행할 수 있습니다.
 :::
 
-1. Vite 설정 파일에서, 진입점(Entry)을 설정하고 매니페스트를 활성화합니다:
+1. Vite 설정 파일에서, 진입점을 설정하고 매니페스트를 활성화합니다:
 
    ```js twoslash [vite.config.js]
    import { defineConfig } from 'vite'
@@ -108,7 +108,7 @@
    `importedChunks` 함수 역시 예시를 위한 것이며, Vite에서 제공하지 않습니다.
 
    ```html
-   <!-- 프로덕션 (아래는 `for ... of` 구문입니다 - 옮긴이) -->
+   <!-- 프로덕션 (아래 `for ... of` 는 구문입니다 - 옮긴이) -->
 
    <!-- for cssFile of manifest[name].css -->
    <link rel="stylesheet" href="/{{ cssFile }}" />
@@ -153,9 +153,9 @@
    <link rel="modulepreload" href="assets/shared-B7PI925R.js" />
    ```
 
-   ::: details Pseudo implementation of `importedChunks`
-   An example pseudo implementation of `importedChunks` in TypeScript (This will
-   need to be adapted for your programming language and templating language):
+   ::: details `importedChunks` 의사 구현체
+   아래 예시 코드는 `importedChunks` 의사 구현체입니다. TypeScript로 작성되어 있으며,
+   실제 적용 시에는 사용하는 프로그래밍 언어와 템플릿 언어에 맞게 수정이 필요합니다:
 
    ```ts
    import type { Manifest, ManifestChunk } from 'vite'
