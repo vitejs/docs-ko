@@ -6,11 +6,11 @@
 
 ## 들어가기 전에 {#overview}
 
-Vite(프랑스어로 "빠르다(Quick)"를 의미하며, 발음은 "veet"와 비슷한 `/vit/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="/voice.svg#voice" /></svg></button> 입니다.)는 빠르고 간결한 모던 웹 프로젝트 개발 경험에 초점을 맞춰 탄생한 빌드 도구이며, 두 가지 컨셉을 중심으로 하고 있습니다.
+Vite(프랑스어로 "빠르다(Quick)"를 의미하며, 발음은 "veet"와 비슷한 `/vit/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="/voice.svg#voice" /></svg></button> 입니다.)는 빠르고 간결한 모던 웹 프로젝트 개발 경험에 초점을 맞춰 탄생한 빌드 도구이며, 두 가지 컨셉을 중심으로 하고 있습니다:
 
 - 개발 시 [네이티브 ES Module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 넘어 [더욱 다양한 기능](./features)을 제공합니다. 가령, [Hot Module Replacement (HMR)](./features#hot-module-replacement)과 같은 것들 말이죠.
 
-- 번들링 시, [Rollup](https://rollupjs.org) 기반의 다양한 빌드 커맨드를 사용할 수 있습니다. 이는 높은 수준으로 최적화된 정적(Static) 리소스들을 배포할 수 있게끔 하며, 미리 정의된 설정(Pre-configured)을 제공합니다.
+- 번들링 시, [Rollup](https://rollupjs.org) 기반의 다양한 빌드 커맨드를 사용할 수 있습니다. 이는 높은 수준으로 최적화된 정적 리소스들을 배포할 수 있게끔 하며, 미리 정의된 설정을 제공합니다.
 
 Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./features)에서 더 자세히 알아보세요. 프레임워크 지원이나 다른 도구와의 통합은 [플러그인](./using-plugins)을 통해 가능합니다. [Vite 설정하기 섹션](../config/)에서는 필요에 따라 프로젝트에 Vite를 적용하는 방법을 설명합니다.
 
@@ -112,7 +112,7 @@ npm install
 npm run dev
 ```
 
-## Manual Installation {#manual-installation}
+## 수동 설치 {#manual-installation}
 
 프로젝트 내에서 `vite` CLI를 설치할 수 있습니다:
 
@@ -142,7 +142,7 @@ $ bun add -D vite
 <p>Hello Vite!</p>
 ```
 
-Then run the appropriate CLI command in your terminal:
+이후 아래 CLI 명령을 터미널에서 실행합니다:
 
 ::: code-group
 
