@@ -12,11 +12,11 @@ Vite는 이러한 것에 초점을 맞춰, 브라우저에서 지원하는 ES Mo
 
 ### 지루할 정도로 길었던 서버 구동 {#slow-server-start}
 
-콜드 스타트 방식으로 개발 서버를 구동할 때, 번들러 기반의 도구의 경우 애플리케이션 내 모든 소스 코드에 대해 크롤링 및 빌드 작업을 마쳐야지만이 실제 페이지를 제공할 수 있습니다. (콜드 스타트는 최초로 실행되어 이전에 캐싱한 데이터가 없는 경우를 의미합니다. - 옮긴이)
+콜드 스타트 방식으로 개발 서버를 구동할 때, 번들러 기반의 도구의 경우 애플리케이션 내 모든 소스 코드에 대해 크롤링 및 빌드 작업을 마쳐야지만이 실제 페이지를 제공할 수 있습니다.
 
 vite는 애플리케이션의 모듈을 **dependencies**와 **source code** 두 가지 카테고리로 나누어 개발 서버의 시작 시간을 개선합니다.
 
-- **Dependencies**: 개발 시 그 내용이 바뀌지 않을 일반적인(Plain) JavaScript 소스 코드입니다. 기존 번들러로는 컴포넌트 라이브러리와 같이 몇 백 개의 JavaScript 모듈을 갖고 있는 매우 큰 디펜던시에 대한 번들링 과정이 매우 비효율적이었고 많은 시간을 필요로 했습니다.
+- **Dependencies**: 개발 시 그 내용이 바뀌지 않을 일반적인 JavaScript 소스 코드입니다. 기존 번들러로는 컴포넌트 라이브러리와 같이 몇 백 개의 JavaScript 모듈을 갖고 있는 매우 큰 디펜던시에 대한 번들링 과정이 매우 비효율적이었고 많은 시간을 필요로 했습니다.
 
   Vite의 [사전 번들링](./dep-pre-bundling) 기능은 [Esbuild](https://esbuild.github.io/)를 사용하고 있습니다. Go로 작성된 Esbuild는 Webpack, Parcel과 같은 기존의 번들러 대비 10-100배 빠른 속도를 제공합니다.
 
@@ -51,7 +51,7 @@ import esmSvg from '../images/esm.svg?raw'
 
 ## 왜 번들링 시에는 Esbuild를 사용하지 않나요? {#why-not-bundle-with-esbuild}
 
-While Vite leverages esbuild to [pre-bundle some dependencies in dev](./dep-pre-bundling.md), Vite does not use esbuild as a bundler for production builds.
+Vite는 [개발 환경에서 일부 디펜던시를 사전 번들링](./dep-pre-bundling.md)하기 위해 esbuild를 사용하지만, 프로덕션 빌드를 위한 번들러로는 사용하지 않습니다.
 
 Vite의 현재 플러그인 API는 `esbuild`를 번들러로 사용하는 것과 호환되지 않습니다. `esbuild`가 더 빠르지만, Vite가 Rollup의 유연한 플러그인 API 및 인프라를 적극적으로 채택한 것은 생태계에서의 성공에 큰 기여를 했습니다. 현재로서는 Rollup이 성능 대 유연성 트레이드오프에서 더 나은 선택이라고 믿습니다.
 
