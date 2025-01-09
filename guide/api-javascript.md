@@ -128,8 +128,8 @@ interface ViteDevServer {
    */
   moduleGraph: ModuleGraph
   /**
-   * The resolved urls Vite prints on the CLI (URL-encoded). Returns `null`
-   * in middleware mode or if the server is not listening on any port.
+   * Vite가 CLI에 출력하는 인코딩된 URL입니다. 미들웨어 모드이거나
+   * 서버가 어떤 포트에서도 수신하고 있지 않은 경우 `null`을 반환합니다.
    */
   resolvedUrls: ResolvedServerUrls | null
   /**
@@ -274,8 +274,8 @@ interface PreviewServer {
    */
   httpServer: http.Server
   /**
-   * The resolved urls Vite prints on the CLI (URL-encoded). Returns `null`
-   * if the server is not listening on any port.
+   * Vite가 CLI에 출력하는 인코딩된 URL입니다. 서버가 어떤
+   * 포트에서도 수신하고 있지 않은 경우 `null`을 반환합니다.
    */
   resolvedUrls: ResolvedServerUrls | null
   /**
