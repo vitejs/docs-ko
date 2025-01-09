@@ -79,7 +79,7 @@ NEW_KEY3=test$KEY   # test123
 
 ### TypeScript를 위한 인텔리센스 {#intellisense-for-typescript}
 
-기본적으로, Vite는 [`vite/client.d.ts`](https://github.com/vitejs/vite/blob/main/packages/vite/client.d.ts)의 `import.meta.env`에 대한 타입 정의를 제공하고 있습니다. 물론 `.env.[mode]` 파일에서 더 많은 사용자 정의 환경 변수를 정의할 수 있으며, `VITE_` 접두사가 붙은 사용자 정의 환경 변수에 대해서는 TypeScript 인텔리센스 정의가 가능합니다.
+기본적으로, Vite는 [`vite/client.d.ts`](https://github.com/vitejs/vite/blob/main/packages/vite/client.d.ts)의 `import.meta.env`에 대한 타입 정의를 제공하고 있습니다. 물론 `.env.[mode]` 파일에서 더 많은 커스텀 환경 변수를 정의할 수 있으며, `VITE_` 접두사가 붙은 커스텀 환경 변수에 대해서는 TypeScript 인텔리센스 정의가 가능합니다.
 
 `src` 디렉터리 내 `vite-env.d.ts` 파일을 생성한 후, 아래와 같이 `ImportMetaEnv`를 정의하여 `VITE_` 환경 변수에 대한 타입을 정의할 수 있습니다.
 
