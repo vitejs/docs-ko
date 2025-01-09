@@ -1,6 +1,6 @@
 # SSR 옵션 {#ssr-options}
 
-Unless noted, the options in this section are applied to both dev and build.
+별도로 명시되지 않은 한, 이 섹션의 옵션들은 개발과 빌드 모두에게 적용됩니다.
 
 ## ssr.external {#ssr-external}
 
@@ -44,13 +44,13 @@ SSR 서버를 위한 빌드 타깃입니다.
 - **타입:** `string[]`
 - **기본값:** `['node']`
 
-Conditions that are used during ssr import (including `ssrLoadModule`) of externalized direct dependencies (external dependencies imported by Vite).
+외부화된 직접 디펜던시(Vite에 의해 임포트된 외부 디펜던시)의 SSR 임포트(`ssrLoadModule` 포함) 중에 사용되는 조건입니다.
 
 :::tip
 
-When using this option, make sure to run Node with [`--conditions` flag](https://nodejs.org/docs/latest/api/cli.html#-c-condition---conditionscondition) with the same values in both dev and build to get a consistent behavior.
+이 옵션을 사용할 때는 개발과 빌드 모두 동일한 값을 전달하고 Node를 [`--conditions` 플래그](https://nodejs.org/docs/latest/api/cli.html#-c-condition---conditionscondition)와 함께 실행해야 일관된 동작을 수행합니다.
 
-For example, when setting `['node', 'custom']`, you should run `NODE_OPTIONS='--conditions custom' vite` in dev and `NODE_OPTIONS="--conditions custom" node ./dist/server.js` after build.
+예를 들어, `['node', 'custom']`을 설정할 때는 개발 시에는 `NODE_OPTIONS='--conditions custom' vite`를, 빌드 후에는 `NODE_OPTIONS="--conditions custom" node ./dist/server.js`를 실행해야 합니다.
 
 :::
 
@@ -59,4 +59,4 @@ For example, when setting `['node', 'custom']`, you should run `NODE_OPTIONS='--
 - **타입:** `string[]`
 - **기본값:** `['module', 'jsnext:main', 'jsnext']`
 
-List of fields in `package.json` to try when resolving a package's entry point. Note this takes lower precedence than conditional exports resolved from the `exports` field: if an entry point is successfully resolved from `exports`, the main field will be ignored. This setting only affect non-externalized dependencies.
+패키지 진입점을 해석할 때 시도할 `package.json` 필드 목록입니다. 이는 `exports` 필드에서 해석된 조건부 내보내기보다 우선순위가 낮습니다: `exports`에서 진입점이 성공적으로 해석되면 모든 main 필드는 무시됩니다. 이 설정은 외부화되지 않은 디펜던시에만 영향을 미칩니다.

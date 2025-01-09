@@ -1,6 +1,6 @@
 # 빌드 옵션 {#build-options}
 
-Unless noted, the options in this section are only applied to build.
+별도로 명시되지 않은 한, 이 섹션의 옵션들은 빌드에만 적용됩니다.
 
 ## build.target {#build-target}
 
@@ -12,7 +12,7 @@ Unless noted, the options in this section are only applied to build.
 
 또 다른 Vite 한정 옵션은 `'esnext'` 로, 네이티브 동적 Import를 지원하며 트랜스파일링을 최소한만 수행합니다.
 
-변환은 esbuild로 수행되며, 값은 유효한 [esbuild 타깃 옵션](https://esbuild.github.io/api/#target)이어야 합니다. 사용자 지정 타깃은 ES 버전 (예: `es2015`)이나 버전이 있는 브라우저 (예: `chrome58`) 또는 다중 타깃 문자열의 배열이 될 수 있습니다.
+변환은 esbuild로 수행되며, 값은 유효한 [esbuild 타깃 옵션](https://esbuild.github.io/api/#target)이어야 합니다. 커스텀 타깃은 ES 버전 (예: `es2015`)이나 버전이 있는 브라우저 (예: `chrome58`) 또는 다중 타깃 문자열의 배열이 될 수 있습니다.
 
 코드안에 esbuild로 안전하게 트랜스파일 할 수 없는 기능이 포함된 경우 빌드는 실패할 것입니다. 자세한 점은 [esbuild 문서](https://esbuild.github.io/content-types/#javascript)를 확인하세요.
 
@@ -167,9 +167,9 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 
 라이브러리로 빌드합니다. 라이브러리에서 HTML을 진입점으로 사용할 수 없으므로, `entry`가 필요합니다. `name`은 노출된 전역 변수이며 `formats`가 `'umd'` 또는 `'iife'` 일 때 필요합니다. `formats` 기본값은 `['es', 'umd']` 이나, 여러 진입점이 존재한다면 `['es', 'cjs']`가 됩니다.
 
-`fileName` is the name of the package file output, which defaults to the `"name"` in `package.json`. It can also be defined as a function taking the `format` and `entryName` as arguments, and returning the file name.
+`fileName`은 패키지 파일 출력의 이름이며, 기본값은 `package.json`의 `"name"` 입니다. `format`과 `entryName`을 인자로 받아 파일 이름을 반환하는 함수로도 정의할 수 있습니다.
 
-If your package imports CSS, `cssFileName` can be used to specify the name of the CSS file output. It defaults to the same value as `fileName` if it's set a string, otherwise it also falls back to the `"name"` in `package.json`.
+패키지가 CSS를 임포트한다면 `cssFileName`을 사용하여 CSS 파일 출력의 이름을 지정할 수도 있습니다. `fileName`이 문자열로 설정되었다면 이를 기본값으로 사용하며, 그렇지 않다면 `package.json`의 `"name"` 값을 사용합니다.
 
 ```js twoslash [vite.config.js]
 import { defineConfig } from 'vite'

@@ -2,7 +2,7 @@
 
 - **관련 항목:** [사전 번들링된 디펜던시](/guide/dep-pre-bundling)
 
-Unless noted, the options in this section are only applied to the dependency optimizer, which is only used in dev.
+별도로 명시되지 않은 한, 이 섹션의 옵션들은 개발 환경에서만 사용되는 디펜던시 최적화 도구에만 적용됩니다.
 
 ## optimizeDeps.entries {#optimizedeps-entries}
 

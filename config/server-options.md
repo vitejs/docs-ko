@@ -1,6 +1,6 @@
 # 서버 옵션 {#server-options}
 
-Unless noted, the options in this section are only applied to dev.
+별도로 명시되지 않은 한, 이 섹션의 옵션들은 개발 환경에만 적용됩니다.
 
 ## server.host {#server-host}
 
@@ -87,7 +87,7 @@ export default defineConfig({
 
 - **타입:** `Record<string, string | ProxyOptions>`
 
-개발 서버에 대한 커스텀 프락시 규칙을 구성합니다. `{ key: options }` 쌍의 객체를 기대합니다. 요청 경로가 해당 키로 시작하는 모든 요청은 해당 지정 대상으로 프락시됩니다. 키가 `^`로 시작하면 `RegExp`로 해석됩니다. `configure` 옵션은 프락시 인스턴스에 액세스하는 데 사용할 수 있습니다. If a request matches any of the configured proxy rules, the request won't be transformed by Vite.
+개발 서버에 대한 커스텀 프락시 규칙을 구성합니다. `{ key: options }` 쌍의 객체를 전달할 수 있습니다. 경로가 해당 키로 시작하는 모든 요청은 지정된 대상으로 프락시됩니다. 키가 `^`로 시작하면 `RegExp`로 해석됩니다. `configure` 옵션은 프락시 인스턴스에 액세스하는 데 사용할 수 있습니다. 또한 프락시 규칙 중 하나라도 요청과 일치한다면, 해당 요청은 Vite에 의해 변환되지 않습니다.
 
 참고로 [`base`](/config/shared-options.md#base)가 비상대적(Non-relative)인 경우, 각 키에 `base`를 접두사로 붙여야 합니다.
 
@@ -184,7 +184,7 @@ Direct websocket connection fallback. Check out https://vite.dev/config/server-o
 
 - WebSocket도 프락시하도록 리버스 프락시를 구성
 - [`server.strictPort` 옵션의 값을 `true`로](#server-strictport), 그리고 `server.hmr.clientPort`를 `server.port`와 동일한 값으로 설정
-- `server.hmr.port`를 [`server.port`](#server-port와 다른 값으로 설정
+- `server.hmr.port`를 [`server.port`](#server-port)와 다른 값으로 설정
 
 :::
 
@@ -299,7 +299,7 @@ Vite는 잠재적인 작업 공간의 루트를 검색하여 기본값으로 사
   - `lerna.json`
   - `pnpm-workspace.yaml`
 
-사용자 지정 작업 공간 루트를 지정하는 경로를 허용합니다. 절대 경로 또는 [프로젝트 루트](/guide/#index-html-and-project-root)에 대한 상대 경로일 수 있습니다. 다음은 하나의 예입니다:
+커스텀 작업 공간 루트를 지정하는 경로를 허용합니다. 절대 경로 또는 [프로젝트 루트](/guide/#index-html-and-project-root)에 대한 상대 경로일 수 있습니다. 다음은 하나의 예입니다:
 
 ```js
 export default defineConfig({
