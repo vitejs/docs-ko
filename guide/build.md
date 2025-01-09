@@ -1,10 +1,10 @@
 # 프로덕션 빌드 {#building-for-production}
 
-앱을 어느정도 완성하셨나요? 프로덕션으로 빌드하고자 한다면 `vite build` 명령을 실행해주세요. 빌드 시 기본적으로 `<root>/index.html` 파일이 빌드를 위한 진입점(Entry point)으로 사용되며, 정적 호스팅을 위한 형태로 진행됩니다. 추가적으로, GitHub Pages와 같은 정적 호스팅 서비스를 위한 빌드 방법을 알고싶다면 [정적 웹 페이지로 배포하기](./static-deploy) 섹션을 참고해주세요.
+앱을 어느정도 완성하셨나요? 프로덕션으로 빌드하고자 한다면 `vite build` 명령을 실행해주세요. 빌드 시 기본적으로 `<root>/index.html` 파일이 빌드를 위한 진입점으로 사용되며, 정적 호스팅을 위한 형태로 진행됩니다. 추가적으로, GitHub Pages와 같은 정적 호스팅 서비스를 위한 빌드 방법을 알고싶다면 [정적 웹 페이지로 배포하기](./static-deploy) 섹션을 참고해주세요.
 
 ## 브라우저 지원 현황 {#browser-compatibility}
 
-빌드된 프로덕션 번들은 모던 JavaScript를 지원하는 환경에서 동작한다고 가정합니다. 따라서 Vite는 기본적으로 [네이티브 ES 모듈](https://caniuse.com/es6-module), [네이티브 ESM의 동적 Import](https://caniuse.com/es6-module-dynamic-import), 그리고 [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta)를 지원하는 브라우저를 타깃으로 하고 있습니다:
+빌드된 프로덕션 번들은 모던 JavaScript를 지원하는 환경에서 동작한다고 가정합니다. 따라서 Vite는 기본적으로 [네이티브 ES 모듈](https://caniuse.com/es6-module), [네이티브 ESM 동적 임포트](https://caniuse.com/es6-module-dynamic-import), 그리고 [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta)를 지원하는 브라우저를 타깃으로 하고 있습니다:
 
 - Chrome >=87
 - Firefox >=78
@@ -13,7 +13,7 @@
 
 만약 JavaScript 타깃을 지정하고자 한다면, [`build.target` 설정](/config/build-options.md#build-target)을 이용해주세요. 다만 버전은 최소한 `es2015` 이상이어야 합니다.
 
-알아두어야 할 사항은, Vite는 오로지 구분 변환만 진행할 뿐 **기본적으로 폴리필을 다루지 않는다는 점** 입니다. 만약 폴리필이 필요하다면, 브라우저 User Agent를 기반으로 폴리필 번들을 생성해 주는 https://cdnjs.cloudflare.com/polyfill/ 을 이용해 주세요.
+알아두어야 할 사항은, Vite는 오로지 구문 변환만 진행할 뿐 **기본적으로 폴리필을 다루지 않는다는 점** 입니다. 만약 폴리필이 필요하다면, 브라우저 User Agent를 기반으로 폴리필 번들을 생성해 주는 https://cdnjs.cloudflare.com/polyfill/ 을 이용해 주세요.
 
 레거시 브라우저의 경우 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 이용할 수 있습니다. 이 플러그인을 사용하면 자동으로 레거시 버전에 대한 청크를 생성하게 되고, 이를 통해 레거시 브라우저 또한 Vite으로 빌드된 앱을 이용할 수 있게 됩니다. 참고로, 생성된 레거시 청크는 브라우저가 ESM을 지원하지 않는 경우에만 불러오게 됩니다.
 
@@ -29,11 +29,21 @@ JS(`import`), CSS(`url()`), 그리고 `.html` 파일에서 참조되는 에셋 �
 
 더욱 상세한 설정이 필요하다면 [Base 옵션 상세 설정](#advanced-base-options) 섹션을 참고해주세요.
 
+### 상대 경로 Base {#relative-base}
+
+만약 Base 경로를 미리 알 수 없는 경우라면, `"base": "./"` 또는 `"base": ""` 설정을 통해 상대 경로를 사용할 수 있습니다. 이렇게 하면 모든 에셋의 URL이 상대 경로로 생성됩니다.
+
+:::warning 상대 경로 Base 사용 시 레거시 브라우저 지원
+
+상대 경로 Base를 사용하기 위해서는 `import.meta`를 지원하는 브라우저가 필요합니다. [`import.meta`를 지원하지 않는 브라우저](https://caniuse.com/mdn-javascript_operators_import_meta)를 지원해야 한다면, [`legacy` 플러그인](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)을 사용해 주세요.
+
+:::
+
 ## 빌드 커스터마이즈하기 {#customizing-the-build}
 
 빌드와 관련된 커스터마이즈는 [build 설정](/config/build-options.md)을 통해 가능합니다. 특별히 알아두어야 할 것이 하나 있는데, [Rollup 옵션](https://rollupjs.org/configuration-options/)을 `build.rollupOptions`에 명시해 사용이 가능합니다.
 
-```ts
+```ts [vite.config.js]
 export default defineConfig({
   build: {
     rollupOptions: {
@@ -65,8 +75,7 @@ window.addEventListener('vite:preloadError', (event) => {
 
 `vite build --watch` 명령을 통해 Rollup Watcher를 활성화 할 수 있습니다. 또는, `build.watch` 옵션에서 [`WatcherOptions`](https://rollupjs.org/configuration-options/#watch)를 직접 명시할 수도 있습니다.
 
-```ts
-// vite.config.js
+```ts [vite.config.js]
 export default defineConfig({
   build: {
     watch: {
@@ -96,8 +105,7 @@ export default defineConfig({
 
 빌드 시에는, 사용자가 접근할 수 있는 모든 `.html` 파일에 대해 아래와 같이 빌드 진입점이라 명시해줘야만 합니다.
 
-```js twoslash
-// vite.config.js
+```js twoslash [vite.config.js]
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
@@ -123,15 +131,15 @@ HTML 파일의 경우, Vite는 `rollupOptions.input` 객체에 명시된 엔트�
 
 라이브러리 배포 시점에서, [`build.lib` 설정 옵션](/config/build-options.md#build-lib)을 이용해보세요. 또한 라이브러리에 포함하지 않을 디펜던시를 명시할 수도 있습니다. `vue`나 `react` 같이 말이죠.
 
-```js twoslash
-// vite.config.js
+::: code-group
+
+```js twoslash [vite.config.js (single entry)]
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
   build: {
     lib: {
-      // 여러 진입점은 객체 또는 배열로 지정할 수 있습니다.
       entry: resolve(__dirname, 'lib/main.js'),
       name: 'MyLib',
       // 적절한 확장자가 추가됩니다.
@@ -153,16 +161,51 @@ export default defineConfig({
 })
 ```
 
+```js twoslash [vite.config.js (multiple entries)]
+import { resolve } from 'path'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  build: {
+    lib: {
+      entry: {
+        'my-lib': resolve(__dirname, 'lib/main.js'),
+        secondary: resolve(__dirname, 'lib/secondary.js'),
+      },
+      name: 'MyLib',
+    },
+    rollupOptions: {
+      // 라이브러리에 포함하지 않을
+      // 디펜던시를 명시해주세요
+      external: ['vue'],
+      output: {
+        // 라이브러리 외부에 존재하는 디펜던시를 위해
+        // UMD 번들링 시 사용될 전역 변수를 명시할 수도 있습니다.
+        globals: {
+          vue: 'Vue',
+        },
+      },
+    },
+  },
+})
+```
+
+:::
+
 패키지의 진입점이 되는 파일에는 패키지의 사용자가 `import` 할 수 있도록 `export` 구문이 포함되게 됩니다:
 
-```js
-// lib/main.js
+```js [lib/main.js]
 import Foo from './Foo.vue'
 import Bar from './Bar.vue'
 export { Foo, Bar }
 ```
 
-위와 같은 Rollup 설정과 함께 `vite build` 명령을 실행하게 되면, `es` 및 `umd` 두 가지의 포맷으로 번들링 과정이 진행되게 됩니다(이에 대해 조금 더 자세히 알고 싶다면 `build.lib` 설정을 참고해주세요).
+이러한 설정으로 `vite build` 명령을 실행하면 라이브러리 배포를 위한 Rollup 프리셋이 사용되며, 두 가지 번들 포맷을 생성합니다:
+
+- `es` 및 `umd` (진입점이 하나인 경우)
+- `es` 및 `cjs` (진입점이 다수인 경우)
+
+참고로 이 포맷은 [`build.lib.formats`](/config/build-options.md#build-lib) 옵션으로 설정할 수 있습니다.
 
 ```
 $ vite build
@@ -173,7 +216,9 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
 
 `package.json`에는 아래와 같이 사용할 라이브러리를 명시해주세요.
 
-```json
+::: code-group
+
+```json [package.json (single entry)]
 {
   "name": "my-lib",
   "type": "module",
@@ -189,9 +234,7 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
 }
 ```
 
-여러 진입점을 노출하는 경우는 아래와 같습니다:
-
-```json
+```json [package.json (multiple entries)]
 {
   "name": "my-lib",
   "type": "module",
@@ -207,6 +250,31 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
       "import": "./dist/secondary.js",
       "require": "./dist/secondary.cjs"
     }
+  }
+}
+```
+
+:::
+
+### CSS 지원 {#css-support}
+
+만약 라이브러리에서 CSS를 임포트하는 경우, 빌드된 JS 파일과 함께 단일 CSS 파일로 번들링됩니다. 예를 들어 `dist/my-lib.css`와 같이 말이죠. 파일 이름은 기본적으로 `build.lib.fileName`을 따르지만, [`build.lib.cssFileName`](/config/build-options.md#build-lib)을 통해 변경할 수도 있습니다.
+
+사용자가 CSS 파일을 임포트할 수 있도록 `package.json`에 CSS 파일을 익스포트할 수도 있습니다:
+
+```json {12}
+{
+  "name": "my-lib",
+  "type": "module",
+  "files": ["dist"],
+  "main": "./dist/my-lib.umd.cjs",
+  "module": "./dist/my-lib.js",
+  "exports": {
+    ".": {
+      "import": "./dist/my-lib.js",
+      "require": "./dist/my-lib.umd.cjs"
+    },
+    "./style.css": "./dist/my-lib.css"
   }
 }
 ```
@@ -232,7 +300,7 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
 이미 배포된 에셋과 Public 디렉터리에 위치한 파일이 서로 다른 경로에 있을 수 있습니다. 이 경우 각각에 대해 다른 캐시 전략을 사용하고자 할 수 있는데, 이 때 Base 옵션에 대한 상세 설정이 필요합니다.
 사용자는 세 가지 다른 경로로 배포하도록 선택할 수 있습니다:
 
-- 생성된 HTML 진입점(Entry) 파일 (SSR을 사용하는 동안 처리될 수 있음)
+- 생성된 HTML 진입점 파일 (SSR을 사용하는 동안 처리될 수 있음)
 - 해시화 되어 생성된 에셋 (JS, CSS, 및 이미지와 같은 여러 파일들)
 - 복사된 [Public 디렉터리 파일](assets.md#the-public-directory)
 
@@ -269,7 +337,9 @@ experimental: {
     if (type === 'public') {
       return 'https://www.domain.com/' + filename
     } else if (path.extname(hostId) === '.js') {
-      return { runtime: `window.__assetsPath(${JSON.stringify(filename)})` }
+      return {
+        runtime: `window.__assetsPath(${JSON.stringify(filename)})`
+      }
     } else {
       return 'https://cdn.domain.com/assets/' + filename
     }

@@ -14,7 +14,7 @@ import imgUrl from './img.png'
 document.getElementById('hero-img').src = imgUrl
 ```
 
-예를 들어, `imgUrl` 객체는 개발 시 `/img.png` 값으로 할당되겠으나, 실제 프로덕션 버전에서는 `/assets/img.2d8efhg.png`와 같은 값이 할당됩니다. (여기서 `2d8efhg`는 해시 값을 의미합니다. - 옮긴이)
+예를 들어 `imgUrl` 객체는 개발 시 `/src/img.png` 값으로 할당되지만, 프로덕션에서는 `/assets/img.2d8efhg.png`와 같은 값이 할당됩니다.
 
 Webpack의 `file-loader`와 비슷한데, 하나 차이점이 있다면 Vite는 절대 경로와 상대 경로 둘 다 사용할 수 있습니다.
 
@@ -53,6 +53,17 @@ import 'vite/client'
 // ---cut---
 import workletURL from 'extra-scalloped-border/worklet.js?url'
 CSS.paintWorklet.addModule(workletURL)
+```
+
+### 명시적인 인라인 처리 {#explicit-inline-handling}
+
+에셋은 `?inline` 또는 `?no-inline` 접미사를 사용해 인라인 처리 여부를 명시적으로 지정하여 가져올 수 있습니다.
+
+```js twoslash
+import 'vite/client'
+// ---cut---
+import imgUrl1 from './img.svg?no-inline'
+import imgUrl2 from './img.png?inline'
 ```
 
 ### 문자열 형태로 에셋 가져오기 {#importing-asset-as-string}
@@ -96,20 +107,17 @@ import InlineWorker from './shader.js?worker&inline'
 
 ## `public` 디렉터리 {#the-public-directory}
 
-다음 에셋의 경우
+아래와 같은 에셋은:
 
 - `robots.txt`와 같이 소스 코드에서 참조되지 않는 에셋
-- 해싱 없이 항상 같은 이름을 갖는 에셋
-- 또는 URL을 얻기 위해 굳이 `import` 할 필요 없는 에셋
+- 해싱을 거치지 않고 항상 같은 이름을 가져야 하는 에셋
+- ...또는 URL을 얻기 위해 `import` 할 필요 없는 에셋
 
-`public` 디렉터리 아래에 에셋을 위치시키세요. 이 곳에 위치한 에셋은 개발 시에 `/` 경로에, 배포 시에는 `dist` 디렉터리에 위치하게 됩니다.
+`public` 디렉터리 아래에 에셋을 위치시키세요. 이 곳에 위치한 에셋은 개발 시 `/` 경로에, 배포 시 `dist` 디렉터리에 위치하게 됩니다.
 
-만약 `<root>/public` 디렉터리가 아닌 다른 디렉터리를 사용하고자 하는 경우, [`publicDir` 옵션](/config/shared-options.md#publicdir)을 이용할 수 있습니다.
+만약 `<root>/public` 이 아닌 다른 디렉터리를 사용하고자 하는 경우, [`publicDir` 옵션](/config/shared-options.md#publicdir)을 이용할 수 있습니다.
 
-마지막으로, 다음의 사항을 유의해주세요.
-
-- `public` 디렉터리에 위치해 있는 에셋을 가져오고자 하는 경우, 항상 루트를 기준으로 하는 절대 경로로 가져와야만 합니다. ( `public/icon.png` 에셋은 소스 코드에서 `/icon.png`으로 접근이 가능합니다.)
-- `public` 디렉터리에 위치한 에셋은 JavaScript 코드로 가져올 수 없습니다.
+참고로 `public` 디렉터리에 위치해 있는 에셋을 가져오고자 하는 경우, 항상 루트를 기준으로 하는 절대 경로로 가져와야 합니다. (예: `public/icon.png` 에셋은 소스 코드에서 `/icon.png`으로 접근이 가능)
 
 ## new URL(url, import.meta.url) {#new-url-url-import-meta-url}
 
@@ -127,6 +135,7 @@ document.getElementById('hero-img').src = imgUrl
 
 ```js
 function getImageUrl(name) {
+  // note that this does not include files in subdirectories
   return new URL(`./dir/${name}.png`, import.meta.url).href
 }
 ```
@@ -137,6 +146,25 @@ function getImageUrl(name) {
 // Vite는 아래 코드를 변환하지 않음
 const imgUrl = new URL(imagePath, import.meta.url).href
 ```
+
+::: details 동작 방식
+
+Vite는 `getImageUrl` 함수를 다음과 같이 변환합니다:
+
+```js
+import __img0png from './dir/img0.png'
+import __img1png from './dir/img1.png'
+
+function getImageUrl(name) {
+  const modules = {
+    './dir/img0.png': __img0png,
+    './dir/img1.png': __img1png,
+  }
+  return new URL(modules[`./dir/${name}.png`], import.meta.url).href
+}
+```
+
+:::
 
 ::: warning SSR과 함께 사용하지 마세요!
 `import.meta.url`은 브라우저와 Node.js 간 서로 다른 의미를 갖기 때문에, 이 패턴은 서버-사이드 렌더링(SSR)에 Vite를 사용하는 경우 동작하지 않습니다. 또한 서버 번들은 클라이언트 호스트의 URL을 미리 결정할 수 없습니다.

@@ -1,5 +1,7 @@
 # 서버 옵션 {#server-options}
 
+별도로 명시되지 않은 한, 이 섹션의 옵션들은 개발 환경에만 적용됩니다.
+
 ## server.host {#server-host}
 
 - **타입:** `string | boolean`
@@ -18,8 +20,7 @@ Vite 대신 다른 서버가 응답하는 경우가 있습니다.
 
 이 재정렬 동작을 비활성화하려면 [`dns.setDefaultResultOrder('verbatim')`](https://nodejs.org/api/dns.html#dns_dns_setdefaultresultorder_order)으로 설정해주세요. 이 때 Vite는 주소를 `localhost`로 표기합니다.
 
-```js twoslash
-// vite.config.js
+```js twoslash [vite.config.js]
 import { defineConfig } from 'vite'
 import dns from 'node:dns'
 
@@ -86,7 +87,7 @@ export default defineConfig({
 
 - **타입:** `Record<string, string | ProxyOptions>`
 
-개발 서버에 대한 사용자 정의 프락시 규칙을 구성합니다. `{ key: options }` 쌍의 객체를 기대합니다. 요청 경로가 해당 키로 시작하는 모든 요청은 해당 지정 대상으로 프락시됩니다. 키가 `^`로 시작하면 `RegExp`로 해석됩니다. `configure` 옵션은 프락시 인스턴스에 액세스하는 데 사용할 수 있습니다.
+개발 서버에 대한 커스텀 프락시 규칙을 구성합니다. `{ key: options }` 쌍의 객체를 전달할 수 있습니다. 경로가 해당 키로 시작하는 모든 요청은 지정된 대상으로 프락시됩니다. 키가 `^`로 시작하면 `RegExp`로 해석됩니다. `configure` 옵션은 프락시 인스턴스에 액세스하는 데 사용할 수 있습니다. 또한 프락시 규칙 중 하나라도 요청과 일치한다면, 해당 요청은 Vite에 의해 변환되지 않습니다.
 
 참고로 [`base`](/config/shared-options.md#base)가 비상대적(Non-relative)인 경우, 각 키에 `base`를 접두사로 붙여야 합니다.
 
@@ -100,15 +101,21 @@ export default defineConfig({
 export default defineConfig({
   server: {
     proxy: {
-      // 문자열만: http://localhost:5173/foo -> http://localhost:4567/foo
+      // 문자열만:
+      // http://localhost:5173/foo
+      //   -> http://localhost:4567/foo
       '/foo': 'http://localhost:4567',
-      // 옵션과 함께: http://localhost:5173/api/bar-> http://jsonplaceholder.typicode.com/bar
+      // 옵션과 함께:
+      // http://localhost:5173/api/bar
+      //   -> http://jsonplaceholder.typicode.com/bar
       '/api': {
         target: 'http://jsonplaceholder.typicode.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       },
-      // 정규식(RegExp)과 함께: http://localhost:5173/fallback/ -> http://jsonplaceholder.typicode.com/
+      // 정규식(RegExp)과 함께:
+      // http://localhost:5173/fallback/
+      //   -> http://jsonplaceholder.typicode.com/
       '^/fallback/.*': {
         target: 'http://jsonplaceholder.typicode.com',
         changeOrigin: true,
@@ -122,8 +129,11 @@ export default defineConfig({
           // proxy 변수에는 'http-proxy'의 인스턴스가 전달됩니다
         }
       },
-      // 웹소켓 또는 socket.io 프락시: ws://localhost:5173/socket.io -> ws://localhost:5174/socket.io
-      // `rewriteWsOrigin`을 사용할 때는 주의하세요. CSRF 공격에 노출될 수 있습니다.
+      // 웹소켓 또는 socket.io 프락시:
+      // ws://localhost:5173/socket.io
+      //   -> ws://localhost:5174/socket.io
+      // `rewriteWsOrigin`을 사용할 때는 주의하세요.
+      // CSRF 공격에 노출될 수 있습니다.
       '/socket.io': {
         target: 'ws://localhost:5174',
         ws: true,
@@ -174,7 +184,7 @@ Direct websocket connection fallback. Check out https://vite.dev/config/server-o
 
 - WebSocket도 프락시하도록 리버스 프락시를 구성
 - [`server.strictPort` 옵션의 값을 `true`로](#server-strictport), 그리고 `server.hmr.clientPort`를 `server.port`와 동일한 값으로 설정
-- `server.hmr.port`를 [`server.port`](#server-port와 다른 값으로 설정
+- `server.hmr.port`를 [`server.port`](#server-port)와 다른 값으로 설정
 
 :::
 
@@ -185,7 +195,7 @@ Direct websocket connection fallback. Check out https://vite.dev/config/server-o
 
 미리 변환하고 그 결과물을 캐시할 파일 목록입니다. 서버 시작 시 초기 페이지 로드를 개선하고 변환 워터폴(변환이 순차적으로 이루어지는 현상 - 옮긴이)을 방지합니다.
 
-옵션의 `clientFiles`는 클라이언트에서만, `ssrFiles`는 SSR에서만 사용되는 파일 목록입니다. `root`를 기준으로 하는 파일 경로 또는 [`fast-glob`](https://github.com/mrmlnc/fast-glob) 패턴의 배열을 받습니다.
+옵션의 `clientFiles`는 클라이언트에서만, `ssrFiles`는 SSR에서만 사용되는 파일 목록입니다. `root`를 기준으로 하는 파일 경로 또는 [`tinyglobby`](https://github.com/SuperchupuDev/tinyglobby) 패턴의 배열을 받습니다.
 
 Vite 개발 서버 시작 시 과부하가 걸리지 않도록 자주 사용되는 파일만 추가해주세요.
 
@@ -204,11 +214,11 @@ export default defineConfig({
 
 - **타입:** `object | null`
 
-[chokidar](https://github.com/paulmillr/chokidar#api)에 전달할 파일 시스템 감시자(Watcher) 옵션입니다.
+[chokidar](https://github.com/paulmillr/chokidar/tree/3.6.0#api)에 전달할 파일 시스템 감시자(Watcher) 옵션입니다.
 
 Vite 서버 감시자는 기본적으로 `root`를 감시하고, `.git/`, `node_modules/`, 그리고 Vite의 `cacheDir` 및 `build.outDir` 디렉터리는 건너뜁니다. 감시하는 파일을 업데이트하면, Vite는 HMR을 적용하고, 필요한 경우에만 페이지를 업데이트합니다.
 
-`null`로 설정하면 어떤 파일도 감시하지 않습니다. `server.watcher`는 기존과 동일한 API를 갖는 이벤트 이미터(Emitter)를 제공하지만, `add` 또는 `unwatch`를 호출해도 아무런 영향을 미치지 않습니다.
+`null`로 설정하면 파일을 감시하지 않습니다. `server.watcher`는 (Node.js `EventEmitter`과)호환되는 이벤트 객체(Emitter)를 제공하지만, `add` 또는 `unwatch`를 호출해도 아무런 효과가 없습니다.
 
 ::: warning `node_modules` 디렉터리에서 파일 감시하기
 
@@ -225,7 +235,7 @@ WSL2에서 Vite를 실행할 때, WSL2가 아닌 타 Windows 응용 프로그램
 - **권고 사항:** WSL2 응용 프로그램을 사용해 파일을 편집
   - 또한 WSL2에서 Windows 파일 시스템에 접근하는 것은 느리기 때문에 프로젝트 폴더를 Windows 파일 시스템 외부로 이동시키는 것이 좋습니다. 이러한 오버헤드를 제거하면 성능이 향상됩니다.
 - `{ usePolling: true }` 로 설정
-  - 참고로 [`usePolling`은 CPU 사용률을 높입니다](https://github.com/paulmillr/chokidar#performance).
+  - 참고로 [`usePolling`은 CPU 사용률을 높입니다](https://github.com/paulmillr/chokidar/tree/3.6.0#performance).
 
 :::
 
@@ -250,13 +260,14 @@ async function createServer() {
   // 미들웨어 모드에서 Vite 서버를 생성합니다
   const vite = await createViteServer({
     server: { middlewareMode: 'ssr' },
-    appType: 'custom' // Vite의 기본 HTML 처리용 미들웨어를 사용하지 마세요
+    // Vite의 기본 HTML 처리 미들웨어를 포함하지 않음
+    appType: 'custom'
   })
   // Vite의 연결(Connect) 인스턴스를 미들웨어로 사용
   app.use(vite.middlewares)
 
   app.use('*', async (req, res) => {
-    // `appType`은 `'custom'`이므로 여기에서 반환될 데이터(Response)를 제공해야 합니다.
+    // `appType`은 `'custom'`이므로, 여기에서 응답을 전달해야 합니다.
     // 참고: `appType`이 `'spa'` 또는 `'mpa'`인 경우,
     // Vite는 HTML 요청과 404를 처리하는 미들웨어를 포함하므로
     // Vite의 미들웨어가 적용되기 전에 사용자 미들웨어를 추가해야 합니다.
@@ -288,7 +299,7 @@ Vite는 잠재적인 작업 공간의 루트를 검색하여 기본값으로 사
   - `lerna.json`
   - `pnpm-workspace.yaml`
 
-사용자 지정 작업 공간 루트를 지정하는 경로를 허용합니다. 절대 경로 또는 [프로젝트 루트](/guide/#index-html-and-project-root)에 대한 상대 경로일 수 있습니다. 다음은 하나의 예입니다:
+커스텀 작업 공간 루트를 지정하는 경로를 허용합니다. 절대 경로 또는 [프로젝트 루트](/guide/#index-html-and-project-root)에 대한 상대 경로일 수 있습니다. 다음은 하나의 예입니다:
 
 ```js
 export default defineConfig({
@@ -324,17 +335,9 @@ export default defineConfig({
 ## server.fs.deny {#server-fs-deny}
 
 - **타입:** `string[]`
-- **기본값:** `['.env', '.env.*', '*.{crt,pem}']`
+- **기본값:** `['.env', '.env.*', '*.{crt,pem}', '**/.git/**']`
 
 Vite dev 서버에서 제공되지 않기를 원하는 민감한 파일들에 대한 차단 목록입니다. 이 옵션은 [`server.fs.allow`](#server-fs-allow)보다 높은 우선 순위를 가지며, [피코매치 패턴](https://github.com/micromatch/picomatch#globbing-features)을 사용할 수 있습니다.
-
-## server.fs.cachedChecks {#server-fs-cachedchecks}
-
-- **타입:** `boolean`
-- **기본값:** `false`
-- **실험적 기능**
-
-접근한 디렉터리 내 파일 이름을 캐시해 반복적인 파일 시스템 작업을 피합니다. 특히 Windows에서는 성능이 향상이 있을 수 있습니다. 캐시된 디렉터리에서 파일을 작성한 후 이를 즉시 가져오는 경우 발생하는 예외 상황으로 인해, 기본적으로는 비활성화되어 있습니다.
 
 ## server.origin {#server-origin}
 

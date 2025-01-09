@@ -69,8 +69,9 @@ vite build [root]
 | `-f, --filter <filter>`        | 디버그 로그 필터 (`string`)|
 | `-m, --mode <mode>`            | env 모드 설정 (`string`)|
 | `-h, --help`                   | 사용 가능한 CLI 옵션 표시|
+| `--app`                        | 모든 환경을 빌드, `builder: {}`와 동일 (`boolean`, 실험적 기능)|
 
-## Others {#others}
+## 기타 {#others}
 
 ### `vite optimize` {#vite-optimize}
 

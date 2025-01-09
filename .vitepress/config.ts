@@ -6,13 +6,18 @@ import markdownItCustomAnchor from './markdown-it-custom-anchor'
 // @ts-ignore
 import renderPermalink from './render-permalink'
 import markdownItFootnote from 'markdown-it-footnote'
+import {
+  groupIconMdPlugin,
+  groupIconVitePlugin,
+} from 'vitepress-plugin-group-icons'
+import { buildEnd } from './buildEnd.config'
 
 const ogDescription = 'Vite, 프런트엔드 개발의 새로운 기준'
 const ogImage = 'https://ko.vite.dev/og-image.jpg'
 const ogTitle = 'Vite'
 const ogUrl = 'https://ko.vite.dev'
 
-// netlify envs
+// netlify 환경 변수
 const deployURL = process.env.DEPLOY_PRIME_URL || ''
 const commitRef = process.env.COMMIT_REF?.slice(0, 8) || 'dev'
 
@@ -26,18 +31,13 @@ const deployType = (() => {
       return 'release'
   }
 })()
-const additionalTitle = ((): string => {
-  switch (deployType) {
-    case 'main':
-      return ' (main branch)'
-    case 'local':
-      return ' (local)'
-    case 'release':
-      return ''
-  }
-})()
+
 const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
   const oldVersions: DefaultTheme.NavItemWithLink[] = [
+    {
+      text: 'Vite 5 문서',
+      link: 'https://v5.vite.dev',
+    },
     {
       text: 'Vite 4 문서',
       link: 'https://v4.vite.dev',
@@ -57,7 +57,7 @@ const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
     case 'local':
       return [
         {
-          text: 'Vite 5 문서 (릴리스)',
+          text: 'Vite 6 문서 (릴리스)',
           link: 'https://ko.vite.dev',
         },
         ...oldVersions,
@@ -141,6 +141,7 @@ export default defineConfig({
     },
 
     socialLinks: [
+      // @ts-ignore
       { icon: 'bluesky', link: 'https://bsky.app/profile/vite.dev' },
       { icon: 'mastodon', link: 'https://elk.zone/m.webtoo.ls/@vite' },
       { icon: 'x', link: 'https://x.com/vite_js' },
@@ -187,7 +188,7 @@ export default defineConfig({
                 link: 'https://x.com/vite_js',
               },
               {
-                text: 'Discord Chat',
+                text: 'Discord',
                 link: 'https://chat.vite.dev',
               },
               {
@@ -199,7 +200,7 @@ export default defineConfig({
                 link: 'https://viteconf.org',
               },
               {
-                text: 'DEV 커뮤니티',
+                text: 'DEV',
                 link: 'https://dev.to/t/vite',
               },
               {
@@ -290,8 +291,12 @@ export default defineConfig({
               link: '/guide/philosophy',
             },
             {
-              text: 'v4에서 마이그레이션하기',
+              text: 'v5에서 마이그레이션하기',
               link: '/guide/migration',
+            },
+            {
+              text: 'v4에서 마이그레이션하기',
+              link: '/guide/migration-from-v4',
             },
             {
               text: 'v3에서 마이그레이션하기',
@@ -304,6 +309,10 @@ export default defineConfig({
             {
               text: 'v1에서 마이그레이션하기',
               link: '/guide/migration-from-v1',
+            },
+            {
+              text: '주요 변경 사항',
+              link: '/changes/',
             },
           ],
         },
@@ -323,19 +332,40 @@ export default defineConfig({
               link: '/guide/api-javascript',
             },
             {
-              text: 'Vite 런타임 API',
-              link: '/guide/api-vite-runtime',
-            },
-            {
               text: 'Vite 설정 레퍼런스',
               link: '/config/',
+            },
+          ],
+        },
+        {
+          text: '환경 API',
+          items: [
+            {
+              text: '환경 API',
+              link: '/guide/api-environment',
+            },
+            {
+              text: '환경 인스턴스',
+              link: '/guide/api-environment-instances',
+            },
+            {
+              text: '플러그인',
+              link: '/guide/api-environment-plugins',
+            },
+            {
+              text: '프레임워크',
+              link: '/guide/api-environment-frameworks',
+            },
+            {
+              text: '런타임',
+              link: '/guide/api-environment-runtimes',
             },
           ],
         },
       ],
       '/config/': [
         {
-          text: 'Config',
+          text: '설정',
           items: [
             {
               text: 'Vite 설정하기',
@@ -372,6 +402,45 @@ export default defineConfig({
           ],
         },
       ],
+      '/changes/': [
+        {
+          text: '주요 변경 사항',
+          link: '/changes/',
+        },
+        {
+          text: '최신 버전',
+          items: [],
+        },
+        {
+          text: '예정된 변경 사항',
+          items: [
+            {
+              text: '훅에서 this.environment 사용하기',
+              link: '/changes/this-environment-in-hooks',
+            },
+            {
+              text: 'HMR hotUpdate 플러그인 훅',
+              link: '/changes/hotupdate-hook',
+            },
+            {
+              text: '환경별 API로 마이그레이션',
+              link: '/changes/per-environment-apis',
+            },
+            {
+              text: 'ModuleRunner API를 사용하는 SSR',
+              link: '/changes/ssr-using-modulerunner',
+            },
+            {
+              text: '빌드 중 공유되는 플러그인',
+              link: '/changes/shared-plugins-during-build',
+            },
+          ],
+        },
+        {
+          text: '지난 변경 사항',
+          items: [],
+        },
+      ],
     },
 
     outline: {
@@ -381,7 +450,7 @@ export default defineConfig({
   transformPageData(pageData) {
     const canonicalUrl = `${ogUrl}/${pageData.relativePath}`
       .replace(/\/index\.md$/, '/')
-      .replace(/\.md$/, '/')
+      .replace(/\.md$/, '')
     pageData.frontmatter.head ??= []
     pageData.frontmatter.head.unshift(
       ['link', { rel: 'canonical', href: canonicalUrl }],
@@ -399,6 +468,27 @@ export default defineConfig({
       md.use(markdownItCustomAnchor)
       // @ts-ignore
       md.use(markdownItFootnote)
+      // @ts-ignore
+      md.use(groupIconMdPlugin)
     },
   },
+  vite: {
+    plugins: [
+      groupIconVitePlugin({
+        customIcon: {
+          firebase: 'vscode-icons:file-type-firebase',
+          '.gitlab-ci.yml': 'vscode-icons:file-type-gitlab',
+        },
+      }),
+    ],
+    optimizeDeps: {
+      include: [
+        '@shikijs/vitepress-twoslash/client',
+        'gsap',
+        'gsap/dist/ScrollTrigger',
+        'gsap/dist/MotionPathPlugin',
+      ],
+    },
+  },
+  buildEnd,
 })

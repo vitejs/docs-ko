@@ -1,5 +1,7 @@
 # 빌드 옵션 {#build-options}
 
+별도로 명시되지 않은 한, 이 섹션의 옵션들은 빌드에만 적용됩니다.
+
 ## build.target {#build-target}
 
 - **타입:** `string | string[]`
@@ -8,12 +10,9 @@
 
 최종 번들을 위한 브라우저 호환성 타깃입니다. 기본값은 Vite에서만 사용 가능한 `'modules'` 이며, [네이티브 ES 모듈](https://caniuse.com/es6-module), [네이티브 ESM의 동적 Import](https://caniuse.com/es6-module-dynamic-import), 그리고 [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta)를 지원하는 브라우저를 타깃으로 합니다. 즉, Vite는 `'modules'`를 `['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14']`로 대체합니다.
 
-또 다른 특수 값은 `'esnext'`입니다. 이는 네이티브 동적 가져오기가 지원되는 것으로 가정하고 가능한 한 적게 트랜스파일 됩니다:
+또 다른 Vite 한정 옵션은 `'esnext'` 로, 네이티브 동적 Import를 지원하며 트랜스파일링을 최소한만 수행합니다.
 
-- `build.minify` 옵션이 `'terser'`이고 설치된 Terser 버전이 5.16.0 미만인 경우, `'esnext'`는 `'es2021'`로 강제 설정됩니다.
-- 다른 경우에는, 전혀 트랜스파일이 수행되지 않습니다.
-
-변환은 esbuild로 수행되며, 값은 유효한 [esbuild 타깃 옵션](https://esbuild.github.io/api/#target)이어야 합니다. 사용자 지정 타깃은 ES 버전 (예: `es2015`)이나 버전이 있는 브라우저 (예: `chrome58`) 또는 다중 타깃 문자열의 배열이 될 수 있습니다.
+변환은 esbuild로 수행되며, 값은 유효한 [esbuild 타깃 옵션](https://esbuild.github.io/api/#target)이어야 합니다. 커스텀 타깃은 ES 버전 (예: `es2015`)이나 버전이 있는 브라우저 (예: `chrome58`) 또는 다중 타깃 문자열의 배열이 될 수 있습니다.
 
 코드안에 esbuild로 안전하게 트랜스파일 할 수 없는 기능이 포함된 경우 빌드는 실패할 것입니다. 자세한 점은 [esbuild 문서](https://esbuild.github.io/content-types/#javascript)를 확인하세요.
 
@@ -131,7 +130,7 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 ## build.cssMinify {#build-cssminify}
 
 - **타입:** `boolean | 'esbuild' | 'lightningcss'`
-- **기본값:** [`build.minify`](#build-minify)와 동일
+- **기본값:** 클라이언트는 [`build.minify`](#build-minify)와 동일, SSR은 `'esbuild'`
 
 이 옵션을 사용하면 기본값이 `build.minify`로 설정되는 대신 CSS 축소화를 구체적으로 재정의할 수 있으므로, JS와 CSS를 별도로 축소화할 수 있습니다. Vite는 기본적으로 `esbuild`를 사용해 CSS를 축소화하지만, 옵션을 `'lightningcss'`로 설정하면 [Lightning CSS](https://lightningcss.dev/minification.html)를 사용할 수도 있습니다. 이를 선택한 경우, [`css.lightningcss`](./shared-options.md#css-lightningcss)를 통해 설정이 가능합니다.
 
@@ -163,10 +162,28 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 
 ## build.lib {#build-lib}
 
-- **타입:** `{ entry: string | string[] | { [entryAlias: string]: string }, name?: string, formats?: ('es' | 'cjs' | 'umd' | 'iife')[], fileName?: string | ((format: ModuleFormat, entryName: string) => string) }`
+- **타입:** `{ entry: string | string[] | { [entryAlias: string]: string }, name?: string, formats?: ('es' | 'cjs' | 'umd' | 'iife')[], fileName?: string | ((format: ModuleFormat, entryName: string) => string), cssFileName?: string }`
 - **관련 항목:** [라이브러리 모드](/guide/build#library-mode)
 
-라이브러리로 빌드합니다. 라이브러리에서 HTML을 진입점으로 사용할 수 없으므로, `entry`가 필요합니다. `name`은 노출된 전역 변수이며 `formats`가 `'umd'` 또는 `'iife'` 일 때 필요합니다. `formats`의 기본값은 `['es', 'umd']` 이나, 여러 `entry`가 존재하는 경우라면 `['es', 'cjs']`가 됩니다. `fileName`은 패키지 파일 출력의 이름이며, 기본값은 package.json 파일의 name 옵션입니다. 이는 `format`과 `entryAlias`를 인수로 취하는 함수로도 정의될 수 있습니다.
+라이브러리로 빌드합니다. 라이브러리에서 HTML을 진입점으로 사용할 수 없으므로, `entry`가 필요합니다. `name`은 노출된 전역 변수이며 `formats`가 `'umd'` 또는 `'iife'` 일 때 필요합니다. `formats` 기본값은 `['es', 'umd']` 이나, 여러 진입점이 존재한다면 `['es', 'cjs']`가 됩니다.
+
+`fileName`은 패키지 파일 출력의 이름이며, 기본값은 `package.json`의 `"name"` 입니다. `format`과 `entryName`을 인자로 받아 파일 이름을 반환하는 함수로도 정의할 수 있습니다.
+
+패키지가 CSS를 임포트한다면 `cssFileName`을 사용하여 CSS 파일 출력의 이름을 지정할 수도 있습니다. `fileName`이 문자열로 설정되었다면 이를 기본값으로 사용하며, 그렇지 않다면 `package.json`의 `"name"` 값을 사용합니다.
+
+```js twoslash [vite.config.js]
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  build: {
+    lib: {
+      entry: ['src/main.js'],
+      fileName: (format, entryName) => `my-lib-${entryName}.${format}.js`,
+      cssFileName: 'my-lib-style',
+    },
+  },
+})
+```
 
 ## build.manifest {#build-manifest}
 
@@ -192,12 +209,19 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 
 서버 측 렌더링으로 빌드합니다. 설정 값은 SSR 항목을 직접 지정하는 문자열이거나, `rollupOptions.input`을 통해 SSR 항목을 지정해야 하는 `true`가 될 수 있습니다.
 
+## build.emitAssets {#build-emitassets}
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+During non-client builds, static assets aren't emitted as it is assumed they would be emitted as part of the client build. This option allows frameworks to force emitting them in other environments build. It is responsibility of the framework to merge the assets with a post build step.
+
 ## build.ssrEmitAssets {#build-ssremitassets}
 
 - **타입:** `boolean`
 - **기본값:** `false`
 
-SSR 빌드 중에는 정적 에셋이 따로 생성되지 않는데, 이는 클라이언트 빌드의 일부에 포함될 것으로 간주하기 때문입니다. 다만 필요한 경우 이 옵션을 사용하여 클라이언트와 SSR 빌드 모두에서 에셋을 생성하도록 강제할 수 있습니다. 이 경우 프레임워크는 빌드 이후 단계에서 에셋을 병합하는 것이 필요합니다.
+SSR 빌드 중에는 정적 에셋이 따로 생성되지 않는데, 이는 클라이언트 빌드의 일부에 포함될 것으로 간주하기 때문입니다. 다만 필요한 경우 이 옵션을 사용하여 클라이언트와 SSR 빌드 모두에서 에셋을 생성하도록 강제할 수 있습니다. 이 경우 프레임워크는 빌드 이후 단계에서 에셋을 병합하는 것이 필요합니다. 이 옵션은 환경 API가 안정화되면 `build.emitAssets`로 대체될 예정입니다.
 
 ## build.minify {#build-minify}
 

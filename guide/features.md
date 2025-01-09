@@ -2,7 +2,7 @@
 
 기본적으로 vite는 여타 정적 파일 서버와 크게 다르지 않습니다. 다만, vite는 네이티브 ESM 말고도 기존 번들러에서 제공하던 기능을 대부분 지원한다는 차이점이 있습니다.
 
-## NPM을 이용한 디펜던시 `import` 그리고 사전 번들링 {#npm-dependency-resolving-and-pre-building}
+## npm을 이용한 디펜던시 임포트 그리고 사전 번들링 {#npm-dependency-resolving-and-pre-building}
 
 다음 코드는 네이티브 ES에서 정상적으로 실행되지 않습니다:
 
@@ -28,7 +28,7 @@ vite는 기본적으로 ESM를 통해 [HMR API](./api-hmr)를 제공합니다. H
 
 ## TypeScript {#typescript}
 
-vite는 `.ts` 파일에 대한 컴파일링 및 Import 역시 지원합니다.
+vite는 `.ts` 파일에 대한 컴파일링 및 임포트 역시 지원합니다.
 
 ### 트랜스파일만 수행 {#transpile-only}
 
@@ -65,7 +65,7 @@ export type { T }
 
 이를 감지하기 위해 `tsconfig.json` 내 `compilerOptions` 설정을 `"isolatedModules": true`와 같이 설정해줘야만 하며, 이 설정으로 TS가 위와 같은 상황에서 작동하지 않는 기능들에 대해 경고할 수 있게 됩니다.
 
-일부 라이브러리는 `"isolatedModules": true`로 설정할 경우 타입 체크가 정상적으로 동작하지 않습니다. 이러한 경우에는 해당 모듈이 이슈를 수정할 때 까지 `"skipLibCheck": true`를 사용해 오류가 발생되지 않도록 해주세요.
+일부 라이브러리는 `"isolatedModules": true`로 설정할 경우 타입 체크가 정상적으로 동작하지 않습니다. 이러한 경우에는 해당 모듈이 이슈를 수정할 때까지 `"skipLibCheck": true`를 사용해 오류가 발생되지 않도록 해주세요.
 
 #### `useDefineForClassFields` {#usedefineforclassfields}
 
@@ -88,12 +88,13 @@ Vite 2.5.0 부터는 TypeScript의 변환 대상이 `ESNext` 또는 `ES2022` 이
 
 - [TypeScript 문서](https://www.typescriptlang.org/tsconfig#target)
 
-Vite는 `esbuild`와 동일하게 기본적으로 설정된 `target` 값으로 TypeScript를 트랜스파일하지 않습니다.
+Vite는 `esbuild`와 동일하게 `tsconfig.json` 내 `target` 값을 무시합니다.
 
-이 대신 [`esbuild.target`](/config/shared-options.html#esbuild) 옵션을 사용할 수 있으며, 이는 최소한의 트랜스파일링을 위해 `esnext`로 기본 설정되어 있습니다. 빌드 시, 높은 우선순위를 갖는 [`build.target`](/config/build-options.html#build-target) 옵션을 사용할 수도 있습니다.
+개발 시 `target`을 지정하고자 한다면 [`esbuild.target`](/config/shared-options.html#esbuild) 옵션을 사용할 수 있으며, 최소한의 트랜스파일링을 위해 `esnext`로 기본 설정되어 있습니다. 빌드 시 `esbuild.target`보다 높은 우선순위를 갖는 [`build.target`](/config/build-options.html#build-target) 옵션을 사용할 수도 있습니다.
 
 ::: warning `useDefineForClassFields`
-`target`이 `ESNext` 또는 `ES2022` 이상이 아니거나, `tsconfig.json` 파일이 존재하지 않는 경우, `useDefineForClassFields`는 기본적으로 `false`로 설정되는데, 이를 `esbuild.target`의 기본값인 `esnext`와 함께 사용할 경우 문제가 발생할 수 있습니다. 이는 [정적 초기화 블록](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks#browser_compatibility)으로 트랜스파일링되어 브라우저에서 지원되지 않을 수 있기 때문입니다.
+
+If `target` in `tsconfig.json` is not `ESNext` or `ES2022` or newer, or if there's no `tsconfig.json` file, `useDefineForClassFields` will default to `false` which can be problematic with the default `esbuild.target` value of `esnext`. It may transpile to [static initialization blocks](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks#browser_compatibility) which may not be supported in your browser.
 
 따라서, `target`을 `ESNext` 또는 `ES2022` 이상으로 설정하거나, `tsconfig.json`을 구성할 때 `useDefineForClassFields`를 명시적으로 `true`로 설정하는 것을 권장합니다.
 :::
@@ -125,7 +126,7 @@ vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 �
 
 또는 `tsconfig.json` 내 `compilerOptions.types` 옵션에 `vite/client`를 명시해 줄 수도 있습니다:
 
-```json
+```json [tsconfig.json]
 {
   "compilerOptions": {
     "types": ["vite/client"]
@@ -159,6 +160,50 @@ vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 �
 
 :::
 
+## HTML {#html}
+
+HTML 파일은 Vite 프로젝트에서 [중심적인 역할](/guide/#index-html-and-project-root)을 하며, 애플리케이션 진입점으로 사용됩니다. 이를 통해 단일 페이지 및 [다중 페이지 애플리케이션](/guide/build.html#multi-page-app)을 쉽게 구축할 수 있습니다.
+
+프로젝트 루트에 있는 모든 HTML 파일은 해당 디렉터리 경로로 직접 접근할 수 있습니다:
+
+- `<root>/index.html` -> `http://localhost:5173/`
+- `<root>/about.html` -> `http://localhost:5173/about.html`
+- `<root>/blog/index.html` -> `http://localhost:5173/blog/index.html`
+
+`<script type="module" src>`, `<link href>`와 같이 HTML 요소에서 참조되는 에셋들은 앱의 일부로 번들링됩니다. 지원되는 전체 요소 목록은 다음과 같습니다:
+
+- `<audio src>`
+- `<embed src>`
+- `<img src>` 및 `<img srcset>`
+- `<image src>`
+- `<input src>`
+- `<link href>` 및 `<link imagesrcset>`
+- `<object data>`
+- `<script type="module" src>`
+- `<source src>` 및 `<source srcset>`
+- `<track src>`
+- `<use href>` 및 `<use xlink:href>`
+- `<video src>` 및 `<video poster>`
+- `<meta content>`
+  - `name` 속성이 `msapplication-tileimage`, `msapplication-square70x70logo`, `msapplication-square150x150logo`, `msapplication-wide310x150logo`, `msapplication-square310x310logo`, `msapplication-config`, 또는 `twitter:image`와 일치하는 경우에만
+  - 또는 `property` 속성이 `og:image`, `og:image:url`, `og:image:secure_url`, `og:audio`, `og:audio:secure_url`, `og:video`, 또는 `og:video:secure_url`와 일치하는 경우에만
+
+```html {4-5,8-9}
+<!doctype html>
+<html>
+  <head>
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <img src="/src/images/logo.svg" alt="logo" />
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
+```
+
+특정 요소에 대해 HTML 처리를 비활성화하려면 해당 요소에 `vite-ignore` 속성을 추가할 수 있습니다. 이는 외부 에셋이나 CDN을 참조할 때 유용할 수 있습니다.
+
 ## Vue {#vue}
 
 vite는 기본적으로 Vue를 지원하고 있습니다.
@@ -176,8 +221,7 @@ Vue를 사용자들은 HMR, 글로벌 컴포넌트, 디렉티브 및 슬롯 등 
 
 React나 Vue를 사용하지 않는다 해도, [`esbuild` 옵션](/config/shared-options.md#esbuild)을 이용해 `jsxFactory`나 `jsxFragment`를 커스터마이징 할 수 있습니다. Preact를 예로 들어보자면 다음과 같습니다:
 
-```js twoslash
-// vite.config.js
+```js twoslash [vite.config.js]
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -192,8 +236,7 @@ export default defineConfig({
 
 참고로, Vite에서만 제공되는 옵션인 `jsxInject`를 이용해 JSX에 대한 헬퍼를 사용할 수도 있습니다.
 
-```js twoslash
-// vite.config.js
+```js twoslash [vite.config.js]
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -223,8 +266,7 @@ vite는 `postcss-import`를 이용해 CSS의 `@import`를 처리합니다. 또�
 
 `.module.css` 확장자로 끝나는 모든 CSS 파일들은 [CSS 모듈 파일](https://github.com/css-modules/css-modules)로 취급되며, 일반적인 JavaScript 모듈처럼 사용이 가능합니다.
 
-```css
-/* example.module.css */
+```css [example.module.css]
 .red {
   color: red;
 }
@@ -545,7 +587,7 @@ Glob 패턴과 관련하여 다음의 사항을 유의해주세요:
 
 - 이 기능들은 Vite에서 제공하는 기능입니다. (ES 표준이나 웹 브라우저에서 제공하는 기능이 아니에요.)
 - Glob 패턴 사용 시, 상대 경로(`./`) 또는 절대 경로(`/`) 또는 [`resolve.alias` 옵션](/config/shared-options.md#resolve-alias)을 통해 별칭으로 지정된 경로 만을 이용해야 합니다.
-- Glob 패턴 매칭은 [`fast-glob`](https://github.com/mrmlnc/fast-glob)을 이용합니다. 자세한 것은 [지원하는 Glob 패턴 목록](https://github.com/mrmlnc/fast-glob#pattern-syntax)을 참고해주세요.
+- Glob 패턴 매칭은 [`tinyglobby`](https://github.com/SuperchupuDev/tinyglobby)을 이용합니다.
 - `import.meta.glob`으로 전달되는 모든 인자는 **리터럴 값을 전달해야 합니다**. 변수나 표현식을 사용할 수 없습니다.
 
 ## 동적 Import {#dynamic-import}
@@ -663,7 +705,7 @@ const worker = new Worker(new URL('./worker.js', import.meta.url), {
 
 ### 쿼리 접미사를 통해 가져오기 {#import-with-query-suffixes}
 
-웹 워커 스크립트는 `?worker` 또는 `?sharedworker` 접미사를 붙여 가져올 수 있습니다. 모듈의 `export default` 로는 워커의 생성자가 들어가게 됩니다.
+웹 워커 스크립트는 `?worker` 또는 `?sharedworker` 접미사를 붙여 임포트할 수 있습니다. 모듈의 `export default`로는 워커의 생성자가 들어가게 됩니다.
 
 ```js twoslash
 import 'vite/client'

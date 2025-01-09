@@ -1,4 +1,4 @@
-# 서버 측 렌더링 (SSR) {#server-side-rendering}
+# 서버 측 렌더링 (SSR) {#server-side-rendering-ssr}
 
 :::tip 참고
 SSR은 동일한 전체 사이트를 Node.js에서 동작시키고, 이를 HTML로 사전 렌더링 한 후, 마지막으로 이를 클라이언트의 프런트엔드 프레임워크(가령 React, Preact, Vue 및 Svelte와 같은)에서 가져오도록 하는 기능입니다. 만약 기존에 사용하고 있었던 서버 사이드 프레임워크와의 연동을 원한다면 [백엔드 프레임워크와 함께 사용하기](./backend-integration)를 참고하시기 바랍니다.
@@ -9,7 +9,7 @@ SSR은 동일한 전체 사이트를 Node.js에서 동작시키고, 이를 HTML�
 :::warning 저수준 API
 이 내용은 라이브러리 및 프레임워크 개발자들을 위한 저수준 API 입니다. 만약 일반적인 애플리케이션을 만드는 것이 목적이라면, 먼저 [Awesome Vite SSR](https://github.com/vitejs/awesome-vite#ssr)에서 SSR 플러그인과 관련 툴을 확인해주세요. Vite의 저수준의 네이티브 API 기반으로 많은 수의 프로젝트들이 성공적으로 구축되어 있습니다.
 
-현재 Vite는 [Environment API](https://github.com/vitejs/vite/discussions/16358)를 통해 개선된 SSR API를 개발 중입니다. 자세한 내용은 링크를 확인해 주세요.
+현재 Vite는 [환경 API](https://github.com/vitejs/vite/discussions/16358)를 통해 개선된 SSR API를 개발 중입니다. 자세한 내용은 링크를 확인해 주세요.
 :::
 
 :::tip Help
@@ -44,7 +44,7 @@ Vite는 서버 측 렌더링(SSR, Server-side Rendering)을 기본적으로 지�
 
 `index.html`은 `entry-client.js`를 반드시 참조해야 하며, 서버에서 렌더링된 페이지를 삽입해야 하는 자리 표시자를 포함해야 합니다:
 
-```html
+```html [index.html]
 <div id="app"><!--ssr-outlet--></div>
 <script type="module" src="/src/entry-client.js"></script>
 ```
@@ -67,11 +67,9 @@ if (import.meta.env.SSR) {
 
 ## 개발 서버 구성하기 {#setting-up-the-dev-server}
 
-SSR 앱을 빌드할 때, 메인 서버를 완전히 제어하고 Vite를 프로덕션 환경에서 분리하고자 한다면 어떻게 해야 할까요? 가장 좋은 방법은, Vite를 미들웨어 모드로 사용하는 것입니다. 가령 [Express](https://expressjs.com/)를 예로 들자면:
+SSR 앱을 빌드할 때, 메인 서버를 완전히 제어하고 Vite를 프로덕션 환경에서 분리하고자 한다면 어떻게 해야 할까요? 가장 좋은 방법은, Vite를 미들웨어 모드로 사용하는 것입니다. 가령 [express](https://expressjs.com/)(v4)를 예로 들자면:
 
-**server.js**
-
-```js{15-18} twoslash
+```js{15-18} twoslash [server.js]
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -113,7 +111,7 @@ createServer()
 
 다음 단계는 서버에서 렌더링된 HTML을 제공하기 위해 `*` 핸들러를 구현하는 것입니다:
 
-```js twoslash
+```js twoslash [server.js]
 // @noErrors
 import fs from 'node:fs'
 import path from 'node:path'
@@ -137,7 +135,7 @@ app.use('*', async (req, res, next) => {
 
     // 2. Vite의 HTML 변환 작업을 통해 Vite HMR 클라이언트를 주입하고,
     //    Vite 플러그인의 HTML 변환도 적용합니다.
-    //    (예시: @vitejs/plugin-react의 Global Preambles)
+    //    (예: @vitejs/plugin-react의 전역 초기화 코드)
     template = await vite.transformIndexHtml(url, template)
 
     // 3. 서버의 진입점(Entry)을 로드합니다.
@@ -151,7 +149,7 @@ app.use('*', async (req, res, next) => {
     const appHtml = await render(url)
 
     // 5. 렌더링된 HTML을 템플릿에 주입합니다.
-    const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+    const html = template.replace(`<!--ssr-outlet-->`, () => appHtml)
 
     // 6. 렌더링된 HTML을 응답으로 전송합니다.
     res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
@@ -166,7 +164,7 @@ app.use('*', async (req, res, next) => {
 
 `package.json`의 `dev` 스크립트도 서버 스크립트를 사용하도록 변경해줍니다:
 
-```diff
+```diff [package.json]
   "scripts": {
 -   "dev": "vite"
 +   "dev": "node server"
@@ -182,7 +180,7 @@ SSR 프로젝트를 프로덕션으로 제공하기 위해서는 다음이 필�
 
 이를 위한 `package.json`의 스크립트는 다음과 같습니다:
 
-```json
+```json [package.json]
 {
   "scripts": {
     "dev": "node server",
@@ -219,8 +217,7 @@ SSR 프로젝트를 프로덕션으로 제공하기 위해서는 다음이 필�
 
 `@vitejs/plugin-vue`는 이를 이미 지원하고 있으며, 사용된 컴포넌트의 모듈 ID를 연결된 Vue SSR 컨텍스트에 자동으로 등록하도록 합니다:
 
-```js
-// src/entry-server.js
+```js [src/entry-server.js]
 const ctx = {}
 const html = await vueServerRenderer.renderToString(app, ctx)
 // ctx.modules는 이제 렌더링 중에 사용된 모듈 ID의 집합(Set)입니다.

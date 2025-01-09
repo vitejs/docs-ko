@@ -6,7 +6,7 @@
 - NPM 또는 NPM 스크립트를 실행할 수 있는 Yarn과 같은 패키지 매니저를 사용하고 있습니다.
 - vite는 로컬 PC에 존재하는 프로젝트에 개발용(Dev) 디펜던시로 설치된 상태이며, 아래와 같이 NPM 스크립트를 설정한 상태입니다.
 
-```json
+```json [package.json]
 {
   "scripts": {
     "build": "vite build",
@@ -43,7 +43,7 @@ $ npm run preview
 
 만약 특정 포트를 지정하고자 한다면 `--port` 옵션을 이용해주세요.
 
-```json
+```json [package.json]
 {
   "scripts": {
     "preview": "vite preview --port 8080"
@@ -127,7 +127,7 @@ $ npm run preview
 
 2. 아래와 같은 내용으로 프로젝트의 루트에 `.gitlab-ci.yml` 파일을 생성해주세요. 이와 같이 설정하게 되면, 콘텐츠가 변경될 때마다 사이트가 빌드 및 배포됩니다.
 
-   ```yaml
+   ```yaml [.gitlab-ci.yml]
    image: node:16.5.0
    pages:
      stage: deploy
@@ -257,9 +257,7 @@ $ npx wrangler pages deploy dist
 
 2. 아래와 같은 내용으로 프로젝트 루트에 `firebase.json` 및 `.firebaserc` 파일을 생성해주세요.
 
-   `firebase.json`:
-
-    ```json
+    ```json [firebase.json]
     {
       "hosting": {
         "public": "dist",
@@ -274,9 +272,7 @@ $ npx wrangler pages deploy dist
     }
     ```
 
-    `.firebaserc`:
-
-    ```js
+    ```js [.firebaserc]
     {
       "projects": {
         "default": "<YOUR_FIREBASE_ID>"
@@ -322,7 +318,7 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 
 4. 프로젝트 이름과 브랜치를 지정합니다.
 
-   - **Build Command**: `npm run build`
+   - **Build Command**: `npm install && npm run build`
    - **Publish Directory**: `dist`
 
 5. **Create Static Site**를 클릭합니다.

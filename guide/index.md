@@ -6,11 +6,11 @@
 
 ## 들어가기 전에 {#overview}
 
-Vite(프랑스어로 "빠르다(Quick)"를 의미하며, 발음은 "veet"와 비슷한 `/vit/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="/voice.svg#voice" /></svg></button> 입니다.)는 빠르고 간결한 모던 웹 프로젝트 개발 경험에 초점을 맞춰 탄생한 빌드 도구이며, 두 가지 컨셉을 중심으로 하고 있습니다.
+Vite(프랑스어로 "빠르다(Quick)"를 의미하며, 발음은 "veet"와 비슷한 `/vit/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="/voice.svg#voice" /></svg></button> 입니다.)는 빠르고 간결한 모던 웹 프로젝트 개발 경험에 초점을 맞춰 탄생한 빌드 도구이며, 두 가지 컨셉을 중심으로 하고 있습니다:
 
 - 개발 시 [네이티브 ES Module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 넘어 [더욱 다양한 기능](./features)을 제공합니다. 가령, [Hot Module Replacement (HMR)](./features#hot-module-replacement)과 같은 것들 말이죠.
 
-- 번들링 시, [Rollup](https://rollupjs.org) 기반의 다양한 빌드 커맨드를 사용할 수 있습니다. 이는 높은 수준으로 최적화된 정적(Static) 리소스들을 배포할 수 있게끔 하며, 미리 정의된 설정(Pre-configured)을 제공합니다.
+- 번들링 시, [Rollup](https://rollupjs.org) 기반의 다양한 빌드 커맨드를 사용할 수 있습니다. 이는 높은 수준으로 최적화된 정적 리소스들을 배포할 수 있게끔 하며, 미리 정의된 설정을 제공합니다.
 
 Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./features)에서 더 자세히 알아보세요. 프레임워크 지원이나 다른 도구와의 통합은 [플러그인](./using-plugins)을 통해 가능합니다. [Vite 설정하기 섹션](../config/)에서는 필요에 따라 프로젝트에 Vite를 적용하는 방법을 설명합니다.
 
@@ -49,7 +49,7 @@ Vite는 버전 18+ 또는 20+ 의 [Node.js](https://nodejs.org/)를 요구합니
 
 ::: code-group
 
-```bash [NPM]
+```bash [npm]
 $ npm create vite@latest
 ```
 
@@ -57,7 +57,7 @@ $ npm create vite@latest
 $ yarn create vite
 ```
 
-```bash [PNPM]
+```bash [pnpm]
 $ pnpm create vite
 ```
 
@@ -73,7 +73,7 @@ $ bun create vite
 
 ::: code-group
 
-```bash [NPM]
+```bash [npm]
 # npm v7 이상에서는 `--` 를 반드시 붙여주세요:
 $ npm create vite@latest my-vue-app -- --template vue
 ```
@@ -82,7 +82,7 @@ $ npm create vite@latest my-vue-app -- --template vue
 $ yarn create vite my-vue-app --template vue
 ```
 
-```bash [PNPM]
+```bash [pnpm]
 $ pnpm create vite my-vue-app --template vue
 ```
 
@@ -112,13 +112,13 @@ npm install
 npm run dev
 ```
 
-## Manual Installation {#manual-installation}
+## 수동 설치 {#manual-installation}
 
 프로젝트 내에서 `vite` CLI를 설치할 수 있습니다:
 
 ::: code-group
 
-```bash [NPM]
+```bash [npm]
 $ npm install -D vite
 ```
 
@@ -126,7 +126,7 @@ $ npm install -D vite
 $ yarn add -D vite
 ```
 
-```bash [PNPM]
+```bash [pnpm]
 $ pnpm add -D vite
 ```
 
@@ -142,11 +142,27 @@ $ bun add -D vite
 <p>Hello Vite!</p>
 ```
 
-이후 터미널에서 `vite` CLI를 실행해주세요:
+이후 아래 CLI 명령을 터미널에서 실행합니다:
 
-```bash
-vite
+::: code-group
+
+```bash [npm]
+$ npx vite
 ```
+
+```bash [Yarn]
+$ yarn vite
+```
+
+```bash [pnpm]
+$ pnpm vite
+```
+
+```bash [Bun]
+$ bunx vite
+```
+
+:::
 
 이제 `http://localhost:5173`에서 `index.html` 파일을 확인할 수 있습니다.
 
@@ -170,7 +186,7 @@ Vite는 정적(Static) HTTP 서버와 비슷하게 "루트 디렉터리"라는 �
 vite가 설치된 프로젝트는 `vite` 명령을 통해 바로 Vite를 실행할 수 있습니다. (`npx vite`을 이용해도 되구요.) 기본적으로 Vite에서 제공하는 npm 스크립트는 아래와 같습니다.
 
 <!-- prettier-ignore -->
-```json
+```json [package.json]
 {
   "scripts": {
     "dev": "vite", // 개발 서버를 실행합니다. (`vite dev` 또는 `vite serve`로도 시작이 가능합니다.)

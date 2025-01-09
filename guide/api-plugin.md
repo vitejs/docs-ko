@@ -42,8 +42,7 @@ Vite는 확립된 패턴을 제공하기 위해 노력하고 있습니다. 따�
 
 프로젝트의 `devDependencies`에 플러그인을 추가한 뒤, Vite 설정 파일의 `plugins` 배열 옵션을 사용해 플러그인을 구성할 수 있습니다.
 
-```js
-// vite.config.js
+```js [vite.config.js]
 import vitePlugin from 'vite-plugin-feature'
 import rollupPlugin from 'rollup-plugin-feature'
 
@@ -66,8 +65,7 @@ export default function framework(config) {
 }
 ```
 
-```js
-// vite.config.js
+```js [vite.config.js]
 import { defineConfig } from 'vite'
 import framework from 'vite-plugin-framework'
 
@@ -519,8 +517,7 @@ apply(config, { command }) {
 
 물론 Vite 전용 프로퍼티로 기존 Rollup 플러그인을 보강할 수도 있습니다:
 
-```js
-// vite.config.js
+```js [vite.config.js]
 import example from 'rollup-plugin-example'
 import { defineConfig } from 'vite'
 
@@ -560,8 +557,7 @@ Vite 2.9부터 클라이언트와의 통신을 처리하는 데 도움이 되는
 
 플러그인 측에서는 `server.ws.send`를 사용해 이벤트를 클라이언트에게 브로드캐스트 할 수 있습니다:
 
-```js
-// vite.config.js
+```js [vite.config.js]
 export default defineConfig({
   plugins: [
     {
@@ -606,8 +602,7 @@ if (import.meta.hot) {
 
 서버에서는 `server.ws.on`을 사용해 이벤트를 수신합니다:
 
-```js
-// vite.config.js
+```js [vite.config.js]
 export default defineConfig({
   plugins: [
     {
@@ -632,8 +627,7 @@ export default defineConfig({
 TypeScript 선언 파일을 가져올 때 `.d.ts` 확장자를 포함해야 합니다. 그렇지 않으면 확장하려는 모듈이 어떤 파일에 존재하는지 TypeScript가 알지 못할 수 있습니다.
 :::
 
-```ts
-// events.d.ts
+```ts [events.d.ts]
 import 'vite/types/customEvent.d.ts'
 
 declare module 'vite/types/customEvent.d.ts' {

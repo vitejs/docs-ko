@@ -1,246 +1,154 @@
-# v4에서 마이그레이션하기 {#migration-from-v4}
+# v5에서 마이그레이션하기 {#migration-from-v5}
 
-## Node.js 지원 {#node-js-support}
+## 환경 API {#environment-api}
 
-Vite는 더 이상 EOL에 도달한 Node.js 14 / 16 / 17 / 19를 지원하지 않습니다. Node.js 18 / 20+이 필요합니다.
+실험적이고 새로운 [환경 API](/guide/api-environment.md)를 위해 커다란 내부 리팩토링이 필요했습니다. 그럼에도 Vite 6는 프로젝트 대부분이 새로운 메이저 버전으로 빠르게 업그레이드할 수 있도록 호환성을 유지하고자 노력했습니다. 우리는 생태계가 새로운 API를 준비하고 사용할 때까지 기다릴 예정입니다. 일부 엣지 케이스가 있을 수는 있지만, 저수준 API를 사용하는 프레임워크 및 도구에 대해서만 영향을 미칠 것입니다. 릴리스 전 생태계 내 메인테이너들과 협력하여 이러한 차이를 완화하기 위해 노력했습니다. 만약 문제점을 발견하셨다면 [이슈를 생성](https://github.com/vitejs/vite/issues/new?assignees=&labels=pending+triage&projects=&template=bug_report.yml)해 주세요.
 
-## Rollup 4 {#rollup-4}
+Vite 구현 변경으로 인해 내부 API 중 일부가 제거되었습니다. 이러한 API를 사용하고 계셨다면, [기능 요청](https://github.com/vitejs/vite/issues/new?assignees=&labels=enhancement%3A+pending+triage&projects=&template=feature_request.yml)을 생성해 주세요.
 
-Vite는 이제 Rollup 4를 사용하며, 이 변경 사항은 특정 부분에 영향을 끼칠 수 있습니다.    
+## Vite 런타임 API {#vite-runtime-api}
 
-- Import assertion(`assertions` 속성)은 import attributes(`attributes` 속성)으로 표현을 바꾸었습니다.
-- Acorn 플러그인을 더 이상 지원하지 않습니다.
-- Vite 플러그인의 `this.resolve` `skipSelf` 옵션은 이제 기본적으로 `true`입니다.
-- Vite 플러그인의 `this.parse`는 현재 일시적으로 `allowReturnOutsideFunction` 옵션만을 지원합니다.  
+실험적인 Vite 런타임 API는 모듈 러너 API로 발전했으며, Vite 6에서 새롭고 실험적인 [환경 API](/guide/api-environment)의 일부로 릴리스되었습니다. Vite 5.1에서 도입된 API가 실험적인 기능이었음을 고려할 때, 이를 제거하는 것이 호환성을 깨뜨리는 변경 사항까지는 아니지만, Vite 6로 마이그레이션하기 위해 모듈 러너에 해당하는 기능으로 업데이트해야 합니다.
 
-[`build.rollupOptions`](/config/build-options.md#build-rollupoptions)에서 빌드와 관련되어 바뀐 부분을 확인하려면, [Rollup 4 릴리스 노트](https://github.com/rollup/rollup/releases/tag/v4.0.0)의 변경 사항을 참고해 주세요.
+## 일반적인 변경 사항 {#general-changes}
 
-TypeScript를 사용한다면, Rollup 4에서 요구하는 것과 같이 `moduleResolution: 'bundler'` (또는 `node16`/`nodenext`)를 설정해 주세요. 또는 `skipLibCheck: true`를 설정할 수도 있습니다.
+### `resolve.conditions` 기본값 {#default-value-for-resolve-conditions}
 
-## CJS Node API 사용 중단 {#deprecate-cjs-node-api}
+이 변경 사항은 [`resolve.conditions`](/config/shared-options#resolve-conditions) / [`ssr.resolve.conditions`](/config/ssr-options#ssr-resolve-conditions) / [`ssr.resolve.externalConditions`](/config/ssr-options#ssr-resolve-externalconditions)를 설정하지 않은 사용자에게는 영향을 미치지 않습니다.
 
-Vite의 CJS Node API는 더 이상 제공되지 않습니다. `require('vite')` 호출 시 경고가 나타나며, 이 대신 파일이나 프레임워크를 업데이트하여 Vite의 ESM 빌드를 가져오도록 해야 합니다.
+Vite 5에서 `resolve.conditions` 기본값은 `[]`였으며, 일부 조건들이 내부적으로 추가되었습니다. 참고로 `ssr.resolve.conditions`는 `resolve.conditions` 값을 기본값으로 사용했었습니다.
 
-표준 Vite 프로젝트에서 다음을 확인해 주세요:
+Vite 6부터는 일부 조건들이 더 이상 내부적으로 추가되지 않으며, 항상 설정에 명시해야 합니다.
+이 조건들은 다음과 같습니다:
 
-1. `vite.config.js` 파일에서 ESM 문법을 사용하고 있습니다.
-2. 가장 가까운 `package.json` 파일에 `"type": "module"`이 있거나 `.mjs`/`.mts` 확장자(예: `vite.config.mjs` 또는 `vite.config.mts`)를 사용하고 있습니다.
+- `resolve.conditions`: `['module', 'browser', 'development|production']`
+- `ssr.resolve.conditions`: `['module', 'node', 'development|production']`
 
-다른 프로젝트의 경우, 몇 가지 일반적인 접근 방식이 있습니다:
+다만 이 값들은 이제 기본값이며, `ssr.resolve.conditions`는 더 이상 `resolve.conditions`를 사용하지 않습니다. 참고로 `development|production`은 `process.env.NODE_ENV` 값에 따라 `production` 또는 `development`로 대체되는 특별한 변수입니다. 이러한 기본값들은 `vite`에서 `defaultClientConditions`와 `defaultServerConditions`로 제공됩니다.
 
-- **ESM을 기본값으로 설정하고, 필요한 경우 CJS를 사용:** 프로젝트 `package.json`에 `"type": "module"`을 추가하세요. 이후 모든 `*.js` 파일은 ESM으로 해석되며 ESM 문법을 사용해야 합니다. 다만 확장자가 `.cjs`인 파일은 CJS로 해석됩니다.
-- **CJS를 기본값으로 유지하고, 필요한 경우 ESM을 사용:** 프로젝트 `package.json`에 `"type": "module"`이 없다면, 모든 `*.js` 파일은 CJS로 해석됩니다. 다만 확장자가 `.mjs`인 파일은 ESM으로 해석됩니다.
-- **Vite를 동적으로 임포트:** CJS를 계속 사용해야 하는 경우, `import('vite')`를 사용하여 Vite를 동적으로 임포트할 수 있습니다. 이를 위해 코드가 `async` 컨텍스트에서 작성되어야 하지만, Vite의 API가 대부분 비동기적이기 때문에 일반적으로 문제가 되지 않습니다.
+만약 `resolve.conditions` 또는 `ssr.resolve.conditions`에 대해 커스텀 값을 지정했다면, 새로운 조건들을 포함하도록 업데이트해야 합니다.
+예를 들어, 이전에 `resolve.conditions`에 대해 `['custom']`을 지정했다면, 대신 `['custom', ...defaultClientConditions]`를 지정해야 합니다.
 
-자세한 내용은 [트러블슈팅 가이드](/guide/troubleshooting.html#vite-cjs-node-api-deprecated)를 참조하세요.
+### JSON stringify {#json-stringify}
 
-## `define` 및 `import.meta.env.*` 치환 방식 변경 {#rework-define-and-import-meta-env-replacement-strategy}
+Vite 5에서는 [`json.stringify: true`](/config/shared-options#json-stringify)가 설정되면 [`json.namedExports`](/config/shared-options#json-namedexports)가 비활성화되었습니다.
 
-Vite 4에서 [`define`](/config/shared-options.md#define) 및 [`import.meta.env.*`](/guide/env-and-mode.md#env-variables) 기능은 개발과 빌드 단계에서 서로 다른 치환 방식을 사용하고 있습니다:
+Vite 6부터는 `json.stringify: true`가 설정되어 있어도 `json.namedExports`가 비활성화되지 않으며, 설정을 유지합니다. 이전 동작을 유지하고 싶다면 `json.namedExports: false`로 설정해 주세요.
 
-- 개발 단계에서는 두 기능 모두 `globalThis`와 `import.meta`에 전역 변수로 주입됩니다.
-- 빌드 단계에서는 두 기능 모두 정규식을 사용하여 정적으로 치환됩니다.
+또한 Vite 6는 `json.stringify`의 새로운 기본값으로, 커다란 JSON 파일만 문자열화하는 `'auto'`를 추가했습니다. 이 동작을 비활성화하려면 `json.stringify: false`로 설정하세요.
 
-이에 따라 변수 접근 시 개발과 빌드 단계에서 일관성이 없어지며, 때로는 빌드가 실패하기도 합니다. 예를 들어:
+### HTML 요소에 대한 에셋 참조 지원 확장 {#extended-support-of-asset-references-in-html-elements}
 
-```js
-// vite.config.js
-export default defineConfig({
-  define: {
-    __APP_VERSION__: JSON.stringify('1.0.0'),
-  },
-})
-```
+Vite 5에서는 `<link href>`, `<img src>` 등과 같이 Vite에서 처리하고 번들링할 에셋을 참조할 수 있는 HTML 요소는 한정적이었습니다.
 
-```js
-const data = { __APP_VERSION__ }
-// dev: { __APP_VERSION__: "1.0.0" } ✅
-// build: { "1.0.0" } ❌
+Vite 6는 더 많은 HTML 요소에 대해 이와 같은 기능을 지원합니다. 전체 목록은 [HTML 기능](/guide/features.html#html) 문서를 확인해 주세요.
 
-const docs = 'I like import.meta.env.MODE'
-// dev: "I like import.meta.env.MODE" ✅
-// build: "I like "production"" ❌
-```
+특정 요소에 대해 HTML 처리를 비활성화하려면, 해당 요소에 `vite-ignore` 속성을 추가해 가능합니다.
 
-Vite 5에서는 `esbuild`를 사용해 빌드 시 치환하는 방식으로 일관성을 유지하도록 하였습니다.
+### postcss-load-config {#postcss-load-config}
 
-이 변경 사항은 대부분의 환경설정에는 영향을 미치지 않습니다. 이미 `define` 값은 esbuild의 문법을 따라야 한다는 사실이 문서화되어 있기 때문입니다:
+[`postcss-load-config`](https://npmjs.com/package/postcss-load-config)가 v4에서 v6로 업데이트되었습니다. TypeScript postcss 설정 파일을 로드하기 위해 [`ts-node`](https://www.npmjs.com/package/ts-node) 대신 [`tsx`](https://www.npmjs.com/package/tsx) 또는 [`jiti`](https://www.npmjs.com/package/jiti)가 필요합니다. 또한 YAML postcss 설정 파일을 로드하기 위해 [`yaml`](https://www.npmjs.com/package/yaml)이 필요합니다.
 
-> esbuild와의 일관성을 유지하기 위해, 표현식은 JSON 객체(null, boolean, number, string, array, 또는 object)이거나 단일 식별자여야 합니다.
+### Sass는 이제 기본적으로 모던 API를 사용합니다 {#sass-now-uses-modern-api-by-default}
 
-만약 값을 직접 정적으로 치환하는 것을 선호한다면, [`@rollup/plugin-replace`](https://github.com/rollup/plugins/tree/master/packages/replace) 플러그인을 사용해 주세요.
+Vite 5에서는 Sass에 대해 기본적으로 레거시 API가 사용되었습니다. Vite 5.4에서 모던 API에 대한 지원이 추가되었습니다.
 
-## 일반 변경 사항 {#general-changes}
+Vite 6부터는 Sass에 대해 기본적으로 모던 API가 사용됩니다. 여전히 레거시 API를 사용하고 싶다면 [`css.preprocessorOptions.sass.api: 'legacy'` / `css.preprocessorOptions.scss.api: 'legacy'`](/config/shared-options#css-preprocessoroptions)로 설정해 주세요. 단, 레거시 API 지원은 Vite 7에서 제거될 예정입니다.
 
-### 이제 SSR 외부화 모듈은 프로덕션과 일치 {#ssr-externalized-modules-value-now-matches-production}
+모던 API로 마이그레이션하려면 [Sass 문서](https://sass-lang.com/documentation/breaking-changes/legacy-js-api/)를 참고해 주세요.
 
-Vite 4에서는 상호 운용성을 위해 SSR 외부화 모듈이 `.default`와 `.__esModule`로 접근하도록 래핑 되었으나, 이는 런타임 환경(예: Note.js)에서 로드될 때 프로덕션에서의 동작과 일치하지 않았기에, 일관성 측면에서 파악하기 어려운 문제를 발생시켰습니다. 참고로 기본적으로 링크되지 않은 모든 프로젝트 디펜던시는 SSR 외부화됩니다.
+### 라이브러리 모드에서 CSS 출력 파일 이름 커스터마이징 {#customize-css-output-file-name-in-library-mode}
 
-Vite 5에서는 프로덕션과 일치하도록 `.default` 및 `.__esModule` 처리를 제거했습니다. 일반적으로 올바르게 패키징된 디펜던시에는 영향을 미치지 않으나, 모듈 로드에 문제가 발생하는 경우 다음 방법을 시도해 볼 수 있습니다:
+Vite 5에서는 라이브러리 모드의 CSS 출력 파일 이름이 항상 `style.css`였으며, Vite 설정으로는 쉽게 변경할 수 없었습니다.
 
-```js
-// Before:
-import { foo } from 'bar'
+Vite 6부터는 파일 이름이 JS 출력 파일과 유사하게 `package.json` "name"을 기본적으로 사용합니다. 또한 [`build.lib.fileName`](/config/build-options.md#build-lib)이 문자열로 설정된 경우, 해당 값이 CSS 출력 파일 이름에도 사용됩니다. CSS 파일 이름을 명시적으로 설정하려면, 새로운 옵션인 [`build.lib.cssFileName`](/config/build-options.md#build-lib)을 사용할 수 있습니다.
 
-// After:
-import _bar from 'bar'
-const { foo } = _bar
-```
+마이그레이션 시, `style.css` 파일 이름에 대해 의존성이 존재하는 경우, 패키지 이름을 기반으로 하는 새로운 이름으로 변경해야 합니다. 아래는 예시입니다:
 
-```js
-// Before:
-import foo from 'bar'
-
-// After:
-import * as _foo from 'bar'
-const foo = _foo.default
-```
-
-이 변경 사항은 Node.js 동작과 일치하므로, Node.js에서 임포트해 테스트할 수도 있습니다. 만약 이전 동작을 유지하고자 한다면, `legacy.proxySsrExternalModules`를 `true`로 설정하세요.
-
-### `worker.plugins` 옵션은 이제 함수를 전달받음 {#worker-plugins-is-now-a-function}
-
-Vite 4에서의 [`worker.plugins`](/config/worker-options.md#worker-plugins) 옵션은 플러그인의 배열(`(Plugin | Plugin[])[]`)을 전달받았습니다. Vite 5에서는 플러그인의 배열을 반환하는 함수(`() => (Plugin | Plugin[])[]`)를 전달해야 합니다. 병렬 워커 빌드를 보다 일관되고 예측 가능하게 실행하기 위해 이와 같이 변경되었습니다.
-
-### `.`를 포함하는 경로가 index.html로 폴백되도록 허용 {#allow-path-containing-to-fallback-to-index-html}
-
-Vite 4에서는 [`appType`](/config/shared-options.md#apptype)이 기본값인 `spa`로 설정되어 있더라도 `.`을 포함하는 경로에 접근하면 index.html로 폴백되지 않았습니다. Vite 5에서는 index.html로 폴백됩니다.
-
-이미지 경로를 존재하지 않는 파일(예: `<img src="./file-does-not-exist.png">`)로 지정해도 더 이상 브라우저에서 404 에러 메시지를 콘솔에 표시하지 않습니다.
-
-### 개발 및 프리뷰 단계에서의 HTML 동작 일치 {#align-dev-and-preview-html-serving-behaviour}
-
-Vite 4에서는 디렉터리 구조와 끝 슬래시에 따라 개발 서버와 프리뷰 서버가 HTML을 다르게 제공합니다. 이는 빌드된 앱을 테스트할 때 일관성을 떨어뜨리기 때문에, Vite 5에서는 하나의 동작으로 리팩토링 되었습니다. 예를 들어 다음과 같은 파일 구조가 있다고 가정했을 때, 아래 표와 같이 동작합니다:
-
-```
-├── index.html
-├── file.html
-└── dir
-    └── index.html
-```
-
-| 요청               | 이전 (개발)                    | 이전 (프리뷰)        | 이후 (개발 & 프리뷰)             |
-| ----------------- | ---------------------------- | ----------------- | ---------------------------- |
-| `/dir/index.html` | `/dir/index.html`            | `/dir/index.html` | `/dir/index.html`            |
-| `/dir`            | `/index.html` (SPA 폴백)      | `/dir/index.html` | `/index.html` (SPA 폴백)      |
-| `/dir/`           | `/dir/index.html`            | `/dir/index.html` | `/dir/index.html`            |
-| `/file.html`      | `/file.html`                 | `/file.html`      | `/file.html`                 |
-| `/file`           | `/index.html` (SPA 폴백)      | `/file.html`      | `/file.html`                 |
-| `/file/`          | `/index.html` (SPA 폴백)      | `/file.html`      | `/index.html` (SPA 폴백)      |
-
-### 매니페스트 파일은 이제 기본적으로 `.vite` 디렉터리에 생성됨 {#manifest-files-are-now-generated-in-vite-directory-by-default}
-
-Vite 4에서는 매니페스트 파일([`build.manifest`](/config/build-options.md#build-manifest)와 [`build.ssrManifest`](/config/build-options.md#build-ssrmanifest))이 기본적으로 `build.outDir`의 루트에 생성되었습니다.
-
-Vite 5에서는 [`build.outDir`](/config/build-options.md#build-outdir)의 `.vite` 디렉터리에 생성됩니다. 이 변경 사항은 동일한 매니페스트 파일 이름을 가진 public 파일이 `build.outDir`로 복사될 때 충돌을 방지하는 데 도움이 됩니다.
-
-### 매니페스트 파일의 최상위 항목으로 CSS 파일이 존재하지 않음 {#corresponding-css-files-are-not-listed-as-top-level-entry-in-manifest-json-file}
-
-Vite 4에서는 JavaScript 엔트리 포인트에 해당하는 CSS 파일이 매니페스트 파일([`build.manifest`](/config/build-options.md#build-manifest))의 최상위 항목으로도 존재했습니다. 이는 의도한 것이 아니며, 구조가 단순한 경우에만 정상적으로 동작합니다.
-
-Vite 5에서 해당 CSS 파일은 JavaScript 엔트리 파일 섹션 내에서만 찾을 수 있습니다(이해를 돕기 위해 동작하는 예시를 함께 첨부합니다. [Vite 4](https://stackblitz.com/edit/vitejs-vite-bydk8m?file=src%2Fmain.js&view=editor) / [Vite 5](https://stackblitz.com/edit/vitejs-vite-tuare3?file=src%2Fmain.js&view=editor) - 옮긴이).
-또한 JS 파일을 추가할 때, 관련된 CSS 파일도 [함께 추가되어야 합니다](/guide/backend-integration.md#:~:text=%3C!%2D%2D%20if%20production%20%2D%2D%3E%0A%3Clink%20rel%3D%22stylesheet%22%20href%3D%22/assets/%7B%7B%20manifest%5B%27main.js%27%5D.css%20%7D%7D%22%20/%3E%0A%3Cscript%20type%3D%22module%22%20src%3D%22/assets/%7B%7B%20manifest%5B%27main.js%27%5D.file%20%7D%7D%22%3E%3C/script%3E).
-만약 CSS 파일을 별도로 추가하는 경우, 별도의 엔트리 포인트를 이용해 주세요.
-
-### CLI 단축키는 `Enter`를 눌러 실행해야 함 {#cli-shortcuts-require-an-additional-enter-press}
-
-CLI 단축키(예: 개발 서버를 재시작하는 `r`)는 이제 명시적으로 `Enter`를 눌러야 실행됩니다. 예를 들어, 개발 서버를 재시작하려면 `r + Enter`를 누르면 됩니다.
-
-이 변경으로 Vite가 OS별 단축키를 무시하고 제어하는 것을 방지하며, Vite 개발 서버를 다른 프로세스와 결합할 때 더 나은 호환성을 제공할 수 있게 되고, [이전의 주의 사항](https://github.com/vitejs/vite/pull/14342)을 피할 수 있습니다.
-
-### `experimentalDecorators` 및 `useDefineForClassFields` TypeScript 동작 변경 {#update-experimentaldecorators-and-usedefineforclassfields-typescript-behaviour}
-
-Vite 5는 esbuild 0.19를 사용하며, esbuild 0.18의 호환성 계층도 제거해 [`experimentalDecorators`](https://www.typescriptlang.org/tsconfig#experimentalDecorators)와 [`useDefineForClassFields`](https://www.typescriptlang.org/tsconfig#useDefineForClassFields)가 처리되는 방식이 변경되었습니다.
-
-- **`experimentalDecorators`는 기본적으로 활성화되지 않습니다.**
-
-  데코레이터를 사용하려면 `tsconfig.json`의 `compilerOptions.experimentalDecorators`를 `true`로 설정해야 합니다.
-
-- **`useDefineForClassFields`의 기본값은 TypeScript `target` 값에 따라 달라집니다.**
-
-  `target`이 `ESNext` 또는 `ES2022` 이상이 아니거나, `tsconfig.json` 파일이 존재하지 않는 경우, `useDefineForClassFields`는 기본적으로 `false`로 설정되는데, 이를 `esbuild.target`의 기본값인 `esnext`와 함께 사용할 경우 문제가 발생할 수 있습니다. 이는 [정적 초기화 블록](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks#browser_compatibility)으로 트랜스파일링되어 브라우저에서 지원되지 않을 수 있기 때문입니다.
-
-  따라서, `target`을 `ESNext` 또는 `ES2022` 이상으로 설정하거나, `tsconfig.json`을 구성할 때 `useDefineForClassFields`를 명시적으로 `true`로 설정하는 것을 권장합니다.
-
-```jsonc
+```json [package.json]
 {
-  "compilerOptions": {
-    // 데코레이터를 사용하는 경우 true로 설정
-    "experimentalDecorators": true,
-    // 브라우저에서 구문 분석 오류가 발생하는 경우 true로 설정
-    "useDefineForClassFields": true,
-  },
+  "name": "my-lib",
+  "exports": {
+    "./style.css": "./dist/style.css" // [!code --]
+    "./style.css": "./dist/my-lib.css" // [!code ++]
+  }
 }
 ```
 
-### `--https` 플래그 및 `https: true` 설정 제거 {#remove-https-flag-and-https-true}
-
-`--https` 플래그는 내부적으로 `server.https: true`와 `preview.https: true`를 설정합니다. 이 설정은 [Vite 3에서 삭제되었던](https://v3.vite.dev/guide/migration.html#automatic-https-certificate-generation) HTTPS 인증서 자동 생성 기능과 함께 사용하기 위해 만들어졌는데, 이를 적용해도 Vite는 인증서 없이 HTTPS 서버를 시작하므로, 더 이상 의미가 없습니다.
-
-[`@vitejs/plugin-basic-ssl`](https://github.com/vitejs/vite-plugin-basic-ssl) 또는 [`vite-plugin-mkcert`](https://github.com/liuweiGL/vite-plugin-mkcert)를 사용하고 있다면, 이미 내부적으로 `https` 설정이 되어 있으므로, `--https`, `server.https: true`, `preview.https: true`를 제거해도 됩니다.
-
-### `resolvePackageEntry`와 `resolvePackageData` API 제거 {#remove-resolvepackageentry-and-resolvepackagedata-apis}
-
-`resolvePackageEntry`와 `resolvePackageData` API는 Vite의 내부를 노출해 Vite 4.3의 최적화를 잠재적으로 가로막았기에 제거되었습니다. 이 API는 다음과 같은 서드파티 패키지로 대체할 수 있습니다:
-
-- `resolvePackageEntry`: [`import.meta.resolve`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta/resolve) 또는 [`import-meta-resolve`](https://github.com/wooorm/import-meta-resolve) 패키지.
-- `resolvePackageData`: 위와 동일하며, 패키지 디렉터리를 크롤링하여 루트의 `package.json`을 가져옵니다. [`vitefu`](https://github.com/svitejs/vitefu) 커뮤니티 패키지를 사용할 수도 있습니다.
-
-```js
-import { resolve } from 'import-meta-resolve'
-import { findDepPkgJsonPath } from 'vitefu'
-import fs from 'node:fs'
-
-const pkg = 'my-lib'
-const basedir = process.cwd()
-
-// `resolvePackageEntry`:
-const packageEntry = resolve(pkg, basedir)
-
-// `resolvePackageData`:
-const packageJsonPath = findDepPkgJsonPath(pkg, basedir)
-const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
-```
-
-## 사용되지 않는 API 제거 {#removed-deprecated-apis}
-
-- CSS 파일의 기본 내보내기 (예: `import style from './foo.css'`): 이 대신 `?inline` 쿼리를 사용
-- `import.meta.globEager`: 이 대신 `import.meta.glob('*', { eager: true })`를 사용
-- `ssr.format: 'cjs`' 및 `legacy.buildSsrCjsExternalHeuristics` ([#13816](https://github.com/vitejs/vite/discussions/13816))
-- `server.middlewareMode: 'ssr'` 및 `server.middlewareMode: 'html'`: 이 대신 [`appType`](/config/shared-options.md#apptype) + [`server.middlewareMode: true`](/config/server-options.md#server-middlewaremode) 를 사용 ([#8452](https://github.com/vitejs/vite/pull/8452))
+이 대신 Vite 5에서와 같이 `style.css`를 유지하고자 한다면 `build.lib.cssFileName: 'style'`로 설정해 주세요.
 
 ## 고급 {#advanced}
 
-플러그인/도구 개발자에게만 영향을 미치는 변경 사항입니다.
+일부 사용자에게만 영향을 미치며, 호환성이 유지되지 않는 변경 사항들이 있습니다.
 
-- [[#14119] refactor!: merge `PreviewServerForHook` into `PreviewServer` type](https://github.com/vitejs/vite/pull/14119)
-  - `configurePreviewServer` 훅은 이제 `PreviewServerForHook` 타입이 아닌 `PreviewServer` 타입을 받습니다.
-- [[#14818] refactor(preview)!: use base middleware](https://github.com/vitejs/vite/pull/14818)
-  - `configurePreviewServer`의 반환 함수에서 추가된 미들웨어는 이제 `req.url` 값을 비교할 때 `base`에 접근할 수 없습니다. 이는 개발 서버와 일관된 동작을 할 수 있도록 합니다. 필요한 경우에는 `configResolved` 훅에서 `base`를 확인할 수 있습니다.
-- [[#14834] fix(types)!: expose httpServer with Http2SecureServer union](https://github.com/vitejs/vite/pull/14834)
-  - 이제 적절한 경우에 `http.Server | http2.Http2SecureServer`가 `http.Server` 대신 사용됩니다.
+- [[#17922] fix(css)!: remove default import in ssr dev](https://github.com/vitejs/vite/pull/17922)
+  - CSS 파일에 대한 `default import`는 [Vite 4에서 더 이상 사용되지 않음](https://v4.vite.dev/guide/migration.html#importing-css-as-a-string)으로 표시되었고, Vite 5에서도 제거되었지만, SSR 개발 모드에서는 의도치 않게 지원되고 있었습니다. 이 기능은 이제 제거되었습니다.
+- [[#15637] fix!: default `build.cssMinify` to `'esbuild'` for SSR](https://github.com/vitejs/vite/pull/15637)
+  - [`build.cssMinify`](/config/build-options#build-cssminify)는 이제 SSR 빌드에서도 기본적으로 활성화됩니다.
+- [[#18070] feat!: proxy bypass with WebSocket](https://github.com/vitejs/vite/pull/18070)
+  - `server.proxy[path].bypass`는 이제 WebSocket 업그레이드 요청에 대해서도 호출되며, 이 경우 `res` 매개변수는 `undefined`가 됩니다.
+- [[#18209] refactor!: bump minimal terser version to 5.16.0](https://github.com/vitejs/vite/pull/18209)
+  - [`build.minify: 'terser'`](/config/build-options#build-minify)에 대한 terser 버전이 5.4.0에서 5.16.0으로 업그레이드되었습니다.
+- [[#18231] chore(deps): update dependency @rollup/plugin-commonjs to v28](https://github.com/vitejs/vite/pull/18231)
+  - [`commonjsOptions.strictRequires`](https://github.com/rollup/plugins/blob/master/packages/commonjs/README.md#strictrequires)가 이제 기본적으로 `true`입니다(이전에는 `'auto'`).
+    - 이로 인해 번들 크기가 커질 수 있지만, 더 결정론적인 빌드(동일한 입력에 대해 동일한 출력이 보장되는 빌드 - 옮긴이)가 가능해집니다.
+    - CommonJS 파일을 진입점으로 지정하는 경우 추가 단계가 필요할 수 있습니다. 자세한 내용은 [commonjs 플러그인 문서](https://github.com/rollup/plugins/blob/master/packages/commonjs/README.md#using-commonjs-files-as-entry-points)를 참고하세요.
+- [[#18243] chore(deps)!: migrate `fast-glob` to `tinyglobby`](https://github.com/vitejs/vite/pull/18243)
+  - 범위 중괄호(`{01..03}` ⇒ `['01', '02', '03']`)와 증분 중괄호(`{2..8..2}` ⇒ `['2', '4', '6', '8']`)는 더 이상 glob에서 지원되지 않습니다.
+- [[#18395] feat(resolve)!: allow removing conditions](https://github.com/vitejs/vite/pull/18395)
+  - 이 PR은 위에서 언급한 "`resolve.conditions` 기본값" 호환성이 깨지는 변경 사항뿐만 아니라, SSR에서 외부화되지 않은 디펜던시에 대해 `resolve.mainFields`가 사용되지 않도록 합니다. `resolve.mainFields`를 사용하고 있고, 이를 SSR에서 외부화되지 않은 디펜던시에도 적용하고 싶다면, [`ssr.resolve.mainFields`](/config/ssr-options#ssr-resolve-mainfields)를 사용할 수 있습니다.
+- [[#18493] refactor!: remove fs.cachedChecks option](https://github.com/vitejs/vite/pull/18493)
+  - 캐시된 폴더에 파일을 작성하고 즉시 임포트할 때 발생하는 엣지 케이스로 인해, 이 최적화 옵션이 제거되었습니다.
+- [[#18697] fix(deps)!: update dependency dotenv-expand to v12](https://github.com/vitejs/vite/pull/18697)
+  - 이제 환경 변수 내에서 다른 환경 변수를 참조할 때, 참조되는 변수가 먼저 정의되어 있어야 합니다. 자세한 내용은 [`dotenv-expand` 변경 로그](https://github.com/motdotla/dotenv-expand/blob/v12.0.1/CHANGELOG.md#1200-2024-11-16)를 참고하세요.
+- [[#16471] feat: v6 - Environment API](https://github.com/vitejs/vite/pull/16471)
 
-이 외로, 몇몇 사용자에게만 영향을 미치는 변경 사항도 있습니다.
+  - 더 이상 SSR 전용 모듈에 대한 업데이트가 클라이언트에서 전체 페이지 리로드를 트리거하지 않습니다. 이전 동작으로 돌아가려면 커스텀 Vite 플러그인을 사용할 수 있습니다:
+    <details>
+    <summary>예제 코드 보기</summary>
 
-- [[#14098] fix!: avoid rewriting this (reverts #5312)](https://github.com/vitejs/vite/pull/14098)
-  - 빌드 시 최상위 `this`가 기본적으로 `globalThis`로 재작성되었는데, 이 동작은 이제 제거되었습니다.
-- [[#14231] feat!: add extension to internal virtual modules](https://github.com/vitejs/vite/pull/14231)
-  - 내부 가상 모듈의 id에 확장자(`.js`)가 추가되었습니다.
-- [[#14583] refactor!: remove exporting internal APIs](https://github.com/vitejs/vite/pull/14583)
-  - 실수로 Export 한 내부 API를 제거했습니다: `isDepsOptimizerEnabled`와 `getDepOptimizationConfig`
-  - Export 한 내부 API를 제거했습니다: `DepOptimizationResult`, `DepOptimizationProcessing`, 그리고 `DepsOptimizer`
-  - `ResolveWorkerOptions` 타입을 `ResolvedWorkerOptions`로 이름을 변경했습니다.
-- [[#5657] fix: return 404 for resources requests outside the base path](https://github.com/vitejs/vite/pull/5657)
-  - 과거 Vite가 `Accept: text/html`이 아닌 기본(Base) 경로 외부의 요청에 대해, 마치 기본 경로로 요청된 것처럼 응답했습니다. 이제 더 이상 그렇게 하지 않고 404로 응답합니다.
-- [[#14723] fix(resolve)!: remove special .mjs handling](https://github.com/vitejs/vite/pull/14723)
-  - 과거 라이브러리의 `"exports"` 필드가 `.mjs` 파일을 매핑하는 경우, Vite는 특정 라이브러리와의 호환성을 유지하기 위해 `"browser"`와 `"module"` 필드를 일치시키려고 시도했습니다. 이 동작은 이제 Export 식별 알고리즘과 일치하도록 제거되었습니다.
-- [[#14733] feat(resolve)!: remove `resolve.browserField`](https://github.com/vitejs/vite/pull/14733)
-  - `resolve.browserField` 필드는 Vite 3부터 [`resolve.mainFields`](/config/shared-options.md#resolve-mainfields)의 기본값인 `['browser', 'module', 'jsnext:main', 'jsnext']`로 대체되었습니다.
-- [[#14855] feat!: add isPreview to ConfigEnv and resolveConfig](https://github.com/vitejs/vite/pull/14855)
-  - `ConfigEnv` 객체의 `ssrBuild`의 이름을 `isSsrBuild`로 변경했습니다.
-- [[#14945] fix(css): correctly set manifest source name and emit CSS file](https://github.com/vitejs/vite/pull/14945)
-  - CSS 파일 이름은 이제 청크 이름을 기반으로 생성됩니다.
+    ```ts twoslash
+    import type { Plugin, EnvironmentModuleNode } from 'vite'
 
-## v3에서 마이그레이션하기 {#migration-from-v3}
+    function hmrReload(): Plugin {
+      return {
+        name: 'hmr-reload',
+        enforce: 'post',
+        hotUpdate: {
+          order: 'post',
+          handler({ modules, server, timestamp }) {
+            if (this.environment.name !== 'ssr') return
 
-먼저 [v3에서 마이그레이션하기 가이드](./migration-from-v3.md)를 확인하여 앱을 Vite v4로 이전하는 데 필요한 변경 사항을 확인하고, 그다음 이 페이지의 변경 사항을 진행하세요.
+            let hasSsrOnlyModules = false
+
+            const invalidatedModules = new Set<EnvironmentModuleNode>()
+            for (const mod of modules) {
+              if (mod.id == null) continue
+              const clientModule =
+                server.environments.client.moduleGraph.getModuleById(mod.id)
+              if (clientModule != null) continue
+
+              this.environment.moduleGraph.invalidateModule(
+                mod,
+                invalidatedModules,
+                timestamp,
+                true,
+              )
+              hasSsrOnlyModules = true
+            }
+
+            if (hasSsrOnlyModules) {
+              server.ws.send({ type: 'full-reload' })
+              return []
+            }
+          },
+        },
+      }
+    }
+    ```
+
+    </details>
+
+## v4에서 마이그레이션 {#migration-from-v4}
+
+먼저 Vite v5의 [v4에서 마이그레이션하기](https://v5.vite.dev/guide/migration.html) 문서를 확인해 앱을 Vite 5로 포팅하는 데 필요한 사항을 진행한 다음, 이 페이지에서 마이그레이션을 진행하세요.

@@ -1,5 +1,7 @@
 # 공용 옵션 {#shared-options}
 
+별도로 명시되지 않은 한, 이 섹션의 옵션들은 개발, 빌드, 그리고 프리뷰 모두에게 적용됩니다.
+
 ## root {#root}
 
 - **타입:** `string`
@@ -115,6 +117,7 @@ SSR 빌드의 경우, `build.rollupOptions.output`을 통해 구성된 ESM 빌�
 ## resolve.conditions {#resolve-conditions}
 
 - **타입:** `string[]`
+- **기본값:** `['module', 'browser', 'development|production']` (`defaultClientConditions`)
 
 패키지로부터 [조건부 내보내기](https://nodejs.org/api/packages.html#packages_conditional_exports)를 할 때, 추가적으로 허용되는 조건입니다.
 
@@ -133,7 +136,9 @@ SSR 빌드의 경우, `build.rollupOptions.output`을 통해 구성된 ESM 빌�
 
 여기에, `import`와 `require`는 "조건"입니다. 조건은 중첩될 수 있으며 구체적인 조건부터 덜 구체적인 조건까지 다양하게 지정될 수 있습니다.
 
-Vite 는 "허용되는 조건들"의 목록을 가지며 이것은 허용되는 목록 안의 첫 번째 조건과 매치됩니다. 기본적으로 허용되는 조건들은 `import`, `module`, `browser`, `default`, 그리고 현재 모드를 기반으로 한 `production/development` 입니다. `resolve.conditions` 설정 옵션은 추가로 허용되는 조건들을 지정하는 것을 허용합니다.
+`development|production`은 특별한 값으로, `process.env.NODE_ENV` 값에 따라 `production` 또는 `development`로 대체됩니다. `process.env.NODE_ENV === 'production'`일 때는 `production`으로, 그렇지 않으면 `development`로 대체됩니다.
+
+참고로 `import`, `require`, `default` 조건은 요구사항이 충족되면 항상 적용됩니다.
 
 :::warning 하위 경로 내보내기 키값
 "/"로 끝나는 `exports` 객체의 키값은 Node에서 더는 사용되지 않기 때문에 제대로 작동하지 않을 수 있습니다. 이 대신 [`*` 하위 경로 패턴](https://nodejs.org/api/packages.html#package-entry-points)을 사용할 수 있도록 사용하고 있는 패키지의 관리자에게 문의해주세요.
@@ -142,7 +147,7 @@ Vite 는 "허용되는 조건들"의 목록을 가지며 이것은 허용되는 
 ## resolve.mainFields {#resolve-mainfields}
 
 - **타입:** `string[]`
-- **기본값:** `['browser', 'module', 'jsnext:main', 'jsnext']`
+- **기본값:** `['browser', 'module', 'jsnext:main', 'jsnext']` (`defaultClientConditions`)
 
 패키지의 진입점을 확인할 때 시도할 `package.json`안의 필드 목록입니다. 이것은 `exports` 필드에서 처리되는 조건부 내보내기보다 우선순위가 낮습니다: 만약 진입점이 `exports`로부터 성공적으로 확인되면, 메인 필드는 무시될 것입니다.
 
@@ -211,11 +216,11 @@ CSS 모듈에 대한 설정입니다. 옵션들은 [postcss-modules](https://git
 
 - **타입:** `string | (postcss.ProcessOptions & { plugins?: postcss.AcceptedPlugin[] })`
 
-인라인 PostCSS 설정, 또는 PostCSS 설정을 검색할 사용자 지정 디렉터리(기본값은 프로젝트 루트)입니다.
+인라인 PostCSS 설정, 또는 PostCSS 설정을 검색할 커스텀 디렉터리(기본값은 프로젝트 루트)입니다.
 
 인라인 PostCSS 설정의 경우, `postcss.config.js`와 동일한 형식으로 작성해야 합니다. 다만 `plugins` 프로퍼티의 경우, 오로지 [array format](https://github.com/postcss/postcss-load-config/blob/main/README.md#array)만을 사용할 수 있습니다.
 
-검색은 [postcss-load-config](https://github.com/postcss/postcss-load-config)를 사용하여 수행되며, 지원되는 설정 파일 이름만 불러오게 됩니다.
+검색은 [postcss-load-config](https://github.com/postcss/postcss-load-config)을 사용하며, 지원하는 설정 파일 이름만 불러옵니다. 작업 공간 루트(작업 공간이 없다면 [프로젝트 루트](/guide/#index-html-and-project-root)) 외부에 위치한 설정 파일은 기본적으로 검색되지 않습니다. 필요한 경우 루트 외부의 특정 설정 파일을 로드하기 위해 커스텀 경로를 지정할 수 있습니다.
 
 인라인 설정이 제공되는 경우, Vite는 다른 PostCSS 설정 소스를 찾지 않을 것입니다.
 
@@ -225,9 +230,12 @@ CSS 모듈에 대한 설정입니다. 옵션들은 [postcss-modules](https://git
 
 CSS 전처리기에 전달할 옵션을 지정합니다. 파일 확장자는 옵션의 키로 사용됩니다. 전처리기에 대한 지원되는 옵션은 각각의 문서에서 찾을 수 있습니다:
 
-- `sass`/`scss` - 최상위 옵션 `api: "legacy" | "modern" | "modern-compiler"`(기본값: `"legacy"`)을 통해 사용할 sass API를 선택할 수 있습니다. 최대한 성능을 끌어올리려면 `sass-embedded` 패키지와 함께 `api: "modern-compiler"`를 사용하세요. [`legacy` 옵션](https://sass-lang.com/documentation/js-api/interfaces/LegacyStringOptions), [`modern` 옵션](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/)
-- `less` - [옵션](https://lesscss.org/usage/#less-options).
-- `styl`/`stylus` - [`define`](https://stylus-lang.com/docs/js.html#define-name-node)만 지원되며, 객체로 전달할 수 있습니다.
+- `sass`/`scss`:
+  - `api: "modern-compiler" | "modern" | "legacy"`를 통해 사용할 sass API를 선택합니다(기본값은 `sass-embedded`가 설치된 경우 `"modern-compiler"`, 그렇지 않으면 `"modern"`). 최상의 성능을 위해서는 `sass-embedded` 패키지와 함께 `api: "modern-compiler"`를 사용하는 것이 권장됩니다. `"legacy"` API는 더 이상 사용되지 않으며 Vite 7에서 제거될 예정입니다.
+  - [옵션 (modern)](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/)
+  - [옵션 (legacy)](https://sass-lang.com/documentation/js-api/interfaces/LegacyStringOptions).
+- `less`: [옵션](https://lesscss.org/usage/#less-options).
+- `styl`/`stylus`: [`define`](https://stylus-lang.com/docs/js.html#define-name-node)만 지원되며, 객체로 전달할 수 있습니다.
 
 **예시**:
 
@@ -343,12 +351,12 @@ Lightning CSS 옵션입니다. 전체 변환 옵션은 [Lightning CSS 리포지�
 
 ## json.stringify {#json-stringify}
 
-- **타입:** `boolean`
-- **기본값:** `false`
+- **타입:** `boolean | 'auto'`
+- **기본값:** `'auto'`
 
-`true`로 지정한다면, 가져온 JSON 은 특히 JSON 파일이 클 때 객체 리터럴보다 성능이 월등히 뛰어난 `export default JSON.parse("...")`으로 변환됩니다.
+`true`로 지정한다면, 임포트하는 JSON은 `export default JSON.parse("...")`으로 변환됩니다. JSON 파일이 클 때 객체 리터럴보다 성능이 월등히 뛰어납니다.
 
-이 옵션을 사용하면 명명된 가져오기가 비활성화됩니다.
+`'auto'`로 설정한다면, [데이터가 10kB보다 큰 경우에만](https://v8.dev/blog/cost-of-javascript-2019#json:~:text=A%20good%20rule%20of%20thumb%20is%20to%20apply%20this%20technique%20for%20objects%20of%2010%20kB%20or%20larger) 문자열화됩니다.
 
 ## esbuild {#esbuild}
 
@@ -489,4 +497,13 @@ define: {
 - `'mpa'`: HTML 미들웨어를 포함합니다.
 - `'custom'`: HTML 미들웨어를 포함하지 않습니다.
 
-좀 더 많은 정보가 필요하다면 Vite의 [SSR 가이드](/guide/ssr#vite-cli)를 참고해주세요. [`server.middlewareMode`](./server-options#server-middlewaremode) 옵션도 참고가 가능합니다.
+더 많은 정보가 필요하다면 Vite의 [SSR 가이드](/guide/ssr#vite-cli)를 참고해주세요. [`server.middlewareMode`](./server-options#server-middlewaremode) 옵션도 참고가 가능합니다.
+
+## future {#future}
+
+- **타입:** `Record<string, 'warn' | undefined>`
+- **관련 항목:** [주요 변경 사항](/changes/)
+
+다음 메이저 버전으로 원활한 마이그레이션을 준비하기 위해 향후 적용될 주요 변경 사항을 활성화합니다. 새로운 기능이 개발됨에 따라 이 목록은 언제든지 업데이트, 추가 또는 제거될 수 있습니다.
+
+가능한 옵션에 대한 자세한 내용은 [주요 변경 사항](/changes/) 페이지를 참고하세요.

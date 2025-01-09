@@ -8,8 +8,7 @@ title: Vite 설정하기
 
 가장 기본적인 설정 파일의 내용은 다음과 같습니다:
 
-```js
-// vite.config.js
+```js [vite.config.js]
 export default {
   // 설정 옵션들
 }
@@ -103,9 +102,10 @@ export default defineConfig(async ({ command, mode }) => {
 ```js twoslash
 import { defineConfig, loadEnv } from 'vite'
 
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ mode }) => {
   // 현재 작업 디렉터리의 `mode`를 기반으로 env 파일을 불러옴
-  // 세 번째 매개변수를 ''로 설정하면 `VITE_` 접두사에 관계없이 모든 환경 변수를 불러옴
+  // 세 번째 매개변수를 ''로 설정하면 `VITE_` 접두사에 관계없이
+  // 모든 환경 변수를 불러옴
   const env = loadEnv(mode, process.cwd(), '')
   return {
     // Vite 설정

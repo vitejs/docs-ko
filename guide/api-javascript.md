@@ -109,9 +109,9 @@ interface ViteDevServer {
    */
   httpServer: http.Server | null
   /**
-   * Chokidar watcher 인스턴스. 만약 `config.server.watch`가 `null` 이라면,
-   * NOOP(아무런 일도 수행하지 않는 - 옮긴이) 이벤트 이미터를 반환합니다.
-   * https://github.com/paulmillr/chokidar#api
+   * Chokidar watcher 인스턴스. `config.server.watch`가 `null` 이라면
+   * 어떠한 파일도 감시하지 않으며, `add` 또는 `unwatch`를 호출해도 아무런 효과가 없습니다.
+   * https://github.com/paulmillr/chokidar/tree/3.6.0#api
    */
   watcher: FSWatcher
   /**
@@ -128,8 +128,8 @@ interface ViteDevServer {
    */
   moduleGraph: ModuleGraph
   /**
-   * 확인된 URL은 Vite가 CLI로 출력합니다.
-   * 미들웨어 모드 또는 `server.listen`이 호출되기 전에는 null 값을 갖습니다.
+   * Vite가 CLI에 출력하는 인코딩된 URL입니다. 미들웨어 모드이거나
+   * 서버가 어떤 포트에서도 수신하고 있지 않은 경우 `null`을 반환합니다.
    */
   resolvedUrls: ResolvedServerUrls | null
   /**
@@ -209,7 +209,7 @@ async function build(
 
 **사용 예제:**
 
-```ts twoslash
+```ts twoslash [vite.config.js]
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { build } from 'vite'
@@ -274,8 +274,8 @@ interface PreviewServer {
    */
   httpServer: http.Server
   /**
-   * Vite가 CLI에 출력하는 해석된 URL
-   * 서버가 시작되기 전에는 null입니다.
+   * Vite가 CLI에 출력하는 인코딩된 URL입니다. 서버가 어떤
+   * 포트에서도 수신하고 있지 않은 경우 `null`을 반환합니다.
    */
   resolvedUrls: ResolvedServerUrls | null
   /**
