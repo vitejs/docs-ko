@@ -55,9 +55,9 @@ import workletURL from 'extra-scalloped-border/worklet.js?url'
 CSS.paintWorklet.addModule(workletURL)
 ```
 
-### Explicit Inline Handling {#explicit-inline-handling}
+### 명시적인 인라인 처리 {#explicit-inline-handling}
 
-Assets can be explicitly imported with inlining or no inlining using the `?inline` or `?no-inline` suffix respectively.
+에셋은 `?inline` 또는 `?no-inline` 접미사를 사용해 인라인 처리 여부를 명시적으로 지정하여 가져올 수 있습니다.
 
 ```js twoslash
 import 'vite/client'
@@ -147,9 +147,9 @@ function getImageUrl(name) {
 const imgUrl = new URL(imagePath, import.meta.url).href
 ```
 
-::: details How it works
+::: details 동작 방식
 
-Vite will transform the `getImageUrl` function to:
+Vite는 `getImageUrl` 함수를 다음과 같이 변환합니다:
 
 ```js
 import __img0png from './dir/img0.png'
