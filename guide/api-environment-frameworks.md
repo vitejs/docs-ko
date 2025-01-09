@@ -145,8 +145,8 @@ const server = createServer({
 const ssrEnvironment = server.environment.ssr
 const input = {}
 
-// 코드를 실행하는 각 환경 빌더가 제공하는 함수 사용
-// 각 환경 빌더가 제공하는 함수를 확인하세요
+// 코드를 실행하는 각 환경 팩토리가 제공하는 함수 사용
+// 각 환경 팩토리가 제공하는 함수를 확인하세요
 if (ssrEnvironment instanceof RunnableDevEnvironment) {
   ssrEnvironment.runner.import('virtual:entrypoint')
 } else if (ssrEnvironment instanceof CustomDevEnvironment) {
@@ -219,8 +219,8 @@ const server = createServer({
 const ssrEnvironment = server.environment.ssr
 const input = {}
 
-// 코드를 실행하는 각 환경 빌더가 제공하는 함수 사용
-// 각 환경 빌더가 제공하는 함수를 확인하세요
+// 코드를 실행하는 각 환경 팩토리가 제공하는 함수 사용
+// 각 환경 팩토리가 제공하는 함수를 확인하세요
 if (ssrEnvironment instanceof RunnableDevEnvironment) {
   ssrEnvironment.runner.import('virtual:entrypoint')
 } else if (ssrEnvironment instanceof CustomDevEnvironment) {
