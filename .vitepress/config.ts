@@ -415,7 +415,7 @@ export default defineConfig({
           text: '예정된 변경 사항',
           items: [
             {
-              text: '훅에서의 this.environment',
+              text: '훅에서 this.environment 사용하기',
               link: '/changes/this-environment-in-hooks',
             },
             {
@@ -427,7 +427,7 @@ export default defineConfig({
               link: '/changes/per-environment-apis',
             },
             {
-              text: 'ModuleRunner API를 사용한 SSR',
+              text: 'ModuleRunner API를 사용하는 SSR',
               link: '/changes/ssr-using-modulerunner',
             },
             {

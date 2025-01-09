@@ -1,27 +1,27 @@
-# Breaking Changes
+# 주요 변경 사항 {#breaking-changes}
 
-List of breaking changes in Vite including API deprecations, removals, and changes. Most of the changes below can be opt-in using the [`future` option](/config/shared-options.html#future) in your Vite config.
+API 지원 중단, 제거, 그리고 변경 사항을 포함한 Vite 주요 변경 사항 목록입니다. 아래 변경 사항 대부분은 Vite [`future` 옵션](/config/shared-options.html#future)을 통해 선택적으로 적용할 수 있습니다.
 
-## Planned
+## 계획된 변경 사항 {#planned}
 
-These changes are planned for the next major version of Vite. The deprecation or usage warnings will guide you where possible, and we're reaching out to framework, plugin authors, and users to apply these changes.
+이러한 변경 사항들은 Vite의 다음 메이저 버전에서 적용될 예정입니다. 가능한 경우 지원 중단 또는 사용 관련 경고를 통해 안내할 예정이며, 프레임워크와 플러그인 개발자, 그리고 사용자들에게 이러한 변경 사항을 적용하도록 요청하고 있습니다.
 
-- _No planned changes yet_
+- _아직 계획된 변경 사항이 없습니다_
 
-## Considering
+## 검토 중인 변경 사항 {#considering}
 
-These changes are being considered and are often experimental APIs that intend to improve upon current usage patterns. As not all changes are listed here, please check out the [Experimental Label in Vite GitHub Discussions](https://github.com/vitejs/vite/discussions/categories/feedback?discussions_q=label%3Aexperimental+category%3AFeedback) for the full list.
+아래 변경 사항들은 현재 검토 중이며, 대부분 사용 패턴을 개선하기 위한 실험적인 API입니다. 여기에 나열되지 않은 변경 사항도 있으므로, 전체 목록은 [Vite GitHub Discussions의 Experimental 레이블](https://github.com/vitejs/vite/discussions/categories/feedback?discussions_q=label%3Aexperimental+category%3AFeedback)을 확인해 주세요.
 
-We don't recommend switching to these APIs yet. They are included in Vite to help us gather feedback. Please check these proposals and let us know how they work in your use case in each's linked GitHub Discussions.
+그리고 아직은 전환하는 것을 권장하지 않습니다. 이러한 API들은 피드백을 수집하기 위해 Vite에 포함되었습니다. 제안을 확인하고, 여러분의 사용 사례에서는 어떻게 동작하는지 GitHub Discussions에서 알려주시기 바랍니다.
 
-- [`this.environment` in Hooks](/changes/this-environment-in-hooks)
-- [HMR `hotUpdate` Plugin Hook](/changes/hotupdate-hook)
-- [Move to per-environment APIs](/changes/per-environment-apis)
-- [SSR using `ModuleRunner` API](/changes/ssr-using-modulerunner)
-- [Shared plugins during build](/changes/shared-plugins-during-build)
+- [훅에서 `this.environment` 사용하기](/changes/this-environment-in-hooks)
+- [HMR `hotUpdate` 플러그인 훅](/changes/hotupdate-hook)
+- [환경별 API로 마이그레이션](/changes/per-environment-apis)
+- [`ModuleRunner` API를 사용하는 SSR](/changes/ssr-using-modulerunner)
+- [빌드 중 공유되는 플러그인](/changes/shared-plugins-during-build)
 
-## Past
+## 과거 변경 사항 {#past}
 
-The changes below has been done or reverted. They are no longer relevant in the current major version.
+아래 변경 사항들은 이미 완료되었거나 철회되었습니다. 현재 메이저 버전에서는 더 이상 관련이 없습니다.
 
-- _No past changes yet_
+- _아직 과거 변경 사항이 없습니다_

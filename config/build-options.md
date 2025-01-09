@@ -221,7 +221,7 @@ During non-client builds, static assets aren't emitted as it is assumed they wou
 - **타입:** `boolean`
 - **기본값:** `false`
 
-SSR 빌드 중에는 정적 에셋이 따로 생성되지 않는데, 이는 클라이언트 빌드의 일부에 포함될 것으로 간주하기 때문입니다. 다만 필요한 경우 이 옵션을 사용하여 클라이언트와 SSR 빌드 모두에서 에셋을 생성하도록 강제할 수 있습니다. 이 경우 프레임워크는 빌드 이후 단계에서 에셋을 병합하는 것이 필요합니다. This option will be replaced by `build.emitAssets` once Environment API is stable.
+SSR 빌드 중에는 정적 에셋이 따로 생성되지 않는데, 이는 클라이언트 빌드의 일부에 포함될 것으로 간주하기 때문입니다. 다만 필요한 경우 이 옵션을 사용하여 클라이언트와 SSR 빌드 모두에서 에셋을 생성하도록 강제할 수 있습니다. 이 경우 프레임워크는 빌드 이후 단계에서 에셋을 병합하는 것이 필요합니다. 이 옵션은 환경 API가 안정화되면 `build.emitAssets`로 대체될 예정입니다.
 
 ## build.minify {#build-minify}
 
