@@ -2,7 +2,7 @@
 
 기본적으로 vite는 여타 정적 파일 서버와 크게 다르지 않습니다. 다만, vite는 네이티브 ESM 말고도 기존 번들러에서 제공하던 기능을 대부분 지원한다는 차이점이 있습니다.
 
-## npm을 이용한 디펜던시 `import` 그리고 사전 번들링 {#npm-dependency-resolving-and-pre-building}
+## npm을 이용한 디펜던시 임포트 그리고 사전 번들링 {#npm-dependency-resolving-and-pre-building}
 
 다음 코드는 네이티브 ES에서 정상적으로 실행되지 않습니다:
 
@@ -28,7 +28,7 @@ vite는 기본적으로 ESM를 통해 [HMR API](./api-hmr)를 제공합니다. H
 
 ## TypeScript {#typescript}
 
-vite는 `.ts` 파일에 대한 컴파일링 및 Import 역시 지원합니다.
+vite는 `.ts` 파일에 대한 컴파일링 및 임포트 역시 지원합니다.
 
 ### 트랜스파일만 수행 {#transpile-only}
 
@@ -65,7 +65,7 @@ export type { T }
 
 이를 감지하기 위해 `tsconfig.json` 내 `compilerOptions` 설정을 `"isolatedModules": true`와 같이 설정해줘야만 하며, 이 설정으로 TS가 위와 같은 상황에서 작동하지 않는 기능들에 대해 경고할 수 있게 됩니다.
 
-일부 라이브러리는 `"isolatedModules": true`로 설정할 경우 타입 체크가 정상적으로 동작하지 않습니다. 이러한 경우에는 해당 모듈이 이슈를 수정할 때 까지 `"skipLibCheck": true`를 사용해 오류가 발생되지 않도록 해주세요.
+일부 라이브러리는 `"isolatedModules": true`로 설정할 경우 타입 체크가 정상적으로 동작하지 않습니다. 이러한 경우에는 해당 모듈이 이슈를 수정할 때까지 `"skipLibCheck": true`를 사용해 오류가 발생되지 않도록 해주세요.
 
 #### `useDefineForClassFields` {#usedefineforclassfields}
 
@@ -162,31 +162,31 @@ vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 �
 
 ## HTML {#html}
 
-HTML files stand [front-and-center](/guide/#index-html-and-project-root) of a Vite project, serving as the entry points for your application, making it simple to build single-page and [multi-page applications](/guide/build.html#multi-page-app).
+HTML 파일은 Vite 프로젝트에서 [중심적인 역할](/guide/#index-html-and-project-root)을 하며, 애플리케이션 진입점으로 사용됩니다. 이를 통해 단일 페이지 및 [다중 페이지 애플리케이션](/guide/build.html#multi-page-app)을 쉽게 구축할 수 있습니다.
 
-Any HTML files in your project root can be directly accessed by its respective directory path:
+프로젝트 루트에 있는 모든 HTML 파일은 해당 디렉터리 경로로 직접 접근할 수 있습니다:
 
 - `<root>/index.html` -> `http://localhost:5173/`
 - `<root>/about.html` -> `http://localhost:5173/about.html`
 - `<root>/blog/index.html` -> `http://localhost:5173/blog/index.html`
 
-Assets referenced by HTML elements such as `<script type="module" src>` and `<link href>` are processed and bundled as part of the app. The full list of supported elements are as below:
+`<script type="module" src>`, `<link href>`와 같이 HTML 요소에서 참조되는 에셋들은 앱의 일부로 번들링됩니다. 지원되는 전체 요소 목록은 다음과 같습니다:
 
 - `<audio src>`
 - `<embed src>`
-- `<img src>` and `<img srcset>`
+- `<img src>` 및 `<img srcset>`
 - `<image src>`
 - `<input src>`
-- `<link href>` and `<link imagesrcset>`
+- `<link href>` 및 `<link imagesrcset>`
 - `<object data>`
 - `<script type="module" src>`
-- `<source src>` and `<source srcset>`
+- `<source src>` 및 `<source srcset>`
 - `<track src>`
-- `<use href>` and `<use xlink:href>`
-- `<video src>` and `<video poster>`
+- `<use href>` 및 `<use xlink:href>`
+- `<video src>` 및 `<video poster>`
 - `<meta content>`
-  - Only if `name` attribute matches `msapplication-tileimage`, `msapplication-square70x70logo`, `msapplication-square150x150logo`, `msapplication-wide310x150logo`, `msapplication-square310x310logo`, `msapplication-config`, or `twitter:image`
-  - Or only if `property` attribute matches `og:image`, `og:image:url`, `og:image:secure_url`, `og:audio`, `og:audio:secure_url`, `og:video`, or `og:video:secure_url`
+  - `name` 속성이 `msapplication-tileimage`, `msapplication-square70x70logo`, `msapplication-square150x150logo`, `msapplication-wide310x150logo`, `msapplication-square310x310logo`, `msapplication-config`, 또는 `twitter:image`와 일치하는 경우에만
+  - 또는 `property` 속성이 `og:image`, `og:image:url`, `og:image:secure_url`, `og:audio`, `og:audio:secure_url`, `og:video`, 또는 `og:video:secure_url`와 일치하는 경우에만
 
 ```html {4-5,8-9}
 <!doctype html>
@@ -202,7 +202,7 @@ Assets referenced by HTML elements such as `<script type="module" src>` and `<li
 </html>
 ```
 
-To opt-out of HTML processing on certain elements, you can add the `vite-ignore` attribute on the element, which can be useful when referencing external assets or CDN.
+특정 요소에 대해 HTML 처리를 비활성화하려면 해당 요소에 `vite-ignore` 속성을 추가할 수 있습니다. 이는 외부 에셋이나 CDN을 참조할 때 유용할 수 있습니다.
 
 ## Vue {#vue}
 
@@ -705,7 +705,7 @@ const worker = new Worker(new URL('./worker.js', import.meta.url), {
 
 ### 쿼리 접미사를 통해 가져오기 {#import-with-query-suffixes}
 
-웹 워커 스크립트는 `?worker` 또는 `?sharedworker` 접미사를 붙여 가져올 수 있습니다. 모듈의 `export default` 로는 워커의 생성자가 들어가게 됩니다.
+웹 워커 스크립트는 `?worker` 또는 `?sharedworker` 접미사를 붙여 임포트할 수 있습니다. 모듈의 `export default`로는 워커의 생성자가 들어가게 됩니다.
 
 ```js twoslash
 import 'vite/client'
