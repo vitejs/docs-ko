@@ -211,10 +211,10 @@ export default defineConfig({
 
 ## build.emitAssets {#build-emitassets}
 
-- **Type:** `boolean`
-- **Default:** `false`
+- **타입:** `boolean`
+- **기본값:** `false`
 
-During non-client builds, static assets aren't emitted as it is assumed they would be emitted as part of the client build. This option allows frameworks to force emitting them in other environments build. It is responsibility of the framework to merge the assets with a post build step.
+클라이언트가 아닌 빌드 중에는 정적 에셋이 생성되지 않습니다. 이는 해당 에셋들이 클라이언트 빌드의 일부로 생성될 것으로 가정되기 때문입니다. 이 옵션은 프레임워크가 다른 환경의 빌드에서 에셋을 강제로 생성할 수 있게 해줍니다. 빌드 후 단계에서 에셋을 병합하는 것은 프레임워크의 책임입니다.
 
 ## build.ssrEmitAssets {#build-ssremitassets}
 
