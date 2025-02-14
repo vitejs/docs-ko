@@ -12,6 +12,12 @@
    import { defineConfig } from 'vite'
    // ---cut---
    export default defineConfig({
+     server: {
+       cors: {
+         // 브라우저를 통해 접근하고자 하는 출처
+         origin: 'http://my-backend.example.com',
+       },
+     },
      build: {
        // outDir 위치에 .vite/manifest.json 파일을 생성
        manifest: true,

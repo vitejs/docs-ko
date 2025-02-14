@@ -161,8 +161,15 @@ export default defineConfig({
 ## server.cors {#server-cors}
 
 - **타입:** `boolean | CorsOptions`
+- **기본값:** `false`
 
-개발 서버를 위한 CORS를 설정합니다. 이것은 기본적으로 활성화되어 있으며 모든 오리진을 허용합니다. 동작을 상세하게 조절하기 위해 [옵션 객체](https://github.com/expressjs/cors#configuration-options)를 전달하거나, 사용하지 않기 위해 `false`를 전달하세요.
+개발 서버 CORS를 설정합니다.  [옵션 객체](https://github.com/expressjs/cors#configuration-options)를 전달해 상세한 동작을 설정하거나, 모든 출처를 허용하기 위해 `true`로 설정할 수 있습니다.
+
+:::warning
+
+신뢰할 수 없는 출처에 소스 코드가 노출되지 않도록, `true` 대신 특정 값 지정을 권장합니다.
+
+:::
 
 ## server.headers {#server-headers}
 
