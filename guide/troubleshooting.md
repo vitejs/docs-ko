@@ -130,6 +130,14 @@ security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-
 
 이를 방지하려면 요청 헤더 크기를 줄이세요. 예를 들어 길이가 긴 쿠키를 삭제합니다. 또는 최대 헤더 크기를 변경하기 위해서 [`--max-http-header-size`](https://nodejs.org/api/cli.html#--max-http-header-sizesize)를 사용할 수 있습니다.
 
+### Dev Containers / VS Code 포트 포워딩 {#dev-containers-vs-code-port-forwarding}
+
+Dev Container나 VS Code의 포트 포워딩 기능을 사용하는 경우, 정상적으로 작동하게 하려면 설정에서 [`server.host`](/config/server-options.md#server-host) 옵션을 `127.0.0.1`로 설정해야 할 수 있습니다.
+
+이는 [VS Code 포트 포워딩 기능이 IPv6를 지원하지 않기 때문](https://github.com/microsoft/vscode-remote-release/issues/7029)입니다.
+
+자세한 내용은 [#16522](https://github.com/vitejs/vite/issues/16522)를 참조하세요.
+
 ## HMR {#hmr}
 
 ### Vite가 파일 변경을 감지했지만 HMR이 작동하지 않음 {#vite-detects-a-file-change-but-the-hmr-is-not-working}
