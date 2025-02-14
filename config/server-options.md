@@ -161,7 +161,7 @@ export default defineConfig({
 ## server.cors {#server-cors}
 
 - **타입:** `boolean | CorsOptions`
-- **기본값:** `false`
+- **기본값:** `{ origin: /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/ }` (`127.0.0.1` 및 `::1` 같은 localhost 허용)
 
 개발 서버 CORS를 설정합니다.  [옵션 객체](https://github.com/expressjs/cors#configuration-options)를 전달해 상세한 동작을 설정하거나, 모든 출처를 허용하기 위해 `true`로 설정할 수 있습니다.
 
