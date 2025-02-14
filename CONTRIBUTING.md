@@ -11,7 +11,7 @@ Vite 한국어 번역 리포지토리에 오신 것을 환영합니다. 이 문�
 - Node.js: `>=22`
 - PNPM: `9.15.3`
 
-이 프로젝트는 [Node.js@22](https://nodejs.org/ko) 및 [PNPM@9.14.4](https://pnpm.io/ko/)를 이용합니다. PNPM은 [Node Corepack](https://nodejs.org/api/corepack.html)을 이용합니다. 자세한 설정은 [package.json](./package.json) 파일을 참고해 주세요.
+이 프로젝트는 [Node.js@22](https://nodejs.org/ko) 및 [PNPM@9.15.3](https://pnpm.io/ko/)를 이용합니다. PNPM은 [Node Corepack](https://nodejs.org/api/corepack.html)을 이용합니다. 자세한 설정은 [package.json](./package.json) 파일을 참고해 주세요.
 
 ```bash
 # 1. 이 리포지토리를 클론합니다.
@@ -37,7 +37,7 @@ pnpm build
 
 번역에 기여해 주신 모든 분께 감사드립니다.
 
-1. [GitHub Issues](https://github.com/vitejs/docs-ko/issues)에서 아직 할당되지 않은 번역 작업을 **오래된 것부터** 찾아주세요. 최신 문서를 번역하는 경우 충돌이 발생할 수 있습니다.
+1. [GitHub Issues](https://github.com/vitejs/docs-ko/issues?q=is%3Aissue%20state%3Aopen%20-label%3Apending%20label%3Async%20)에서 번역이 필요한 부분을 확인할 수 있습니다. `sync` 라벨만 붙은 이슈 중, 아직 할당되지 않은 번역 작업을 **오래된 것부터** 찾아주세요. 최신 문서를 번역하는 경우 충돌이 발생할 수 있습니다.
 1. 해당 Issue에서 "번역 작업을 진행하겠습니다"와 같은 코멘트를 남겨 작업을 진행하겠다는 의사를 표현해주세요. 승인된 경우, 번역 담당자로 자신이 Assign 된 것을 확인할 수 있습니다. (메인테이너의 경우 Self-Assign 기능을 이용할 수 있습니다.)
 1. 이 리포지토리를 Fork하고, 브랜치를 생성한 후, 번역 작업을 진행합니다. (작업을 진행하며 `pnpm dev` 명령을 통해 브라우저에서 실시간으로 확인할 수 있습니다.)
 1. 커밋, 그리고 자신의 번역 리포지토리로 Push 후, 이 리포지토리의 `main` 브랜치로 PR을 생성해주세요.
@@ -46,7 +46,11 @@ pnpm build
 
 ### 번역 대상
 
-번역은 번경 사항 중 `docs` 디렉터리에 있는 파일을 대상으로 진행합니다(예: `docs/guide/index.md`). 다만 다음의 파일은 일반적으로 최신 내용만 유지하며, 번역하지 않습니다:
+번역은 원본 리포지토리 내 `docs` 디렉터리를 대상으로 진행합니다(예: `docs/guide/index.md`). 이 프로젝트는 [Yuki-no](https://github.com/Gumball12/yuki-no)를 사용해 자동으로 `docs` 디렉터리 내 모든 변경 사항을 GitHub Issues로 등록하고 관리합니다.
+
+번역 대상 이슈에는 `sync` 라벨이 존재합니다. 이슈 본문에 변경 사항에 대한 GitHub Commit URL이 있으니, 이를 참고해 번역을 진행해 주세요. 다만 `pending` 라벨이 함께 존재하는 이슈는 번역 대상이 아닙니다. Vite 정식 릴리스에 포함되지 않은 변경 사항이며, 향후 릴리스가 되면 `pending` 라벨이 제거됩니다. 이는 Yuki-no에서 관리합니다.
+
+아래 파일은 최신 내용만 유지하며, 번역하지 않습니다:
 
 - `blogs/*.md`
 
@@ -59,7 +63,7 @@ pnpm build
 - 줄 바꿈 및 단락은 원본 문서와 동일하게 유지합니다.
 - 공백(` `), 큰따옴표(`""`), 작은따옴표(`''`), 대시(`-`), 백틱(`` ` ``) 등 모든 특수문자는 최대한 남겨 수정합니다.
 - 소스 코드는 주석만 번역하며, 나머지는 원본 문서와 동일하게 유지합니다. 에러 내용은 번역하지 않습니다.
-- ko.javascript.info의 [번역 모법 사례](https://github.com/javascript-tutorial/ko.javascript.info/wiki/%EB%B2%88%EC%97%AD-%EB%AA%A8%EB%B2%94-%EC%82%AC%EB%A1%80)를 읽고 작업에 참여해주세요.
+- ko.javascript.info의 [번역 모범 사례](https://github.com/javascript-tutorial/ko.javascript.info/wiki/%EB%B2%88%EC%97%AD-%EB%AA%A8%EB%B2%94-%EC%82%AC%EB%A1%80)를 읽고 작업에 참여해주세요.
 - 원문에는 없으나 이해를 돕기 위해 추가하고자 하는 내용은 문장 중간이나 끝에 `(... - 옮긴이)` 형태로 작성해주세요. 길어지는 경우, 미주(Footnote)를 이용할 수 있습니다. 단, 이 경우에도 줄 바꿈 및 단락은 원본 문서와 동일하게 유지합니다.
 
   ```md
@@ -89,22 +93,6 @@ pnpm build
 - 번역 문서는 원본 문서와 동일한 디렉터리 구조를 가지고 있습니다.
 - 번역 문서는 원본 문서의 파일명을 그대로 사용합니다.
   - 예외: 마이그레이션 가이드의 경우 [v2](https://github.com/vitejs/docs-ko/blob/main/guide/migration-from-v1.md), [v3](https://github.com/vitejs/docs-ko/blob/main/guide/migration-from-v2.md) 문서가 추가로 존재합니다.
-
-#### 공식적으로 배포되지 않은 다음 버전의 Vite 문서를 번역하는 경우
-
-이 문제는 Vite 5 베타 버전에 대한 문서 번역에서 확인되었습니다. [#737 이슈](https://github.com/vitejs/docs-ko/issues/737)에서 언급된 것과 같이, 본 프로젝트는 다음 버전의 Vite 문서를 번역하는 경우에는 다음과 같은 방법을 사용합니다:
-
-- 다음 버전에 대한 sync 이슈가 처음 등록되면
-  - 다음 버전에 대한 브랜치를 생성(예: `v5`) 및 main으로의 Draft PR을 생성
-  - 번역 PR은 해당 브랜치를 타깃으로 생성
-- 이후, 다음 버전에 대한 sync 이슈가 등록되면
-  - 구분을 위해 해당 버전에 대한 라벨을 붙임
-  - 동일하게, 번역 PR은 해당 브랜치를 타깃으로 생성
-- 다음 버전이 정식으로 배포되면
-  - 현재의 main 브랜치의 이름을 이전 버전으로 변경(예: `v4`)
-  - 다음 버전에 대한 PR을 main 브랜치로 머지
-
-위 사항은 Vite 6 베타 버전부터 적용될 예정입니다.
 
 ## 🤝 컨벤션
 
