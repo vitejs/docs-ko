@@ -77,6 +77,23 @@ NEW_KEY3=test$KEY   # test123
 - Vite 소스 코드에 노출되는 모든 환경 변수는 번들링 시 포함되게 됩니다. 따라서, `VITE_*` 환경 변수에는 민감한 정보들이 _포함되어서는 안됩니다_.
   :::
 
+::: details 역순으로 변수 확장하기
+
+Vite는 역순으로 변수를 확장하는 것을 지원합니다.
+예를 들어, 아래의 `.env` 파일은 `VITE_FOO=foobar`, `VITE_BAR=bar`로 설정됩니다.
+
+```[.env]
+VITE_FOO=foo${VITE_BAR}
+VITE_BAR=bar
+```
+
+이는 셸 스크립트나 `docker-compose`와 같은 다른 도구에서는 작동하지 않습니다.
+하지만 Vite는 이 동작을 지원하는데, 이는 `dotenv-expand`가 오랫동안 이 기능을 지원해 왔고, JavaScript 생태계 내 다른 도구들도 이 동작을 지원하는 이전 버전을 사용하고 있기 때문입니다.
+
+다만 상호 운용성 문제를 피하기 위해 이러한 동작에 의존하지 않는 것이 좋습니다. Vite는 향후 이러한 동작에 대해 경고를 표시할 수 있습니다.
+
+:::
+
 ### TypeScript를 위한 인텔리센스 {#intellisense-for-typescript}
 
 기본적으로, Vite는 [`vite/client.d.ts`](https://github.com/vitejs/vite/blob/main/packages/vite/client.d.ts)의 `import.meta.env`에 대한 타입 정의를 제공하고 있습니다. 물론 `.env.[mode]` 파일에서 더 많은 커스텀 환경 변수를 정의할 수 있으며, `VITE_` 접두사가 붙은 커스텀 환경 변수에 대해서는 TypeScript 인텔리센스 정의가 가능합니다.

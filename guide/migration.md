@@ -99,8 +99,8 @@ Vite 6부터는 파일 이름이 JS 출력 파일과 유사하게 `package.json`
   - 이 PR은 위에서 언급한 "`resolve.conditions` 기본값" 호환성이 깨지는 변경 사항뿐만 아니라, SSR에서 외부화되지 않은 디펜던시에 대해 `resolve.mainFields`가 사용되지 않도록 합니다. `resolve.mainFields`를 사용하고 있고, 이를 SSR에서 외부화되지 않은 디펜던시에도 적용하고 싶다면, [`ssr.resolve.mainFields`](/config/ssr-options#ssr-resolve-mainfields)를 사용할 수 있습니다.
 - [[#18493] refactor!: remove fs.cachedChecks option](https://github.com/vitejs/vite/pull/18493)
   - 캐시된 폴더에 파일을 작성하고 즉시 임포트할 때 발생하는 엣지 케이스로 인해, 이 최적화 옵션이 제거되었습니다.
-- [[#18697] fix(deps)!: update dependency dotenv-expand to v12](https://github.com/vitejs/vite/pull/18697)
-  - 이제 환경 변수 내에서 다른 환경 변수를 참조할 때, 참조되는 변수가 먼저 정의되어 있어야 합니다. 자세한 내용은 [`dotenv-expand` 변경 로그](https://github.com/motdotla/dotenv-expand/blob/v12.0.1/CHANGELOG.md#1200-2024-11-16)를 참고하세요.
+- ~~[[#18697] fix(deps)!: update dependency dotenv-expand to v12](https://github.com/vitejs/vite/pull/18697)~~
+  - ~~이제 환경 변수 내에서 다른 환경 변수를 참조할 때, 참조되는 변수가 먼저 정의되어 있어야 합니다. 자세한 내용은 [`dotenv-expand` 변경 로그](https://github.com/motdotla/dotenv-expand/blob/v12.0.1/CHANGELOG.md#1200-2024-11-16)를 참고하세요.~~ 이 변경 사항은 v6.1.0에서 복원되었습니다.
 - [[#16471] feat: v6 - Environment API](https://github.com/vitejs/vite/pull/16471)
 
   - 더 이상 SSR 전용 모듈에 대한 업데이트가 클라이언트에서 전체 페이지 리로드를 트리거하지 않습니다. 이전 동작으로 돌아가려면 커스텀 Vite 플러그인을 사용할 수 있습니다:
