@@ -56,6 +56,10 @@ HTTPS를 사용하는 경우 이 검사는 건너뜁니다.
 `true`로 설정하면 서버가 모든 호스트의 요청에 응답할 수 있게 됩니다.
 DNS 리바인딩 공격에 취약할 수 있으므로 권장하지 않습니다.
 
+::: details 환경 변수를 통해 설정하기
+`__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS` 환경 변수를 통해 허용할 호스트를 추가로 지정할 수 있습니다.
+:::
+
 ## server.port {#server-port}
 
 - **타입:** `number`
