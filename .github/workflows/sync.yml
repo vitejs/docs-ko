@@ -1,25 +1,36 @@
-name: Sync
+name: yuki-no
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "0 * * * *" # Every hour
+  workflow_dispatch: # Manual trigger (Optional)
 
 jobs:
-  ryu-cho:
-    name: Ryu Cho
+  yuki-no:
     runs-on: ubuntu-latest
     steps:
-      - uses: vuejs-translations/ryu-cho@v1
+      - uses: Gumball12/yuki-no@v1
         with:
+          # GitHub access token. Required.
           access-token: ${{ secrets.GITHUB_TOKEN }}
-          username: github-actions
-          email: "action@github.com"
 
-          upstream-repo: https://github.com/vitejs/docs-ko.git
-          upstream-repo-branch: main
+          # The head repo to track. This is the repository you want to
+          # take a diff. Required.
+          head-repo: https://github.com/vitejs/vite.git
 
-          head-repo: https://github.com/vitejs/vite
-          head-repo-branch: main
-          track-from: 0cbd81895ecb462f93b4cb9522576b305f984f3f
-          path-starts-with: docs/
-          workflow-name: ryu-cho
+          # The git commit sha of head repo to start tracking. Yuki-no will
+          # only track commit from this hash. Required.
+          track-from: 14027b0f2a9b01c14815c38aab22baf5b29594bb
+
+          # List of file patterns to track. Multiple patterns can be specified
+          # with newlines. Files matching these glob patterns will be included
+          # in tracking.
+          # If empty, all files will be tracked. Optional.
+          include: |
+            docs/**
+
+          # Whether to enable release tracking.
+          # When enabled, Yuki-no will track releases for each issue
+          # and add comments about release status. Optional.
+          # Defaults to 'false'
+          release-tracking: true
