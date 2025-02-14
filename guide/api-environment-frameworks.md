@@ -46,7 +46,12 @@ if (isRunnableDevEnvironment(server.environments.ssr)) {
 [SSR 설정 가이드](/guide/ssr#setting-up-the-dev-server)에서 설명한 대로 미들웨어 모드로 구성된 Vite 서버가 있다고 가정하고, 환경 API를 사용하여 SSR 미들웨어를 구현해보겠습니다. 오류 처리는 생략했습니다.
 
 ```js
+import fs from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { createServer } from 'vite'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const server = await createServer({
   server: { middlewareMode: true },
