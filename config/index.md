@@ -22,8 +22,10 @@ export default {
 vite --config my-config.js
 ```
 
-::: tip 설정 번들링
-기본적으로 Vite는 `esbuild`를 사용하여 설정을 임시 파일로 번들링합니다. 이는 모노레포에서 TypeScript 파일을 가져올 때 문제가 발생할 수 있습니다. 이 방식에서 문제가 발생한다면, 이 대신 `--configLoader=runner`를 지정해 모듈 러너를 사용할 수 있습니다 - 이는 임시 설정 파일을 생성하지 않고 모든 파일을 실시간으로 변환합니다. 참고로 모듈 러너는 설정 파일에서 CJS를 지원하지 않지만, 외부 CJS 패키지는 평소와 같이 동작합니다.
+::: tip 설정 파일 로딩
+기본적으로 Vite는 `esbuild`를 사용해 설정 파일을 임시 파일로 번들링한 뒤 로드합니다. 다만 이는 모노리포에서 TypeScript 파일을 불러올 때 문제가 발생할 수 있습니다. 이러한 문제가 발생한다면 `--configLoader runner`를 지정해 [모듈 러너](/guide/api-environment-runtimes.html#modulerunner)를 대신 사용할 수 있습니다. 모듈 러너는 임시 설정 파일을 생성하지 않고 파일을 즉시 변환합니다. 참고로 모듈 러너는 설정 파일에서 CJS를 지원하지 않으나, 그럼에도 외부 CJS 패키지는 정상적으로 동작합니다.
+
+또는 TypeScript를 지원하는 환경(예: `node --experimental-strip-types`)을 사용하거나 순수 JavaScript만 작성하는 경우, `--configLoader native`를 지정하여 현재 환경의 네이티브 런타임으로 설정 파일을 로드할 수 있습니다. 단, 설정 파일에서 불러온 모듈의 업데이트는 감지되지 않으므로 Vite 서버가 자동으로 재시작되지 않습니다.
 :::
 
 ## 인텔리센스 설정 {#config-intellisense}

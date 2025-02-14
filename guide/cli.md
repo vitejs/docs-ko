@@ -14,25 +14,25 @@ vite [root]
 
 #### 옵션 {#options}
 
-| 옵션                      |                                                                                                                 |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `--host [host]`           | 호스트 이름 지정 (`string`)                                                                                     |
-| `--port <port>`           | 포트 번호 지정 (`number`)                                                                                       |
-| `--open [path]`           | 시작 시 브라우저 열기 (`boolean \| string`)                                                                     |
-| `--cors`                  | CORS 활성화 (`boolean`)                                                                                         |
-| `--strictPort`            | 포트가 이미 사용중인 경우 종료 (`boolean`)                                                                      |
-| `--force`                 | 캐시를 무시하고 다시 번들링 (`boolean`)                                                                         |
-| `-c, --config <file>`     | 설정 파일 지정 (`string`)                                                                                       |
-| `--base <path>`           | `base` 옵션 위치 지정 (기본값: `/`) (`string`)                                                                  |
-| `-l, --logLevel <level>`  | info \| warn \| error \| silent (`string`)                                                                      |
-| `--clearScreen`           | 로깅 시 화면을 지우는 것을 허용/비허용 (`boolean`)                                                              |
-| `--configLoader <loader>` | esbuild로 설정을 번들링하려면 `bundle`을, 실시간으로 처리하려면 `runner`(실험적 기능)를 사용 (기본값: `bundle`) |
-| `--profile`               | 빌트인 Node.js 인스펙터 실행 ([성능 병목현상](/guide/troubleshooting#performance-bottlenecks) 참고)             |
-| `-d, --debug [feat]`      | 디버그 로그 표시 (`string \| boolean`)                                                                          |
-| `-f, --filter <filter>`   | 디버그 로그 필터 (`string`)                                                                                     |
-| `-m, --mode <mode>`       | env 모드 설정 (`string`)                                                                                        |
-| `-h, --help`              | 사용 가능한 CLI 옵션 표시                                                                                       |
-| `-v, --version`           | 버전 표시                                                                                                       |
+| 옵션                      |                                                                                                                                                                       |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--host [host]`           | 호스트 이름 지정 (`string`)                                                                                                                                           |
+| `--port <port>`           | 포트 번호 지정 (`number`)                                                                                                                                             |
+| `--open [path]`           | 시작 시 브라우저 열기 (`boolean \| string`)                                                                                                                           |
+| `--cors`                  | CORS 활성화 (`boolean`)                                                                                                                                               |
+| `--strictPort`            | 포트가 이미 사용중인 경우 종료 (`boolean`)                                                                                                                            |
+| `--force`                 | 캐시를 무시하고 다시 번들링 (`boolean`)                                                                                                                               |
+| `-c, --config <file>`     | 설정 파일 지정 (`string`)                                                                                                                                             |
+| `--base <path>`           | `base` 옵션 위치 지정 (기본값: `/`) (`string`)                                                                                                                        |
+| `-l, --logLevel <level>`  | info \| warn \| error \| silent (`string`)                                                                                                                            |
+| `--clearScreen`           | 로깅 시 화면을 지우는 것을 허용/비허용 (`boolean`)                                                                                                                    |
+| `--configLoader <loader>` | esbuild로 설정을 번들링하려면 `bundle`을, 실시간으로 처리하려면 `runner`(실험적 기능)를, 네이티브 런타임을 사용하려면 `native`(실험적 기능)을 전달 (기본값: `bundle`) |
+| `--profile`               | 빌트인 Node.js 인스펙터 실행 ([성능 병목현상](/guide/troubleshooting#performance-bottlenecks) 참고)                                                                   |
+| `-d, --debug [feat]`      | 디버그 로그 표시 (`string \| boolean`)                                                                                                                                |
+| `-f, --filter <filter>`   | 디버그 로그 필터 (`string`)                                                                                                                                           |
+| `-m, --mode <mode>`       | env 모드 설정 (`string`)                                                                                                                                              |
+| `-h, --help`              | 사용 가능한 CLI 옵션 표시                                                                                                                                             |
+| `-v, --version`           | 버전 표시                                                                                                                                                             |
 
 ## 빌드 {#build}
 
