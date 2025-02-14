@@ -12,10 +12,6 @@ SSR은 동일한 전체 사이트를 Node.js에서 동작시키고, 이를 HTML�
 현재 Vite는 [환경 API](https://github.com/vitejs/vite/discussions/16358)를 통해 개선된 SSR API를 개발 중입니다. 자세한 내용은 링크를 확인해 주세요.
 :::
 
-:::tip Help
-만약 질문하고자 한다면, [Vite Discord의 #ssr 채널](https://discord.gg/PkbxgzPhJv)을 방문해주세요.
-:::
-
 ## 예제 프로젝트 {#example-projects}
 
 Vite는 서버 측 렌더링(SSR, Server-side Rendering)을 기본적으로 지원합니다. [`create-vite-extra`](https://github.com/bluwy/create-vite-extra) 리포지토리에서 이 가이드의 참고 자료로 사용할 수 있는 SSR 설정에 대한 예제를 볼 수 있습니다:
