@@ -19,6 +19,15 @@ Vite 대신 다른 서버가 응답하는 경우가 있습니다.
 
 :::
 
+## preview.allowedHosts {#preview-allowedhosts}
+
+- **타입:** `string | true`
+- **기본값:** [`server.allowedHosts`](./server-options#server-allowedhosts)
+
+Vite가 응답할 수 있는 호스트 이름 목록입니다.
+
+자세한 내용은 [`server.allowedHosts`](./server-options#server-allowedhosts)를 참고해 주세요.
+
 ## preview.port {#preview-port}
 
 - **타입:** `number`

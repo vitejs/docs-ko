@@ -42,6 +42,20 @@ WSL2에서 Vite를 실행할 때, `host: true`를 설정하는 것만으로는 L
 
 :::
 
+## server.allowedHosts {#server-allowedhosts}
+
+- **타입:** `string[] | true`
+- **기본값:** `[]`
+
+Vite가 응답할 수 있는 호스트 이름 목록입니다.
+기본적으로 `localhost`와 `.localhost` 하위 도메인, 그리고 모든 IP 주소가 허용됩니다.
+HTTPS를 사용하는 경우 이 검사는 건너뜁니다.
+
+문자열이 `.`으로 시작하는 경우, `.`이 제외된 호스트 이름과 모든 서브도메인을 허용합니다. 예를 들어, `.example.com`은 `example.com`, `foo.example.com`, `foo.bar.example.com`을 허용합니다.
+
+`true`로 설정하면 서버가 모든 호스트의 요청에 응답할 수 있게 됩니다.
+DNS 리바인딩 공격에 취약할 수 있으므로 권장하지 않습니다.
+
 ## server.port {#server-port}
 
 - **타입:** `number`
