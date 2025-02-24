@@ -1,8 +1,10 @@
 # Vite의 환경 변수와 모드 {#env-variables-and-modes}
 
-## 환경 변수 {#env-variables}
+Vite는 `import.meta.env` 라는 특수한 객체를 통해 특정 상수들을 노출합니다. 이러한 상수들은 개발 시 전역 변수로 정의되나, 빌드 시에는 정적으로 치환되어 효과적인 트리 셰이킹이 가능합니다.
 
-Vite는 **`import.meta.env`** 객체를 이용해 환경 변수에 접근할 수 있도록 하고 있으며, 이는 빌드 시 정적으로 대체됩니다. 기본적으로 아래와 같은 환경 변수를 제공합니다:
+## 내장 상수 {#built-in-constants}
+
+모든 상황에서 사용할 수 있는 내장 상수들은 다음과 같습니다:
 
 - **`import.meta.env.MODE`**: {string} 현재 앱이 동작하고 있는 [모드](#modes)입니다.
 
@@ -14,7 +16,31 @@ Vite는 **`import.meta.env`** 객체를 이용해 환경 변수에 접근할 수
 
 - **`import.meta.env.SSR`**: {boolean} 앱이 [서버](./ssr.md#conditional-logic)에서 실행 중인지 여부입니다.
 
-## `.env` 파일들 {#env-files}
+## 환경 변수 {#env-variables}
+
+Vite는 `import.meta.env` 객체를 통해 자동으로 환경 변수를 문자열로 노출합니다.
+
+환경 변수가 클라이언트에 실수로 노출되는 것을 방지하기 위해, `VITE_` 접두사가 붙은 변수들만 Vite가 처리하는 코드에서 접근이 가능합니다. 가령, 아래와 같이 환경 변수를 정의했다면:
+
+```[.env]
+VITE_SOME_KEY=123
+DB_PASSWORD=foobar
+```
+
+`VITE_SOME_KEY` 변수만이 클라이언트에서 `import.meta.env.VITE_SOME_KEY`로 접근이 가능합니다. `DB_PASSWORD`는 노출되지 않습니다.
+
+```js
+console.log(import.meta.env.VITE_SOME_KEY) // "123"
+console.log(import.meta.env.DB_PASSWORD) // undefined
+```
+
+[envPrefix](/config/shared-options.html#envprefix) 옵션을 통해 환경 변수 접두사를 커스터마이징할 수 있습니다.
+
+:::tip 환경 변수 파싱
+위와 같이 `VITE_SOME_KEY`는 숫자이지만 파싱 시 문자열로 반환됩니다. 불리얼 환경 변수에 대해서도 동일하게 적용되며, 코드에서 사용할 때는 원하는 타입으로 변환해야 합니다.
+:::
+
+### `.env` 파일들 {#env-files}
 
 Vite는 [dotenv](https://github.com/motdotla/dotenv)를 이용해 [환경 변수가 저장된 디렉터리](/config/shared-options.md#envdir) 내 아래의 파일에서 환경 변수를 가져옵니다.
 
@@ -34,27 +60,7 @@ Vite는 모드별 `.env.[mode]` 파일 외에도 항상 `.env`와 `.env.local` �
 Vite가 실행될 때 이미 존재하던 환경 변수는 가장 높은 우선 순위를 가지며, `.env` 파일로 인해 덮어씌워지지 않습니다. 가령 `VITE_SOME_KEY=123 vite build` 와 같이 말이죠.
 
 `.env` 파일은 Vite가 시작될 때 가져와집니다. 따라서 파일을 변경했다면 서버를 재시작해주세요.
-:::
 
-마찬가지로 이렇게 설정된 환경 변수는 `import.meta.env` 객체를 통해 문자열 형태로 접근이 가능합니다.
-
-참고로, Vite에서 접근 가능한 환경 변수는 일반 환경 변수와 구분을 위해 `VITE_` 라는 접두사를 붙여 나타냅니다. 가령, 아래와 같이 환경 변수를 정의했다면:
-
-```[.env]
-VITE_SOME_KEY=123
-DB_PASSWORD=foobar
-```
-
-`VITE_SOME_KEY` 변수만이 `import.meta.env.VITE_SOME_KEY`로 접근이 가능합니다. (`DB_PASSWORD`는 노출되지 않습니다.)
-
-```js
-console.log(import.meta.env.VITE_SOME_KEY) // "123"
-console.log(import.meta.env.DB_PASSWORD) // undefined
-```
-
-:::tip 환경 변수 파싱
-
-위와 같이, `VITE_SOME_KEY`는 숫자이지만 파싱 시 문자열로 반환됩니다. 불리얼 환경 변수에 대해서도 동일하게 적용되며, 코드에서 사용할 때는 원하는 타입으로 변환해야 합니다.
 :::
 
 또한 Vite는 [dotenv-expand](https://github.com/motdotla/dotenv-expand)를 사용해 env 파일에 작성된 환경 변수를 확장합니다. 문법에 대해 더 알아보고 싶다면 [이 문서](https://github.com/motdotla/dotenv-expand#what-rules-does-the-expansion-engine-follow)를 참고하세요.
@@ -68,14 +74,13 @@ NEW_KEY2=test\$foo  # test$foo
 NEW_KEY3=test$KEY   # test123
 ```
 
-환경 변수에 대한 접미사(Prefix)를 커스터마이즈 하고자 한다면, [envPrefix](/config/shared-options.html#envprefix) 옵션을 참고해주세요.
-
 :::warning 보안 권고 사항
 
 - `.env.*.local` 파일은 오로지 로컬에서만 접근이 가능한 파일이며, 데이터베이스 비밀번호와 같은 민감한 정보를 이 곳에 저장하도록 합니다. 또한 `.gitignore` 파일에 `*.local` 파일을 명시해 Git에 체크인되는 것을 방지하도록 합니다.
 
 - Vite 소스 코드에 노출되는 모든 환경 변수는 번들링 시 포함되게 됩니다. 따라서, `VITE_*` 환경 변수에는 민감한 정보들이 _포함되어서는 안됩니다_.
-  :::
+
+:::
 
 ::: details 역순으로 변수 확장하기
 
@@ -94,7 +99,7 @@ VITE_BAR=bar
 
 :::
 
-### TypeScript를 위한 인텔리센스 {#intellisense-for-typescript}
+## TypeScript를 위한 인텔리센스 {#intellisense-for-typescript}
 
 기본적으로, Vite는 [`vite/client.d.ts`](https://github.com/vitejs/vite/blob/main/packages/vite/client.d.ts)의 `import.meta.env`에 대한 타입 정의를 제공하고 있습니다. 물론 `.env.[mode]` 파일에서 더 많은 커스텀 환경 변수를 정의할 수 있으며, `VITE_` 접두사가 붙은 커스텀 환경 변수에 대해서는 TypeScript 인텔리센스 정의가 가능합니다.
 
@@ -124,20 +129,21 @@ interface ImportMeta {
 :::warning `import`는 타입 확장을 동작하지 않도록 합니다
 
 만약 `ImportMetaEnv`가 정의되지 않는다면, `vite-env.d.ts`에 `import` 구문이 없는지 확인해 주세요. 더 자세한 내용은 [TypeScript 문서](https://www.typescriptlang.org/docs/handbook/2/modules.html#how-javascript-modules-are-defined)에서 확인할 수 있습니다.
+
 :::
 
-## HTML 환경 변수 대체 {#html-env-replacement}
+## HTML 내 상수 치환 {#html-env-replacement}
 
-Vite는 HTML 파일에서 환경 변수를 대체하는 기능도 지원합니다. `import.meta.env`의 모든 속성은 특수한 `%ENV_NAME%` 구문을 사용해 HTML 파일에서도 사용할 수 있습니다.
+Vite는 HTML 파일에서 상수를 치환하는 기능도 지원합니다. `import.meta.env`의 모든 속성은 특수한 `%CONST_NAME%` 구문을 통해 HTML 파일에서도 사용할 수 있습니다.
 
 ```html
 <h1>Vite is running in %MODE%</h1>
 <p>Using data from %VITE_API_URL%</p>
 ```
 
-다만 환경 변수가 `import.meta.env`에 존재하지 않는다면 HTML에서는 무시되고 대체되지 않습니다. 예를 들어 `%NON_EXISTENT%`라는 환경 변수가 `import.meta.env`에 존재하지 않는다면, JS에서는 `import.meta.env.NON_EXISTENT`가 `undefined`로 대체되지만, HTML에서는 무시되고 대체되지 않습니다.
+단, HTML에서 환경 변수가 `import.meta.env`에 존재하지 않으면 무시되며 치환되지 않습니다. 가령 존재하지 않는 환경변수 `%NON_EXISTENT%`를 사용하는 경우, 이는 치환되지 않습니다. 이와는 달리 JS는 `import.meta.env.NON_EXISTENT`로 접근하면 `undefined`로 치환된다는 차이가 있습니다.
 
-Vite는 많은 프레임워크에서 사용되고 있기 때문에, 조건문과 같은 복잡한 대체에 대해서는 의도적으로 의견을 제시하지 않고 있습니다. [기존의 커뮤니티 플러그인](https://github.com/vitejs/awesome-vite#transformers) 또는 [`transformIndexHtml` 훅](./api-plugin#transformindexhtml)을 구현한 커스텀 플러그인을 통해 Vite를 확장할 수 있습니다.
+Vite는 많은 프레임워크에서 사용되고 있기에, 조건문과 같은 복잡한 대체에 대해서는 의도적으로 의견을 제시하지 않고 있습니다. [커뮤니티 플러그인](https://github.com/vitejs/awesome-vite#transformers) 또는 [`transformIndexHtml` 훅](./api-plugin#transformindexhtml)을 구현한 커스텀 플러그인을 통해 Vite를 확장할 수 있습니다.
 
 ## 모드 {#modes}
 
@@ -145,8 +151,7 @@ Vite는 많은 프레임워크에서 사용되고 있기 때문에, 조건문과
 
 다시말해 `vite build` 명령을 실행하게 되면 `.env.production`에 정의된 환경 변수를 불러오게 됩니다.
 
-```
-# .env.production
+```[.env.production]
 VITE_APP_TITLE=My App
 ```
 
@@ -160,19 +165,17 @@ vite build --mode staging
 
 그리고 `.env.staging` 파일을 생성합니다:
 
-```
-# .env.staging
+```[.env.staging]
 VITE_APP_TITLE=My App (staging)
 ```
 
 `vite build` 명령은 기본적으로 `production` 모드로 동작하기 때문에, 다른 모드와 `.env` 파일 설정을 통해 `development` 모드로 빌드를 실행할 수 있습니다:
 
-```
-# .env.testing
+```[.env.testing]
 NODE_ENV=development
 ```
 
-## NODE_ENV 그리고 모드 {#node-env-and-modes}
+### NODE_ENV 그리고 모드 {#node-env-and-modes}
 
 `NODE_ENV`(`process.env.NODE_ENV`)와 모드는 서로 다른 개념임을 유의해야 합니다. 아래는 명령어가 `NODE_ENV`와 모드에 어떤 영향을 미치는지 보여줍니다:
 

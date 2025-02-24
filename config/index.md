@@ -61,7 +61,7 @@ export default {
 
 ## 조건부 설정 {#conditional-config}
 
-만약 설정에서 명령(`serve` 또는 `build`), 사용 중인 [모드](/guide/env-and-mode), SSR 빌드 여부(`isSsrBuild`), 또는 빌드 프리뷰(`isPreview`) 여부에 따라 조건부로 옵션을 결정해야 하는 경우, 아래와 같이 함수를 내보낼 수 있습니다:
+만약 설정에서 명령(`serve` 또는 `build`), 사용 중인 [모드](/guide/env-and-mode#mode), SSR 빌드 여부(`isSsrBuild`), 또는 빌드 프리뷰(`isPreview`) 여부에 따라 조건부로 옵션을 결정해야 하는 경우, 아래와 같이 함수를 내보낼 수 있습니다:
 
 ```js twoslash
 import { defineConfig } from 'vite'

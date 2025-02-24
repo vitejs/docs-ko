@@ -137,7 +137,7 @@ vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 �
 이를 통해 다음에 대한 Shim이 제공됩니다:
 
 - `.svg`와 같은 에셋
-- Vite를 통해 주입되는 `import.meta.env`에 명시된 [환경 변수](./env-and-mode#env-variables) 타입들
+- `import.meta.env`를 통해 Vite가 주입하는 [상수 변수](./env-and-mode#env-variables) 타입
 - `import.meta.hot`에 명시된 [HMR API](./api-hmr) 타입들
 
 ::: tip
