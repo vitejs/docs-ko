@@ -48,7 +48,7 @@ VITE_CJS_IGNORE_WARNING=true vite dev
 
 ## 설정 {#config}
 
-### 이 패키지는 ESM만 지원합니다 {#this-package-is-esm-only}
+### This package is ESM only {#this-package-is-esm-only}
 
 ESM만 지원하는 패키지를 `require`로 불러올 때 아래와 같은 에러가 발생합니다.
 
@@ -63,6 +63,15 @@ Node.js <=22 환경에서, ESM 파일은 기본적으로 [`require`](https://nod
 
 - 가장 가까운 `package.json`에 `"type": "module"`을 추가합니다.
 - `vite.config.js`/`vite.config.ts`를 `vite.config.mjs`/`vite.config.mts`로 변경합니다.
+
+### `failed to load config from '/path/to/config*/vite.config.js'` {#failed-to-load-config-from-path-to-config-vite-config-js}
+
+> failed to load config from '/path/to/config\*/vite.config.js'
+> error when starting dev server:
+> Error: Build failed with 1 error:
+> error: Must use "outdir" when there are multiple input files
+
+프로젝트 폴더 경로에 `*`가 포함되어 있는 경우 위와 같은 오류가 발생할 수 있습니다. esbuild가 이를 glob 패턴으로 인식하기 때문에, `*`를 제거하도록 디렉터리 이름을 변경해야 합니다.
 
 ## 개발 서버 {#dev-server}
 
@@ -206,7 +215,7 @@ Node.js 인스펙터가 루트 폴더에 `vite-profile-0.cpuprofile`을 생성�
 
 ## 그 외 {#others}
 
-### 브라우저 호환성을 위해 외부화된 모듈 {#module-externalized-for-browser-compatibility}
+### Module externalized for browser compatibility {#module-externalized-for-browser-compatibility}
 
 브라우저에서 Node.js 모듈을 사용할 때 Vite는 다음 경고를 출력합니다.
 
