@@ -51,10 +51,23 @@ Vite가 응답할 수 있는 호스트 이름 목록입니다.
 기본적으로 `localhost`와 `.localhost` 하위 도메인, 그리고 모든 IP 주소가 허용됩니다.
 HTTPS를 사용하는 경우 이 검사는 건너뜁니다.
 
-문자열이 `.`으로 시작하는 경우, `.`이 제외된 호스트 이름과 모든 서브도메인을 허용합니다. 예를 들어, `.example.com`은 `example.com`, `foo.example.com`, `foo.bar.example.com`을 허용합니다.
+문자열이 `.`으로 시작하는 경우, `.`이 제외된 호스트 이름과 모든 서브도메인을 허용합니다. 예를 들어, `.example.com`은 `example.com`, `foo.example.com`, `foo.bar.example.com`을 허용합니다. `true`로 설정하면 서버가 모든 호스트에 대한 요청에 응답할 수 있게 됩니다.
 
-`true`로 설정하면 서버가 모든 호스트의 요청에 응답할 수 있게 됩니다.
-DNS 리바인딩 공격에 취약할 수 있으므로 권장하지 않습니다.
+::: details 어떤 호스트가 안전한가요?
+
+직접 IP 주소를 관리할 수 있는 호스트만 허용된 호스트 목록에 추가하는 것이 안전합니다.
+
+예를 들어, `vite.dev` 도메인을 소유하고 있다면 `vite.dev` 및 `.vite.dev`를 목록에 추가해도 좋습니다. 해당 도메인을 소유하고 있지 않고 도메인 소유자를 신뢰할 수 없다면, 추가하지 말아야 합니다.
+
+특히 `.com`과 같은 최상위 도메인은 절대로 목록에 추가하지 마세요. 누구나 `example.com`과 같은 도메인을 구매해 원하는 IP 주소로 연결할 수 있습니다.
+
+:::
+
+::: danger
+
+`server.allowedHosts`를 `true`로 설정하면 DNS 리바인딩 공격을 통해 어떤 웹사이트에서든 개발 서버에 요청을 보낼 수 있게 되며, 소스 코드와 콘텐츠가 유출될 수 있습니다. 따라서 항상 명시적으로 호스트 목록을 지정할 것을 강력히 권장합니다. 자세한 내용은 [GHSA-vg6x-rcgg-rjx6](https://github.com/vitejs/vite/security/advisories/GHSA-vg6x-rcgg-rjx6)를 참고해 주세요.
+
+:::
 
 ::: details 환경 변수를 통해 설정하기
 `__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS` 환경 변수를 통해 허용할 호스트를 추가로 지정할 수 있습니다.
@@ -169,9 +182,9 @@ export default defineConfig({
 
 개발 서버 CORS를 설정합니다.  [옵션 객체](https://github.com/expressjs/cors#configuration-options)를 전달해 상세한 동작을 설정하거나, 모든 출처를 허용하기 위해 `true`로 설정할 수 있습니다.
 
-:::warning
+::: danger
 
-신뢰할 수 없는 출처에 소스 코드가 노출되지 않도록, `true` 대신 특정 값 지정을 권장합니다.
+`server.cors`를 `true`로 설정하면 모든 웹사이트에서 개발 서버에 요청을 보내고 소스 코드와 콘텐츠를 다운로드할 수 있게 됩니다. 따라서 항상 명시적으로 허용할 출처(origin) 목록을 사용할 것을 권장합니다.
 
 :::
 
