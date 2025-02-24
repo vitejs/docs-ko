@@ -129,12 +129,18 @@ vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 �
 ```json [tsconfig.json]
 {
   "compilerOptions": {
-    "types": ["vite/client"]
+    "types": ["vite/client", "some-other-global-lib"]
   }
 }
 ```
 
-이를 통해 다음에 대한 Shim이 제공됩니다:
+::: warning
+
+[`compilerOptions.types`](https://www.typescriptlang.org/tsconfig#types)를 지정하는 경우, 전역 스코프에는 지정된 패키지만이 포함되며, 모든 "@types" 패키지는 포함되지 않습니다.
+
+:::
+
+`vite/client`는 다음과 같은 타입 심(shim)을 제공합니다:
 
 - `.svg`와 같은 에셋
 - `import.meta.env`를 통해 Vite가 주입하는 [상수 변수](./env-and-mode#env-variables) 타입
