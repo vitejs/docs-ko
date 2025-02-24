@@ -18,7 +18,7 @@ vite는 애플리케이션의 모듈을 **dependencies**와 **source code** 두 
 
 - **Dependencies**: 개발 시 그 내용이 바뀌지 않을 일반적인 JavaScript 소스 코드입니다. 기존 번들러로는 컴포넌트 라이브러리와 같이 몇 백 개의 JavaScript 모듈을 갖고 있는 매우 큰 디펜던시에 대한 번들링 과정이 매우 비효율적이었고 많은 시간을 필요로 했습니다.
 
-  Vite의 [사전 번들링](./dep-pre-bundling) 기능은 [Esbuild](https://esbuild.github.io/)를 사용하고 있습니다. Go로 작성된 Esbuild는 Webpack, Parcel과 같은 기존의 번들러 대비 10-100배 빠른 속도를 제공합니다.
+  Vite [사전 번들링](./dep-pre-bundling.md) 기능은 [Esbuild](https://esbuild.github.io/)를 사용하고 있습니다. Go로 작성된 Esbuild는 Webpack, Parcel과 같은 기존의 번들러 대비 10-100배 빠른 속도를 제공합니다.
 
 - **Source code**: JSX, CSS 또는 Vue/Svelte 컴포넌트와 같이 컴파일링이 필요하고, 수정 또한 매우 잦은 Non-plain JavaScript 소스 코드는 어떻게 할까요? (물론 이들 역시 특정 시점에서 모두 불러올 필요는 없습니다.)
 
@@ -47,7 +47,7 @@ import esmSvg from '../images/esm.svg?raw'
 
 이제 기본적으로 ESM이 대부분의 환경에서 지원되지만, 프로덕션에서 번들 되지 않은 ESM을 가져오는 것은 중첩된 import로 인한 추가 네트워크 통신으로 인해 여전히 비효율적입니다(HTTP/2를 사용하더라도). 프로덕션 환경에서 최적의 로딩 성능을 얻으려면 트리 셰이킹, 지연 로딩 및 청크 파일 분할(더 나은 캐싱을 위해)을 이용하여 번들링 하는 것이 더 좋습니다.
 
-개발 서버와 프로덕션 빌드 간에 최적의 출력과 동작 일관성을 보장하는 것은 쉽지 않습니다. 이것이 바로 Vite가 미리 설정된 [빌드 커맨드](./build)를 이용하고, [빌드 퍼포먼스 최적화](./features#build-optimizations)를 진행하는 이유입니다.
+개발 서버와 프로덕션 빌드 간에 최적의 출력과 동작 일관성을 보장하는 것은 쉽지 않습니다. 이것이 바로 Vite가 미리 설정된 [빌드 커맨드](./build.md)를 이용하고, [빌드 퍼포먼스 최적화](./features.md#build-optimizations)를 진행하는 이유입니다.
 
 ## 왜 번들링 시에는 Esbuild를 사용하지 않나요? {#why-not-bundle-with-esbuild}
 
@@ -59,4 +59,4 @@ Rollup은 [v4에서 파서를 SWC로 전환](https://github.com/rollup/rollup/pu
 
 ## Vite와 다른 도구의 차이점 {#how-is-vite-different-from-x}
 
-[다른 빌드 도구와의 차이점](./comparisons) 섹션에서 Vite와 다른 번들러 도구의 차이점에 대해 자세히 다루고 있습니다.
+[다른 빌드 도구와의 차이점](./comparisons.md) 섹션에서 Vite와 다른 번들러 도구의 차이점에 대해 자세히 다루고 있습니다.
