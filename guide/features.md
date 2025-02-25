@@ -71,18 +71,13 @@ export type { T }
 
 - [TypeScript 문서](https://www.typescriptlang.org/tsconfig#useDefineForClassFields)
 
-Vite 2.5.0 부터는 TypeScript의 변환 대상이 `ESNext` 또는 `ES2022` 이상인 경우, 기본 값을 `true`로 설정합니다. 이는 [`tsc` 버전 4.3.2 이상](https://github.com/microsoft/TypeScript/pull/42663) 및 ECMAScript 표준을 따르도록 하는 설정입니다.
+TypeScript 변환 대상이 `ES2022` 또는 `ESNext` 이상인 경우, 기본값은 `true`가 됩니다. 이는 [TypeScript 4.3.2+ 동작 방식](https://github.com/microsoft/TypeScript/pull/42663)과 동일합니다.
+그 외 TypeScript 변환 대상은 기본적으로 `false`로 설정됩니다.
 
-그 외의 TypeScript 변환 대상은 `false`로 설정됩니다.
+`true`는 표준 ECMAScript 런타임 동작입니다.
 
-그러나 다른 프로그래밍 언어나 이전 버전의 TypeScript를 사용하던 사람들에게는 직관적이지 않은 내용일 수 있습니다.
-이에 대한 자세한 정보는 [TypeScript 3.7 릴리스 노트](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#the-usedefineforclassfields-flag-and-the-declare-property-modifier)를 참고할 수 있습니다.
-
-만약 클래스의 필드에 크게 의존하는 라이브러리를 사용하는 경우라면, 이러한 라이브러리를 사용하는 것에 대해 옵션을 수정하는 경우 상당한 주의를 기울어야 합니다.
-
-가령 [MobX](https://mobx.js.org/installation.html#use-spec-compliant-transpilation-for-class-properties)와 같은 대부분의 라이브러리는 `"useDefineForClassFields": true`인 것으로 가정하고 동작합니다.
-
-그러나 [`lit-element`](https://github.com/lit/lit-element/issues/1030)를 포함해 일부 라이브러리는 아직 이 새로운 기본값이 적용되지 않았습니다. 이러한 경우에는 `useDefineForClassFields`의 값을 `false`로 설정해주세요.
+클래스 필드에 크게 의존하는 라이브러리를 사용하는 경우, 해당 라이브러리의 의도된 사용법에 주의하세요.
+라이브러리 대부분은 `"useDefineForClassFields": true`를 기대하지만, 이를 지원하지 않는 경우 명시적으로 `useDefineForClassFields`를 `false`로 설정할 수 있습니다.
 
 #### `target` {#target}
 
@@ -94,7 +89,7 @@ Vite는 `esbuild`와 동일하게 `tsconfig.json` 내 `target` 값을 무시합�
 
 ::: warning `useDefineForClassFields`
 
-If `target` in `tsconfig.json` is not `ESNext` or `ES2022` or newer, or if there's no `tsconfig.json` file, `useDefineForClassFields` will default to `false` which can be problematic with the default `esbuild.target` value of `esnext`. It may transpile to [static initialization blocks](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks#browser_compatibility) which may not be supported in your browser.
+`tsconfig.json` 내 `target`이 `ESNext` 또는 `ES2022` 이상이 아니거나, `tsconfig.json` 파일이 없는 경우, `useDefineForClassFields`는 기본값이 `false`가 됩니다. 이는 기본 `esbuild.target` 값인 `esnext`와 함께 사용할 때 문제가 될 수 있습니다. 브라우저에서 지원하지 않을 수 있는 [정적 초기화 블록](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks#browser_compatibility)으로 트랜스파일될 수 있기 때문입니다.
 
 따라서, `target`을 `ESNext` 또는 `ES2022` 이상으로 설정하거나, `tsconfig.json`을 구성할 때 `useDefineForClassFields`를 명시적으로 `true`로 설정하는 것을 권장합니다.
 :::
@@ -124,7 +119,9 @@ vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 �
 /// <reference types="vite/client" />
 ```
 
-또는 `tsconfig.json` 내 `compilerOptions.types` 옵션에 `vite/client`를 명시해 줄 수도 있습니다:
+::: details `compilerOptions.types` 사용하기
+
+`tsconfig.json` 내 `compilerOptions.types`에 `vite/client`를 추가할 수도 있습니다:
 
 ```json [tsconfig.json]
 {
@@ -133,8 +130,6 @@ vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 �
   }
 }
 ```
-
-::: warning
 
 [`compilerOptions.types`](https://www.typescriptlang.org/tsconfig#types)를 지정하는 경우, 전역 스코프에는 지정된 패키지만이 포함되며, 모든 "@types" 패키지는 포함되지 않습니다.
 
@@ -216,8 +211,6 @@ vite는 기본적으로 Vue를 지원하고 있습니다.
 
 - Vue 3 SFC: [@vitejs/plugin-vue](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue)
 - Vue 3 JSX: [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx)
-- Vue 2.7 SFC: [@vitejs/plugin-vue2](https://github.com/vitejs/vite-plugin-vue2)
-- Vue 2.7 JSX: [@vitejs/plugin-vue2-jsx](https://github.com/vitejs/vite-plugin-vue2-jsx)
 
 ## JSX {#jsx}
 
@@ -773,11 +766,11 @@ vite는 비동기적으로 불러와지는 청크 내에 CSS 코드가 포함된
 
 물론, 모든 CSS가 그냥 일반적인 각각의 파일로 저장된 경우라면 굳이 이러한 기능을 사용할 필요가 없습니다. 이러한 경우 [`build.cssCodeSplit`](/config/build-options.md#build-csscodesplit) 옵션의 값을 `false`로 설정해 비활성화가 가능합니다.
 
-### Preload Directives Generation {#preload-directives-generation}
+### 프리로드 디렉티브 생성 {#preload-directives-generation}
 
 vite는 빌드 시 Direct Import 구문에 대해 `<link ref="modulepreload">` 디렉티브를 이용해 미리 모듈을 캐싱하도록 자동으로 변환합니다. 덕분에 해당 모듈을 필요로 하는 경우 이를 바로 사용할 수 있게 됩니다. (`modulepreload`에 대한 더 자세한 내용은 [MDN doc](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/modulepreload) 또는 [Google developers](https://developers.google.com/web/updates/2017/12/modulepreload) 문서를 참고해주세요. - 옮긴이)
 
-### Async Chunk Loading Optimization {#async-chunk-loading-optimization}
+### 비동기 청크 로딩 최적화 {#async-chunk-loading-optimization}
 
 빌드 시, 때때로 Rollup은 "공통(Common)" 청크 파일을 생성합니다. 보통 두 개 이상의 모듈에서 공유되는 청크가 이러한데, 이를 Dynamic Import를 이용해 불러오는 경우 다음과 같은 상황이 발생됩니다. (브라우저는 `A`와 `B` 모듈을 필요로 하며(Dynamic Import), `A`와 `B` 모듈은 공통적으로 모듈 `C`를 필요로 하는 경우(Direct Import)입니다. - 옮긴이)
 
