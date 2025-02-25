@@ -57,6 +57,10 @@ Vite의 현재 플러그인 API는 `esbuild`를 번들러로 사용하는 것과
 
 Rollup은 [v4에서 파서를 SWC로 전환](https://github.com/rollup/rollup/pull/5073)하는 등 성능 개선을 위해 노력해 왔습니다. 또한 Rollup의 Rust 포팅인 Rolldown을 만드는 작업이 진행 중입니다. Rolldown이 준비되면 Rollup과 esbuild를 모두 대체하여 빌드 성능을 크게 향상시키고 개발과 빌드 사이의 불일치를 제거할 수 있습니다. [Evan You의 ViteConf 2023 키노트](https://youtu.be/hrdwQHoAp0M)에서 자세한 내용을 확인할 수 있습니다.
 
-## Vite와 다른 도구의 차이점 {#how-is-vite-different-from-x}
+## Vite는 다른 번들링하지 않는 빌드 툴과 어떤 관계가 있나요? {#how-vite-relates-to-other-unbundled-build-tools}
 
-[다른 빌드 도구와의 차이점](./comparisons.md) 섹션에서 Vite와 다른 번들러 도구의 차이점에 대해 자세히 다루고 있습니다.
+Preact 팀이 제공하는 [WMR](https://github.com/preactjs/wmr)은 비슷한 기능을 제공하고자 했습니다. Vite 개발 및 빌드를 위한 범용 Rollup 플러그인 API는 여기에서 영감을 받았습니다. 다만 WMR은 더 이상 관리되지 않습니다. Preact 팀은 Vite와 함께 [@preactjs/preset-vite](https://github.com/preactjs/preset-vite) 플러그인 사용을 권장하고 있습니다.
+
+[Snowpack](https://www.snowpack.dev/)도 번들링을 하지 않는 네이티브 ESM 개발 서버로, Vite와 매우 유사한 영역에 있었습니다. Vite에서 제공하는 디펜던시 사전 번들링 기능 역시 Snowpack v1(현재는 [`esinstall`](https://github.com/snowpackjs/snowpack/tree/main/esinstall))에서 영감을 받았습니다. 마찬가지로 Snowpack은 더 이상 관리되지 않고 있습니다. Snowpack 팀은 현재 Vite를 기반으로 한 정적 사이트 빌더인 [Astro](https://astro.build/)를 개발하고 있습니다.
+
+[@web/dev-server](https://modern-web.dev/docs/dev-server/overview/)(이전에는 `es-dev-server`)는 훌륭한 프로젝트로, 이로부터 Vite 1.0 Koa 기반 서버 설정에 대한 영감을 받았었습니다. `@web`라는 우산 아래에 있는 프로젝트는 활발하게 유지보수되고 있으며, Vite 사용자에게도 도움이 될 수 있는 많은 우수한 도구들을 포함하고 있습니다.

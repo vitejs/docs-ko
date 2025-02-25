@@ -275,10 +275,6 @@ export default defineConfig({
               link: '/guide/backend-integration',
             },
             {
-              text: '다른 빌드 도구와의 차이점',
-              link: '/guide/comparisons',
-            },
-            {
               text: '트러블슈팅',
               link: '/guide/troubleshooting',
             },
@@ -474,6 +470,7 @@ export default defineConfig({
   },
   vite: {
     plugins: [
+      // @ts-ignore
       groupIconVitePlugin({
         customIcon: {
           firebase: 'vscode-icons:file-type-firebase',
