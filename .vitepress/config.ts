@@ -224,16 +224,25 @@ export default defineConfig({
     sidebar: {
       '/guide/': [
         {
-          text: '가이드',
+          text: '소개',
           items: [
-            {
-              text: 'Vite를 사용해야 하는 이유',
-              link: '/guide/why',
-            },
             {
               text: '시작하기',
               link: '/guide/',
             },
+            {
+              text: '프로젝트 철학',
+              link: '/guide/philosophy',
+            },
+            {
+              text: 'Vite를 사용해야 하는 이유',
+              link: '/guide/why',
+            },
+          ],
+        },
+        {
+          text: '가이드',
+          items: [
             {
               text: '지원하는 기능들',
               link: '/guide/features',
@@ -281,10 +290,6 @@ export default defineConfig({
             {
               text: '퍼포먼스',
               link: '/guide/performance',
-            },
-            {
-              text: '프로젝트 철학',
-              link: '/guide/philosophy',
             },
             {
               text: 'v5에서 마이그레이션하기',
