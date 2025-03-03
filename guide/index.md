@@ -202,7 +202,31 @@ Vite CLI와 함께 `--port`, `--open`와 같은 옵션을 사용할 수 있습�
 
 ## 릴리스되지 않은 Vite 사용하기 {#using-unreleased-commits}
 
-만약 아직 릴리스되지 않은 Vite를 사용하고자 한다면, 먼저 [Vite 리포지토리](https://github.com/vitejs/vite)를 로컬 컴퓨터로 클론한 뒤 이를 빌드해 사용하는 방법이 있습니다. ([PNPM](https://pnpm.io/)이 필요해요.)
+최신 기능을 테스트하기 위해 새 릴리스까지 기다릴 수 없다면, https://pkg.pr.new 를 통해 특정 Vite 커밋을 설치하는 방법도 있습니다:
+
+::: code-group
+
+```bash [npm]
+$ npm install -D https://pkg.pr.new/vite@SHA
+```
+
+```bash [Yarn]
+$ yarn add -D https://pkg.pr.new/vite@SHA
+```
+
+```bash [pnpm]
+$ pnpm add -D https://pkg.pr.new/vite@SHA
+```
+
+```bash [Bun]
+$ bun add -D https://pkg.pr.new/vite@SHA
+```
+
+:::
+
+`SHA`를 [Vite 커밋 SHA](https://github.com/vitejs/vite/commits/main/) 중 하나로 대체해 주세요. 참고로 한 달 이내의 커밋에 대해서만 동작하며, 그 이후 커밋 릴리스는 삭제됩니다.
+
+또는 [vite 리포지토리](https://github.com/vitejs/vite)를 로컬 머신에 클론한 다음, 이를 직접 빌드하고 링크할 수도 있습니다([pnpm](https://pnpm.io/)이 필요합니다):
 
 ```bash
 git clone https://github.com/vitejs/vite.git
@@ -214,6 +238,10 @@ pnpm link --global # 이 단계에서는 선호하는 패키지 관리자를 사
 ```
 
 이후 Vite를 클론한 프로젝트 위에서 `pnpm link --global vite` 명령을 실행해 주세요(또는 `vite`를 전역적으로 링크하는 데 사용했던 패키지 관리자를 사용합니다). 이 작업 이후 개발 서버를 재시작(`yarn dev`)하게 되면, 클론된 Vite를 이용해 프로젝트를 진행할 수 있게 됩니다.
+
+::: tip Vite를 사용하는 디펜던시
+디펜던시에서 간접적으로 사용되는 Vite 버전을 교체하려면, [npm overrides](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#overrides) 또는 [pnpm overrides](https://pnpm.io/package_json#pnpmoverrides)를 사용해야 합니다.
+:::
 
 ## 커뮤니티 {#community}
 
