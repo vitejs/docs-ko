@@ -205,20 +205,26 @@ HTML 파일은 Vite 프로젝트에서 [중심적인 역할](/guide/#index-html-
 
 특정 요소에 대해 HTML 처리를 비활성화하려면 해당 요소에 `vite-ignore` 속성을 추가할 수 있습니다. 이는 외부 에셋이나 CDN을 참조할 때 유용할 수 있습니다.
 
-## Vue {#vue}
+## 프레임워크 {#frameworks}
 
-vite는 기본적으로 Vue를 지원하고 있습니다.
+모든 모던 프레임워크는 Vite를 지원합니다. 프레임워크 플러그인 대부분은 각 프레임워크 팀에서 관리하지만, Vue와 React용 공식 Vite 플러그인은 vite 조직에서 관리합니다:
 
-- Vue 3 SFC: [@vitejs/plugin-vue](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue)
-- Vue 3 JSX: [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx)
+- Vue: [@vitejs/plugin-vue](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue)
+- Vue JSX: [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx)
+- React: [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react)
+- React SWC: [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc)
+
+자세한 내용은 [플러그인 가이드](https://ko.vite.dev/plugins)를 참고해 주세요.
 
 ## JSX {#jsx}
 
-`.jsx`와 `.tsx` 역시 사용이 가능합니다. 마찬가지로 [esbuild](https://esbuild.github.io)를 이용해 컴파일링합니다.
+기본적으로 `.jsx`와 `.tsx` 파일을 지원합니다. JSX 트랜스파일링은 [esbuild](https://esbuild.github.io)를 통해 처리됩니다.
 
-Vue를 사용자들은 HMR, 글로벌 컴포넌트, 디렉티브 및 슬롯 등 Vue 3에서 제공하고 있는 API를 위해 [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx)를 사용해야 합니다.
+다만 각 프레임워크에 최적화된 JSX 기능을 사용하려면 이를 위한 플러그인이 필요합니다. 일반적으로 여러분이 선택한 프레임워크는 이미 JSX를 위한 설정을 기본적으로 제공하고 있을 가능성이 높습니다. 예를 들어, Vue로 개발할 경우 HMR, 전역 컴포넌트 탐색, 디렉티브, 슬롯 등 Vue 3에 특화된 기능을 사용하기 위해서는 공식 [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx) 플러그인을 사용해야 합니다.
 
-React나 Vue를 사용하지 않는다 해도, [`esbuild` 옵션](/config/shared-options.md#esbuild)을 이용해 `jsxFactory`나 `jsxFragment`를 커스터마이징 할 수 있습니다. Preact를 예로 들어보자면 다음과 같습니다:
+If using JSX with your own framework, custom `jsxFactory` and `jsxFragment` can be configured using the [`esbuild` option](/config/shared-options.md#esbuild). For example, the Preact plugin would use:
+
+자체 프레임워크와 함께 JSX를 사용하는 경우, [`esbuild` 옵션](/config/shared-options.md#esbuild)을 사용해 커스텀 `jsxFactory` 및 `jsxFragment`를 구성할 수 있습니다. 예를 들어, Preact 플러그인은 다음과 같이 사용할 수 있습니다:
 
 ```js twoslash [vite.config.js]
 import { defineConfig } from 'vite'
@@ -231,9 +237,9 @@ export default defineConfig({
 })
 ```
 
-자세한 사항은 [esbuild 문서](https://esbuild.github.io/content-types/#jsx)를 참고해주세요.
+자세한 내용은 [esbuild 문서](https://esbuild.github.io/content-types/#jsx)를 참고해주세요.
 
-참고로, Vite에서만 제공되는 옵션인 `jsxInject`를 이용해 JSX에 대한 헬퍼를 사용할 수도 있습니다.
+Vite에서 제공하는 옵션인 `jsxInject`를 이용해 JSX 헬퍼를 사용할 수도 있습니다:
 
 ```js twoslash [vite.config.js]
 import { defineConfig } from 'vite'
