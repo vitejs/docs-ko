@@ -121,3 +121,19 @@ export default defineConfig(({ mode }) => {
   }
 })
 ```
+
+## VS Code에서 설정 파일 디버깅하기 {#debugging-the-config-file-on-vs-code}
+
+기본 설정인 `--configLoader bundle` 모드에서, Vite는 `node_modules/.vite-temp` 폴더에 임시 설정 파일을 작성합니다. 이 경우 중단점을 이용해 Vite 설정 파일을 디버깅하면 파일을 찾을 수 없다는 오류가 발생합니다. 이 문제는 다음과 같이 `.vscode/settings.json` 설정을 추가해 해결할 수 있습니다:
+
+```json
+{
+  "debug.javascript.terminalOptions": {
+    "resolveSourceMapLocations": [
+      "${workspaceFolder}/**",
+      "!**/node_modules/**",
+      "**/node_modules/.vite-temp/**"
+    ]
+  }
+}
+```
