@@ -222,8 +222,6 @@ HTML 파일은 Vite 프로젝트에서 [중심적인 역할](/guide/#index-html-
 
 다만 각 프레임워크에 최적화된 JSX 기능을 사용하려면 이를 위한 플러그인이 필요합니다. 일반적으로 여러분이 선택한 프레임워크는 이미 JSX를 위한 설정을 기본적으로 제공하고 있을 가능성이 높습니다. 예를 들어, Vue로 개발할 경우 HMR, 전역 컴포넌트 탐색, 디렉티브, 슬롯 등 Vue 3에 특화된 기능을 사용하기 위해서는 공식 [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx) 플러그인을 사용해야 합니다.
 
-If using JSX with your own framework, custom `jsxFactory` and `jsxFragment` can be configured using the [`esbuild` option](/config/shared-options.md#esbuild). For example, the Preact plugin would use:
-
 자체 프레임워크와 함께 JSX를 사용하는 경우, [`esbuild` 옵션](/config/shared-options.md#esbuild)을 사용해 커스텀 `jsxFactory` 및 `jsxFragment`를 구성할 수 있습니다. 예를 들어, Preact 플러그인은 다음과 같이 사용할 수 있습니다:
 
 ```js twoslash [vite.config.js]
@@ -425,8 +423,8 @@ const modules = import.meta.glob('./dir/*.js')
 ```js
 // Vite를 통해 변환된 코드
 const modules = {
+  './dir/bar.js': () => import('./dir/bar.js'),
   './dir/foo.js': () => import('./dir/foo.js'),
-  './dir/bar.js': () => import('./dir/bar.js')
 }
 ```
 
@@ -452,11 +450,11 @@ const modules = import.meta.glob('./dir/*.js', { eager: true })
 
 ```js
 // Vite를 통해 변환된 코드
-import * as __glob__0_0 from './dir/foo.js'
-import * as __glob__0_1 from './dir/bar.js'
+import * as __vite_glob_0_0 from './dir/bar.js'
+import * as __vite_glob_0_1 from './dir/foo.js'
 const modules = {
-  './dir/foo.js': __glob__0_0,
-  './dir/bar.js': __glob__0_1
+  './dir/bar.js': __vite_glob_0_0,
+  './dir/foo.js': __vite_glob_0_1,
 }
 ```
 
@@ -500,8 +498,8 @@ const modules = import.meta.glob('./dir/*.js', { import: 'setup' })
 ```ts
 // 아래는 Vite에 의해 생성되는 코드입니다.
 const modules = {
+  './dir/bar.js': () => import('./dir/bar.js').then((m) => m.setup),
   './dir/foo.js': () => import('./dir/foo.js').then((m) => m.setup),
-  './dir/bar.js': () => import('./dir/bar.js').then((m) => m.setup)
 }
 ```
 
@@ -518,11 +516,11 @@ const modules = import.meta.glob('./dir/*.js', {
 
 ```ts
 // 아래는 Vite에 의해 생성되는 코드입니다:
-import { setup as __glob__0_0 } from './dir/foo.js'
-import { setup as __glob__0_1 } from './dir/bar.js'
+import { setup as __vite_glob_0_0 } from './dir/bar.js'
+import { setup as __vite_glob_0_1 } from './dir/foo.js'
 const modules = {
-  './dir/foo.js': __glob__0_0,
-  './dir/bar.js': __glob__0_1
+  './dir/bar.js': __vite_glob_0_0,
+  './dir/foo.js': __vite_glob_0_1,
 }
 ```
 
@@ -539,11 +537,11 @@ const modules = import.meta.glob('./dir/*.js', {
 
 ```ts
 // 아래는 Vite에 의해 생성되는 코드입니다:
-import __glob__0_0 from './dir/foo.js'
-import __glob__0_1 from './dir/bar.js'
+import { default as __vite_glob_0_0 } from './dir/bar.js'
+import { default as __vite_glob_0_1 } from './dir/foo.js'
 const modules = {
-  './dir/foo.js': __glob__0_0,
-  './dir/bar.js': __glob__0_1
+  './dir/bar.js': __vite_glob_0_0,
+  './dir/foo.js': __vite_glob_0_1,
 }
 ```
 
@@ -567,12 +565,12 @@ const moduleUrls = import.meta.glob('./dir/*.svg', {
 ```ts
 // 아래는 Vite에 의해 생성되는 코드입니다:
 const moduleStrings = {
-  './dir/foo.svg': () => import('./dir/foo.js?raw').then((m) => m['default']),
-  './dir/bar.svg': () => import('./dir/bar.js?raw').then((m) => m['default']),
+  './dir/bar.svg': () => import('./dir/bar.svg?raw').then((m) => m['default']),
+  './dir/foo.svg': () => import('./dir/foo.svg?raw').then((m) => m['default']),
 }
 const moduleUrls = {
-  './dir/foo.svg': () => import('./dir/foo.js?url').then((m) => m['default']),
-  './dir/bar.svg': () => import('./dir/bar.js?url').then((m) => m['default']),
+  './dir/bar.svg': () => import('./dir/bar.svg?url').then((m) => m['default']),
+  './dir/foo.svg': () => import('./dir/foo.svg?url').then((m) => m['default']),
 }
 ```
 
