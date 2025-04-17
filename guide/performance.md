@@ -122,5 +122,6 @@ export default defineConfig({
 
 네이티브 툴링을 사용하면 설치 시 크기가 커지는 경우가 많으므로 새로운 Vite 프로젝트를 시작할 때는 기본적으로 사용되지 않습니다. 그러나 대규모 애플리케이션의 경우에는 그 비용을 감당할 가치가 있을 수 있습니다.
 
+- Rollup과 esbuild 대신 [Rolldown](./rolldown)을 사용해 보세요. 더 빠른 빌드와 개발-빌드 간 일관된 경험을 누릴 수 있습니다.
 - 실험적으로 도입된 [LightningCSS](https://github.com/vitejs/vite/discussions/13835)를 사용해 보세요.
 - `@vitejs/plugin-react` 대신 [`@vitejs/plugin-react-swc`](https://github.com/vitejs/vite-plugin-react-swc)를 사용하세요.

@@ -292,6 +292,10 @@ export default defineConfig({
               link: '/guide/performance',
             },
             {
+              text: 'Rolldown',
+              link: '/guide/rolldown',
+            },
+            {
               text: 'v5에서 마이그레이션하기',
               link: '/guide/migration',
             },
