@@ -4,7 +4,7 @@
 [환경 API 피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 피드백을 남겨주세요.
 :::
 
-[빌드 중 공유되는 플러그인](/guide/api-environment.md#shared-plugins-during-build)을 참고하세요.
+[빌드 중 공유되는 플러그인](/guide/api-environment-plugins.md#shared-plugins-during-build)을 참고하세요.
 
 영향을 받는 범위: `Vite 플러그인 개발자`
 
