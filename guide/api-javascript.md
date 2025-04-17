@@ -77,7 +77,6 @@ parentServer.use(vite.middlewares)
 `InlineConfig` 인터페이스는 `UserConfig`의 추가적인 속성들로 확장됩니다:
 
 - `configFile`: 특정 설정 파일을 지칭할 때 사용합니다. 만약 설정이 되어있지 않다면, Vite는 자동적으로 프로젝트 루트에서 결정합니다. `false`로 설정한다면 자동 설정을 비활성화합니다.
-- `envFile`: `false` 일 때는 `.env` 파일들을 비활성화합니다.
 
 ## `ResolvedConfig` {#resolvedconfig}
 

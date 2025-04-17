@@ -459,10 +459,10 @@ export default defineConfig({
 
 ## envDir {#envdir}
 
-- **타입:** `string`
+- **타입:** `string | false`
 - **기본값:** `root`
 
-'.env' 파일이 로드되는 디렉터리입니다. 절대 경로 또는 프로젝트 루트에 상대적인 경로일 수 있습니다.
+'.env' 파일이 로드되는 디렉터리입니다. 절대 경로 또는 프로젝트 루트에 상대적인 경로일 수 있습니다. `false`는 `.env` 파일 로딩을 비활성화합니다.
 
 환경 파일에 대한 더 자세한 점을 알려면, [여기](/guide/env-and-mode#env-files)를 확인하세요.
 
