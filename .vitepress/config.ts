@@ -5,6 +5,8 @@ import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
 import markdownItCustomAnchor from './markdown-it-custom-anchor'
 // @ts-ignore
 import renderPermalink from './render-permalink'
+import llmstxt from 'vitepress-plugin-llms'
+import type { PluginOption } from 'vite'
 import markdownItFootnote from 'markdown-it-footnote'
 import {
   groupIconMdPlugin,
@@ -485,6 +487,25 @@ export default defineConfig({
           '.gitlab-ci.yml': 'vscode-icons:file-type-gitlab',
         },
       }),
+      llmstxt({
+        ignoreFiles: ['blog/*', 'blog.md', 'index.md', 'team.md'],
+        description: '프런트엔드 개발의 새로운 기준',
+        details: `\
+- 💡 즉각적인 서버 구동
+- ⚡️ 빛처럼 빠른 HMR
+- 🛠️ 풍부한 기능
+- 📦 최적화된 빌드
+- 🔩 유연한 플러그인 시스템
+- 🔑 완전한 타입 지원 API
+
+Vite는 프런트엔드 개발 경험을 크게 향상시키는 새로운 프런트엔드 빌드 툴입니다. 크게 두 부분으로 구성되어 있습니다:
+
+- [네이티브 ES 모듈](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 통해 소스 파일을 제공하는 개발 서버로, [다양한 기능](https://ko.vite.dev/guide/features.md)과 놀라울 정도로 빠른 [Hot Module Replacement(HMR)](https://ko.vite.dev/guide/features.md#hot-module-replacement)를 제공합니다.
+
+- [Rollup](https://rollupjs.org)을 사용해 코드를 번들링하는 [빌드 명령어](https://ko.vite.dev/guide/build.md)로, 프로덕션을 위해 고도로 최적화된 정적 에셋을 출력하도록 구성되어 있습니다.
+
+또한 Vite는 타입이 완벽하게 지원되는 [플러그인 API](https://ko.vite.dev/guide/api-plugin.md)와 [JavaScript API](https://ko.vite.dev/guide/api-javascript.md)를 통해 높은 확장성을 제공합니다`,
+      }) as PluginOption,
     ],
     optimizeDeps: {
       include: [
