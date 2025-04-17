@@ -78,7 +78,7 @@ TLS + HTTP/2를 활성화합니다.
 - **타입:** `Record<string, string | ProxyOptions>`
 - **기본값:** [`server.proxy`](./server-options#server-proxy)
 
-프리뷰 서버에 대한 커스텀 프락시 규칙을 설정할 수 있습니다. `{ key: options }` 형태로 구성되며, 키값이 `^`로 시작하는 경우 `RegExp`로 해석됩니다. `configure` 옵션을 사용하여 프락시 인스턴스에 접근할 수 있습니다.
+프리뷰 서버에 대한 커스텀 프록시 규칙을 설정할 수 있습니다. `{ key: options }` 형태로 구성되며, 키값이 `^`로 시작하는 경우 `RegExp`로 해석됩니다. `configure` 옵션을 사용하여 프록시 인스턴스에 접근할 수 있습니다.
 
 이는 [`http-proxy`](https://github.com/http-party/node-http-proxy)를 사용하며, 더 많은 옵션은 [이 링크](https://github.com/http-party/node-http-proxy#options)를 참고해주세요.
 

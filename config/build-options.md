@@ -21,7 +21,7 @@
 - **타입:** `boolean | { polyfill?: boolean, resolveDependencies?: ResolveModulePreloadDependenciesFn }`
 - **기본값:** `{ polyfill: true }`
 
-기본적으로, [모듈 사전로드 폴리필](https://guybedford.com/es-module-preloading-integrity#modulepreload-polyfill)이 자동으로 주입됩니다. 폴리필은 각 `index.html` 엔트리의 프락시 모듈에 자동 주입됩니다. 빌드가 `build.rollupOptions.input`을 통해 HTML이 아닌 커스텀 엔트리를 사용하도록 설정된 경우, 커스텀 엔트리에 직접 폴리필을 가져와야 합니다:
+기본적으로, [모듈 사전로드 폴리필](https://guybedford.com/es-module-preloading-integrity#modulepreload-polyfill)이 자동으로 주입됩니다. 폴리필은 각 `index.html` 엔트리의 프록시 모듈에 자동 주입됩니다. 빌드가 `build.rollupOptions.input`을 통해 HTML이 아닌 커스텀 엔트리를 사용하도록 설정된 경우, 커스텀 엔트리에 직접 폴리필을 가져와야 합니다:
 
 ```js
 import 'vite/modulepreload-polyfill'

@@ -30,7 +30,7 @@
 | Vite           |                |
 | Worker         | 워커           |
 | Side effect    | 사이드 이펙트  |
-| Proxy          | 프락시         |
+| Proxy          | 프록시         |
 | Minification   | 축소화         |
 | Release        | 릴리스         |
 | Asset          | 에셋           |
