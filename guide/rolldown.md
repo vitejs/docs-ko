@@ -152,7 +152,7 @@ Rolldown 덕분에 독보적인 Vite 성능을 유지하면서도 개발과 프�
 ### `rolldown-vite` 감지하기 {#detecting-rolldown-vite}
 
 ::: warning
-일반적으로 플러그인이 `rolldown-vite`나 `vite` 둘 중 무엇으로 실행되는지 감지할 필요가 없으며, 조건부 분기 없이 두 환경 모두에 대해 일관된 동작을 목표로 해야 합니다.
+일반적으로 플러그인은 `rolldown-vite`나 `vite` 둘 중 무엇으로 실행되는지 감지할 필요가 없으며, 조건부 분기 없이 두 환경 모두에 대해 일관된 동작을 해야 합니다.
 :::
 
 `rolldown-vite`에서 다른 동작이 필요한 경우, `rolldown-vite`가 사용되는지 확인하는 방법은 두 가지가 있습니다:
@@ -185,7 +185,7 @@ if (vite.rolldownVersion) {
 }
 ```
 
-`vite`를 피어 디펜던시가 아닌 디펜던시로 지정한 경우, `rolldownVersion` 익스포트 방식이 코드 어디에서든 사용할 수 있기에 더욱 유용합니다.
+`vite`를 (피어 디펜던시가 아닌)디펜던시로 지정한 경우, `rolldownVersion` 익스포트 방식이 코드 어디에서든 사용할 수 있기에 더욱 유용합니다.
 
 ### Rolldown에서 옵션 검증 무시하기 {#ignoring-option-validation-in-rolldown}
 
