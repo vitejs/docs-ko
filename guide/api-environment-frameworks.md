@@ -13,7 +13,7 @@
 
 ## 환경과 프레임워크 {#environments-and-frameworks}
 
-암시적인 `ssr` 환경을 포함해, 클라이언트가 아닌 환경은 개발 중 기본적으로 `RunnableDevEnvironment`를 사용합니다. 이 경우 런타임이 Vite 서버가 실행되는 런타임과 동일해야 하지만, `ssrLoadModule`과 유사하게 작동하여 프레임워크가 SSR 개발 환경에서 HMR을 활성화하고 마이그레이션할 수 있도록 합니다. `isRunnableDevEnvironment` 함수를 사용하여 실행 가능한 환경을 확인할 수 있습니다.
+암시적인 `ssr` 환경을 포함해, 클라이언트가 아닌 환경은 개발 중 기본적으로 `RunnableDevEnvironment`를 사용합니다. 이 경우 런타임이 Vite 서버가 실행되는 런타임과 동일해야 하지만, `ssrLoadModule`과 유사하게 작동하여 프레임워크가 SSR 개발 환경에서 HMR을 활성화하고 마이그레이션할 수 있도록 만듭니다. `isRunnableDevEnvironment` 함수를 사용하여 실행 가능한 환경을 확인할 수 있습니다.
 
 ```ts
 export class RunnableDevEnvironment extends DevEnvironment {
@@ -38,7 +38,48 @@ if (isRunnableDevEnvironment(server.environments.ssr)) {
 ```
 
 :::warning
-`runner`는 처음 접근할 때 초기화됩니다. `runner`가 생성될 때 Vite는 소스 맵 지원을 활성화하는데, 이 때 `process.setSourceMapsEnabled`를 호출하거나, 사용할 수 없는 경우 `Error.prepareStackTrace`를 재정의한다는 점을 유의하세요.
+`runner`는 처음 접근할 때만 지연 평가됩니다. Vite는 `runner`가 생성될 때 `process.setSourceMapsEnabled`를 호출하거나, 이를 사용할 수 없는 경우 `Error.prepareStackTrace`를 오버라이드해 소스 맵 지원을 활성화한다는 점을 유의하세요.
+:::
+
+[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch)를 통해 런타임과 통신하는 프레임워크는 `handleRequest` 메서드를 통해 요청을 처리하는 표준인 `FetchableDevEnvironment`를 활용할 수 있습니다:
+
+```ts
+import {
+  createServer,
+  createFetchableDevEnvironment,
+  isFetchableDevEnvironment,
+} from 'vite'
+
+const server = await createServer({
+  server: { middlewareMode: true },
+  appType: 'custom',
+  environments: {
+    custom: {
+      dev: {
+        createEnvironment(name, config) {
+          return createFetchableDevEnvironment(name, config, {
+            handleRequest(request: Request): Promise<Response> | Response {
+              // Request를 처리하고 Response를 반환
+            },
+          })
+        },
+      },
+    },
+  },
+})
+
+// 환경 API 실행측은 이제 `dispatchFetch` 호출 가능
+if (isFetchableDevEnvironment(server.environments.custom)) {
+  const response: Response = await server.environments.custom.dispatchFetch(
+    new Request('/request-to-handle'),
+  )
+}
+```
+
+:::warning
+Vite는 `dispatchFetch` 메서드 입력 및 출력을 검증합니다: 요청과 응답은 각각 전역 `Request` 및 `Response` 클래스에 대한 인스턴스여야 합니다. 이를 만족하지 않으면 Vite는 `TypeError`를 발생시킵니다.
+
+또한 `FetchableDevEnvironment`가 클래스로 구현되어 있기는 하지만, Vite 팀은 이를 내부 구현 중 하나로 취급하기에 언제든지 변경될 수 있습니다.
 :::
 
 ## 기본 `RunnableDevEnvironment` {#default-runnabledevenvironment}
