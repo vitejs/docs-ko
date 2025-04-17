@@ -276,7 +276,7 @@ Terser로 전달할 추가적인 [경량화 옵션](https://terser.org/docs/api-
 - **타입:** `boolean`
 - **기본값:** `true`
 
-gzip 압축 크기 보고를 활성화/비활성화합니다. 큰 출력 파일을 압축하는 경우 속도가 느릴 수 있으므로, 이를 사용하지 않도록 설정하면 대규모 프로젝트의 빌드 성능이 향상될 수 있습니다.
+gzip 압축 크기 리포트를 활성화/비활성화합니다. 큰 출력 파일을 압축하는 경우 속도가 느릴 수 있으므로, 이를 사용하지 않도록 설정하면 대규모 프로젝트의 빌드 성능이 향상될 수 있습니다.
 
 ## build.chunkSizeWarningLimit {#build-chunksizewarninglimit}
 
