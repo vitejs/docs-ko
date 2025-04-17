@@ -24,7 +24,7 @@
 - 🛠️ 풍부한 기능
 - 📦 최적화된 빌드
 - 🔩 유연한 플러그인 시스템
-- 🔑 타입 안전한 API
+- 🔑 완전한 타입 지원 API
 
 Vite(프랑스어로 '빠른'을 의미하며 [`/vit/`](https://cdn.jsdelivr.net/gh/vitejs/vite@main/docs/public/vite.mp3), "veet"로 발음)는 프런트엔드 개발 경험을 크게 향상시키는 새로운 프런트엔드 빌드 툴입니다. 두 가지 주요 부분으로 구성됩니다.
 

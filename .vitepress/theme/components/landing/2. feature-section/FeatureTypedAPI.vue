@@ -68,7 +68,7 @@ const { isCardActive, startAnimation } = useCardAnimation(
       </div>
     </div>
     <div class="feature__meta meta--center">
-      <div class="meta__title">타입 안전한 API</div>
+      <div class="meta__title">완전한 타입 지원 API</div>
       <div class="meta__description">확장성을 고려해 설계되었습니다.</div>
     </div>
   </div>
