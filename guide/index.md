@@ -8,7 +8,7 @@
 
 Vite(프랑스어로 "빠르다(Quick)"를 의미하며, 발음은 "veet"와 비슷한 `/vit/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="/voice.svg#voice" /></svg></button> 입니다.)는 빠르고 간결한 모던 웹 프로젝트 개발 경험에 초점을 맞춰 탄생한 빌드 툴입니다. 크게 두 가지 부분으로 구성되어 있습니다:
 
-- [네이티브 ES 모듈](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 통해 소스 파일을 제공하는 개발 서버로, [다양한 기능](.features)과 놀라울 정도로 빠른 [Hot Module Replacement(HMR)](./features#hot-module-replacement)를 제공합니다.
+- [네이티브 ES 모듈](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 통해 소스 파일을 제공하는 개발 서버로, [다양한 기능](./features)과 놀라울 정도로 빠른 [Hot Module Replacement(HMR)](./features#hot-module-replacement)를 제공합니다.
 
 - [Rollup](https://rollupjs.org)을 사용해 코드를 번들링하는 빌드 명령어로, 프로덕션을 위해 고도로 최적화된 정적 에셋을 출력하도록 구성되어 있습니다.
 
