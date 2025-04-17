@@ -90,9 +90,9 @@ HTTPS를 사용하는 경우 이 검사는 건너뜁니다.
 
 - **타입:** `https.ServerOptions`
 
-TLS + HTTP/2를 사용합니다. [`server.proxy` 옵션](#server-proxy)이 사용된다면, 이 옵션은 오직 TLS만 사용하는 것으로 다운그레이드됩니다.
+TLS + HTTP/2를 사용합니다. 값은 `https.createServer()`로 전달되는 [옵션 객체](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener)입니다.
 
-또한 이 값은 [옵션 객체](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener)가 `https.createServer()`로 전달되는 값일 수도 있습니다.
+이 설정은 [`server.proxy` 옵션](#server-proxy)이 사용된다면 TLS만 사용하도록 다운그레이드된다는 점에 유의하세요.
 
 인증서는 유효한 것이 필요합니다. 기본적으로 프로젝트에 [@vitejs/plugin-basic-ssl](https://github.com/vitejs/vite-plugin-basic-ssl) 플러그인을 추가하면 자체 서명된 인증서가 자동으로 생성되고 캐시됩니다. 다만 직접 생성한 인증서를 사용하는 것이 좋습니다.
 

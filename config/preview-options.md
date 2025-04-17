@@ -60,9 +60,9 @@ export default defineConfig({
 - **타입:** `https.ServerOptions`
 - **기본값:** [`server.https`](./server-options#server-https)
 
-TLS + HTTP/2를 활성화합니다. [`server.proxy`](./server-options#server-proxy) 옵션이 함께 사용되는 경우에만 TLS로 다운그레이드됩니다.
+TLS + HTTP/2를 활성화합니다.
 
-참고로 이 값은 `https.createServer()`에 전달된 [옵션 객체](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener)가 될 수도 있습니다.
+자세한 내용은 [`server.https`](./server-options#server-https)를 참고해 주세요.
 
 ## preview.open {#preview-open}
 
