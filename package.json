@@ -22,7 +22,7 @@
     "gsap": "^3.12.7",
     "markdown-it-footnote": "^4.0.0",
     "prettier": "3.5.1",
-    "vite": "^6.2.2",
+    "vite": "^6.3.1",
     "vitepress": "^1.6.3",
     "vitepress-plugin-group-icons": "^1.3.7",
     "vue": "^3.5.13"
@@ -32,5 +32,11 @@
     "build": "vitepress build",
     "serve": "vitepress serve",
     "rewrite-title": "node scripts/rewrite-title"
+  },
+  "pnpm": {
+    "overrides": {
+      "vite": "^6.3.1",
+      "rollup": "^4.40.0"
+    }
   }
 }

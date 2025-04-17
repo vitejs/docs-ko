@@ -479,7 +479,6 @@ export default defineConfig({
   },
   vite: {
     plugins: [
-      // @ts-ignore
       groupIconVitePlugin({
         customIcon: {
           firebase: 'vscode-icons:file-type-firebase',
