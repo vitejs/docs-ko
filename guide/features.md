@@ -348,10 +348,6 @@ CSS 모듈의 설정은 [`css.modules`](../config/shared-options.md#css-modules)
 
 기본적으로 Vite는 CSS를 축소하기 위해 esbuild를 사용합니다. Lightning CSS는 [`build.cssMinify: 'lightningcss'`](../config/build-options.md#build-cssminify)를 통해 CSS 축소기로도 사용할 수도 있습니다.
 
-::: tip 참고
-Lightning CSS를 사용하는 경우 [CSS 전처리기](#css-pre-processors)는 지원되지 않습니다.
-:::
-
 ## 정적 에셋 {#static-assets}
 
 정적 에셋을 Import 하는 경우, 이에 대한 Public URL이 반환됩니다.
