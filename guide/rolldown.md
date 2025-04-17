@@ -2,6 +2,8 @@
 
 Vite는 빌드 성능과 기능을 개선하기 위해, Rust 기반 JavaScript 번들러인 [Rolldown](https://rolldown.rs)을 통합할 계획입니다.
 
+<YouTubeVideo videoId="RRjfm8cMveQ" />
+
 ## Rolldown이란 무엇인가요? {#what-is-rolldown}
 
 Rolldown은 Rust로 작성된 현대적이고 성능이 뛰어난 JavaScript 번들러입니다. Rollup을 대체하기 위해 설계되었으며, 기존 생태계와 호환성을 유지하면서 유의미한 성능 향상을 제공하고자 합니다.
