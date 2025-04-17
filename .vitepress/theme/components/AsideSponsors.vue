@@ -26,6 +26,7 @@ const sponsors = computed(() => {
   >
     <img width="22" height="22" src="/viteconf.svg" alt="ViteConf Logo" />
     <span>
+      <p class="extra-info">Building Together</p>
       <p class="heading">ViteConf 2025</p>
       <p class="extra-info">First time in-person!</p>
     </span>
