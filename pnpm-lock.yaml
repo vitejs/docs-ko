@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@shikijs/types':
+        specifier: ^3.2.2
+        version: 3.2.2
       '@shikijs/vitepress-twoslash':
         specifier: ^2.5.0
         version: 2.5.0(typescript@5.4.3)
@@ -727,6 +730,9 @@ packages:
 
   '@shikijs/types@3.1.0':
     resolution: {integrity: sha512-F8e7Fy4ihtcNpJG572BZZC1ErYrBrzJ5Cbc9Zi3REgWry43gIvjJ9lFAoUnuy7Bvy4IFz7grUSxL5edfrrjFEA==}
+
+  '@shikijs/types@3.2.2':
+    resolution: {integrity: sha512-a5TiHk7EH5Lso8sHcLHbVNNhWKP0Wi3yVnXnu73g86n3WoDgEra7n3KszyeCGuyoagspQ2fzvy4cpSc8pKhb0A==}
 
   '@shikijs/vitepress-twoslash@2.5.0':
     resolution: {integrity: sha512-q/HUykPsvOOfaa+eWucu2/wFT/+hpIbBEYMneeR/VInBT05dDU3WlBb3ioEkUAmL7gyH9UiVK8e6u14zZNefeA==}
@@ -2068,6 +2074,11 @@ snapshots:
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
 
+  '@shikijs/types@3.2.2':
+    dependencies:
+      '@shikijs/vscode-textmate': 10.0.2
+      '@types/hast': 3.0.4
+
   '@shikijs/vitepress-twoslash@2.5.0(typescript@5.4.3)':
     dependencies:
       '@shikijs/twoslash': 3.1.0(typescript@5.4.3)
@@ -3058,7 +3069,7 @@ snapshots:
       '@iconify-json/simple-icons': 1.2.24
       '@shikijs/core': 2.3.2
       '@shikijs/transformers': 2.3.2
-      '@shikijs/types': 2.3.2
+      '@shikijs/types': 2.5.0
       '@types/markdown-it': 14.1.2
       '@vitejs/plugin-vue': 5.2.1(vite@5.4.14(@types/node@22.13.4))(vue@3.5.13(typescript@5.4.3))
       '@vue/devtools-api': 7.7.2
