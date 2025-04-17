@@ -140,10 +140,6 @@ SSR 빌드의 경우, `build.rollupOptions.output`을 통해 구성된 ESM 빌�
 
 참고로 `import`, `require`, `default` 조건은 요구사항이 충족되면 항상 적용됩니다.
 
-:::warning 하위 경로 내보내기 키값
-"/"로 끝나는 `exports` 객체의 키값은 Node에서 더는 사용되지 않기 때문에 제대로 작동하지 않을 수 있습니다. 이 대신 [`*` 하위 경로 패턴](https://nodejs.org/api/packages.html#package-entry-points)을 사용할 수 있도록 사용하고 있는 패키지의 관리자에게 문의해주세요.
-:::
-
 ## resolve.mainFields {#resolve-mainfields}
 
 - **타입:** `string[]`
