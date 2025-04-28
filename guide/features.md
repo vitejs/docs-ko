@@ -42,7 +42,7 @@ Vite의 역할은 소스 모듈을 가능한 빠르게 브라우저에서 실행
 
 - 개발 중 IDE에서 제공하는 힌트 이상의 기능이 필요하다면, 별도의 프로세스에서 `tsc --noEmit --watch`를 실행해주세요. 만약 브라우저에서 직접 타입 에러를 확인하고 싶다면 [vite-plugin-checker](https://github.com/fi3ework/vite-plugin-checker)를 사용하는 것을 권장합니다.
 
-Vite의 TypeScript 트랜스파일링은 [Esbuild](https://github.com/evanw/esbuild)를 이용하며, TypeScript 소스 코드를 JavaScript 소스 코드로 변환하는 작업에 대해 `tsc` 대비 약 20~30배 정도 빠른 퍼포먼스를 보이고 있습니다. (HMR은 50ms 미만)
+Vite의 TypeScript 트랜스파일링은 [Esbuild](https://github.com/evanw/esbuild)를 이용하며, TypeScript 소스 코드를 JavaScript 소스 코드로 변환하는 작업에 대해 `tsc` 대비 약 20~30배 정도 빠른 성능을 보이고 있습니다. (HMR은 50ms 미만)
 
 참고로 타입만을 가져오는 경우 잘못 번들링이 될 수 있으며, 이는 [타입 전용 Imports와 Exports](https://www.typescriptlang.org/ko/docs/handbook/release-notes/typescript-3-8.html#type-only-imports-and-export)를 사용하여 이 문제를 우회할 수 있습니다:
 

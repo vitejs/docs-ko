@@ -26,7 +26,7 @@ Rolldown을 개발하게 된 동기에 대해 더 알고자 한다면, [Rolldown
 
 ## `rolldown-vite` 이점 {#benefits-of-trying-rolldown-vite}
 
-- 특히 대규모 프로젝트에서 훨씬 더 빠른 빌드 퍼포먼스 경험
+- 특히 대규모 프로젝트에서 훨씬 더 빠른 빌드 성능
 - Vite 번들링의 미래를 만들어가는 데 도움이 되는 귀중한 피드백 제공
 - 향후 공식 Rolldown 통합을 위해 프로젝트 준비
 

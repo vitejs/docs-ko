@@ -290,7 +290,7 @@ export default defineConfig({
               link: '/guide/troubleshooting',
             },
             {
-              text: '퍼포먼스',
+              text: '성능',
               link: '/guide/performance',
             },
             {

@@ -43,3 +43,4 @@
 | Transform      | 변환           |
 | Release        | 릴리스         |
 | Ecosystem      | 생태계         |
+| Performance    | 성능           |

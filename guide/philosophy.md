@@ -16,7 +16,7 @@ Vite는 모던 코드를 작성할 수 있도록 유도하고 있습니다. 예�
 
 ## 성능에 대한 실용적인 접근 {#a-pragmatic-approach-to-performance}
 
-Vite는 [개발 초기부터](./why.md) 성능에 초점을 맞추어 왔습니다. 개발 서버 아키텍처는 프로젝트가 확장되어도 빠른 HMR을 유지할 수 있도록 도와줍니다. 성능 집약적인 작업은 [esbuild](https://esbuild.github.io/)와 [SWC](https://github.com/vitejs/vite-plugin-react-swc) 같은 네이티브 툴을 사용해 구현하지만, 그 외의 코드는 JS로 유지해 속도와 유연성의 균형을 맞추었습니다. 다만 필요한 경우, 프레임워크 플러그인은 사용자 코드를 컴파일하기 위해 [Babel](https://babeljs.io/)을 사용할 수도 있습니다. 빌드 타임에는 현재 [Rollup](https://rollupjs.org/)을 사용하는데, 이는 네이티브 툴을 사용해 얻을 수 있는 퍼포먼스보다 더 효율적인 번들 크기와 광범위한 플러그인 생태계가 존재한다는 것을 더 중요하게 생각하기 때문입니다. 이처럼 Vite는 최대한 API를 안정적으로 유지하되, DX를 개선할 수 있는 새로운 라이브러리가 등장하면 이를 사용해 내부적으로 계속 발전할 것입니다.
+Vite는 [개발 초기부터](./why.md) 성능에 초점을 맞추어 왔습니다. 개발 서버 아키텍처는 프로젝트가 확장되어도 빠른 HMR을 유지할 수 있도록 도와줍니다. 성능 집약적인 작업은 [esbuild](https://esbuild.github.io/)와 [SWC](https://github.com/vitejs/vite-plugin-react-swc) 같은 네이티브 툴을 사용해 구현하지만, 그 외의 코드는 JS로 유지해 속도와 유연성의 균형을 맞추었습니다. 다만 필요한 경우, 프레임워크 플러그인은 사용자 코드를 컴파일하기 위해 [Babel](https://babeljs.io/)을 사용할 수도 있습니다. 빌드 타임에는 현재 [Rollup](https://rollupjs.org/)을 사용하는데, 이는 네이티브 툴을 사용해 얻을 수 있는 성능보다 더 효율적인 번들 크기와 광범위한 플러그인 생태계가 존재한다는 것을 더 중요하게 생각하기 때문입니다. 이처럼 Vite는 최대한 API를 안정적으로 유지하되, DX를 개선할 수 있는 새로운 라이브러리가 등장하면 이를 사용해 내부적으로 계속 발전할 것입니다.
 
 ## Vite를 기반으로 프레임워크 구축하기 {#building-frameworks-on-top-of-vite}
 
