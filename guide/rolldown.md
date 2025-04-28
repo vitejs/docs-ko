@@ -106,6 +106,12 @@ Rolldown과 Oxc 덕분에 별칭(alias)이나 resolve 플러그인과 같은 다
 
 실시간으로 논의하고 문제를 해결하기 위해 [Rolldown 디스코드](https://chat.rolldown.rs/)에 참여할 수도 있습니다.
 
+## 버전 관리 정책 {#version-policy}
+
+`rolldown-vite` 버전 관리 정책은 메이저 및 마이너 버전을 기존 Vite 패키지와 일치시키는 형태로 운영됩니다. 이러한 동기화를 통해 특정 Vite 마이너 릴리스에 포함된 기능은 이에 대응하는 `rolldown-vite` 마이너 릴리스에도 포함됩니다. 다만 패치 버전은 두 프로젝트 간 동기화되지 않는다는 점에 유의하세요. 특정 Vite 변경사항이 `rolldown-vite`에도 포함되었는지 확인하려면 [`rolldown-vite` 변경 사항](https://github.com/vitejs/rolldown-vite/blob/rolldown-vite/packages/vite/CHANGELOG.md)을 참고해 주세요.
+
+`rolldown-vite`는 실험적인 프로젝트입니다. 이러한 성격으로 인해 패치 버전 내에서도 호환성이 깨지는 변경사항이 도입될 수 있습니다. 또한 `rolldown-vite`는 가장 최신 마이너 버전에 대해서만 패치 업데이트가 제공됩니다. 중요한 보안 및 버그 수정이라도 이전 메이저나 마이너 버전에는 패치가 적용되지 않습니다.
+
 ## 향후 계획 {#future-plans}
 
 `rolldown-vite` 패키지는 Rolldown 통합에 대한 피드백 수집과 안정화를 위한 임시 솔루션입니다. 향후 이 기능은 Vite 리포지토리에 다시 병합될 예정입니다.
