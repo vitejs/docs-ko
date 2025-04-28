@@ -32,7 +32,17 @@ Rolldown을 개발하게 된 동기에 대해 더 알고자 한다면, [Rolldown
 
 ## Rolldown 시작하기 {#how-to-try-rolldown}
 
-현재 Rolldown 기반 Vite는 `rolldown-vite`라는 별도 패키지로 제공하고 있습니다. `package.json`에 다음과 같이 패키지 오버라이드를 추가해 사용할 수 있습니다:
+현재 Rolldown 기반 Vite는 `rolldown-vite`라는 별도 패키지로 제공하고 있습니다. 만약 `vite`를 직접 디펜던시로 명시해 사용하고 있다면, `vite` 패키지를 `rolldown-vite`에 대한 별칭으로 사용할 수 있습니다. 기존 코드를 수정하지 않고 간단히 대체할 수 있습니다:
+
+```json
+{
+  "dependencies": {
+    "vite": "npm:rolldown-vite@latest"
+  }
+}
+```
+
+Vitepress나 다른 메타 프레임워크와 같이 Vite를 피어 디펜던시로 사용하고 있다면, 패키지 매니저에서 `vite` 디펜던시를 오버라이드해야 합니다:
 
 :::code-group
 
