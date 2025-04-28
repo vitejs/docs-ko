@@ -98,11 +98,38 @@ Rolldown은 알 수 없거나 유효하지 않은 옵션이 전달되는 경우 
 
 관련 옵션을 전달하지 않았다면 사용하고 있는 프레임워크가 이 문제를 해결해야 합니다. 그동안 이 오류는 `ROLLDOWN_OPTIONS_VALIDATION=loose` 환경 변수로 숨길 수 있습니다.
 
+## 성능 {#performance}
+
+`rolldown-vite`는 추가적인 설정 없이도 원활한 전환이 가능하도록 기존 생태계에 대한 호환성을 보장하고 있습니다. 추가적인 성능 향상이 필요하다면, 더 빠른 Rust 기반 내부 플러그인과 관련 커스텀 설정을 사용해 보세요.
+
 ## 네이티브 플러그인 활성화 {#enabling-native-plugins}
 
 Rolldown과 Oxc 덕분에 별칭(alias)이나 resolve 플러그인과 같은 다양한 Vite 내부 플러그인들이 Rust로 전환되었습니다. 다만 현재 시점에서는 플러그인 동작이 JavaScript 버전과 다를 수 있기 때문에, 기본적으로 비활성화되어 있습니다.
 
 이를 테스트하려면 Vite 설정에서 `experimental.enableNativePlugin` 옵션을 `true`로 설정해 주세요.
+
+### `withFilter` 래퍼 {#withfilter-wrapper}
+
+플러그인 개발자는 [훅 필터 기능](#hook-filter-feature)을 통해 Rust와 JavaScript 런타임 간 통신 오버헤드를 줄일 수 있습니다.
+플러그인 중 일부가 아직 이 기능을 사용하지 않더라도, `withFilter` 래퍼를 사용하면 이 이점을 활용할 수 있습니다. 직접 플러그인에 필터를 적용하는 형태입니다.
+
+```js
+// 프로젝트 내 vite.config.ts
+import { withFilter, defineConfig } from 'vite'
+import svgr from 'vite-plugin-svgr'
+
+export default defineConfig({
+  plugins: [
+    // `.svg?react`로 끝나는 파일에 대해서만 `svgr` 플러그인 로드
+    withFilter(
+      svgr({
+        /*...*/
+      }),
+      { load: { id: /\.svg?react$/ } },
+    ),
+  ],
+})
+```
 
 ## 보고된 이슈 {#reporting-issues}
 
