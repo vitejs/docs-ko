@@ -5,6 +5,11 @@ on:
     - cron: "0 * * * *" # Every hour
   workflow_dispatch: # Manual trigger (Optional)
 
+permissions:
+  contents: read
+  issues: write
+  actions: read
+
 jobs:
   yuki-no:
     runs-on: ubuntu-latest
