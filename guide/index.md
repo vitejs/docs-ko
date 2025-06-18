@@ -65,6 +65,10 @@ $ pnpm create vite
 $ bun create vite
 ```
 
+```bash [Deno]
+$ deno init --npm vite
+```
+
 :::
 
 이후에는 프롬프트 창에 출력된 메시지를 따라주세요.
@@ -88,6 +92,10 @@ $ pnpm create vite my-vue-app --template vue
 
 ```bash [Bun]
 $ bun create vite my-vue-app --template vue
+```
+
+```bash [Deno]
+$ deno init --npm vite my-vue-app --template vue
 ```
 
 :::
@@ -134,6 +142,10 @@ $ pnpm add -D vite
 $ bun add -D vite
 ```
 
+```bash [Deno]
+$ deno add -D npm:vite
+```
+
 :::
 
 그리고 다음과 같이 `index.html` 파일을 생성해주세요:
@@ -160,6 +172,10 @@ $ pnpm vite
 
 ```bash [Bun]
 $ bunx vite
+```
+
+```bash [Deno]
+$ deno run -A npm:vite
 ```
 
 :::
