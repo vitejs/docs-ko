@@ -63,7 +63,7 @@ if (import.meta.env.SSR) {
 
 ## 개발 서버 구성하기 {#setting-up-the-dev-server}
 
-SSR 앱을 빌드할 때, 메인 서버를 완전히 제어하고 Vite를 프로덕션 환경에서 분리하고자 한다면 어떻게 해야 할까요? 가장 좋은 방법은, Vite를 미들웨어 모드로 사용하는 것입니다. 가령 [express](https://expressjs.com/)(v4)를 예로 들자면:
+SSR 앱을 빌드할 때, 메인 서버를 완전히 제어하고 Vite를 프로덕션 환경에서 분리하고자 한다면 어떻게 해야 할까요? 가장 좋은 방법은, Vite를 미들웨어 모드로 사용하는 것입니다. 가령 [express](https://expressjs.com/)를 예로 들자면:
 
 ```js{15-18} twoslash [server.js]
 import fs from 'node:fs'
@@ -93,7 +93,7 @@ async function createServer() {
   // 다음은 재시작 후에도 유효합니다.
   app.use(vite.middlewares)
 
-  app.use('*', async (req, res) => {
+  app.use('*all', async (req, res) => {
     // index.html 파일을 제공합니다 - 아래에서 이를 다룰 예정입니다.
   })
 
@@ -119,7 +119,7 @@ var app
 var vite
 
 // ---cut---
-app.use('*', async (req, res, next) => {
+app.use('*all', async (req, res, next) => {
   const url = req.originalUrl
 
   try {
