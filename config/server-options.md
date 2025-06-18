@@ -377,6 +377,12 @@ export default defineConfig({
 
 Vite dev 서버에서 제공되지 않기를 원하는 민감한 파일들에 대한 차단 목록입니다. 이 옵션은 [`server.fs.allow`](#server-fs-allow)보다 높은 우선 순위를 가지며, [피코매치 패턴](https://github.com/micromatch/picomatch#globbing-features)을 사용할 수 있습니다.
 
+::: tip 참고
+
+이 차단 목록은 [Public 디렉터리](/guide/assets.md#the-public-directory)에 적용되지 않습니다. Public 디렉터리 내 모든 파일은 빌드 시 결과물 출력 디렉터리에 직접 복사되며, 어떠한 필터링도 거치지 않습니다.
+
+:::
+
 ## server.origin {#server-origin}
 
 - **타입:** `string`
