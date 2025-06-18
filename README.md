@@ -59,7 +59,7 @@ Vite(프랑스어로 '빠른'을 의미하며 [`/vit/`](https://cdn.jsdelivr.net
    <a target="_blank" href="https://github.com/junghyeonsu"><img width="100" src="https://github.com/junghyeonsu.png" alt="junghyeonsu"></a>
    <a target="_blank" href="https://github.com/dante01yoon"><img width="100" src="https://github.com/dante01yoon.png" alt="dante01yoon"></a>
    <a target="_blank" href="https://github.com/hyjoong"><img width="100" src="https://github.com/hyjoong.png" alt="hyjoong"></a>
-   <a target="_blank" href="https://github.com/Jogeonsang"><img width="100" src="https://github.com/Jogeonsang.png" alt="Jogeonsang"></a>
+   <a target="_blank" href="https://github.com/Jogeonsang"><img width="100" src="https://github.com/ghost.png" alt="Jogeonsang"></a>
    <a target="_blank" href="https://github.com/marshallku"><img width="100" src="https://github.com/marshallku.png" alt="marshallku"></a>
    <a target="_blank" href="https://github.com/Choi-Jinwoo"><img width="100" src="https://github.com/Choi-Jinwoo.png" alt="Choi-Jinwoo"></a>
    <a target="_blank" href="https://github.com/tooooo1"><img width="100" src="https://github.com/tooooo1.png" alt="tooooo1"></a>
