@@ -1,7 +1,7 @@
 ---
 title: Vite 5.0이 출시되었습니다!
 author:
-  name: Vite 팀
+  name: The Vite Team
 date: 2023-11-16
 sidebar: false
 head:
@@ -10,7 +10,7 @@ head:
       content: website
   - - meta
     - property: og:title
-      content: Vite 5 발표
+      content: Vite 5.0이 출시되었습니다!
   - - meta
     - property: og:image
       content: https://vite.dev/og-image-announcing-vite5.png

@@ -1,7 +1,7 @@
 ---
 title: Vite 4.0이 출시되었습니다!
 author:
-  name: Vite 팀
+  name: The Vite Team
 date: 2022-12-09
 sidebar: false
 head:
@@ -10,7 +10,7 @@ head:
       content: website
   - - meta
     - property: og:title
-      content: Vite 4 발표
+      content: Vite 4.0이 출시되었습니다!
   - - meta
     - property: og:image
       content: https://vite.dev/og-image-announcing-vite4.png
@@ -35,7 +35,7 @@ Vite 3가 5개월 전에 [릴리스되었습니다](./announcing-vite3.md). 그 
 
 Vite와 관련 프로젝트들이 경험한 성장을 보여주는 사례로, Vite 생태계는 10월 11일 [ViteConf 2022](https://viteconf.org/2022/replay)에서 모였습니다. 주요 웹 프레임워크와 도구들의 대표자들이 혁신과 협력의 이야기를 들려주었습니다. 그리고 상징적인 움직임으로, Rollup 팀은 바로 그 날 [Rollup 3](https://rollupjs.org) 릴리스를 선택했습니다.
 
-오늘, Vite [팀](https://vite.dev/team)은 생태계 파트너들의 도움으로 빌드 시점에 Rollup 3로 구동되는 Vite 4의 릴리스를 발표하게 되어 기쁩니다. 우리는 이 새로운 메이저 버전을 위한 원활한 업그레이드 경로를 보장하기 위해 생태계와 함께 작업했습니다. Vite는 이제 [Rollup 3](https://github.com/vitejs/vite/issues/9870)를 사용하며, 이를 통해 Vite의 내부 자산 처리를 단순화하고 많은 개선사항을 가져올 수 있었습니다. [Rollup 3 릴리스 노트는 여기에서](https://github.com/rollup/rollup/releases/tag/v3.0.0) 확인하세요.
+오늘, Vite [팀](https://vite.dev/team)은 생태계 파트너들의 도움으로 빌드 시점에 Rollup 3로 구동되는 Vite 4의 릴리스를 발표하게 되어 기쁩니다. 저희는 이 새로운 메이저 버전을 위한 원활한 업그레이드 경로를 보장하기 위해 생태계와 함께 작업했습니다. Vite는 이제 [Rollup 3](https://github.com/vitejs/vite/issues/9870)를 사용하며, 이를 통해 Vite의 내부 자산 처리를 단순화하고 많은 개선사항을 가져올 수 있었습니다. [Rollup 3 릴리스 노트는 여기에서](https://github.com/rollup/rollup/releases/tag/v3.0.0) 확인하세요.
 
 ![Vite 4 발표 커버 이미지](/og-image-announcing-vite4.png)
 
@@ -53,9 +53,9 @@ Vite와 관련 프로젝트들이 경험한 성장을 보여주는 사례로, Vi
 
 최근에 Vite를 사용하기 시작했다면 [Why Vite 가이드](https://vite.dev/guide/why.html)를 읽고 [시작하기](https://vite.dev/guide/)와 [기능 가이드](https://vite.dev/guide/features)를 확인해보시기를 권합니다. 참여하고 싶으시다면 [GitHub](https://github.com/vitejs/vite)에서 기여를 환영합니다. 거의 [700명의 협력자](https://github.com/vitejs/vite/graphs/contributors)가 Vite에 기여했습니다. [Twitter](https://twitter.com/vite_js)와 [Mastodon](https://webtoo.ls/@vite)에서 업데이트를 팔로우하거나 [Discord 커뮤니티](http://chat.vite.dev/)에서 다른 사람들과 협력하세요.
 
-## Vite 4로 놀아보기 시작하기 {#start-playing-with-vite-4}
+## Vite 4로 체험해보기 시작하기 {#start-playing-with-vite-4}
 
-`pnpm create vite`를 사용하여 선호하는 프레임워크로 Vite 프로젝트를 스캐폴딩하거나, [vite.new](https://vite.new)를 사용하여 온라인에서 시작 템플릿을 열어 Vite 4로 놀아보세요.
+`pnpm create vite`를 사용하여 선호하는 프레임워크로 Vite 프로젝트를 스캐폴딩하거나, [vite.new](https://vite.new)를 사용하여 온라인에서 시작 템플릿을 열어 Vite 4로 체험해보세요.
 
 `pnpm create vite-extra`를 실행하여 다른 프레임워크와 런타임(Solid, Deno, SSR, 라이브러리 스타터)의 템플릿에 접근할 수도 있습니다. `create vite-extra` 템플릿은 `create vite`를 실행할 때 `Others` 옵션에서도 사용할 수 있습니다.
 
@@ -63,7 +63,7 @@ Vite 스타터 템플릿은 다양한 프레임워크로 Vite를 테스트하는
 
 ## 개발 중 SWC를 사용하는 새로운 React 플러그인 {#new-react-plugin-using-swc-during-development}
 
-[SWC](https://swc.rs/)는 이제 특히 React 프로젝트의 맥락에서 [Babel](https://babeljs.io/)의 성숙한 대체재입니다. SWC의 React Fast Refresh 구현은 Babel보다 훨씬 빠르며, 일부 프로젝트에서는 이제 더 나은 대안입니다. Vite 4부터 서로 다른 트레이드오프를 가진 두 개의 플러그인이 React 프로젝트에 사용할 수 있습니다. 우리는 이 시점에서 두 접근법 모두 지원할 가치가 있다고 믿으며, 앞으로 두 플러그인 모두의 개선사항을 계속 탐구할 것입니다.
+[SWC](https://swc.rs/)는 이제 특히 React 프로젝트의 맥락에서 [Babel](https://babeljs.io/)의 성숙한 대체재입니다. SWC의 React Fast Refresh 구현은 Babel보다 훨씬 빠르며, 일부 프로젝트에서는 이제 더 나은 대안입니다. Vite 4부터 서로 다른 트레이드오프를 가진 두 개의 플러그인이 React 프로젝트에 사용할 수 있습니다. 저희는 이 시점에서 두 접근법 모두 지원할 가치가 있다고 믿으며, 앞으로 두 플러그인 모두의 개선사항을 계속 탐구할 것입니다.
 
 ### @vitejs/plugin-react {#vitejs-plugin-react}
 
@@ -125,16 +125,16 @@ Vite는 특히 문서와 재현을 위한 플레이그라운드 사용 사례에
 
 ### vite-ecosystem-ci 개선사항 {#vite-ecosystem-ci-improvements}
 
-[vite-ecosystem-ci](https://github.com/vitejs/vite-ecosystem-ci)는 [대부분의 주요 다운스트림 프로젝트](https://github.com/vitejs/vite-ecosystem-ci/tree/main/tests)의 CI 상태에 대한 온디맨드 상태 보고서를 제공하여 Vite의 CI를 확장합니다. 우리는 Vite의 main 브랜치에 대해 주 3회 vite-ecosystem-ci를 실행하고 회귀를 도입하기 전에 시기적절한 보고서를 받습니다. Vite 4는 곧 Vite를 사용하는 대부분의 프로젝트와 호환될 것이며, 이들은 이미 필요한 변경사항이 포함된 브랜치를 준비했고 앞으로 며칠 내에 릴리스할 예정입니다. 또한 댓글에서 `/ecosystem-ci run`을 사용하여 PR에서 온디맨드로 vite-ecosystem-ci를 실행할 수 있어 main에 도달하기 전에 [변경사항의 효과](https://github.com/vitejs/vite/pull/11269#issuecomment-1343365064)를 알 수 있습니다.
+[vite-ecosystem-ci](https://github.com/vitejs/vite-ecosystem-ci)는 [대부분의 주요 다운스트림 프로젝트](https://github.com/vitejs/vite-ecosystem-ci/tree/main/tests)의 CI 상태에 대한 온디맨드 상태 보고서를 제공하여 Vite의 CI를 확장합니다. 저희는 Vite의 main 브랜치에 대해 주 3회 vite-ecosystem-ci를 실행하고 회귀를 도입하기 전에 시기적절한 보고서를 받습니다. Vite 4는 곧 Vite를 사용하는 대부분의 프로젝트와 호환될 것이며, 이들은 이미 필요한 변경사항이 포함된 브랜치를 준비했고 앞으로 며칠 내에 릴리스할 예정입니다. 또한 댓글에서 `/ecosystem-ci run`을 사용하여 PR에서 온디맨드로 vite-ecosystem-ci를 실행할 수 있어 main에 도달하기 전에 [변경사항의 효과](https://github.com/vitejs/vite/pull/11269#issuecomment-1343365064)를 알 수 있습니다.
 
 ## 감사의 말 {#acknowledgments}
 
-Vite 4는 Vite 기여자들의 수많은 시간의 작업 없이는 불가능했을 것입니다. 그들 중 많은 이들이 다운스트림 프로젝트와 플러그인의 메인테이너들이며, [Vite 팀](/team)의 노력도 있었습니다. 우리 모두는 Vite를 사용하는 모든 프레임워크와 앱을 위해 Vite의 DX를 다시 한 번 개선하기 위해 함께 작업했습니다. 이렇게 활기찬 생태계를 위한 공통 기반을 개선할 수 있게 되어 감사합니다.
+Vite 4는 Vite 기여자들의 수많은 시간의 작업 없이는 불가능했을 것입니다. 그들 중 많은 이들이 다운스트림 프로젝트와 플러그인의 메인테이너들이며, [Vite 팀](/team)의 노력도 있었습니다. 저희 모두는 Vite를 사용하는 모든 프레임워크와 앱을 위해 Vite의 DX를 다시 한 번 개선하기 위해 함께 작업했습니다. 이렇게 활기찬 생태계를 위한 공통 기반을 개선할 수 있게 되어 감사합니다.
 
 또한 Vite 팀을 후원하는 개인과 회사들, 그리고 Vite의 미래에 직접 투자하는 회사들에게도 감사드립니다: [@antfu7](https://twitter.com/antfu7)의 Vite와 생태계에 대한 작업은 [Nuxt Labs](https://nuxtlabs.com/)에서의 그의 업무의 일부이며, [Astro](https://astro.build)는 [@bluwyoo](https://twitter.com/bluwyoo)의 Vite 코어 작업에 자금을 지원하고 있으며, [StackBlitz](https://stackblitz.com/)는 [@patak_dev](https://twitter.com/patak_dev)를 Vite에서 풀타임으로 작업하도록 고용했습니다.
 
 ## 다음 단계 {#next-steps}
 
-우리의 즉각적인 초점은 가능한 회귀로 인한 중단을 피하기 위해 새로 열린 이슈를 트리아징하는 것입니다. 참여하여 Vite 개선에 도움을 주고 싶으시다면 이슈 트리아징부터 시작하는 것을 제안합니다. [Discord](https://chat.vite.dev)에 참여하여 `#contributing` 채널에 연락하세요. `#docs` 스토리를 다듬고 다른 사람들을 `#help`하세요. Vite의 채택이 계속 성장함에 따라 다음 사용자들을 위한 도움이 되고 환영받는 커뮤니티를 계속 구축해야 합니다.
+저희의 즉각적인 초점은 가능한 회귀로 인한 중단을 피하기 위해 새로 열린 이슈를 트리아징하는 것입니다. 참여하여 Vite 개선에 도움을 주고 싶으시다면 이슈 트리아징부터 시작하는 것을 제안합니다. [Discord](https://chat.vite.dev)에 참여하여 `#contributing` 채널에 연락하세요. `#docs` 스토리를 다듬고 다른 사람들을 `#help`하세요. Vite의 채택이 계속 성장함에 따라 다음 사용자들을 위한 도움이 되고 환영받는 커뮤니티를 계속 구축해야 합니다.
 
 Vite를 선택하여 프레임워크를 구동하고 앱을 개발하는 모든 사람의 DX를 계속 개선할 수 있는 많은 열린 전선이 있습니다. 앞으로 나아가세요!

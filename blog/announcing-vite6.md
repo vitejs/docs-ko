@@ -10,7 +10,7 @@ head:
       content: website
   - - meta
     - property: og:title
-      content: Announcing Vite 6
+      content: Vite 6.0이 출시되었습니다!
   - - meta
     - property: og:image
       content: https://vite.dev/og-image-announcing-vite6.png

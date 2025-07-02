@@ -1,7 +1,7 @@
 ---
 title: Vite 3.0이 출시되었습니다!
 author:
-  name: Vite 팀
+  name: The Vite Team
 date: 2022-07-23
 sidebar: false
 head:
@@ -10,7 +10,7 @@ head:
       content: website
   - - meta
     - property: og:title
-      content: Vite 3 발표
+      content: Vite 3.0이 출시되었습니다!
   - - meta
     - property: og:image
       content: https://vite.dev/og-image-announcing-vite3.png
@@ -33,7 +33,7 @@ _2022년 7월 23일_ - [Vite 4.0 발표](./announcing-vite4.md)도 확인해보�
 
 ![Vite 3 발표 커버 이미지](/og-image-announcing-vite3.png)
 
-오늘, v2 출시로부터 16개월 후 Vite 3의 릴리스를 발표하게 되어 기쁩니다. 우리는 [Node.js의 EOL](https://nodejs.org/en/about/releases/)에 맞춰 최소 매년 새로운 Vite 메이저 버전을 릴리스하기로 결정했으며, 생태계 프로젝트들을 위한 짧은 마이그레이션 경로와 함께 Vite의 API를 정기적으로 검토할 기회를 갖기로 했습니다.
+오늘, v2 출시로부터 16개월 후 Vite 3의 릴리스를 발표하게 되어 기쁩니다. 저희는 [Node.js의 EOL](https://nodejs.org/en/about/releases/)에 맞춰 최소 매년 새로운 Vite 메이저 버전을 릴리스하기로 결정했으며, 생태계 프로젝트들을 위한 짧은 마이그레이션 경로와 함께 Vite의 API를 정기적으로 검토할 기회를 갖기로 했습니다.
 
 빠른 링크:
 
@@ -61,7 +61,7 @@ Vite 2 문서에 접근해야 한다면 [v2.vite.dev](https://v2.vite.dev)에서
 
 ## Create Vite 스타터 템플릿 {#create-vite-starter-templates}
 
-[create-vite](/guide/#trying-vite-online) 템플릿은 좋아하는 프레임워크로 Vite를 빠르게 테스트할 수 있는 훌륭한 도구였습니다. Vite 3에서는 모든 템플릿이 새로운 문서에 맞춘 새로운 테마를 얻었습니다. 온라인에서 열어보고 지금 Vite 3으로 놀아보세요:
+[create-vite](/guide/#trying-vite-online) 템플릿은 좋아하는 프레임워크로 Vite를 빠르게 테스트할 수 있는 훌륭한 도구였습니다. Vite 3에서는 모든 템플릿이 새로운 문서에 맞춘 새로운 테마를 얻었습니다. 온라인에서 열어보고 지금 Vite 3으로 체험해보세요:
 
 <div class="stackblitz-links">
 <a target="_blank" href="https://vite.new"><img width="75" height="75" src="../images/vite.svg" alt="Vite logo"></a>
