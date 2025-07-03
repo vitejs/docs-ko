@@ -33,7 +33,7 @@ _2022년 7월 23일_ - [Vite 4.0 발표](./announcing-vite4.md)도 확인해보�
 
 ![Vite 3 발표 커버 이미지](/og-image-announcing-vite3.png)
 
-오늘, v2 출시로부터 16개월 후 Vite 3의 릴리스를 발표하게 되어 기쁩니다. 저희는 [Node.js의 EOL](https://nodejs.org/en/about/releases/)에 맞춰 최소 매년 새로운 Vite 메이저 버전을 릴리스하기로 결정했으며, 생태계 프로젝트들을 위한 짧은 마이그레이션 경로와 함께 Vite의 API를 정기적으로 검토할 기회를 갖기로 했습니다.
+오늘, v2 출시로부터 16개월 후 Vite 3의 릴리스를 발표하게 되어 기쁩니다. 저희는 [Node.js의 EOL](https://nodejs.org/en/about/releases/)에 맞춰 최소 매년 새로운 Vite 메이저 버전을 릴리스하기로 결정했으며, 생태계 프로젝트들을 위한 간단한 마이그레이션 가이드와 함께 Vite의 API를 정기적으로 검토할 기회를 갖기로 했습니다.
 
 빠른 링크:
 
@@ -41,7 +41,7 @@ _2022년 7월 23일_ - [Vite 4.0 발표](./announcing-vite4.md)도 확인해보�
 - [마이그레이션 가이드](https://v3.vite.dev/guide/migration.html)
 - [변경 로그](https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md#300-2022-07-13)
 
-Vite를 처음 접하신다면 [Why Vite 가이드](https://vite.dev/guide/why.html)를 읽어보시기를 권합니다. 그런 다음 [시작하기](https://vite.dev/guide/)와 [기능 가이드](https://vite.dev/guide/features)를 확인하여 Vite가 즉시 제공하는 것들을 살펴보세요. 언제나 그렇듯이 [GitHub](https://github.com/vitejs/vite)에서의 기여를 환영합니다. 지금까지 [600명 이상의 협력자](https://github.com/vitejs/vite/graphs/contributors)가 Vite 개선에 도움을 주었습니다. [Twitter](https://twitter.com/vite_js)에서 업데이트를 팔로우하거나 [Discord 채팅 서버](http://chat.vite.dev/)에서 다른 Vite 사용자들과 토론에 참여하세요.
+Vite를 처음 접하신다면 [Why Vite 가이드](https://vite.dev/guide/why.html)를 읽어보시기를 권합니다. 그런 다음 [시작하기](https://vite.dev/guide/)와 [기능 가이드](https://vite.dev/guide/features)를 확인하여 Vite가 제공하는 것들을 살펴보세요. 언제나 그렇듯이 [GitHub](https://github.com/vitejs/vite)에서의 기여를 환영합니다. 지금까지 [600명 이상의 협력자](https://github.com/vitejs/vite/graphs/contributors)가 Vite 개선에 도움을 주었습니다. [Twitter](https://twitter.com/vite_js)에서 업데이트를 팔로우하거나 [Discord 채팅 서버](http://chat.vite.dev/)에서 다른 Vite 사용자들과 토론에 참여하세요.
 
 ## 새로운 문서 {#new-documentation}
 
@@ -118,11 +118,11 @@ CLI의 미적 개선사항 외에도, 기본 개발 서버 포트가 이제 5173
 
 ### 개선된 WebSocket 연결 전략 {#improved-websocket-connection-strategy}
 
-Vite 2의 문제점 중 하나는 프록시 뒤에서 실행할 때 서버를 구성하는 것이었습니다. Vite 3는 기본 연결 스키마를 변경하여 대부분의 시나리오에서 즉시 작동하도록 했습니다. 이러한 모든 설정은 이제 [`vite-setup-catalogue`](https://github.com/sapphi-red/vite-setup-catalogue)를 통해 Vite 생태계 CI의 일부로 테스트됩니다.
+Vite 2의 문제점 중 하나는 프록시 뒤에서 실행할 때 서버를 구성하는 것이었습니다. Vite 3는 기본 연결 스키마를 변경하여 대부분의 시나리오에서  작동하도록 했습니다. 이러한 모든 설정은 이제 [`vite-setup-catalogue`](https://github.com/sapphi-red/vite-setup-catalogue)를 통해 Vite 생태계 CI의 일부로 테스트됩니다.
 
 ### 콜드 스타트 개선사항 {#cold-start-improvements}
 
-Vite는 이제 초기 정적으로 가져온 모듈을 크롤링하는 동안 플러그인에 의해 가져오기가 주입될 때 콜드 스타트 중 전체 리로드를 피합니다([#8869](https://github.com/vitejs/vite/issues/8869)).
+Vite는 이제 초기 정적으로 가져온 모듈을 크롤링하는 동안 플러그인이 의존성을 주입하더라도, 콜드 스타트 시 전체 페이지 리로드가 발생하지 않도록 방지합니다([#8869](https://github.com/vitejs/vite/issues/8869)).
 
 <details>
   <summary><b>자세히 알아보기</b></summary>
@@ -143,7 +143,7 @@ Vite 2.9에서는 스캐너와 옵티마이저가 모두 백그라운드에서 �
 import.meta.glob(['./dir/*.js', './another/*.js'])
 ```
 
-[부정 패턴](/guide/features.html#negative-patterns)이 이제 지원됩니다(`!`로 접두사) 특정 파일을 무시하기 위해
+특정 파일을 무시하기 위한 [부정 패턴](/guide/features.html#negative-patterns)(`!`로 시작하는)이 이제 지원됩니다
 
 ```js
 import.meta.glob(['./dir/*.js', '!**/bar.js'])
@@ -189,13 +189,13 @@ init().then((instance) => {
 
 ### 개선된 상대 Base 지원 {#improved-relative-base-support}
 
-Vite 3는 이제 상대 base(`base: ''` 사용)를 적절히 지원하여 빌드된 자산을 다시 빌드하지 않고 다른 base에 배포할 수 있습니다. 이는 빌드 시점에 base를 알 수 없는 경우, 예를 들어 [IPFS](https://ipfs.io/)와 같은 콘텐츠 주소 지정 가능한 네트워크에 배포할 때 유용합니다.
+Vite 3는 이제 상대 base(`base: ''` 사용)를 적절히 지원하여 빌드된 에셋을 다시 빌드하지 않고 다른 base에 배포할 수 있습니다. 이는 빌드 시점에 base를 알 수 없는 경우, 예를 들어 [IPFS](https://ipfs.io/)와 같은 콘텐츠 주소 지정 가능한 네트워크에 배포할 때 유용합니다.
 
 ## 실험적 기능 {#experimental-features}
 
-### 빌드된 자산 경로 세밀한 제어 (실험적) {#built-asset-paths-fine-grained-control-experimental}
+### 빌드된 에셋에 대한 세밀한 경로 제어 (실험적) {#built-asset-paths-fine-grained-control-experimental}
 
-이것만으로는 충분하지 않은 다른 배포 시나리오들이 있습니다. 예를 들어, 생성된 해시된 자산을 공용 파일과 다른 CDN에 배포해야 하는 경우, 빌드 시점에 경로 생성에 대한 더 세밀한 제어가 필요합니다. Vite 3는 빌드된 파일 경로를 수정하는 실험적 API를 제공합니다. 자세한 내용은 [빌드 고급 Base 옵션](/guide/build.html#advanced-base-options)을 확인하세요.
+이것만으로는 충분하지 않은 다른 배포 시나리오들이 있습니다. 예를 들어, 생성된 해시된 에셋을 공용 파일과 다른 CDN에 배포해야 하는 경우, 빌드 시점에 경로 생성에 대한 더 세밀한 제어가 필요합니다. Vite 3는 빌드된 파일 경로를 수정하는 실험적 API를 제공합니다. 자세한 내용은 [빌드 고급 Base 옵션](/guide/build.html#advanced-base-options)을 확인하세요.
 
 ### 빌드 시점의 Esbuild 의존성 최적화 (실험적) {#esbuild-deps-optimization-at-build-time-experimental}
 
@@ -209,9 +209,9 @@ Rollup v3가 앞으로 몇 달 안에 출시될 예정이고, 우리는 또 다�
 
 ## 번들 크기 감소 {#bundle-size-reduction}
 
-Vite는 게시 및 설치 공간을 중요하게 생각합니다. 새 앱의 빠른 설치는 하나의 기능입니다. Vite는 대부분의 의존성을 번들링하고 가능한 곳에서는 현대적이고 가벼운 대안을 사용하려고 합니다. 이러한 지속적인 목표를 계속하여, Vite 3 게시 크기는 v2보다 30% 작습니다.
+Vite는 배포 및 설치 용량을 중요하게 생각합니다. 새 앱의 빠른 설치는 하나의 기능입니다. Vite는 대부분의 의존성을 번들링하고 가능한 곳에서는 현대적이고 가벼운 대안을 사용하려고 합니다. 이러한 지속적인 목표를 계속하여, Vite 3 배포 용량은 v2보다 30% 작습니다.
 
-|             | 게시 크기 | 설치 크기 |
+|             | 배포 용량 | 설치 용량 |
 | ----------- | :----------: | :----------: |
 | Vite 2.9.14 |    4.38MB    |    19.1MB    |
 | Vite 3.0.0  |    3.05MB    |    17.8MB    |
@@ -230,7 +230,7 @@ Vite는 게시 및 설치 공간을 중요하게 생각합니다. 새 앱의 빠
 ## 호환성 참고사항 {#compatibility-notes}
 
 - Vite는 더 이상 EOL에 도달한 Node.js 12 / 13 / 15를 지원하지 않습니다. 이제 Node.js 14.18+ / 16+가 필요합니다.
-- Vite는 이제 ESM으로 게시되며, 호환성을 위해 ESM 엔트리에 대한 CJS 프록시가 있습니다.
+- Vite는 이제 ESM으로 배포되며, 호환성을 위해 ESM 엔트리에 대한 CJS 프록시가 있습니다.
 - 현대 브라우저 베이스라인은 이제 [네이티브 ES 모듈](https://caniuse.com/es6-module), [네이티브 ESM 동적 가져오기](https://caniuse.com/es6-module-dynamic-import), [`import.meta`](https://caniuse.com/mdn-javascript_operators_import_meta) 기능을 지원하는 브라우저를 대상으로 합니다.
 - SSR 및 라이브러리 모드의 JS 파일 확장자는 이제 형식과 패키지 타입에 따라 출력 JS 엔트리와 청크에 대해 유효한 확장자(`js`, `mjs`, 또는 `cjs`)를 사용합니다.
 

@@ -35,7 +35,7 @@ Vite 3가 5개월 전에 [릴리스되었습니다](./announcing-vite3.md). 그 
 
 Vite와 관련 프로젝트들이 경험한 성장을 보여주는 사례로, Vite 생태계는 10월 11일 [ViteConf 2022](https://viteconf.org/2022/replay)에서 모였습니다. 주요 웹 프레임워크와 도구들의 대표자들이 혁신과 협력의 이야기를 들려주었습니다. 그리고 상징적인 움직임으로, Rollup 팀은 바로 그 날 [Rollup 3](https://rollupjs.org) 릴리스를 선택했습니다.
 
-오늘, Vite [팀](https://vite.dev/team)은 생태계 파트너들의 도움으로 빌드 시점에 Rollup 3로 구동되는 Vite 4의 릴리스를 발표하게 되어 기쁩니다. 저희는 이 새로운 메이저 버전을 위한 원활한 업그레이드 경로를 보장하기 위해 생태계와 함께 작업했습니다. Vite는 이제 [Rollup 3](https://github.com/vitejs/vite/issues/9870)를 사용하며, 이를 통해 Vite의 내부 자산 처리를 단순화하고 많은 개선사항을 가져올 수 있었습니다. [Rollup 3 릴리스 노트는 여기에서](https://github.com/rollup/rollup/releases/tag/v3.0.0) 확인하세요.
+오늘, Vite [팀](https://vite.dev/team)은 생태계 파트너들의 도움으로 빌드 시점에 Rollup 3로 구동되는 Vite 4의 릴리스를 발표하게 되어 기쁩니다. 저희는 이 새로운 메이저 버전을 위한 원활한 업그레이드 경로를 보장하기 위해 생태계와 함께 작업했습니다. Vite는 이제 [Rollup 3](https://github.com/vitejs/vite/issues/9870)를 사용하며, 이를 통해 Vite의 내부 에셋 처리를 단순화하고 많은 개선사항을 가져올 수 있었습니다. [Rollup 3 릴리스 노트는 여기에서](https://github.com/rollup/rollup/releases/tag/v3.0.0) 확인하세요.
 
 ![Vite 4 발표 커버 이미지](/og-image-announcing-vite4.png)
 
