@@ -33,7 +33,7 @@ _2025년 6월 24일_
 
 Vite 7의 출시를 공유하게 되어 기쁩니다! Evan You가 Vite 저장소에 첫 커밋을 보낸 지 5년이 지났으며, 그 이후로 프론트엔드 생태계가 얼마나 많이 변화했는지는 아무도 예측할 수 없었습니다. 이제 대부분의 현대적인 프론트엔드 프레임워크와 도구들이 함께 작업하며, Vite의 공유 인프라 위에 구축되고 있습니다. 그리고 더 높은 수준에서 공유함으로써 더 빠른 속도로 혁신할 수 있게 되었습니다. Vite는 이제 주간 3,100만 회 다운로드되고 있으며, 이전 메이저 릴리스 이후 지난 7개월 동안 1,400만 회 증가했습니다.
 
-올해, 저희는 여러 큰 발걸음을 내딛고 있습니다. 우선, [ViteConf](https://viteconf.org)가 대면으로 진행됩니다! Vite 생태계가 10월 9-10일 암스테르담에서 모입니다! [JSWorld](https://jsworldconference.com/)가 [Bolt](https://bolt.new), [VoidZero](https://voidzero.dev), Vite 코어 팀과 파트너십으로 주최합니다! 저희는 세 번의 놀라운 [ViteConf 온라인 에디션](https://www.youtube.com/@viteconf/playlists)을 가졌으며, 실제로 만날 수 있기를 기대하고 있습니다. [ViteConf 사이트](https://viteconf.org)에서 연사들을 확인하고 티켓을 구매하세요!
+올해, 저희는 여러 큰 발걸음을 내딛게 되었습니다. 우선, [ViteConf](https://viteconf.org)가 대면으로 진행됩니다! Vite 생태계가 10월 9-10일 암스테르담에서 모입니다! [JSWorld](https://jsworldconference.com/)가 [Bolt](https://bolt.new), [VoidZero](https://voidzero.dev), Vite 코어 팀과 파트너십으로 주최합니다! 저희는 세 번의 놀라운 [ViteConf 온라인 에디션](https://www.youtube.com/@viteconf/playlists)을 가졌으며, 실제로 만날 수 있기를 기대하고 있습니다. [ViteConf 사이트](https://viteconf.org)에서 연사들을 확인하고 티켓을 구매하세요!
 
 그리고 [VoidZero](https://voidzero.dev/posts/announcing-voidzero-inc)는 JavaScript 생태계를 위한 오픈 소스 통합 개발 툴체인 구축이라는 사명에서 계속해서 상당한 진전을 이루고 있습니다. 지난 1년 동안, VoidZero 팀은 Vite의 코어를 현대화하는 더 넓은 노력의 일환으로 Rust 기반 차세대 번들러인 [Rolldown](https://rolldown.rs/)을 작업해왔습니다. 기본 `vite` 패키지 대신 `rolldown-vite` 패키지를 사용하여 오늘 Rolldown 기반 Vite를 체험해볼 수 있습니다. Rolldown이 향후 Vite의 기본 번들러가 될 예정이므로 이는 드롭인 대체재입니다. 전환하면 특히 대규모 프로젝트에서 빌드 시간이 단축됩니다. [Rolldown-vite 발표 블로그 포스트](https://voidzero.dev/posts/announcing-rolldown-vite)와 저희 [마이그레이션 가이드](https://vite.dev/rolldown)에서 더 자세히 읽어보세요.
 
@@ -49,7 +49,7 @@ VoidZero와 [NuxtLabs](https://nuxtlabs.com/) 간의 파트너십을 통해, Ant
 
 [vite.new](https://vite.new)를 사용하여 Vite 7을 온라인으로 체험하거나 `pnpm create vite`를 실행하여 선호하는 프레임워크로 Vite 앱을 로컬에서 스캐폴딩하세요. 자세한 정보는 [시작하기 가이드](/guide/)를 확인하세요.
 
-Vite 개선에 도움을 주시기 바랍니다([Vite Core의 1,100명 이상의 기여자](https://github.com/vitejs/vite/graphs/contributors)에 합류), 저희 의존성, 또는 생태계의 플러그인과 프로젝트에 참여해주세요. 자세한 내용은 [기여 가이드](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md)에서 확인하세요. 시작하기 좋은 방법은 [이슈 분류](https://github.com/vitejs/vite/issues), [PR 리뷰](https://github.com/vitejs/vite/pulls), 열린 이슈를 기반으로 한 테스트 PR 전송, [Discussions](https://github.com/vitejs/vite/discussions)나 Vite Land의 [도움 포럼](https://discord.com/channels/804011606160703521/1019670660856942652)에서 다른 사람들 지원입니다. 질문이 있으시면, [Discord 커뮤니티](http://chat.vite.dev/)에 참여하여 [#contributing 채널](https://discord.com/channels/804011606160703521/804439875226173480)에서 저희와 대화하세요.
+Vite 개선에 참여해주시기 바랍니다([Vite Core의 1,100명 이상의 기여자](https://github.com/vitejs/vite/graphs/contributors)에 합류), 저희 의존성, 또는 생태계의 플러그인과 프로젝트에 참여해주세요. 자세한 내용은 [기여 가이드](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md)에서 확인하세요. 시작하기 좋은 방법은 [이슈 분류](https://github.com/vitejs/vite/issues), [PR 리뷰](https://github.com/vitejs/vite/pulls), 열린 이슈를 기반으로 한 테스트 PR 전송, [Discussions](https://github.com/vitejs/vite/discussions)나 Vite Land의 [도움 포럼](https://discord.com/channels/804011606160703521/1019670660856942652)에서 다른 사람들 지원입니다. 질문이 있으시면, [Discord 커뮤니티](http://chat.vite.dev/)에 참여하여 [#contributing 채널](https://discord.com/channels/804011606160703521/804439875226173480)에서 저희와 대화하세요.
 
 [Bluesky](https://bsky.app/profile/vite.dev), [X](https://twitter.com/vite_js), 또는 [Mastodon](https://webtoo.ls/@vite)에서 저희를 팔로우하여 최신 소식을 받고 Vite 위에 구축하는 다른 사람들과 소통하세요.
 

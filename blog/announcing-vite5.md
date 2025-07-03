@@ -58,15 +58,15 @@ Vite 5는 API 정리(더 이상 사용되지 않는 기능 제거)에 집중하�
 
 Vite를 처음 사용하신다면 먼저 [시작하기](/guide/)와 [기능](/guide/features) 가이드를 읽어보시기를 권합니다.
 
-우리가 여기까지 올 수 있도록 도움을 준 [850명 이상의 Vite 코어 기여자들](https://github.com/vitejs/vite/graphs/contributors)과 Vite 플러그인, 통합, 도구, 번역의 메인테이너와 기여자들에게 감사드립니다. 여러분이 참여하여 우리와 함께 Vite를 계속 개선해 나가시기를 권합니다. [기여 가이드](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md)에서 자세히 알아보실 수 있습니다. 시작하려면 [이슈 트리아징](https://github.com/vitejs/vite/issues), [PR 리뷰](https://github.com/vitejs/vite/pulls), 열린 이슈를 기반으로 한 실패 테스트 PR 전송, [Discussions](https://github.com/vitejs/vite/discussions)와 Vite Land의 [도움말 포럼](https://discord.com/channels/804011606160703521/1019670660856942652)에서 다른 사람들 돕기를 권합니다. 그 과정에서 많은 것을 배우고 프로젝트에 추가 기여할 수 있는 원활한 길을 갖게 될 것입니다. 궁금한 점이 있으시면 [Discord 커뮤니티](http://chat.vite.dev/)에 참여하여 [#contributing 채널](https://discord.com/channels/804011606160703521/804439875226173480)에서 인사해 주세요.
+우리가 여기까지 올 수 있도록 도움을 준 [850명 이상의 Vite 코어 기여자들](https://github.com/vitejs/vite/graphs/contributors)과 Vite 플러그인, 통합, 도구, 번역의 메인테이너와 기여자들에게 감사드립니다. Vite를 함께 발전시켜 나갈 수 있도록 여러분의 지속적인 참여를 기다립니다. [기여 가이드](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md)에서 자세히 알아보실 수 있습니다. 시작하려면 [이슈 트리아징](https://github.com/vitejs/vite/issues), [PR 리뷰](https://github.com/vitejs/vite/pulls), 열린 이슈를 기반으로 한 실패 테스트 PR 전송, [Discussions](https://github.com/vitejs/vite/discussions)와 Vite Land의 [도움말 포럼](https://discord.com/channels/804011606160703521/1019670660856942652)에서 다른 사람들 돕기를 권합니다. 그 과정에서 많은 것을 배우고 프로젝트에 추가 기여할 수 있는 원활한 길을 갖게 될 것입니다. 궁금한 점이 있으시면 [Discord 커뮤니티](http://chat.vite.dev/)에 참여하여 [#contributing 채널](https://discord.com/channels/804011606160703521/804439875226173480)에서 인사해 주세요.
 
 최신 소식을 받아보려면 [X](https://twitter.com/vite_js) 또는 [Mastodon](https://webtoo.ls/@vite)에서 팔로우해 주세요.
 
 ## Vite 5로 빠르게 시작하기 {#quick-start-with-vite-5}
 
-`pnpm create vite`를 사용하여 선호하는 프레임워크로 Vite 프로젝트를 스캐폴딩하거나, [vite.new](https://vite.new)를 사용하여 온라인에서 시작 템플릿을 열어 Vite 5로 놀아보세요. `pnpm create vite-extra`를 실행하여 다른 프레임워크와 런타임(Solid, Deno, SSR, 라이브러리 스타터)의 템플릿에 접근할 수도 있습니다. `create vite-extra` 템플릿은 `create vite`를 실행할 때 `Others` 옵션에서도 사용할 수 있습니다.
+선호하는 프레임워크로 Vite 프로젝트를 시작하려면 `pnpm create vite`명령어를 사용하거나, [vite.new](https://vite.new)에서  체험할 수 있는 시작 템플릿을 열어보세요. `pnpm create vite-extra`를 실행하여 다른 프레임워크와 런타임(Solid, Deno, SSR, 라이브러리 스타터)의 템플릿에 접근할 수도 있습니다. `create vite-extra` 템플릿은 `create vite`를 실행할 때 `Others` 옵션에서도 사용할 수 있습니다.
 
-Vite 스타터 템플릿은 다양한 프레임워크로 Vite를 테스트하는 플레이그라운드로 사용되도록 의도되었다는 점에 유의하세요. 다음 프로젝트를 구축할 때는 각 프레임워크에서 권장하는 스타터에 접근하는 것을 권합니다. 일부 프레임워크는 이제 `create vite`에서 자신들의 스타터로 리디렉션하기도 합니다(Vue의 경우 `create-vue`와 `Nuxt 3`, Svelte의 경우 `SvelteKit`).
+Vite 스타터 템플릿은 다양한 프레임워크로 Vite를 테스트하는 플레이그라운드로 사용되도록 의도되었다는 점에 유의하세요. 다음 프로젝트를 구축할 때는 각 프레임워크에서 권장하는 스타터를 사용하시기를 권합니다. 일부 프레임워크는 이제 `create vite`에서 자신들의 스타터로 리디렉션하기도 합니다(Vue의 경우 `create-vue`와 `Nuxt 3`, Svelte의 경우 `SvelteKit`).
 
 ## Node.js 지원 {#node-js-support}
 

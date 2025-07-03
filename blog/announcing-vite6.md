@@ -31,13 +31,13 @@ _2024년 11월 26일_
 
 ![Vite 6 발표 커버 이미지](/og-image-announcing-vite6.png)
 
-오늘, 저희는 Vite의 이야기에서 또 다른 큰 발걸음을 내딛습니다. Vite [팀](/team), [기여자들](https://github.com/vitejs/vite/graphs/contributors), 그리고 생태계 파트너들은 Vite 6의 출시를 발표하게 되어 기쁩니다.
+오늘, 저희는 Vite의 이야기에서 또 다른 큰 발걸음을 내딛게 되었습니다. Vite [팀](/team), [기여자들](https://github.com/vitejs/vite/graphs/contributors), 그리고 생태계 파트너들은 Vite 6의 출시를 발표하게 되어 기쁩니다.
 
 올해는 정말 다사다난한 한 해였습니다. Vite의 채택률이 계속 증가하여, 1년 전 Vite 5가 출시된 이후 주간 npm 다운로드가 750만 건에서 1,700만 건으로 급증했습니다. [Vitest](https://vitest.dev)는 사용자들에게 더욱 선호받을 뿐만 아니라 자체적인 생태계를 형성하기 시작했습니다. 예를 들어, [Storybook](https://storybook.js.org)은 Vitest로 구동되는 새로운 테스트 기능을 갖추고 있습니다.
 
 [TanStack Start](https://tanstack.com/start), [One](https://onestack.dev/), [Ember](https://emberjs.com/) 등을 포함한 새로운 프레임워크들도 Vite 생태계에 합류했습니다. 웹 프레임워크들은 점점 더 빠른 속도로 혁신하고 있습니다. [Astro](https://astro.build/), [Nuxt](https://nuxt.com/), [SvelteKit](https://kit.svelte.dev/), [Solid Start](https://www.solidjs.com/blog/introducing-solidstart), [Qwik City](https://qwik.builder.io/qwikcity/overview/), [RedwoodJS](https://redwoodjs.com/), [React Router](https://reactrouter.com/) 등에서 사람들이 해온 개선사항들을 확인해보실 수 있습니다.
 
-Vite는 OpenAI, Google, Apple, Microsoft, NASA, Shopify, Cloudflare, GitLab, Reddit, Linear 등 많은 기업에서 사용되고 있습니다. 두 달 전, 저희는 [Vite를 사용하는 기업들](https://github.com/vitejs/companies-using-vite) 목록을 시작했습니다. 많은 개발자들이 자신들의 회사를 목록에 추가하기 위해 PR을 보내주시는 것을 보니 기쁩니다. Vite가 첫 걸음을 내딛은 이후 함께 구축한 생태계가 이렇게 크게 성장했다는 것이 믿기 어려울 정도입니다.
+Vite는 OpenAI, Google, Apple, Microsoft, NASA, Shopify, Cloudflare, GitLab, Reddit, Linear 등 많은 기업에서 사용되고 있습니다. 두 달 전, 저희는 [Vite를 사용하는 기업들](https://github.com/vitejs/companies-using-vite) 목록을 시작했습니다. 많은 개발자들이 자신들의 회사를 목록에 추가하기 위해 PR을 보내주시는 것을 보니 기쁩니다. Vite가 첫 걸음을 내딛은 이후 함께 구축한 생태계가 이렇게 크게 성장한 것이 믿기 어려울 정도입니다.
 
 ![Vite 주간 npm 다운로드](/vite6-npm-weekly-downloads.png)
 
