@@ -69,7 +69,7 @@ Vite 스타터 템플릿은 다양한 프레임워크로 Vite를 테스트하는
 
 [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react)는 esbuild와 Babel을 사용하는 플러그인으로, 작은 패키지 공간으로 빠른 HMR을 달성하고 Babel 변환 파이프라인을 사용할 수 있는 유연성을 제공합니다.
 
-### @vitejs/plugin-react-swc (새로움) {#vitejs-plugin-react-swc-new}
+### @vitejs/plugin-react-swc (새로운 플러그인) {#vitejs-plugin-react-swc-new}
 
 [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc)는 빌드 중에는 esbuild를 사용하지만 개발 중에는 Babel을 SWC로 대체하는 새로운 플러그인입니다. 비표준 React 확장이 필요하지 않은 대규모 프로젝트의 경우, 콜드 스타트와 Hot Module Replacement(HMR)가 상당히 빨라질 수 있습니다.
 

@@ -47,7 +47,7 @@ Vite 2.0은 그 과정에서 배운 것들을 바탕으로 더 견고한 내부 
 
 ### 새로운 플러그인 형식 및 API {#new-plugin-format-and-api}
 
-[WMR](https://github.com/preactjs/wmr)에서 영감을 받은 새로운 플러그인 시스템은 Rollup의 플러그인 인터페이스를 확장하며 [많은 Rollup 플러그인](https://vite-rollup-plugins.patak.dev/)과 즉시 호환됩니다. 플러그인은 Rollup 호환 훅을 사용할 수 있으며, Vite 전용 동작을 조정하기 위한 추가적인 Vite 전용 훅과 속성을 가집니다(예: 개발 vs 빌드 구분 또는 HMR의 사용자 정의 처리).
+[WMR](https://github.com/preactjs/wmr)에서 영감을 받은 새로운 플러그인 시스템은 Rollup의 플러그인 인터페이스를 확장하며 [많은 Rollup 플러그인](https://vite-rollup-plugins.patak.dev/)과 즉시 호환됩니다. 플러그인은 Rollup 호환 훅을 사용할 수 있으며, Vite 전용 동작을 위한 추가적인 Vite 전용 훅과 속성을 가집니다(예: 개발 vs 빌드 구분 또는 HMR의 사용자 정의 처리).
 
 [프로그래매틱 API](https://vite.dev/guide/api-javascript.html)도 Vite 위에 구축된 상위 레벨 도구/프레임워크를 용이하게 하기 위해 크게 개선되었습니다.
 
