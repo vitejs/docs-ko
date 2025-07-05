@@ -1,5 +1,5 @@
 ---
-title: Vite 4.3 is out!
+title: Vite 4.3이 출시되었습니다!
 author:
   name: The Vite Team
 date: 2023-04-20
@@ -10,7 +10,7 @@ head:
       content: website
   - - meta
     - property: og:title
-      content: Announcing Vite 4.3
+      content: Vite 4.3이 출시되었습니다!
   - - meta
     - property: og:image
       content: https://vite.dev/og-image-announcing-vite4-3.png
@@ -25,35 +25,35 @@ head:
       content: summary_large_image
 ---
 
-# Vite 4.3 is out!
+# Vite 4.3이 출시되었습니다! {#vite-4-3-is-out}
 
-_April 20, 2023_
+_2023년 4월 20일_
 
 ![Vite 4.3 Announcement Cover Image](/og-image-announcing-vite4-3.png)
 
-Quick links:
+빠른 링크:
 
-- Docs: [English](/), [简体中文](https://cn.vite.dev/), [日本語](https://ja.vite.dev/), [Español](https://es.vite.dev/), [Português](https://pt.vite.dev/)
-- [Vite 4.3 Changelog](https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md#430-2023-04-20)
+- 문서: [English](/), [简体中文](https://cn.vite.dev/), [日本語](https://ja.vite.dev/), [Español](https://es.vite.dev/), [Português](https://pt.vite.dev/)
+- [Vite 4.3 변경 사항](https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md#430-2023-04-20)
 
-## Performance Improvements
+## 성능 향상 {#performance-improvements}
 
-In this minor, we focused on improving the dev server performance. The resolve logic got streamlined, improving hot paths and implementing smarter caching for finding `package.json`, TS config files, and resolved URL in general.
+이번 마이너 릴리스에서는 개발 서버 성능 향상에 집중했습니다. 리졸버 로직을 간소화하여 핫 패스를 개선하고, `package.json`, TypeScript 설정 파일, 그리고 일반적인 URL 해석을 위한 더 스마트한 캐싱을 구현했습니다.
 
-You can read a detailed walkthrough of the performance work done in this blog post by one of Vite Contributors: [How we made Vite 4.3 faaaaster 🚀](https://sun0day.github.io/blog/vite/why-vite4_3-is-faster.html).
+Vite 기여자 중 한 명이 작성한 이 블로그 포스트에서 성능 작업에 대한 자세한 설명을 읽을 수 있습니다: [How we made Vite 4.3 faaaaster 🚀](https://sun0day.github.io/blog/vite/why-vite4_3-is-faster.html).
 
-This sprint resulted in speed improvements across the board compared to Vite 4.2.
+이번 스프린트는 Vite 4.2와 비교하여 전반적인 속도 향상을 가져왔습니다.
 
-These are the performance improvements as measured by [sapphi-red/performance-compare](https://github.com/sapphi-red/performance-compare), which tests an app with 1000 React Components cold and warm dev server startup time as well as HMR times for a root and a leaf component:
+다음은 [sapphi-red/performance-compare](https://github.com/sapphi-red/performance-compare)로 측정한 성능 향상 결과입니다. 이 도구는 1000개의 React 컴포넌트가 있는 앱을 대상으로 콜드 및 웜 개발 서버 시작 시간과 루트 및 리프 컴포넌트의 HMR 시간을 테스트합니다:
 
-| **Vite (babel)**   |  Vite 4.2 | Vite 4.3 | Improvement |
+| **Vite (babel)**   |  Vite 4.2 | Vite 4.3 | 향상 |
 | :----------------- | --------: | -------: | ----------: |
 | **dev cold start** | 17249.0ms | 5132.4ms |      -70.2% |
 | **dev warm start** |  6027.8ms | 4536.1ms |      -24.7% |
 | **Root HMR**       |    46.8ms |   26.7ms |      -42.9% |
 | **Leaf HMR**       |    27.0ms |   12.9ms |      -52.2% |
 
-| **Vite (swc)**     |  Vite 4.2 | Vite 4.3 | Improvement |
+| **Vite (swc)**     |  Vite 4.2 | Vite 4.3 | 향상 |
 | :----------------- | --------: | -------: | ----------: |
 | **dev cold start** | 13552.5ms | 3201.0ms |      -76.4% |
 | **dev warm start** |  4625.5ms | 2834.4ms |      -38.7% |
@@ -64,27 +64,27 @@ These are the performance improvements as measured by [sapphi-red/performance-co
 
 ![Vite 4.3 vs 4.2 HMR time comparison](/vite4-3-hmr-time.png)
 
-You can read more information about the benchmark [here](https://gist.github.com/sapphi-red/25be97327ee64a3c1dce793444afdf6e). Specs and Versions for this performance run:
+벤치마크에 대한 자세한 정보는 [여기](https://gist.github.com/sapphi-red/25be97327ee64a3c1dce793444afdf6e)에서 확인할 수 있습니다. 이 성능 테스트의 사양과 버전:
 
 - CPU: Ryzen 9 5900X, Memory: DDR4-3600 32GB, SSD: WD Blue SN550 NVME SSD
 - Windows 10 Pro 21H2 19044.2846
 - Node.js 18.16.0
-- Vite and React Plugin versions
+- Vite 및 React 플러그인 버전
   - Vite 4.2 (babel): Vite 4.2.1 + plugin-react 3.1.0
   - Vite 4.3 (babel): Vite 4.3.0 + plugin-react 4.0.0-beta.1
   - Vite 4.2 (swc): Vite 4.2.1 + plugin-react-swc 3.2.0
   - Vite 4.3 (swc): Vite 4.3.0 + plugin-react-swc 3.3.0
 
-Early adopters have also reported seeing 1.5x-2x dev startup time improvement on real apps while testing the Vite 4.3 beta. We'd love to know the results for your apps.
+얼리 어답터들도 Vite 4.3 베타를 테스트하면서 실제 앱에서 1.5x-2x의 개발 시작 시간 향상을 보고했습니다. 여러분의 앱에서의 결과를 알려주시면 좋겠습니다.
 
-## Profiling
+## 프로파일링 {#profiling}
 
-We'll continue to work on Vite's performance. We're working on an official [Benchmark tool](https://github.com/vitejs/vite-benchmark) for Vite that let us get performance metrics for each Pull Request.
+Vite의 성능 향상 작업을 계속 진행할 예정입니다. 각 Pull Request에 대한 성능 메트릭을 얻을 수 있는 공식 [벤치마크 도구](https://github.com/vitejs/vite-benchmark)를 작업하고 있습니다.
 
-And [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect) now has more performance-related features to help you identify which plugins or middlewares are the bottleneck for your applications.
+그리고 [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect)는 이제 어떤 플러그인이나 미들웨어가 애플리케이션의 병목인지 식별하는 데 도움이 되는 더 많은 성능 관련 기능을 제공합니다.
 
-Using `vite --profile` (and then pressing `p`) once the page loads will save a CPU profile of the dev server startup. You can open them in an app as [speedscope](https://www.speedscope.app/) to identify performance issues. And you can share your findings with the Vite Team in a [Discussion](https://github.com/vitejs/vite/discussions) or in [Vite's Discord](https://chat.vite.dev).
+페이지가 로드된 후 `vite --profile`을 사용하고 (그 다음 `p`를 누르면) 개발 서버 시작의 CPU 프로파일이 저장됩니다. [speedscope](https://www.speedscope.app/)와 같은 앱에서 열어 성능 문제를 식별할 수 있습니다. 그리고 [Discussion](https://github.com/vitejs/vite/discussions)이나 [Vite Discord](https://chat.vite.dev)에서 Vite 팀과 발견한 내용을 공유할 수 있습니다.
 
-## Next Steps
+## 다음 단계 {#next-steps}
 
-We decided to do a single Vite Major this year aligning with the [EOL of Node.js 16](https://endoflife.date/nodejs) in September, dropping support for both Node.js 14 and 16 in it. If you would like to get involved, we started a [Vite 5 Discussion](https://github.com/vitejs/vite/discussions/12466) to gather early feedback.
+올해는 9월에 있을 [Node.js 16의 EOL](https://endoflife.date/nodejs)에 맞춰 단일 Vite 메이저 버전을 한 번만 출시하기로 결정했으며, 이 릴리스에서 Node.js 14와 16 모두에 대한 지원을 중단할 예정입니다. 참여하고 싶으시다면, 초기 피드백을 수집하기 위해 [Vite 5 Discussion](https://github.com/vitejs/vite/discussions/12466)을 시작했습니다.
