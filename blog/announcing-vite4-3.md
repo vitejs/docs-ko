@@ -10,7 +10,7 @@ head:
       content: website
   - - meta
     - property: og:title
-      content: Announcing Vite 4.3
+      content: Vite 4.3이 출시되었습니다!
   - - meta
     - property: og:image
       content: https://vite.dev/og-image-announcing-vite4-3.png
@@ -25,7 +25,7 @@ head:
       content: summary_large_image
 ---
 
-# Vite 4.3이 출시되었습니다!
+# Vite 4.3이 출시되었습니다! {#vite-4-3-is-out}
 
 _2023년 4월 20일_
 
@@ -36,7 +36,7 @@ _2023년 4월 20일_
 - 문서: [English](/), [简体中文](https://cn.vite.dev/), [日本語](https://ja.vite.dev/), [Español](https://es.vite.dev/), [Português](https://pt.vite.dev/)
 - [Vite 4.3 변경 사항](https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md#430-2023-04-20)
 
-## 성능 향상
+## 성능 향상 {#performance-improvements}
 
 이번 마이너 릴리스에서는 개발 서버 성능 향상에 집중했습니다. 리졸버 로직을 간소화하여 핫 패스를 개선하고, `package.json`, TypeScript 설정 파일, 그리고 일반적인 URL 해석을 위한 더 스마트한 캐싱을 구현했습니다.
 
@@ -77,7 +77,7 @@ Vite 기여자 중 한 명이 작성한 이 블로그 포스트에서 성능 작
 
 얼리 어답터들도 Vite 4.3 베타를 테스트하면서 실제 앱에서 1.5x-2x의 개발 시작 시간 향상을 보고했습니다. 여러분의 앱에서의 결과를 알려주시면 좋겠습니다.
 
-## 프로파일링
+## 프로파일링 {#profiling}
 
 Vite의 성능 향상 작업을 계속 진행할 예정입니다. 각 Pull Request에 대한 성능 메트릭을 얻을 수 있는 공식 [벤치마크 도구](https://github.com/vitejs/vite-benchmark)를 작업하고 있습니다.
 
@@ -85,6 +85,6 @@ Vite의 성능 향상 작업을 계속 진행할 예정입니다. 각 Pull Reque
 
 페이지가 로드된 후 `vite --profile`을 사용하고 (그 다음 `p`를 누르면) 개발 서버 시작의 CPU 프로파일이 저장됩니다. [speedscope](https://www.speedscope.app/)와 같은 앱에서 열어 성능 문제를 식별할 수 있습니다. 그리고 [Discussion](https://github.com/vitejs/vite/discussions)이나 [Vite Discord](https://chat.vite.dev)에서 Vite 팀과 발견한 내용을 공유할 수 있습니다.
 
-## 다음 단계
+## 다음 단계 {#next-steps}
 
 올해는 9월에 있을 [Node.js 16의 EOL](https://endoflife.date/nodejs)에 맞춰 단일 Vite 메이저 버전을 한 번만 출시하기로 결정했으며, 이 릴리스에서 Node.js 14와 16 모두에 대한 지원을 중단할 예정입니다. 참여하고 싶으시다면, 초기 피드백을 수집하기 위해 [Vite 5 Discussion](https://github.com/vitejs/vite/discussions/12466)을 시작했습니다.
