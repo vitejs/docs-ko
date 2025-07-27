@@ -13,30 +13,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4.1.0
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - run: corepack enable
+      - uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: "22"
           cache: "pnpm"
 
-      - name: Check dependency cache
-        uses: actions/cache@v4
-        id: dep-cache
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
-      - name: Install dependencies if not installed
-        if: steps.dep-cache.outputs.cache-hit != 'true'
-        run: pnpm install
-
-      - name: Build site
-        run: pnpm run build
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build
