@@ -1,0 +1,2 @@
+Affected scope: `Vite Plugin Authors`
+`builder.sharedConfigBuild` was first introduced in `v6.0`. You can set it true to check how your plugins work with a shared config. We're looking for feedback about changing the default in a future major once the plugin ecosystem is ready.
