@@ -14,7 +14,7 @@ export default {
 }
 ```
 
-참고로 Vite는 프로젝트가 네이티브 Node ESM을 사용하지 않는 경우에도 설정 파일에서 ES 모듈 구문을 사용할 수 있도록 지원하고 있습니다(예: `package.json`의 `type: "module"`). 이 때 설정 파일은 사용되기 전에 자동으로 미리 처리됩니다.
+Note Vite supports using ES modules syntax in the config file even if the project is not using native Node ESM, e.g. `"type": "module"` in `package.json`. In this case, the config file is auto pre-processed before load.
 
 또한 `--config` CLI 옵션을 사용하여 명시적으로 특정 설정 파일을 지정할 수도 있습니다. (경로는 `cwd`를 기준으로 하여 상대적으로 처리됩니다.)
 

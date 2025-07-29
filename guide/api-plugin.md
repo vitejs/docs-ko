@@ -12,7 +12,7 @@ Vite는 확립된 패턴을 제공하기 위해 노력하고 있습니다. 따�
 
 ::: tip
 플러그인을 학습하거나, 디버깅 또는 새롭게 작성할 때, 프로젝트에 [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect)를 설치하는 것이 좋습니다. 이 모듈은 `localhost:5173/__inspect/`를 통해 Vite 플러그인의 중간 상태를 검사할 수 있도록 도와줍니다. 더 자세한 사항은 [vite-plugin-inspect 문서](https://github.com/antfu/vite-plugin-inspect)를 참고해주세요.
-![vite-plugin-inspect](/images/vite-plugin-inspect.png)
+![vite-plugin-inspect](../images/vite-plugin-inspect.png)
 :::
 
 ## 플러그인 작성 규칙 {#conventions}
@@ -38,7 +38,7 @@ Vite는 확립된 패턴을 제공하기 위해 노력하고 있습니다. 따�
 
 [가상 모듈 컨벤션](#virtual-modules-convention)또한 참고가 가능합니다.
 
-## 플러그인 설정 {#plugins-config}
+## Plugins Config
 
 프로젝트의 `devDependencies`에 플러그인을 추가한 뒤, Vite 설정 파일의 `plugins` 배열 옵션을 사용해 플러그인을 구성할 수 있습니다.
 
@@ -338,7 +338,6 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
   `index.html`과 같은 진입점이 되는 HTML 파일을 변환하기 위한 훅입니다. 훅의 인자로는 HTML 문자열과 컨텍스트를 전달받습니다. 개발 서버의 경우 컨텍스트에 [`ViteDevServer`](./api-javascript#vitedevserver) 인스턴스를 함께 전달하며, 빌드 시에는 Rollup된 번들을 전달합니다.
 
   훅은 비동기적으로 동작할 수 있으며 다음 중 하나를 반환합니다:
-
   - 변환된 HTML 문자열
   - 기존 HTML에 추가할 태그 설명자 객체(`{ tag, attrs, children }`) 배열. 각 태그는 기본적으로 `<head>` 앞에 추가되지만, 이 위치를 지정할 수도 있습니다.
   - `{ html, tags }` 둘 다 포함하는 객체
@@ -423,7 +422,6 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
   - `read`는 파일을 읽어 그 내용을 반환하는 비동기 함수입니다. 일부 시스템에서 핫 리로딩 시 파일 변경 콜백이 너무 이르게 호출되어 `fs.readFile`로 빈 콘텐츠가 반환될 수 있기에(더 자세한 내용은 [hmr.ts](https://github.com/vitejs/vite/blob/5a111cedf31f579e3b8c8af5c4442d2e0cd5aa12/packages/vite/src/node/server/hmr.ts#L443) 파일을 참고해주세요. - 옮긴이), 이 함수를 통해 정상적으로 파일을 읽을 수 있도록 제공하고 있습니다.
 
   이 훅은 다음 동작을 할 수 있습니다:
-
   - 영향을 받는 모듈 목록을 필터링하고 범위를 좁혀 더 정확하게 HMR이 동작하도록 구성
 
   - 빈 배열을 반환하고 전체 리로드를 수행:

@@ -113,7 +113,7 @@ Vite 스타터 템플릿은 TypeScript의 특정 버전과 설정만을 지원�
 
 ### Client Types {#client-types}
 
-vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 있습니다. 따라서 클라이언트 측의 환경을 위해 Shim을 구성하고자 한다면 아래와 같이 `d.ts` 선언 파일을 추가해주세요.
+Vite's default types are for its Node.js API. To shim the environment of client-side code in a Vite application, add a `d.ts` declaration file:
 
 ```typescript
 /// <reference types="vite/client" />
@@ -153,7 +153,7 @@ vite는 기본적으로 Node.js API 기반의 타입 시스템을 차용하고 �
     export default content
   }
   ```
-- `vite/client`에 대한 참조를 포함하는 파일:
+- The file containing the reference to `vite/client` (normally `vite-env.d.ts`):
   ```ts
   /// <reference types="./vite-env-override.d.ts" />
   /// <reference types="vite/client" />
@@ -176,7 +176,7 @@ HTML 파일은 Vite 프로젝트에서 [중심적인 역할](/guide/#index-html-
 - `<audio src>`
 - `<embed src>`
 - `<img src>` 및 `<img srcset>`
-- `<image src>`
+- `<image href>` and `<image xlink:href>`
 - `<input src>`
 - `<link href>` 및 `<link imagesrcset>`
 - `<object data>`
@@ -212,7 +212,7 @@ HTML 파일은 Vite 프로젝트에서 [중심적인 역할](/guide/#index-html-
 - Vue: [@vitejs/plugin-vue](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue)
 - Vue JSX: [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx)
 - React: [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react)
-- React SWC: [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc)
+- React using SWC support via [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react-swc)
 
 자세한 내용은 [플러그인 가이드](https://ko.vite.dev/plugins)를 참고해 주세요.
 
@@ -313,7 +313,7 @@ npm add -D stylus
 
 Vue 싱글 파일 컴포넌트를 사용하는 경우, 설치 후 별 다른 설정 없이도 `<style lang="sass">`와 같은 CSS 전처리기를 바로 사용할 수 있습니다.
 
-Sass나 Less에서의 `@import` 별칭 또한 Vite에서 사용이 가능합니다. `url()`로 참조되는 파일들 역시 자동으로 올바른 URL을 갖도록 재정의되고 말이죠.
+Vite improves `@import` resolving for Sass and Less so that Vite aliases are also respected. In addition, relative `url()` references inside imported Sass/Less files that are in different directories from the root file are also automatically rebased to ensure correctness. Rebasing `url()` references that starts with a variable or a interpolation are not supported due to its API constraints.
 
 다만 Stylus의 경우 API 충돌로 인해 Vite의 `@import` 별칭과 URL 재정의 기능이 제공되지 않습니다.
 
@@ -364,7 +364,7 @@ URL 쿼리를 이용해 에셋을 가져올 때 어떻게 이를 가져올 것�
 ```js twoslash
 import 'vite/client'
 // ---cut---
-// URL로 에셋 가져오기
+// Explicitly load assets as URL (automatically inlined depending on the file size)
 import assetAsURL from './asset.js?url'
 ```
 
@@ -579,6 +579,32 @@ const modules = import.meta.glob('./dir/*.js', {
   query: { foo: 'bar', bar: true },
 })
 ```
+
+#### Base Path
+
+You can also use the `base` option to provide base path for the imports:
+
+```ts twoslash
+import 'vite/client'
+// ---cut---
+const modulesWithBase = import.meta.glob('./**/*.js', {
+  base: './base',
+})
+```
+
+```ts
+// code produced by vite:
+const modulesWithBase = {
+  './dir/foo.js': () => import('./base/dir/foo.js'),
+  './dir/bar.js': () => import('./base/dir/bar.js'),
+}
+```
+
+The base option can only be a directory path relative to the importer file or absolute against the project root. Aliases and virtual modules aren't supported.
+
+Only the globs that are relative paths are interpreted as relative to the resolved base.
+
+All the resulting module keys are modified to be relative to the base if provided.
 
 ### Glob Import 유의 사항 {#glob-import-caveats}
 
