@@ -6,10 +6,10 @@
 
 [빌드 중 공유되는 플러그인](/guide/api-environment-plugins.md#shared-plugins-during-build)을 참고하세요.
 
-영향을 받는 범위: `Vite 플러그인 개발자`
+Affected scope: `Vite Plugin Authors`
 
 ::: warning 기본값 변경
-`builder.sharedConfigBuild`는 `v6.0`에서 처음 도입되었습니다. 플러그인이 공유 설정에서 어떻게 동작하는지 확인하려면 이 값을 `true`로 설정해 주세요. 플러그인 생태계가 준비된다면 향후 메이저 버전에서 기본값을 변경하는 것에 대한 피드백을 받을 예정입니다.
+`builder.sharedConfigBuild` was first introduced in `v6.0`. You can set it true to check how your plugins work with a shared config. We're looking for feedback about changing the default in a future major once the plugin ecosystem is ready.
 :::
 
 ## 배경 {#motivation}
