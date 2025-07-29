@@ -6,15 +6,18 @@ on:
   workflow_dispatch: # Manual trigger (Optional)
 
 permissions:
-  contents: read
+  contents: write
   issues: write
   actions: read
+  pull-requests: write
 
 jobs:
   yuki-no:
     runs-on: ubuntu-latest
     steps:
       - uses: Gumball12/yuki-no@wip
+        env:
+          YUKI_NO_BATCH_PR_ROOT_DIR: docs
         with:
           # GitHub access token. Required.
           access-token: ${{ secrets.GITHUB_TOKEN }}
@@ -34,8 +37,6 @@ jobs:
           include: |
             docs/**
 
-          # Whether to enable release tracking.
-          # When enabled, Yuki-no will track releases for each issue
-          # and add comments about release status. Optional.
-          # Defaults to 'false'
-          release-tracking: true
+          plugins: |
+            @yuki-no/plugin-release-tracking@latest
+            @yuki-no/plugin-batch-pr@latest
