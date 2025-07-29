@@ -1,7 +1,9 @@
 # 런타임을 위한 환경 API {#environment-api-for-runtimes}
 
-:::warning 실험적 기능
-환경 API는 실험적 기능입니다. 생태계가 충분히 검증하고 확장할 수 있도록 Vite 6에서는 API를 안정적으로 유지하고자 합니다. Vite 7에서 잠재적 주요 변경 사항과 함께 새로운 API를 안정화할 계획입니다.
+:::info Release Candidate
+The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
+
+We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
 
 리소스:
 
@@ -108,6 +110,8 @@ function createWorkerdDevEnvironment(
 }
 ```
 
+There are [multiple communication levels for the `DevEnvironment`](/guide/api-environment-frameworks#devenvironment-communication-levels). To make it easier for frameworks to write runtime agnostic code, we recommend to implement the most flexible communication level possible.
+
 ## `ModuleRunner` {#modulerunner}
 
 모듈 실행기는 실행될 특정 런타임에서 인스턴스화됩니다. 다음 섹션의 모든 API는 별도의 언급이 없는 한 `vite/module-runner`에서 가져옵니다. 이 진입점은 모듈 실행기를 만드는 데 필요한 핵심 기능만 제공하며, 최대한 경량화되어 있습니다.
@@ -149,12 +153,17 @@ export class ModuleRunner {
 **사용 예시:**
 
 ```js
-import { ModuleRunner, ESModulesEvaluator } from 'vite/module-runner'
+import {
+  ModuleRunner,
+  ESModulesEvaluator,
+  createNodeImportMeta,
+} from 'vite/module-runner'
 import { transport } from './rpc-implementation.js'
 
 const moduleRunner = new ModuleRunner(
   {
     transport,
+    createImportMeta: createNodeImportMeta, // if the module runner runs in Node.js
   },
   new ESModulesEvaluator(),
 )
@@ -274,7 +283,11 @@ RPC를 이용하거나 직접 함수를 호출해 환경과 통신하는 전송 
 ```js [worker.js]
 import { parentPort } from 'node:worker_threads'
 import { fileURLToPath } from 'node:url'
-import { ESModulesEvaluator, ModuleRunner } from 'vite/module-runner'
+import {
+  ESModulesEvaluator,
+  ModuleRunner,
+  createNodeImportMeta,
+} from 'vite/module-runner'
 
 /** @type {import('vite/module-runner').ModuleRunnerTransport} */
 const transport = {
@@ -290,6 +303,7 @@ const transport = {
 const runner = new ModuleRunner(
   {
     transport,
+    createImportMeta: createNodeImportMeta,
   },
   new ESModulesEvaluator(),
 )

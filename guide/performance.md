@@ -6,7 +6,7 @@ Vite는 기본적으로 빠르지만, 프로젝트의 요구 사항이 커질수
 - 느린 페이지 로드
 - 느린 빌드
 
-## 브라우저 설정 확인하기 {#review-your-browser-setup}
+## Review Your Browser Setup
 
 일부 브라우저 확장 프로그램은 요청을 방해하고, 특히 브라우저 개발 도구를 사용할 때 대형 애플리케이션의 시작과 리로드 시간을 느리게 만들 수 있습니다. 이 경우 Vite 개발 서버를 사용하는 동안 확장 프로그램이 없는 개발 전용 프로필을 만들거나 시크릿 모드로 전환하는 것이 좋습니다. 시크릿 모드는 확장 프로그램이 없는 일반 프로필보다 빠를 수도 있습니다.
 
@@ -115,7 +115,7 @@ export default defineConfig({
 이에 대한 예시는 다음과 같습니다:
 
 - 가능하다면 Sass/Less/Stylus 대신 CSS를 사용하세요. 중첩된 스타일은 PostCSS에서 처리할 수 있습니다.
-- SVG를 UI 프레임워크 컴포넌트(React, Vue 등)로 변환하지 마세요. 대신 문자열이나 URL로 임포트하세요.
+- Don't transform SVGs into UI framework components (React, Vue, etc.). Import them as strings or URLs instead.
 - `@vitejs/plugin-react`를 사용하는 경우, 빌드 중 변환을 수행하지 않기 위해 Babel 옵션을 구성하지 마세요. 이 경우 esbuild만 사용됩니다.
 
 네이티브 툴링을 사용하는 예시:
