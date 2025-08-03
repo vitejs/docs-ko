@@ -1,31 +1,31 @@
 # 플러그인을 위한 환경 API {#environment-api-for-plugins}
 
-:::warning 실험적 기능
-환경 API는 실험적 기능입니다. 생태계가 충분히 검증하고 확장할 수 있도록 Vite 6에서는 API를 안정적으로 유지하고자 합니다. Vite 7에서 잠재적 주요 변경 사항과 함께 새로운 API를 안정화할 계획입니다.
+:::info Release Candidate
+The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
 
-리소스:
+We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
+We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
+We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
+- [`this.environment` in Hooks](/changes/this-environment-in-hooks)
+- [HMR `hotUpdate` Plugin Hook](/changes/hotupdate-hook)
+- [SSR Using `ModuleRunner` API](/changes/ssr-using-modulerunner)
+We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
+We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
 
-- [피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 새로운 API에 대한 피드백을 모으고 있습니다.
-- [환경 API PR](https://github.com/vitejs/vite/pull/16471)에서 새로운 API를 구현하고 검토했습니다.
 
-여러분의 피드백을 공유해주세요.
-:::
 
-## 훅에서 현재 환경에 접근하기 {#accessing-the-current-environment-in-hooks}
 
-Vite 6 이전에는 두 가지 환경(`client`와 `ssr`)만 있었기에, Vite API에서 현재 환경을 식별하기 위해서는 `ssr` 불리언 값이면 충분했습니다. 플러그인 훅은 마지막 옵션 매개변수로 `ssr` 불리언 값을 받았고, 여러 API에서도 모듈을 올바른 환경과 연결하기 위해 마지막 매개변수로 `ssr` 값을 옵션으로 받았습니다(예: `server.moduleGraph.getModuleByUrl(url, { ssr })`).
-
+Vite 6 formalizes the concept of Environments. Until Vite 5, there were two implicit Environments (`client`, and optionally `ssr`). The new Environment API allows users and framework authors to create as many environments as needed to map the way their apps work in production. This new capability required a big internal refactoring, but a lot of effort has been placed on backward compatibility. The initial goal of Vite 6 is to move the ecosystem to the new major as smoothly as possible, delaying the adoption of the APIs until enough users have migrated and frameworks and plugin authors have validated the new design.
+The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
+The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
+The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
+The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
+:::info Release Candidate
+:::info Release Candidate
+:::info Release Candidate
+:::info Release Candidate
 이제 환경을 구성할 수 있게 되면서, 플러그인 내에서 환경 옵션과 인스턴스에 접근하는 방법이 통일되었습니다. 플러그인 훅에서는 `this.environment`로 환경에 접근할 수 있으며, `ssr` 불리언 값을 받던 API는 환경에 맞게 적절히 범위가 지정됩니다(예: `environment.moduleGraph.getModuleByUrl(url)`).
 
-Vite 서버는 모든 환경이 공유하는 하나의 플러그인 파이프라인을 가지고 있습니다. 하지만 모듈을 처리할 때는 항상 특정 환경에 속하게 되며, 플러그인은 이 환경에 대한 정보를 `environment` 인스턴스를 통해 접근할 수 있습니다.
-
-그리고 플러그인은 `environment` 인스턴스를 사용해 환경에 대한 설정(`environment.config`로 접근)에 따라 모듈 처리 방식을 변경할 수 있습니다.
-
-```ts
-  transform(code, id) {
-    console.log(this.environment.config.resolve.conditions)
-  }
-```
 
 ## 훅을 사용해 새로운 환경 등록하기 {#registering-new-environments-using-hooks}
 
@@ -44,7 +44,6 @@ Vite 서버는 모든 환경이 공유하는 하나의 플러그인 파이프라
 `config` 훅이 실행되는 동안에는 전체 환경 목록을 알 수 없으며, 환경은 최상위 환경 설정에서 가져와지는 기본값이나 `config.environments` 값을 통해 직접적으로 영향을 받을 수 있습니다.
 플러그인은 `config` 훅으로 기본값을 설정할 수 있습니다. 또는, 이를 위한 `configEnvironment` 훅을 사용할 수도 있습니다. 이 훅은 각 환경에 대해, 기본값이 적용된 초기 설정과 함께 호출됩니다.
 
-```ts
   configEnvironment(name: string, options: EnvironmentOptions) {
     if (name === 'rsc') {
       options.resolve.conditions = // ...
@@ -96,9 +95,6 @@ interface HotUpdateOptions {
       )
     }
     this.environment.hot.send({ type: 'full-reload' })
-    return []
-  }
-  ```
 
 - 빈 배열을 반환하고 클라이언트에 커스텀 이벤트를 보내 완전한 커스텀 HMR 처리를 수행합니다:
 
@@ -123,6 +119,7 @@ interface HotUpdateOptions {
     import.meta.hot.on('special-update', (data) => {
       // 커스텀 업데이트 수행
     })
+The current Vite server API is not yet deprecated and is backward compatible with Vite 5.
   }
   ```
 
@@ -130,17 +127,28 @@ interface HotUpdateOptions {
 
 플러그인은 `applyToEnvironment` 함수로 적용할 환경을 정의할 수 있습니다.
 
-```js
-const UnoCssPlugin = () => {
-  // 공유 전역 상태
   return {
     buildStart() {
       // this.environment를 이용해
       // WeakMap<Environment,Data>로 환경별 상태 초기화
     },
-    configureServer() {
-      // 전역 훅은 평소처럼 사용
     },
+## Per-environment State in Plugins
+
+Given that the same plugin instance is used for different environments, the plugin state needs to be keyed with `this.environment`. This is the same pattern the ecosystem has already been using to keep state about modules using the `ssr` boolean as key to avoid mixing client and ssr modules state. A `Map<Environment, State>` can be used to keep the state for each environment separately. Note that for backward compatibility, `buildStart` and `buildEnd` are only called for the client environment without the `perEnvironmentStartEndDuringDev: true` flag.
+function PerEnvironmentCountTransformedModulesPlugin() {
+  const state = new Map<Environment, { count: number }>()
+  return {
+    name: 'count-transformed-modules',
+    perEnvironmentStartEndDuringDev: true,
+    buildStart() {
+    buildEnd() {
+      console.log(this.environment.name, state.get(this.environment).count)
+    }
+  }
+}
+```
+
     applyToEnvironment(environment) {
       // 플러그인이 해당 환경에서 활성화되어야 한다면 true를 반환하거나,
       // 대체할 새로운 플러그인을 반환합니다.
@@ -149,19 +157,11 @@ const UnoCssPlugin = () => {
     resolveId(id, importer) {
       // 플러그인이 적용되는 환경에서만 호출
     },
-  }
-}
 ```
 
 만약 플러그인이 환경을 인식하지 못하고 현재 환경에 대해 키가 지정되지 않은 상태를 가지는 경우(플러그인 상태가 환경별로 구분되지 않고 모든 환경이 같은 상태를 공유하는 경우 - 옮긴이), `applyToEnvironment` 훅을 사용하면 쉽게 환경별로 만들 수 있습니다.
-
 ```js
 import { nonShareablePlugin } from 'non-shareable-plugin'
-
-export default defineConfig({
-  plugins: [
-    {
-      name: 'per-environment-plugin',
       applyToEnvironment(environment) {
         return nonShareablePlugin({ outputName: environment.name }) // 각 환경마다 독립된 플러그인 인스턴스를 생성 - 옮긴이
       },
@@ -180,7 +180,6 @@ export default defineConfig({
     perEnvironmentPlugin('per-environment-plugin', (environment) =>
       nonShareablePlugin({ outputName: environment.name }),
     ),
-  ],
 })
 ```
 
@@ -197,8 +196,9 @@ Vite 6 이전에는 플러그인 파이프라인이 개발과 빌드 단계에�
 - **빌드 단계:** 각 환경마다 플러그인이 격리됨(클라이언트를 위한 `vite build` 명령 후, SSR을 위한 `vite build --ssr` 명령을 실행하기에, 별도 프로세스에서 빌드가 수행되어 플러그인도 환경별로 격리)
 
 따라서 프레임워크는 `client` 빌드와 `ssr` 빌드 간 정보를 공유하기 위해 매니페스트 파일을 파일 시스템에 작성해 공유해야 했습니다. Vite 6에서는 모든 환경에 대한 빌드를 단일 프로세스에서 수행하므로, 플러그인 파이프라인과 환경 간 통신 시 개발 단계에서와 같이 메모리를 이용할 수 있게 되었습니다.
+The `applyToEnvironment` hook is called at config time, currently after `configResolved` due to projects in the ecosystem modifying the plugins in it. Environment plugins resolution may be moved before `configResolved` in the future.
 
-향후 메이저 버전(Vite 7 또는 8)에서 완벽하게 동일한 동작을 목표로 하고 있습니다:
+
 
 - **개발과 빌드 모두:** 플러그인이 공유되며, [환경별 필터링 됨](#per-environment-plugins)
 
@@ -212,6 +212,7 @@ Vite 6 이전에는 플러그인 파이프라인이 개발과 빌드 단계에�
 function myPlugin() {
   // 개발 및 빌드 단계에서 모든 환경 간 상태 공유
   const sharedState = ...
+In a future major, we could have complete alignment:
   return {
     name: 'shared-plugin',
     transform(code, id) { ... },
@@ -221,3 +222,18 @@ function myPlugin() {
   }
 }
 ```
+    // run configResolved hooks
+    await Promise.all(
+      createPluginHookUtils(workerResolved.plugins)
+
+    // Resolve environment plugins after configResolved because there are
+    // downstream projects modifying the plugins in it. This may change
+    // once the ecosystem is ready.
+  // Resolve environment plugins after configResolved because there are
+  // downstream projects modifying the plugins in it. This may change
+  // once the ecosystem is ready.
+  for (const name of Object.keys(resolved.environments)) {
+    resolved.environments[name].plugins = await resolveEnvironmentPlugins(
+      new PartialEnvironment(name, resolved),
+    )
+  }

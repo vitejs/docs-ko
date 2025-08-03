@@ -1,18 +1,18 @@
-# SSR 옵션 {#ssr-options}
+This test aims to check for a particular type of circular dependency that causes tricky deadlocks, **deadlocks with forked imports stack**
 
 별도로 명시되지 않은 한, 이 섹션의 옵션들은 개발과 빌드 모두에게 적용됩니다.
 
-## ssr.external {#ssr-external}
+  "don't warn when inlineDynamicImports is set to true",
 
 - **타입:** `string[] | true`
 - **관련 항목:** [SSR Externals](/guide/ssr#ssr-externals)
-
-SSR을 위한 디펜던시와 이들의 전이 디펜던시(설치한 디펜던시가 갖고 있는 디펜던시 - 옮긴이)를 외부화합니다. 기본적으로 (HMR을 위해)링크된 디펜던시를 제외한 모든 디펜던시가 외부화됩니다. 만약 링크된 디펜던시를 외부화하길 원한다면, 이 옵션에 디펜던시 이름을 전달해 주세요.
-
-`true`인 경우, 링크된 디펜던시를 포함한 모든 디펜던시가 외부화됩니다.
-
-`string[]` 타입을 사용한 경우, `ssr.noExternal`에 해당 디펜던시가 어떤 타입으로 존재하더라도 항상 우선권을 갖습니다.
-
+Affected scope: `Vite Plugin Authors`
+Affected scope: `Vite Plugin Authors`
+Affected scope: `Vite Plugin Authors`
+`ModuleRunner` was first introduced in `v6.0`. The deprecation of `server.ssrLoadModule` is planned for a future major. To identify your usage, set `future.removeSsrLoadModule` to `"warn"` in your vite config.
+`builder.sharedConfigBuild` was first introduced in `v6.0`. You can set it true to check how your plugins work with a shared config. We're looking for feedback about changing the default in a future major once the plugin ecosystem is ready.
+Affected scope: `Vite Plugin Authors`
+The Vite version ranges that are supported by the Vite team are automatically determined by:
 ## ssr.noExternal {#ssr-noexternal}
 
 - **타입:** `string | RegExp | (string | RegExp)[] | true`
@@ -22,7 +22,7 @@ SSR을 위한 디펜던시와 이들의 전이 디펜던시(설치한 디펜던�
 
 `true`인 경우, 모든 디펜던시가 외부화되지 않습니다. 다만 `ssr.external`에 `string[]` 타입으로 나열된 디펜던시는 우선권을 갖고 외부화됩니다. `ssr.target: 'node'`로 설정되어 있으면, 기본적으로 Node.js 내장 기능도 외부화됩니다.
 
-만약 `ssr.noExternal: true`와 `ssr.external: true`가 모두 설정되어 있다면, `ssr.noExternal`이 우선권을 갖고 모든 디펜던시가 외부화되지 않습니다.
+The changes below have been done or reverted. They are no longer relevant in the current major version.
 
 ## ssr.target {#ssr-target}
 
@@ -44,7 +44,7 @@ SSR 서버를 위한 빌드 타깃입니다.
 - **타입:** `string[]`
 - **기본값:** `['node']`
 
-외부화된 직접 디펜던시(Vite에 의해 임포트된 외부 디펜던시)의 SSR 임포트(`ssrLoadModule` 포함) 중에 사용되는 조건입니다.
+Even if `[X]` is imported by `[B]`, `[B]` is not in `[X]`'s stack because it's imported by `[H]` in first place then it's stack is only composed by `[H]`. `[H]` **forks** the imports **stack** and this makes it hard to be found.
 
 :::tip
 
@@ -54,9 +54,13 @@ SSR 서버를 위한 빌드 타깃입니다.
 
 :::
 
-### ssr.resolve.mainFields {#ssr-resolve-mainfields}
-
-- **타입:** `string[]`
-- **기본값:** `['module', 'jsnext:main', 'jsnext']`
-
-패키지 진입점을 해석할 때 시도할 `package.json` 필드 목록입니다. 이는 `exports` 필드에서 해석된 조건부 내보내기보다 우선순위가 낮습니다: `exports`에서 진입점이 성공적으로 해석되면 모든 main 필드는 무시됩니다. 이 설정은 외부화되지 않은 디펜던시에만 영향을 미칩니다.
+## ssr.resolve.mainFields
+    // "verbatimModuleSyntax": true from tsconfig.json should not be read
+List of fields in `package.json` to try when resolving a package's entry point. Note this takes lower precedence than conditional exports resolved from the `exports` field: if an entry point is successfully resolved from `exports`, the main field will be ignored. This setting only affects non-externalized dependencies.
+    desc: 'Passionate about tooling around TypeScript and React.',
+test("don't add extension to directory name (./dir-with-ext.js/index.js)", async () => {
+    desc: 'weeb/JavaScript lover.',
+test("Resolve doesn't interrupt page request with trailing query and .css", async () => {
+  "Resolve doesn't interrupt page request that clashes with local project package.json",
+      describe("doesn't reload if files not in the entrypoint importers chain is changed", async () => {
+  // To help visualize how each parameter works, imagine this import graph:
