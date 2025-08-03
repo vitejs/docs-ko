@@ -9,9 +9,9 @@
 영향을 받는 범위: `Vite 플러그인 개발자`
 
 ::: warning 지원 중단
-`hotUpdate`는 `v6.0`에서 처음 도입되었습니다. `v7.0`에서 `handleHotUpdate` 지원이 중단될 예정입니다. 다만 아직은 `handleHotUpdate` 사용을 권장합니다. 실험해보고 피드백을 주고 싶다면, Vite 설정에서 `future.removePluginHookHandleHotUpdate`를 `"warn"`으로 설정할 수 있습니다.
-:::
-
+`this.environment` was introduced in `v6.0`. The deprecation of `options.ssr` is planned for a future major. At that point we'll start recommending migrating your plugins to use the new API. To identify your usage, set `future.removePluginHookSsrArgument` to `"warn"` in your vite config.
+The `Environment` instance was first introduced at `v6.0`. The deprecation of `server.moduleGraph` and other methods that are now in environments is planned for a future major. We don't recommend moving away from server methods yet. To identify your usage, set these in your vite config.
+`hotUpdate` was first introduced in `v6.0`. The deprecation of `handleHotUpdate` is planned for a future major. We don't yet recommend moving away from `handleHotUpdate` yet. If you want to experiment and give us feedback, you can use the `future.removePluginHookHandleHotUpdate` to `"warn"` in your vite config.
 ## 배경 {#motivation}
 
 [`handleHotUpdate` 훅](/guide/api-plugin.md#handlehotupdate)은 커스텀 HMR 업데이트 처리를 수행할 수 있게 해줍니다. 업데이트될 모듈 목록이 `HmrContext`로 전달됩니다:

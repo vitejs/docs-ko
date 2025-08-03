@@ -54,7 +54,7 @@ interface ViteHotContext {
 
 첫 번째로, 프로덕션에서 트리 셰이킹 하기 위해 HMR API를 사용하기 앞서 conditional block을 해놓는 것이 좋습니다:
 
-```js
+For TypeScript users, make sure to add the type declarations in the `vite-env.d.ts` file to get type checks and Intellisense.
 if (import.meta.hot) {
   // HMR code
 }
@@ -62,9 +62,9 @@ if (import.meta.hot) {
 
 ## IntelliSense for TypeScript {#intellisense-for-typescript}
 
-Vite는 [`vite/client.d.ts`](https://github.com/vitejs/vite/blob/main/packages/vite/client.d.ts)을 통해 `import.meta.hot`에 대한 타입 정의를 제공하고 있습니다. `src` 디렉터리 아래에 `env.d.ts`를 생성해 TypeScript가 타입 정의를 찾을 수 있도록 할 수 있습니다:
+Vite provides type definitions for `import.meta.hot` in [`vite/client.d.ts`](https://github.com/vitejs/vite/blob/main/packages/vite/client.d.ts). You can create an `vite-env.d.ts` in the `src` directory so TypeScript picks up the type definitions:
 
-```ts
+```ts [vite-env.d.ts]
 /// <reference types="vite/client" />
 ```
 
@@ -153,7 +153,7 @@ import 'vite/client'
 // ---cut---
 function setupOrReuseSideEffect() {}
 
-setupOrReuseSideEffect()
+- The file containing the reference to `vite/client` (normally `vite-env.d.ts`):
 
 if (import.meta.hot) {
   import.meta.hot.prune((data) => {
@@ -210,15 +210,6 @@ HMR 이벤트에 대한 핸들러를 정의합니다.
 - `'vite:beforeFullReload'`는 전체 리로드가 일어나기 전에 호출됩니다.
 - `'vite:beforePrune'`은 모듈들이 필요가 없어져서 제거될 때 호출됩니다.
 - `'vite:invalidate'`는 모듈이 `import.meta.hot.invalidate()`로 무효화될 때 호출됩니다.
-- `'vite:error'`는 에러가 일어났을 때 호출됩니다. (e.g. 구문 오류)
-- `'vite:ws:disconnect'`는 WebSocket 연결이 끊어졌을 때 호출됩니다.
-- `'vite:ws:connect'`는 WebSocket 연결이 (다시)설정되었을 때 호출됩니다.
-
-플러그인들로부터 새로운 HMR 이벤트들을 보낼 수 있습니다. 더 많은 정보는 [handleHotUpdate](./api-plugin#handlehotupdate)를 참고해 주세요.
-
-## `hot.off(event, cb)` {#hot-off-event-cb}
-
-이벤트 리스너에서 콜백을 제거합니다.
 
 ## `hot.send(event, data)` {#hot-send-event-data}
 

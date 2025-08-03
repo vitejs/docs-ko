@@ -1,25 +1,185 @@
+export type ImportMetaResolver = (specifier: string, importer: string) => string
+
+import {
+  ESModulesEvaluator,
+  ModuleRunner,
+  createNodeImportMeta,
+} from 'vite/module-runner'
+    const data = specifier.slice(${JSON.stringify(customizationHookNamespace)}.length)
+    const [parsedSpecifier, parsedImporter] = JSON.parse(data)
+  '/import-meta': renderImportMeta,
+  createDefaultImportMeta,
+  createNodeImportMeta,
+} from './createImportMeta'
+  return nextResolve(specifier, context)
+}
+
+`
+import { posixDirname, posixPathToFileHref, posixResolve } from './utils'
+export async function createImportMetaResolver(): Promise<
+  ImportMetaResolver | undefined
+> {
+  let module: typeof import('node:module')
+  try {
+    module = (await import('node:module')).Module
+  } catch {
+    return
+    createImportMeta: createNodeImportMeta,
+  // `module.Module` may be `undefined` when `node:module` is mocked
+  if (!module?.register) {
+    createImportMeta: createNodeImportMeta,
+import { createDefaultImportMeta } from './createImportMeta'
+
+  try {
+    const hookModuleContent = `data:text/javascript,${encodeURI(customizationHooksModule)}`
+    module.register(hookModuleContent)
+  } catch (e) {
+    // For `--experimental-network-imports` flag that exists in Node before v22
+    if ('code' in e && e.code === 'ERR_NETWORK_IMPORT_DISALLOWED') {
+      return
+    }
+    throw e
+  }
+
+  return (specifier: string, importer: string) =>
+    import.meta.resolve(
+      `${customizationHookNamespace}${JSON.stringify([specifier, importer])}`,
+test(`import.meta.resolve is supported`, async () => {
+  await page.goto(`${url}/import-meta`)
+
+  const metaUrl = await page.textContent('.import-meta-url')
+  expect(metaUrl).not.toBe('')
+  expect(await page.textContent('.import-meta-resolve')).toBe(metaUrl)
+})
+
+  return {
+    ...defaultMeta,
+    resolve(id: string, parent?: string) {
+      const resolver = importMetaResolver ?? defaultMeta.resolve
+      return resolver(id, parent ?? href)
+    },
+  }
+}
+
+
+async function renderImportMeta(rootDir) {
+  const metaUrl = import.meta.url
+  const resolveResult = import.meta.resolve('./app.js')
+  return (
+    `<div class="import-meta-url">${escapeHtml(metaUrl)}</div>` +
+    `<div class="import-meta-resolve">${escapeHtml(resolveResult)}</div>`
+  )
+}
+  const importMetaResolver = await importMetaResolverCache
+  importMetaResolverCache ??= createImportMetaResolver()
+
+        createImportMeta: createNodeImportMeta,
+  const href = defaultMeta.url
+  const defaultMeta = createDefaultImportMeta(modulePath)
+}
+): Promise<ModuleRunnerImportMeta> {
+    )
+  modulePath: string,
+export async function createNodeImportMeta(
+ */
+ * Create import.meta object for Node.js.
+/**
+
+let importMetaResolverCache: Promise<ImportMetaResolver | undefined> | undefined
+
+}
+  }
+    },
+      )
+          `file transformation. Make sure to reference it by the full name.`,
+        `[module runner] "import.meta.glob" is statically replaced during ` +
+      throw new Error(
+    glob() {
+  }
+    // should be replaced during transformation
+    return
+    },
+      throw new Error('[module runner] "import.meta.resolve" is not supported.')
+    resolve(_id: string, _parent?: string) {
+  }
+    env: envProxy,
+    url: href,
+    dirname: isWindows ? toWindowsPath(dirname) : dirname,
+  /**
+   * Create import.meta object for the module.
+   *
+   * @default createDefaultImportMeta
+   */
+  createImportMeta?: (
+    modulePath: string,
+  ) => ModuleRunnerImportMeta | Promise<ModuleRunnerImportMeta>
+    filename: isWindows ? toWindowsPath(filename) : filename,
+  return {
+  const dirname = posixDirname(modulePath)
+  const filename = modulePath
+  const href = posixPathToFileHref(modulePath)
+): ModuleRunnerImportMeta {
+
+  modulePath: string,
+export function createDefaultImportMeta(
+
+})
+  },
+
+    )
+  }
+      `[module runner] Dynamic access of "import.meta.env" is not supported. Please, use "import.meta.env.${String(p)}" instead.`,
+    context.parentURL = parsedImporter
+      createImportMeta: createNodeImportMeta,
+    throw new Error(
+export {
+    specifier = parsedSpecifier
+  get(_, p) {
+const envProxy = new Proxy({} as any, {
+
+  if (specifier.startsWith(${JSON.stringify(customizationHookNamespace)})) {
+import { posixDirname, posixPathToFileHref, toWindowsPath } from './utils'
+export async function resolve(specifier, context, nextResolve) {
+import type { ModuleRunnerImportMeta } from './types'
+
+} from './importMetaResolver'
+import { ESModulesEvaluator, ModuleRunner, createNodeImportMeta } from 'vite/module-runner'
+import { ESModulesEvaluator, ModuleRunner, createNodeImportMeta } from 'vite/module-runner'
+const customizationHooksModule = /* js */ `
+  createImportMetaResolver,
+import { ModuleRunner, createNodeImportMeta } from 'vite/module-runner'
+import { cleanUrl, isPrimitive } from '../shared/utils'
+const customizationHookNamespace = 'vite-module-runner:import-meta-resolve/v1/'
+  type ImportMetaResolver,
+import {
+import { isWindows } from '../shared/utils'
+import {
+  ModuleRunner,
+  ESModulesEvaluator,
+  createNodeImportMeta,
+} from 'vite/module-runner'
 # 런타임을 위한 환경 API {#environment-api-for-runtimes}
 
-:::warning 실험적 기능
-환경 API는 실험적 기능입니다. 생태계가 충분히 검증하고 확장할 수 있도록 Vite 6에서는 API를 안정적으로 유지하고자 합니다. Vite 7에서 잠재적 주요 변경 사항과 함께 새로운 API를 안정화할 계획입니다.
+We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
+- [`this.environment` in Hooks](/changes/this-environment-in-hooks)
+- [HMR `hotUpdate` Plugin Hook](/changes/hotupdate-hook)
+    createImportMeta: createNodeImportMeta, // if the module runner runs in Node.js
+- [SSR Using `ModuleRunner` API](/changes/ssr-using-modulerunner)
+We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
+We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
 
-리소스:
+## DevEnvironment Communication Levels
 
-- [피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 새로운 API에 대한 피드백을 모으고 있습니다.
-- [환경 API PR](https://github.com/vitejs/vite/pull/16471)에서 새로운 API를 구현하고 검토했습니다.
-
-여러분의 피드백을 공유해주세요.
-:::
-
-## 환경 팩토리 {#environment-factories}
-
+Since environments may run in different runtimes, communication against the environment may have constraints depending on the runtime. To allow frameworks to write runtime agnostic code easily, the Environment API provides three kinds of communication levels.
+The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
+The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
+:::info Release Candidate
+:::info Release Candidate
+:::info Release Candidate
+:::info Release Candidate
 환경 팩토리는 일반적으로 Cloudflare와 같은 환경을 제공하는 쪽에서 구현하며, 이를 최종 사용자가 직접 작성하지는 않습니다. 환경 팩토리는 개발과 빌드 환경에서 사용할 런타임에 대한 일반적인 설정을 `EnvironmentOptions`로 반환합니다. 사용자가 직접 설정할 필요가 없도록 기본 환경 옵션도 구성할 수도 있습니다.
 
-```ts
-function createWorkerdEnvironment(
-  userConfig: EnvironmentOptions,
 ): EnvironmentOptions {
-  return mergeConfig(
     {
       resolve: {
         conditions: [
@@ -32,56 +192,6 @@ function createWorkerdEnvironment(
             hot: true,
             transport: customHotChannel(),
           })
-        },
-      },
-      build: {
-        createEnvironment(name, config) {
-          return createWorkerdBuildEnvironment(name, config)
-        },
-      },
-    },
-    userConfig,
-  )
-}
-```
-
-그러면 설정 파일은 다음과 같이 작성할 수 있습니다:
-
-```js
-import { createWorkerdEnvironment } from 'vite-environment-workerd'
-
-export default {
-  environments: {
-    ssr: createWorkerdEnvironment({
-      build: {
-        outDir: '/dist/ssr',
-      },
-    }),
-    rsc: createWorkerdEnvironment({
-      build: {
-        outDir: '/dist/rsc',
-      },
-    }),
-  },
-}
-```
-
-그리고 프레임워크는 다음과 같이 workerd 런타임을 사용하는 환경에서 SSR을 수행할 수 있습니다:
-
-```js
-const ssrEnvironment = server.environments.ssr
-```
-
-## 새로운 환경 팩토리 만들기 {#creating-a-new-environment-factory}
-
-Vite 개발 서버는 기본적으로 두 가지 환경을 제공합니다: `client` 환경과 `ssr` 환경입니다. 클라이언트 환경은 기본적으로 브라우저 환경이며, 이 때 모듈 실행기는 클라이언트 앱에 `/@vite/client` 가상 모듈을 가져와 구현됩니다. SSR 환경은 기본적으로 Vite 서버와 동일한 Node 런타임에서 실행되며, 개발 단계에서 완전한 HMR 지원과 함께 애플리케이션 서버를 사용해 요청을 렌더링할 수 있습니다.
-
-소스 코드가 변환된 결과물을 모듈이라고 하며, 각 환경에서 처리된 모듈 사이의 의존성 관계는 모듈 그래프에 저장됩니다. 이러한 모듈은 각 환경과 연결된 런타임으로 전송되어 실행됩니다. 그리고 런타임에서 모듈이 분석되면서 다른 모듈을 불러오는 요청이 발생하고, 이에 따라 모듈 그래프에서 관련 부분이 처리됩니다.
-
-Vite 모듈 실행기를 사용하면 Vite 플러그인으로 먼저 처리한 후 코드를 실행할 수 있습니다. 이 모듈 실행 환경은 Vite 서버와 분리되어 있으며, `server.ssrLoadModule`과는 다르게 동작합니다(`server.ssrLoadModule`은 Vite 서버 프로세스 내에서 직접 모듈을 실행 - 옮긴이). 이를 통해 라이브러리와 프레임워크 작성자가 Vite 서버와 실행기 간 통신 계층 구현이 가능합니다. 브라우저는 서버 웹소켓과 HTTP 요청을 통해 해당 환경과 통신하나, Node 모듈 실행기는 동일한 프로세스에서 실행되므로 모듈을 처리하기 위해 직접 함수를 호출할 수도 있습니다. 그 외 환경에서는 workerd나 Vitest처럼 Worker Thread와 같은 JS 런타임을 통해 모듈을 실행할 수 있습니다.
-
-이 기능의 목표 중 하나는 코드를 처리하고 실행하는 API를 사용자가 커스터마이즈할 수 있도록 하는 것입니다. 사용자는 Vite에서 제공하는 기본 구성 요소를 활용해 새로운 환경 팩토리를 만들 수 있습니다.
-
 ```ts
 import { DevEnvironment, HotChannel } from 'vite'
 
@@ -91,8 +201,6 @@ function createWorkerdDevEnvironment(
   context: DevEnvironmentContext
 ) {
   const connection = /* ... */
-  const transport: HotChannel = {
-    on: (listener) => { connection.on('message', listener) },
     send: (data) => connection.send(data),
   }
 
@@ -102,8 +210,6 @@ function createWorkerdDevEnvironment(
       ...context.options,
     },
     hot: true,
-    transport,
-  })
   return workerdDevEnvironment
 }
 ```
@@ -112,6 +218,7 @@ function createWorkerdDevEnvironment(
 
 모듈 실행기는 실행될 특정 런타임에서 인스턴스화됩니다. 다음 섹션의 모든 API는 별도의 언급이 없는 한 `vite/module-runner`에서 가져옵니다. 이 진입점은 모듈 실행기를 만드는 데 필요한 핵심 기능만 제공하며, 최대한 경량화되어 있습니다.
 
+The current Vite server API is not yet deprecated and is backward compatible with Vite 5.
 **타입 시그니처:**
 
 ```ts
@@ -119,9 +226,6 @@ export class ModuleRunner {
   constructor(
     public options: ModuleRunnerOptions,
     public evaluator: ModuleEvaluator = new ESModulesEvaluator(),
-    private debug?: ModuleRunnerDebugger,
-  ) {}
-  /**
    * 실행할 URL.
    * 파일 경로, 서버 경로 또는 루트를 기준으로 하는 ID를 받습니다.
    */
@@ -137,42 +241,69 @@ export class ModuleRunner {
   public async close(): Promise<void>
   /**
    * `close()`를 호출하여 실행기가 종료되었는지 여부를 반환합니다.
-   */
-  public isClosed(): boolean
-}
 ```
-
 `ModuleRunner`의 모듈 분석기는 코드를 실행하는 역할을 합니다. Vite는 기본적으로 `ESModulesEvaluator`를 제공하며, 이는 `new AsyncFunction`을 사용해 코드를 실행합니다. JavaScript 런타임이 안전하지 않은 실행을 지원하지 않는다면 직접 구현할 수도 있습니다.
-
+### `FetchableDevEnvironment`
 모듈 실행기는 `import` 메서드를 제공합니다. Vite 서버가 `full-reload` HMR 이벤트를 발생시키면 영향을 받는 모든 모듈이 다시 실행됩니다. 이때 모듈 실행기는 `exports` 객체를 업데이트하지 않고 덮어쓰므로, 최신 `exports` 객체가 필요한 경우 `import`를 다시 호출하거나 `evaluatedModules`에서 모듈을 다시 가져와야 합니다.
+:::info
 
+We are looking for feedback on [the `FetchableDevEnvironment` proposal](https://github.com/vitejs/vite/discussions/18191).
 **사용 예시:**
-
 ```js
-import { ModuleRunner, ESModulesEvaluator } from 'vite/module-runner'
+There are [multiple communication levels for the `DevEnvironment`](/guide/api-environment-frameworks#devenvironment-communication-levels). To make it easier for frameworks to write runtime agnostic code, we recommend to implement the most flexible communication level possible.
+
+`FetchableDevEnvironment` is an environment that can communicate with its runtime via the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch) interface. Since the `RunnableDevEnvironment` is only possible to implement in a limited set of runtimes, we recommend to use the `FetchableDevEnvironment` instead of the `RunnableDevEnvironment`.
+This environment provides a standardized way of handling requests via the `handleRequest` method:
 import { transport } from './rpc-implementation.js'
 
-const moduleRunner = new ModuleRunner(
-  {
-    transport,
+import {
+  createServer,
+  createFetchableDevEnvironment,
+  isFetchableDevEnvironment,
+} from 'vite'
+
+const server = await createServer({
+  server: { middlewareMode: true },
+  appType: 'custom',
+  environments: {
+    custom: {
+      dev: {
+        createEnvironment(name, config) {
+          return createFetchableDevEnvironment(name, config, {
+            handleRequest(request: Request): Promise<Response> | Response {
+              // handle Request and return a Response
+            },
+          })
+        },
+      },
+    },
   },
-  new ESModulesEvaluator(),
-)
-
-await moduleRunner.import('/src/entry-point.js')
-```
-
+})
 ## `ModuleRunnerOptions` {#modulerunneroptions}
-
-```ts twoslash
-import type {
-  InterceptorOptions as InterceptorOptionsRaw,
-  ModuleRunnerHmr as ModuleRunnerHmrRaw,
-  EvaluatedModules,
+// Any consumer of the environment API can now call `dispatchFetch`
+if (isFetchableDevEnvironment(server.environments.custom)) {
+  const response: Response = await server.environments.custom.dispatchFetch(
+import {
+  ESModulesEvaluator,
+  ModuleRunner,
+  createNodeImportMeta,
+} from 'vite/module-runner'
+    new Request('/request-to-handle'),
+  )
 } from 'vite/module-runner'
 import type { Debug } from '@type-challenges/utils'
 
+:::warning
+Vite validates the input and output of the `dispatchFetch` method: the request must be an instance of the global `Request` class and the response must be the instance of the global `Response` class. Vite will throw a `TypeError` if this is not the case.
+
+Note that although the `FetchableDevEnvironment` is implemented as a class, it is considered an implementation detail by the Vite team and might change at any moment.
+:::
+### raw `DevEnvironment`
+
+If the environment does not implement the `RunnableDevEnvironment` or `FetchableDevEnvironment` interfaces, you need to set up the communication manually.
+
 type InterceptorOptions = Debug<InterceptorOptionsRaw>
+    createImportMeta: createNodeImportMeta,
 type ModuleRunnerHmr = Debug<ModuleRunnerHmrRaw>
 /** see below */
 type ModuleRunnerTransport = unknown
@@ -192,15 +323,13 @@ interface ModuleRunnerOptions {
    * 설정하기 위해 객체를 전달할 수 있습니다.
    */
   sourcemapInterceptor?:
-    | false
-    | 'node'
-    | 'prepareStackTrace'
+if (ssrEnvironment instanceof CustomDevEnvironment) {
     | InterceptorOptions
   /**
    * HMR을 비활성화하거나 HMR 옵션을 설정합니다.
-   *
    * @default true
    */
+In a future major, we could have complete alignment:
   hmr?: boolean | ModuleRunnerHmr
   /**
    * 커스텀 모듈 캐시입니다. 전달하지 않으면 모듈 실행기 인스턴스마다
@@ -210,9 +339,13 @@ interface ModuleRunnerOptions {
 }
 ```
 
+    const createImportMeta =
+      this.options.createImportMeta ?? createDefaultImportMeta
+
 ## `ModuleEvaluator` {#moduleevaluator}
 
 **타입 시그니처:**
+    const meta = await createImportMeta(modulePath)
 
 ```ts twoslash
 import type { ModuleRunnerContext as ModuleRunnerContextRaw } from 'vite/module-runner'
@@ -294,7 +427,6 @@ const runner = new ModuleRunner(
   new ESModulesEvaluator(),
 )
 ```
-
 ```js [server.js]
 import { BroadcastChannel } from 'node:worker_threads'
 import { createServer, RemoteEnvironmentTransport, DevEnvironment } from 'vite'
@@ -370,25 +502,5 @@ export const runner = new ModuleRunner(
   new ESModulesEvaluator(),
 )
 
-await runner.import('/entry.js')
-```
-
-이 경우 `NormalizedHotChannel`의 `handleInvoke` 메서드를 사용할 수 있습니다:
-
-```ts
-const customEnvironment = new DevEnvironment(name, config, context)
-
-server.onRequest((request: Request) => {
-  const url = new URL(request.url)
-  if (url.pathname === '/invoke') {
-    const payload = (await request.json()) as HotPayload
-    const result = customEnvironment.hot.handleInvoke(payload)
-    return new Response(JSON.stringify(result))
-  }
-  return Response.error()
-})
-```
-
-단, HMR을 지원하려면 `send`와 `connect` 메서드가 필요합니다. `send` 메서드는 일반적으로 커스텀 이벤트가 발생할 때 호출됩니다(예: `import.meta.hot.send("my-event")`).
 
 Vite는 Vite SSR에서 HMR을 지원하기 위해 메인 진입점에서 `createServerHotChannel`을 제공합니다.

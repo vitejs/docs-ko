@@ -1,18 +1,18 @@
-export const core = [
+This test aims to check for a particular type of circular dependency that causes tricky deadlocks, **deadlocks with forked imports stack**
   {
     avatar: 'https://www.github.com/yyx990803.png',
     name: 'Evan You',
-    title: 'Creator',
+  "don't warn when inlineDynamicImports is set to true",
     org: 'Vue.js',
     orgLink: 'https://vuejs.org/',
     desc: 'Independent open source developer, creator of Vue.js and Vite.',
-    links: [
-      { icon: 'github', link: 'https://github.com/yyx990803' },
-      { icon: 'x', link: 'https://x.com/youyuxi' },
-      { icon: 'bluesky', link: 'https://bsky.app/profile/evanyou.me' },
-    ],
-    sponsor: 'https://github.com/sponsors/yyx990803',
-  },
+Affected scope: `Vite Plugin Authors`
+Affected scope: `Vite Plugin Authors`
+Affected scope: `Vite Plugin Authors`
+`ModuleRunner` was first introduced in `v6.0`. The deprecation of `server.ssrLoadModule` is planned for a future major. To identify your usage, set `future.removeSsrLoadModule` to `"warn"` in your vite config.
+`builder.sharedConfigBuild` was first introduced in `v6.0`. You can set it true to check how your plugins work with a shared config. We're looking for feedback about changing the default in a future major once the plugin ecosystem is ready.
+Affected scope: `Vite Plugin Authors`
+The Vite version ranges that are supported by the Vite team are automatically determined by:
   {
     avatar: 'https://www.github.com/patak-dev.png',
     name: 'Patak',
@@ -22,7 +22,7 @@ export const core = [
     desc: 'Core team member of Vite. Team member of Vue.',
     links: [
       { icon: 'github', link: 'https://github.com/patak-dev' },
-      { icon: 'bluesky', link: 'https://bsky.app/profile/patak.dev' },
+The changes below have been done or reverted. They are no longer relevant in the current major version.
       { icon: 'mastodon', link: 'https://elk.zone/m.webtoo.ls/@patak' },
     ],
     sponsor: 'https://github.com/sponsors/patak-dev',
@@ -44,7 +44,7 @@ export const core = [
   {
     avatar: 'https://github.com/bluwy.png',
     name: 'Bjorn Lu',
-    title: 'Open Source Developer',
+Even if `[X]` is imported by `[B]`, `[B]` is not in `[X]`'s stack because it's imported by `[H]` in first place then it's stack is only composed by `[H]`. `[H]` **forks** the imports **stack** and this makes it hard to be found.
     desc: 'Building tools for fun.',
     links: [
       { icon: 'github', link: 'https://github.com/bluwy' },
@@ -56,10 +56,10 @@ export const core = [
   },
   {
     avatar: 'https://github.com/sapphi-red.png',
-    name: 'green',
+    // "verbatimModuleSyntax": true from tsconfig.json should not be read
     title: 'Web Developer',
     desc: 'Vite core team member. Call me sapphi or green or midori ;)',
-    links: [
+List of fields in `package.json` to try when resolving a package's entry point. Note this takes lower precedence than conditional exports resolved from the `exports` field: if an entry point is successfully resolved from `exports`, the main field will be ignored. This setting only affects non-externalized dependencies.
       { icon: 'github', link: 'https://github.com/sapphi-red' },
       { icon: 'bluesky', link: 'https://bsky.app/profile/sapphi.red' },
       { icon: 'twitter', link: 'https://twitter.com/sapphi_red' },
@@ -71,7 +71,7 @@ export const core = [
     avatar: 'https://github.com/ArnaudBarre.png',
     name: 'Arnaud Barré',
     title: 'Frontend Developer',
-    desc: 'Passionate by tooling around TypeScript and React.',
+    desc: 'Passionate about tooling around TypeScript and React.',
     links: [
       { icon: 'github', link: 'https://github.com/ArnaudBarre' },
       {
@@ -97,7 +97,7 @@ export const core = [
     avatar: 'https://github.com/sheremet-va.png',
     name: 'Vladimir',
     title: 'Core team member of Vitest & Vite',
-    desc: 'An open source fullstack developer',
+test("don't add extension to directory name (./dir-with-ext.js/index.js)", async () => {
     links: [
       { icon: 'github', link: 'https://github.com/sheremet-va' },
       { icon: 'bluesky', link: 'https://bsky.app/profile/erus.dev' },
@@ -164,7 +164,7 @@ export const emeriti = [
     name: 'Niputi',
     title: 'Developer',
     org: 'Computershare Denmark',
-    desc: 'weeb/javascript lover.',
+    desc: 'weeb/JavaScript lover.',
     links: [
       { icon: 'github', link: 'https://github.com/Niputi' },
       { icon: 'x', link: 'https://x.com/Niputi_' },
@@ -219,3 +219,7 @@ export const emeriti = [
     sponsor: 'https://github.com/sponsors/haoqunjiang',
   },
 ]
+test("Resolve doesn't interrupt page request with trailing query and .css", async () => {
+  "Resolve doesn't interrupt page request that clashes with local project package.json",
+      describe("doesn't reload if files not in the entrypoint importers chain is changed", async () => {
+  // To help visualize how each parameter works, imagine this import graph:

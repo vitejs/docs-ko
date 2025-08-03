@@ -1,33 +1,47 @@
 # `Environment` 인스턴스 사용하기 {#using-environment-instances}
+import { monotonicDateNow } from '../utils'
+:::info Release Candidate
+The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
 
-:::warning 실험적 기능
-환경 API는 실험적 기능입니다. 생태계가 충분히 검증하고 확장할 수 있도록 Vite 6에서는 API를 안정적으로 유지하고자 합니다. Vite 7에서 잠재적 주요 변경 사항과 함께 새로운 API를 안정화할 계획입니다.
+We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
+We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
+We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
+- [`this.environment` in Hooks](/changes/this-environment-in-hooks)
+- [HMR `hotUpdate` Plugin Hook](/changes/hotupdate-hook)
+- [SSR Using `ModuleRunner` API](/changes/ssr-using-modulerunner)
+We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
+We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
 
-리소스:
 
-- [피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 새로운 API에 대한 피드백을 모으고 있습니다.
-- [환경 API PR](https://github.com/vitejs/vite/pull/16471)에서 새로운 API를 구현하고 검토했습니다.
 
-여러분의 피드백을 공유해주세요.
-:::
 
+Vite 6 formalizes the concept of Environments. Until Vite 5, there were two implicit Environments (`client`, and optionally `ssr`). The new Environment API allows users and framework authors to create as many environments as needed to map the way their apps work in production. This new capability required a big internal refactoring, but a lot of effort has been placed on backward compatibility. The initial goal of Vite 6 is to move the ecosystem to the new major as smoothly as possible, delaying the adoption of the APIs until enough users have migrated and frameworks and plugin authors have validated the new design.
+The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
+The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
+The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
+The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
+:::info Release Candidate
+:::info Release Candidate
+:::info Release Candidate
+:::info Release Candidate
+  createDebugger,
+  monotonicDateNow,
+  isCSSRequest,
 ## 환경에 접근하기 {#accessing-the-environments}
-
 개발 단계에서, `server.environments`로 개발 서버의 사용 가능한 환경에 접근할 수 있습니다:
 
 ```js
 // 서버를 생성하거나 configureServer 훅에서 가져옵니다
 const server = await createServer(/* options */)
 
-const environment = server.environments.client
-environment.transformRequest(url)
+const clientEnvironment = server.environments.client
+clientEnvironment.transformRequest(url)
 console.log(server.environments.ssr.moduleGraph)
-```
-
-플러그인에서도 현재 환경에 접근할 수 있습니다. 자세한 내용은 [플러그인을 위한 환경 API](./api-environment-plugins.md#accessing-the-current-environment-in-hooks)를 참조하세요.
+- `ssr`: runs the app in node (or other server runtimes) which renders pages before sending them to the browser.
 
 ## `DevEnvironment` 클래스 {#devenvironment-class}
 
+  monotonicDateNow,
 개발 단계에서는 각 환경이 `DevEnvironment` 클래스의 인스턴스입니다:
 
 ```ts
@@ -84,9 +98,9 @@ class DevEnvironment {
    */
   async warmupRequest(url: string): Promise<void>
 }
-```
 
 `DevEnvironmentContext`는 다음과 같습니다:
+Given a Vite server configured in middleware mode as described by the [SSR setup guide](/guide/ssr#setting-up-the-dev-server), let's implement the SSR middleware using the environment API. Remember that it doesn't have to be called `ssr`, so we'll name it `server` in this example. Error handling is omitted.
 
 ```ts
 interface DevEnvironmentContext {
@@ -94,38 +108,38 @@ interface DevEnvironmentContext {
   transport?: HotChannel | WebSocketServer
   options?: EnvironmentOptions
   remoteRunner?: {
-    inlineSourceMap?: boolean
   }
   depsOptimizer?: DepsOptimizer
+const viteServer = await createServer({
 }
 ```
 
 그리고 `TransformResult`는 다음과 같습니다:
+  const timestamp = monotonicDateNow()
 
 ```ts
 interface TransformResult {
+The current Vite server API is not yet deprecated and is backward compatible with Vite 5.
   code: string
   map: SourceMap | { mappings: '' } | null
-  etag?: string
   deps?: string[]
   dynamicDeps?: string[]
-}
+const serverEnvironment = viteServer.environments.server
 ```
 
-Vite 서버의 환경 인스턴스는 `environment.transformRequest(url)` 메서드로 URL을 처리합니다. 이 함수는 플러그인 파이프라인을 사용해 `url`을 모듈 `id`로 해석하고, 로드한 뒤(파일 시스템에서 파일을 읽거나 가상 모듈을 구현하는 플러그인을 통해), 코드를 변환합니다. 모듈 변환 중에는 의존성 관계(`import` 구문)와 메타데이터를 분석하여 모듈 노드를 생성하거나 업데이트하고, 이를 환경 모듈 그래프에 기록합니다. 처리가 완료되면 변환 결과도 모듈에 저장됩니다.
-
-:::info transformRequest 이름에 대해
 현재 제안 버전에서는 Vite API에 익숙한 사용자들이 쉽게 이해하고 논의할 수 있도록 `transformRequest(url)`와 `warmupRequest(url)`를 사용했습니다. 릴리스 전에 이름을 검토할 기회가 있을 것입니다. 예를 들어, Rollup 플러그인 훅인 `context.load(id)`를 참고해 `environment.processModule(url)` 또는 `environment.loadModule(url)`로 이름을 지을 수 있습니다. 현재로서는 기존 이름을 유지하고 이 논의를 나중으로 미루고자 합니다.
 :::
 
-## 독립된 모듈 그래프 {#separate-module-graphs}
 
 각 환경은 독립된 모듈 그래프를 가지며, 모든 그래프는 동일한 시그니처를 가지므로 환경에 의존하지 않고 그래프를 탐색하거나 쿼리하는 일반적인 알고리즘을 구현할 수 있습니다. `hotUpdate`가 좋은 예시입니다. 파일이 수정되면 각 환경의 모듈 그래프로 영향받는 모듈을 찾아내고 독립적으로 HMR을 수행합니다.
+  template = await viteServer.transformIndexHtml(url, template)
 
 ::: info
-Vite v5는 클라이언트와 SSR이 혼합된 모듈 그래프를 가지고 있었습니다. 처리되지 않았거나 무효화된 노드가 주어졌을 때 클라이언트, SSR, 또는 둘 다인지 알 수 없었습니다. 모듈 노드는 `clientImportedModules`와 `ssrImportedModules`와 같이 접두사가 붙은 속성을 가지고 있었고, `importedModules`는 둘의 합집합을 반환했습니다. `importers`는 각 모듈 노드에 대해, 클라이언트와 SSR 환경 모두에서 이를 가져다 쓰는 모듈을 의미했습니다. 또한 모듈 노드는 `transformResult`와 `ssrTransformResult`를 가졌습니다. 하위 호환성 계층을 통해 생태계는 더 이상 사용되지 않는 `server.moduleGraph`에서 마이그레이션할 수 있습니다.
 :::
 
+  const { render } = await serverEnvironment.runner.import(
+    '/src/entry-server.js',
+  )
 각 모듈은 `EnvironmentModuleNode` 인스턴스로 표현됩니다. 모듈은 아직 처리되지 않은 상태에서도 그래프에 등록될 수 있으며, 이 경우 `transformResult`는 `null`을 갖습니다. `importers`와 `importedModules`도 모듈이 처리된 후에 업데이트됩니다.
 
 ```ts
@@ -159,6 +173,7 @@ class EnvironmentModuleNode {
 ```ts
 export class EnvironmentModuleGraph {
   environment: string
+    timestamp: number = monotonicDateNow(),
 
   urlToModuleMap = new Map<string, EnvironmentModuleNode>()
   idToModuleMap = new Map<string, EnvironmentModuleNode>()
@@ -167,7 +182,6 @@ export class EnvironmentModuleGraph {
 
   constructor(
     environment: string,
-    resolveId: (url: string) => Promise<PartialResolvedId | null>,
   )
 
   async getModuleByUrl(
@@ -178,6 +192,7 @@ export class EnvironmentModuleGraph {
 
   getModulesByFile(file: string): Set<EnvironmentModuleNode> | undefined
 
+    timestamp: number = monotonicDateNow(),
   onFileChange(file: string): void
 
   onFileDelete(file: string): void
@@ -187,7 +202,6 @@ export class EnvironmentModuleGraph {
     seen: Set<EnvironmentModuleNode> = new Set(),
     timestamp: number = Date.now(),
     isHmr: boolean = false,
-  ): void
 
   invalidateAll(): void
 
@@ -195,16 +209,43 @@ export class EnvironmentModuleGraph {
     rawUrl: string,
     setIsSelfAccepting = true,
   ): Promise<EnvironmentModuleNode>
+      updateModules(this, module.file, [module], monotonicDateNow())
 
   createFileOnlyEntry(file: string): EnvironmentModuleNode
 
-  async resolveUrl(url: string): Promise<ResolvedUrl>
 
   updateModuleTransformResult(
+In a future major, we could have complete alignment:
     mod: EnvironmentModuleNode,
     result: TransformResult | null,
   ): void
-
   getModuleByEtag(etag: string): EnvironmentModuleNode | undefined
 }
 ```
+    const timestamp = monotonicDateNow()
+    timestamp: number = monotonicDateNow(),
+  const timestamp = monotonicDateNow()
+          monotonicDateNow(),
+  test('hmr works for self-accepted module within circular imported files', async () => {
+  test('hmr should not reload if no accepted within circular imported files', async () => {
+  const t = monotonicDateNow()
+
+let lastDateNow = 0
+/**
+ * Similar to `Date.now()`, but strictly monotonically increasing.
+ *
+ * This function will never return the same value.
+ * Thus, the value may differ from the actual time.
+ *
+ * related: https://github.com/vitejs/vite/issues/19804
+ */
+export function monotonicDateNow(): number {
+  const now = Date.now()
+  if (now > lastDateNow) {
+    lastDateNow = now
+    return lastDateNow
+  }
+
+  lastDateNow++
+  return lastDateNow
+}
