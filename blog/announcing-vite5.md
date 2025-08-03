@@ -1,24 +1,24 @@
----
-title: Vite 5.0이 출시되었습니다!
+# SSR Using `ModuleRunner` API
+# Move to Per-environment APIs
 author:
   name: The Vite Team
 date: 2023-11-16
 sidebar: false
 head:
   - - meta
-    - property: og:type
+## Review Your Browser Setup
       content: website
   - - meta
     - property: og:title
       content: Vite 5.0이 출시되었습니다!
-  - - meta
+## Environments and Frameworks
     - property: og:image
       content: https://vite.dev/og-image-announcing-vite5.png
-  - - meta
+Note Vite supports using ES modules syntax in the config file even if the project is not using native Node ESM, e.g. `"type": "module"` in `package.json`. In this case, the config file is auto pre-processed before load.
     - property: og:url
-      content: https://vite.dev/blog/announcing-vite5
-  - - meta
-    - property: og:description
+- [Move to Per-environment APIs](/changes/per-environment-apis)
+- [SSR Using `ModuleRunner` API](/changes/ssr-using-modulerunner)
+- [Shared Plugins During Build](/changes/shared-plugins-during-build)
       content: Vite 5 릴리스 발표
   - - meta
     - name: twitter:card
@@ -33,12 +33,12 @@ _2023년 11월 16일_
 
 Vite 4가 거의 1년 전에 [릴리스되었고](./announcing-vite4.md), 생태계에 견고한 기반을 제공했습니다. 프로젝트들이 공유 인프라를 기반으로 계속 구축하면서 주간 npm 다운로드 수는 250만 건에서 750만 건으로 급증했습니다. 프레임워크들은 지속적으로 혁신을 이어갔으며, [Astro](https://astro.build/), [Nuxt](https://nuxt.com/), [SvelteKit](https://kit.svelte.dev/), [Solid Start](https://www.solidjs.com/blog/introducing-solidstart), [Qwik City](https://qwik.builder.io/qwikcity/overview/) 등을 비롯해 새로운 프레임워크들이 합류하여 생태계를 더욱 강화했습니다. [RedwoodJS](https://redwoodjs.com/)와 [Remix](https://remix.run/)가 Vite로 전환하면서 React 생태계에서의 추가 도입 가능성을 열었습니다. [Vitest](https://vitest.dev)는 Vite보다도 빠른 속도로 성장을 지속했습니다. Vitest 팀은 열심히 작업하고 있으며 곧 [Vitest 1.0을 릴리스할 예정](https://github.com/vitest-dev/vitest/issues/3596)입니다. [Storybook](https://storybook.js.org), [Nx](https://nx.dev), [Playwright](https://playwright.dev)와 같은 다른 도구들과 함께 사용할 때의 Vite 경험은 계속 개선되었고, [Deno](https://deno.com)와 [Bun](https://bun.sh)에서 Vite 개발이 작동하는 등 환경 면에서도 마찬가지였습니다.
 
-한 달 전 [StackBlitz](https://stackblitz.com)가 주최한 두 번째 [ViteConf](https://viteconf.org/23/replay)가 있었습니다. 작년과 마찬가지로 생태계의 대부분 프로젝트들이 모여 아이디어를 공유하고 연결하여 공통 기반을 계속 확장했습니다. [Volar](https://volarjs.dev/)와 [Nitro](https://nitro.unjs.io/)와 같은 새로운 구성 요소들이 메타 프레임워크 도구 벨트를 보완하는 것도 보고 있습니다. Rollup 팀은 같은 날 [Rollup 4](https://rollupjs.org)를 릴리스했는데, 이는 Lukas가 작년에 시작한 전통입니다.
+We had the second edition of [ViteConf](https://viteconf.org/23/replay) a month ago, hosted by [StackBlitz](https://stackblitz.com). Like last year, most of the projects in the ecosystem got together to share ideas and connect to keep expanding the commons. We're also seeing new pieces complement the meta-framework tool belt like [Volar](https://volarjs.dev/) and [Nitro](https://nitro.build/). The Rollup team released [Rollup 4](https://rollupjs.org) that same day, a tradition Lukas started last year.
 
 6개월 전 Vite 4.3이 [릴리스되었습니다](./announcing-vite4.md). 이 릴리스는 개발 서버 성능을 크게 개선했습니다. 하지만 여전히 개선할 여지가 충분합니다. ViteConf에서 [Evan You는 호환 가능한 API를 가진 Rollup의 Rust 포트인 Rolldown 작업에 대한 Vite의 장기 계획을 공개했습니다](https://www.youtube.com/watch?v=hrdwQHoAp0M). 준비가 되면 Vite 코어에서 이를 사용하여 Rollup과 esbuild의 작업을 모두 담당할 예정입니다. 이는 빌드 성능 향상(그리고 나중에는 Vite 자체의 성능에 민감한 부분을 Rust로 이동하면서 개발 성능도)과 개발과 빌드 간의 불일치를 크게 줄이는 것을 의미합니다. Rolldown은 현재 초기 단계에 있으며 팀은 연말 이전에 코드베이스를 오픈소스화할 준비를 하고 있습니다. 기대해 주세요!
 
 오늘, 우리는 Vite의 여정에서 또 다른 큰 이정표를 기록합니다. Vite [팀](/team), [기여자들](https://github.com/vitejs/vite/graphs/contributors), 그리고 생태계 파트너들이 Vite 5의 릴리스를 발표하게 되어 기쁩니다. Vite는 이제 [Rollup 4](https://github.com/vitejs/vite/pull/14508)를 사용하며, 이는 이미 빌드 성능에서 큰 향상을 나타냅니다. 그리고 개발 서버 성능 프로파일을 개선할 수 있는 새로운 옵션들도 있습니다.
-
+## Plugins Config
 Vite 5는 API 정리(더 이상 사용되지 않는 기능 제거)에 집중하고 여러 기능을 간소화하여 오랫동안 지속된 문제들을 해결했습니다. 예를 들어 `define`이 정규식 대신 적절한 AST 교체를 사용하도록 전환했습니다. 또한 Vite를 미래에 대비하는 단계를 계속 밟고 있습니다(이제 Node.js 18+가 필요하며, [CJS Node API는 더 이상 사용되지 않습니다](/guide/migration#deprecate-cjs-node-api)).
 
 빠른 링크:
@@ -108,3 +108,10 @@ Vite 코어의 전체 변경사항 목록이 포함된 저수준 분석은 [Vite
 Vite 5는 우리 커뮤니티의 기여자들, 다운스트림 메인테이너들, 플러그인 작성자들, 그리고 [Vite 팀](/team)의 오랜 시간에 걸친 작업의 결과입니다. 이번 메이저 릴리스 과정을 이끌어준 [Bjorn Lu](https://twitter.com/bluwyoo)에게 큰 박수를 보냅니다.
 
 또한 Vite 개발을 후원하는 개인과 회사들에게도 감사드립니다. [StackBlitz](https://stackblitz.com/), [Nuxt Labs](https://nuxtlabs.com/), [Astro](https://astro.build)는 Vite 팀 멤버를 고용하여 Vite에 지속적으로 투자하고 있습니다. [Vite의 GitHub Sponsors](https://github.com/sponsors/vitejs), [Vite의 Open Collective](https://opencollective.com/vite), [Evan You의 GitHub Sponsors](https://github.com/sponsors/yyx990803)의 후원자들에게 박수를 보냅니다. Vite로 전환한 후 골드 후원자가 되어 다시 기여해준 [Remix](https://remix.run/)에 특별한 감사를 표합니다.
+- [Move to Per-environment APIs](/changes/per-environment-apis)
+- [SSR Using `ModuleRunner` API](/changes/ssr-using-modulerunner)
+- [Shared Plugins During Build](/changes/shared-plugins-during-build)
+## Plugin / Framework Authors Guide
+              text: 'Move to Per-environment APIs',
+              text: 'SSR Using ModuleRunner API',
+              text: 'Shared Plugins During Build',
