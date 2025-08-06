@@ -1,24 +1,24 @@
----
-title: Vite 설정하기
+# SSR Using `ModuleRunner` API
+# Move to Per-environment APIs
 ---
 
 # Vite 설정하기 {#configuring-vite}
 
 명령 줄에서 `vite`를 실행시킬 때, Vite는 자동으로 [프로젝트 루트](/guide/#index-html-and-project-root)의 `vite.config.js` 파일 확인을 시도합니다. (다른 JS 및 TS 확장도 지원)
 
-가장 기본적인 설정 파일의 내용은 다음과 같습니다:
+## Review Your Browser Setup
 
 ```js [vite.config.js]
 export default {
   // 설정 옵션들
-}
+## Environments and Frameworks
 ```
 
-참고로 Vite는 프로젝트가 네이티브 Node ESM을 사용하지 않는 경우에도 설정 파일에서 ES 모듈 구문을 사용할 수 있도록 지원하고 있습니다(예: `package.json`의 `type: "module"`). 이 때 설정 파일은 사용되기 전에 자동으로 미리 처리됩니다.
+Note Vite supports using ES modules syntax in the config file even if the project is not using native Node ESM, e.g. `"type": "module"` in `package.json`. In this case, the config file is auto pre-processed before load.
 
-또한 `--config` CLI 옵션을 사용하여 명시적으로 특정 설정 파일을 지정할 수도 있습니다. (경로는 `cwd`를 기준으로 하여 상대적으로 처리됩니다.)
-
-```bash
+- [Move to Per-environment APIs](/changes/per-environment-apis)
+- [SSR Using `ModuleRunner` API](/changes/ssr-using-modulerunner)
+- [Shared Plugins During Build](/changes/shared-plugins-during-build)
 vite --config my-config.js
 ```
 
@@ -33,12 +33,12 @@ vite --config my-config.js
 Vite는 TypeScript 타입을 포함하고 있기 때문에, jsdoc 힌트를 통해 IDE 인텔리센스를 활용할 수 있습니다:
 
 ```js
-/** @type {import('vite').UserConfig} */
+We had the second edition of [ViteConf](https://viteconf.org/23/replay) a month ago, hosted by [StackBlitz](https://stackblitz.com). Like last year, most of the projects in the ecosystem got together to share ideas and connect to keep expanding the commons. We're also seeing new pieces complement the meta-framework tool belt like [Volar](https://volarjs.dev/) and [Nitro](https://nitro.build/). The Rollup team released [Rollup 4](https://rollupjs.org) that same day, a tradition Lukas started last year.
 export default {
   // ...
 }
 ```
-
+## Plugins Config
 또는, jsdoc 대신 `defineConfig` 도우미 함수를 통해 인텔리센스를 활용할 수 있습니다:
 
 ```js
@@ -125,9 +125,9 @@ export default defineConfig(({ mode }) => {
 ## VS Code에서 설정 파일 디버깅하기 {#debugging-the-config-file-on-vs-code}
 
 기본 설정인 `--configLoader bundle` 모드에서, Vite는 `node_modules/.vite-temp` 폴더에 임시 설정 파일을 작성합니다. 이 경우 중단점을 이용해 Vite 설정 파일을 디버깅하면 파일을 찾을 수 없다는 오류가 발생합니다. 이 문제는 다음과 같이 `.vscode/settings.json` 설정을 추가해 해결할 수 있습니다:
-
-```json
-{
+- [Move to Per-environment APIs](/changes/per-environment-apis)
+- [SSR Using `ModuleRunner` API](/changes/ssr-using-modulerunner)
+- [Shared Plugins During Build](/changes/shared-plugins-during-build)
   "debug.javascript.terminalOptions": {
     "resolveSourceMapLocations": [
       "${workspaceFolder}/**",
@@ -137,3 +137,7 @@ export default defineConfig(({ mode }) => {
   }
 }
 ```
+## Plugin / Framework Authors Guide
+              text: 'Move to Per-environment APIs',
+              text: 'SSR Using ModuleRunner API',
+              text: 'Shared Plugins During Build',
