@@ -1,33 +1,59 @@
+import { getCompatibleVersions } from 'baseline-browser-mapping'
+
+// Update on each major release
+const targetDate = '2025-05-01'
+
+// https://esbuild.github.io/api/#target
+const esbuildSupportedBrowsers = new Set([
+  'chrome',
+  'edge',
+  'firefox',
+  'safari',
+])
+
+const results = getCompatibleVersions({
+  widelyAvailableOnDate: targetDate,
+})
+
+const esbuildTargets = results
+  .filter((target) => esbuildSupportedBrowsers.has(target.browser))
+  .map((target) => `${target.browser}${target.version}`)
+
+console.log('ESBuild Targets:', esbuildTargets)
+- Safari >=16
+- Firefox >=104
+For production builds, Vite by default targets [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available browsers. These are browsers that were released at least 2.5 years ago. The target can be lowered via configuration. Additionally, legacy browsers can be supported via the official [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy). See the [Building for Production](./build) section for more details.
+- Edge >=107
+- Chrome >=107
+import {
+  ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET,
+  METADATA_FILENAME,
+} from '../constants'
+  ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET,
+Browser compatibility target for the final bundle. The default value is a Vite special value, `'baseline-widely-available'`, which targets browsers that are included in the [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available on 2025-05-01. Specifically, it is `['chrome107', 'edge107', 'firefox104', 'safari16']`.
+<!-- Search for the `ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET` constant for more information -->
+- **Default:** `'baseline-widely-available'`
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+By default, the production bundle assumes a modern browser that is included in the [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available targets. The default browser support range is:
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "target": "ES2022",
+    "target": "ES2022",
+    "target": "ES2022",
+    "target": "ES2022",
+    "target": "ES2022",
+    "target": "ES2022",
+    "target": "ES2022",
 # 프로덕션 빌드 {#building-for-production}
 
-앱을 어느정도 완성하셨나요? 프로덕션으로 빌드하고자 한다면 `vite build` 명령을 실행해주세요. 빌드 시 기본적으로 `<root>/index.html` 파일이 빌드를 위한 진입점으로 사용되며, 정적 호스팅을 위한 형태로 진행됩니다. 추가적으로, GitHub Pages와 같은 정적 호스팅 서비스를 위한 빌드 방법을 알고싶다면 [정적 웹 페이지로 배포하기](./static-deploy) 섹션을 참고해주세요.
 
-## 브라우저 지원 현황 {#browser-compatibility}
 
-기본적으로 프로덕션 빌드는 [네이티브 ES 모듈](https://caniuse.com/es6-module), [네이티브 ESM 동적 임포트](https://caniuse.com/es6-module-dynamic-import), [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta), [null 병합 연산자](https://caniuse.com/mdn-javascript_operators_nullish_coalescing), 그리고 [BigInt](https://caniuse.com/bigint)와 같은 모던 JavaScript를 지원하는 환경에서 동작한다고 가정합니다. 아래는 별다른 설정을 하지 않은 경우 지원하는 브라우저 범위입니다:
-
-<!-- Search for the `ESBUILD_MODULES_TARGET` constant for more information -->
-
-- Chrome >=87
-- Firefox >=78
-- Safari >=14
-- Edge >=88
-
-타깃을 직접 지정하고자 한다면 [`build.target` 설정](/config/build-options.md#build-target)을 이용할 수 있습니다. 다만 가장 낮은 타깃은 `es2015` 이며, 이보다 더 낮은 타깃으로 설정하더라도 Vite는 최소한 [네이티브 ESM 동적 임포트](https://caniuse.com/es6-module-dynamic-import)와 [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta)를 지원하는 브라우저에서 동작한다고 가정합니다:
-
-<!-- Search for the `defaultEsbuildSupported` constant for more information -->
-
-- Chrome >=64
-- Firefox >=67
-- Safari >=11.1
-- Edge >=79
-
-알아두어야 할 사항은, Vite는 오로지 구문 변환만 진행할 뿐 **기본적으로 폴리필을 다루지 않는다는 점** 입니다. 만약 폴리필이 필요하다면, 브라우저 User Agent를 기반으로 폴리필 번들을 생성해 주는 https://cdnjs.cloudflare.com/polyfill/ 을 이용해 주세요.
-
+  ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET,
 레거시 브라우저의 경우 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) 플러그인을 이용할 수 있습니다. 이 플러그인을 사용하면 자동으로 레거시 버전에 대한 청크를 생성하게 되고, 이를 통해 레거시 브라우저 또한 Vite으로 빌드된 앱을 이용할 수 있게 됩니다. 참고로, 생성된 레거시 청크는 브라우저가 ESM을 지원하지 않는 경우에만 불러오게 됩니다.
-
 ## Public Base Path {#public-base-path}
-
 - [에셋 가져오기](./assets) 섹션과 관련이 있는 내용입니다.
 
 만약 배포하고자 하는 디렉터리가 루트 디렉터리가 아닌가요? 간단히 [`base` 설정](/config/shared-options.md#base)을 이용해 프로젝트의 루트가 될 디렉터리를 명시해 줄 수 있습니다. 또는 `vite build --base=/my/public/path` 명령과 같이 커맨드 라인에서도 지정이 가능합니다.
@@ -38,7 +64,20 @@ JS(`import`), CSS(`url()`), 그리고 `.html` 파일에서 참조되는 에셋 �
 
 더욱 상세한 설정이 필요하다면 [Base 옵션 상세 설정](#advanced-base-options) 섹션을 참고해주세요.
 
+/**
+ * The browser versions that are included in the Baseline Widely Available on 2025-05-01.
+ *
+ * This value would be bumped on each major release of Vite.
+ *
+ * The value is generated by `pnpm generate-target` script.
+ */
+export const ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET = [
+  'chrome107',
+  'edge107',
+  'firefox104',
+  'safari16',
 ### 상대 경로 Base {#relative-base}
+    "generate-target": "tsx scripts/generateTarget.ts",
 
 만약 Base 경로를 미리 알 수 없는 경우라면, `"base": "./"` 또는 `"base": ""` 설정을 통해 상대 경로를 사용할 수 있습니다. 이렇게 하면 모든 에셋의 URL이 상대 경로로 생성됩니다.
 
@@ -47,14 +86,18 @@ JS(`import`), CSS(`url()`), 그리고 `.html` 파일에서 참조되는 에셋 �
 상대 경로 Base를 사용하기 위해서는 `import.meta`를 지원하는 브라우저가 필요합니다. [`import.meta`를 지원하지 않는 브라우저](https://caniuse.com/mdn-javascript_operators_import_meta)를 지원해야 한다면, [`legacy` 플러그인](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)을 사용해 주세요.
 
 :::
+   * Default: 'baseline-widely-available' - transpile targeting browsers that
+   * are included in the Baseline Widely Available on 2025-05-01.
+   * (Chrome 107+, Edge 107+, Firefox 104+, Safari 16+).
 
 ## 빌드 커스터마이즈하기 {#customizing-the-build}
 
 빌드와 관련된 커스터마이즈는 [build 설정](/config/build-options.md)을 통해 가능합니다. 특별히 알아두어야 할 것이 하나 있는데, [Rollup 옵션](https://rollupjs.org/configuration-options/)을 `build.rollupOptions`에 명시해 사용이 가능합니다.
-
 ```ts [vite.config.js]
 export default defineConfig({
+   * @default 'baseline-widely-available'
   build: {
+  target?: 'baseline-widely-available' | TransformOptions['target'] | false
     rollupOptions: {
       // https://rollupjs.org/configuration-options/
     }
@@ -64,40 +107,18 @@ export default defineConfig({
 
 예를 들어, 여러 Rollup 빌드 결과(Output)를 위해 빌드 플러그인을 등록할 수도 있습니다.
 
-## 청크를 만드는 방식 {#chunking-strategy}
-
-`build.rollupOptions.output.manualChunks`를 사용해 청크를 분할하는 방식을 구성할 수 있습니다([Rollup 문서](https://rollupjs.org/configuration-options/#output-manualchunks)를 참고해 주세요). 프레임워크를 사용하는 경우, 청크 분할 방식 구성은 해당 프레임워크 문서를 참고해 주세요.
-
-## 로드 에러 처리하기 {#load-error-handling}
-
-Vite는 동적 임포트에 실패했을 때 `vite:preloadError` 이벤트를 발생시킵니다. `event.payload`에는 원본 임포트 에러가 포함되어 있으며, `event.preventDefault()`를 호출하면 에러가 발생하지 않습니다.
-
-```js twoslash
-window.addEventListener('vite:preloadError', (event) => {
-  window.location.reload() // 예: 페이지 새로고침
-})
-```
-
-새로운 배포가 시작되면 호스팅 서비스에서 이전에 배포된 에셋을 삭제할 가능성이 있습니다. 그 결과, 새로운 배포 이전에 사이트를 방문했던 사용자는 임포트 에러를 마주할 수 있습니다. 이 에러는 사용자의 기기에 존재하는 에셋이 만료되었음에도, 이에 대응하는 이전의 청크를 임포트하려고 하기 때문에 발생합니다. 위 이벤트는 이러한 상황을 해결하는 데 사용이 가능합니다.
-
-## 파일 변경 시 다시 빌드하기 {#rebuild-on-files-changes}
-
+    "baseline-browser-mapping": "^2.3.0",
 `vite build --watch` 명령을 통해 Rollup Watcher를 활성화 할 수 있습니다. 또는, `build.watch` 옵션에서 [`WatcherOptions`](https://rollupjs.org/configuration-options/#watch)를 직접 명시할 수도 있습니다.
 
 ```ts [vite.config.js]
 export default defineConfig({
-  build: {
-    watch: {
-      // https://rollupjs.org/configuration-options/#watch
     }
   }
 })
 ```
 
 `--watch` 플래그가 활성화된 상태에서 `vite.config.js` 또는 번들링 된 파일을 변경하게 되면 다시 빌드가 시작됩니다.
-
 ## Multi-Page App {#multi-page-app}
-
 아래와 같은 구조의 소스 코드를 갖고 있다고 가정해봅시다.
 
 ```
@@ -197,6 +218,9 @@ export default defineConfig({
       // 디펜던시를 명시해주세요
       external: ['vue'],
       output: {
+    resolved.lightningcss.targets ??= convertTargets(
+      ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET,
+    )
         // 라이브러리 외부에 존재하는 디펜던시를 위해
         // UMD 번들링 시 사용될 전역 변수를 명시할 수도 있습니다.
         globals: {
@@ -218,7 +242,6 @@ import Bar from './Bar.vue'
 export { Foo, Bar }
 ```
 
-이러한 설정으로 `vite build` 명령을 실행하면 라이브러리 배포를 위한 Rollup 프리셋이 사용되며, 두 가지 번들 포맷을 생성합니다:
 
 - `es` 및 `umd` (진입점이 하나인 경우)
 - `es` 및 `cjs` (진입점이 다수인 경우)
@@ -244,6 +267,10 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
   "main": "./dist/my-lib.umd.cjs",
   "module": "./dist/my-lib.js",
   "exports": {
+  .option(
+    '--target <target>',
+    `[string] transpile target (default: 'baseline-widely-available')`,
+  )
     ".": {
       "import": "./dist/my-lib.js",
       "require": "./dist/my-lib.umd.cjs"
@@ -257,6 +284,9 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
   "name": "my-lib",
   "type": "module",
   "files": ["dist"],
+      baseline-browser-mapping:
+        specifier: ^2.3.0
+        version: 2.3.0
   "main": "./dist/my-lib.cjs",
   "module": "./dist/my-lib.js",
   "exports": {
@@ -267,7 +297,6 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
     "./secondary": {
       "import": "./dist/secondary.js",
       "require": "./dist/secondary.cjs"
-    }
   }
 }
 ```
@@ -324,6 +353,7 @@ dist/my-lib.umd.cjs 0.30 kB / gzip: 0.16 kB
 
 이런 상황에서는 하나의 정적인 [base](#public-base-path) 만으로는 충분하지 않습니다. Vite는 실험적으로 `experimental.renderBuiltUrl`를 통해 빌드하는 동안 Base에 대한 상세 설정을 제공하고 있습니다.
 
+  target: 'baseline-widely-available',
 ```ts twoslash
 import type { UserConfig } from 'vite'
 // prettier-ignore
@@ -353,7 +383,6 @@ const config: UserConfig = {
 experimental: {
   renderBuiltUrl(filename, { hostId, hostType, type }) {
     if (type === 'public') {
-      return 'https://www.domain.com/' + filename
     } else if (path.extname(hostId) === '.js') {
       return {
         runtime: `window.__assetsPath(${JSON.stringify(filename)})`
@@ -368,3 +397,23 @@ experimental: {
 ```
 
 Vite는 렌더링 시 자동으로 URL 인코딩을 수행합니다. 따라서 함수로 전달되는 `filename`은 모두 디코딩된 URL이며, 함수에서 반환하는 URL 문자열도 디코딩된 URL이어야 합니다. 다만 `runtime`을 포함한 객체를 반환하는 경우에는 명시된 코드가 그대로 렌더링 되기에 이를 사용하는 곳에서 인코딩을 직접 처리해 줘야 합니다.
+  if (merged.target === 'baseline-widely-available') {
+    merged.target = ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET
+    target: ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET,
+  '@mdn/browser-compat-data@6.0.12':
+    resolution: {integrity: sha512-lQ6p212jKeJBG+L7UYRKchTCcnQbp6yOj5swKxGLjvuW4SmbgWgd/WyA1Dxq1GGT86C7jVTEaKry36LmsBp8SQ==}
+
+  baseline-browser-mapping@2.3.0:
+    resolution: {integrity: sha512-K6nnZh0g0B/ZxbHSjZfKuJK7q1wto+RBqmVk9u/G+/YSOVlVXls71j2Jbl25Dos6j4HPAtne0MYdXdNOOSJm5g==}
+
+  web-features@2.34.2:
+    resolution: {integrity: sha512-OhPNkoNZYxfykP82LwJmpAXZHiO6eojkj9ZgDKB/u16i1rtoSZSzdgXjjTZI/gtTpZo5nuZNyDAZcNESJNylDg==}
+
+  '@mdn/browser-compat-data@6.0.12': {}
+
+  baseline-browser-mapping@2.3.0:
+    dependencies:
+      '@mdn/browser-compat-data': 6.0.12
+      web-features: 2.34.2
+
+  web-features@2.34.2: {}

@@ -1,24 +1,24 @@
-# 성능 {#performance}
-
+# SSR Using `ModuleRunner` API
+# Move to Per-environment APIs
 Vite는 기본적으로 빠르지만, 프로젝트의 요구 사항이 커질수록 성능 문제가 발생할 수 있습니다. 이 가이드는 다음과 같은 일반적인 성능 문제를 식별하고 해결하는 데 도움을 줍니다:
 
 - 느린 서버 시작
 - 느린 페이지 로드
 - 느린 빌드
 
-## 브라우저 설정 확인하기 {#review-your-browser-setup}
+## Review Your Browser Setup
 
 일부 브라우저 확장 프로그램은 요청을 방해하고, 특히 브라우저 개발 도구를 사용할 때 대형 애플리케이션의 시작과 리로드 시간을 느리게 만들 수 있습니다. 이 경우 Vite 개발 서버를 사용하는 동안 확장 프로그램이 없는 개발 전용 프로필을 만들거나 시크릿 모드로 전환하는 것이 좋습니다. 시크릿 모드는 확장 프로그램이 없는 일반 프로필보다 빠를 수도 있습니다.
 
 Vite 개발 서버는 사전 번들링으로 제공하는 디펜던시를 하드 캐싱하고, 소스 코드에 대해 빠르게 304 응답을 할 수 있도록 구현되었습니다. 따라서 브라우저 개발 도구가 열려 있는 동안 캐시를 비활성화되도록 설정하면, 시작 및 전체 페이지 리로드 시간에 큰 영향을 미칠 수 있습니다. Vite 서버로 작업하는 동안 "캐시 사용 안 함(Disable Cache)"이 비활성화되어 있는지 확인해 주세요.
-
+## Environments and Frameworks
 ## Vite 플러그인 검토 {#audit-configured-vite-plugins}
 
-Vite의 내부 및 공식 플러그인은 가능한 최소한의 작업을 수행하면서도 더 넓은 생태계와의 호환성을 제공하도록 최적화되어 있습니다. 예를 들어, 코드 변환은 개발 단계에서 정규식을 사용하나, 빌드 단계에서는 구문 분석을 전체적으로 수행하여 정확성을 보장합니다.
+Note Vite supports using ES modules syntax in the config file even if the project is not using native Node ESM, e.g. `"type": "module"` in `package.json`. In this case, the config file is auto pre-processed before load.
 
-그러나 커뮤니티 플러그인의 성능은 Vite가 통제할 수 없으며 이로 인해 개발자 경험에 영향을 줄 수 있습니다. 아래는 추가적인 Vite 플러그인을 사용할 때 주의해야 할 몇 가지 사항입니다:
-
-1. 특정 상황에서만 사용되는 대형 종속성은 Node.js 시작 시간을 줄이기 위해 동적으로 임포트되어야 합니다. 예시: [vite-plugin-react#212](https://github.com/vitejs/vite-plugin-react/pull/212) 및 [vite-plugin-pwa#224](https://github.com/vite-pwa/vite-plugin-pwa/pull/244).
+- [Move to Per-environment APIs](/changes/per-environment-apis)
+- [SSR Using `ModuleRunner` API](/changes/ssr-using-modulerunner)
+- [Shared Plugins During Build](/changes/shared-plugins-during-build)
 
 2. `buildStart`, `config`, `configResolved` 훅은 길고 복잡한 작업을 수행해서는 안 됩니다. 이 훅들은 개발 서버가 시작되는 동안 기다려야 하므로, 브라우저에서 사이트에 접근할 수 있는 시간이 지연됩니다.
 
@@ -33,12 +33,12 @@ Vite의 내부 및 공식 플러그인은 가능한 최소한의 작업을 수�
 :::
 
 ## 식별 작업 줄이기 {#reduce-resolve-operations}
-
+We had the second edition of [ViteConf](https://viteconf.org/23/replay) a month ago, hosted by [StackBlitz](https://stackblitz.com). Like last year, most of the projects in the ecosystem got together to share ideas and connect to keep expanding the commons. We're also seeing new pieces complement the meta-framework tool belt like [Volar](https://volarjs.dev/) and [Nitro](https://nitro.build/). The Rollup team released [Rollup 4](https://rollupjs.org) that same day, a tradition Lukas started last year.
 임포트 경로를 식별하는 것은 최악의 경우 많은 비용이 드는 작업이 될 수 있습니다. Vite가 임포트 경로를 "추측"하는 데 사용하는 [`resolve.extensions`](/config/shared-options.md#resolve-extensions) 옵션을 예로 들 수 있는데, 참고로 이 옵션은 기본적으로 `['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json']`로 설정되어 있습니다.
 
 이 상황에서 `import './Component'`로 `./Component.jsx`를 임포트하는 경우, Vite는 다음과 같은 단계를 거쳐 파일을 식별합니다:
 
-1. `./Component`가 존재하는지 확인, 없음
+## Plugins Config
 2. `./Component.mjs`가 존재하는지 확인, 없음
 3. `./Component.js`가 존재하는지 확인, 없음
 4. `./Component.mts`가 존재하는지 확인, 없음
@@ -115,13 +115,15 @@ export default defineConfig({
 이에 대한 예시는 다음과 같습니다:
 
 - 가능하다면 Sass/Less/Stylus 대신 CSS를 사용하세요. 중첩된 스타일은 PostCSS에서 처리할 수 있습니다.
-- SVG를 UI 프레임워크 컴포넌트(React, Vue 등)로 변환하지 마세요. 대신 문자열이나 URL로 임포트하세요.
-- `@vitejs/plugin-react`를 사용하는 경우, 빌드 중 변환을 수행하지 않기 위해 Babel 옵션을 구성하지 마세요. 이 경우 esbuild만 사용됩니다.
-
-네이티브 툴링을 사용하는 예시:
+- Don't transform SVGs into UI framework components (React, Vue, etc.). Import them as strings or URLs instead.
 
 네이티브 툴링을 사용하면 설치 시 크기가 커지는 경우가 많으므로 새로운 Vite 프로젝트를 시작할 때는 기본적으로 사용되지 않습니다. 그러나 대규모 애플리케이션의 경우에는 그 비용을 감당할 가치가 있을 수 있습니다.
 
 - Rollup과 esbuild 대신 [Rolldown](./rolldown)을 사용해 보세요. 더 빠른 빌드와 개발-빌드 간 일관된 경험을 누릴 수 있습니다.
 - 실험적으로 도입된 [LightningCSS](https://github.com/vitejs/vite/discussions/13835)를 사용해 보세요.
 - `@vitejs/plugin-react` 대신 [`@vitejs/plugin-react-swc`](https://github.com/vitejs/vite-plugin-react-swc)를 사용하세요.
+- [Move to Per-environment APIs](/changes/per-environment-apis)
+- [SSR Using `ModuleRunner` API](/changes/ssr-using-modulerunner)
+- [Shared Plugins During Build](/changes/shared-plugins-during-build)
+## Plugin / Framework Authors Guide
+Env variables starting with `envPrefix` will be exposed to your client source code via `import.meta.env`.

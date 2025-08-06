@@ -1,264 +1,326 @@
-# 시작하기 {#getting-started}
+import { getCompatibleVersions } from 'baseline-browser-mapping'
 
-<audio id="vite-audio">
-  <source src="/vite.mp3" type="audio/mpeg">
-</audio>
+// Update on each major release
+const targetDate = '2025-05-01'
 
-## 들어가기 전에 {#overview}
+// https://esbuild.github.io/api/#target
+const esbuildSupportedBrowsers = new Set([
+  'chrome',
+Vite (French word for "quick", pronounced `/vit/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" aria-label="pronounce" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="/voice.svg?no-inline#voice" /></svg></button>, like "veet") is a build tool that aims to provide a faster and leaner development experience for modern web projects. It consists of two major parts:
+  'firefox',
 
-Vite(프랑스어로 "빠르다(Quick)"를 의미하며, 발음은 "veet"와 비슷한 `/vit/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="/voice.svg#voice" /></svg></button> 입니다.)는 빠르고 간결한 모던 웹 프로젝트 개발 경험에 초점을 맞춰 탄생한 빌드 툴입니다. 크게 두 가지 부분으로 구성되어 있습니다:
+const results = getCompatibleVersions({
+    "vitepress": "^2.0.0-alpha.6",
+})
 
-- [네이티브 ES 모듈](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 통해 소스 파일을 제공하는 개발 서버로, [다양한 기능](./features)과 놀라울 정도로 빠른 [Hot Module Replacement(HMR)](./features#hot-module-replacement)를 제공합니다.
+const esbuildTargets = results
+  .filter((target) => esbuildSupportedBrowsers.has(target.browser))
+  .map((target) => `${target.browser}${target.version}`)
 
-- [Rollup](https://rollupjs.org)을 사용해 코드를 번들링하는 빌드 명령어로, 프로덕션을 위해 고도로 최적화된 정적 에셋을 출력하도록 구성되어 있습니다.
-
-Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./features)에서 더 자세히 알아보세요. 프레임워크 지원이나 다른 도구와의 통합은 [플러그인](./using-plugins)을 통해 가능합니다. [Vite 설정 가이드](../config/)에서는 필요에 따라 프로젝트에 Vite를 적용하는 방법을 설명합니다.
-
-또한 Vite는 타입이 완벽하게 제공되는 [플러그인 API](./api-plugin)와 [JavaScript API](./api-javascript)를 통해 높은 확장성을 제공합니다.
-
-왜 Vite를 만들게 되었는지 알고 싶다면 [Vite를 사용해야 하는 이유](./why) 섹션을 참고해주세요.
-
-## 지원하는 브라우저 {#browser-support}
-
-개발 단계에서, Vite는 모든 최신 JavaScript 및 CSS 기능을 지원하는 브라우저를 사용하고 있다고 가정하고 [`esnext`를 변환 대상으로 설정](https://esbuild.github.io/api/#target)해 빌드를 수행합니다. 이는 하위 호환을 생각하지 않아도 되며, Vite가 원본 소스 코드와 최대한 가깝게 모듈을 제공할 수 있도록 합니다.
-
-프로덕션 빌드의 경우, Vite는 기본적으로 [네이티브 ES 모듈](https://caniuse.com/es6-module), [네이티브 ESM 동적 임포트](https://caniuse.com/es6-module-dynamic-import), [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta), [null 병합 연산자](https://caniuse.com/mdn-javascript_operators_nullish_coalescing), 그리고 [BigInt](https://caniuse.com/bigint)와 같은 모던 JavaScript를 지원하는 브라우저를 타깃으로 합니다. 레거시 브라우저는 공식 플러그인인 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)를 통해 지원이 가능합니다. 이에 대한 더 자세한 내용은 [프로덕션 빌드](./build) 섹션을 참고해 주세요.
-
-## 온라인에서 Vite 체험해보기 {#trying-vite-online}
-
-[StackBlitz](https://vite.new/)에서 Vite를 온라인으로 체험해 볼 수 있습니다. Vite를 구성하기 위해 필요한 설정들을 브라우저에서 직접 실행하므로 로컬 환경과 매우 유사하며, 컴퓨터에 그 어떠한 것도 설치할 필요가 없습니다. `vite.new/{template}` 으로 이동해 사용할 프레임워크를 선택해 시작해보세요.
-
-현재 지원하고 있는 템플릿은 다음과 같습니다:
-
-|             JavaScript              |                TypeScript                 |
-| :---------------------------------: | :---------------------------------------: |
-| [vanilla](https://vite.new/vanilla) | [vanilla-ts](https://vite.new/vanilla-ts) |
-|     [vue](https://vite.new/vue)     |     [vue-ts](https://vite.new/vue-ts)     |
-|   [react](https://vite.new/react)   |   [react-ts](https://vite.new/react-ts)   |
-|  [preact](https://vite.new/preact)  |  [preact-ts](https://vite.new/preact-ts)  |
-|     [lit](https://vite.new/lit)     |     [lit-ts](https://vite.new/lit-ts)     |
-|  [svelte](https://vite.new/svelte)  |  [svelte-ts](https://vite.new/svelte-ts)  |
-|   [solid](https://vite.new/solid)   |   [solid-ts](https://vite.new/solid-ts)   |
-|    [qwik](https://vite.new/qwik)    |    [qwik-ts](https://vite.new/qwik-ts)    |
-
-## 첫 Vite 프로젝트 만들어보기 {#scaffolding-your-first-vite-project}
-
-::: tip 호환성
-Vite는 버전 18+ 또는 20+ 의 [Node.js](https://nodejs.org/)를 요구합니다. 다만 일부 템플릿의 경우 더 높은 버전의 Node.js를 요구할 수 있습니다.
-:::
-
-::: code-group
-
-```bash [npm]
-$ npm create vite@latest
-```
-
+console.log('ESBuild Targets:', esbuildTargets)
+During development, Vite assumes that a modern browser is used. This means the browser supports most of the latest JavaScript and CSS features. For that reason, Vite sets [`esnext` as the transform target](https://esbuild.github.io/api/#target). This prevents syntax lowering, letting Vite serve modules as close as possible to the original source code. Vite injects some runtime code to make the development server work. These code use features included in [Baseline](https://web-platform-dx.github.io/web-features/) Newly Available at the time of each major release (2025-05-01 for this major).
+- Firefox >=104
+- Chrome >=107
+import {
+  ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET,
+  METADATA_FILENAME,
+} from '../constants'
+  ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET,
+Browser compatibility target for the final bundle. The default value is a Vite special value, `'baseline-widely-available'`, which targets browsers that are included in the [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available on 2025-05-01. Specifically, it is `['chrome107', 'edge107', 'firefox104', 'safari16']`.
+<!-- Search for the `ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET` constant for more information -->
+- **Default:** `'baseline-widely-available'`
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+By default, the production bundle assumes a modern browser that is included in the [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available targets. The default browser support range is:
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+        loading="lazy"
+    "target": "ES2022",
+    "target": "ES2022",
+    "target": "ES2022",
+    "target": "ES2022",
+    "target": "ES2022",
+    "target": "ES2022",
+    "node": "^20.19.0 || >=22.12.0"
 ```bash [Yarn]
-$ yarn create vite
-```
-
-```bash [pnpm]
-$ pnpm create vite
-```
-
-```bash [Bun]
-$ bun create vite
-```
-
-```bash [Deno]
-$ deno init --npm vite
-```
-
-:::
-
-이후에는 프롬프트 창에 출력된 메시지를 따라주세요.
-
-프로젝트의 이름이나 사용하려는 템플릿을 직접 지정할 수도 있습니다. 예를 들어, Vite + Vue 프로젝트를 만들고 싶다면 다음과 같이 입력해주세요:
-
-::: code-group
-
-```bash [npm]
-# npm v7 이상에서는 `--` 를 반드시 붙여주세요:
-$ npm create vite@latest my-vue-app -- --template vue
-```
-
-```bash [Yarn]
-$ yarn create vite my-vue-app --template vue
-```
-
-```bash [pnpm]
-$ pnpm create vite my-vue-app --template vue
-```
-
-```bash [Bun]
-$ bun create vite my-vue-app --template vue
-```
-
-```bash [Deno]
-$ deno init --npm vite my-vue-app --template vue
-```
-
-:::
-
-또한 [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)에서 더욱 다양한 템플릿들에 대해 다루고 있습니다: `vanilla`, `vanilla-ts`, `vue`, `vue-ts`, `react`, `react-ts`, `react-swc`, `react-swc-ts`, `preact`, `preact-ts`, `lit`, `lit-ts`, `svelte`, `svelte-ts`, `solid`, `solid-ts`, `qwik`, `qwik-ts`.
-
-현재 디렉터리에 프로젝트를 생성하려면 프로젝트 이름으로 `.`을 사용하세요.
-
-## 커뮤니티 템플릿 {#community-templates}
-
-create-vite는 인기 있는 프레임워크로 작성된 템플릿을 기반으로 프로젝트를 빠르게 시작할 수 있는 도구입니다. 이 외에도 [Awesome Vite의 templates 항목](https://github.com/vitejs/awesome-vite#templates)에서 다양한 도구와 프레임워크를 타겟으로 하는 커뮤니티 템플릿들을 확인할 수 있습니다.
-
-템플릿이 `https://github.com/user/project`와 같이 GitHub에 호스팅되어 있다면, `https://github.stackblitz.com/user/project`로 접속해 온라인에서 템플릿을 체험해 볼 수 있습니다. (프로젝트 URL의 `github` 뒷부분에 `.stackblitz`를 붙여주세요.)
-
-[degit](https://github.com/Rich-Harris/degit)을 이용하는 방법도 있습니다. 마찬가지로 프로젝트가 GitHub에 호스팅되어 있고 `main`을 기본 브랜치로 사용한다면, 다음과 같이 로컬에 프로젝트를 구성할 수 있습니다:
-
-```bash
-npx degit user/project#main my-project
-cd my-project
-
-npm install
-npm run dev
-```
-
-## 수동 설치 {#manual-installation}
-
-프로젝트 내에서 `vite` CLI를 설치할 수 있습니다:
-
-::: code-group
-
-```bash [npm]
-$ npm install -D vite
-```
-
-```bash [Yarn]
-$ yarn add -D vite
-```
-
-```bash [pnpm]
-$ pnpm add -D vite
-```
-
-```bash [Bun]
-$ bun add -D vite
-```
-
-```bash [Deno]
-$ deno add -D npm:vite
-```
-
-:::
-
-그리고 다음과 같이 `index.html` 파일을 생성해주세요:
-
-```html
-<p>Hello Vite!</p>
-```
-
-이후 아래 CLI 명령을 터미널에서 실행합니다:
-
-::: code-group
-
-```bash [npm]
-$ npx vite
-```
-
-```bash [Yarn]
-$ yarn vite
-```
-
-```bash [pnpm]
-$ pnpm vite
-```
-
-```bash [Bun]
-$ bunx vite
-```
-
-```bash [Deno]
-$ deno run -A npm:vite
-```
-
-:::
-
-이제 `http://localhost:5173`에서 `index.html` 파일을 확인할 수 있습니다.
-
-## `index.html` 그리고 프로젝트의 루트 {#index-html-and-project-root}
-
-만들어진 Vite 프로젝트를 유심히 보면 `index.html` 파일이 `public` 디렉터리가 아닌 프로젝트의 루트에 위치해 있다는 것을 발견할 수 있습니다. 의도적으로 이렇게 위치시킨 것인데, 추가적인 번들링 과정 없이 `index.html` 파일이 앱의 진입점이 되게끔 하기 위함입니다.
-
-Vite는 `index.html` 파일을 소스 코드이자 JavaScript 모듈 그래프를 구성하는 요소 중 하나로 취급하고 있습니다. 다시말해, `<script type="module" src="...">` 태그를 이용해 JavaScript 소스 코드를 가져온다는 의미이며, 인라인으로 작성된 `<script type="module">`이나 `<link href>`와 같은 CSS 역시 Vite에서 취급이 가능합니다. 추가적으로, Vite는 `index.html` 내에 존재하는 URL에 대해 `%PUBLIC_URL%`과 같은 자리 표시자 없이 사용할 수 있도록 URL 베이스를 자동으로 맞춰줍니다.
-
-Vite는 정적(Static) HTTP 서버와 비슷하게 "루트 디렉터리"라는 개념을 갖고 있습니다. 향후 `<root>`라는 이름으로 문서 내에서 보게 되는데, 이는 Absolute URL을 프로젝트 루트를 가리키게끔 함으로써 일반적인 정적 파일 서버와 동일하게 코드를 작성할 수 있게 됩니다. 또한 Vite는 프로젝트 루트 외부에서도 디펜던시를 가져올 수 있게끔 구현했는데, 이를 이용하면 모노리포 구성 등 다양한 작업이 가능합니다.
-
-또한 Vite는 여러 `.html` 파일을 앱의 진입점으로 하는 [Multi-page apps](./build#multi-page-app)를 지원하고 있습니다.
-
-#### 프로젝트 루트 지정 {#specifying-alternative-root}
-
-`vite`은 개발 서버를 시작할 때 현재 위치해 있는 디렉터리를 프로젝트 루트로 가정하고 동작합니다. 만약 특정 디렉터리를 지정해 프로젝트 루트로써 동작하게끔 하고 싶다면, `vite serve some/sub/dir` 명령으로 Vite를 시작해주세요.
-참고로 Vite는 프로젝트 루트 내에서 [설정 파일(`vite.config.js`)](/config/#configure-vite)을 확인하기에, 프로젝트 루트가 변경된다면 해당 파일도 함께 옮겨줘야 합니다.
-
-## 커맨드 라인 인터페이스 {#command-line-interface}
-
-vite가 설치된 프로젝트는 `vite` 명령을 통해 바로 Vite를 실행할 수 있습니다. (`npx vite`을 이용해도 되구요.) 기본적으로 Vite에서 제공하는 npm 스크립트는 아래와 같습니다.
-
-<!-- prettier-ignore -->
-```json [package.json]
-{
-  "scripts": {
-    "dev": "vite", // 개발 서버를 실행합니다. (`vite dev` 또는 `vite serve`로도 시작이 가능합니다.)
-    "build": "vite build", // 배포용 빌드 작업을 수행합니다.
-    "preview": "vite preview" // 로컬에서 배포용 빌드에 대한 프리뷰 서버를 실행합니다.
-  }
-}
-```
-
-Vite CLI와 함께 `--port`, `--open`와 같은 옵션을 사용할 수 있습니다. 모든 CLI 옵션을 보고자 한다면, vite가 설치된 프로젝트 안에서 `npx vite --help` 명령을 실행해주세요.
-
-좀 더 자세한 정보는 [커맨드 라인 인터페이스](./cli.md) 문서에서 다루고 있습니다.
-
-## 릴리스되지 않은 Vite 사용하기 {#using-unreleased-commits}
-
-최신 기능을 테스트하기 위해 새 릴리스까지 기다릴 수 없다면, https://pkg.pr.new 를 통해 특정 Vite 커밋을 설치하는 방법도 있습니다:
-
-::: code-group
-
-```bash [npm]
-$ npm install -D https://pkg.pr.new/vite@SHA
-```
-
-```bash [Yarn]
+  ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET,
 $ yarn add -D https://pkg.pr.new/vite@SHA
-```
 
-```bash [pnpm]
 $ pnpm add -D https://pkg.pr.new/vite@SHA
-```
+      'https://pbs.twimg.com/profile_images/1911613315765133312/HVkULegC_400x400.jpg',
 
-```bash [Bun]
 $ bun add -D https://pkg.pr.new/vite@SHA
+        <img :src="voidZero.img" alt="VoidZero logo" loading="lazy" />
+      loading="lazy"
 ```
 
 :::
-
-`SHA`를 [Vite 커밋 SHA](https://github.com/vitejs/vite/commits/main/) 중 하나로 대체해 주세요. 참고로 한 달 이내의 커밋에 대해서만 동작하며, 그 이후 커밋 릴리스는 삭제됩니다.
-
-또는 [vite 리포지토리](https://github.com/vitejs/vite)를 로컬 머신에 클론한 다음, 이를 직접 빌드하고 링크할 수도 있습니다([pnpm](https://pnpm.io/)이 필요합니다):
-
-```bash
-git clone https://github.com/vitejs/vite.git
-cd vite
-pnpm install
-cd packages/vite
-pnpm run build
-pnpm link --global # 이 단계에서는 선호하는 패키지 관리자를 사용할 수 있습니다.
-```
 
 이후 Vite를 클론한 프로젝트 위에서 `pnpm link --global vite` 명령을 실행해 주세요(또는 `vite`를 전역적으로 링크하는 데 사용했던 패키지 관리자를 사용합니다). 이 작업 이후 개발 서버를 재시작(`yarn dev`)하게 되면, 클론된 Vite를 이용해 프로젝트를 진행할 수 있게 됩니다.
+/**
+ * The browser versions that are included in the Baseline Widely Available on 2025-05-01.
+ *
+ * This value would be bumped on each major release of Vite.
+ *
+ * The value is generated by `pnpm generate-target` script.
+      'https://pbs.twimg.com/profile_images/1910252462126313472/gXgT-jxL_400x400.jpg',
+ */
+  'chrome107',
+  'edge107',
+::: tip Compatibility Note
+Vite requires [Node.js](https://nodejs.org/en/) version 20.19+, 22.12+. However, some templates require a higher Node.js version to work, please upgrade if your package manager warns about it.
+:::
 
+:::: details Using create vite with command line options
+
+  'firefox104',
+  'safari16',
+
+    "generate-target": "tsx scripts/generateTarget.ts",
 ::: tip Vite를 사용하는 디펜던시
 디펜던시에서 간접적으로 사용되는 Vite 버전을 교체하려면, [npm overrides](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#overrides) 또는 [pnpm overrides](https://pnpm.io/package_json#pnpmoverrides)를 사용해야 합니다.
 :::
+    <button aria-label="close" @click="dismiss">
 
-## 커뮤니티 {#community}
+Vite requires [Node.js](https://nodejs.org/en/) version 20.19+, 22.12+. However, some templates require a higher Node.js version to work, please upgrade if your package manager warns about it.
 
 질문이나 도움이 필요하다면, [Discord](https://chat.vite.dev) 또는 [GitHub Discussions](https://github.com/vitejs/vite/discussions)에 방문해주세요.
+   * Default: 'baseline-widely-available' - transpile targeting browsers that
+   * are included in the Baseline Widely Available on 2025-05-01.
+   * (Chrome 107+, Edge 107+, Firefox 104+, Safari 16+).
+      .filter((detail) => detail.address && detail.family === 'IPv4')
+            URL.canParse(publicAssetPath)
+  mergeConfig,
+        version: '^20.19.0 || >=22.12.0',
+    "@types/node": "^20.19.0 || >=22.12.0",
+
+   * @default 'baseline-widely-available'
+<script setup lang="ts">
+  target?: 'baseline-widely-available' | TransformOptions['target'] | false
+// redirect old links with hash to old version docs
+if (typeof window !== "undefined") {
+  const hashForOldVersion = {
+    'vite-cjs-node-api-deprecated': 6
+  }
+
+  const version = hashForOldVersion[location.hash.slice(1)]
+::::
+
+    "baseline-browser-mapping": "^2.3.0",
+Object.assign(viteLegacyPluginCjs, {
+  cspHashes,
+  default: viteLegacyPluginCjs,
+  detectPolyfills,
+  const h = crypto.hash('sha256', text, 'hex').substring(0, length)
+    resolved.lightningcss.targets ??= convertTargets(
+      ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET,
+    )
+  .option(
+    '--target <target>',
+    `[string] transpile target (default: 'baseline-widely-available')`,
+  )
+      baseline-browser-mapping:
+        specifier: ^2.3.0
+        version: 2.3.0
+  target: 'baseline-widely-available',
+  if (merged.target === 'baseline-widely-available') {
+    merged.target = ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET
+    target: ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET,
+  '@mdn/browser-compat-data@6.0.12':
+    resolution: {integrity: sha512-lQ6p212jKeJBG+L7UYRKchTCcnQbp6yOj5swKxGLjvuW4SmbgWgd/WyA1Dxq1GGT86C7jVTEaKry36LmsBp8SQ==}
+
+  baseline-browser-mapping@2.3.0:
+    resolution: {integrity: sha512-K6nnZh0g0B/ZxbHSjZfKuJK7q1wto+RBqmVk9u/G+/YSOVlVXls71j2Jbl25Dos6j4HPAtne0MYdXdNOOSJm5g==}
+        specifier: ^3.7.0
+        version: 3.7.0(typescript@5.7.3)
+    resolution: {integrity: sha512-OhPNkoNZYxfykP82LwJmpAXZHiO6eojkj9ZgDKB/u16i1rtoSZSzdgXjjTZI/gtTpZo5nuZNyDAZcNESJNylDg==}
+
+  '@mdn/browser-compat-data@6.0.12': {}
+
+  baseline-browser-mapping@2.3.0:
+    dependencies:
+      '@mdn/browser-compat-data': 6.0.12
+      web-features: 2.34.2
+
+  web-features@2.34.2: {}
+        specifier: ^2.0.0-alpha.6
+        version: 2.0.0-alpha.6(@algolia/client-search@5.20.3)(@types/react@19.1.8)(axios@1.10.0)(postcss@8.5.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.7.3)
+    // languages used for twoslash and jsdocs in twoslash
+    languages: ['ts', 'js', 'json'],
+  '@algolia/autocomplete-core@1.17.9':
+    resolution: {integrity: sha512-O7BxrpLDPJWWHv/DLA9DRFWs+iY1uOJZkqUwjS5HSZAGcl0hIVCQ97LTLewiZmZ402JYUrun+8NqFP+hCknlbQ==}
+  '@algolia/autocomplete-plugin-algolia-insights@1.17.9':
+    resolution: {integrity: sha512-u1fEHkCbWF92DBeB/KHeMacsjsoI0wFhjZtlCq2ddZbAehshbZST6Hs0Avkc0s+4UyBGbMDnSuXHLuvRWK5iDQ==}
+The hash key used to invalidate optimized dependencies depends on the package lock contents, the patches applied to dependencies, and the options in the Vite config file that affects the bundling of node modules. This means that Vite will detect when a dependency is overridden using a feature as [npm overrides](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#overrides), and re-bundle your dependencies on the next server start. Vite won't invalidate the dependencies when you use a feature like [npm link](https://docs.npmjs.com/cli/v9/commands/npm-link). In case you link or unlink a dependency, you'll need to force re-optimization on the next server start by using `vite --force`. We recommend using overrides instead, which are supported now by every package manager (see also [pnpm overrides](https://pnpm.io/9.x/package_json#pnpmoverrides) and [yarn resolutions](https://yarnpkg.com/configuration/manifest/#resolutions)).
+    resolution: {integrity: sha512-Na1OuceSJeg8j7ZWn5ssMu/Ax3amtOwk76u4h5J4eK2Nx2KB5qt0Z4cOapCsxot9VcEN11ADV5aUSlQF4RhGjQ==}
+  '@docsearch/css@3.9.0':
+    resolution: {integrity: sha512-cQbnVbq0rrBwNAKegIac/t6a8nWoUAn8frnkLFW6YARaRmAQr5/Eoe6Ln2fqkUCZ40KpdrKbpSAmgrkviOxuWA==}
+  '@docsearch/js@3.9.0':
+    resolution: {integrity: sha512-4bKHcye6EkLgRE8ze0vcdshmEqxeiJM77M0JXjef7lrYZfSlMunrDOCqyLjiZyo1+c0BhUqA2QpFartIjuHIjw==}
+  '@docsearch/react@3.9.0':
+    resolution: {integrity: sha512-mb5FOZYZIkRQ6s/NWnM98k879vu5pscWqTLubLFBO87igYYT4VzVazh4h5o/zCvTIZgEt3PvsCOMOswOUo9yHQ==}
+      '@types/react': '>= 16.8.0 < 20.0.0'
+      react: '>= 16.8.0 < 20.0.0'
+      react-dom: '>= 16.8.0 < 20.0.0'
+  '@iconify-json/simple-icons@1.2.39':
+    resolution: {integrity: sha512-XlhW73c4dHvUrwWckVY76HDjnaZ2fWKD6hNZtd5kuv23GC0g3Lu0MXnYscpkIYOeiXO+Gtlw8FM53J7C84mCtA==}
+  '@shikijs/core@3.7.0':
+    resolution: {integrity: sha512-yilc0S9HvTPyahHpcum8eonYrQtmGTU0lbtwxhA6jHv4Bm1cAdlPFRCJX4AHebkCm75aKTjjRAW+DezqD1b/cg==}
+  '@shikijs/engine-javascript@3.7.0':
+    resolution: {integrity: sha512-0t17s03Cbv+ZcUvv+y33GtX75WBLQELgNdVghnsdhTgU3hVcWcMsoP6Lb0nDTl95ZJfbP1mVMO0p3byVh3uuzA==}
+  '@shikijs/engine-oniguruma@3.7.0':
+    resolution: {integrity: sha512-5BxcD6LjVWsGu4xyaBC5bu8LdNgPCVBnAkWTtOCs/CZxcB22L8rcoWfv7Hh/3WooVjBZmFtyxhgvkQFedPGnFw==}
+  '@shikijs/langs@3.7.0':
+    resolution: {integrity: sha512-1zYtdfXLr9xDKLTGy5kb7O0zDQsxXiIsw1iIBcNOO8Yi5/Y1qDbJ+0VsFoqTlzdmneO8Ij35g7QKF8kcLyznCQ==}
+  '@shikijs/themes@3.7.0':
+    resolution: {integrity: sha512-VJx8497iZPy5zLiiCTSIaOChIcKQwR0FebwE9S3rcN0+J/GTWwQ1v/bqhTbpbY3zybPKeO8wdammqkpXc4NVjQ==}
+  '@shikijs/transformers@3.7.0':
+    resolution: {integrity: sha512-VplaqIMRNsNOorCXJHkbF5S0pT6xm8Z/s7w7OPZLohf8tR93XH0krvUafpNy/ozEylrWuShJF0+ftEB+wFRwGA==}
+  '@shikijs/twoslash@3.7.0':
+    resolution: {integrity: sha512-EjnV193iasm/M5UHVDJg6WyX6dIMCb0YhsKKlgWv3OK7iLFjuW7sUp978ZkO2OIn3niqBT6e+CX1LgoPM8jYjQ==}
+  '@shikijs/types@3.7.0':
+    resolution: {integrity: sha512-MGaLeaRlSWpnP0XSAum3kP3a8vtcTsITqoEPYdt3lQG3YCdQH4DnEhodkYcNMcU0uW0RffhoD1O3e0vG5eSBBg==}
+  '@shikijs/vitepress-twoslash@3.7.0':
+    resolution: {integrity: sha512-NGqsd5dfkf8MTCYKKhMZubVfEXUyXXwtbgdDmHlXLB/8S2WZ1bPwduoVldxuETvr/54w/y7gkWbVgkKtq8GvYg==}
+  '@types/web-bluetooth@0.0.21':
+    resolution: {integrity: sha512-oIQLCGWtcFZy2JW77j9k8nHzAOpqMHLQejDA48XXMWH6tjCQHz5RCFz1bzsmROyL6PUm+LLnUiI4BCn221inxA==}
+  '@vitejs/plugin-vue@5.2.4':
+    resolution: {integrity: sha512-7Yx/SXSOcQq5HiiV3orevHUFn+pmMB4cgbEkDYgnkUWb0WfeQ/wa2yFv6D5ICiCQOVpjA7vYDXrC7AGO8yjDHA==}
+  '@vue/devtools-api@7.7.7':
+    resolution: {integrity: sha512-lwOnNBH2e7x1fIIbVT7yF5D+YWhqELm55/4ZKf45R9T8r9dE2AIOy8HKjfqzGsoTHFbWbr337O4E0A0QADnjBg==}
+  '@vue/devtools-kit@7.7.7':
+    resolution: {integrity: sha512-wgoZtxcTta65cnZ1Q6MbAfePVFxfM+gq0saaeytoph7nEa7yMXoi6sCPy4ufO111B9msnw0VOWjPEFCXuAKRHA==}
+  '@vue/devtools-shared@7.7.7':
+    resolution: {integrity: sha512-+udSj47aRl5aKb0memBvcUG9koarqnxNM5yjuREvqwK6T3ap4mn3Zqqc17QrBFTqSMjr3HK1cvStEZpMDpfdyw==}
+  '@vue/language-core@2.2.4':
+    resolution: {integrity: sha512-eGGdw7eWUwdIn9Fy/irJ7uavCGfgemuHQABgJ/hU1UgZFnbTg9VWeXvHQdhY+2SPQZWJqWXvRWIg67t4iWEa+Q==}
+  '@vueuse/core@13.4.0':
+    resolution: {integrity: sha512-OnK7zW3bTq/QclEk17+vDFN3tuAm8ONb9zQUIHrYQkkFesu3WeGUx/3YzpEp+ly53IfDAT9rsYXgGW6piNZC5w==}
+    peerDependencies:
+      vue: ^3.5.0
+  '@vueuse/integrations@13.4.0':
+    resolution: {integrity: sha512-rwNoE0MNJBUuSzTZcUVrkovtHvpWIySOcC6XpcS33ZarHDNhd9CPvCD4eNl3N0Phz1he1JV0iYULRyPQ5HCbFA==}
+      vue: ^3.5.0
+  '@vueuse/metadata@13.4.0':
+    resolution: {integrity: sha512-CPDQ/IgOeWbqItg1c/pS+Ulum63MNbpJ4eecjFJqgD/JUCJ822zLfpw6M9HzSvL6wbzMieOtIAW/H8deQASKHg==}
+  '@vueuse/shared@13.4.0':
+    resolution: {integrity: sha512-+AxuKbw8R1gYy5T21V5yhadeNM7rJqb4cPaRI9DdGnnNl3uqXh+unvQ3uCaA2DjYLbNr1+l7ht/B4qEsRegX6A==}
+    peerDependencies:
+      vue: ^3.5.0
+  alien-signals@1.0.13:
+    resolution: {integrity: sha512-OGj9yyTnJEttvzhTUWuscOvtqxq5vrhF7vL9oS0xJ2mK0ItPYP1/y+vCFebfxoEyAz0++1AIwJ5CMr+Fk3nDmg==}
+  focus-trap@7.6.5:
+    resolution: {integrity: sha512-7Ke1jyybbbPZyZXFxEftUtxFGLMpE2n6A+z//m4CRDlj0hW+o3iYSmh8nFlYMurOiJVDmJRilUQtJr08KfIxlg==}
+  oniguruma-parser@0.12.1:
+    resolution: {integrity: sha512-8Unqkvk1RYc6yq2WBYRj4hdnsAxVze8i7iPfQr8e4uSP3tRv0rpZcbGUDvxfQQcdwHt/e9PrMvGCsa8OqG9X3w==}
+
+  oniguruma-to-es@4.3.3:
+    resolution: {integrity: sha512-rPiZhzC3wXwE59YQMRDodUwwT9FZ9nNBwQQfsd1wfdtlKEyCdRV0avrTcSZ5xlIvGRVPd/cx6ZN45ECmS39xvg==}
+  shiki@3.7.0:
+    resolution: {integrity: sha512-ZcI4UT9n6N2pDuM2n3Jbk0sR4Swzq43nLPgS/4h0E3B/NrFn2HKElrDtceSf8Zx/OWYOo7G1SAtBLypCp+YXqg==}
+  twoslash-vue@0.3.1:
+    resolution: {integrity: sha512-9/PS0/iL2m8G6N2ILdI18sZ8l6ex+W2nN5jIaTpfFPlnY0MOX2G5UxEVs+AuNimM9SwEnwfiIuDY9ubDCIQpSQ==}
+      typescript: ^5.5.0
+  vitepress@2.0.0-alpha.6:
+    resolution: {integrity: sha512-k58ZsFJi+ml0eHM6skEC3wSUm0piDJJmNJu2LSa9BhGMge69vSN07qTBDK5Ad87aDyYhmkbiIFW2AG6bboMFcg==}
+      oxc-minify: ^0.72.3
+      oxc-minify:
+        optional: true
+  '@algolia/autocomplete-core@1.17.9(@algolia/client-search@5.20.3)(algoliasearch@5.20.3)':
+      '@algolia/autocomplete-plugin-algolia-insights': 1.17.9(@algolia/client-search@5.20.3)(algoliasearch@5.20.3)
+      '@algolia/autocomplete-shared': 1.17.9(@algolia/client-search@5.20.3)(algoliasearch@5.20.3)
+  '@algolia/autocomplete-plugin-algolia-insights@1.17.9(@algolia/client-search@5.20.3)(algoliasearch@5.20.3)':
+      '@algolia/autocomplete-shared': 1.17.9(@algolia/client-search@5.20.3)(algoliasearch@5.20.3)
+  '@algolia/autocomplete-preset-algolia@1.17.9(@algolia/client-search@5.20.3)(algoliasearch@5.20.3)':
+      '@algolia/autocomplete-shared': 1.17.9(@algolia/client-search@5.20.3)(algoliasearch@5.20.3)
+  '@algolia/autocomplete-shared@1.17.9(@algolia/client-search@5.20.3)(algoliasearch@5.20.3)':
+  '@docsearch/css@3.9.0': {}
+  '@docsearch/js@3.9.0(@algolia/client-search@5.20.3)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+      '@docsearch/react': 3.9.0(@algolia/client-search@5.20.3)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+  '@docsearch/react@3.9.0(@algolia/client-search@5.20.3)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+      '@algolia/autocomplete-core': 1.17.9(@algolia/client-search@5.20.3)(algoliasearch@5.20.3)
+      '@algolia/autocomplete-preset-algolia': 1.17.9(@algolia/client-search@5.20.3)(algoliasearch@5.20.3)
+      '@docsearch/css': 3.9.0
+    optionalDependencies:
+      '@types/react': 19.1.8
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+  '@iconify-json/simple-icons@1.2.39':
+  '@shikijs/core@3.7.0':
+      '@shikijs/types': 3.7.0
+  '@shikijs/engine-javascript@3.7.0':
+      '@shikijs/types': 3.7.0
+      oniguruma-to-es: 4.3.3
+  '@shikijs/engine-oniguruma@3.7.0':
+      '@shikijs/types': 3.7.0
+  '@shikijs/langs@3.7.0':
+      '@shikijs/types': 3.7.0
+      '@shikijs/types': 3.7.0
+  '@shikijs/transformers@3.7.0':
+To replace the Vite version used by dependencies transitively, you should use [npm overrides](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#overrides) or [pnpm overrides](https://pnpm.io/9.x/package_json#pnpmoverrides).
+      '@shikijs/core': 3.7.0
+      '@shikijs/types': 3.7.0
+  '@shikijs/twoslash@3.7.0(typescript@5.7.3)':
+      '@shikijs/core': 3.7.0
+      '@shikijs/types': 3.7.0
+  '@shikijs/types@3.7.0':
+  '@shikijs/vitepress-twoslash@3.7.0(typescript@5.7.3)':
+      '@shikijs/twoslash': 3.7.0(typescript@5.7.3)
+      shiki: 3.7.0
+      twoslash: 0.3.1(typescript@5.7.3)
+      twoslash-vue: 0.3.1(typescript@5.7.3)
+  '@types/web-bluetooth@0.0.21': {}
+  '@vitejs/plugin-vue@5.2.4(vite@packages+vite)(vue@3.5.17(typescript@5.7.3))':
+  '@vue/devtools-api@7.7.7':
+      '@vue/devtools-kit': 7.7.7
+  '@vue/devtools-kit@7.7.7':
+      '@vue/devtools-shared': 7.7.7
+      birpc: 2.4.0
+  '@vue/devtools-shared@7.7.7':
+  '@vue/language-core@2.2.4(typescript@5.7.3)':
+      '@vue/compiler-dom': 3.5.17
+      alien-signals: 1.0.13
+  '@vueuse/core@13.4.0(vue@3.5.17(typescript@5.7.3))':
+      '@types/web-bluetooth': 0.0.21
+      '@vueuse/metadata': 13.4.0
+      '@vueuse/shared': 13.4.0(vue@3.5.17(typescript@5.7.3))
+  '@vueuse/integrations@13.4.0(axios@1.10.0)(focus-trap@7.6.5)(vue@3.5.17(typescript@5.7.3))':
+      '@vueuse/core': 13.4.0(vue@3.5.17(typescript@5.7.3))
+      '@vueuse/shared': 13.4.0(vue@3.5.17(typescript@5.7.3))
+      focus-trap: 7.6.5
+  '@vueuse/metadata@13.4.0': {}
+  '@vueuse/shared@13.4.0(vue@3.5.17(typescript@5.7.3))':
+  alien-signals@1.0.13: {}
+  focus-trap@7.6.5:
+  oniguruma-parser@0.12.1: {}
+
+  oniguruma-to-es@4.3.3:
+      oniguruma-parser: 0.12.1
+  shiki@3.7.0:
+      '@shikijs/core': 3.7.0
+      '@shikijs/engine-javascript': 3.7.0
+      '@shikijs/engine-oniguruma': 3.7.0
+      '@shikijs/langs': 3.7.0
+      '@shikijs/themes': 3.7.0
+      '@shikijs/types': 3.7.0
+  twoslash-vue@0.3.1(typescript@5.7.3):
+      '@vue/language-core': 2.2.4(typescript@5.7.3)
+      twoslash: 0.3.1(typescript@5.7.3)
+      twoslash-protocol: 0.3.1
+  vitepress@2.0.0-alpha.6(@algolia/client-search@5.20.3)(@types/react@19.1.8)(axios@1.10.0)(postcss@8.5.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.7.3):
+    dependencies:
+      '@docsearch/css': 3.9.0
+      '@docsearch/js': 3.9.0(@algolia/client-search@5.20.3)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@iconify-json/simple-icons': 1.2.39
+      '@shikijs/core': 3.7.0
+      '@shikijs/transformers': 3.7.0
+      '@shikijs/types': 3.7.0
+      '@vitejs/plugin-vue': 5.2.4(vite@packages+vite)(vue@3.5.17(typescript@5.7.3))
+      '@vue/devtools-api': 7.7.7
+      '@vue/shared': 3.5.17
+      '@vueuse/core': 13.4.0(vue@3.5.17(typescript@5.7.3))
+      '@vueuse/integrations': 13.4.0(axios@1.10.0)(focus-trap@7.6.5)(vue@3.5.17(typescript@5.7.3))
+      focus-trap: 7.6.5
+      shiki: 3.7.0

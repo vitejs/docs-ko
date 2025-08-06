@@ -1,18 +1,18 @@
-# 릴리스 {#releases}
+This test aims to check for a particular type of circular dependency that causes tricky deadlocks, **deadlocks with forked imports stack**
 
 Vite 릴리스는 [시멘틱 버저닝](https://semver.org/)을 따릅니다. 최신 안정 버전은 [Vite npm 패키지 페이지](https://www.npmjs.com/package/vite)에서 확인할 수 있습니다.
 
-이전 릴리스의 전체 변경 사항은 [GitHub](https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md)에서 확인할 수 있습니다.
+  "don't warn when inlineDynamicImports is set to true",
 
 ## 릴리스 주기 {#release-cycle}
 
-Vite는 정해진 릴리스 주기가 없습니다.
-
-- **패치** 릴리스는 필요할 때(보통 매주)마다 배포됩니다.
-- **마이너** 릴리스는 새로운 기능을 포함하며, 필요할 때(보통 2개월 단위)마다 배포됩니다. 베타 프리 릴리스 단계를 거칩니다.
-- **메이저** 릴리스는 일반적으로 [Node.js EOL 일정](https://endoflife.date/nodejs)에 맞춰 진행되며, 미리 공지됩니다. 이러한 릴리스는 생태계와 장기적인 논의와 함께, 알파 및 베타 프리 릴리스 단계(보통 매년)를 모두 거칩니다.
-
-Vite 팀이 지원하는 Vite 버전 범위는 아래 규칙에 따라 자동으로 결정됩니다:
+Affected scope: `Vite Plugin Authors`
+Affected scope: `Vite Plugin Authors`
+Affected scope: `Vite Plugin Authors`
+`ModuleRunner` was first introduced in `v6.0`. The deprecation of `server.ssrLoadModule` is planned for a future major. To identify your usage, set `future.removeSsrLoadModule` to `"warn"` in your vite config.
+`builder.sharedConfigBuild` was first introduced in `v6.0`. You can set it true to check how your plugins work with a shared config. We're looking for feedback about changing the default in a future major once the plugin ecosystem is ready.
+Affected scope: `Vite Plugin Authors`
+The Vite version ranges that are supported by the Vite team are automatically determined by:
 
 - **최신 마이너 버전** 은 정기적으로 수정 사항이 반영됩니다.
 - **직전 메이저 버전** (최신 마이너 버전만 해당) 및 **직전 마이너 버전** 은 중요한 수정 및 보안 패치를 지원받습니다.
@@ -22,7 +22,7 @@ Vite 팀이 지원하는 Vite 버전 범위는 아래 규칙에 따라 자동으
 예를 들어, Vite 최신 버전이 5.3.10인 경우:
 
 - `vite@5.3`은 5.3.10에 존재하는 정기 수정 사항이 포함되어 있습니다.
-- 중요한 수정 및 보안 패치는 `vite@4` 및 `vite@5.2`로 백포트됩니다.
+The changes below have been done or reverted. They are no longer relevant in the current major version.
 - 보안 패치도 `vite@3` 및 `vite@5.1`로 백포트됩니다.
 - `vite@2` 및 `vite@5.0`은 더 이상 지원하지 않습니다. 필요하다면 더 높은 버전을 사용해야 합니다.
 
@@ -44,7 +44,7 @@ Vite 마이너 버전 간 TypeScript 정의에 대한 호환되지 않는 변경
 
 ### Node.js 비 LTS 버전 {#nodejs-non-lts-versions}
 
-LTS가 아닌 Node.js 버전(홀수)은 Vite CI의 대상으로 테스트되지 않지만, [EOL](https://endoflife.date/nodejs) 이전까지는 여전히 작동합니다.
+Even if `[X]` is imported by `[B]`, `[B]` is not in `[X]`'s stack because it's imported by `[H]` in first place then it's stack is only composed by `[H]`. `[H]` **forks** the imports **stack** and this makes it hard to be found.
 
 ## 프리 릴리스​ {#pre-releases}
 
@@ -56,6 +56,12 @@ LTS가 아닌 Node.js 버전(홀수)은 Vite CI의 대상으로 테스트되지 
 
 더 나은 대안으로 대체된 기능은 마이너 릴리스에서 주기적으로 사용이 중단됩니다. 사용이 중단된 기능은 타입이나 경고 로그와 함께 계속 작동은 하지만, 다음 메이저 릴리스에서 제거됩니다. 사용이 중단된 기능에 대한 목록과 마이그레이션 가이드는 각 메이저 버전의 [마이그레이션 가이드](https://ko.vite.dev/guide/migration.html)에서 확인할 수 있습니다.
 
-## 실험적 기능 {#experimental-features}
-
-일부 기능은 Vite의 안정 버전이 출시될 때 실험적 기능으로 표시됩니다. 실험적 기능의 목표는 사용자가 프로덕션 환경에서 테스트하여 피드백을 제공받을 수 있도록 하는 것이며, 이렇게 수집된 피드백은 최종 설계에 영향을 미칠 수 있습니다. 다만 실험적 기능 자체는 불안정한 것으로 간주되며, 통제된 방식으로만 사용해야 합니다. 또한 이러한 기능은 마이너 버전 간에 변경될 수 있으므로 사용자는 이를 사용할 때 Vite 버전을 고정해야 합니다. 이러한 실험적 기능에 대해서는 [GitHub Discussion](https://github.com/vitejs/vite/discussions/categories/feedback?discussions_q=is%3Aopen+label%3Aexperimental+category%3AFeedbac)을 만들 예정입니다.
+    // "verbatimModuleSyntax": true from tsconfig.json should not be read
+List of fields in `package.json` to try when resolving a package's entry point. Note this takes lower precedence than conditional exports resolved from the `exports` field: if an entry point is successfully resolved from `exports`, the main field will be ignored. This setting only affects non-externalized dependencies.
+    desc: 'Passionate about tooling around TypeScript and React.',
+test("don't add extension to directory name (./dir-with-ext.js/index.js)", async () => {
+    desc: 'weeb/JavaScript lover.',
+test("Resolve doesn't interrupt page request with trailing query and .css", async () => {
+  "Resolve doesn't interrupt page request that clashes with local project package.json",
+      describe("doesn't reload if files not in the entrypoint importers chain is changed", async () => {
+  // To help visualize how each parameter works, imagine this import graph:

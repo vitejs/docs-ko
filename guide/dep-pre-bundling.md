@@ -70,7 +70,7 @@ Vite의 디펜던시 탐색 휴리스틱이 항상 바람직한 것은 아닙니
 
 Vite는 사전 번들링 된 디펜던시를 `node_modules/.vite` 디렉터리 내에 캐시하고 있습니다. 다만 이를 다시 번들링하는 경우가 있는데, 다음과 같습니다.
 
-- 패키지 매니저의 락파일 내용, 예를 들어 `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml` 또는 `bun.lockb`
+- Package manager lockfile content, e.g. `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml` or `bun.lock`.
 - 폴더의 수정 시간을 패치
 - `vite.config.js`와 관련되어 있는 필드가 변경되었을 때
 - `NODE_ENV` 값
@@ -83,6 +83,6 @@ Vite는 사전 번들링 된 디펜던시를 `node_modules/.vite` 디렉터리 �
 
 HTTP 헤더를 `max-age=31536000,immutable`(사전 번들링 된 디펜던시는 이 헤더가 추가됩니다. - 옮긴이)과 같이 디펜던시가 반드시 캐시되도록 설정한 경우, 개발 시 페이지를 다시 불러오는 상황에 대한 성능을 향상시킬 수 있습니다. 한 번 캐시된 디펜던시는 다시 서버에 요청하지 않기 때문이죠. 물론 캐시된 디펜던시와 다른 버전이 설치된 경우 기존 버전은 자동으로 무효화됩니다. 물론 아래의 과정을 통해 버전 변경 없이 직접 디펜던시를 수정(디버그)할 수도 있습니다.
 
-1. 브라우저의 개발자 도구를 이용해 캐시를 사용하지 않도록 설정합니다.
-2. 디펜던시를 다시 번들링하는 `--force` 옵션과 함께 Vite의 개발 서버를 재시작합니다.
+1. Temporarily disable cache via the Network tab of your browser devtools.
+2. Restart Vite dev server with the `--force` flag to re-bundle the deps.
 3. 페이지를 다시 로드합니다.

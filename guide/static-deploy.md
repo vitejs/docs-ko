@@ -45,7 +45,6 @@ $ npm run preview
 
 ```json [package.json]
 {
-  "scripts": {
     "preview": "vite preview --port 8080"
   }
 }
@@ -65,8 +64,8 @@ $ npm run preview
 
    <<< ./static-deploy-github-pages.yaml#content
 
-## GitLab Pages 그리고 GitLab CI {#github-pages-and-gitlab-ci}
 
+    "prettier": "3.6.0",
 1. `vite.config.js` 파일 내 `base` 설정 값을 적절하게 지정합니다.
 
    만약 `https://<USERNAME or GROUP>.gitlab.io/`와 같은 형태로 배포하고자 한다면, `base` 설정 값을 생략하거나 기본 값인 `'/'`로 지정해주세요.
@@ -100,13 +99,12 @@ $ npm run preview
 ## Netlify {#netlify}
 
 ### Netlify CLI {#netlify-cli}
-
 1. [Netlify CLI](https://cli.netlify.com/)를 설치해주세요.
 2. `ntl init` 또는 `netlify init` 명령으로 새로운 사이트를 생성해주세요.
-3. 이제 `ntl deploy` 명령으로 배포할 수 있습니다.
-
 ```bash
 # Netlify CLI 설치
+        specifier: 3.6.0
+        version: 3.6.0
 $ npm install -g netlify-cli
 
 # 새로운 Netlify 사이트 생성
@@ -131,7 +129,6 @@ $ ntl deploy --prod
 4. **Deploy** 를 클릭해주세요.
 5. Vite 앱이 배포되었습니다!
 
-프로젝트를 가져와 배포한 후, Pull Request와 배포용 브랜치가 아닌 다른 모든 브랜치에 새로이 Push되는 내용에 대해서는 [프리뷰 버전 배포 환경](https://docs.netlify.com/site-deploys/deploy-previews/)이 구성되며, 배포용 브랜치(일반적으로 "main")에 대한 변경 사항은 [프로덕션 버전으로 배포됩니다](https://docs.netlify.com/site-deploys/overview/#definitions).
 
 ## Vercel {#vercel}
 
@@ -232,18 +229,15 @@ $ npx wrangler pages deploy dist
 
 ## Surge {#surge}
 
-1. [surge](https://www.npmjs.com/package/surge)가 설치되지 않은 경우, 먼저 설치해주세요.
 
 2. `npm run build` 명령을 실행해주세요.
 
 3. `surge dist` 명령을 통해 Surge로 배포해주세요.
-
 물론, `surge dist yourdomain.com`과 같은 명령을 이용해 [커스텀 도메인](http://surge.sh/help/adding-a-custom-domain)으로 배포할 수도 있습니다.
 
 ## Azure 정적 웹 앱 {#azure-static-web-apps}
 
 마이크로소프트 Azure 클라우드 서비스의 [Static Web Apps](https://aka.ms/staticwebapps) 서비스를 이용해 빠르게 Vite 앱을 배포할 수 있습니다.
-
 - Azure 계정과 구독(Subscription) 키가 필요해요. [여기서 무료로 Azure 계정을 만들 수 있답니다](https://azure.microsoft.com/free).
 - Vite 앱을 [GitHub](https://github.com)에 Push 해주세요.
 - [Visual Studio Code](https://code.visualstudio.com)의 [SWA(Static Web Apps) 확장 프로그램](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurestaticwebapps)을 설치해주세요.
@@ -265,7 +259,6 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 3. GitHub/GitLab 계정을 연결하거나, 공개 리포지토리를 사용합니다.
 
 4. 프로젝트 이름과 브랜치를 지정합니다.
-
    - **Build Command**: `npm install && npm run build`
    - **Publish Directory**: `dist`
 
@@ -302,3 +295,6 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 ## xmit 정적 사이트 호스팅 {#xmit-static-site-hosting}
 
 [xmit](https://xmit.co)를 사용하여 정적 사이트를 배포하려면 이 [가이드](https://xmit.dev/posts/vite-quickstart/)를 따라주세요.
+  prettier@3.6.0:
+    resolution: {integrity: sha512-ujSB9uXHJKzM/2GBuE0hBOUgC77CN3Bnpqa+g80bkv3T3A93wL/xlzDATHhnhkzifz/UE2SNOvmbTz5hSkDlHw==}
+  prettier@3.6.0: {}
