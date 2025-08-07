@@ -45,6 +45,7 @@ const { data } = useSponsor()
       alt="Vite is made possible by our contributors, partner companies, and sponsors"
       width="58"
       height="55"
+      loading="lazy"
     />
     <h2>자유롭게 사용할 수 있는 오픈 소스</h2>
     <h4>
@@ -55,7 +56,7 @@ const { data } = useSponsor()
     <h4>제공</h4>
     <div class="voidzero">
       <a :href="voidZero.url" target="_blank">
-        <img :src="voidZero.img" />
+        <img :src="voidZero.img" alt="VoidZero logo" loading="lazy" />
       </a>
     </div>
 

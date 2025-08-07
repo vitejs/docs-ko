@@ -13,6 +13,7 @@ import {
   groupIconVitePlugin,
 } from 'vitepress-plugin-group-icons'
 import { buildEnd } from './buildEnd.config'
+import { markdownItImageSize } from 'markdown-it-image-size'
 
 const ogDescription = 'Vite, 프런트엔드 개발의 새로운 기준'
 const ogImage = 'https://ko.vite.dev/og-image.jpg'
@@ -499,6 +500,10 @@ export default defineConfig({
       md.use(markdownItFootnote)
       // @ts-ignore
       md.use(groupIconMdPlugin)
+      // @ts-ignore
+      md.use(markdownItImageSize, {
+        publicDir: path.resolve(import.meta.dirname, '../public')
+      })
     },
   },
   vite: {
