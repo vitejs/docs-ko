@@ -1,9 +1,9 @@
 # 런타임을 위한 환경 API {#environment-api-for-runtimes}
 
-:::info Release Candidate
-The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
+:::info 릴리즈 후보
+환경 API는 일반적으로 릴리즈 후보 단계에 있습니다. 생태계가 실험하고 이를 기반으로 구축할 수 있도록 주요 릴리즈 간 API의 안정성을 유지할 것입니다. 다만 [일부 특정 API](/changes/#considering)는 여전히 실험적인 것으로 간주됩니다.
 
-We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
+다운스트림 프로젝트들이 새로운 기능을 실험하고 검증할 시간을 가진 후, 향후 메이저 릴리즈에서 (잠재적인 주요 변경 사항과 함께) 이러한 새로운 API를 안정화할 계획입니다.
 
 리소스:
 
@@ -110,7 +110,7 @@ function createWorkerdDevEnvironment(
 }
 ```
 
-There are [multiple communication levels for the `DevEnvironment`](/guide/api-environment-frameworks#devenvironment-communication-levels). To make it easier for frameworks to write runtime agnostic code, we recommend to implement the most flexible communication level possible.
+[`DevEnvironment`를 위한 여러 통신 수준](/guide/api-environment-frameworks#devenvironment-communication-levels)이 있습니다. 프레임워크가 런타임에 무관한 코드를 작성하기 쉽도록, 가능한 한 가장 유연한 통신 수준을 구현하는 것을 권장합니다.
 
 ## `ModuleRunner` {#modulerunner}
 

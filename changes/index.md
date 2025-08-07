@@ -21,6 +21,6 @@ API 지원 중단, 제거, 그리고 변경 사항을 포함한 Vite 주요 변�
 
 ## 과거 변경 사항 {#past}
 
-The changes below have been done or reverted. They are no longer relevant in the current major version.
+아래 변경 사항들은 이미 완료되었거나 되돌려졌습니다. 현재 주요 버전에서는 더 이상 관련이 없습니다.
 
 - _아직 과거 변경 사항이 없습니다_

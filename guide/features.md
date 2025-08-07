@@ -113,7 +113,7 @@ Vite 스타터 템플릿은 TypeScript의 특정 버전과 설정만을 지원�
 
 ### Client Types {#client-types}
 
-Vite's default types are for its Node.js API. To shim the environment of client-side code in a Vite application, add a `d.ts` declaration file:
+Vite의 기본 타입들은 Node.js API를 위한 것입니다. Vite 애플리케이션의 클라이언트 사이드 코드 환경을 시뮬레이트하려면, `d.ts` 선언 파일을 추가해주세요:
 
 ```typescript
 /// <reference types="vite/client" />
@@ -313,7 +313,7 @@ npm add -D stylus
 
 Vue 싱글 파일 컴포넌트를 사용하는 경우, 설치 후 별 다른 설정 없이도 `<style lang="sass">`와 같은 CSS 전처리기를 바로 사용할 수 있습니다.
 
-Vite improves `@import` resolving for Sass and Less so that Vite aliases are also respected. In addition, relative `url()` references inside imported Sass/Less files that are in different directories from the root file are also automatically rebased to ensure correctness. Rebasing `url()` references that starts with a variable or a interpolation are not supported due to its API constraints.
+Vite는 Vite 별칭도 존중되도록 Sass와 Less에 대한 `@import` 해석을 개선합니다. 또한 루트 파일과 다른 디렉터리에 있는 가져온 Sass/Less 파일 내부의 상대적 `url()` 참조도 정확성을 보장하기 위해 자동으로 재정의됩니다. 변수나 보간으로 시작하는 `url()` 참조의 재정의는 API 제약으로 인해 지원되지 않습니다.
 
 다만 Stylus의 경우 API 충돌로 인해 Vite의 `@import` 별칭과 URL 재정의 기능이 제공되지 않습니다.
 

@@ -1,58 +1,58 @@
-# Migration from v6
+# v6에서 마이그레이션하기 {#migration-from-v6}
 
-## Node.js Support
+## Node.js 지원 {#node-js-support}
 
-Vite no longer supports Node.js 18, which reached its EOL. Node.js 20.19+ / 22.12+ is now required.
+Vite는 더 이상 수명이 종료된 Node.js 18을 지원하지 않습니다. 이제 Node.js 20.19+ / 22.12+ 버전이 필요합니다.
 
-## Default Browser Target change
+## 기본 브라우저 타깃 변경 {#default-browser-target-change}
 
-The default browser value of `build.target` is updated to a newer browser.
+`build.target`의 기본 브라우저 값이 더 최신 브라우저로 업데이트되었습니다.
 
 - Chrome 87 → 107
 - Edge 88 → 107
 - Firefox 78 → 104
 - Safari 14.0 → 16.0
 
-These browser versions align with [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available feature sets as of 2025-05-01. In other words, they were all released before 2022-11-01.
+이러한 브라우저 버전은 2025-05-01 기준으로 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available 기능 세트와 일치합니다. 즉, 모두 2022-11-01 이전에 출시된 버전들입니다.
 
-In Vite 5, the default target was named `'modules'`, but this is no longer available. Instead, a new default target `'baseline-widely-available'` is introduced.
+Vite 5에서는 기본 타깃이 `'modules'`로 명명되었지만, 이는 더 이상 사용할 수 없습니다. 대신 새로운 기본 타깃인 `'baseline-widely-available'`이 도입되었습니다.
 
-## General Changes
+## 일반적인 변경 사항 {#general-changes}
 
-### Removed Sass legacy API support
+### Sass 레거시 API 지원 제거 {#removed-sass-legacy-api-support}
 
-As planned, support for the Sass legacy API is removed. Vite now only supports the modern API. You can remove the `css.preprocessorOptions.sass.api` / `css.preprocessorOptions.scss.api` option.
+계획대로 Sass 레거시 API 지원이 제거되었습니다. Vite는 이제 모던 API만 지원합니다. `css.preprocessorOptions.sass.api` / `css.preprocessorOptions.scss.api` 옵션을 제거할 수 있습니다.
 
-## Removed deprecated features
+## 사용 중단된 기능 제거 {#removed-deprecated-features}
 
-- `splitVendorChunkPlugin` (deprecated in v5.2.7)
-  - This plugin was originally provided to ease migration to Vite v2.9.
-  - The `build.rollupOptions.output.manualChunks` option can be used to control the chunking behavior if needed.
-- Hook-level `enforce` / `transform` for `transformIndexHtml` (deprecated in v4.0.0)
-  - It was changed to align the interface with [Rollup's object hooks](https://rollupjs.org/plugin-development/#build-hooks:~:text=Instead%20of%20a%20function%2C%20hooks%20can%20also%20be%20objects.).
-  - `order` should be used instead of `enforce`, and `handler` should be used instead of `transform`.
+- `splitVendorChunkPlugin` (v5.2.7에서 사용 중단됨)
+  - 이 플러그인은 원래 Vite v2.9로의 마이그레이션을 쉽게 하기 위해 제공되었습니다.
+  - 필요한 경우 청크 동작을 제어하기 위해 `build.rollupOptions.output.manualChunks` 옵션을 사용할 수 있습니다.
+- `transformIndexHtml`에 대한 훅 수준 `enforce` / `transform` (v4.0.0에서 사용 중단됨)
+  - 이는 [Rollup의 객체 훅](https://rollupjs.org/plugin-development/#build-hooks:~:text=Instead%20of%20a%20function%2C%20hooks%20can%20also%20be%20objects.)과 인터페이스를 맞추기 위해 변경되었습니다.
+  - `enforce` 대신 `order`를 사용하고, `transform` 대신 `handler`를 사용해야 합니다.
 
-## Advanced
+## 고급 {#advanced}
 
-There are other breaking changes which only affect few users.
+일부 사용자에게만 영향을 미치는 다른 호환성이 깨지는 변경 사항들이 있습니다.
 
 - [[#19979] chore: declare version range for peer dependencies](https://github.com/vitejs/vite/pull/19979)
-  - Specified the peer dependencies version range for CSS preprocessors.
+  - CSS 전처리기에 대한 피어 디펜던시 버전 범위를 명시했습니다.
 - [[#20013] refactor: remove no-op `legacy.proxySsrExternalModules`](https://github.com/vitejs/vite/pull/20013)
-  - `legacy.proxySsrExternalModules` property had no effect since Vite 6. It is now removed.
+  - `legacy.proxySsrExternalModules` 프로퍼티는 Vite 6부터 효과가 없었습니다. 이제 제거되었습니다.
 - [[#19985] refactor!: remove deprecated no-op type only properties](https://github.com/vitejs/vite/pull/19985)
-  - The following unused properties are now removed: `ModuleRunnerOptions.root`, `ViteDevServer._importGlobMap`, `ResolvePluginOptions.isFromTsImporter`, `ResolvePluginOptions.getDepsOptimizer`, `ResolvePluginOptions.shouldExternalize`, `ResolvePluginOptions.ssrConfig`
+  - 다음과 같은 사용되지 않는 프로퍼티들이 제거되었습니다: `ModuleRunnerOptions.root`, `ViteDevServer._importGlobMap`, `ResolvePluginOptions.isFromTsImporter`, `ResolvePluginOptions.getDepsOptimizer`, `ResolvePluginOptions.shouldExternalize`, `ResolvePluginOptions.ssrConfig`
 - [[#19986] refactor: remove deprecated env api properties](https://github.com/vitejs/vite/pull/19986)
-  - These properties were deprecated from the beginning. It is now removed.
+  - 이러한 프로퍼티들은 처음부터 사용 중단되었습니다. 이제 제거되었습니다.
 - [[#19987] refactor!: remove deprecated `HotBroadcaster` related types](https://github.com/vitejs/vite/pull/19987)
-  - These types were introduced as part of the now-deprecated Runtime API. It is now removed: `HMRBroadcaster`, `HMRBroadcasterClient`, `ServerHMRChannel`, `HMRChannel`
+  - 이러한 타입들은 현재 사용 중단된 Runtime API의 일부로 도입되었습니다. 이제 제거되었습니다: `HMRBroadcaster`, `HMRBroadcasterClient`, `ServerHMRChannel`, `HMRChannel`
 - [[#19996] fix(ssr)!: don't access `Object` variable in ssr transformed code](https://github.com/vitejs/vite/pull/19996)
-  - `__vite_ssr_exportName__` is now required for the module runner runtime context.
+  - 모듈 러너 런타임 컨텍스트에 대해 `__vite_ssr_exportName__`이 이제 필요합니다.
 - [[#20045] fix: treat all `optimizeDeps.entries` values as globs](https://github.com/vitejs/vite/pull/20045)
-  - `optimizeDeps.entries` now does not receive literal string paths. Instead, it always receives globs.
+  - `optimizeDeps.entries`는 이제 리터럴 문자열 경로를 받지 않습니다. 대신 항상 glob을 받습니다.
 - [[#20222] feat: apply some middlewares before `configureServer` hook](https://github.com/vitejs/vite/pull/20222), [[#20224] feat: apply some middlewares before `configurePreviewServer` hook](https://github.com/vitejs/vite/pull/20224)
-  - Some middlewares are now applied before the `configureServer` / `configurePreviewServer` hook. Note that if you don't expect a certain route to apply the [`server.cors`](../config/server-options.md#server-cors) / [`preview.cors`](../config/preview-options.md#preview-cors) option, make sure to remove the related headers from the response.
+  - 일부 미들웨어가 이제 `configureServer` / `configurePreviewServer` 훅 이전에 적용됩니다. 특정 경로가 [`server.cors`](../config/server-options.md#server-cors) / [`preview.cors`](../config/preview-options.md#preview-cors) 옵션을 적용하지 않기를 원한다면, 응답에서 관련 헤더를 제거해야 합니다.
 
-## Migration from v5
+## v5에서 마이그레이션 {#migration-from-v5}
 
-Check the [Migration from v5 Guide](https://v6.vite.dev/guide/migration.html) in the Vite v6 docs first to see the needed changes to port your app to Vite 6, and then proceed with the changes on this page.
+먼저 Vite v6 문서의 [v5에서 마이그레이션하기 가이드](https://v6.vite.dev/guide/migration.html)를 확인해 앱을 Vite 6로 포팅하는 데 필요한 사항을 진행한 다음, 이 페이지의 변경 사항을 적용하세요.

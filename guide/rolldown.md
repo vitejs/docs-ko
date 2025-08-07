@@ -89,21 +89,21 @@ Vitepress나 다른 메타 프레임워크와 같이 Vite를 피어 디펜던시
 
 Rolldown은 Rollup 대체 목적으로 설계되었지만, 아직 구현 중인 기능과 의도적인 동작 차이가 있습니다. 자세한 목록은 정기적으로 업데이트되는 [이 GitHub PR](https://github.com/vitejs/rolldown-vite/pull/84#issue-2903144667)을 참고해 주세요.
 
-### Option Validation Warnings
+### 옵션 검증 경고 {#option-validation-warnings}
 
-Rolldown outputs an warning when unknown or invalid options are passed. Because some options available in Rollup are not supported by Rolldown, you may encounter warnings based on the options you or the meta framework you use set. Below, you can find an example of such an warning message:
+Rolldown은 알 수 없거나 유효하지 않은 옵션이 전달될 때 경고를 출력합니다. Rollup에서 사용할 수 있는 일부 옵션이 Rolldown에서 지원되지 않기 때문에, 사용자나 메타 프레임워크에서 설정한 옵션에 따라 경고가 발생할 수 있습니다. 다음은 이러한 경고 메시지의 예시입니다:
 
 > Warning validate output options.
 >
 > - For the "generatedCode". Invalid key: Expected never but received "generatedCode".
 
-If you don't pass the option in yourself, this must be fixed by the utilized framework.
+이러한 옵션을 직접 전달하지 않은 경우, 사용 중인 프레임워크에서 수정해야 합니다.
 
-### API Differences
+### API 차이점 {#api-differences}
 
-#### `manualChunks` to `advancedChunks`
+#### `manualChunks`에서 `advancedChunks`로 {#manualchunks-to-advancedchunks}
 
-While Rolldown has support for the `manualChunks` option that is also exposed by Rollup, it is marked deprecated. Instead of it, Rolldown offers a more fine-grained setting via the [`advancedChunks` option](https://rolldown.rs/guide/in-depth/advanced-chunks#advanced-chunks), which is more similar to webpack's `splitChunk`:
+Rolldown은 Rollup에서도 제공되는 `manualChunks` 옵션을 지원하지만, 이는 지원 중단으로 표시되어 있습니다. 대신 Rolldown은 webpack의 `splitChunk`와 더 유사한 [`advancedChunks` 옵션](https://rolldown.rs/guide/in-depth/advanced-chunks#advanced-chunks)을 통해 더 세밀한 설정을 제공합니다:
 
 ```js
 // Old configuration (Rollup)
@@ -145,15 +145,15 @@ Rolldown과 Oxc 덕분에 별칭(alias)이나 resolve 플러그인과 같은 다
 
 이를 테스트하려면 Vite 설정에서 `experimental.enableNativePlugin` 옵션을 `true`로 설정해 주세요.
 
-### Utilizing Oxc's React refresh transform
+### Oxc의 React refresh 변환 활용하기 {#utilizing-oxc-s-react-refresh-transform}
 
-`@vitejs/plugin-react` v5.0.0+ uses Oxc's React refresh transform. If you are not using any Babel plugins (including the React compiler), the full transform would now be done by Oxc and will improve the build performance without any changes other than updating `@vitejs/plugin-react`.
+`@vitejs/plugin-react` v5.0.0+는 Oxc의 React refresh 변환을 사용합니다. (React 컴파일러를 포함해) Babel 플러그인을 사용하지 않는다면, 이제 전체 변환이 Oxc에 의해 수행되며 `@vitejs/plugin-react` 업데이트 외에 다른 변경 없이도 빌드 성능이 향상됩니다.
 
-If you are using `@vitejs/plugin-react-swc` without SWC plugins and custom SWC options, you can switch to the `@vitejs/plugin-react` plugin to utilize Oxc.
+SWC 플러그인과 커스텀 SWC 옵션 없이 `@vitejs/plugin-react-swc`를 사용하고 있다면, Oxc를 활용하기 위해 `@vitejs/plugin-react` 플러그인으로 전환할 수 있습니다.
 
-::: details `@vitejs/plugin-react-oxc` plugin is deprecated
+::: details `@vitejs/plugin-react-oxc` 플러그인은 지원 중단됨
 
-Previously, we recommended using `@vitejs/plugin-react-oxc` to utilize Oxc's React refresh transform. However, we have merged the implementation into `@vitejs/plugin-react` so that it is easier to switch to `rolldown-vite`. `@vitejs/plugin-react-oxc` is now deprecated and will no longer be updated.
+이전에는 Oxc의 React refresh 변환을 활용하기 위해 `@vitejs/plugin-react-oxc`를 사용할 것을 권장했습니다. 그러나 `rolldown-vite`로 더 쉽게 전환할 수 있도록 구현을 `@vitejs/plugin-react`에 병합했습니다. `@vitejs/plugin-react-oxc`는 이제 지원이 중단되며 더 이상 업데이트되지 않습니다.
 
 :::
 
@@ -265,7 +265,7 @@ const plugin = {
 
 ::: tip
 
-Since Vite 7.0.0, `this.meta` is available in all hooks. In previous versions, `this.meta` was not available in Vite-specific hooks, such as the `config` hook.
+Vite 7.0.0부터 `this.meta`는 모든 훅에서 사용할 수 있습니다. 이전 버전에서는 `config` 훅과 같은 Vite 전용 훅에서 `this.meta`를 사용할 수 없었습니다.
 
 :::
 
@@ -287,15 +287,15 @@ if (vite.rolldownVersion) {
 
 ### Rolldown에서 옵션 검증 무시하기 {#ignoring-option-validation-in-rolldown}
 
-As [mentioned above](#option-validation-errors), Rolldown outputs a warning when unknown or invalid options are passed.
+[위에서 언급했듯이](#option-validation-warnings), Rolldown은 알 수 없거나 유효하지 않은 옵션이 전달될 때 경고를 출력합니다.
 
 이는 [앞서 설명했듯](#detecting-rolldown-vite) `rolldown-vite` 실행 여부 확인을 통해 조건부로 옵션을 전달하는 방식으로 해결할 수 있습니다.
 
 ### `transformWithEsbuild`는 `esbuild`를 별도로 설치해야 함 {#transformwithesbuild-requires-esbuild-to-be-installed-separately}
 
-Since Vite itself does not use `esbuild` any more, `esbuild` is now an optional peer dependency. If your plugin uses `transformWithEsbuild`, the plugin needs to add `esbuild` to its dependencies or the user needs to install it manually.
+Vite 자체에서 더 이상 `esbuild`를 사용하지 않기 때문에, `esbuild`는 이제 선택적 피어 디펜던시가 되었습니다. 플러그인에서 `transformWithEsbuild`를 사용하는 경우, 플러그인 디펜던시에 `esbuild`를 추가하거나 사용자가 직접 설치해야 합니다.
 
-The recommended migration is to use the newly exported `transformWithOxc` function, which utilizes Oxc instead of `esbuild`.
+권장되는 마이그레이션 방법은 `esbuild` 대신 Oxc를 사용하는 새로 익스포트된 `transformWithOxc` 함수를 사용하는 것입니다.
 
 ### `esbuild` 옵션을 위한 호환성 레이어 {#compatibility-layer-for-esbuild-options}
 
@@ -319,7 +319,7 @@ Rolldown은 Rust와 JavaScript 런타임 간 통신 오버헤드를 줄이기 �
 
 ::: tip
 
-[`@rolldown/pluginutils`](https://www.npmjs.com/package/@rolldown/pluginutils) exports some utilities for hook filters like `exactRegex` and `prefixRegex`.
+[`@rolldown/pluginutils`](https://www.npmjs.com/package/@rolldown/pluginutils)는 `exactRegex`나 `prefixRegex`와 같은 훅 필터를 위한 유틸리티들을 익스포트합니다.
 
 :::
 
@@ -342,4 +342,4 @@ const plugin = {
 }
 ```
 
-This is because [Rolldown supports non-JavaScript modules](https://rolldown.rs/guide/in-depth/module-types) and infers the module type from extensions unless specified.
+이는 [Rolldown이 JavaScript가 아닌 모듈을 지원하며](https://rolldown.rs/guide/in-depth/module-types), 명시적으로 지정하지 않는 한 확장자에서 모듈 타입을 추론하기 때문입니다.

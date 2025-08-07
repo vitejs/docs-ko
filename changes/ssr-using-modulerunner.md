@@ -1,4 +1,4 @@
-# SSR Using `ModuleRunner` API
+# ModuleRunner API를 사용하는 SSR {#ssr-using-modulerunner-api}
 
 ::: tip 피드백
 [환경 API 피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 피드백을 남겨주세요.
@@ -6,10 +6,10 @@
 
 `server.ssrLoadModule`이 [ModuleRunner](/guide/api-environment#modulerunner)를 통한 임포트로 대체되었습니다.
 
-Affected scope: `Vite Plugin Authors`
+영향을 받는 범위: `Vite 플러그인 개발자`
 
 ::: warning 지원 중단
-`ModuleRunner` was first introduced in `v6.0`. The deprecation of `server.ssrLoadModule` is planned for a future major. To identify your usage, set `future.removeSsrLoadModule` to `"warn"` in your vite config.
+`ModuleRunner`는 `v6.0`에서 처음 도입되었습니다. `server.ssrLoadModule`의 지원 중단은 향후 메이저 버전에서 계획되어 있습니다. 사용 현황을 확인하려면 Vite 설정에서 `future.removeSsrLoadModule`을 `"warn"`으로 설정하세요.
 :::
 
 ## 배경 {#motivation}
@@ -20,4 +20,4 @@ Affected scope: `Vite Plugin Authors`
 
 [프레임워크를 위한 환경 API 가이드](../guide/api-environment-frameworks.md)를 참고하세요.
 
-`server.ssrFixStacktrace` and `server.ssrRewriteStacktrace` does not have to be called when using the Module Runner APIs. The stack traces will be updated unless `sourcemapInterceptor` is set to `false`.
+Module Runner API를 사용할 때는 `server.ssrFixStacktrace` 및 `server.ssrRewriteStacktrace`를 호출할 필요가 없습니다. `sourcemapInterceptor`가 `false`로 설정되지 않는 한 스택 추적이 자동으로 업데이트됩니다.

@@ -4,7 +4,7 @@
 
 ## 브라우저 지원 현황 {#browser-compatibility}
 
-By default, the production bundle assumes a modern browser that is included in the [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available targets. The default browser support range is:
+기본적으로 프로덕션 번들은 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available 타겟에 포함된 모던 브라우저를 가정합니다. 기본 브라우저 지원 범위는 다음과 같습니다:
 
 <!-- Search for the `ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET` constant for more information -->
 

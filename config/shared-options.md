@@ -54,7 +54,7 @@ export default defineConfig({
 ```
 
 ::: tip 참고
-For TypeScript users, make sure to add the type declarations in the `vite-env.d.ts` file to get type checks and Intellisense.
+TypeScript 사용자의 경우, 타입 검사 및 IntelliSense를 위해 `vite-env.d.ts` 파일에 타입 선언을 추가하세요.
 
 예제:
 
@@ -227,8 +227,8 @@ CSS 모듈에 대한 설정입니다. 옵션들은 [postcss-modules](https://git
 CSS 전처리기에 전달할 옵션을 지정합니다. 파일 확장자는 옵션의 키로 사용됩니다. 전처리기에 대한 지원되는 옵션은 각각의 문서에서 찾을 수 있습니다:
 
 - `sass`/`scss`:
-  - Uses `sass-embedded` if installed, otherwise uses `sass`. For the best performance, it's recommended to install the `sass-embedded` package.
-  - [Options](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/)
+  - 설치되어 있다면 `sass-embedded`를, 그렇지 않다면 `sass`를 사용합니다. 최고의 성능을 위해서는 `sass-embedded` 패키지를 설치하는 것을 권장합니다.
+  - [옵션](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/)
 - `less`: [옵션](https://lesscss.org/usage/#less-options).
 - `styl`/`stylus`: [`define`](https://stylus-lang.com/docs/js.html#define-name-node)만 지원되며, 객체로 전달할 수 있습니다.
 
@@ -279,11 +279,11 @@ export default defineConfig({
 ## css.preprocessorMaxWorkers {#css-preprocessormaxworkers}
 
 - **타입:** `number | true`
-- **Default:** `true`
+- **기본값:** `true`
 
-Specifies the maximum number of threads CSS preprocessors can use. `true` means up to the number of CPUs minus 1. When set to `0`, Vite will not create any workers and will run the preprocessors in the main thread.
+CSS 전처리기가 사용할 수 있는 최대 스레드 수를 지정합니다. `true`는 CPU 수에서 1을 뺀 값까지를 의미합니다. `0`으로 설정하면 Vite는 워커를 생성하지 않고 메인 스레드에서 전처리기를 실행합니다.
 
-Depending on the preprocessor options, Vite may run the preprocessors on the main thread even if this option is not set to `0`.
+전처리기 옵션에 따라, 이 옵션이 `0`으로 설정되지 않았더라도 Vite가 메인 스레드에서 전처리기를 실행할 수 있습니다.
 
 ## css.devSourcemap {#css-devsourcemap}
 
@@ -466,7 +466,7 @@ export default defineConfig({
 - **타입:** `string | string[]`
 - **기본값:** `VITE_`
 
-Env variables starting with `envPrefix` will be exposed to your client source code via `import.meta.env`.
+`envPrefix`로 시작하는 환경 변수는 `import.meta.env`를 통해 클라이언트 소스 코드에서 노출됩니다.
 
 :::warning 보안 권고 사항
 `envPrefix`를 `''`로 설정해서는 안 됩니다. 이렇게 설정한 경우 모든 환경 변수가 노출되며, 이로 인해 예기치 않게 민감한 정보가 누출될 수 있습니다. 따라서 Vite는 `''`로 설정되었을 때 오류를 발생시킵니다.

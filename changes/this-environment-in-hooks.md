@@ -6,10 +6,10 @@
 
 Vite 6 이전에는 `client`와 `ssr` 두 가지 환경만 사용할 수 있었습니다. 플러그인 개발자는 `options.ssr` 인자를 통해 모듈을 처리할 때 `resolveId`, `load`, `transform` 플러그인 훅에서 이 두 환경을 구분했습니다. Vite 6에서는 Vite 애플리케이션이 필요한만큼 환경을 정의할 수 있게 되었습니다. 따라서 플러그인 컨텍스트에 `this.environment`를 도입해, 훅에서 현재 모듈의 환경과 상호작용 할 수 있도록 했습니다.
 
-Affected scope: `Vite Plugin Authors`
+영향 범위: `Vite 플러그인 작성자`
 
 ::: warning 지원 중단
-`this.environment` was introduced in `v6.0`. The deprecation of `options.ssr` is planned for a future major. At that point we'll start recommending migrating your plugins to use the new API. To identify your usage, set `future.removePluginHookSsrArgument` to `"warn"` in your vite config.
+`this.environment`는 `v6.0`에서 도입되었습니다. `options.ssr`의 지원 중단은 향후 메이저 버전에서 계획되어 있습니다. 그 시점에서 플러그인을 새로운 API로 마이그레이션하도록 권장할 예정입니다. 사용 현황을 확인하려면 Vite 설정에서 `future.removePluginHookSsrArgument`를 `"warn"`으로 설정하세요.
 :::
 
 ## 배경 {#motivation}
@@ -18,7 +18,7 @@ Affected scope: `Vite Plugin Authors`
 
 ## 마이그레이션 가이드 {#migration-guide}
 
-For the existing plugin to do a quick migration, replace the `options.ssr` argument with `this.environment.config.consumer === 'server'` in the `resolveId`, `load` and `transform` hooks:
+기존 플러그인을 빠르게 마이그레이션하려면 `resolveId`, `load`, `transform` 훅에서 `options.ssr` 인자를 `this.environment.config.consumer === 'server'`로 교체하세요:
 
 ```ts
 import { Plugin } from 'vite'
@@ -40,4 +40,4 @@ export function myPlugin(): Plugin {
 }
 ```
 
-For a more robust long term implementation, the plugin hook should handle for [multiple environments](/guide/api-environment-plugins.html#accessing-the-current-environment-in-hooks) using fine-grained environment options instead of relying on the environment name.
+더 견고한 장기적 구현을 위해서는 플러그인 훅이 환경 이름에 의존하지 않고 세분화된 환경 옵션을 사용하여 [여러 환경](/guide/api-environment-plugins.html#accessing-the-current-environment-in-hooks)을 처리해야 합니다.

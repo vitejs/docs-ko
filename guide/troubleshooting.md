@@ -146,15 +146,15 @@ HTML 파일 출력이 `file` 프로토콜로 열린 경우 다음 오류와 함�
 
 `http` 프로토콜로 파일에 액세스해야 합니다. 이를 달성하는 가장 쉬운 방법은 `npx vite preview`를 실행하는 것입니다.
 
-### No such file or directory error due to case sensitivity
+### 대소문자 구분으로 인한 No such file or directory 오류 {#no-such-file-or-directory-error-due-to-case-sensitivity}
 
-If you encounter errors like `ENOENT: no such file or directory` or `Module not found`, this often occurs when your project was developed on a case-insensitive filesystem (Windows / macOS) but built on a case-sensitive one (Linux). Please make sure that the imports have the correct casing.
+`ENOENT: no such file or directory` 또는 `Module not found`와 같은 오류가 발생하는 경우, 이는 대소문자를 구분하지 않는 파일 시스템(Windows / macOS)에서 개발되었지만 대소문자를 구분하는 시스템(Linux)에서 빌드될 때 자주 발생합니다. import 시 올바른 대소문자를 사용하고 있는지 확인하세요.
 
 ## 디펜던시 최적화 {#optimized-dependencies}
 
 ### 링크된 로컬 패키지의 경우 사전 번들링 된 디펜던시가 갱신되지 않음 {#outdated-pre-bundled-deps-when-linking-to-a-local-package}
 
-The hash key used to invalidate optimized dependencies depends on the package lock contents, the patches applied to dependencies, and the options in the Vite config file that affects the bundling of node modules. This means that Vite will detect when a dependency is overridden using a feature as [npm overrides](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#overrides), and re-bundle your dependencies on the next server start. Vite won't invalidate the dependencies when you use a feature like [npm link](https://docs.npmjs.com/cli/v9/commands/npm-link). In case you link or unlink a dependency, you'll need to force re-optimization on the next server start by using `vite --force`. We recommend using overrides instead, which are supported now by every package manager (see also [pnpm overrides](https://pnpm.io/9.x/package_json#pnpmoverrides) and [yarn resolutions](https://yarnpkg.com/configuration/manifest/#resolutions)).
+최적화된 디펜던시를 무효화하는 데 사용되는 해시 키는 패키지 락 파일 내용, 디펜던시에 적용된 패치, 그리고 node 모듈 번들링에 영향을 미치는 Vite 설정 파일의 옵션에 따라 달라집니다. 즉, Vite는 [npm overrides](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#overrides)와 같은 기능을 사용해 디펜던시가 재정의될 때 이를 감지하고, 다음 서버 시작 시 디펜던시를 다시 번들링합니다. 하지만 [npm link](https://docs.npmjs.com/cli/v9/commands/npm-link)와 같은 기능을 사용할 때는 Vite가 디펜던시를 무효화하지 않습니다. 디펜던시를 링크하거나 링크를 해제하는 경우, `vite --force`를 사용해 다음 서버 시작 시 최적화를 강제로 다시 실행해야 합니다. 대신 모든 패키지 매니저에서 지원되는 overrides 기능을 사용하는 것을 권장합니다([pnpm overrides](https://pnpm.io/9.x/package_json#pnpmoverrides) 및 [yarn resolutions](https://yarnpkg.com/configuration/manifest/#resolutions) 참고).
 
 ## 성능 병목현상 {#performance-bottlenecks}
 

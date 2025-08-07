@@ -1,9 +1,9 @@
 # 프레임워크를 위한 환경 API {#environment-api-for-frameworks}
 
-:::info Release Candidate
-The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
+:::info 릴리즈 후보
+환경 API는 일반적으로 릴리즈 후보 단계에 있습니다. 생태계가 실험하고 이를 기반으로 구축할 수 있도록 주요 릴리즈 간 API의 안정성을 유지할 것입니다. 다만 [일부 특정 API](/changes/#considering)는 여전히 실험적인 것으로 간주됩니다.
 
-We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
+다운스트림 프로젝트들이 새로운 기능을 실험하고 검증할 시간을 가진 후, 향후 메이저 릴리즈에서 (잠재적인 주요 변경 사항과 함께) 이러한 새로운 API를 안정화할 계획입니다.
 
 리소스:
 
@@ -13,13 +13,13 @@ We plan to stabilize these new APIs (with potential breaking changes) in a futur
 여러분의 피드백을 공유해주세요.
 :::
 
-## DevEnvironment Communication Levels
+## 개발 환경 통신 레벨 {#devenvironment-communication-levels}
 
-Since environments may run in different runtimes, communication against the environment may have constraints depending on the runtime. To allow frameworks to write runtime agnostic code easily, the Environment API provides three kinds of communication levels.
+환경은 다양한 런타임에서 실행될 수 있기 때문에, 환경과의 통신은 런타임에 따라 제약이 있을 수 있습니다. 프레임워크가 런타임에 구애받지 않는 코드를 쉽게 작성할 수 있도록, 환경 API는 세 종류의 통신 레벨을 제공합니다.
 
 ### `RunnableDevEnvironment`
 
-`RunnableDevEnvironment` is an environment that can communicate arbitrary values. The implicit `ssr` environment and other non-client environments use a `RunnableDevEnvironment` by default during dev. While this requires the runtime to be the same with the one the Vite server is running in, this works similarly with `ssrLoadModule` and allows frameworks to migrate and enable HMR for their SSR dev story. You can guard any runnable environment with an `isRunnableDevEnvironment` function.
+`RunnableDevEnvironment`는 임의의 값들을 통신할 수 있는 환경입니다. 암시적인 `ssr` 환경을 포함해, 클라이언트가 아닌 환경은 개발 중 기본적으로 `RunnableDevEnvironment`를 사용합니다. 이 경우 런타임이 Vite 서버가 실행되는 런타임과 동일해야 하지만, `ssrLoadModule`과 유사하게 작동하여 프레임워크가 SSR 개발 환경에서 HMR을 활성화하고 마이그레이션할 수 있도록 만듭니다. `isRunnableDevEnvironment` 함수를 사용하여 실행 가능한 환경을 확인할 수 있습니다.
 
 ```ts
 export class RunnableDevEnvironment extends DevEnvironment {
@@ -47,7 +47,7 @@ if (isRunnableDevEnvironment(server.environments.ssr)) {
 `runner`는 처음 접근할 때만 지연 평가됩니다. Vite는 `runner`가 생성될 때 `process.setSourceMapsEnabled`를 호출하거나, 이를 사용할 수 없는 경우 `Error.prepareStackTrace`를 오버라이드해 소스 맵 지원을 활성화한다는 점을 유의하세요.
 :::
 
-Given a Vite server configured in middleware mode as described by the [SSR setup guide](/guide/ssr#setting-up-the-dev-server), let's implement the SSR middleware using the environment API. Remember that it doesn't have to be called `ssr`, so we'll name it `server` in this example. Error handling is omitted.
+[SSR 설정 가이드](/guide/ssr#setting-up-the-dev-server)에서 설명한 대로 미들웨어 모드로 구성된 Vite 서버가 있다고 가정하고, 환경 API를 사용하여 SSR 미들웨어를 구현해보겠습니다. 환경 이름이 반드시 `ssr`일 필요는 없으므로, 이 예제에서는 `server`로 명명하겠습니다. 오류 처리는 생략했습니다.
 
 ```js
 import fs from 'node:fs'
@@ -103,7 +103,7 @@ app.use('*', async (req, res, next) => {
 })
 ```
 
-When using environments that support HMR (such as `RunnableDevEnvironment`), you should add `import.meta.hot.accept()` in your server entry file for optimal behavior. Without this, server file changes will invalidate the entire server module graph:
+HMR을 지원하는 환경(예: `RunnableDevEnvironment`)을 사용할 때는 최적의 동작을 위해 서버 엔트리 파일에 `import.meta.hot.accept()`를 추가해야 합니다. 이것이 없으면 서버 파일 변경 시 전체 서버 모듈 그래프가 무효화됩니다:
 
 ```js
 // src/entry-server.js
@@ -118,13 +118,13 @@ if (import.meta.hot) {
 
 :::info
 
-We are looking for feedback on [the `FetchableDevEnvironment` proposal](https://github.com/vitejs/vite/discussions/18191).
+[`FetchableDevEnvironment` 제안](https://github.com/vitejs/vite/discussions/18191)에 대한 피드백을 모으고 있습니다.
 
 :::
 
-`FetchableDevEnvironment` is an environment that can communicate with its runtime via the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch) interface. Since the `RunnableDevEnvironment` is only possible to implement in a limited set of runtimes, we recommend to use the `FetchableDevEnvironment` instead of the `RunnableDevEnvironment`.
+`FetchableDevEnvironment`는 [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch) 인터페이스를 통해 런타임과 통신할 수 있는 환경입니다. `RunnableDevEnvironment`는 제한된 런타임에서만 구현이 가능하기 때문에, `RunnableDevEnvironment` 대신 `FetchableDevEnvironment`를 사용하는 것을 권장합니다.
 
-This environment provides a standardized way of handling requests via the `handleRequest` method:
+이 환경은 `handleRequest` 메서드를 통해 요청을 처리하는 표준화된 방법을 제공합니다:
 
 ```ts
 import {
@@ -142,7 +142,7 @@ const server = await createServer({
         createEnvironment(name, config) {
           return createFetchableDevEnvironment(name, config, {
             handleRequest(request: Request): Promise<Response> | Response {
-              // handle Request and return a Response
+              // Request를 처리하고 Response를 반환
             },
           })
         },
@@ -151,7 +151,7 @@ const server = await createServer({
   },
 })
 
-// Any consumer of the environment API can now call `dispatchFetch`
+// 환경 API 소비자는 이제 `dispatchFetch`를 호출할 수 있습니다
 if (isFetchableDevEnvironment(server.environments.custom)) {
   const response: Response = await server.environments.custom.dispatchFetch(
     new Request('/request-to-handle'),
@@ -160,14 +160,14 @@ if (isFetchableDevEnvironment(server.environments.custom)) {
 ```
 
 :::warning
-Vite validates the input and output of the `dispatchFetch` method: the request must be an instance of the global `Request` class and the response must be the instance of the global `Response` class. Vite will throw a `TypeError` if this is not the case.
+Vite는 `dispatchFetch` 메서드의 입력과 출력을 검증합니다: 요청은 전역 `Request` 클래스의 인스턴스여야 하고, 응답은 전역 `Response` 클래스의 인스턴스여야 합니다. 이를 만족하지 않으면 Vite는 `TypeError`를 발생시킵니다.
 
-Note that although the `FetchableDevEnvironment` is implemented as a class, it is considered an implementation detail by the Vite team and might change at any moment.
+`FetchableDevEnvironment`가 클래스로 구현되어 있지만, Vite 팀은 이를 구현 세부사항으로 간주하며 언제든지 변경될 수 있습니다.
 :::
 
-### raw `DevEnvironment`
+### 기본 `DevEnvironment` {#raw-devenvironment}
 
-If the environment does not implement the `RunnableDevEnvironment` or `FetchableDevEnvironment` interfaces, you need to set up the communication manually.
+환경이 `RunnableDevEnvironment` 또는 `FetchableDevEnvironment` 인터페이스를 구현하지 않는 경우, 통신을 수동으로 설정해야 합니다.
 
 또한 작성한 코드가 사용자 모듈과 동일한 런타임에서 실행될 수 있다면(즉, Node.js 특정 API에 의존하지 않는다면), 가상 모듈을 사용할 수도 있습니다. 이 방식은 Vite API를 사용하는 측에서 모듈 값에 접근하는 코드를 생략할 수 있습니다.
 
@@ -323,7 +323,7 @@ export default {
 }
 ```
 
-Plugins can also define a `buildApp` hook. Order `'pre'` and `null` are executed before the configured `builder.buildApp`, and order `'post'` hooks are executed after it. `environment.isBuilt` can be used to check if an environment has already being build.
+플러그인도 `buildApp` 훅을 정의할 수 있습니다. `'pre'` 및 `null` 순서는 구성된 `builder.buildApp` 이전에 실행되고, `'post'` 순서의 훅은 그 이후에 실행됩니다. `environment.isBuilt`를 사용해 환경이 이미 빌드되었는지 확인할 수 있습니다.
 
 ## 환경에 구애받지 않는 코드 {#environment-agnostic-code}
 

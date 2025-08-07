@@ -1,4 +1,4 @@
-# Move to Per-environment APIs
+# 환경별 API로 마이그레이션 {#move-to-per-environment-apis}
 
 ::: tip 피드백
 [환경 API 피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 피드백을 남겨주세요.
@@ -6,10 +6,10 @@
 
 모듈 그래프 및 모듈 변환과 관련된 여러 `ViteDevServer` API가 `DevEnvironment` 인스턴스로 이동되었습니다.
 
-Affected scope: `Vite Plugin Authors`
+영향을 받는 범위: `Vite 플러그인 개발자`
 
 ::: warning 지원 중단
-The `Environment` instance was first introduced at `v6.0`. The deprecation of `server.moduleGraph` and other methods that are now in environments is planned for a future major. We don't recommend moving away from server methods yet. To identify your usage, set these in your vite config.
+`Environment` 인스턴스는 `v6.0`에서 처음 도입되었습니다. `server.moduleGraph` 및 현재 환경에 있는 다른 메서드들에 대한 지원 중단은 향후 메이저 버전에서 계획되어 있습니다. 아직은 서버 메서드에서 벗어나는 것을 권장하지 않습니다. 사용 현황을 확인하려면 Vite 설정에서 다음과 같이 설정하세요.
 
 ```ts
 future: {
