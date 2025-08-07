@@ -114,7 +114,7 @@ declare const __APP_VERSION__: string
 SSR 빌드의 경우, `build.rollupOptions.output`을 통해 구성된 ESM 빌드 결과물에 대해 중복된 코드의 제거가 진행되지 않습니다. 이를 해결하기 위해서는 ESM이 모듈 로드에 대한 플러그인 지원을 개선할 때까지 CJS(CommonJS) 빌드를 이용하는 것입니다.
 :::
 
-## resolve.conditions {#resolve-conditions}
+## resolve.conditions <NonInheritBadge />
 
 - **타입:** `string[]`
 - **기본값:** `['module', 'browser', 'development|production']` (`defaultClientConditions`)
@@ -140,7 +140,7 @@ SSR 빌드의 경우, `build.rollupOptions.output`을 통해 구성된 ESM 빌�
 
 참고로 `import`, `require`, `default` 조건은 요구사항이 충족되면 항상 적용됩니다.
 
-## resolve.mainFields {#resolve-mainfields}
+## resolve.mainFields <NonInheritBadge />
 
 - **타입:** `string[]`
 - **기본값:** `['browser', 'module', 'jsnext:main', 'jsnext']` (`defaultClientConditions`)

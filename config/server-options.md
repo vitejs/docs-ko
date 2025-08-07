@@ -122,7 +122,7 @@ export default defineConfig({
 
 참고로 [`base`](/config/shared-options.md#base)가 비상대적(Non-relative)인 경우, 각 키에 `base`를 접두사로 붙여야 합니다.
 
-이 옵션은 [`http-proxy`](https://github.com/http-party/node-http-proxy#options)를 확장합니다. 추가 옵션은 [여기](https://github.com/vitejs/vite/blob/main/packages/vite/src/node/server/middlewares/proxy.ts#L13)를 참고해 주세요.
+Extends [`http-proxy-3`](https://github.com/sagemathinc/http-proxy-3#options). Additional options are [here](https://github.com/vitejs/vite/blob/main/packages/vite/src/node/server/middlewares/proxy.ts#L13).
 
 특정 상황(예: 서버 내부에서 사용되는 [connect](https://github.com/senchalabs/connect) 앱에 커스텀 미들웨어 추가)에서는 개발 서버를 직접 구성해야 할 수도 있습니다. 이를 위해서는 [플러그인](/guide/using-plugins.html)을 작성하고, [configureServer](/guide/api-plugin.html#configureserver) 훅을 이용해야 합니다. 자세한 것은 각 문서를 참고해주세요.
 

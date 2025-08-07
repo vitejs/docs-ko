@@ -4,7 +4,7 @@
 
 별도로 명시되지 않은 한, 이 섹션의 옵션들은 개발 환경에서만 사용되는 디펜던시 최적화 도구에만 적용됩니다.
 
-## optimizeDeps.entries {#optimizedeps-entries}
+## optimizeDeps.entries <NonInheritBadge />
 
 - **타입:** `string | string[]`
 
@@ -12,7 +12,7 @@
 
 If neither of these fit your needs, you can specify custom entries using this option - the value should be a [`tinyglobby` pattern](https://github.com/SuperchupuDev/tinyglobby) or array of patterns that are relative from Vite project root. This will overwrite default entries inference. Only `node_modules` and `build.outDir` folders will be ignored by default when `optimizeDeps.entries` is explicitly defined. If other folders need to be ignored, you can use an ignore pattern as part of the entries list, marked with an initial `!`. `node_modules` will not be ignored for patterns that explicitly include the string `node_modules`.
 
-## optimizeDeps.exclude {#optimizedeps-exclude}
+## optimizeDeps.exclude <NonInheritBadge />
 
 - **타입:** `string[]`
 
@@ -33,7 +33,7 @@ export default defineConfig({
 
 :::
 
-## optimizeDeps.include {#optimizedeps-include}
+## optimizeDeps.include <NonInheritBadge />
 
 - **타입:** `string[]`
 
@@ -51,7 +51,7 @@ export default defineConfig({
 })
 ```
 
-## optimizeDeps.esbuildOptions {#optimizedeps-esbuildoptions}
+## optimizeDeps.esbuildOptions <NonInheritBadge />
 
 - **타입:** [`Omit`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys)`<`[`EsbuildBuildOptions`](https://esbuild.github.io/api/#general-options)`,
 | 'bundle'
@@ -72,20 +72,20 @@ export default defineConfig({
 - `external`은 생략됩니다. 이 대신 Vite의 `optimizeDeps.exclude` 옵션을 사용합니다.
 - `plugins`는 Vite의 디펜던시 플러그인과 병합됩니다.
 
-## optimizeDeps.force {#optimizedeps-force}
+## optimizeDeps.force <NonInheritBadge />
 
 - **타입:** `boolean`
 
 `true`로 설정하면 최적화되어 캐시된 디펜던시들을 무시하고, 디펜던시 사전 번들링을 강제로 실행합니다.
 
-## optimizeDeps.noDiscovery
+## optimizeDeps.noDiscovery <NonInheritBadge />
 
 - **Type:** `boolean`
 - **Default:** `false`
 
 When set to `true`, automatic dependency discovery will be disabled and only dependencies listed in `optimizeDeps.include` will be optimized. CJS-only dependencies must be present in `optimizeDeps.include` during dev.
 
-## optimizeDeps.holdUntilCrawlEnd {#optimizedeps-holduntilcrawlend}
+## optimizeDeps.holdUntilCrawlEnd <NonInheritBadge />
 
 - **실험적 기능**: [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/15834)
 - **타입:** `boolean`
@@ -93,7 +93,7 @@ When set to `true`, automatic dependency discovery will be disabled and only dep
 
 이 옵션이 활성화되어 있으면 콜드 스타트 시 모든 정적 에셋이 크롤링될 때까지 디펜던시 최적화가 완료되지 않습니다. 이는 크롤링 도중 새로운 디펜던시가 발견되어 공통 청크를 다시 만들어야 하는 경우 전체 페이지를 다시 로드해야 하는 상황을 피할 수 있습니다(자세한 설명은 [이 코멘트](https://github.com/vitejs/vite/pull/8869#issuecomment-1172902125)를 참고해 주세요. - 옮긴이). 만약 디펜던시 스캐너로 `include`에 정의된 목록을 포함해 모든 디펜던시를 찾을 수 있다면, 브라우저가 병렬로 더 많은 요청을 처리할 수 있도록 이 옵션을 비활성화하는 것이 좋습니다.
 
-## optimizeDeps.disabled {#optimizedeps-disabled}
+## optimizeDeps.disabled <NonInheritBadge />
 
 - **지원 중단 예정**
 - **실험적 기능:** [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/13839)
@@ -108,7 +108,7 @@ When set to `true`, automatic dependency discovery will be disabled and only dep
 빌드 중 디펜던시를 최적화하는 것은 **실험적** 기능이었습니다. 이 전략을 시도하는 프로젝트는 `build.commonjsOptions: { include: [] }`를 사용해 `@rollup/plugin-commonjs`를 제거해야 합니다. 이렇게 했다면 번들링 중 CJS 패키지를 지원하기 위해 다시 활성화하도록 안내하는 경고가 표시됩니다.
 :::
 
-## optimizeDeps.needsInterop {#optimizedeps-needsinterop}
+## optimizeDeps.needsInterop <NonInheritBadge />
 
 - **실험적 기능**
 - **타입:** `string[]`

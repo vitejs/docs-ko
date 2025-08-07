@@ -6,7 +6,7 @@
 
 ## 들어가기 전에 {#overview}
 
-Vite (French word for "quick", pronounced `/vit/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="/voice.svg?no-inline#voice" /></svg></button>, like "veet") is a build tool that aims to provide a faster and leaner development experience for modern web projects. It consists of two major parts:
+Vite (French word for "quick", pronounced `/vit/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" aria-label="pronounce" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="/voice.svg?no-inline#voice" /></svg></button>, like "veet") is a build tool that aims to provide a faster and leaner development experience for modern web projects. It consists of two major parts:
 
 - [네이티브 ES 모듈](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 통해 소스 파일을 제공하는 개발 서버로, [다양한 기능](./features)과 놀라울 정도로 빠른 [Hot Module Replacement(HMR)](./features#hot-module-replacement)를 제공합니다.
 
@@ -43,10 +43,6 @@ For production builds, Vite by default targets [Baseline](https://web-platform-d
 
 ## 첫 Vite 프로젝트 만들어보기 {#scaffolding-your-first-vite-project}
 
-::: tip 호환성
-Vite requires [Node.js](https://nodejs.org/en/) version 20.19+, 22.12+. However, some templates require a higher Node.js version to work, please upgrade if your package manager warns about it.
-:::
-
 ::: code-group
 
 ```bash [npm]
@@ -72,6 +68,12 @@ $ deno init --npm vite
 :::
 
 이후에는 프롬프트 창에 출력된 메시지를 따라주세요.
+
+::: tip Compatibility Note
+Vite requires [Node.js](https://nodejs.org/en/) version 20.19+, 22.12+. However, some templates require a higher Node.js version to work, please upgrade if your package manager warns about it.
+:::
+
+:::: details Using create vite with command line options
 
 프로젝트의 이름이나 사용하려는 템플릿을 직접 지정할 수도 있습니다. 예를 들어, Vite + Vue 프로젝트를 만들고 싶다면 다음과 같이 입력해주세요:
 
@@ -103,6 +105,8 @@ $ deno init --npm vite my-vue-app --template vue
 또한 [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)에서 더욱 다양한 템플릿들에 대해 다루고 있습니다: `vanilla`, `vanilla-ts`, `vue`, `vue-ts`, `react`, `react-ts`, `react-swc`, `react-swc-ts`, `preact`, `preact-ts`, `lit`, `lit-ts`, `svelte`, `svelte-ts`, `solid`, `solid-ts`, `qwik`, `qwik-ts`.
 
 현재 디렉터리에 프로젝트를 생성하려면 프로젝트 이름으로 `.`을 사용하세요.
+
+::::
 
 ## 커뮤니티 템플릿 {#community-templates}
 
@@ -256,7 +260,7 @@ pnpm link --global # 이 단계에서는 선호하는 패키지 관리자를 사
 이후 Vite를 클론한 프로젝트 위에서 `pnpm link --global vite` 명령을 실행해 주세요(또는 `vite`를 전역적으로 링크하는 데 사용했던 패키지 관리자를 사용합니다). 이 작업 이후 개발 서버를 재시작(`yarn dev`)하게 되면, 클론된 Vite를 이용해 프로젝트를 진행할 수 있게 됩니다.
 
 ::: tip Vite를 사용하는 디펜던시
-디펜던시에서 간접적으로 사용되는 Vite 버전을 교체하려면, [npm overrides](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#overrides) 또는 [pnpm overrides](https://pnpm.io/package_json#pnpmoverrides)를 사용해야 합니다.
+To replace the Vite version used by dependencies transitively, you should use [npm overrides](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#overrides) or [pnpm overrides](https://pnpm.io/9.x/package_json#pnpmoverrides).
 :::
 
 ## 커뮤니티 {#community}

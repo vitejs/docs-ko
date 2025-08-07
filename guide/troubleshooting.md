@@ -146,11 +146,15 @@ HTML 파일 출력이 `file` 프로토콜로 열린 경우 다음 오류와 함�
 
 `http` 프로토콜로 파일에 액세스해야 합니다. 이를 달성하는 가장 쉬운 방법은 `npx vite preview`를 실행하는 것입니다.
 
+### No such file or directory error due to case sensitivity
+
+If you encounter errors like `ENOENT: no such file or directory` or `Module not found`, this often occurs when your project was developed on a case-insensitive filesystem (Windows / macOS) but built on a case-sensitive one (Linux). Please make sure that the imports have the correct casing.
+
 ## 디펜던시 최적화 {#optimized-dependencies}
 
 ### 링크된 로컬 패키지의 경우 사전 번들링 된 디펜던시가 갱신되지 않음 {#outdated-pre-bundled-deps-when-linking-to-a-local-package}
 
-최적화된 디펜던시를 무효화하는 데 사용되는 해시 키는 패키지 락 내용, 디펜던시에 적용된 패치, 그리고 노드 모듈 번들링에 영향을 미치는 Vite 설정 파일의 옵션에 따라 달라집니다. 이는 Vite가 [npm overrides](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#overrides)와 같은 기능을 사용하여 디펜던시를 덮어쓸 때 디펜던시를 다시 번들링하고 다음 서버 시작 시에 감지할 수 있다는 것을 의미합니다. 다만 Vite는 [npm link](https://docs.npmjs.com/cli/v9/commands/npm-link)와 같은 기능을 사용할 때는 디펜던시를 무효화하지 않습니다. 따라서 디펜던시를 링크하거나 링크 해제하는 경우 `vite --force`를 사용하여 다음 서버 시작 시에 강제로 다시 최적화해야 합니다. 우리는 대신 모든 패키지 매니저에서 지원하는 오버라이드 기능을 사용하는 것을 권장합니다([pnpm overrides](https://pnpm.io/package_json#pnpmoverrides) 및 [yarn resolutions](https://yarnpkg.com/configuration/manifest/#resolutions)를 참고하세요).
+The hash key used to invalidate optimized dependencies depends on the package lock contents, the patches applied to dependencies, and the options in the Vite config file that affects the bundling of node modules. This means that Vite will detect when a dependency is overridden using a feature as [npm overrides](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#overrides), and re-bundle your dependencies on the next server start. Vite won't invalidate the dependencies when you use a feature like [npm link](https://docs.npmjs.com/cli/v9/commands/npm-link). In case you link or unlink a dependency, you'll need to force re-optimization on the next server start by using `vite --force`. We recommend using overrides instead, which are supported now by every package manager (see also [pnpm overrides](https://pnpm.io/9.x/package_json#pnpmoverrides) and [yarn resolutions](https://yarnpkg.com/configuration/manifest/#resolutions)).
 
 ## 성능 병목현상 {#performance-bottlenecks}
 

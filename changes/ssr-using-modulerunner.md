@@ -19,3 +19,5 @@ Affected scope: `Vite Plugin Authors`
 ## 마이그레이션 가이드 {#migration-guide}
 
 [프레임워크를 위한 환경 API 가이드](../guide/api-environment-frameworks.md)를 참고하세요.
+
+`server.ssrFixStacktrace` and `server.ssrRewriteStacktrace` does not have to be called when using the Module Runner APIs. The stack traces will be updated unless `sourcemapInterceptor` is set to `false`.

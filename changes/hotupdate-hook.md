@@ -9,12 +9,12 @@
 영향을 받는 범위: `Vite 플러그인 개발자`
 
 ::: warning 지원 중단
-`hotUpdate` was first introduced in `v6.0`. The deprecation of `handleHotUpdate` is planned for a future major. We don't yet recommend moving away from `handleHotUpdate` yet. If you want to experiment and give us feedback, you can use the `future.removePluginHookHandleHotUpdate` to `"warn"` in your vite config.
+`hotUpdate` was first introduced in `v6.0`. The deprecation of `handleHotUpdate` is planned for a future major. We don't recommend moving away from `handleHotUpdate` yet. If you want to experiment and give us feedback, you can use the `future.removePluginHookHandleHotUpdate` to `"warn"` in your vite config.
 :::
 
 ## 배경 {#motivation}
 
-[`handleHotUpdate` 훅](/guide/api-plugin.md#handlehotupdate)은 커스텀 HMR 업데이트 처리를 수행할 수 있게 해줍니다. 업데이트될 모듈 목록이 `HmrContext`로 전달됩니다:
+The [`handleHotUpdate` hook](/guide/api-plugin.md#handlehotupdate) allows to perform custom HMR update handling. A list of modules to be updated is passed in the `HmrContext`.
 
 ```ts
 interface HmrContext {

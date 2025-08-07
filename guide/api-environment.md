@@ -70,7 +70,7 @@ export default {
 }
 ```
 
-환경은 기본적으로 최상위 설정 옵션을 상속합니다(예: 새로운 `server`와 `edge` 환경은 `build.sourcemap: false` 옵션을 상속). 다만 `optimizeDeps`와 같은 일부 최상위 옵션은 서버 환경에서 기본값으로 잘 적용되지 않는 경우가 있어 `client` 환경에만 적용됩니다. 참고로 `client` 환경 역시 `environments.client`로 명시적인 구성이 가능하지만, 새로운 환경 추가 시 클라이언트 설정이 변경될 수 있기에 최상위 옵션 사용을 권장합니다.
+When not explicitly documented, environment inherits the configured top-level config options (for example, the new `server` and `edge` environments will inherit the `build.sourcemap: false` option). A small number of top-level options, like `optimizeDeps`, only apply to the `client` environment, as they don't work well when applied as a default to server environments. Those options have <NonInheritBadge /> badge in [the reference](/config/). The `client` environment can also be configured explicitly through `environments.client`, but we recommend to do it with the top-level options so the client config remains unchanged when adding new environments.
 
 `EnvironmentOptions` 인터페이스는 모든 환경별 옵션을 나타냅니다. `resolve`처럼 `build`와 `dev` 모두에 적용되는 환경 옵션이 있고, `DevEnvironmentOptions`와 `BuildEnvironmentOptions`처럼 개발 및 빌드별 옵션(`dev.warmup` 또는 `build.outDir`같은)이 있습니다. `optimizeDeps`같은 일부 옵션은 개발 시에만 적용되지만, 하위 호환성을 위해 `dev` 대신 최상위 레벨에 위치합니다.
 

@@ -12,7 +12,7 @@ Vite는 확립된 패턴을 제공하기 위해 노력하고 있습니다. 따�
 
 ::: tip
 플러그인을 학습하거나, 디버깅 또는 새롭게 작성할 때, 프로젝트에 [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect)를 설치하는 것이 좋습니다. 이 모듈은 `localhost:5173/__inspect/`를 통해 Vite 플러그인의 중간 상태를 검사할 수 있도록 도와줍니다. 더 자세한 사항은 [vite-plugin-inspect 문서](https://github.com/antfu/vite-plugin-inspect)를 참고해주세요.
-![vite-plugin-inspect](/images/vite-plugin-inspect.png)
+![vite-plugin-inspect](../images/vite-plugin-inspect.png)
 :::
 
 ## 플러그인 작성 규칙 {#conventions}
