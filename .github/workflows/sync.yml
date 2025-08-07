@@ -15,6 +15,13 @@ jobs:
   yuki-no:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
       # https://github.com/Gumball12/yuki-no/
       - uses: Gumball12/yuki-no@wip
         env:
