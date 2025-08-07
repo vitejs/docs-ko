@@ -218,6 +218,7 @@ Windows에서 프로젝트에 드라이브 간 링크가 있는 경우 Vite가 �
 - `subst` 명령으로 폴더에 연결된 가상 드라이브
 - `mklink` 명령으로 다른 드라이브에 대한 소프트 링크(Junction)/심볼릭 링크 (예: Yarn 글로벌 캐시)
 
+관련 이슈: [#10802](https://github.com/vitejs/vite/issues/10802)
 
 <script setup lang="ts">
 // redirect old links with hash to old version docs
@@ -233,4 +234,3 @@ if (typeof window !== "undefined") {
   }
 }
 </script>
-관련 이슈: [#10802](https://github.com/vitejs/vite/issues/10802)
