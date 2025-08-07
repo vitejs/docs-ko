@@ -45,7 +45,6 @@
    ```
 
    이후 Vite의 에셋에 접근할 수 있도록 아래 두 가지 옵션 중 하나를 적용해 주세요:
-
    - 백엔드 서버가 Vite 서버에 대한 에셋 요청을 프록시 하도록 설정
    - 에셋의 URL이 상대 경로 대신 백엔드 서버 URL을 사용해 가져와질 수 있도록 [`server.origin`](/config/server-options.md#server-origin) 옵션값을 설정
 
@@ -76,6 +75,10 @@
        "file": "assets/shared-ChJ_j-JJ.css",
        "src": "_shared-ChJ_j-JJ.css"
      },
+     "logo.svg": {
+       "file": "assets/logo-BuPIv-2h.svg",
+       "src": "logo.svg"
+     },
      "baz.js": {
        "file": "assets/baz-B2H3sXNv.js",
        "name": "baz",
@@ -101,11 +104,31 @@
    }
    ```
 
-   - 매니페스트는 `Record<name, chunk>` 구조를 가집니다.
-   - 진입점 또는 동적 진입점의 청크는 프로젝트 루트로부터의 상대적인 src 경로를 가집니다.
-   - 진입점이 아닌 청크의 경우, 키는 `_`로 접두사가 붙은 파일명이 됩니다.
-   - 청크에는 정적 및 동적 임포트에 대한 정보(둘 다 매니페스트에서 해당 청크를 매핑하는 키)와 CSS 및 에셋 파일(있는 경우)이 포함됩니다.
-   - [build.cssCodeSplit](/config/build-options.md#build-csscodesplit)이 `false`일 때 생성되는 CSS 파일 키는 `style.css` 입니다.
+   The manifest has a `Record<name, chunk>` structure where each chunk follows the `ManifestChunk` interface:
+
+   ```ts
+   interface ManifestChunk {
+     src?: string
+     file: string
+     css?: string[]
+     assets?: string[]
+     isEntry?: boolean
+     name?: string
+     names?: string[]
+     isDynamicEntry?: boolean
+     imports?: string[]
+     dynamicImports?: string[]
+   }
+   ```
+
+   Each entry in the manifest represents one of the following:
+   - **Entry chunks**: Generated from files specified in [`build.rollupOptions.input`](https://rollupjs.org/configuration-options/#input). These chunks have `isEntry: true` and their key is the relative src path from project root.
+   - **Dynamic entry chunks**: Generated from dynamic imports. These chunks have `isDynamicEntry: true` and their key is the relative src path from project root.
+   - **Non-entry chunks**: Their key is the base name of the generated file prefixed with `_`.
+   - **Asset chunks**: Generated from imported assets like images, fonts. Their key is the relative src path from project root.
+   - **CSS files**: When [`build.cssCodeSplit`](/config/build-options.md#build-csscodesplit) is `false`, a single CSS file is generated with the key `style.css`. When `build.cssCodeSplit` is not `false`, the key is generated similar to JS chunks (i.e. entry chunks will not have `_` prefix and non-entry chunks will have `_` prefix).
+
+   Chunks will contain information on their static and dynamic imports (both are keys that map to the corresponding chunk in the manifest), and also their corresponding CSS and asset files (if any).
 
 4. 해시된 파일 이름으로 링크를 렌더링하거나 지시문을 미리 로드하기 위해 이 파일을 사용할 수 있습니다.
 
@@ -130,15 +153,13 @@
    ```
 
    구체적으로, HTML을 생성하는 백엔드는 매니페스트 파일과 진입점이 주어졌을 때
-   다음 태그를 포함해야 합니다:
-
-   - 진입점 청크의 `css` 목록에 있는 각 파일에 대한 `<link rel="stylesheet">` 태그
-   - 진입점의 `imports` 목록에 있는 모든 청크를 재귀적으로 따라가며,
-     임포트된 청크 내 CSS 파일에 대한 `<link rel="stylesheet">` 태그
-   - 진입점 청크의 `file` 키에 대한 태그
-     (JavaScript는 `<script type="module">`, CSS는 `<link rel="stylesheet">`)
-   - 선택 사항으로, 진입점의 `imports` 목록에 있는 JavaScript 청크를 재귀적으로 따라가며,
-     임포트된 청크의 `file`에 대한 `<link rel="modulepreload">` 태그
+   file and an entry point. Note that following this order is recommended for optimal performance:
+   1. A `<link rel="stylesheet">` tag for each file in the entry point chunk's `css` list (if it exists)
+   2. Recursively follow all chunks in the entry point's `imports` list and include a
+      `<link rel="stylesheet">` tag for each CSS file of each imported chunk's `css` list (if it exists).
+   3. A tag for the `file` key of the entry point chunk. This can be `<script type="module">` for JavaScript, `<link rel="stylesheet">` for CSS.
+   4. Optionally, `<link rel="modulepreload">` tag for the `file` of each imported JavaScript
+      chunk, again recursively following the imports starting from the entry point chunk.
 
    위 예시 매니페스트를 예로 들자면, 진입점 `views/foo.js`에 대해 다음 태그가 포함되어야 합니다.
 
