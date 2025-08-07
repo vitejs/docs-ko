@@ -254,7 +254,7 @@ export default defineConfig({
 
 [chokidar](https://github.com/paulmillr/chokidar/tree/3.6.0#api)에 전달할 파일 시스템 감시자(Watcher) 옵션입니다.
 
-Vite 서버 감시자는 기본적으로 `root`를 감시하고, `.git/`, `node_modules/`, 그리고 Vite의 `cacheDir` 및 `build.outDir` 디렉터리는 건너뜁니다. 감시하는 파일을 업데이트하면, Vite는 HMR을 적용하고, 필요한 경우에만 페이지를 업데이트합니다.
+The Vite server watcher watches the `root` and skips the `.git/`, `node_modules/`, `test-results/`, and Vite's `cacheDir` and `build.outDir` directories by default. When updating a watched file, Vite will apply HMR and update the page only if needed.
 
 `null`로 설정하면 파일을 감시하지 않습니다. `server.watcher`는 (Node.js `EventEmitter`과)호환되는 이벤트 객체(Emitter)를 제공하지만, `add` 또는 `unwatch`를 호출해도 아무런 효과가 없습니다.
 

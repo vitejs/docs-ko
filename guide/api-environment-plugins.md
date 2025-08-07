@@ -1,7 +1,9 @@
 # 플러그인을 위한 환경 API {#environment-api-for-plugins}
 
-:::warning 실험적 기능
-환경 API는 실험적 기능입니다. 생태계가 충분히 검증하고 확장할 수 있도록 Vite 6에서는 API를 안정적으로 유지하고자 합니다. Vite 7에서 잠재적 주요 변경 사항과 함께 새로운 API를 안정화할 계획입니다.
+:::info Release Candidate
+The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
+
+We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
 
 리소스:
 
@@ -126,6 +128,29 @@ interface HotUpdateOptions {
   }
   ```
 
+## Per-environment State in Plugins
+
+Given that the same plugin instance is used for different environments, the plugin state needs to be keyed with `this.environment`. This is the same pattern the ecosystem has already been using to keep state about modules using the `ssr` boolean as key to avoid mixing client and ssr modules state. A `Map<Environment, State>` can be used to keep the state for each environment separately. Note that for backward compatibility, `buildStart` and `buildEnd` are only called for the client environment without the `perEnvironmentStartEndDuringDev: true` flag.
+
+```js
+function PerEnvironmentCountTransformedModulesPlugin() {
+  const state = new Map<Environment, { count: number }>()
+  return {
+    name: 'count-transformed-modules',
+    perEnvironmentStartEndDuringDev: true,
+    buildStart() {
+      state.set(this.environment, { count: 0 })
+    },
+    transform(id) {
+      state.get(this.environment).count++
+    },
+    buildEnd() {
+      console.log(this.environment.name, state.get(this.environment).count)
+    }
+  }
+}
+```
+
 ## 환경별 플러그인 {#per-environment-plugins}
 
 플러그인은 `applyToEnvironment` 함수로 적용할 환경을 정의할 수 있습니다.
@@ -184,6 +209,8 @@ export default defineConfig({
 })
 ```
 
+The `applyToEnvironment` hook is called at config time, currently after `configResolved` due to projects in the ecosystem modifying the plugins in it. Environment plugins resolution may be moved before `configResolved` in the future.
+
 ## 빌드 훅에서의 환경 {#environment-in-build-hooks}
 
 개발 단계에서와 마찬가지로, 빌드 시에도 플러그인 훅은 `ssr` 불리언 값 대신 환경 인스턴스를 전달받습니다.
@@ -198,7 +225,7 @@ Vite 6 이전에는 플러그인 파이프라인이 개발과 빌드 단계에�
 
 따라서 프레임워크는 `client` 빌드와 `ssr` 빌드 간 정보를 공유하기 위해 매니페스트 파일을 파일 시스템에 작성해 공유해야 했습니다. Vite 6에서는 모든 환경에 대한 빌드를 단일 프로세스에서 수행하므로, 플러그인 파이프라인과 환경 간 통신 시 개발 단계에서와 같이 메모리를 이용할 수 있게 되었습니다.
 
-향후 메이저 버전(Vite 7 또는 8)에서 완벽하게 동일한 동작을 목표로 하고 있습니다:
+In a future major, we could have complete alignment:
 
 - **개발과 빌드 모두:** 플러그인이 공유되며, [환경별 필터링 됨](#per-environment-plugins)
 

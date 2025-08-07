@@ -54,7 +54,7 @@ export default defineConfig({
 ```
 
 ::: tip 참고
-TypeScript를 사용할 때 타입 체크 및 인텔리센스를 활성화하고자 한다면, `env.d.ts` 또는 `vite-env.d.ts` 파일에 해당 타입을 선언해줘야 합니다.
+For TypeScript users, make sure to add the type declarations in the `vite-env.d.ts` file to get type checks and Intellisense.
 
 예제:
 
@@ -227,9 +227,8 @@ CSS 모듈에 대한 설정입니다. 옵션들은 [postcss-modules](https://git
 CSS 전처리기에 전달할 옵션을 지정합니다. 파일 확장자는 옵션의 키로 사용됩니다. 전처리기에 대한 지원되는 옵션은 각각의 문서에서 찾을 수 있습니다:
 
 - `sass`/`scss`:
-  - `api: "modern-compiler" | "modern" | "legacy"`를 통해 사용할 sass API를 선택합니다(기본값은 `sass-embedded`가 설치된 경우 `"modern-compiler"`, 그렇지 않으면 `"modern"`). 최상의 성능을 위해서는 `sass-embedded` 패키지와 함께 `api: "modern-compiler"`를 사용하는 것이 권장됩니다. `"legacy"` API는 더 이상 사용되지 않으며 Vite 7에서 제거될 예정입니다.
-  - [옵션 (modern)](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/)
-  - [옵션 (legacy)](https://sass-lang.com/documentation/js-api/interfaces/LegacyStringOptions).
+  - Uses `sass-embedded` if installed, otherwise uses `sass`. For the best performance, it's recommended to install the `sass-embedded` package.
+  - [Options](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/)
 - `less`: [옵션](https://lesscss.org/usage/#less-options).
 - `styl`/`stylus`: [`define`](https://stylus-lang.com/docs/js.html#define-name-node)만 지원되며, 객체로 전달할 수 있습니다.
 
@@ -248,7 +247,6 @@ export default defineConfig({
         },
       },
       scss: {
-        api: 'modern-compiler', // 또는 "modern", "legacy"
         importers: [
           // ...
         ],
@@ -280,11 +278,12 @@ export default defineConfig({
 
 ## css.preprocessorMaxWorkers {#css-preprocessormaxworkers}
 
-- **실험적 기능:** [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/15835)
 - **타입:** `number | true`
-- **기본값:** `0` (워커를 생성하지 않고 메인 스레드에서 실행)
+- **Default:** `true`
 
-이 옵션을 설정하면 CSS 전처리기는 가능한 경우 워커에서 실행됩니다. `true`는 CPU 수에서 1을 뺀 값입니다.
+Specifies the maximum number of threads CSS preprocessors can use. `true` means up to the number of CPUs minus 1. When set to `0`, Vite will not create any workers and will run the preprocessors in the main thread.
+
+Depending on the preprocessor options, Vite may run the preprocessors on the main thread even if this option is not set to `0`.
 
 ## css.devSourcemap {#css-devsourcemap}
 
@@ -467,7 +466,7 @@ export default defineConfig({
 - **타입:** `string | string[]`
 - **기본값:** `VITE_`
 
-`envPrefix`로 시작하는 환경 변수는 import.meta.env를 통해 소스 코드에서 접근할 수 있습니다.
+Env variables starting with `envPrefix` will be exposed to your client source code via `import.meta.env`.
 
 :::warning 보안 권고 사항
 `envPrefix`를 `''`로 설정해서는 안 됩니다. 이렇게 설정한 경우 모든 환경 변수가 노출되며, 이로 인해 예기치 않게 민감한 정보가 누출될 수 있습니다. 따라서 Vite는 `''`로 설정되었을 때 오류를 발생시킵니다.

@@ -4,37 +4,6 @@
 
 이 글이 제안하는 해결책이 잘 동작하지 않는다면 [GitHub Discussions](https://github.com/vitejs/vite/discussions)이나 [Vite Land Discord](https://chat.vite.dev)의 `#help` 채널에 질문을 게시해 보세요.
 
-## CJS {#cjs}
-
-### Vite CJS Node API 사용 중단 {#vite-cjs-node-api-deprecated}
-
-Node API를 이용한 CJS 빌드는 더 이상 지원되지 않으며 Vite 6에서 제거될 예정입니다. 자세한 내용은 [GitHub discussion](https://github.com/vitejs/vite/discussions/13928)을 참조하세요. 파일 또는 프레임워크를 업데이트하여 ESM 빌드를 가져오도록 해야 합니다.
-
-표준 Vite 프로젝트에서 다음을 확인해 주세요:
-
-1. `vite.config.js` 파일에서 ESM 문법을 사용하고 있습니다.
-2. 가장 가까운 `package.json` 파일에 `"type": "module"`이 있거나 `.mjs`/`.mts` 확장자(예: `vite.config.mjs` 또는 `vite.config.mts`)를 사용하고 있습니다.
-
-다른 프로젝트의 경우, 몇 가지 일반적인 접근 방식이 있습니다:
-
-- **ESM을 기본값으로 설정하고, 필요한 경우 CJS를 사용:** 프로젝트 `package.json`에 `"type": "module"`을 추가하세요. 이후 모든 `*.js` 파일은 ESM으로 해석되며 ESM 문법을 사용해야 합니다. 다만 확장자가 `.cjs`인 파일은 CJS로 해석됩니다.
-- **CJS를 기본값으로 유지하고, 필요한 경우 ESM을 사용:** 프로젝트 `package.json`에 `"type": "module"`이 없다면, 모든 `*.js` 파일은 CJS로 해석됩니다. 다만 확장자가 `.mjs`인 파일은 ESM으로 해석됩니다.
-- **Vite를 동적으로 임포트:** CJS를 계속 사용해야 하는 경우, `import('vite')`를 사용하여 Vite를 동적으로 임포트할 수 있습니다. 이를 위해 코드가 `async` 컨텍스트에서 작성되어야 하지만, Vite의 API가 대부분 비동기적이기 때문에 일반적으로 문제가 되지 않습니다.
-
-경고가 어디에서 발생하는지 모르겠다면, `VITE_CJS_TRACE=true` 플래그를 사용하여 스택 트레이스를 로그로 남길 수 있습니다:
-
-```bash
-VITE_CJS_TRACE=true vite dev
-```
-
-임시로 경고를 무시하려면 `VITE_CJS_IGNORE_WARNING=true` 플래그를 사용하여 스크립트를 실행하면 됩니다:
-
-```bash
-VITE_CJS_IGNORE_WARNING=true vite dev
-```
-
-참고로 postcss 설정 파일은 아직 ESM + TypeScript(`.mts` 또는 `"type": "module"` 에서의 `.ts`)를 지원하지 않습니다. 만약 확장자가 `.ts`인 postcss 설정 파일이 존재하고 package.json에 `"type": "module"`로 지정한 경우, postcss 설정 파일의 확장자를 `.cts`로 변경해주세요.
-
 ## CLI {#cli}
 
 ### `Error: Cannot find module 'C:\foo\bar&baz\vite\bin\vite.js'` {#error-cannot-find-module-c-foo-bar-baz-vite-bin-vite-js}
@@ -245,4 +214,19 @@ Windows에서 프로젝트에 드라이브 간 링크가 있는 경우 Vite가 �
 - `subst` 명령으로 폴더에 연결된 가상 드라이브
 - `mklink` 명령으로 다른 드라이브에 대한 소프트 링크(Junction)/심볼릭 링크 (예: Yarn 글로벌 캐시)
 
+
+<script setup lang="ts">
+// redirect old links with hash to old version docs
+if (typeof window !== "undefined") {
+  const hashForOldVersion = {
+    'vite-cjs-node-api-deprecated': 6
+  }
+
+  const version = hashForOldVersion[location.hash.slice(1)]
+  if (version) {
+    // update the scheme and the port as well so that it works in local preview (it is http and 4173 locally)
+    location.href = `https://v${version}.vite.dev` + location.pathname + location.search + location.hash
+  }
+}
+</script>
 관련 이슈: [#10802](https://github.com/vitejs/vite/issues/10802)

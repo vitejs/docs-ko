@@ -1,4 +1,4 @@
-# 환경별 API로 마이그레이션 {#move-to-per-environment-apis}
+# Move to Per-environment APIs
 
 ::: tip 피드백
 [환경 API 피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 피드백을 남겨주세요.
@@ -6,10 +6,10 @@
 
 모듈 그래프 및 모듈 변환과 관련된 여러 `ViteDevServer` API가 `DevEnvironment` 인스턴스로 이동되었습니다.
 
-영향을 받는 범위: `Vite 플러그인 개발자`
+Affected scope: `Vite Plugin Authors`
 
 ::: warning 지원 중단
-`Environment` 인스턴스는 `v6.0`에서 처음 도입되었습니다. `v7.0`에서 `server.moduleGraph` 및 현재 환경에 있는 다른 메서드들에 대한 지원이 중단될 예정입니다. 다만 아직은 서버 메서드 사용을 권장합니다. 이 변경 사항에 영향을 받는 코드를 미리 확인하고자 한다면, Vite 설정에서 다음과 같이 설정하세요.
+The `Environment` instance was first introduced at `v6.0`. The deprecation of `server.moduleGraph` and other methods that are now in environments is planned for a future major. We don't recommend moving away from server methods yet. To identify your usage, set these in your vite config.
 
 ```ts
 future: {
@@ -28,6 +28,6 @@ Vite v6에서는 임의의 수의 커스텀 환경(`client`, `ssr`, `edge` 등)�
 
 ## 마이그레이션 가이드 {#migration-guide}
 
-- `server.moduleGraph` -> [`environment.moduleGraph`](/guide/api-environment#separate-module-graphs)
+- `server.moduleGraph` -> [`environment.moduleGraph`](/guide/api-environment-instances#separate-module-graphs)
 - `server.transformRequest(url, ssr)` -> `environment.transformRequest(url)`
 - `server.warmupRequest(url, ssr)` -> `environment.warmupRequest(url)`

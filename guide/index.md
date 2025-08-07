@@ -6,7 +6,7 @@
 
 ## 들어가기 전에 {#overview}
 
-Vite(프랑스어로 "빠르다(Quick)"를 의미하며, 발음은 "veet"와 비슷한 `/vit/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="/voice.svg#voice" /></svg></button> 입니다.)는 빠르고 간결한 모던 웹 프로젝트 개발 경험에 초점을 맞춰 탄생한 빌드 툴입니다. 크게 두 가지 부분으로 구성되어 있습니다:
+Vite (French word for "quick", pronounced `/vit/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="/voice.svg?no-inline#voice" /></svg></button>, like "veet") is a build tool that aims to provide a faster and leaner development experience for modern web projects. It consists of two major parts:
 
 - [네이티브 ES 모듈](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 통해 소스 파일을 제공하는 개발 서버로, [다양한 기능](./features)과 놀라울 정도로 빠른 [Hot Module Replacement(HMR)](./features#hot-module-replacement)를 제공합니다.
 
@@ -20,9 +20,9 @@ Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./feat
 
 ## 지원하는 브라우저 {#browser-support}
 
-개발 단계에서, Vite는 모든 최신 JavaScript 및 CSS 기능을 지원하는 브라우저를 사용하고 있다고 가정하고 [`esnext`를 변환 대상으로 설정](https://esbuild.github.io/api/#target)해 빌드를 수행합니다. 이는 하위 호환을 생각하지 않아도 되며, Vite가 원본 소스 코드와 최대한 가깝게 모듈을 제공할 수 있도록 합니다.
+During development, Vite assumes that a modern browser is used. This means the browser supports most of the latest JavaScript and CSS features. For that reason, Vite sets [`esnext` as the transform target](https://esbuild.github.io/api/#target). This prevents syntax lowering, letting Vite serve modules as close as possible to the original source code. Vite injects some runtime code to make the development server work. These code use features included in [Baseline](https://web-platform-dx.github.io/web-features/) Newly Available at the time of each major release (2025-05-01 for this major).
 
-프로덕션 빌드의 경우, Vite는 기본적으로 [네이티브 ES 모듈](https://caniuse.com/es6-module), [네이티브 ESM 동적 임포트](https://caniuse.com/es6-module-dynamic-import), [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta), [null 병합 연산자](https://caniuse.com/mdn-javascript_operators_nullish_coalescing), 그리고 [BigInt](https://caniuse.com/bigint)와 같은 모던 JavaScript를 지원하는 브라우저를 타깃으로 합니다. 레거시 브라우저는 공식 플러그인인 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)를 통해 지원이 가능합니다. 이에 대한 더 자세한 내용은 [프로덕션 빌드](./build) 섹션을 참고해 주세요.
+For production builds, Vite by default targets [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available browsers. These are browsers that were released at least 2.5 years ago. The target can be lowered via configuration. Additionally, legacy browsers can be supported via the official [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy). See the [Building for Production](./build) section for more details.
 
 ## 온라인에서 Vite 체험해보기 {#trying-vite-online}
 
@@ -44,7 +44,7 @@ Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./feat
 ## 첫 Vite 프로젝트 만들어보기 {#scaffolding-your-first-vite-project}
 
 ::: tip 호환성
-Vite는 버전 18+ 또는 20+ 의 [Node.js](https://nodejs.org/)를 요구합니다. 다만 일부 템플릿의 경우 더 높은 버전의 Node.js를 요구할 수 있습니다.
+Vite requires [Node.js](https://nodejs.org/en/) version 20.19+, 22.12+. However, some templates require a higher Node.js version to work, please upgrade if your package manager warns about it.
 :::
 
 ::: code-group
