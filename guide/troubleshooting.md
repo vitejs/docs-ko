@@ -221,7 +221,7 @@ Windows에서 프로젝트에 드라이브 간 링크가 있는 경우 Vite가 �
 관련 이슈: [#10802](https://github.com/vitejs/vite/issues/10802)
 
 <script setup lang="ts">
-// redirect old links with hash to old version docs
+// 해시가 있는 오래된 링크를 이전 버전 문서로 리디렉션
 if (typeof window !== "undefined") {
   const hashForOldVersion = {
     'vite-cjs-node-api-deprecated': 6
@@ -229,7 +229,7 @@ if (typeof window !== "undefined") {
 
   const version = hashForOldVersion[location.hash.slice(1)]
   if (version) {
-    // update the scheme and the port as well so that it works in local preview (it is http and 4173 locally)
+    // 로컬 미리보기에서도 동작하도록 스키마 및 포트 업데이트 (로컬에서는 http와 4173)
     location.href = `https://v${version}.vite.dev` + location.pathname + location.search + location.hash
   }
 }

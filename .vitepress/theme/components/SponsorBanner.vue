@@ -68,16 +68,16 @@ function dismiss() {
     <p class="vt-banner-text">
       <span class="vt-main">ViteConf 2025</span>
       <span class="vt-tagline">
-        · First time <span style="font-weight: 900">in-person</span></span
+        · 첫 <span style="font-weight: 900">오프라인</span> 컨퍼런스</span
       >
-      <span class="vt-place"> · Amsterdam</span>
+      <span class="vt-place"> · 암스테르담</span>
       <span class="vt-date"> · Oct 09-10</span>
       <a
         target="_blank"
         class="vt-primary-action"
         href="https://viteconf.amsterdam/?utm_source=vite&utm_content=top_banner"
       >
-        Register
+        등록하기
       </a>
     </p>
     <button aria-label="close" @click="dismiss">

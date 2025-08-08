@@ -1,7 +1,7 @@
 # 프레임워크를 위한 환경 API {#environment-api-for-frameworks}
 
 :::info 릴리즈 후보
-환경 API는 일반적으로 릴리즈 후보 단계에 있습니다. 생태계가 실험하고 이를 기반으로 구축할 수 있도록 주요 릴리즈 간 API의 안정성을 유지할 것입니다. 다만 [일부 특정 API](/changes/#considering)는 여전히 실험적인 것으로 간주됩니다.
+환경 API는 현재 릴리즈 후보 단계에 있습니다. 생태계가 실험하고 이를 기반으로 구축할 수 있도록 주요 릴리즈 간 API의 안정성을 유지할 계획입니다. 다만 [일부 특정 API](/changes/#considering)는 여전히 실험적인 기능으로 간주됩니다.
 
 다운스트림 프로젝트들이 새로운 기능을 실험하고 검증할 시간을 가진 후, 향후 메이저 릴리즈에서 (잠재적인 주요 변경 사항과 함께) 이러한 새로운 API를 안정화할 계획입니다.
 
@@ -13,13 +13,13 @@
 여러분의 피드백을 공유해주세요.
 :::
 
-## 개발 환경 통신 레벨 {#devenvironment-communication-levels}
+## DevEnvironment 통신 레벨 {#devenvironment-communication-levels}
 
 환경은 다양한 런타임에서 실행될 수 있기 때문에, 환경과의 통신은 런타임에 따라 제약이 있을 수 있습니다. 프레임워크가 런타임에 구애받지 않는 코드를 쉽게 작성할 수 있도록, 환경 API는 세 종류의 통신 레벨을 제공합니다.
 
 ### `RunnableDevEnvironment`
 
-`RunnableDevEnvironment`는 임의의 값들을 통신할 수 있는 환경입니다. 암시적인 `ssr` 환경을 포함해, 클라이언트가 아닌 환경은 개발 중 기본적으로 `RunnableDevEnvironment`를 사용합니다. 이 경우 런타임이 Vite 서버가 실행되는 런타임과 동일해야 하지만, `ssrLoadModule`과 유사하게 작동하여 프레임워크가 SSR 개발 환경에서 HMR을 활성화하고 마이그레이션할 수 있도록 만듭니다. `isRunnableDevEnvironment` 함수를 사용하여 실행 가능한 환경을 확인할 수 있습니다.
+`RunnableDevEnvironment`는 임의의 값을 주고받을 수 있는 환경입니다. 암시적인 `ssr` 환경을 포함해, 클라이언트가 아닌 환경은 개발 중 기본적으로 `RunnableDevEnvironment`를 사용합니다. 이 경우 Vite 서버가 실행되는 런타임과 동일해야 하지만, `ssrLoadModule`과 유사하게 작동하여 프레임워크가 SSR 개발 환경에서 HMR을 활성화하고 마이그레이션할 수 있도록 만듭니다. 또한 `isRunnableDevEnvironment` 함수를 사용하여 실행 가능한 환경인지 확인할 수 있습니다.
 
 ```ts
 export class RunnableDevEnvironment extends DevEnvironment {

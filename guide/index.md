@@ -6,7 +6,7 @@
 
 ## 들어가기 전에 {#overview}
 
-Vite(프랑스어로 "빠르다(Quick)"를 의미하며, 발음은 "veet"와 비슷한 `/vit/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" aria-label="pronounce" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="/voice.svg?no-inline#voice" /></svg></button> 입니다.)는 빠르고 간결한 모던 웹 프로젝트 개발 경험에 초점을 맞춰 탄생한 빌드 툴입니다. 크게 두 가지 부분으로 구성되어 있습니다:
+Vite(프랑스어로 "빠르다(Quick)"를 의미하며, 발음은 "veet"와 비슷한 `/vit/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" aria-label="pronounce" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="/voice.svg?no-inline#voice" /></svg></button> 입니다.)는 모던 웹 프로젝트 개발 환경에 초점을 맞춰 탄생한 빠르고 간결한 빌드 툴입니다. 크게 두 가지 부분으로 구성되어 있습니다:
 
 - [네이티브 ES 모듈](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 통해 소스 파일을 제공하는 개발 서버로, [다양한 기능](./features)과 놀라울 정도로 빠른 [Hot Module Replacement(HMR)](./features#hot-module-replacement)를 제공합니다.
 
@@ -20,9 +20,9 @@ Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./feat
 
 ## 지원하는 브라우저 {#browser-support}
 
-개발 단계에서, Vite는 모든 최신 JavaScript 및 CSS 기능을 지원하는 모던 브라우저를 사용하고 있다고 가정합니다. 이러한 이유로 Vite는 [`esnext`를 변환 대상으로 설정](https://esbuild.github.io/api/#target)해 빌드를 수행합니다. 이는 하위 호환을 생각하지 않아도 되며, Vite가 원본 소스 코드와 최대한 가깝게 모듈을 제공할 수 있도록 합니다. Vite는 개발 서버가 동작할 수 있도록 일부 런타임 코드를 주입합니다. 이러한 코드는 각 주요 릴리스 시점(이 주요 버전의 경우 2025-05-01)에 [Baseline](https://web-platform-dx.github.io/web-features/) 새롭게 사용 가능한 기능을 사용합니다.
+개발 단계에서, Vite는 모든 최신 JavaScript 및 CSS 기능을 지원하는 모던 브라우저를 사용하고 있다고 가정합니다. 이러한 이유로 Vite는 [`esnext`를 변환 대상으로 설정](https://esbuild.github.io/api/#target)해 빌드를 수행합니다. 이 덕분에 하위 호환성을 지키기 위한 문법 변환을 수행하지 않아도 되며, 원본 소스 코드에 최대한 근접한 형태로 Vite가 모듈을 제공할 수 있도록 합니다. Vite는 개발 서버가 동작할 수 있도록 일부 런타임 코드를 주입합니다. 이러한 코드는 각 메이저 릴리스 시점(현재 메이저 버전은 2025-05-01)에 [Baseline](https://web-platform-dx.github.io/web-features/) Newly Available 기능을 사용할 수 있도록 합니다.
 
-프로덕션 빌드의 경우, Vite는 기본적으로 [Baseline](https://web-platform-dx.github.io/web-features/) 폭넓게 사용 가능한 브라우저를 타깃으로 합니다. 이는 최소 2.5년 전에 릴리스된 브라우저들입니다. 타깃은 설정을 통해 더 낮출 수 있습니다. 또한, 레거시 브라우저는 공식 플러그인인 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)를 통해 지원이 가능합니다. 이에 대한 더 자세한 내용은 [프로덕션 빌드](./build) 섹션을 참고해 주세요.
+프로덕션 빌드의 경우, Vite는 기본적으로 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available 브라우저를 타깃으로 합니다. 최소 2.5년 이전에 릴리스된 브라우저들을 의미합니다. 이 타깃은 설정을 통해 더 낮출 수 있으며, 레거시 브라우저는 공식 플러그인인 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)를 통해 지원이 가능합니다. 이에 대한 더 자세한 내용은 [프로덕션 빌드](./build) 섹션을 참고해 주세요.
 
 ## 온라인에서 Vite 체험해보기 {#trying-vite-online}
 
@@ -70,7 +70,7 @@ $ deno init --npm vite
 이후에는 프롬프트 창에 출력된 메시지를 따라주세요.
 
 ::: tip 호환성 참고 사항
-Vite는 [Node.js](https://nodejs.org/en/) 버전 20.19+ 또는 22.12+를 요구합니다. 다만 일부 템플릿의 경우 더 높은 버전의 Node.js를 요구할 수 있으니, 패키지 관리자에서 경고가 표시되면 업그레이드해 주세요.
+Vite는 [Node.js](https://nodejs.org/en/) 20.19+ 또는 22.12+를 요구합니다. 다만 일부 템플릿의 경우 더 높은 버전의 Node.js를 요구할 수 있으니, 패키지 관리자에서 경고가 표시되면 업그레이드해 주세요.
 :::
 
 :::: details create vite를 커맨드 라인 옵션과 함께 사용하기
@@ -260,7 +260,7 @@ pnpm link --global # 이 단계에서는 선호하는 패키지 관리자를 사
 이후 Vite를 클론한 프로젝트 위에서 `pnpm link --global vite` 명령을 실행해 주세요(또는 `vite`를 전역적으로 링크하는 데 사용했던 패키지 관리자를 사용합니다). 이 작업 이후 개발 서버를 재시작(`yarn dev`)하게 되면, 클론된 Vite를 이용해 프로젝트를 진행할 수 있게 됩니다.
 
 ::: tip Vite를 사용하는 디펜던시
-전이적 디펜던시에서 사용되는 Vite 버전을 교체하려면, [npm overrides](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#overrides) 또는 [pnpm overrides](https://pnpm.io/9.x/package_json#pnpmoverrides)를 사용해야 합니다.
+디펜던시에서 간접적으로 사용되는 Vite 버전을 교체하려면, [npm overrides](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#overrides) 또는 [pnpm overrides](https://pnpm.io/9.x/package_json#pnpmoverrides)를 사용해야 합니다.
 :::
 
 ## 커뮤니티 {#community}

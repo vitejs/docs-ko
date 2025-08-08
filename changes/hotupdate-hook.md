@@ -9,7 +9,7 @@
 영향을 받는 범위: `Vite 플러그인 개발자`
 
 ::: warning 지원 중단
-`hotUpdate`는 `v6.0`에서 처음 도입되었습니다. `handleHotUpdate`의 지원 중단은 향후 메이저 버전에서 계획되어 있습니다. 아직은 `handleHotUpdate`에서 벗어나는 것을 권장하지 않습니다. 실험해보고 피드백을 주고 싶다면, Vite 설정에서 `future.removePluginHookHandleHotUpdate`를 `"warn"`으로 설정할 수 있습니다.
+`hotUpdate`는 `v6.0`에서 처음 도입되었습니다. `handleHotUpdate`의 지원 중단은 향후 메이저 버전에서 계획되어 있기에, 아직은 `handleHotUpdate`에서 벗어나는 것을 권장하지 않습니다. 실험해보고 피드백을 주고 싶다면, Vite 설정에서 `future.removePluginHookHandleHotUpdate`를 `"warn"`으로 설정할 수 있습니다.
 :::
 
 ## 배경 {#motivation}

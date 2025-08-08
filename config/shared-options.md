@@ -54,7 +54,7 @@ export default defineConfig({
 ```
 
 ::: tip 참고
-TypeScript 사용자의 경우, 타입 검사 및 IntelliSense를 위해 `vite-env.d.ts` 파일에 타입 선언을 추가하세요.
+TypeScript 사용자의 경우, 타입 검사 및 인텔리센스를 위해 `vite-env.d.ts` 파일에 타입 선언을 추가하세요.
 
 예제:
 

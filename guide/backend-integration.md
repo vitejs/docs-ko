@@ -122,10 +122,10 @@
    ```
 
    매니페스트의 각 항목은 다음 중 하나를 나타냅니다:
-   - **진입 청크**: [`build.rollupOptions.input`](https://rollupjs.org/configuration-options/#input)에 지정된 파일에서 생성됩니다. 이러한 청크는 `isEntry: true`를 가지며, 키는 프로젝트 루트에서 상대적인 src 경로입니다.
-   - **동적 진입 청크**: 동적 가져오기에서 생성됩니다. 이러한 청크는 `isDynamicEntry: true`를 가지며, 키는 프로젝트 루트에서 상대적인 src 경로입니다.
-   - **비진입 청크**: 키는 `_` 접두사가 붙은 생성된 파일의 기본 이름입니다.
-   - **에셋 청크**: 이미지, 폰트와 같은 가져온 에셋에서 생성됩니다. 키는 프로젝트 루트에서 상대적인 src 경로입니다.
+   - **진입 청크**: [`build.rollupOptions.input`](https://rollupjs.org/configuration-options/#input)에 지정된 파일에서 생성됩니다. 이러한 청크는 `isEntry: true`를 가지며, 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
+   - **동적 진입 청크**: 동적 가져오기에서 생성됩니다. 이러한 청크는 `isDynamicEntry: true`를 가지며, 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
+   - **비진입(Non-entry) 청크**: 생성된 파일 이름에 `_` 접두사를 붙여 키로 사용합니다.
+   - **에셋 청크**: 이미지나 폰트와 같은 에셋에서 생성됩니다. 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
    - **CSS 파일**: [`build.cssCodeSplit`](/config/build-options.md#build-csscodesplit)이 `false`인 경우, `style.css` 키로 단일 CSS 파일이 생성됩니다. `build.cssCodeSplit`이 `false`가 아닌 경우, 키는 JS 청크와 유사하게 생성됩니다(즉, 진입 청크는 `_` 접두사가 없고 비진입 청크는 `_` 접두사가 있음).
 
    청크는 정적 및 동적 가져오기에 대한 정보(둘 다 매니페스트의 해당 청크에 매핑되는 키)와 해당 CSS 및 에셋 파일(있는 경우)을 포함합니다.
@@ -158,8 +158,8 @@
    2. 진입점의 `imports` 목록에 있는 모든 청크를 재귀적으로 따라가며, 
       가져온 각 청크의 `css` 목록(있는 경우)의 각 CSS 파일에 대한 `<link rel="stylesheet">` 태그를 포함
    3. 진입점 청크의 `file` 키에 대한 태그. JavaScript의 경우 `<script type="module">`, CSS의 경우 `<link rel="stylesheet">`가 될 수 있습니다.
-   4. 선택적으로, 가져온 각 JavaScript 청크의 `file`에 대한 `<link rel="modulepreload">` 태그를
-      진입점 청크에서 시작하여 imports를 재귀적으로 따라가며 포함
+   4. 선택적으로, 진입점 청크에서 시작해 imports를 재귀적으로 따라가며 가져온
+      각 JavaScript 청크 파일에 대한 `<link rel="modulepreload">` 태그를 포함
 
    위 예시 매니페스트를 예로 들자면, 진입점 `views/foo.js`에 대해 다음 태그가 포함되어야 합니다.
 

@@ -5,7 +5,7 @@
 ## build.target {#build-target}
 
 - **타입:** `string | string[]`
-- **Default:** `'baseline-widely-available'`
+- **기본값:** `'baseline-widely-available'`
 - **관련 항목:** [브라우저 지원 현황](/guide/build#browser-compatibility)
 
 최종 번들에 대한 브라우저 호환성 타깃입니다. 기본값은 Vite 전용 값인 `'baseline-widely-available'`로, 2025-05-01에 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available에 포함된 브라우저를 타깃으로 합니다. 구체적으로는 `['chrome107', 'edge107', 'firefox104', 'safari16']`입니다.

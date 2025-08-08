@@ -97,7 +97,7 @@ Rolldown은 알 수 없거나 유효하지 않은 옵션이 전달될 때 경고
 >
 > - For the "generatedCode". Invalid key: Expected never but received "generatedCode".
 
-이러한 옵션을 직접 전달하지 않은 경우, 사용 중인 프레임워크에서 수정해야 합니다.
+이러한 옵션을 직접 전달하지 않았다면, 사용 중인 프레임워크에서 수정해야 합니다.
 
 ### API 차이점 {#api-differences}
 

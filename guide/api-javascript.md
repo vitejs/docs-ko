@@ -1,6 +1,6 @@
 # JavaScript API {#javascript-api}
 
-Vite의 자바스크립트 API들은 전부 타입이 명시되어 있고 intellisense와 유효성 검사를 효과적으로 사용하기 위해 타입 스크립트 또는 VSCode의 JS 타입 검사 활성화를 추천합니다.
+Vite의 자바스크립트 API들은 전부 타입이 명시되어 있고 인텔리센스와 유효성 검사를 효과적으로 사용하기 위해 타입 스크립트 또는 VSCode의 JS 타입 검사 활성화를 추천합니다.
 
 ## `createServer` {#createserver}
 
