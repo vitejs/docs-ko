@@ -1,7 +1,9 @@
 # 런타임을 위한 환경 API {#environment-api-for-runtimes}
 
-:::warning 실험적 기능
-환경 API는 실험적 기능입니다. 생태계가 충분히 검증하고 확장할 수 있도록 Vite 6에서는 API를 안정적으로 유지하고자 합니다. Vite 7에서 잠재적 주요 변경 사항과 함께 새로운 API를 안정화할 계획입니다.
+:::info 릴리즈 후보
+환경 API는 현재 릴리즈 후보 단계에 있습니다. 생태계가 실험하고 이를 기반으로 구축할 수 있도록 주요 릴리즈 간 API의 안정성을 유지할 계획입니다. 다만 [일부 특정 API](/changes/#considering)는 여전히 실험적인 기능으로 간주됩니다.
+
+다운스트림 프로젝트들이 새로운 기능을 실험하고 검증할 시간을 가진 후, 향후 메이저 릴리즈에서 (잠재적인 주요 변경 사항과 함께) 이러한 새로운 API를 안정화할 계획입니다.
 
 리소스:
 
@@ -78,7 +80,7 @@ Vite 개발 서버는 기본적으로 두 가지 환경을 제공합니다: `cli
 
 소스 코드가 변환된 결과물을 모듈이라고 하며, 각 환경에서 처리된 모듈 사이의 의존성 관계는 모듈 그래프에 저장됩니다. 이러한 모듈은 각 환경과 연결된 런타임으로 전송되어 실행됩니다. 그리고 런타임에서 모듈이 분석되면서 다른 모듈을 불러오는 요청이 발생하고, 이에 따라 모듈 그래프에서 관련 부분이 처리됩니다.
 
-Vite 모듈 실행기를 사용하면 Vite 플러그인으로 먼저 처리한 후 코드를 실행할 수 있습니다. 이 모듈 실행 환경은 Vite 서버와 분리되어 있으며, `server.ssrLoadModule`과는 다르게 동작합니다(`server.ssrLoadModule`은 Vite 서버 프로세스 내에서 직접 모듈을 실행 - 옮긴이). 이를 통해 라이브러리와 프레임워크 작성자가 Vite 서버와 실행기 간 통신 계층 구현이 가능합니다. 브라우저는 서버 웹소켓과 HTTP 요청을 통해 해당 환경과 통신하나, Node 모듈 실행기는 동일한 프로세스에서 실행되므로 모듈을 처리하기 위해 직접 함수를 호출할 수도 있습니다. 그 외 환경에서는 workerd나 Vitest처럼 Worker Thread와 같은 JS 런타임을 통해 모듈을 실행할 수 있습니다.
+Vite 모듈 실행기를 사용하면 Vite 플러그인으로 먼저 처리한 후 코드를 실행할 수 있습니다. 이 모듈 실행 환경은 Vite 서버와 분리되어 있으며, `server.ssrLoadModule`과는 다르게 동작합니다(`server.ssrLoadModule`은 Vite 서버 프로세스 내에서 직접 모듈을 실행 - 옮긴이). 이를 통해 라이브러리와 프레임워크 개발자가 Vite 서버와 실행기 간 통신 계층 구현이 가능합니다. 브라우저는 서버 웹소켓과 HTTP 요청을 통해 해당 환경과 통신하나, Node 모듈 실행기는 동일한 프로세스에서 실행되므로 모듈을 처리하기 위해 직접 함수를 호출할 수도 있습니다. 그 외 환경에서는 workerd나 Vitest처럼 Worker Thread와 같은 JS 런타임을 통해 모듈을 실행할 수 있습니다.
 
 이 기능의 목표 중 하나는 코드를 처리하고 실행하는 API를 사용자가 커스터마이즈할 수 있도록 하는 것입니다. 사용자는 Vite에서 제공하는 기본 구성 요소를 활용해 새로운 환경 팩토리를 만들 수 있습니다.
 
@@ -107,6 +109,8 @@ function createWorkerdDevEnvironment(
   return workerdDevEnvironment
 }
 ```
+
+[`DevEnvironment`를 위한 여러 통신 레벨](/guide/api-environment-frameworks#devenvironment-communication-levels)이 있습니다. 프레임워크가 런타임에 무관한 코드를 작성하기 쉽도록, 가능한 한 가장 유연한 통신 수준을 구현하는 것을 권장합니다.
 
 ## `ModuleRunner` {#modulerunner}
 
@@ -149,12 +153,17 @@ export class ModuleRunner {
 **사용 예시:**
 
 ```js
-import { ModuleRunner, ESModulesEvaluator } from 'vite/module-runner'
+import {
+  ModuleRunner,
+  ESModulesEvaluator,
+  createNodeImportMeta,
+} from 'vite/module-runner'
 import { transport } from './rpc-implementation.js'
 
 const moduleRunner = new ModuleRunner(
   {
     transport,
+    createImportMeta: createNodeImportMeta, // if the module runner runs in Node.js
   },
   new ESModulesEvaluator(),
 )
@@ -274,7 +283,11 @@ RPC를 이용하거나 직접 함수를 호출해 환경과 통신하는 전송 
 ```js [worker.js]
 import { parentPort } from 'node:worker_threads'
 import { fileURLToPath } from 'node:url'
-import { ESModulesEvaluator, ModuleRunner } from 'vite/module-runner'
+import {
+  ESModulesEvaluator,
+  ModuleRunner,
+  createNodeImportMeta,
+} from 'vite/module-runner'
 
 /** @type {import('vite/module-runner').ModuleRunnerTransport} */
 const transport = {
@@ -290,6 +303,7 @@ const transport = {
 const runner = new ModuleRunner(
   {
     transport,
+    createImportMeta: createNodeImportMeta,
   },
   new ESModulesEvaluator(),
 )

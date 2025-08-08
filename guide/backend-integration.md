@@ -45,7 +45,6 @@
    ```
 
    이후 Vite의 에셋에 접근할 수 있도록 아래 두 가지 옵션 중 하나를 적용해 주세요:
-
    - 백엔드 서버가 Vite 서버에 대한 에셋 요청을 프록시 하도록 설정
    - 에셋의 URL이 상대 경로 대신 백엔드 서버 URL을 사용해 가져와질 수 있도록 [`server.origin`](/config/server-options.md#server-origin) 옵션값을 설정
 
@@ -76,6 +75,10 @@
        "file": "assets/shared-ChJ_j-JJ.css",
        "src": "_shared-ChJ_j-JJ.css"
      },
+     "logo.svg": {
+       "file": "assets/logo-BuPIv-2h.svg",
+       "src": "logo.svg"
+     },
      "baz.js": {
        "file": "assets/baz-B2H3sXNv.js",
        "name": "baz",
@@ -101,11 +104,31 @@
    }
    ```
 
-   - 매니페스트는 `Record<name, chunk>` 구조를 가집니다.
-   - 진입점 또는 동적 진입점의 청크는 프로젝트 루트로부터의 상대적인 src 경로를 가집니다.
-   - 진입점이 아닌 청크의 경우, 키는 `_`로 접두사가 붙은 파일명이 됩니다.
-   - 청크에는 정적 및 동적 임포트에 대한 정보(둘 다 매니페스트에서 해당 청크를 매핑하는 키)와 CSS 및 에셋 파일(있는 경우)이 포함됩니다.
-   - [build.cssCodeSplit](/config/build-options.md#build-csscodesplit)이 `false`일 때 생성되는 CSS 파일 키는 `style.css` 입니다.
+   매니페스트는 `Record<name, chunk>` 구조를 가지며, 각 청크는 `ManifestChunk` 인터페이스를 따릅니다:
+
+   ```ts
+   interface ManifestChunk {
+     src?: string
+     file: string
+     css?: string[]
+     assets?: string[]
+     isEntry?: boolean
+     name?: string
+     names?: string[]
+     isDynamicEntry?: boolean
+     imports?: string[]
+     dynamicImports?: string[]
+   }
+   ```
+
+   매니페스트의 각 항목은 다음 중 하나를 나타냅니다:
+   - **진입 청크**: [`build.rollupOptions.input`](https://rollupjs.org/configuration-options/#input)에 지정된 파일에서 생성됩니다. 이러한 청크는 `isEntry: true`를 가지며, 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
+   - **동적 진입 청크**: 동적 가져오기에서 생성됩니다. 이러한 청크는 `isDynamicEntry: true`를 가지며, 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
+   - **비진입(Non-entry) 청크**: 생성된 파일 이름에 `_` 접두사를 붙여 키로 사용합니다.
+   - **에셋 청크**: 이미지나 폰트와 같은 에셋에서 생성됩니다. 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
+   - **CSS 파일**: [`build.cssCodeSplit`](/config/build-options.md#build-csscodesplit)이 `false`인 경우, `style.css` 키로 단일 CSS 파일이 생성됩니다. `build.cssCodeSplit`이 `false`가 아닌 경우, 키는 JS 청크와 유사하게 생성됩니다(즉, 진입 청크는 `_` 접두사가 없고 비진입 청크는 `_` 접두사가 있음).
+
+   청크는 정적 및 동적 가져오기에 대한 정보(둘 다 매니페스트의 해당 청크에 매핑되는 키)와 해당 CSS 및 에셋 파일(있는 경우)을 포함합니다.
 
 4. 해시된 파일 이름으로 링크를 렌더링하거나 지시문을 미리 로드하기 위해 이 파일을 사용할 수 있습니다.
 
@@ -130,15 +153,13 @@
    ```
 
    구체적으로, HTML을 생성하는 백엔드는 매니페스트 파일과 진입점이 주어졌을 때
-   다음 태그를 포함해야 합니다:
-
-   - 진입점 청크의 `css` 목록에 있는 각 파일에 대한 `<link rel="stylesheet">` 태그
-   - 진입점의 `imports` 목록에 있는 모든 청크를 재귀적으로 따라가며,
-     임포트된 청크 내 CSS 파일에 대한 `<link rel="stylesheet">` 태그
-   - 진입점 청크의 `file` 키에 대한 태그
-     (JavaScript는 `<script type="module">`, CSS는 `<link rel="stylesheet">`)
-   - 선택 사항으로, 진입점의 `imports` 목록에 있는 JavaScript 청크를 재귀적으로 따라가며,
-     임포트된 청크의 `file`에 대한 `<link rel="modulepreload">` 태그
+   다음 순서를 따라야 합니다. 최적 성능을 위해 이 순서를 따르는 것을 권장합니다:
+   1. 진입점 청크의 `css` 목록(있는 경우)에 있는 각 파일에 대한 `<link rel="stylesheet">` 태그
+   2. 진입점의 `imports` 목록에 있는 모든 청크를 재귀적으로 따라가며, 
+      가져온 각 청크의 `css` 목록(있는 경우)의 각 CSS 파일에 대한 `<link rel="stylesheet">` 태그를 포함
+   3. 진입점 청크의 `file` 키에 대한 태그. JavaScript의 경우 `<script type="module">`, CSS의 경우 `<link rel="stylesheet">`가 될 수 있습니다.
+   4. 선택적으로, 진입점 청크에서 시작해 imports를 재귀적으로 따라가며 가져온
+      각 JavaScript 청크 파일에 대한 `<link rel="modulepreload">` 태그를 포함
 
    위 예시 매니페스트를 예로 들자면, 진입점 `views/foo.js`에 대해 다음 태그가 포함되어야 합니다.
 

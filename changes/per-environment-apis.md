@@ -9,12 +9,16 @@
 영향을 받는 범위: `Vite 플러그인 개발자`
 
 ::: warning 지원 중단
-`Environment` 인스턴스는 `v6.0`에서 처음 도입되었습니다. `v7.0`에서 `server.moduleGraph` 및 현재 환경에 있는 다른 메서드들에 대한 지원이 중단될 예정입니다. 다만 아직은 서버 메서드 사용을 권장합니다. 이 변경 사항에 영향을 받는 코드를 미리 확인하고자 한다면, Vite 설정에서 다음과 같이 설정하세요.
+`Environment` 인스턴스는 `v6.0`에서 처음 도입되었습니다. `server.moduleGraph` 및 현재 환경에 있는 다른 메서드들에 대한 지원 중단은 향후 메이저 버전에서 계획되어 있습니다. 따라서 아직은 서버 메서드에서 벗어나는 것을 권장하지 않습니다. 사용 현황을 확인하려면 Vite 설정에서 다음과 같이 설정하세요.
 
 ```ts
 future: {
   removeServerModuleGraph: 'warn',
+  removeServerReloadModule: 'warn',
+  removeServerPluginContainer: 'warn',
+  removeServerHot: 'warn',
   removeServerTransformRequest: 'warn',
+  removeServerWarmupRequest: 'warn',
 }
 ```
 
@@ -28,6 +32,9 @@ Vite v6에서는 임의의 수의 커스텀 환경(`client`, `ssr`, `edge` 등)�
 
 ## 마이그레이션 가이드 {#migration-guide}
 
-- `server.moduleGraph` -> [`environment.moduleGraph`](/guide/api-environment#separate-module-graphs)
+- `server.moduleGraph` -> [`environment.moduleGraph`](/guide/api-environment-instances#separate-module-graphs)
+- `server.reloadModule(module)` -> `environment.reloadModule(module)`
+- `server.pluginContainer` -> `environment.pluginContainer`
 - `server.transformRequest(url, ssr)` -> `environment.transformRequest(url)`
 - `server.warmupRequest(url, ssr)` -> `environment.warmupRequest(url)`
+- `server.hot` -> `server.client.environment.hot`

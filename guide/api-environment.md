@@ -1,7 +1,9 @@
 # 환경 API {#environment-api}
 
-:::warning 실험적 기능
-환경 API는 실험적 기능입니다. 생태계가 충분히 검증하고 확장할 수 있도록 Vite 6에서는 API를 안정적으로 유지하고자 합니다. Vite 7에서 잠재적 주요 변경 사항과 함께 새로운 API를 안정화할 계획입니다.
+:::info 릴리즈 후보
+환경 API는 현재 릴리즈 후보 단계에 있습니다. 생태계가 실험하고 이를 기반으로 구축할 수 있도록 주요 릴리즈 간 API의 안정성을 유지할 계획입니다. 다만 [일부 특정 API](/changes/#considering)는 여전히 실험적인 기능으로 간주됩니다.
+
+다운스트림 프로젝트들이 새로운 기능을 실험하고 검증할 시간을 가진 후, 향후 메이저 릴리즈에서 (잠재적인 주요 변경 사항과 함께) 이러한 새로운 API를 안정화할 계획입니다.
 
 리소스:
 
@@ -13,7 +15,7 @@
 
 ## 환경 공식화 {#formalizing-environments}
 
-Vite 6는 환경이라는 개념을 공식화합니다. Vite 5까지는 두 가지 암시적 환경(`client`와, 선택적으로 존재하는 `ssr`)만 존재했습니다. 새로운 환경 API를 이용하면, 프로덕션 동작 방식에 맞춰 사용자와 프레임워크 개발자가 필요한 만큼 환경을 생성할 수 있습니다. 이 새로운 기능은 내부 리팩토링을 꽤 요구했지만, 우리는 하위 호환성 유지에 많은 노력을 기울였습니다. Vite 6의 초기 목표는 생태계를 새로운 메이저 버전으로 최대한 원활하게 이전할 수 있도록 돕고, 충분한 사용자가 마이그레이션하고 프레임워크와 플러그인 개발자가 새로운 디자인을 검증할 때까지, 이 새롭고 실험적인 API에 대한 채택을 지연하는 데 있습니다.
+Vite 6는 환경이라는 개념을 공식화합니다. Vite 5까지는 두 가지 암시적 환경(`client`와, 선택적으로 존재하는 `ssr`)만 존재했습니다. 새로운 환경 API를 이용하면, 프로덕션 동작 방식에 맞춰 사용자와 프레임워크 개발자가 필요한 만큼 환경을 생성할 수 있습니다. 이 새로운 기능은 내부 리팩토링을 꽤 요구했지만, 우리는 하위 호환성 유지에 많은 노력을 기울였습니다. Vite 6의 초기 목표는 생태계를 새로운 메이저 버전으로 최대한 원활하게 이전할 수 있도록 돕고, 충분한 사용자가 마이그레이션하고 프레임워크와 플러그인 개발자가 새로운 디자인을 검증할 때까지, 이 API 채택을 지연하는 데 있습니다.
 
 ## 빌드와 개발 간 격차 해소 {#closing-the-gap-between-build-and-dev}
 
@@ -22,7 +24,7 @@ Vite 6는 환경이라는 개념을 공식화합니다. Vite 5까지는 두 가�
 일반적인 서버 사이드 렌더링(SSR) 앱에서는 두 가지 환경이 있습니다:
 
 - `client`: 브라우저에서 앱을 실행
-- `server`: 브라우저로 보내기 전 페이지를 렌더링하는 Node.js(또는 다른 서버 런타임)에서 앱을 실행
+- `ssr`: 브라우저로 보내기 전 페이지를 렌더링하는 Node.js(또는 다른 서버 런타임)에서 앱을 실행
 
 개발 시 Vite는 서버 코드를 Vite 개발 서버와 동일한 Node.js 프로세스에서 실행해 프로덕션 환경과 유사한 환경을 제공합니다. 하지만 서버는 [Cloudflare의 workerd](https://github.com/cloudflare/workerd)처럼 다른 제약 조건을 가진 JS 런타임에서도 실행될 수 있습니다. 또한 최신 앱은 브라우저, Node.js 서버, 엣지 서버 등 두 개 이상 환경에서 실행될 수도 있습니다. Vite 5는 이러한 환경을 제대로 구성할 수 없었습니다.
 
@@ -68,7 +70,7 @@ export default {
 }
 ```
 
-환경은 기본적으로 최상위 설정 옵션을 상속합니다(예: 새로운 `server`와 `edge` 환경은 `build.sourcemap: false` 옵션을 상속). 다만 `optimizeDeps`와 같은 일부 최상위 옵션은 서버 환경에서 기본값으로 잘 적용되지 않는 경우가 있어 `client` 환경에만 적용됩니다. 참고로 `client` 환경 역시 `environments.client`로 명시적인 구성이 가능하지만, 새로운 환경 추가 시 클라이언트 설정이 변경될 수 있기에 최상위 옵션 사용을 권장합니다.
+명시적으로 문서화되지 않은 경우, 환경은 구성된 최상위 설정 옵션을 상속합니다(예: 새로운 `server`와 `edge` 환경은 `build.sourcemap: false` 옵션을 상속). `optimizeDeps`와 같은 소수의 최상위 옵션은 서버 환경에 기본값으로 적용할 때 잘 작동하지 않기 때문에 `client` 환경에만 적용됩니다. 이러한 옵션들은 [레퍼런스](/config/)에서 <NonInheritBadge /> 배지를 가지고 있습니다. `client` 환경 역시 `environments.client`로 명시적인 구성이 가능하지만, 새로운 환경 추가 시 클라이언트 설정이 변경되지 않도록 최상위 옵션 사용을 권장합니다.
 
 `EnvironmentOptions` 인터페이스는 모든 환경별 옵션을 나타냅니다. `resolve`처럼 `build`와 `dev` 모두에 적용되는 환경 옵션이 있고, `DevEnvironmentOptions`와 `BuildEnvironmentOptions`처럼 개발 및 빌드별 옵션(`dev.warmup` 또는 `build.outDir`같은)이 있습니다. `optimizeDeps`같은 일부 옵션은 개발 시에만 적용되지만, 하위 호환성을 위해 `dev` 대신 최상위 레벨에 위치합니다.
 
@@ -117,7 +119,7 @@ export default {
 
 ## 하위 호환성 {#backward-compatibility}
 
-Vite 서버 API는 폐기되지 않았으며, Vite 5와 하위 호환을 유지하고 있습니다. 새로운 환경 API는 아직 실험 단계입니다.
+현재 Vite 서버 API는 아직 폐기되지 않았으며, Vite 5와 하위 호환을 유지하고 있습니다.
 
 `server.moduleGraph`는 클라이언트와 ssr 모듈 그래프를 통합해서 보여줍니다. 즉, 모든 메서드는 두 환경에 대한 모듈 정보를 포함하는, 하위 호환되는 모듈 노드를 반환합니다. `handleHotUpdate`에 전달되는 모듈 노드도 동일한 방식을 사용합니다.
 
@@ -125,9 +127,9 @@ Vite 서버 API는 폐기되지 않았으며, Vite 5와 하위 호환을 유지�
 
 - [훅에서의 `this.environment`](/changes/this-environment-in-hooks)
 - [HMR `hotUpdate` 플러그인 훅](/changes/hotupdate-hook)
-- [환경별 API로 마이그레이션](/changes/per-environment-apis)
-- [`ModuleRunner` API를 사용한 SSR](/changes/ssr-using-modulerunner)
-- [빌드 중 공유되는 플러그인](/changes/shared-plugins-during-build)
+- [Move to Per-environment APIs](/changes/per-environment-apis)
+- [SSR Using `ModuleRunner` API](/changes/ssr-using-modulerunner)
+- [Shared Plugins During Build](/changes/shared-plugins-during-build)
 
 ## 대상 사용자 {#target-users}
 

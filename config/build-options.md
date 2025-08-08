@@ -5,10 +5,10 @@
 ## build.target {#build-target}
 
 - **타입:** `string | string[]`
-- **기본값:** `'modules'`
+- **기본값:** `'baseline-widely-available'`
 - **관련 항목:** [브라우저 지원 현황](/guide/build#browser-compatibility)
 
-최종 번들을 위한 브라우저 호환성 타깃입니다. 기본값은 Vite에서만 사용 가능한 `'modules'` 이며, [네이티브 ES 모듈](https://caniuse.com/es6-module), [네이티브 ESM의 동적 Import](https://caniuse.com/es6-module-dynamic-import), 그리고 [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta)를 지원하는 브라우저를 타깃으로 합니다. 즉, Vite는 `'modules'`를 `['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14']`로 대체합니다.
+최종 번들에 대한 브라우저 호환성 타깃입니다. 기본값은 Vite 전용 값인 `'baseline-widely-available'`로, 2025-05-01에 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available에 포함된 브라우저를 타깃으로 합니다. 구체적으로는 `['chrome107', 'edge107', 'firefox104', 'safari16']`입니다.
 
 또 다른 Vite 한정 옵션은 `'esnext'` 로, 네이티브 동적 Import를 지원하며 트랜스파일링을 최소한만 수행합니다.
 
@@ -125,7 +125,7 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 
 일반적으로 비주류 브라우저를 대상으로 하는 경우에만 사용되며, Android WeChat WebView를 예로 들 수 있습니다.
 이 브라우저는 대부분의 최신 JavaScript 문법을 지원하지만 [16진수 CSS 색상 표기법인 `#RGBA`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb_colors)를 지원하지 않습니다.
-이 경우, Vite가 `rgba()` 색상을 `#RGBA` 16진수 표기법으로 변환하는 것을 방지하기 위해 `build.cssTarget`을 `chrome61`로 설정해줘야 합니다.
+이런 경우, Vite가 `rgba()` 색상을 `#RGBA` 16진수 표기법으로 변환하지 않도록 `build.cssTarget`을 `chrome61`로 설정해야 합니다.
 
 ## build.cssMinify {#build-cssminify}
 

@@ -80,7 +80,7 @@ TLS + HTTP/2를 활성화합니다.
 
 프리뷰 서버에 대한 커스텀 프록시 규칙을 설정할 수 있습니다. `{ key: options }` 형태로 구성되며, 키값이 `^`로 시작하는 경우 `RegExp`로 해석됩니다. `configure` 옵션을 사용하여 프록시 인스턴스에 접근할 수 있습니다.
 
-이는 [`http-proxy`](https://github.com/http-party/node-http-proxy)를 사용하며, 더 많은 옵션은 [이 링크](https://github.com/http-party/node-http-proxy#options)를 참고해주세요.
+[`http-proxy-3`](https://github.com/sagemathinc/http-proxy-3)를 사용합니다. 전체 옵션은 [이곳](https://github.com/sagemathinc/http-proxy-3#options)에서 확인할 수 있습니다.
 
 ## preview.cors {#preview-cors}
 

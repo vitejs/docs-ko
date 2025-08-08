@@ -9,7 +9,7 @@ Vite 6 이전에는 `client`와 `ssr` 두 가지 환경만 사용할 수 있었�
 영향을 받는 범위: `Vite 플러그인 개발자`
 
 ::: warning 지원 중단
-`this.environment`는 `v6.0`에서 도입되었습니다. `v7.0`에서 `options.ssr` 지원이 중단될 예정입니다. 그 시점에 새로운 API를 사용하도록 플러그인 마이그레이션을 권장하고자 합니다. 이 변경 사항에 영향을 받는 코드를 미리 확인하고자 한다면, Vite 설정에서 `future.removePluginHookSsrArgument`를 `"warn"`으로 설정하세요.
+`this.environment`는 `v6.0`에서 도입되었습니다. `options.ssr`의 지원 중단은 향후 메이저 버전에서 계획되어 있습니다. 그 시점에 플러그인을 새로운 API로 마이그레이션하도록 권장할 예정입니다. 사용 현황을 확인하려면 Vite 설정에서 `future.removePluginHookSsrArgument`를 `"warn"`으로 설정하세요.
 :::
 
 ## 배경 {#motivation}
@@ -18,7 +18,7 @@ Vite 6 이전에는 `client`와 `ssr` 두 가지 환경만 사용할 수 있었�
 
 ## 마이그레이션 가이드 {#migration-guide}
 
-기존 플러그인을 빠르게 마이그레이션하려면 `resolveId`, `load`, `transform` 훅에서 `options.ssr` 인자를 `this.environment.name !== 'client'`로 대체하세요:
+기존 플러그인을 빠르게 마이그레이션하려면 `resolveId`, `load`, `transform` 훅에서 `options.ssr` 인자를 `this.environment.config.consumer === 'server'`로 교체하세요:
 
 ```ts
 import { Plugin } from 'vite'
@@ -28,7 +28,7 @@ export function myPlugin(): Plugin {
     name: 'my-plugin',
     resolveId(id, importer, options) {
       const isSSR = options.ssr // [!code --]
-      const isSSR = this.environment.name !== 'client' // [!code ++]
+      const isSSR = this.environment.config.consumer === 'server' // [!code ++]
 
       if (isSSR) {
         // SSR 관련 로직
@@ -40,4 +40,4 @@ export function myPlugin(): Plugin {
 }
 ```
 
-더 견고하고 장기적인 구현을 위해서는, 환경 이름에 의존하는 대신 [여러 환경](/guide/api-environment.html#accessing-the-current-environment-in-hooks)을 위한 세분화된 환경 옵션을 사용해 플러그인 훅을 처리해야 합니다.
+더 견고하고 장기적인 구현을 위해서는 플러그인 훅이 환경 이름에 의존하지 않고 세분화된 환경 옵션을 사용하여 [여러 환경](/guide/api-environment-plugins.html#accessing-the-current-environment-in-hooks)을 처리해야 합니다.

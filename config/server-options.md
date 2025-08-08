@@ -122,7 +122,7 @@ export default defineConfig({
 
 참고로 [`base`](/config/shared-options.md#base)가 비상대적(Non-relative)인 경우, 각 키에 `base`를 접두사로 붙여야 합니다.
 
-이 옵션은 [`http-proxy`](https://github.com/http-party/node-http-proxy#options)를 확장합니다. 추가 옵션은 [여기](https://github.com/vitejs/vite/blob/main/packages/vite/src/node/server/middlewares/proxy.ts#L13)를 참고해 주세요.
+또한 [`http-proxy-3`](https://github.com/sagemathinc/http-proxy-3#options)를 확장합니다. 추가 옵션은 [여기](https://github.com/vitejs/vite/blob/main/packages/vite/src/node/server/middlewares/proxy.ts#L13)에서 확인할 수 있습니다.
 
 특정 상황(예: 서버 내부에서 사용되는 [connect](https://github.com/senchalabs/connect) 앱에 커스텀 미들웨어 추가)에서는 개발 서버를 직접 구성해야 할 수도 있습니다. 이를 위해서는 [플러그인](/guide/using-plugins.html)을 작성하고, [configureServer](/guide/api-plugin.html#configureserver) 훅을 이용해야 합니다. 자세한 것은 각 문서를 참고해주세요.
 
@@ -254,7 +254,7 @@ export default defineConfig({
 
 [chokidar](https://github.com/paulmillr/chokidar/tree/3.6.0#api)에 전달할 파일 시스템 감시자(Watcher) 옵션입니다.
 
-Vite 서버 감시자는 기본적으로 `root`를 감시하고, `.git/`, `node_modules/`, 그리고 Vite의 `cacheDir` 및 `build.outDir` 디렉터리는 건너뜁니다. 감시하는 파일을 업데이트하면, Vite는 HMR을 적용하고, 필요한 경우에만 페이지를 업데이트합니다.
+Vite 서버 감시자는 기본적으로 `root`를 감시하며, `.git/`, `node_modules/`, `test-results/`, 그리고 Vite의 `cacheDir` 및 `build.outDir` 디렉터리는 건너뜁니다. 감시하는 파일이 업데이트되면, Vite는 필요한 경우에만 HMR을 적용하고 페이지를 업데이트합니다.
 
 `null`로 설정하면 파일을 감시하지 않습니다. `server.watcher`는 (Node.js `EventEmitter`과)호환되는 이벤트 객체(Emitter)를 제공하지만, `add` 또는 `unwatch`를 호출해도 아무런 효과가 없습니다.
 

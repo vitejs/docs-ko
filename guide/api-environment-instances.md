@@ -1,7 +1,9 @@
 # `Environment` 인스턴스 사용하기 {#using-environment-instances}
 
-:::warning 실험적 기능
-환경 API는 실험적 기능입니다. 생태계가 충분히 검증하고 확장할 수 있도록 Vite 6에서는 API를 안정적으로 유지하고자 합니다. Vite 7에서 잠재적 주요 변경 사항과 함께 새로운 API를 안정화할 계획입니다.
+:::info 릴리즈 후보
+환경 API는 현재 릴리즈 후보 단계에 있습니다. 생태계가 실험하고 이를 기반으로 구축할 수 있도록 주요 릴리즈 간 API의 안정성을 유지할 계획입니다. 다만 [일부 특정 API](/changes/#considering)는 여전히 실험적인 기능으로 간주됩니다.
+
+다운스트림 프로젝트들이 새로운 기능을 실험하고 검증할 시간을 가진 후, 향후 메이저 릴리즈에서 (잠재적인 주요 변경 사항과 함께) 이러한 새로운 API를 안정화할 계획입니다.
 
 리소스:
 
@@ -19,8 +21,8 @@
 // 서버를 생성하거나 configureServer 훅에서 가져옵니다
 const server = await createServer(/* options */)
 
-const environment = server.environments.client
-environment.transformRequest(url)
+const clientEnvironment = server.environments.client
+clientEnvironment.transformRequest(url)
 console.log(server.environments.ssr.moduleGraph)
 ```
 
@@ -185,7 +187,7 @@ export class EnvironmentModuleGraph {
   invalidateModule(
     mod: EnvironmentModuleNode,
     seen: Set<EnvironmentModuleNode> = new Set(),
-    timestamp: number = Date.now(),
+    timestamp: number = monotonicDateNow(),
     isHmr: boolean = false,
   ): void
 

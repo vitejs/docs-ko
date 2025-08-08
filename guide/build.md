@@ -4,14 +4,14 @@
 
 ## 브라우저 지원 현황 {#browser-compatibility}
 
-기본적으로 프로덕션 빌드는 [네이티브 ES 모듈](https://caniuse.com/es6-module), [네이티브 ESM 동적 임포트](https://caniuse.com/es6-module-dynamic-import), [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta), [null 병합 연산자](https://caniuse.com/mdn-javascript_operators_nullish_coalescing), 그리고 [BigInt](https://caniuse.com/bigint)와 같은 모던 JavaScript를 지원하는 환경에서 동작한다고 가정합니다. 아래는 별다른 설정을 하지 않은 경우 지원하는 브라우저 범위입니다:
+기본적으로 프로덕션 번들은 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available 타겟에 포함된 모던 브라우저를 가정합니다. 기본 브라우저 지원 범위는 다음과 같습니다:
 
-<!-- Search for the `ESBUILD_MODULES_TARGET` constant for more information -->
+<!-- Search for the `ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET` constant for more information -->
 
-- Chrome >=87
-- Firefox >=78
-- Safari >=14
-- Edge >=88
+- Chrome >=107
+- Edge >=107
+- Firefox >=104
+- Safari >=16
 
 타깃을 직접 지정하고자 한다면 [`build.target` 설정](/config/build-options.md#build-target)을 이용할 수 있습니다. 다만 가장 낮은 타깃은 `es2015` 이며, 이보다 더 낮은 타깃으로 설정하더라도 Vite는 최소한 [네이티브 ESM 동적 임포트](https://caniuse.com/es6-module-dynamic-import)와 [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta)를 지원하는 브라우저에서 동작한다고 가정합니다:
 

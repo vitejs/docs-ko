@@ -14,7 +14,7 @@ export default {
 }
 ```
 
-참고로 Vite는 프로젝트가 네이티브 Node ESM을 사용하지 않는 경우에도 설정 파일에서 ES 모듈 구문을 사용할 수 있도록 지원하고 있습니다(예: `package.json`의 `type: "module"`). 이 때 설정 파일은 사용되기 전에 자동으로 미리 처리됩니다.
+참고로 Vite는 프로젝트에서 네이티브 Node ESM을 사용하지 않는 경우(예: `package.json`에 `"type": "module"`이 없을 때)에도 설정 파일에서 ES 모듈 문법을 사용할 수 있도록 지원합니다. 이 경우 설정 파일은 로드되기 전에 자동으로 전처리됩니다.
 
 또한 `--config` CLI 옵션을 사용하여 명시적으로 특정 설정 파일을 지정할 수도 있습니다. (경로는 `cwd`를 기준으로 하여 상대적으로 처리됩니다.)
 
@@ -61,7 +61,7 @@ export default {
 
 ## 조건부 설정 {#conditional-config}
 
-만약 설정에서 명령(`serve` 또는 `build`), 사용 중인 [모드](/guide/env-and-mode#modes), SSR 빌드 여부(`isSsrBuild`), 또는 빌드 프리뷰(`isPreview`) 여부에 따라 조건부로 옵션을 결정해야 하는 경우, 아래와 같이 함수를 내보낼 수 있습니다:
+만약 설정에서 명령(`serve` 또는 `build`), 사용 중인 [모드](/guide/env-and-mode#modes), SSR 빌드인지(`isSsrBuild`), 또는 빌드 프리뷰인지(`isPreview`)에 따라 조건부로 옵션을 결정해야 한다면, 아래와 같이 함수를 내보낼 수 있습니다:
 
 ```js twoslash
 import { defineConfig } from 'vite'

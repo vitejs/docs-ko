@@ -92,4 +92,4 @@ Vite 7은 Vite 6에서 원활한 업데이트가 되어야 합니다. 저희는 
 
 ## 감사의 말 {#acknowledgments}
 
-Vite 7은 광범위한 기여자 커뮤니티, 다운스트림 유지보수자들, 플러그인 작성자들의 도움으로 [Vite 팀](/team)이 제작했습니다. `rolldown-vite`와 이번 릴리스에 대한 놀라운 작업을 해준 [sapphi-red](https://github.com/sapphi-red)에게 특별히 감사드립니다. Vite는 [Bolt](https://bolt.new/)와 [Nuxt Labs](https://nuxtlabs.com/)와의 파트너십으로 [VoidZero](https://voidzero.dev)에서 제공합니다. 또한 [Vite의 GitHub Sponsors](https://github.com/sponsors/vitejs)와 [Vite의 Open Collective](https://opencollective.com/vite)의 후원자들에게도 감사드립니다.
+Vite 7은 광범위한 기여자 커뮤니티, 다운스트림 유지보수자들, 플러그인 개발자들의 도움으로 [Vite 팀](/team)이 제작했습니다. `rolldown-vite`와 이번 릴리스에 대한 놀라운 작업을 해준 [sapphi-red](https://github.com/sapphi-red)에게 특별히 감사드립니다. Vite는 [Bolt](https://bolt.new/)와 [Nuxt Labs](https://nuxtlabs.com/)와의 파트너십으로 [VoidZero](https://voidzero.dev)에서 제공합니다. 또한 [Vite의 GitHub Sponsors](https://github.com/sponsors/vitejs)와 [Vite의 Open Collective](https://opencollective.com/vite)의 후원자들에게도 감사드립니다.

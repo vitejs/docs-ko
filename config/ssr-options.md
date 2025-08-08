@@ -54,9 +54,9 @@ SSR 서버를 위한 빌드 타깃입니다.
 
 :::
 
-### ssr.resolve.mainFields {#ssr-resolve-mainfields}
+## ssr.resolve.mainFields
 
 - **타입:** `string[]`
 - **기본값:** `['module', 'jsnext:main', 'jsnext']`
 
-패키지 진입점을 해석할 때 시도할 `package.json` 필드 목록입니다. 이는 `exports` 필드에서 해석된 조건부 내보내기보다 우선순위가 낮습니다: `exports`에서 진입점이 성공적으로 해석되면 모든 main 필드는 무시됩니다. 이 설정은 외부화되지 않은 디펜던시에만 영향을 미칩니다.
+패키지의 진입점을 확인할 때 시도할 `package.json` 내 필드 목록입니다. 이는 `exports` 필드에서 처리되는 조건부 내보내기보다 우선순위가 낮습니다: 만약 진입점이 `exports`로부터 성공적으로 확인되면, 메인 필드는 무시됩니다. 이 설정은 외부화되지 않은 디펜던시에만 영향을 미칩니다.

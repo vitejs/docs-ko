@@ -82,11 +82,11 @@ Vite 6는 Vite 5와 유사하게 Node.js 18, 20, 22+를 지원합니다. Node.js
 
 ## 실험적 Environment API {#experimental-environment-api}
 
-Vite는 새로운 Environment API로 더욱 유연해지고 있습니다. 이러한 새로운 API를 통해 프레임워크 작성자들은 프로덕션에 더 가까운 개발 경험을 제공하고 생태계가 새로운 빌딩 블록을 공유할 수 있게 됩니다. SPA를 구축하는 경우에는 아무것도 변경되지 않습니다. 단일 클라이언트 환경에서 Vite를 사용할 때는 모든 것이 이전과 같이 작동합니다. 그리고 커스텀 SSR 앱의 경우에도 Vite 6는 하위 호환성을 유지합니다. Environment API의 주요 대상 사용자는 프레임워크 작성자들입니다.
+Vite는 새로운 Environment API로 더욱 유연해지고 있습니다. 이러한 새로운 API를 통해 프레임워크 개발자들은 프로덕션에 더 가까운 개발 경험을 제공하고 생태계가 새로운 빌딩 블록을 공유할 수 있게 됩니다. SPA를 구축하는 경우에는 아무것도 변경되지 않습니다. 단일 클라이언트 환경에서 Vite를 사용할 때는 모든 것이 이전과 같이 작동합니다. 그리고 커스텀 SSR 앱의 경우에도 Vite 6는 하위 호환성을 유지합니다. Environment API의 주요 대상 사용자는 프레임워크 개발자들입니다.
 
 궁금한 최종 사용자들을 위해, [Sapphi](https://github.com/sapphi-red)가 훌륭한 [Environment API 소개](https://green.sapphi.red/blog/increasing-vites-potential-with-the-environment-api) 가이드를 작성했습니다. 이는 시작하기에 좋은 곳이며 저희가 왜 Vite를 더욱 유연하게 만들려고 하는지 이해할 수 있습니다.
 
-프레임워크 작성자이거나 Vite 플러그인 유지보수자이고 새로운 API를 활용하고 싶으시다면, [Environment API 가이드](https://main.vite.dev/guide/api-environment)에서 더 자세히 알아보실 수 있습니다.
+프레임워크 개발자이거나 Vite 플러그인 유지보수자이고 새로운 API를 활용하고 싶으시다면, [Environment API 가이드](https://main.vite.dev/guide/api-environment)에서 더 자세히 알아보실 수 있습니다.
 
 새로운 API를 정의하고 구현하는 데 참여한 모든 분들에게 감사드립니다. 이 이야기는 [Rich Harris](https://github.com/Rich-Harris)와 [SvelteKit](https://svelte.dev/docs/kit) 팀이 개척한 언번들드 SSR 개발 스킴을 Vite 2가 채택하면서 시작됩니다. 그 후 Vite의 SSR 변환이 [Anthony Fu](https://github.com/antfu/)와 [Pooya Parsa](https://github.com/pi0)가 vite-node를 만들고 [Nuxt의 Dev SSR 스토리](https://antfu.me/posts/dev-ssr-on-nuxt)를 개선할 수 있게 해주었습니다. Anthony는 vite-node를 사용하여 [Vitest](https://vitest.dev)를 구동했고, [Vladimir Sheremet](https://github.com/sheremet-va)는 Vitest 유지보수 작업의 일환으로 계속 개선했습니다. 2023년 초, Vladimir는 vite-node를 Vite Core로 업스트림하는 작업을 시작했고, 1년 후 Vite 5.1에서 Runtime API로 출시했습니다. 생태계 파트너들(특히 Cloudflare 팀에게 감사드립니다)의 피드백은 저희가 Vite의 환경에 대해 더욱 야심찬 재작업을 하도록 이끌었습니다. 이 이야기에 대해 더 자세히 알아보려면 [Patak의 ViteConf 24 발표](https://www.youtube.com/watch?v=WImor3HDyqU?si=EZ-rFJn4pDW3tUvp)를 참조하세요.
 
@@ -112,4 +112,4 @@ Vite 팀의 모든 구성원이 새로운 API 정의에 참여했으며, 이는 
 
 ## 감사의 말 {#acknowledgments}
 
-Vite 6는 기여자 커뮤니티, 다운스트림 유지보수자들, 플러그인 작성자들, 그리고 [Vite 팀](/team)의 오랜 작업 시간의 결과입니다. Vite 개발을 후원하는 개인과 기업들에게 감사드립니다. Vite는 [StackBlitz](https://stackblitz.com/), [Nuxt Labs](https://nuxtlabs.com/), [Astro](https://astro.build)와의 파트너십으로 [VoidZero](https://voidzero.dev)에서 제공합니다. [Vite의 GitHub Sponsors](https://github.com/sponsors/vitejs)와 [Vite의 Open Collective](https://opencollective.com/vite)의 후원자들에게 감사드립니다.
+Vite 6는 기여자 커뮤니티, 다운스트림 유지보수자들, 플러그인 개발자들, 그리고 [Vite 팀](/team)의 오랜 작업 시간의 결과입니다. Vite 개발을 후원하는 개인과 기업들에게 감사드립니다. Vite는 [StackBlitz](https://stackblitz.com/), [Nuxt Labs](https://nuxtlabs.com/), [Astro](https://astro.build)와의 파트너십으로 [VoidZero](https://voidzero.dev)에서 제공합니다. [Vite의 GitHub Sponsors](https://github.com/sponsors/vitejs)와 [Vite의 Open Collective](https://opencollective.com/vite)의 후원자들에게 감사드립니다.

@@ -1,4 +1,6 @@
-import type { DefaultTheme } from 'vitepress'
+import path from 'node:path'
+import fs from 'node:fs'
+import type { DefaultTheme, HeadConfig } from 'vitepress'
 import { defineConfig } from 'vitepress'
 import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
 // @ts-ignore
@@ -11,6 +13,7 @@ import {
   groupIconVitePlugin,
 } from 'vitepress-plugin-group-icons'
 import { buildEnd } from './buildEnd.config'
+import { markdownItImageSize } from 'markdown-it-image-size'
 
 const ogDescription = 'Vite, 프런트엔드 개발의 새로운 기준'
 const ogImage = 'https://ko.vite.dev/og-image.jpg'
@@ -35,6 +38,10 @@ const deployType = (() => {
 const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
   const oldVersions: DefaultTheme.NavItemWithLink[] = [
     {
+      text: 'Vite 6 문서',
+      link: 'https://v6.vite.dev',
+    },
+    {
       text: 'Vite 5 문서',
       link: 'https://v5.vite.dev',
     },
@@ -57,7 +64,7 @@ const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
     case 'local':
       return [
         {
-          text: 'Vite 6 문서 (릴리스)',
+          text: 'Vite 7 문서 (릴리스)',
           link: 'https://ko.vite.dev',
         },
         ...oldVersions,
@@ -66,6 +73,17 @@ const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
       return oldVersions
   }
 })()
+
+function inlineScript(file: string): HeadConfig {
+  return [
+    'script',
+    {},
+    fs.readFileSync(
+      path.resolve(__dirname, `./inlined-scripts/${file}`),
+      'utf-8',
+    ),
+  ]
+}
 
 export default defineConfig({
   title: 'Vite',
@@ -130,6 +148,7 @@ export default defineConfig({
     es: { label: 'Español', link: 'https://es.vite.dev' },
     pt: { label: 'Português', link: 'https://pt.vite.dev' },
     de: { label: 'Deutsch', link: 'https://de.vite.dev' },
+    fa: { label: 'فارسی', link: 'https://fa.vite.dev' },
   },
 
   themeConfig: {
@@ -296,8 +315,12 @@ export default defineConfig({
               link: '/guide/rolldown',
             },
             {
+              text: 'v6에서 마이그레이션하기',
+              link: '/guide/migration'
+            },
+            {
               text: 'v5에서 마이그레이션하기',
-              link: '/guide/migration',
+              link: '/guide/migration-from-v5',
             },
             {
               text: 'v4에서 마이그레이션하기',
@@ -464,6 +487,8 @@ export default defineConfig({
     return pageData
   },
   markdown: {
+    // languages used for twoslash and jsdocs in twoslash
+    languages: ['ts', 'js', 'json'],
     codeTransformers: [transformerTwoslash()],
     anchor: {
       // @ts-ignore
@@ -475,6 +500,10 @@ export default defineConfig({
       md.use(markdownItFootnote)
       // @ts-ignore
       md.use(groupIconMdPlugin)
+      // @ts-ignore
+      md.use(markdownItImageSize, {
+        publicDir: path.resolve(import.meta.dirname, '../public')
+      })
     },
   },
   vite: {

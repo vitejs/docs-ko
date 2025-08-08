@@ -1,7 +1,9 @@
 # 플러그인을 위한 환경 API {#environment-api-for-plugins}
 
-:::warning 실험적 기능
-환경 API는 실험적 기능입니다. 생태계가 충분히 검증하고 확장할 수 있도록 Vite 6에서는 API를 안정적으로 유지하고자 합니다. Vite 7에서 잠재적 주요 변경 사항과 함께 새로운 API를 안정화할 계획입니다.
+:::info 릴리즈 후보
+환경 API는 현재 릴리즈 후보 단계에 있습니다. 생태계가 실험하고 이를 기반으로 구축할 수 있도록 주요 릴리즈 간 API의 안정성을 유지할 계획입니다. 다만 [일부 특정 API](/changes/#considering)는 여전히 실험적인 기능으로 간주됩니다.
+
+다운스트림 프로젝트들이 새로운 기능을 실험하고 검증할 시간을 가진 후, 향후 메이저 릴리즈에서 (잠재적인 주요 변경 사항과 함께) 이러한 새로운 API를 안정화할 계획입니다.
 
 리소스:
 
@@ -126,6 +128,29 @@ interface HotUpdateOptions {
   }
   ```
 
+## 플러그인에서의 환경별 상태 관리 {#per-environment-state-in-plugins}
+
+동일한 플러그인 인스턴스가 여러 환경에서 사용되기 때문에, 플러그인 상태는 `this.environment`를 키로 사용해야 합니다. 이는 생태계에서 이미 클라이언트와 SSR 모듈 상태가 섞이지 않도록 `ssr` 불리언 값을 키로 사용해 모듈 상태를 유지하는 패턴과 동일합니다. `Map<Environment, State>`를 사용하여 각 환경의 상태를 별도로 유지할 수 있습니다. 하위 호환성을 위해 `perEnvironmentStartEndDuringDev: true` 플래그 없이는 `buildStart`와 `buildEnd`가 클라이언트 환경에서만 호출됩니다.
+
+```js
+function PerEnvironmentCountTransformedModulesPlugin() {
+  const state = new Map<Environment, { count: number }>()
+  return {
+    name: 'count-transformed-modules',
+    perEnvironmentStartEndDuringDev: true,
+    buildStart() {
+      state.set(this.environment, { count: 0 })
+    },
+    transform(id) {
+      state.get(this.environment).count++
+    },
+    buildEnd() {
+      console.log(this.environment.name, state.get(this.environment).count)
+    }
+  }
+}
+```
+
 ## 환경별 플러그인 {#per-environment-plugins}
 
 플러그인은 `applyToEnvironment` 함수로 적용할 환경을 정의할 수 있습니다.
@@ -184,6 +209,8 @@ export default defineConfig({
 })
 ```
 
+`applyToEnvironment` 훅은 설정 시점에 호출되며, 현재는 생태계의 프로젝트들이 플러그인을 수정하기 때문에 `configResolved` 이후에 호출됩니다. 환경 플러그인 해석은 향후 `configResolved` 이전으로 이동될 수 있습니다.
+
 ## 빌드 훅에서의 환경 {#environment-in-build-hooks}
 
 개발 단계에서와 마찬가지로, 빌드 시에도 플러그인 훅은 `ssr` 불리언 값 대신 환경 인스턴스를 전달받습니다.
@@ -198,7 +225,7 @@ Vite 6 이전에는 플러그인 파이프라인이 개발과 빌드 단계에�
 
 따라서 프레임워크는 `client` 빌드와 `ssr` 빌드 간 정보를 공유하기 위해 매니페스트 파일을 파일 시스템에 작성해 공유해야 했습니다. Vite 6에서는 모든 환경에 대한 빌드를 단일 프로세스에서 수행하므로, 플러그인 파이프라인과 환경 간 통신 시 개발 단계에서와 같이 메모리를 이용할 수 있게 되었습니다.
 
-향후 메이저 버전(Vite 7 또는 8)에서 완벽하게 동일한 동작을 목표로 하고 있습니다:
+향후 메이저 릴리즈에서는 완전한 일치(Alignment)를 달성할 수 있을 것입니다:
 
 - **개발과 빌드 모두:** 플러그인이 공유되며, [환경별 필터링 됨](#per-environment-plugins)
 
