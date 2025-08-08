@@ -29,6 +29,7 @@ jobs:
           YUKI_NO_BATCH_PR_EXCLUDE: |
             **/guide/migration*.md
             **/package.json
+            **/.vitepress/config.ts
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
           head-repo: https://github.com/vitejs/vite.git
