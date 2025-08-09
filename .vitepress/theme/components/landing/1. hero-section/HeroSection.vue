@@ -19,7 +19,8 @@ import HeroDiagram from './HeroDiagram.vue'
       <h1>웹을 위한<br />완벽한 빌드 툴</h1>
       <!-- Tagline -->
       <h3>
-        Vite는 미래의 웹 애플리케이션을 위한<br />강력하고 빠른 프런트엔드 빌드 툴입니다.
+        Vite는 미래의 웹 애플리케이션을 위한
+        강력하고 빠른 프런트엔드 빌드 툴입니다.
       </h3>
 
       <!-- CTA Buttons -->
