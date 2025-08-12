@@ -13,7 +13,7 @@ head:
       content: Vite 3.0이 출시되었습니다!
   - - meta
     - property: og:image
-      content: https://vite.dev/og-image-announcing-vite3.png
+      content: https://vite.dev/og-image-announcing-vite3.webp
   - - meta
     - property: og:url
       content: https://vite.dev/blog/announcing-vite3
@@ -31,7 +31,7 @@ _2022년 7월 23일_ - [Vite 4.0 발표](./announcing-vite4.md)도 확인해보�
 
 작년 2월, [Evan You](https://twitter.com/youyuxi)가 Vite 2를 릴리스했습니다. 그 이후로 Vite의 채택은 멈추지 않고 성장하여 주당 100만 건 이상의 npm 다운로드를 기록하고 있습니다. 릴리스 후 방대한 생태계가 빠르게 형성되었습니다. Vite는 웹 프레임워크에서 새로운 혁신 경쟁을 이끌고 있습니다. [Nuxt 3](https://v3.nuxtjs.org/)는 기본적으로 Vite를 사용합니다. [SvelteKit](https://kit.svelte.dev/), [Astro](https://astro.build/), [Hydrogen](https://hydrogen.shopify.dev/), [SolidStart](https://docs.solidjs.com/quick-start)는 모두 Vite로 구축되었습니다. [Laravel은 이제 기본적으로 Vite를 사용하기로 결정했습니다](https://laravel.com/docs/9.x/vite). [Vite Ruby](https://vite-ruby.netlify.app/)는 Vite가 Rails DX를 어떻게 개선할 수 있는지 보여줍니다. [Vitest](https://vitest.dev)는 Jest의 Vite 네이티브 대안으로 진전을 이루고 있습니다. Vite는 [Cypress](https://docs.cypress.io/guides/component-testing/writing-your-first-component-test)와 [Playwright](https://playwright.dev/docs/test-components)의 새로운 컴포넌트 테스팅 기능을 뒷받침하고 있으며, Storybook은 [Vite를 공식 빌더로](https://github.com/storybookjs/builder-vite) 채택했습니다. 그리고 [목록은 계속됩니다](https://patak.dev/vite/ecosystem.html). 이러한 프로젝트 대부분의 메인테이너들이 Vite 코어 자체를 개선하는 데 참여하여 Vite [팀](https://vite.dev/team) 및 다른 기여자들과 긴밀히 협력하고 있습니다.
 
-![Vite 3 발표 커버 이미지](/og-image-announcing-vite3.png)
+![Vite 3 Announcement Cover Image](/og-image-announcing-vite3.webp)
 
 오늘, v2 출시로부터 16개월 후 Vite 3의 릴리스를 발표하게 되어 기쁩니다. 저희는 [Node.js의 EOL](https://nodejs.org/en/about/releases/)에 맞춰 최소 매년 새로운 Vite 메이저 버전을 릴리스하기로 결정했으며, 생태계 프로젝트들을 위한 간단한 마이그레이션 가이드와 함께 Vite의 API를 정기적으로 검토할 기회를 갖기로 했습니다.
 
@@ -47,7 +47,7 @@ Vite를 처음 접하신다면 [Why Vite 가이드](https://vite.dev/guide/why.h
 
 [vite.dev](https://vite.dev)로 이동하여 새로운 v3 문서를 즐겨보세요. Vite는 이제 새로운 [VitePress](https://vitepress.vuejs.org) 기본 테마를 사용하며, 다른 기능들과 함께 멋진 다크 모드를 제공합니다.
 
-[![Vite 문서 첫 페이지](../images/v3-docs.png)](https://vite.dev)
+[![Vite documentation frontpage](../images/v3-docs.webp)](https://vite.dev)
 
 생태계의 여러 프로젝트들이 이미 이 테마로 마이그레이션했습니다([Vitest](https://vitest.dev), [vite-plugin-pwa](https://vite-plugin-pwa.netlify.app/), [VitePress](https://vitepress.vuejs.org/) 자체 포함).
 
@@ -223,9 +223,9 @@ Vite는 배포 및 설치 용량을 중요하게 생각합니다. 새 앱의 빠
 
 최근 Vite 팀에 합류한 [@bluwyoo](https://twitter.com/bluwyoo), [@sapphi_red](https://twitter.com/sapphi_red)가 주도한 트리아징 마라톤이 있었습니다. 지난 3개월 동안 Vite 열린 이슈는 770개에서 400개로 줄었습니다. 그리고 이 감소는 새로 열린 PR이 역대 최고치를 기록하는 동안 달성되었습니다. 동시에 [@haoqunjiang](https://twitter.com/haoqunjiang)도 [Vite 이슈의 포괄적인 개요](https://github.com/vitejs/vite/discussions/8232)를 큐레이션했습니다.
 
-[![Vite의 열린 이슈와 풀 리퀘스트 그래프](../images/v3-open-issues-and-PRs.png)](https://www.repotrends.com/vitejs/vite)
+[![Graph of open issues and pull requests in Vite](../images/v3-open-issues-and-PRs.webp)](https://www.repotrends.com/vitejs/vite)
 
-[![Vite의 새로운 이슈와 풀 리퀘스트 그래프](../images/v3-new-open-issues-and-PRs.png)](https://www.repotrends.com/vitejs/vite)
+[![Graph of new issues and pull requests in Vite](../images/v3-new-open-issues-and-PRs.webp)](https://www.repotrends.com/vitejs/vite)
 
 ## 호환성 참고사항 {#compatibility-notes}
 
