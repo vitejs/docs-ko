@@ -14,25 +14,25 @@ vite [root]
 
 #### 옵션 {#options}
 
-| 옵션                      |                                                                                                                                                                       |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--host [host]`           | 호스트 이름 지정 (`string`)                                                                                                                                           |
-| `--port <port>`           | 포트 번호 지정 (`number`)                                                                                                                                             |
-| `--open [path]`           | 시작 시 브라우저 열기 (`boolean \| string`)                                                                                                                           |
-| `--cors`                  | CORS 활성화 (`boolean`)                                                                                                                                               |
-| `--strictPort`            | 포트가 이미 사용중인 경우 종료 (`boolean`)                                                                                                                            |
-| `--force`                 | 캐시를 무시하고 다시 번들링 (`boolean`)                                                                                                                               |
-| `-c, --config <file>`     | 설정 파일 지정 (`string`)                                                                                                                                             |
-| `--base <path>`           | `base` 옵션 위치 지정 (기본값: `/`) (`string`)                                                                                                                        |
-| `-l, --logLevel <level>`  | info \| warn \| error \| silent (`string`)                                                                                                                            |
-| `--clearScreen`           | 로깅 시 화면을 지우는 것을 허용/비허용 (`boolean`)                                                                                                                    |
-| `--configLoader <loader>` | esbuild로 설정을 번들링하려면 `bundle`을, 실시간으로 처리하려면 `runner`(실험적 기능)를, 네이티브 런타임을 사용하려면 `native`(실험적 기능)을 전달 (기본값: `bundle`) |
-| `--profile`               | 빌트인 Node.js 인스펙터 실행 ([성능 병목현상](/guide/troubleshooting#performance-bottlenecks) 참고)                                                                   |
-| `-d, --debug [feat]`      | 디버그 로그 표시 (`string \| boolean`)                                                                                                                                |
-| `-f, --filter <filter>`   | 디버그 로그 필터 (`string`)                                                                                                                                           |
-| `-m, --mode <mode>`       | env 모드 설정 (`string`)                                                                                                                                              |
-| `-h, --help`              | 사용 가능한 CLI 옵션 표시                                                                                                                                             |
-| `-v, --version`           | 버전 표시                                                                                                                                                             |
+| Options                   |                                                                                                                                                                                      |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `--host [host]`           | Specify hostname (`string`)                                                                                                                                                          |
+| `--port <port>`           | Specify port (`number`)                                                                                                                                                              |
+| `--open [path]`           | Open browser on startup (`boolean \| string`)                                                                                                                                        |
+| `--cors`                  | Enable CORS (`boolean`)                                                                                                                                                              |
+| `--strictPort`            | Exit if specified port is already in use (`boolean`)                                                                                                                                 |
+| `--force`                 | Force the optimizer to ignore the cache and re-bundle (`boolean`)                                                                                                                    |
+| `-c, --config <file>`     | Use specified config file (`string`)                                                                                                                                                 |
+| `--base <path>`           | Public base path (default: `/`) (`string`)                                                                                                                                           |
+| `-l, --logLevel <level>`  | info \| warn \| error \| silent (`string`)                                                                                                                                           |
+| `--clearScreen`           | Allow/disable clear screen when logging (`boolean`)                                                                                                                                  |
+| `--configLoader <loader>` | Use `bundle` to bundle the config with esbuild, or `runner` (experimental) to process it on the fly, or `native` (experimental) to load using the native runtime (default: `bundle`) |
+| `--profile`               | Start built-in Node.js inspector (check [Performance bottlenecks](/guide/troubleshooting#performance-bottlenecks))                                                                   |
+| `-d, --debug [feat]`      | Show debug logs (`string \| boolean`)                                                                                                                                                |
+| `-f, --filter <filter>`   | Filter debug logs (`string`)                                                                                                                                                         |
+| `-m, --mode <mode>`       | Set env mode (`string`)                                                                                                                                                              |
+| `-h, --help`              | Display available CLI options                                                                                                                                                        |
+| `-v, --version`           | Display version number                                                                                                                                                               |
 
 ## 빌드 {#build}
 
@@ -78,6 +78,8 @@ vite build [root]
 ### `vite optimize` {#vite-optimize}
 
 디펜던시를 미리 번들링합니다.
+
+**Deprecated**: the pre-bundle process runs automatically and does not need to be called.
 
 **사용 중단**: 사전 번들링은 자동으로 실행되며, 명시적으로 실행할 필요가 없습니다.
 

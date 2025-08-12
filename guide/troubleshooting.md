@@ -4,37 +4,6 @@
 
 이 글이 제안하는 해결책이 잘 동작하지 않는다면 [GitHub Discussions](https://github.com/vitejs/vite/discussions)이나 [Vite Land Discord](https://chat.vite.dev)의 `#help` 채널에 질문을 게시해 보세요.
 
-## CLI {#cli}
-
-### `Error: Cannot find module 'C:\foo\bar&baz\vite\bin\vite.js'` {#error-cannot-find-module-c-foo-bar-baz-vite-bin-vite-js}
-
-프로젝트 폴더의 경로에 `&` 가 포함되어있을 가능성이 있습니다. 이는 Windows의 `npm`에서 동작시키지 않습니다([npm/cmd-shim#45](https://github.com/npm/cmd-shim/issues/45)).
-
-다음 중 하나를 수행해야 합니다:
-
-- 다른 패키지 매니저로 교체하세요 (e.g. `pnpm`, `yarn`)
-- 프로젝트의 경로에서 `&` 을 제거하세요
-
-## 설정 {#config}
-
-### This package is ESM only {#this-package-is-esm-only}
-
-ESM만 지원하는 패키지를 `require`로 불러올 때 아래와 같은 에러가 발생합니다.
-
-> Failed to resolve "foo". This package is ESM only but it was tried to load by `require`.
-
-> Error [ERR_REQUIRE_ESM]: require() of ES Module /path/to/dependency.js from /path/to/vite.config.js not supported.
-> Instead change the require of index.js in /path/to/vite.config.js to a dynamic import() which is available in all CommonJS modules.
-
-Node.js <=22 환경에서, ESM 파일은 기본적으로 [`require`](https://nodejs.org/docs/latest-v22.x/api/esm.html#require)를 통해 불러올 수 없습니다.
-
-[`--experimental-require-module`](https://nodejs.org/docs/latest-v22.x/api/modules.html#loading-ecmascript-modules-using-require) 옵션이나 Node.js >22 환경, 또는 다른 런타임을 이용할 수도 있겠지만, 다음과 같이 설정을 ESM으로 변환하기를 권장합니다:
-
-- 가장 가까운 `package.json`에 `"type": "module"`을 추가합니다.
-- `vite.config.js`/`vite.config.ts`를 `vite.config.mjs`/`vite.config.mts`로 변경합니다.
-
-## 개발 서버 {#dev-server}
-
 ### 요청이 영원히 중단됨 {#requests-are-stalled-forever}
 
 Linux를 사용하는 경우, 파일 디스크립터 및 inotify 제한이 문제의 원인일 수 있습니다. Vite는 파일 대부분을 번들링하지 않기 때문에, 브라우저가 많은 파일을 요청할 수 있게 되고, 이로 인해 많은 파일 디스크립터가 필요하게 되어 시스템 제한을 초과할 수 있습니다.
@@ -63,6 +32,15 @@ Linux를 사용하는 경우, 파일 디스크립터 및 inotify 제한이 문�
   ```
 
 해결되지 않으면 `DefaultLimitNOFILE=65536`을 주석 처리되지 않도록 하고 다음 파일에 추가하세요:
+
+### `failed to load config from '/path/to/config*/vite.config.js'`
+
+> failed to load config from '/path/to/config\*/vite.config.js'
+> error when starting dev server:
+> Error: Build failed with 1 error:
+> error: Must use "outdir" when there are multiple input files
+
+The error above may occur if the path to your project folder contains `*`, which esbuild treats as a glob. You will need to rename your directory to remove the `*`.
 
 - /etc/systemd/system.conf
 - /etc/systemd/user.conf
@@ -101,6 +79,9 @@ security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-
 이는 Node.js가 [CVE-2018-12121](https://www.cve.org/CVERecord?id=CVE-2018-12121) 완화를 위해 요청 헤더 크기를 제한하기 때문입니다..
 
 이를 방지하려면 요청 헤더 크기를 줄이세요. 예를 들어 길이가 긴 쿠키를 삭제합니다. 또는 최대 헤더 크기를 변경하기 위해서 [`--max-http-header-size`](https://nodejs.org/api/cli.html#--max-http-header-sizesize)를 사용할 수 있습니다.
+
+Alternatively, if the server is running inside a VS Code devcontainer, the request may appear to be stalled. To fix this issue, see
+[Dev Containers / VS Code Port Forwarding](#dev-containers-vs-code-port-forwarding).
 
 ### Dev Containers / VS Code 포트 포워딩 {#dev-containers-vs-code-port-forwarding}
 
@@ -233,4 +214,19 @@ if (typeof window !== "undefined") {
     location.href = `https://v${version}.vite.dev` + location.pathname + location.search + location.hash
   }
 }
+
+<script setup lang="ts">
+// redirect old links with hash to old version docs
+if (typeof window !== "undefined") {
+  const hashForOldVersion = {
+    'vite-cjs-node-api-deprecated': 6
+  }
+
+  const version = hashForOldVersion[location.hash.slice(1)]
+  if (version) {
+    // update the scheme and the port as well so that it works in local preview (it is http and 4173 locally)
+    location.href = `https://v${version}.vite.dev` + location.pathname + location.search + location.hash
+  }
+}
+</script>
 </script>

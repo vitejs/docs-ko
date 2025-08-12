@@ -176,6 +176,7 @@ html:has(.landing) {
           rgba(255, 255, 255, 0.4) 0%,
           rgba(255, 255, 255, 0) 100%
         ),
+      background:
         radial-gradient(
           140.35% 140.35% at 100% 94.74%,
           #bd34fe 0%,
@@ -194,7 +195,8 @@ html:has(.landing) {
             141.42% 141.42% at 100% 0%,
             rgba(255, 255, 255, 0.5) 0%,
             rgba(255, 255, 255, 0) 100%
-          ),
+        background:
+          radial-gradient(
           radial-gradient(
             140.35% 140.35% at 100% 94.74%,
             #bd34fe 0%,

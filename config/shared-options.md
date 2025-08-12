@@ -140,10 +140,6 @@ SSR 빌드의 경우, `build.rollupOptions.output`을 통해 구성된 ESM 빌�
 
 참고로 `import`, `require`, `default` 조건은 요구사항이 충족되면 항상 적용됩니다.
 
-## resolve.mainFields <NonInheritBadge />
-
-- **타입:** `string[]`
-- **기본값:** `['browser', 'module', 'jsnext:main', 'jsnext']` (`defaultClientConditions`)
 
 패키지의 진입점을 확인할 때 시도할 `package.json`안의 필드 목록입니다. 이것은 `exports` 필드에서 처리되는 조건부 내보내기보다 우선순위가 낮습니다: 만약 진입점이 `exports`로부터 성공적으로 확인되면, 메인 필드는 무시될 것입니다.
 
@@ -231,9 +227,8 @@ CSS 전처리기에 전달할 옵션을 지정합니다. 파일 확장자는 옵
   - [옵션](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/)
 - `less`: [옵션](https://lesscss.org/usage/#less-options).
 - `styl`/`stylus`: [`define`](https://stylus-lang.com/docs/js.html#define-name-node)만 지원되며, 객체로 전달할 수 있습니다.
-
-**예시**:
-
+  - Uses `sass-embedded` if installed, otherwise uses `sass`. For the best performance, it's recommended to install the `sass-embedded` package.
+  - [Options](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/)
 ```js
 export default defineConfig({
   css: {
@@ -252,7 +247,6 @@ export default defineConfig({
         ],
       },
     },
-  },
 })
 ```
 
@@ -284,11 +278,12 @@ export default defineConfig({
 CSS 전처리기가 사용할 수 있는 최대 스레드 수를 지정합니다. `true`는 CPU 수에서 1을 뺀 값까지를 의미합니다. `0`으로 설정하면 Vite는 워커를 생성하지 않고 메인 스레드에서 전처리기를 실행합니다.
 
 전처리기 옵션에 따라, 이 옵션이 `0`으로 설정되지 않았더라도 Vite가 메인 스레드에서 전처리기를 실행할 수 있습니다.
-
 ## css.devSourcemap {#css-devsourcemap}
-
+- **Default:** `true`
 - **실험적 기능:** [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/13845)
-- **타입:** `boolean`
+Specifies the maximum number of threads CSS preprocessors can use. `true` means up to the number of CPUs minus 1. When set to `0`, Vite will not create any workers and will run the preprocessors in the main thread.
+
+Depending on the preprocessor options, Vite may run the preprocessors on the main thread even if this option is not set to `0`.
 - **기본값:** `false`
 
 개발 중 CSS 소스 맵을 활성화할지 여부를 나타냅니다.
@@ -459,10 +454,10 @@ export default defineConfig({
 
 '.env' 파일이 로드되는 디렉터리입니다. 절대 경로 또는 프로젝트 루트에 상대적인 경로일 수 있습니다. `false`는 `.env` 파일 로딩을 비활성화합니다.
 
-환경 파일에 대한 더 자세한 점을 알려면, [여기](/guide/env-and-mode#env-files)를 확인하세요.
+- **Type:** `string | false`
 
 ## envPrefix {#envprefix}
-
+The directory from which `.env` files are loaded. Can be an absolute path, or a path relative to the project root. `false` will disable the `.env` file loading.
 - **타입:** `string | string[]`
 - **기본값:** `VITE_`
 
@@ -471,7 +466,7 @@ export default defineConfig({
 :::warning 보안 권고 사항
 `envPrefix`를 `''`로 설정해서는 안 됩니다. 이렇게 설정한 경우 모든 환경 변수가 노출되며, 이로 인해 예기치 않게 민감한 정보가 누출될 수 있습니다. 따라서 Vite는 `''`로 설정되었을 때 오류를 발생시킵니다.
 
-접두사가 붙지 않은 변수를 노출하려면, 이 대신 [define](#define) 옵션을 사용하세요:
+Env variables starting with `envPrefix` will be exposed to your client source code via `import.meta.env`.
 
 ```js
 define: {

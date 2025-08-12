@@ -318,7 +318,7 @@ const rowStyle: ComputedRef<{ transform: string }> = computed(() => {
   }
 })
 </script>
-
+        <FrameworkCard v-for="_ in numBlocksPerRow + 2" />
 <template>
   <section class="frameworks-section" id="frameworks-section">
     <h2>인기있는 툴과 프레임워크의<br />성능을 극대화</h2>
@@ -350,7 +350,7 @@ const rowStyle: ComputedRef<{ transform: string }> = computed(() => {
             </template>
             <template v-else>
               <FrameworkCard />
-            </template>
+        <FrameworkCard v-for="_ in numBlocksPerRow + 2" />
           </template>
         </div>
       </template>

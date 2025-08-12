@@ -16,9 +16,9 @@ API 지원 중단, 제거, 그리고 변경 사항을 포함한 Vite 주요 변�
 
 그리고 아직은 전환하는 것을 권장하지 않습니다. 이러한 API들은 피드백을 수집하기 위해 Vite에 포함되었습니다. 제안을 확인하고, 여러분의 사용 사례에서는 어떻게 동작하는지 GitHub Discussions에서 알려주시기 바랍니다.
 
-- [환경별 API로 마이그레이션](/changes/per-environment-apis)
-- [빌드 중 공유되는 플러그인](/changes/shared-plugins-during-build)
-
+- [Move to Per-environment APIs](/changes/per-environment-apis)
+- [SSR Using `ModuleRunner` API](/changes/ssr-using-modulerunner)
+- [Shared Plugins During Build](/changes/shared-plugins-during-build)
 ## 과거 변경 사항 {#past}
 
 아래 변경 사항들은 이미 완료되었거나 되돌려졌습니다. 현재 메이저 버전에서는 더 이상 관련이 없습니다.

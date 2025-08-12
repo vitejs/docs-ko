@@ -14,7 +14,7 @@ export default {
 }
 ```
 
-참고로 Vite는 프로젝트에서 네이티브 Node ESM을 사용하지 않는 경우(예: `package.json`에 `"type": "module"`이 없을 때)에도 설정 파일에서 ES 모듈 문법을 사용할 수 있도록 지원합니다. 이 경우 설정 파일은 로드되기 전에 자동으로 전처리됩니다.
+Note Vite supports using ES modules syntax in the config file even if the project is not using native Node ESM, e.g. `"type": "module"` in `package.json`. In this case, the config file is auto pre-processed before load.
 
 또한 `--config` CLI 옵션을 사용하여 명시적으로 특정 설정 파일을 지정할 수도 있습니다. (경로는 `cwd`를 기준으로 하여 상대적으로 처리됩니다.)
 
@@ -22,8 +22,10 @@ export default {
 vite --config my-config.js
 ```
 
-::: tip 설정 파일 로딩
-기본적으로 Vite는 `esbuild`를 사용해 설정 파일을 임시 파일로 번들링한 뒤 로드합니다. 다만 이는 모노리포에서 TypeScript 파일을 불러올 때 문제가 발생할 수 있습니다. 이러한 문제가 발생한다면 `--configLoader runner`를 지정해 [모듈 러너](/guide/api-environment-runtimes.html#modulerunner)를 대신 사용할 수 있습니다. 모듈 러너는 임시 설정 파일을 생성하지 않고 파일을 즉시 변환합니다. 참고로 모듈 러너는 설정 파일에서 CJS를 지원하지 않으나, 그럼에도 외부 CJS 패키지는 정상적으로 동작합니다.
+::: tip CONFIG LOADING
+By default, Vite uses `esbuild` to bundle the config into a temporary file and load it. This may cause issues when importing TypeScript files in a monorepo. If you encounter any issues with this approach, you can specify `--configLoader runner` to use the [module runner](/guide/api-environment-runtimes.html#modulerunner) instead, which will not create a temporary config and will transform any files on the fly. Note that module runner doesn't support CJS in config files, but external CJS packages should work as usual.
+
+Alternatively, if you're using an environment that supports TypeScript (e.g. `node --experimental-strip-types`), or if you're only writing plain JavaScript, you can specify `--configLoader native` to use the environment's native runtime to load the config file. Note that updates to modules imported by the config file are not detected and hence would not auto-restart the Vite server.
 
 또는 TypeScript를 지원하는 환경(예: `node --experimental-strip-types`)을 사용하거나 순수 JavaScript만 작성하는 경우, `--configLoader native`를 지정하여 현재 환경의 네이티브 런타임으로 설정 파일을 로드할 수 있습니다. 단, 설정 파일에서 불러온 모듈의 업데이트는 감지되지 않으므로 Vite 서버가 자동으로 재시작되지 않습니다.
 :::
@@ -59,7 +61,7 @@ export default {
 } satisfies UserConfig
 ```
 
-## 조건부 설정 {#conditional-config}
+If the config needs to conditionally determine options based on the command (`serve` or `build`), the [mode](/guide/env-and-mode#modes) being used, if it's an SSR build (`isSsrBuild`), or is previewing the build (`isPreview`), it can export a function instead:
 
 만약 설정에서 명령(`serve` 또는 `build`), 사용 중인 [모드](/guide/env-and-mode#modes), SSR 빌드인지(`isSsrBuild`), 또는 빌드 프리뷰인지(`isPreview`)에 따라 조건부로 옵션을 결정해야 한다면, 아래와 같이 함수를 내보낼 수 있습니다:
 
@@ -119,6 +121,22 @@ export default defineConfig(({ mode }) => {
       __APP_ENV__: JSON.stringify(env.APP_ENV),
     }
   }
+
+## Debugging the Config File on VS Code
+
+With the default `--configLoader bundle` behavior, Vite writes the generated temporary configuration file to the `node_modules/.vite-temp` folder and a file not found error will occur when setting breakpoint debugging in the Vite config file. To fix the issue, add the following configuration to `.vscode/settings.json`:
+
+```json
+{
+  "debug.javascript.terminalOptions": {
+    "resolveSourceMapLocations": [
+      "${workspaceFolder}/**",
+      "!**/node_modules/**",
+      "**/node_modules/.vite-temp/**"
+    ]
+  }
+}
+```
 })
 ```
 

@@ -5,10 +5,10 @@
 ## build.target {#build-target}
 
 - **타입:** `string | string[]`
-- **기본값:** `'baseline-widely-available'`
+- **Default:** `'baseline-widely-available'`
 - **관련 항목:** [브라우저 지원 현황](/guide/build#browser-compatibility)
 
-최종 번들에 대한 브라우저 호환성 타깃입니다. 기본값은 Vite 전용 값인 `'baseline-widely-available'`로, 2025-05-01에 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available에 포함된 브라우저를 타깃으로 합니다. 구체적으로는 `['chrome107', 'edge107', 'firefox104', 'safari16']`입니다.
+Browser compatibility target for the final bundle. The default value is a Vite special value, `'baseline-widely-available'`, which targets browsers that are included in the [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available on 2025-05-01. Specifically, it is `['chrome107', 'edge107', 'firefox104', 'safari16']`.
 
 또 다른 Vite 한정 옵션은 `'esnext'` 로, 네이티브 동적 Import를 지원하며 트랜스파일링을 최소한만 수행합니다.
 
@@ -191,7 +191,9 @@ export default defineConfig({
 - **기본값:** `false`
 - **관련 항목:** [백엔드 프레임워크와 함께 사용하기](/guide/backend-integration)
 
-해시되지 않은 에셋 파일 이름과 해시된 버전 간 매핑을 포함하는 매니패스트 파일을 생성할지 여부입니다. 이는 서버 프레임워크에서 올바른 에셋 링크를 렌더링하는 데 사용될 수 있습니다.
+Whether to generate a manifest file that contains a mapping of non-hashed asset filenames to their hashed versions, which can then be used by a server framework to render the correct asset links.
+
+When the value is a string, it will be used as the manifest file path relative to `build.outDir`. When set to `true`, the path would be `.vite/manifest.json`.
 
 값이 문자열이면 `build.outDir`을 기준으로 하는 매니페스트 파일 경로로 사용됩니다. `true`면 `.vite/manifest.json`이 경로가 됩니다.
 
@@ -199,7 +201,9 @@ export default defineConfig({
 
 - **타입:** `boolean | string`
 - **기본값:** `false`
-- **관련 항목:** [서버 측 렌더링](/guide/ssr)
+Whether to generate a SSR manifest file for determining style links and asset preload directives in production.
+
+When the value is a string, it will be used as the manifest file path relative to `build.outDir`. When set to `true`, the path would be `.vite/ssr-manifest.json`.
 
 프로덕션 환경에서 필요한 스타일 링크 및 에셋 프리로드 디렉티브를 식별하는 데 사용되는 SSR 매니페스트 파일을 생성할지 여부입니다.
 

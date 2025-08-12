@@ -11,7 +11,7 @@
 - [환경 API PR](https://github.com/vitejs/vite/pull/16471)에서 새로운 API를 구현하고 검토했습니다.
 
 여러분의 피드백을 공유해주세요.
-:::
+## Environments and Frameworks
 
 ## DevEnvironment 통신 레벨 {#devenvironment-communication-levels}
 
@@ -328,3 +328,5 @@ export default {
 ## 환경에 구애받지 않는 코드 {#environment-agnostic-code}
 
 대부분의 경우 `environment` 인스턴스는 컨텍스트에 이미 존재하기에, `server.environments`로 직접 접근할 필요가 없습니다. 예를 들어, 플러그인 훅 내부에서는 `this.environment`로 환경에 접근할 수 있습니다. 환경을 인식하는 플러그인을 만드는 방법은 [플러그인을 위한 환경 API](./api-environment-plugins.md) 섹션을 참조하세요.
+Plugins can also define a `buildApp` hook. Order `'pre'` and `null'` are executed before the configured `builder.buildApp`, and order `'post'` hooks are executed after it. `environment.isBuilt` can be used to check if an environment has already being build.
+Plugins can also define a `buildApp` hook. Order `'pre'` and `null` are executed before the configured `builder.buildApp`, and order `'post'` hooks are executed after it. `environment.isBuilt` can be used to check if an environment has already being build.

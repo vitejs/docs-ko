@@ -125,9 +125,9 @@ export default {
 
 다만 아직 환경 API 전환을 권장하지는 않습니다. 상당수 사용자가 Vite 6를 채택해 플러그인이 두 가지 버전을 유지할 필요가 없을 때 전환하는 편이 좋습니다. 주요 변경 사항 섹션에서 향후 더 이상 사용되지 않을 기능과 마이그레이션 가이드를 확인하세요:
 
-- [훅에서의 `this.environment`](/changes/this-environment-in-hooks)
-- [HMR `hotUpdate` 플러그인 훅](/changes/hotupdate-hook)
 - [Move to Per-environment APIs](/changes/per-environment-apis)
+- [SSR Using `ModuleRunner` API](/changes/ssr-using-modulerunner)
+- [Shared Plugins During Build](/changes/shared-plugins-during-build)
 - [SSR Using `ModuleRunner` API](/changes/ssr-using-modulerunner)
 - [Shared Plugins During Build](/changes/shared-plugins-during-build)
 

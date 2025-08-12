@@ -39,7 +39,6 @@ const { isCardActive, startAnimation } = useCardAnimation(
           width="658"
           height="275"
           viewBox="0 0 658 275"
-          d
           xmlns="http://www.w3.org/2000/svg"
         >
           <path

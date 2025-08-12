@@ -1,4 +1,4 @@
-# 환경별 API로 마이그레이션 {#move-to-per-environment-apis}
+# Move to Per-environment APIs
 
 ::: tip 피드백
 [환경 API 피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 피드백을 남겨주세요.

@@ -51,10 +51,23 @@ Vite가 응답할 수 있는 호스트 이름 목록입니다.
 기본적으로 `localhost`와 `.localhost` 하위 도메인, 그리고 모든 IP 주소가 허용됩니다.
 HTTPS를 사용하는 경우 이 검사는 건너뜁니다.
 
-문자열이 `.`으로 시작하는 경우, `.`이 제외된 호스트 이름과 모든 서브도메인을 허용합니다. 예를 들어, `.example.com`은 `example.com`, `foo.example.com`, `foo.bar.example.com`을 허용합니다. `true`로 설정하면 서버가 모든 호스트에 대한 요청에 응답할 수 있게 됩니다.
+If a string starts with `.`, it will allow that hostname without the `.` and all subdomains under the hostname. For example, `.example.com` will allow `example.com`, `foo.example.com`, and `foo.bar.example.com`. If set to `true`, the server is allowed to respond to requests for any hosts.
 
-::: details 어떤 호스트가 안전한가요?
+::: details What hosts are safe to be added?
 
+Hosts that you have control over which IP addresses they resolve to are safe to add to the list of allowed hosts.
+
+For example, if you own a domain `vite.dev`, you can add `vite.dev` and `.vite.dev` to the list. If you don't own that domain and you cannot trust the owner of that domain, you should not add it.
+
+Especially, you should never add Top-Level Domains like `.com` to the list. This is because anyone can purchase a domain like `example.com` and control the IP address it resolves to.
+
+:::
+
+::: danger
+
+Setting `server.allowedHosts` to `true` allows any website to send requests to your dev server through DNS rebinding attacks, allowing them to download your source code and content. We recommend always using an explicit list of allowed hosts. See [GHSA-vg6x-rcgg-rjx6](https://github.com/vitejs/vite/security/advisories/GHSA-vg6x-rcgg-rjx6) for more details.
+
+:::
 직접 IP 주소를 관리할 수 있는 호스트만 허용된 호스트 목록에 추가하는 것이 안전합니다.
 
 예를 들어, `vite.dev` 도메인을 소유하고 있다면 `vite.dev` 및 `.vite.dev`를 목록에 추가해도 좋습니다. 해당 도메인을 소유하고 있지 않고 도메인 소유자를 신뢰할 수 없다면, 추가하지 말아야 합니다.
@@ -169,9 +182,9 @@ export default defineConfig({
         target: 'ws://localhost:5174',
         ws: true,
         rewriteWsOrigin: true,
-      }
+::: danger
     }
-  }
+Setting `server.cors` to `true` allows any website to send requests to your dev server and download your source code and content. We recommend always using an explicit list of allowed origins.
 })
 ```
 
@@ -364,6 +377,12 @@ export default defineConfig({
         // 커스텀 allow 옵션 규칙
         '/path/to/custom/allow_directory',
         '/path/to/custom/allow_file.demo',
+::: tip NOTE
+
+This blocklist does not apply to [the public directory](/guide/assets.md#the-public-directory). All files in the public directory are served without any filtering, since they are copied directly to the output directory during build.
+
+:::
+
       ]
     }
   }

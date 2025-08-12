@@ -20,7 +20,7 @@ interface Sponsor {
    * Expects to also have an **inversed** image with `-dark` postfix.
    */
   hasDark?: true
-}
+const data = ref<{ tier: string; size: string; items: Sponsor[] }[]>()
 
 // shared data across instances so we load only once.
 const data = ref<{ tier: string; size: string; items: Sponsor[] }[]>()

@@ -18,7 +18,7 @@ vite는 애플리케이션의 모듈을 **디펜던시**와 **소스 코드** �
 
 - **디펜던시**: 개발 시 그 내용이 바뀌지 않을 일반적인 JavaScript 소스 코드입니다. 기존 번들러로는 컴포넌트 라이브러리와 같이 몇 백 개의 JavaScript 모듈을 갖고 있는 매우 큰 디펜던시에 대한 번들링 과정이 매우 비효율적이었고 많은 시간을 필요로 했습니다.
 
-  Vite [사전 번들링](./dep-pre-bundling.md) 기능은 [Esbuild](https://esbuild.github.io/)를 사용하고 있습니다. Go로 작성된 Esbuild는 Webpack, Parcel과 같은 기존의 번들러 대비 10-100배 빠른 속도를 제공합니다.
+  Vite [pre-bundles dependencies](./dep-pre-bundling.md) using [esbuild](https://esbuild.github.io/). esbuild is written in Go and pre-bundles dependencies 10-100x faster than JavaScript-based bundlers.
 
 - **소스 코드**: JSX, CSS 또는 Vue/Svelte 컴포넌트와 같이 컴파일링이 필요하고, 수정 또한 매우 잦은 Non-plain JavaScript 소스 코드는 어떻게 할까요? (물론 이들 역시 특정 시점에서 모두 불러올 필요는 없습니다.)
 
@@ -47,7 +47,7 @@ import esmSvg from '../images/esm.svg?raw'
 
 이제 기본적으로 ESM이 대부분의 환경에서 지원되지만, 프로덕션에서 번들 되지 않은 ESM을 가져오는 것은 중첩된 import로 인한 추가 네트워크 통신으로 인해 여전히 비효율적입니다(HTTP/2를 사용하더라도). 프로덕션 환경에서 최적의 로딩 성능을 얻으려면 트리 셰이킹, 지연 로딩 및 청크 파일 분할(더 나은 캐싱을 위해)을 이용하여 번들링 하는 것이 더 좋습니다.
 
-개발 서버와 프로덕션 빌드 간에 최적의 출력과 동작 일관성을 보장하는 것은 쉽지 않습니다. 이것이 바로 Vite가 미리 설정된 [빌드 커맨드](./build.md)를 이용하고, [빌드 최적화](./features.md#build-optimizations)를 진행하는 이유입니다.
+Ensuring optimal output and behavioral consistency between the dev server and the production build isn't easy. This is why Vite ships with a pre-configured [build command](./build.md) that bakes in many [performance optimizations](./features.md#build-optimizations) out of the box.
 
 ## 왜 번들링 시에는 Esbuild를 사용하지 않나요? {#why-not-bundle-with-esbuild}
 
@@ -57,9 +57,13 @@ Vite의 현재 플러그인 API는 `esbuild`를 번들러로 사용하는 것과
 
 Rollup은 [v4에서 파서를 SWC로 전환](https://github.com/rollup/rollup/pull/5073)하는 등 성능 개선을 위해 노력해 왔습니다. 또한 Rollup의 Rust 포팅인 Rolldown을 만드는 작업이 진행 중입니다. Rolldown이 준비되면 Rollup과 esbuild를 모두 대체하여 빌드 성능을 크게 향상시키고 개발과 빌드 사이의 불일치를 제거할 수 있습니다. [Evan You의 ViteConf 2023 키노트](https://youtu.be/hrdwQHoAp0M)에서 자세한 내용을 확인할 수 있습니다.
 
-## Vite는 다른 번들링하지 않는 빌드 툴과 어떤 관계가 있나요? {#how-vite-relates-to-other-unbundled-build-tools}
+## How Vite Relates to Other Unbundled Build Tools?
 
-Preact 팀이 제공하는 [WMR](https://github.com/preactjs/wmr)은 비슷한 기능을 제공하고자 했습니다. Vite 개발 및 빌드를 위한 범용 Rollup 플러그인 API는 여기에서 영감을 받았습니다. 다만 WMR은 더 이상 관리되지 않습니다. Preact 팀은 Vite와 함께 [@preactjs/preset-vite](https://github.com/preactjs/preset-vite) 플러그인 사용을 권장하고 있습니다.
+[WMR](https://github.com/preactjs/wmr) by the Preact team looked to provide a similar feature set. Vite's universal Rollup plugin API for dev and build was inspired by it. WMR is no longer maintained. The Preact team now recommends Vite with [@preactjs/preset-vite](https://github.com/preactjs/preset-vite).
+
+[Snowpack](https://www.snowpack.dev/) was also a no-bundle native ESM dev server, very similar in scope to Vite. Vite's dependency pre-bundling is also inspired by Snowpack v1 (now [`esinstall`](https://github.com/snowpackjs/snowpack/tree/main/esinstall)). Snowpack is no longer being maintained. The Snowpack team is now working on [Astro](https://astro.build/), a static site builder powered by Vite.
+
+[@web/dev-server](https://modern-web.dev/docs/dev-server/overview/) (previously `es-dev-server`) is a great project and Vite 1.0's Koa-based server setup was inspired by it. The `@web` umbrella project is actively maintained and contains many other excellent tools that may benefit Vite users as well.
 
 [Snowpack](https://www.snowpack.dev/)도 번들링을 하지 않는 네이티브 ESM 개발 서버로, Vite와 매우 유사한 영역에 있었습니다. Vite에서 제공하는 디펜던시 사전 번들링 기능 역시 Snowpack v1(현재는 [`esinstall`](https://github.com/snowpackjs/snowpack/tree/main/esinstall))에서 영감을 받았습니다. 마찬가지로 Snowpack은 더 이상 관리되지 않고 있습니다. Snowpack 팀은 현재 Vite를 기반으로 한 정적 사이트 빌더인 [Astro](https://astro.build/)를 개발하고 있습니다.
 

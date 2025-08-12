@@ -18,7 +18,7 @@
 한 가지 유의할 점은, `vite preview` 명령은 로컬에서 어떤 형태로 빌드가 되는지 미리 확인하기 위한 용도일 뿐이며, 실제 배포용 서버를 의미하지는 않습니다.
 
 ::: tip 참고
-이 가이드는 Vite 기반의 사이트를 정적(Static)으로 배포하기 위한 방법을 설명하고 있습니다. 물론 Vite는 서버 측 렌더링(SSR, Server Side Rendering)을 지원합니다. 참고로 '서버 측 렌더링'이란, Node.js를 이용해 동일한 웹 애플리케이션을 HTML로 사전에 렌더링한 뒤, 이를 클라이언트에게 제공하는 방식의 프런트엔드 프레임워크를 의미합니다. 이에 대해 더 알고자 한다면 [SSR 가이드](./ssr)를 참고해주세요. 만약 기존에 사용하고 있는 서버측 프레임워크(Ror, Laravel 등)가 있다면, [백엔드 통합 가이드](./backend-integration)를 참고해주세요.
+These guides provide instructions for performing a static deployment of your Vite site. Vite also supports Server-Side Rendering. SSR refers to front-end frameworks that support running the same application in Node.js, pre-rendering it to HTML, and finally hydrating it on the client. Check out the [SSR Guide](./ssr) to learn about this feature. On the other hand, if you are looking for integration with traditional server-side frameworks, check out the [Backend Integration guide](./backend-integration) instead.
 :::
 
 ## 앱 빌드하기 {#building-the-app}
@@ -99,7 +99,7 @@ $ npm run preview
 
 ## Netlify {#netlify}
 
-### Netlify CLI {#netlify-cli}
+             node-version: lts/*
 
 1. [Netlify CLI](https://cli.netlify.com/)를 설치해주세요.
 2. `ntl init` 또는 `netlify init` 명령으로 새로운 사이트를 생성해주세요.
@@ -128,7 +128,7 @@ $ ntl deploy --prod
 1. 코드를 Git 리포지토리(GitHub, GitLab, BitBucket, Azure DevOps)에 Push 해주세요.
 2. Netlify에서 [프로젝트를 불러와주세요](https://app.netlify.com/start).
 3. 배포될 브랜치를 선택하고, 빌드 결과물이 들어갈 디렉터리와 필요하다면 환경 변수를 설정해주세요.
-4. **Deploy** 를 클릭해주세요.
+   image: node:lts
 5. Vite 앱이 배포되었습니다!
 
 프로젝트를 가져와 배포한 후, Pull Request와 배포용 브랜치가 아닌 다른 모든 브랜치에 새로이 Push되는 내용에 대해서는 [프리뷰 버전 배포 환경](https://docs.netlify.com/site-deploys/deploy-previews/)이 구성되며, 배포용 브랜치(일반적으로 "main")에 대한 변경 사항은 [프로덕션 버전으로 배포됩니다](https://docs.netlify.com/site-deploys/overview/#definitions).

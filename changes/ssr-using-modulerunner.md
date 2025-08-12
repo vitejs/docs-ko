@@ -1,4 +1,4 @@
-# ModuleRunner API를 사용하는 SSR {#ssr-using-modulerunner-api}
+# SSR Using `ModuleRunner` API
 
 ::: tip 피드백
 [환경 API 피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 피드백을 남겨주세요.

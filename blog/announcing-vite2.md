@@ -33,7 +33,7 @@ Vite(프랑스어로 "빠르다"는 뜻, `/vit/`로 발음)는 프론트엔드 �
 
 Vite가 얼마나 빠른지 느껴보시려면, Repl.it에서 Vite와 `create-react-app`(CRA)을 사용하여 React 애플리케이션을 부팅하는 [이 영상 비교](https://twitter.com/amasad/status/1355379680275128321)를 확인해보세요.
 
-Vite에 대해 처음 들어보셨고 더 자세히 알고 싶으시다면, [프로젝트의 배경](https://vite.dev/guide/why.html)을 확인해보세요. Vite가 다른 유사한 도구들과 어떻게 다른지 궁금하시다면, [비교](https://v5.vite.dev/guide/comparisons.html)를 확인해보세요.
+If you've never heard of Vite before and would love to learn more about it, check out [the rationale behind the project](https://vite.dev/guide/why.html). If you are interested in how Vite differs from other similar tools, check out the [comparisons](https://v5.vite.dev/guide/comparisons.html).
 
 ## 2.0의 새로운 기능 {#what-s-new-in-2-0}
 

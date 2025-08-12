@@ -71,18 +71,13 @@ export type { T }
 
 - [TypeScript 문서](https://www.typescriptlang.org/tsconfig#useDefineForClassFields)
 
-TypeScript 변환 대상이 `ES2022` 또는 `ESNext` 이상인 경우, 기본값은 `true`가 됩니다. 이는 [TypeScript 4.3.2+ 동작 방식](https://github.com/microsoft/TypeScript/pull/42663)과 동일합니다.
-그 외 TypeScript 변환 대상은 기본적으로 `false`로 설정됩니다.
+The default value will be `true` if the TypeScript target is `ES2022` or newer including `ESNext`. It is consistent with the [behavior of TypeScript 4.3.2+](https://github.com/microsoft/TypeScript/pull/42663).
 
 `true`는 표준 ECMAScript 런타임 동작입니다.
-
-클래스 필드에 크게 의존하는 라이브러리를 사용하는 경우, 해당 라이브러리의 의도된 사용법에 주의하세요.
+`true` is the standard ECMAScript runtime behavior.
 라이브러리 대부분은 `"useDefineForClassFields": true`를 기대하지만, 이를 지원하지 않는 경우 명시적으로 `useDefineForClassFields`를 `false`로 설정할 수 있습니다.
 
-#### `target` {#target}
-
-- [TypeScript 문서](https://www.typescriptlang.org/tsconfig#target)
-
+While most libraries expect `"useDefineForClassFields": true`, you can explicitly set `useDefineForClassFields` to `false` if your library doesn't support it.
 Vite는 `esbuild`와 동일하게 `tsconfig.json` 내 `target` 값을 무시합니다.
 
 개발 시 `target`을 지정하고자 한다면 [`esbuild.target`](/config/shared-options.html#esbuild) 옵션을 사용할 수 있으며, 최소한의 트랜스파일링을 위해 `esnext`로 기본 설정되어 있습니다. 빌드 시 `esbuild.target`보다 높은 우선순위를 갖는 [`build.target`](/config/build-options.html#build-target) 옵션을 사용할 수도 있습니다.
@@ -124,20 +119,26 @@ Vite의 기본 타입들은 Node.js API를 위한 것입니다. Vite 애플리�
 `tsconfig.json` 내 `compilerOptions.types`에 `vite/client`를 추가할 수도 있습니다:
 
 ```json [tsconfig.json]
+::: details Using `compilerOptions.types`
+
 {
   "compilerOptions": {
     "types": ["vite/client", "some-other-global-lib"]
   }
 }
-```
+    "types": ["vite/client", "some-other-global-lib"]
 
 [`compilerOptions.types`](https://www.typescriptlang.org/tsconfig#types)를 지정하는 경우, 전역 스코프에는 지정된 패키지만이 포함되며, 모든 "@types" 패키지는 포함되지 않습니다.
 
 :::
+Note that if [`compilerOptions.types`](https://www.typescriptlang.org/tsconfig#types) is specified, only these packages will be included in the global scope (instead of all visible ”@types” packages).
 
+:::
+
+`vite/client` provides the following type shims:
 `vite/client`는 다음과 같은 타입 심(shim)을 제공합니다:
 
-- `.svg`와 같은 에셋
+- Types for the Vite-injected [constants](./env-and-mode#env-variables) on `import.meta.env`
 - `import.meta.env`에 Vite가 주입하는 [환경 변수](./env-and-mode#env-variables)에 대한 타입 정의
 - `import.meta.hot`에 명시된 [HMR API](./api-hmr) 타입들
 
@@ -204,22 +205,28 @@ HTML 파일은 Vite 프로젝트에서 [중심적인 역할](/guide/#index-html-
 ```
 
 특정 요소에 대해 HTML 처리를 비활성화하려면 해당 요소에 `vite-ignore` 속성을 추가할 수 있습니다. 이는 외부 에셋이나 CDN을 참조할 때 유용할 수 있습니다.
-
+## Frameworks
 ## 프레임워크 {#frameworks}
-
+All modern frameworks maintain integrations with Vite. Most framework plugins are maintained by each framework team, with the exception of the official Vue and React Vite plugins that are maintained in the vite org:
 모든 모던 프레임워크는 Vite를 지원합니다. 프레임워크 플러그인 대부분은 각 프레임워크 팀에서 관리하지만, Vue와 React용 공식 Vite 플러그인은 vite 조직에서 관리합니다:
-
-- Vue: [@vitejs/plugin-vue](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue)
-- Vue JSX: [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx)
-- React: [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react)
+- Vue support via [@vitejs/plugin-vue](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue)
+- Vue JSX support via [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx)
+- React support via [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react)
 - React using SWC support via [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react-swc)
 
+Check out the [Plugins Guide](https://vite.dev/plugins) for more information.
+- React support via [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react)
+- React using SWC support via [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc)
+
+Check out the [Plugins Guide](https://vite.dev/plugins) for more information.
+- React using SWC support via [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react-swc)
+Your framework of choice will already configure JSX out of the box (for example, Vue users should use the official [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx) plugin, which provides Vue 3 specific features including HMR, global component resolving, directives and slots).
 자세한 내용은 [플러그인 가이드](https://ko.vite.dev/plugins)를 참고해 주세요.
-
+If using JSX with your own framework, custom `jsxFactory` and `jsxFragment` can be configured using the [`esbuild` option](/config/shared-options.md#esbuild). For example, the Preact plugin would use:
 ## JSX {#jsx}
-
+Your framework of choice will already configure JSX out of the box (for example, Vue users should use the official [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx) plugin, which provides Vue 3 specific features including HMR, global component resolving, directives and slots).
 기본적으로 `.jsx`와 `.tsx` 파일을 지원합니다. JSX 트랜스파일링은 [esbuild](https://esbuild.github.io)를 통해 처리됩니다.
-
+If using JSX with your own framework, custom `jsxFactory` and `jsxFragment` can be configured using the [`esbuild` option](/config/shared-options.md#esbuild). For example, the Preact plugin would use:
 다만 각 프레임워크에 최적화된 JSX 기능을 사용하려면 이를 위한 플러그인이 필요합니다. 일반적으로 여러분이 선택한 프레임워크는 이미 JSX를 위한 설정을 기본적으로 제공하고 있을 가능성이 높습니다. 예를 들어, Vue로 개발할 경우 HMR, 전역 컴포넌트 탐색, 디렉티브, 슬롯 등 Vue 3에 특화된 기능을 사용하기 위해서는 공식 [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx) 플러그인을 사용해야 합니다.
 
 자체 프레임워크와 함께 JSX를 사용하는 경우, [`esbuild` 옵션](/config/shared-options.md#esbuild)을 사용해 커스텀 `jsxFactory` 및 `jsxFragment`를 구성할 수 있습니다. 예를 들어, Preact 플러그인은 다음과 같이 사용할 수 있습니다:
@@ -306,7 +313,7 @@ npm add -D sass-embedded # 또는 sass
 
 # .less
 npm add -D less
-
+Vite improves `@import` resolving for Sass and Less so that Vite aliases are also respected. In addition, relative `url()` references inside imported Sass/Less files that are in different directories from the root file are also automatically rebased to ensure correctness. Rebasing `url()` references that starts with a variable or a interpolation are not supported due to its API constraints.
 # .styl 및 .stylus
 npm add -D stylus
 ```
@@ -357,7 +364,7 @@ import 'vite/client'
 // ---cut---
 import imgUrl from './img.png'
 document.getElementById('hero-img').src = imgUrl
-```
+// Explicitly load assets as URL (automatically inlined depending on the file size)
 
 URL 쿼리를 이용해 에셋을 가져올 때 어떻게 이를 가져올 것인지 명시할 수도 있습니다.
 
@@ -573,6 +580,32 @@ const moduleUrls = {
 다른 플러그인에서 사용할 목적으로 커스텀 쿼리를 작성할 수도 있습니다:
 
 ```ts twoslash
+#### Base Path
+
+You can also use the `base` option to provide base path for the imports:
+
+```ts twoslash
+import 'vite/client'
+// ---cut---
+const modulesWithBase = import.meta.glob('./**/*.js', {
+  base: './base',
+})
+```
+
+```ts
+// code produced by vite:
+const modulesWithBase = {
+  './dir/foo.js': () => import('./base/dir/foo.js'),
+  './dir/bar.js': () => import('./base/dir/bar.js'),
+}
+```
+
+The base option can only be a directory path relative to the importer file or absolute against the project root. Aliases and virtual modules aren't supported.
+
+Only the globs that are relative paths are interpreted as relative to the resolved base.
+
+All the resulting module keys are modified to be relative to the base if provided.
+
 import 'vite/client'
 // ---cut---
 const modules = import.meta.glob('./dir/*.js', {

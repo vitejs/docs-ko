@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import CommunityCard, { type Testimonial } from './CommunityCard.vue'
-
 const testimonials: Testimonial[] = [
   {
     name: 'Ryan Carniato',

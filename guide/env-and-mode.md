@@ -77,6 +77,23 @@ NEW_KEY3=test$KEY   # test123
 :::warning 보안 권고 사항
 
 - `.env.*.local` 파일은 오로지 로컬에서만 접근이 가능한 파일이며, 데이터베이스 비밀번호와 같은 민감한 정보를 이 곳에 저장하도록 합니다. 또한 `.gitignore` 파일에 `*.local` 파일을 명시해 Git에 체크인되는 것을 방지하도록 합니다.
+::: details Expanding variables in reverse order
+
+Vite supports expanding variables in reverse order.
+For example, the `.env` below will be evaluated as `VITE_FOO=foobar`, `VITE_BAR=bar`.
+
+```[.env]
+VITE_FOO=foo${VITE_BAR}
+VITE_BAR=bar
+```
+
+This does not work in shell scripts and other tools like `docker-compose`.
+That said, Vite supports this behavior as this has been supported by `dotenv-expand` for a long time and other tools in JavaScript ecosystem uses older versions that supports this behavior.
+
+To avoid interop issues, it is recommended to avoid relying on this behavior. Vite may start emitting warnings for this behavior in the future.
+
+:::
+
 
 - Vite 소스 코드에 노출되는 모든 환경 변수는 번들링 시 포함되게 됩니다. 따라서, `VITE_*` 환경 변수에는 민감한 정보들이 _포함되어서는 안됩니다_.
 

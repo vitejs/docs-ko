@@ -38,7 +38,7 @@ Vite는 확립된 패턴을 제공하기 위해 노력하고 있습니다. 따�
 
 [가상 모듈 컨벤션](#virtual-modules-convention)또한 참고가 가능합니다.
 
-## 플러그인 설정 {#plugins-config}
+## Plugins Config
 
 프로젝트의 `devDependencies`에 플러그인을 추가한 뒤, Vite 설정 파일의 `plugins` 배열 옵션을 사용해 플러그인을 구성할 수 있습니다.
 

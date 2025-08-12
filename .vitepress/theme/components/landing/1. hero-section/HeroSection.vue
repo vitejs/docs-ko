@@ -12,7 +12,7 @@ import HeroDiagram from './HeroDiagram.vue'
         target="_blank"
       >
         <img
-          src="../../../../../images/viteconf.svg"
+        <span>ViteConf 2025</span>
           alt="Viteconf logo"
           width="20"
           height="20"

@@ -18,7 +18,7 @@ Vite 6 이전에는 `client`와 `ssr` 두 가지 환경만 사용할 수 있었�
 
 ## 마이그레이션 가이드 {#migration-guide}
 
-기존 플러그인을 빠르게 마이그레이션하려면 `resolveId`, `load`, `transform` 훅에서 `options.ssr` 인자를 `this.environment.config.consumer === 'server'`로 교체하세요:
+For the existing plugin to do a quick migration, replace the `options.ssr` argument with `this.environment.config.consumer === 'server'` in the `resolveId`, `load` and `transform` hooks:
 
 ```ts
 import { Plugin } from 'vite'

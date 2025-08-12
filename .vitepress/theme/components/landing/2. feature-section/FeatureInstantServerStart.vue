@@ -27,6 +27,7 @@ const { startAnimation } = useCardAnimation(
       highlightEnter.value = false
     })
     return timeline
+    return timeline
   },
   {
     once: true,
@@ -35,7 +36,7 @@ const { startAnimation } = useCardAnimation(
 
 /**
  * Run the command animation on enter press
- */
+function handleEnterPress(event: KeyboardEvent) {
 function handleEnterPress(event: KeyboardEvent) {
   if (event.key === 'Enter') {
     startAnimation()
@@ -342,7 +343,8 @@ onUnmounted(() => {
       right: 0;
       bottom: 0;
       height: 100%;
-      border-radius: 12px 0 0 12px;
+      background:
+        url('/noise.png'),
       background:
         url('../common/noise.webp'),
         radial-gradient(

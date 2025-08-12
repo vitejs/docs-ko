@@ -184,6 +184,8 @@ const UnoCssPlugin = () => {
 import { nonShareablePlugin } from 'non-shareable-plugin'
 
 export default defineConfig({
+The `applyToEnvironment` hook is called at config time, currently after `configResolved` due to projects in the ecosystem modifying the plugins in it. Environment plugins resolution may be moved before `configResolved` in the future.
+
   plugins: [
     {
       name: 'per-environment-plugin',

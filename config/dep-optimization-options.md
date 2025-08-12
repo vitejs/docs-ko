@@ -10,7 +10,7 @@
 
 기본적으로 Vite는 모든 `.html` 파일을 크롤링해 사전 번들링이 필요한 디펜던시를 탐지합니다(`node_modules`, `build.outDir`, `__tests__` 및 `coverage` 디렉터리는 무시). 만약 `build.rollupOptions.input`이 지정된 경우 Vite가 대신 해당 진입점을 탐색합니다.
 
-이 방식들이 맞지 않는다면 이 옵션을 사용해 커스텀 진입점을 지정할 수 있습니다. 값은 [`tinyglobby` 패턴](https://github.com/SuperchupuDev/tinyglobby) 또는 패턴 배열이어야 하며, 이는 Vite 프로젝트 루트를 기준으로 합니다. 이는 기본 진입점 추론 방식을 덮어쓰게 됩니다. `optimizeDeps.entries`가 명시적으로 정의된 경우 기본적으로 `node_modules`와 `build.outDir` 폴더만 무시됩니다. 다른 폴더들을 무시해야 하는 경우에는 진입점 목록의 일부로 `!`로 시작하는 무시 패턴을 사용할 수 있습니다. `node_modules` 문자열을 명시적으로 포함하는 패턴의 경우 `node_modules`는 무시되지 않습니다.
+If neither of these fit your needs, you can specify custom entries using this option - the value should be a [`tinyglobby` pattern](https://github.com/SuperchupuDev/tinyglobby) or array of patterns that are relative from Vite project root. This will overwrite default entries inference. Only `node_modules` and `build.outDir` folders will be ignored by default when `optimizeDeps.entries` is explicitly defined. If other folders need to be ignored, you can use an ignore pattern as part of the entries list, marked with an initial `!`. `node_modules` will not be ignored for patterns that explicitly include the string `node_modules`.
 
 ## optimizeDeps.exclude <NonInheritBadge />
 
@@ -77,6 +77,13 @@ export default defineConfig({
 - **타입:** `boolean`
 
 `true`로 설정하면 최적화되어 캐시된 디펜던시들을 무시하고, 디펜던시 사전 번들링을 강제로 실행합니다.
+
+## optimizeDeps.noDiscovery
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+When set to `true`, automatic dependency discovery will be disabled and only dependencies listed in `optimizeDeps.include` will be optimized. CJS-only dependencies must be present in `optimizeDeps.include` during dev.
 
 ## optimizeDeps.noDiscovery <NonInheritBadge />
 

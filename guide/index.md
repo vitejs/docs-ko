@@ -22,7 +22,7 @@ Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./feat
 
 개발 단계에서, Vite는 모든 최신 JavaScript 및 CSS 기능을 지원하는 모던 브라우저를 사용하고 있다고 가정합니다. 이러한 이유로 Vite는 [`esnext`를 변환 대상으로 설정](https://esbuild.github.io/api/#target)해 빌드를 수행합니다. 이 덕분에 하위 호환성을 지키기 위한 문법 변환을 수행하지 않아도 되며, 원본 소스 코드에 최대한 근접한 형태로 Vite가 모듈을 제공할 수 있도록 합니다. Vite는 개발 서버가 동작할 수 있도록 일부 런타임 코드를 주입합니다. 이러한 코드는 각 메이저 릴리스 시점(현재 메이저 버전은 2025-05-01)에 [Baseline](https://web-platform-dx.github.io/web-features/) Newly Available 기능을 사용할 수 있도록 합니다.
 
-프로덕션 빌드의 경우, Vite는 기본적으로 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available 브라우저를 타깃으로 합니다. 최소 2.5년 이전에 릴리스된 브라우저들을 의미합니다. 이 타깃은 설정을 통해 더 낮출 수 있으며, 레거시 브라우저는 공식 플러그인인 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)를 통해 지원이 가능합니다. 이에 대한 더 자세한 내용은 [프로덕션 빌드](./build) 섹션을 참고해 주세요.
+For production builds, Vite by default targets [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available browsers. These are browsers that were released at least 2.5 years ago. The target can be lowered via configuration. Additionally, legacy browsers can be supported via the official [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy). See the [Building for Production](./build) section for more details.
 
 ## 온라인에서 Vite 체험해보기 {#trying-vite-online}
 
@@ -44,7 +44,7 @@ Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./feat
 ## 첫 Vite 프로젝트 만들어보기 {#scaffolding-your-first-vite-project}
 
 ::: code-group
-
+Vite requires [Node.js](https://nodejs.org/en/) version 20.19+, 22.12+. However, some templates require a higher Node.js version to work, please upgrade if your package manager warns about it.
 ```bash [npm]
 $ npm create vite@latest
 ```
@@ -202,7 +202,31 @@ Vite는 정적(Static) HTTP 서버와 비슷하게 "루트 디렉터리"라는 �
 참고로 Vite는 프로젝트 루트 내에서 [설정 파일(`vite.config.js`)](/config/#configure-vite)을 확인하기에, 프로젝트 루트가 변경된다면 해당 파일도 함께 옮겨줘야 합니다.
 
 ## 커맨드 라인 인터페이스 {#command-line-interface}
+If you can't wait for a new release to test the latest features, you can install a specific commit of Vite with https://pkg.pr.new:
 
+::: code-group
+
+```bash [npm]
+$ npm install -D https://pkg.pr.new/vite@SHA
+```
+
+```bash [Yarn]
+$ yarn add -D https://pkg.pr.new/vite@SHA
+```
+
+```bash [pnpm]
+$ pnpm add -D https://pkg.pr.new/vite@SHA
+```
+
+```bash [Bun]
+$ bun add -D https://pkg.pr.new/vite@SHA
+```
+
+:::
+
+Replace `SHA` with any of [Vite's commit SHAs](https://github.com/vitejs/vite/commits/main/). Note that only commits within the last month will work, as older commit releases are purged.
+
+Alternatively, you can also clone the [vite repo](https://github.com/vitejs/vite) to your local machine and then build and link it yourself ([pnpm](https://pnpm.io/) is required):
 vite가 설치된 프로젝트는 `vite` 명령을 통해 바로 Vite를 실행할 수 있습니다. (`npx vite`을 이용해도 되구요.) 기본적으로 Vite에서 제공하는 npm 스크립트는 아래와 같습니다.
 
 <!-- prettier-ignore -->
@@ -215,6 +239,10 @@ vite가 설치된 프로젝트는 `vite` 명령을 통해 바로 Vite를 실행�
   }
 }
 ```
+::: tip Dependencies using Vite
+To replace the Vite version used by dependencies transitively, you should use [npm overrides](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#overrides) or [pnpm overrides](https://pnpm.io/package_json#pnpmoverrides).
+:::
+
 
 Vite CLI와 함께 `--port`, `--open`와 같은 옵션을 사용할 수 있습니다. 모든 CLI 옵션을 보고자 한다면, vite가 설치된 프로젝트 안에서 `npx vite --help` 명령을 실행해주세요.
 
