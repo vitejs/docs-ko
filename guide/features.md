@@ -423,8 +423,8 @@ const modules = {
   './dir/foo.js': () => import('./dir/foo.js'),
 }
 ```
-
 이렇게 가져온 `modules`를 순회하여 각 모듈에 접근할 수 있게 됩니다.
+  './dir/foo.js': () => import('./dir/foo.js'),
 
 ```js
 for (const path in modules) {
@@ -450,11 +450,11 @@ import * as __vite_glob_0_0 from './dir/bar.js'
 import * as __vite_glob_0_1 from './dir/foo.js'
 const modules = {
   './dir/bar.js': __vite_glob_0_0,
-  './dir/foo.js': __vite_glob_0_1,
-}
+import * as __vite_glob_0_0 from './dir/bar.js'
+import * as __vite_glob_0_1 from './dir/foo.js'
 ```
-
-### Glob 패턴 배열 {#multiple-patterns}
+  './dir/bar.js': __vite_glob_0_0,
+  './dir/foo.js': __vite_glob_0_1,
 
 첫 번째 인자는 Glob 패턴의 배열로 전달할 수 있습니다.
 
@@ -498,8 +498,8 @@ const modules = {
   './dir/foo.js': () => import('./dir/foo.js').then((m) => m.setup),
 }
 ```
-
 `eager`와 같이 사용하면 모듈에 대한 트리 셰이킹도 가능합니다.
+  './dir/foo.js': () => import('./dir/foo.js').then((m) => m.setup),
 
 ```ts twoslash
 import 'vite/client'
@@ -516,11 +516,11 @@ import { setup as __vite_glob_0_0 } from './dir/bar.js'
 import { setup as __vite_glob_0_1 } from './dir/foo.js'
 const modules = {
   './dir/bar.js': __vite_glob_0_0,
-  './dir/foo.js': __vite_glob_0_1,
-}
+import { setup as __vite_glob_0_0 } from './dir/bar.js'
+import { setup as __vite_glob_0_1 } from './dir/foo.js'
 ```
-
-`default export`를 가져오고자 하는 경우에는 `import` 옵션 값을 `default`로 설정해주세요.
+  './dir/bar.js': __vite_glob_0_0,
+  './dir/foo.js': __vite_glob_0_1,
 
 ```ts twoslash
 import 'vite/client'
@@ -537,11 +537,11 @@ import { default as __vite_glob_0_0 } from './dir/bar.js'
 import { default as __vite_glob_0_1 } from './dir/foo.js'
 const modules = {
   './dir/bar.js': __vite_glob_0_0,
-  './dir/foo.js': __vite_glob_0_1,
-}
+import { default as __vite_glob_0_0 } from './dir/bar.js'
+import { default as __vite_glob_0_1 } from './dir/foo.js'
 ```
-
-#### 커스텀 쿼리 {#custom-queries}
+  './dir/bar.js': __vite_glob_0_0,
+  './dir/foo.js': __vite_glob_0_1,
 
 `query` 옵션을 이용해 Import에 대한 쿼리를 작성할 수 있습니다. 예를 들어, [문자열 형태](https://ko.vite.dev/guide/assets.html#importing-asset-as-string) 또는 [URL 형태](https://ko.vite.dev/guide/assets.html#importing-asset-as-url)로 에셋을 가져올 수 있습니다:
 
@@ -565,12 +565,12 @@ const moduleStrings = {
   './dir/foo.svg': () => import('./dir/foo.svg?raw').then((m) => m['default']),
 }
 const moduleUrls = {
-  './dir/bar.svg': () => import('./dir/bar.svg?url').then((m) => m['default']),
-  './dir/foo.svg': () => import('./dir/foo.svg?url').then((m) => m['default']),
+  './dir/bar.svg': () => import('./dir/bar.svg?raw').then((m) => m['default']),
+  './dir/foo.svg': () => import('./dir/foo.svg?raw').then((m) => m['default']),
 }
 ```
-
-다른 플러그인에서 사용할 목적으로 커스텀 쿼리를 작성할 수도 있습니다:
+  './dir/bar.svg': () => import('./dir/bar.svg?url').then((m) => m['default']),
+  './dir/foo.svg': () => import('./dir/foo.svg?url').then((m) => m['default']),
 
 ```ts twoslash
 import 'vite/client'
