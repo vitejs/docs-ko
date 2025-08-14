@@ -13,7 +13,7 @@ head:
       content: Vite 7.0이 출시되었습니다!
   - - meta
     - property: og:image
-      content: https://vite.dev/og-image-announcing-vite7.png
+      content: https://vite.dev/og-image-announcing-vite7.webp
   - - meta
     - property: og:url
       content: https://vite.dev/blog/announcing-vite7
@@ -29,7 +29,7 @@ head:
 
 _2025년 6월 24일_
 
-![Vite 7 발표 커버 이미지](/og-image-announcing-vite7.png)
+![Vite 7 Announcement Cover Image](/og-image-announcing-vite7.webp)
 
 Vite 7의 출시를 공유하게 되어 기쁩니다! Evan You가 Vite 저장소에 첫 커밋을 보낸 지 5년이 지났으며, 그 이후로 프론트엔드 생태계가 얼마나 많이 변화했는지는 아무도 예측할 수 없었습니다. 이제 대부분의 현대적인 프론트엔드 프레임워크와 도구들이 함께 작업하며, Vite의 공유 인프라 위에 구축되고 있습니다. 그리고 더 높은 수준에서 공유함으로써 더 빠른 속도로 혁신할 수 있게 되었습니다. Vite는 이제 주간 3,100만 회 다운로드되고 있으며, 이전 메이저 릴리스 이후 지난 7개월 동안 1,400만 회 증가했습니다.
 

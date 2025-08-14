@@ -13,7 +13,7 @@ head:
       content: Vite 4.0이 출시되었습니다!
   - - meta
     - property: og:image
-      content: https://vite.dev/og-image-announcing-vite4.png
+      content: https://vite.dev/og-image-announcing-vite4.webp
   - - meta
     - property: og:url
       content: https://vite.dev/blog/announcing-vite4
@@ -31,13 +31,13 @@ _2022년 12월 9일_ - [Vite 5.0 발표](./announcing-vite5.md)도 확인해보�
 
 Vite 3가 5개월 전에 [릴리스되었습니다](./announcing-vite3.md). 그 이후로 주간 npm 다운로드 수가 100만 건에서 250만 건으로 증가했습니다. 생태계도 성숙해졌으며 계속해서 성장하고 있습니다. 올해 [Jamstack Conf 설문조사](https://twitter.com/vite_js/status/1589665610119585793)에서 커뮤니티 사용률이 14%에서 32%로 급증했으며 9.7점의 높은 만족도를 유지했습니다. [Astro 1.0](https://astro.build/), [Nuxt 3](https://v3.nuxtjs.org/), 그리고 혁신하고 협력하는 다른 Vite 기반 프레임워크들의 안정적인 릴리스를 보았습니다: [SvelteKit](https://kit.svelte.dev/), [Solid Start](https://www.solidjs.com/blog/introducing-solidstart), [Qwik City](https://qwik.builder.io/qwikcity/overview/). Storybook은 [Storybook 7.0](https://storybook.js.org/blog/first-class-vite-support-in-storybook/)의 주요 기능 중 하나로 Vite에 대한 일급 지원을 발표했습니다. Deno도 이제 [Vite를 지원합니다](https://www.youtube.com/watch?v=Zjojo9wdvmY). [Vitest](https://vitest.dev) 채택이 폭발적으로 증가하고 있으며, 곧 Vite npm 다운로드의 절반을 차지할 것입니다. Nx도 생태계에 투자하고 있으며 [공식적으로 Vite를 지원합니다](https://nx.dev/packages/vite).
 
-[![Vite 4 생태계](/ecosystem-vite4.png)](https://viteconf.org/2022/replay)
+[![Vite 4 Ecosystem](../images/ecosystem-vite4.webp)](https://viteconf.org/2022/replay)
 
 Vite와 관련 프로젝트들이 경험한 성장을 보여주는 사례로, Vite 생태계는 10월 11일 [ViteConf 2022](https://viteconf.org/2022/replay)에서 모였습니다. 주요 웹 프레임워크와 도구들의 대표자들이 혁신과 협력의 이야기를 들려주었습니다. 그리고 상징적인 움직임으로, Rollup 팀은 바로 그 날 [Rollup 3](https://rollupjs.org) 릴리스를 선택했습니다.
 
 오늘, Vite [팀](https://vite.dev/team)은 생태계 파트너들의 도움으로 빌드 시점에 Rollup 3로 구동되는 Vite 4의 릴리스를 발표하게 되어 기쁩니다. 저희는 이 새로운 메이저 버전을 위한 원활한 업그레이드 경로를 보장하기 위해 생태계와 함께 작업했습니다. Vite는 이제 [Rollup 3](https://github.com/vitejs/vite/issues/9870)를 사용하며, 이를 통해 Vite의 내부 에셋 처리를 단순화하고 많은 개선사항을 가져올 수 있었습니다. [Rollup 3 릴리스 노트는 여기에서](https://github.com/rollup/rollup/releases/tag/v3.0.0) 확인하세요.
 
-![Vite 4 발표 커버 이미지](/og-image-announcing-vite4.png)
+![Vite 4 Announcement Cover Image](/og-image-announcing-vite4.webp)
 
 빠른 링크:
 

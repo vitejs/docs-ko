@@ -13,7 +13,7 @@ head:
       content: Vite 5.1이 출시되었습니다!
   - - meta
     - property: og:image
-      content: https://vite.dev/og-image-announcing-vite5-1.png
+      content: https://vite.dev/og-image-announcing-vite5-1.webp
   - - meta
     - property: og:url
       content: https://vite.dev/blog/announcing-vite5-1
@@ -29,7 +29,7 @@ head:
 
 _2024년 2월 8일_
 
-![Vite 5.1 발표 커버 이미지](/og-image-announcing-vite5-1.png)
+![Vite 5.1 Announcement Cover Image](/og-image-announcing-vite5-1.webp)
 
 Vite 5는 지난 11월에 [출시되었으며](./announcing-vite5.md), Vite와 생태계에 또 다른 큰 도약을 의미했습니다. 몇 주 전에는 주간 npm 다운로드 1천만 건과 Vite 저장소 기여자 900명을 축하했습니다. 오늘, 저희는 Vite 5.1의 출시를 발표하게 되어 기쁩니다.
 
@@ -86,7 +86,7 @@ Vite 5.0에서는 순환 import 내의 수락된 모듈이 클라이언트에서
 
 Vite는 각 릴리스마다 계속 빨라지고 있으며, Vite 5.1은 성능 개선으로 가득합니다. 저희는 [vite-dev-server-perf](https://github.com/yyx990803/vite-dev-server-perf)를 사용하여 Vite 4.0부터 모든 마이너 버전에 대해 10K 모듈(25단계 깊이 트리)의 로딩 시간을 측정했습니다. 이는 Vite의 번들 없는 접근 방식의 효과를 측정하는 좋은 벤치마크입니다. 각 모듈은 카운터와 트리의 다른 파일에 대한 import를 가진 작은 TypeScript 파일이므로, 이는 주로 개별 모듈로 요청을 처리하는 데 걸리는 시간을 측정합니다. Vite 4.0에서는 10K 모듈을 로드하는 데 M1 MAX에서 8초가 걸렸습니다. [성능에 집중한 Vite 4.3에서 획기적인 발전](./announcing-vite4-3.md)이 있었고, 6.35초에 로드할 수 있었습니다. Vite 5.1에서는 또 다른 성능 도약을 이뤄냈습니다. Vite는 이제 10K 모듈을 5.35초에 서빙합니다.
 
-![Vite 10K 모듈 로딩 시간 진행 상황](/vite5-1-10K-modules-loading-time.png)
+![Vite 10K Modules Loading time progression](../images/vite5-1-10K-modules-loading-time.webp)
 
 이 벤치마크의 결과는 Headless Puppeteer에서 실행되며 버전을 비교하는 좋은 방법입니다. 하지만 사용자가 경험하는 시간을 나타내지는 않습니다. Chrome의 시크릿 창에서 동일한 10K 모듈을 실행할 때의 결과는 다음과 같습니다:
 
