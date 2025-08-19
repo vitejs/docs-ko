@@ -17,6 +17,11 @@ import HeroDiagram from './HeroDiagram.vue'
           width="20"
           height="20"
         />
+          src="../../../../../images/viteconf.svg"
+          alt="Viteconf logo"
+          width="20"
+          height="20"
+        />
         <span>ViteConf 2025</span>
       </a>
 
@@ -31,7 +36,7 @@ import HeroDiagram from './HeroDiagram.vue'
       <!-- CTA Buttons -->
       <div class="hero__actions">
         <a href="/guide/" class="btn btn--primary">시작하기</a>
-        <a
+          <img src="./github.svg" alt="GitHub logo" width="20" height="20" />
           href="https://github.com/vitejs/vite"
           target="_blank"
           class="btn btn--outline"

@@ -20,6 +20,7 @@ export default createContentLoader('blog/*.md', {
         title: frontmatter.head.find(
           (e: any) => e[1].property === 'og:title',
         )[1].content,
+        )[1].content,
         url,
         date: formatDate(frontmatter.date),
       }))

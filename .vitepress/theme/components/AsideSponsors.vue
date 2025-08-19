@@ -30,6 +30,11 @@ const sponsors = computed(() => {
       src="../../../images/viteconf.svg"
       alt="ViteConf Logo"
     />
+      width="22"
+      height="22"
+      src="../../../images/viteconf.svg"
+      alt="ViteConf Logo"
+    />
     <span>
       <p class="extra-info">Building Together</p>
       <p class="heading">ViteConf 2025</p>
