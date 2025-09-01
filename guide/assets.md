@@ -46,7 +46,7 @@ document.getElementById('hero-img').style.background = `url("${imgUrl}")`
 
 ### 접미사를 이용해 URL로 에셋 가져오기 {#explicit-url-imports}
 
-Vite 내부적으로 설정된 목록이나 `assetsInclude`에 포함되지 않은 에셋도 `?url` 접미사를 사용해 명시적으로 URL로서 가져올 수 있습니다. 이는 [Houdini Paint Worklets](https://developer.mozilla.org/en-US/docs/Web/API/CSS/paintWorklet_static)를 가져올 때와 같은 상황에서 유용합니다.
+Assets that are not included in the internal list or in `assetsInclude` can be explicitly imported as a URL using the `?url` suffix. This is useful, for example, to import [Houdini Paint Worklets](https://developer.mozilla.org/en-US/docs/Web/API/CSS/paintWorklet_static).
 
 ```js twoslash
 import 'vite/client'
@@ -167,5 +167,5 @@ function getImageUrl(name) {
 :::
 
 ::: warning SSR과 함께 사용하지 마세요!
-`import.meta.url`은 브라우저와 Node.js 간 서로 다른 의미를 갖기 때문에, 이 패턴은 서버-사이드 렌더링(SSR)에 Vite를 사용하는 경우 동작하지 않습니다. 또한 서버 번들은 클라이언트 호스트의 URL을 미리 결정할 수 없습니다.
+This pattern does not work if you are using Vite for Server-Side Rendering, because `import.meta.url` has different semantics in browsers vs. Node.js. The server bundle also cannot determine the client host URL ahead of time.
 :::
