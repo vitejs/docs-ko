@@ -6,13 +6,13 @@ Vite의 플러그인은 Rollup의 멋진 플러그인 인터페이스에 몇 가
 
 ## 플러그인 만들기 {#authoring-a-plugin}
 
-Vite는 확립된 패턴을 제공하기 위해 노력하고 있습니다. 따라서 새 플러그인을 만들기 전 [Vite에서 지원하는 기능들](https://ko.vite.dev/guide/features), [호환되는 Rollup 플러그인](https://github.com/rollup/awesome), 그리고 [Vite 플러그인](https://github.com/vitejs/awesome-vite#plugins)을 확인하여 사용 가능한 것이 있는지 확인해주세요.
+Vite strives to offer established patterns out of the box, so before creating a new plugin make sure that you check the [Features guide](/guide/features) to see if your need is covered. Also review available community plugins, both in the form of a [compatible Rollup plugin](https://github.com/rollup/awesome) and [Vite Specific plugins](https://github.com/vitejs/awesome-vite#plugins)
 
 플러그인을 만들 때는 굳이 새로운 패키지를 만들지 않고 `vite.config.js`에 직접 작성할 수도 있습니다. 만약 작성한 플러그인이 프로젝트에서 유용하다고 생각된다면, [Vite를 사용하는 다른 사람들과 공유해보세요](https://chat.vite.dev).
 
 ::: tip
 플러그인을 학습하거나, 디버깅 또는 새롭게 작성할 때, 프로젝트에 [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect)를 설치하는 것이 좋습니다. 이 모듈은 `localhost:5173/__inspect/`를 통해 Vite 플러그인의 중간 상태를 검사할 수 있도록 도와줍니다. 더 자세한 사항은 [vite-plugin-inspect 문서](https://github.com/antfu/vite-plugin-inspect)를 참고해주세요.
-![vite-plugin-inspect](../images/vite-plugin-inspect.png)
+![vite-plugin-inspect](../images/vite-plugin-inspect.webp)
 :::
 
 ## 플러그인 작성 규칙 {#conventions}
@@ -403,6 +403,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 ### `handleHotUpdate` {#handlehotupdate}
 
 - **타입:** `(ctx: HmrContext) => Array<ModuleNode> | void | Promise<Array<ModuleNode> | void>`
+- **Kind:** `async`, `sequential`
 - **관련 항목:** [HMR API](./api-hmr)
 
   사용자가 지정한 방식대로 HMR 업데이트를 수행합니다. 이 훅은 아래와 같은 컨텍스트 객체를 전달받습니다:

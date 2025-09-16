@@ -13,7 +13,7 @@ head:
       content: Vite 6.0이 출시되었습니다!
   - - meta
     - property: og:image
-      content: https://vite.dev/og-image-announcing-vite6.png
+      content: https://vite.dev/og-image-announcing-vite6.webp
   - - meta
     - property: og:url
       content: https://vite.dev/blog/announcing-vite6
@@ -29,7 +29,7 @@ head:
 
 _2024년 11월 26일_
 
-![Vite 6 발표 커버 이미지](/og-image-announcing-vite6.png)
+![Vite 6 Announcement Cover Image](/og-image-announcing-vite6.webp)
 
 오늘, 저희는 Vite의 이야기에서 또 다른 큰 발걸음을 내딛게 되었습니다. Vite [팀](/team), [기여자들](https://github.com/vitejs/vite/graphs/contributors), 그리고 생태계 파트너들은 Vite 6의 출시를 발표하게 되어 기쁩니다.
 
@@ -39,7 +39,7 @@ _2024년 11월 26일_
 
 Vite는 OpenAI, Google, Apple, Microsoft, NASA, Shopify, Cloudflare, GitLab, Reddit, Linear 등 많은 기업에서 사용되고 있습니다. 두 달 전, 저희는 [Vite를 사용하는 기업들](https://github.com/vitejs/companies-using-vite) 목록을 시작했습니다. 많은 개발자들이 자신들의 회사를 목록에 추가하기 위해 PR을 보내주시는 것을 보니 기쁩니다. Vite가 첫 걸음을 내딛은 이후 함께 구축한 생태계가 이렇게 크게 성장한 것이 믿기 어려울 정도입니다.
 
-![Vite 주간 npm 다운로드](/vite6-npm-weekly-downloads.png)
+![Vite weekly npm downloads](../images/vite6-npm-weekly-downloads.webp)
 
 ## Vite 생태계 가속화 {#speeding-up-the-vite-ecosystem}
 
