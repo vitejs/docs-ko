@@ -301,3 +301,11 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 ## xmit 정적 사이트 호스팅 {#xmit-static-site-hosting}
 
 [xmit](https://xmit.co)를 사용하여 정적 사이트를 배포하려면 이 [가이드](https://xmit.dev/posts/vite-quickstart/)를 따라주세요.
+
+## Zephyr Cloud
+
+[Zephyr Cloud](https://zephyr-cloud.io) is a deployment platform that integrates directly into your build process and provides global edge distribution for module federation and other kind of applications.
+
+Zephyr follows a different approach than other cloud providers. It integrates directly with Vite build process, so every time you build or run the dev server for your application, it will be automatically deployed with Zephyr Cloud.
+
+Follow the steps in [the Vite deployment guide](https://docs.zephyr-cloud.io/recipes/react-vite) to get started.
