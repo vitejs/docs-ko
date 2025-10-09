@@ -2,6 +2,17 @@
 
 Vite는 `import.meta.env` 라는 특수한 객체를 통해 특정 상수들을 노출합니다. 이러한 상수들은 개발 시 전역 변수로 정의되나, 빌드 시에는 정적으로 치환되어 효과적인 트리 셰이킹이 가능합니다.
 
+:::details Example
+
+```js
+if (import.meta.env.DEV) {
+  // code inside here will be tree-shaken in production builds
+  console.log('Dev mode')
+}
+```
+
+:::
+
 ## 내장 상수 {#built-in-constants}
 
 모든 상황에서 사용할 수 있는 내장 상수들은 다음과 같습니다:
@@ -106,8 +117,6 @@ VITE_BAR=bar
 `src` 디렉터리 내 `vite-env.d.ts` 파일을 생성한 후, 아래와 같이 `ImportMetaEnv`를 정의하여 `VITE_` 환경 변수에 대한 타입을 정의할 수 있습니다.
 
 ```typescript [vite-env.d.ts]
-/// <reference types="vite/client" />
-
 interface ViteTypeOptions {
   // 아래 라인을 추가하면, ImportMetaEnv 타입을 엄격하게 설정해
   // 알 수 없는 키를 허용하지 않게 할 수 있습니다.

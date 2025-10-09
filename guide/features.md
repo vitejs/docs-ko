@@ -113,15 +113,7 @@ Vite 스타터 템플릿은 TypeScript의 특정 버전과 설정만을 지원�
 
 ### Client Types {#client-types}
 
-Vite의 기본 타입들은 Node.js API를 위한 것입니다. Vite 애플리케이션의 클라이언트 사이드 코드 환경을 시뮬레이트(Shim)하려면, `d.ts` 선언 파일을 추가해주세요:
-
-```typescript
-/// <reference types="vite/client" />
-```
-
-::: details `compilerOptions.types` 사용하기
-
-`tsconfig.json` 내 `compilerOptions.types`에 `vite/client`를 추가할 수도 있습니다:
+Vite's default types are for its Node.js API. To shim the environment of client-side code in a Vite application, you can add `vite/client` to `compilerOptions.types` inside `tsconfig.json`:
 
 ```json [tsconfig.json]
 {
@@ -131,7 +123,15 @@ Vite의 기본 타입들은 Node.js API를 위한 것입니다. Vite 애플리�
 }
 ```
 
-[`compilerOptions.types`](https://www.typescriptlang.org/tsconfig#types)를 지정하는 경우, 전역 스코프에는 지정된 패키지만이 포함되며, 모든 "@types" 패키지는 포함되지 않습니다.
+Note that if [`compilerOptions.types`](https://www.typescriptlang.org/tsconfig#types) is specified, only these packages will be included in the global scope (instead of all visible ”@types” packages). This is recommended since TS 5.9.
+
+::: details Using triple-slash directive
+
+Alternatively, you can add a `d.ts` declaration file:
+
+```typescript [vite-env.d.ts]
+/// <reference types="vite/client" />
+```
 
 :::
 
@@ -153,7 +153,13 @@ Vite의 기본 타입들은 Node.js API를 위한 것입니다. Vite 애플리�
     export default content
   }
   ```
-- The file containing the reference to `vite/client` (normally `vite-env.d.ts`):
+- If you are using `compilerOptions.types`, ensure the file is included in `tsconfig.json`:
+  ```json [tsconfig.json]
+  {
+    "include": ["src", "./vite-env-override.d.ts"]
+  }
+  ```
+- If you are using triple-slash directives, update the file containing the reference to `vite/client` (normally `vite-env.d.ts`):
   ```ts
   /// <reference types="./vite-env-override.d.ts" />
   /// <reference types="vite/client" />

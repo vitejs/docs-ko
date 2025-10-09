@@ -43,6 +43,12 @@ Rolldown을 개발하게 된 동기에 대해 더 알고자 한다면, [Rolldown
 }
 ```
 
+::: tip Please pin the version!
+
+While these examples use `@latest`, we recommend using a specific version number to avoid unexpected breaking changes as [`rolldown-vite` is considered experimental](#versioning-policy).
+
+:::
+
 Vitepress나 다른 메타 프레임워크와 같이 Vite를 피어 디펜던시로 사용하고 있다면, `package.json` 파일에서 `vite` 디펜던시를 오버라이드해야 합니다. 사용중인 패키지 매니저에 따라 방법이 조금 다릅니다:
 
 :::code-group
@@ -84,6 +90,8 @@ Vitepress나 다른 메타 프레임워크와 같이 Vite를 피어 디펜던시
 :::
 
 오버라이드를 추가한 후 디펜던시를 재설치한 뒤, 평소처럼 개발 서버를 시작하거나 프로젝트 빌드를 수행해 주세요. 추가적인 설정 변경은 필요하지 않습니다.
+
+If you are starting a new project, you can use `create-vite` as normal for rolldown-vite, too. The latest version will ask you whether to use `rolldown-vite` or not.
 
 ## 알려진 제약 사항 {#known-limitations}
 
@@ -314,14 +322,9 @@ const plugin = {
 
 ### 훅 필터 기능 {#hook-filter-features}
 
-Rolldown introduced a [hook filter feature](https://rolldown.rs/plugins/hook-filters) to reduce the communication overhead the between Rust and JavaScript runtimes. By using this feature you can make your plugin more performant.
-훅 필터 기능은 Rollup 4.38.0+ 및 Vite 6.3.0+ 에서도 지원합니다. Rollup 4.38.0 미만이나 Vite 6.3.0 미만 버전과 호환되는 플러그인을 만들고자 한다면, 외부 필터 설정과 별개로 훅 함수 내부에서도 동일한 필터링 로직을 구현해야 합니다. (자세한 내용은 [Rolldown 훅 필터 기능 문서](https://rolldown.rs/guide/plugin-development#plugin-hook-filters)를 참고해 주세요 - 옮긴이)
+Rolldown introduced a [hook filter feature](https://rolldown.rs/plugins/hook-filters) to reduce the communication overhead between the Rust and JavaScript runtimes. This feature allows plugins to specify patterns that determine when hooks should be called, improving performance by avoiding unnecessary hook invocations.
 
-::: tip
-
-[`@rolldown/pluginutils`](https://www.npmjs.com/package/@rolldown/pluginutils)는 `exactRegex`나 `prefixRegex`와 같은 훅 필터를 위한 유틸리티들을 익스포트합니다.
-
-:::
+See the [Hook Filters guide](/guide/api-plugin#hook-filters) for more information.
 
 ### `load` 또는 `transform` 훅에서 콘텐츠를 JavaScript로 변환하기 {#converting-content-to-javascript-in-load-or-transform-hooks}
 

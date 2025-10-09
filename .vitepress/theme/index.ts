@@ -9,11 +9,13 @@ import AsideSponsors from './components/AsideSponsors.vue'
 import SvgImage from './components/SvgImage.vue'
 import YouTubeVideo from './components/YouTubeVideo.vue'
 import SponsorBanner from './components/SponsorBanner.vue'
+import SponsorBanner from './components/SponsorBanner.vue'
 import NonInheritBadge from './components/NonInheritBadge.vue'
 import 'virtual:group-icons.css'
 
 export default {
   extends: DefaultTheme,
+      'layout-top': () => h(SponsorBanner),
   Layout() {
     return h(DefaultTheme.Layout, null, {
       'layout-top': () => h(SponsorBanner),
