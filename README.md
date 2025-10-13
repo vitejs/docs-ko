@@ -53,7 +53,7 @@ Vite(프랑스어로 '빠른'을 의미하며 [`/vit/`](https://cdn.jsdelivr.net
 ## 기여해 주신 분들
 
 <p align="center">
-   <a target="_blank" href="https://github.com/eterv"><img width="100" src="https://github.com/eterv.png" alt="eterv"></a>
+   <a target="_blank" href="https://github.com/eterv"><img width="100" src="https://github.com/ghost.png" alt="eterv"></a>
    <a target="_blank" href="https://github.com/proceane"><img width="100" src="https://github.com/proceane.png" alt="proceane"></a>
    <a target="_blank" href="https://github.com/eddie0329"><img width="100" src="https://github.com/eddie0329.png" alt="eddie0329"></a>
    <a target="_blank" href="https://github.com/junghyeonsu"><img width="100" src="https://github.com/junghyeonsu.png" alt="junghyeonsu"></a>
