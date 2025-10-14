@@ -6,7 +6,7 @@
     }
   }
 
-  window.__VITE_BANNER_ID__ = 'viteconf2025'
+  window.__VITE_BANNER_ID__ = 'viteplusannouncement'
   restore(`vite-docs-banner-${__VITE_BANNER_ID__}`, 'banner-dismissed')
 })()
 ;(() => {

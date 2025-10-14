@@ -286,7 +286,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
   **서버 인스턴스 저장하기**
 
-  플러그인 훅에서 개발 서버 인스턴스가 필요한 경우도 있습니다. 가령 웹 소켓 서버나, 파일 시스템 감시자, 또는 모듈 디펜던시 그래프에 접근해야 하는 경우와 같이 말이죠. `configureServer` 훅은 다른 훅에서 서버 인스턴스에 접근할 수 있도록 도와줄 수 있습니다:
+  In some cases, other plugin hooks may need access to the dev server instance (e.g. accessing the WebSocket server, the file system watcher, or the module graph). This hook can also be used to store the server instance for access in other hooks:
 
   ```js
   const myPlugin = () => {
