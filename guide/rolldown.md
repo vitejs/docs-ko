@@ -22,7 +22,7 @@ Rolldown은 세 가지 핵심 원칙이 있습니다:
 
 3. **추가 기능**: 고급 청크 분할 제어, 내장 HMR, 모듈 페더레이션 등 Rollup이나 esbuild에서 제공하지 않는 기능들을 Rolldown에서 도입합니다.
 
-Rolldown을 개발하게 된 동기에 대해 더 알고자 한다면, [Rolldown이 만들어진 이유](https://rolldown.rs/guide/#why-rolldown)를 참고해 주세요.
+For additional insights on the motivations behind Rolldown, see the [reasons why Rolldown is being built](https://rolldown.rs/guide/introduction#why-rolldown).
 
 ## `rolldown-vite` 이점 {#benefits-of-trying-rolldown-vite}
 
@@ -322,7 +322,7 @@ const plugin = {
 
 ### 훅 필터 기능 {#hook-filter-features}
 
-Rolldown introduced a [hook filter feature](https://rolldown.rs/plugins/hook-filters) to reduce the communication overhead between the Rust and JavaScript runtimes. This feature allows plugins to specify patterns that determine when hooks should be called, improving performance by avoiding unnecessary hook invocations.
+Rolldown introduced a [hook filter feature](https://rolldown.rs/apis/plugin-hook-filters) to reduce the communication overhead between the Rust and JavaScript runtimes. This feature allows plugins to specify patterns that determine when hooks should be called, improving performance by avoiding unnecessary hook invocations.
 
 See the [Hook Filters guide](/guide/api-plugin#hook-filters) for more information.
 
