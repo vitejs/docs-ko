@@ -92,8 +92,6 @@ HTTPS를 사용하는 경우 이 검사는 건너뜁니다.
 
 TLS + HTTP/2를 사용합니다. 값은 `https.createServer()`로 전달되는 [옵션 객체](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener)입니다.
 
-이 설정은 [`server.proxy` 옵션](#server-proxy)이 사용된다면 TLS만 사용하도록 다운그레이드된다는 점에 유의하세요.
-
 인증서는 유효한 것이 필요합니다. 기본적으로 프로젝트에 [@vitejs/plugin-basic-ssl](https://github.com/vitejs/vite-plugin-basic-ssl) 플러그인을 추가하면 자체 서명된 인증서가 자동으로 생성되고 캐시됩니다. 다만 직접 생성한 인증서를 사용하는 것이 좋습니다.
 
 ## server.open {#server-open}
@@ -233,7 +231,7 @@ Direct websocket connection fallback. Check out https://vite.dev/config/server-o
 
 미리 변환하고 그 결과물을 캐시할 파일 목록입니다. 서버 시작 시 초기 페이지 로드를 개선하고 변환 워터폴(변환이 순차적으로 이루어지는 현상 - 옮긴이)을 방지합니다.
 
-옵션의 `clientFiles`는 클라이언트에서만, `ssrFiles`는 SSR에서만 사용되는 파일 목록입니다. `root`를 기준으로 하는 파일 경로 또는 [`tinyglobby`](https://github.com/SuperchupuDev/tinyglobby) 패턴의 배열을 받습니다.
+`clientFiles` are files that are used in the client only, while `ssrFiles` are files that are used in SSR only. They accept an array of file paths or [`tinyglobby` patterns](https://superchupu.dev/tinyglobby/comparison) relative to the `root`.
 
 Vite 개발 서버 시작 시 과부하가 걸리지 않도록 자주 사용되는 파일만 추가해주세요.
 

@@ -259,6 +259,8 @@ pnpm link --global # 이 단계에서는 선호하는 패키지 관리자를 사
 
 이후 Vite를 클론한 프로젝트 위에서 `pnpm link --global vite` 명령을 실행해 주세요(또는 `vite`를 전역적으로 링크하는 데 사용했던 패키지 관리자를 사용합니다). 이 작업 이후 개발 서버를 재시작(`yarn dev`)하게 되면, 클론된 Vite를 이용해 프로젝트를 진행할 수 있게 됩니다.
 
+To learn more about how and when Vite does releases, check out the [Releases](../releases.md) documentation.
+
 ::: tip Vite를 사용하는 디펜던시
 디펜던시에서 간접적으로 사용되는 Vite 버전을 교체하려면, [npm overrides](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#overrides) 또는 [pnpm overrides](https://pnpm.io/9.x/package_json#pnpmoverrides)를 사용해야 합니다.
 :::

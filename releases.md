@@ -1,3 +1,7 @@
+<script setup>
+import SupportedVersions from './.vitepress/theme/components/SupportedVersions.vue';
+</script>
+
 # 릴리스 {#releases}
 
 Vite 릴리스는 [시멘틱 버저닝](https://semver.org/)을 따릅니다. 최신 안정 버전은 [Vite npm 패키지 페이지](https://www.npmjs.com/package/vite)에서 확인할 수 있습니다.
@@ -12,19 +16,20 @@ Vite는 정해진 릴리스 주기가 없습니다.
 - **마이너** 릴리스는 새로운 기능을 포함하며, 필요할 때(보통 2개월 단위)마다 배포됩니다. 베타 프리 릴리스 단계를 거칩니다.
 - **메이저** 릴리스는 일반적으로 [Node.js EOL 일정](https://endoflife.date/nodejs)에 맞춰 진행되며, 미리 공지됩니다. 이러한 릴리스는 생태계와 장기적인 논의와 함께, 알파 및 베타 프리 릴리스 단계(보통 매년)를 모두 거칩니다.
 
-Vite 팀에서 지원하는 Vite 버전 범위는 자동으로 다음과 같이 결정됩니다:
+## Supported Versions
+
+In summary, the current supported Vite versions are:
+
+<SupportedVersions />
+
+<br>
+
+The supported version ranges are are automatically determined by:
 
 - **최신 마이너 버전** 은 정기적으로 수정 사항이 반영됩니다.
 - **직전 메이저 버전** (최신 마이너 버전만 해당) 및 **직전 마이너 버전** 은 중요한 수정 및 보안 패치를 지원받습니다.
 - **이전 두 메이저 버전** (최신 마이너 버전만 해당) 및 **이전 두 마이너 버전** 은 보안 패치를 지원받습니다.
 - 그 외 이전 모든 버전은 지원되지 않습니다.
-
-예를 들어, Vite 최신 버전이 5.3.10인 경우:
-
-- `vite@5.3`은 5.3.10에 존재하는 정기 수정 사항이 포함되어 있습니다.
-- 중요한 수정 및 보안 패치는 `vite@4` 및 `vite@5.2`로 백포트됩니다.
-- 보안 패치도 `vite@3` 및 `vite@5.1`로 백포트됩니다.
-- `vite@2` 및 `vite@5.0`은 더 이상 지원하지 않습니다. 필요하다면 더 높은 버전을 사용해야 합니다.
 
 따라서 정기적인 Vite 업데이트를 권장합니다. 메이저 버전 업데이트 시에는 [마이그레이션 가이드](https://ko.vite.dev/guide/migration.html)를 참고해 주세요. Vite 팀은 새 버전에 대한 품질을 보장하기 위해 생태계 내 주요 프로젝트와 긴밀하게 협력하고 있습니다. 새로운 Vite 버전은 출시 전 [vite-ecosystem-ci 프로젝트](https://github.com/vitejs/vite-ecosystem-ci)를 통해 테스트하기에, Vite를 사용하는 생태계 내 프로젝트 대부분은 출시 직후 이를 신속하게 지원하거나 마이그레이션을 제공할 수 있습니다.
 

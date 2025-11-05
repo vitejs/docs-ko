@@ -63,7 +63,7 @@ $ npm run preview
 
 2. 리포지토리 설정 페이지에서 GitHub Pages 설정으로 이동한 후, 배포 소스를 "GitHub Actions"로 지정해 주세요. 이를 통해 프로젝트를 빌드하고 배포하는 워크플로우를 생성할 수 있습니다. 아래는 npm을 이용해 의존성을 설치하고 빌드하는 예시입니다:
 
-   <<< ./static-deploy-github-pages.yaml#content
+   <<< ./static-deploy-github-pages.yaml#content [.github/workflows/deploy.yml]
 
 ## GitLab Pages 그리고 GitLab CI {#github-pages-and-gitlab-ci}
 
@@ -296,7 +296,7 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 
 ## Kinsta 정적 사이트 호스팅 {#kinsta-static-site-hosting}
 
-[이 문서](https://kinsta.com/docs/react-vite-example/)를 통해 [Kinsta](https://kinsta.com/static-site-hosting/)로 정적 사이트를 배포할 수 있습니다.
+Deploy your static site using [Kinsta](https://kinsta.com/static-site-hosting/) by following these [instructions](https://kinsta.com/docs/static-site-hosting/static-site-quick-start/react-static-site-examples/#react-with-vite).
 
 ## xmit 정적 사이트 호스팅 {#xmit-static-site-hosting}
 
@@ -308,4 +308,4 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 
 Zephyr follows a different approach than other cloud providers. It integrates directly with Vite build process, so every time you build or run the dev server for your application, it will be automatically deployed with Zephyr Cloud.
 
-Follow the steps in [the Vite deployment guide](https://docs.zephyr-cloud.io/recipes/react-vite) to get started.
+Follow the steps in [the Vite deployment guide](https://docs.zephyr-cloud.io/bundlers/vite) to get started.

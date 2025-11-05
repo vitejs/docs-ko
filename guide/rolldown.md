@@ -111,7 +111,7 @@ Rolldown은 알 수 없거나 유효하지 않은 옵션이 전달될 때 경고
 
 #### `manualChunks`에서 `advancedChunks`로 {#manualchunks-to-advancedchunks}
 
-Rolldown은 Rollup에서도 제공되는 `manualChunks` 옵션을 지원하지만, 이는 지원 중단으로 표시되어 있습니다. 대신 Rolldown은 webpack의 `splitChunk`와 더 유사한 [`advancedChunks` 옵션](https://rolldown.rs/guide/in-depth/advanced-chunks#advanced-chunks)을 통해 더 세밀한 설정을 제공합니다:
+While Rolldown has support for the `manualChunks` option that is also exposed by Rollup, it is marked deprecated. Instead of it, Rolldown offers a more fine-grained setting via the [`advancedChunks` option](https://rolldown.rs/in-depth/advanced-chunks), which is more similar to webpack's `splitChunk`:
 
 ```js
 // Old configuration (Rollup)
@@ -345,4 +345,4 @@ const plugin = {
 }
 ```
 
-이는 [Rolldown이 JavaScript가 아닌 모듈을 지원하며](https://rolldown.rs/guide/in-depth/module-types), 명시적으로 지정하지 않는 한 확장자에서 모듈 타입을 추론하기 때문입니다.
+This is because [Rolldown supports non-JavaScript modules](https://rolldown.rs/in-depth/module-types) and infers the module type from extensions unless specified.
