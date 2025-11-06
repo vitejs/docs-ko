@@ -24,7 +24,7 @@ In summary, the current supported Vite versions are:
 
 <br>
 
-The supported version ranges are are automatically determined by:
+The supported version ranges are automatically determined by:
 
 - **최신 마이너 버전** 은 정기적으로 수정 사항이 반영됩니다.
 - **직전 메이저 버전** (최신 마이너 버전만 해당) 및 **직전 마이너 버전** 은 중요한 수정 및 보안 패치를 지원받습니다.
