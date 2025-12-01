@@ -106,6 +106,8 @@ $ deno init --npm vite my-vue-app --template vue
 
 현재 디렉터리에 프로젝트를 생성하려면 프로젝트 이름으로 `.`을 사용하세요.
 
+To create a project without interactive prompts, you can use the `--no-interactive` flag.
+
 ::::
 
 ## 커뮤니티 템플릿 {#community-templates}
