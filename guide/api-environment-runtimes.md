@@ -80,7 +80,7 @@ Vite 개발 서버는 기본적으로 두 가지 환경을 제공합니다: `cli
 
 소스 코드가 변환된 결과물을 모듈이라고 하며, 각 환경에서 처리된 모듈 사이의 의존성 관계는 모듈 그래프에 저장됩니다. 이러한 모듈은 각 환경과 연결된 런타임으로 전송되어 실행됩니다. 그리고 런타임에서 모듈이 분석되면서 다른 모듈을 불러오는 요청이 발생하고, 이에 따라 모듈 그래프에서 관련 부분이 처리됩니다.
 
-Vite 모듈 실행기를 사용하면 Vite 플러그인으로 먼저 처리한 후 코드를 실행할 수 있습니다. 이 모듈 실행 환경은 Vite 서버와 분리되어 있으며, `server.ssrLoadModule`과는 다르게 동작합니다(`server.ssrLoadModule`은 Vite 서버 프로세스 내에서 직접 모듈을 실행 - 옮긴이). 이를 통해 라이브러리와 프레임워크 개발자가 Vite 서버와 실행기 간 통신 계층 구현이 가능합니다. 브라우저는 서버 웹소켓과 HTTP 요청을 통해 해당 환경과 통신하나, Node 모듈 실행기는 동일한 프로세스에서 실행되므로 모듈을 처리하기 위해 직접 함수를 호출할 수도 있습니다. 그 외 환경에서는 workerd나 Vitest처럼 Worker Thread와 같은 JS 런타임을 통해 모듈을 실행할 수 있습니다.
+A Vite Module Runner allows running any code by processing it with Vite plugins first. It is different from `server.ssrLoadModule` because the runner implementation is decoupled from the server. This allows library and framework authors to implement their layer of communication between the Vite server and the runner. The browser communicates with its corresponding environment using the server WebSocket and through HTTP requests. The Node Module runner can directly do function calls to process modules as it is running in the same process. Other environments could run modules connecting to a JS runtime like workerd, or a Worker Thread as Vitest does.
 
 이 기능의 목표 중 하나는 코드를 처리하고 실행하는 API를 사용자가 커스터마이즈할 수 있도록 하는 것입니다. 사용자는 Vite에서 제공하는 기본 구성 요소를 활용해 새로운 환경 팩토리를 만들 수 있습니다.
 
@@ -316,19 +316,28 @@ import { createServer, RemoteEnvironmentTransport, DevEnvironment } from 'vite'
 function createWorkerEnvironment(name, config, context) {
   const worker = new Worker('./worker.js')
   const handlerToWorkerListener = new WeakMap()
+  const client = {
+    send(payload: HotPayload) {
+      worker.postMessage(payload)
+    },
+  }
 
   const workerHotChannel = {
     send: (data) => worker.postMessage(data),
     on: (event, handler) => {
-      if (event === 'connection') return
+      // client is already connected
+      if (event === 'vite:client:connect') return
+      if (event === 'vite:client:disconnect') {
+        const listener = () => {
+          handler(undefined, client)
+        }
+        handlerToWorkerListener.set(handler, listener)
+        worker.on('exit', listener)
+        return
+      }
 
       const listener = (value) => {
         if (value.type === 'custom' && value.event === event) {
-          const client = {
-            send(payload) {
-              worker.postMessage(payload)
-            },
-          }
           handler(value.data, client)
         }
       }
@@ -336,7 +345,16 @@ function createWorkerEnvironment(name, config, context) {
       worker.on('message', listener)
     },
     off: (event, handler) => {
-      if (event === 'connection') return
+      if (event === 'vite:client:connect') return
+      if (event === 'vite:client:disconnect') {
+        const listener = handlerToWorkerListener.get(handler)
+        if (listener) {
+          worker.off('exit', listener)
+          handlerToWorkerListener.delete(handler)
+        }
+        return
+      }
+
       const listener = handlerToWorkerListener.get(handler)
       if (listener) {
         worker.off('message', listener)
@@ -362,6 +380,8 @@ await createServer({
 ```
 
 :::
+
+Make sure to implement the `vite:client:connect` / `vite:client:disconnect` events in the `on` / `off` methods when those methods exist. `vite:client:connect` event should be emitted when the connection is established, and `vite:client:disconnect` event should be emitted when the connection is closed. The `HotChannelClient` object passed to the event handler must have the same reference for the same connection.
 
 다음은 HTTP 요청을 통해 실행기와 서버 간 통신하는 다른 예시입니다:
 

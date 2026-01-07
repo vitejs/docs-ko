@@ -31,11 +31,19 @@ Vite 서버는 모든 환경이 공유하는 하나의 플러그인 파이프라
 
 ## 훅을 사용해 새로운 환경 등록하기 {#registering-new-environments-using-hooks}
 
-플러그인은 `config` 훅에서 새로운 환경을 구성할 수 있습니다(예: [RSC](https://react.dev/blog/2023/03/22/react-labs-what-we-have-been-working-on-march-2023#react-server-components)를 위한 별도의 모듈 그래프 구성하기):
+Plugins can add new environments in the `config` hook. For example, [RSC support](/plugins/#vitejs-plugin-rsc) uses an additional environment to have a separate module graph with the `react-server` condition:
 
 ```ts
   config(config: UserConfig) {
-    config.environments.rsc ??= {}
+    return {
+      environments: {
+        rsc: {
+          resolve: {
+            conditions: ['react-server', ...defaultServerConditions],
+          },
+        },
+      },
+    }
   }
 ```
 
@@ -48,13 +56,21 @@ Vite 서버는 모든 환경이 공유하는 하나의 플러그인 파이프라
 
 ```ts
   configEnvironment(name: string, options: EnvironmentOptions) {
+    // add "workerd" condition to the rsc environment
     if (name === 'rsc') {
-      options.resolve.conditions = // ...
+      return {
+        resolve: {
+          conditions: ['workerd'],
+        },
+      }
+    }
+  }
 ```
 
 ## `hotUpdate` 훅 {#the-hotupdate-hook}
 
 - **타입:** `(this: { environment: DevEnvironment }, options: HotUpdateOptions) => Array<EnvironmentModuleNode> | void | Promise<Array<EnvironmentModuleNode> | void>`
+- **Kind:** `async`, `sequential`
 - **참고:** [HMR API](./api-hmr)
 
 `hotUpdate` 훅을 사용하면 플러그인이 특정 환경에 대해 HMR 업데이트 처리를 커스텀할 수 있습니다. 파일이 변경되면 `server.environments`의 순서에 따라 각 환경에 대해 순차적으로 HMR 알고리즘이 실행되므로, `hotUpdate` 훅은 여러 번 호출됩니다. 훅은 다음과 같은 시그니처를 가진 컨텍스트 객체를 받습니다:
@@ -130,7 +146,7 @@ interface HotUpdateOptions {
 
 ## 플러그인에서의 환경별 상태 관리 {#per-environment-state-in-plugins}
 
-동일한 플러그인 인스턴스가 여러 환경에서 사용되기 때문에, 플러그인 상태는 `this.environment`를 키로 사용해야 합니다. 이는 생태계에서 이미 클라이언트와 SSR 모듈 상태가 섞이지 않도록 `ssr` 불리언 값을 키로 사용해 모듈 상태를 유지하는 패턴과 동일합니다. `Map<Environment, State>`를 사용하여 각 환경의 상태를 별도로 유지할 수 있습니다. 하위 호환성을 위해 `perEnvironmentStartEndDuringDev: true` 플래그 없이는 `buildStart`와 `buildEnd`가 클라이언트 환경에서만 호출됩니다.
+Given that the same plugin instance is used for different environments, the plugin state needs to be keyed with `this.environment`. This is the same pattern the ecosystem has already been using to keep state about modules using the `ssr` boolean as key to avoid mixing client and ssr modules state. A `Map<Environment, State>` can be used to keep the state for each environment separately. Note that for backward compatibility, `buildStart` and `buildEnd` are only called for the client environment without the `perEnvironmentStartEndDuringDev: true` flag. Same for `watchChange` and the `perEnvironmentWatchChangeDuringDev: true` flag.
 
 ```js
 function PerEnvironmentCountTransformedModulesPlugin() {
@@ -210,6 +226,43 @@ export default defineConfig({
 ```
 
 `applyToEnvironment` 훅은 설정 시점에 호출되며, 현재는 생태계의 프로젝트들이 플러그인을 수정하기 때문에 `configResolved` 이후에 호출됩니다. 환경 플러그인 해석은 향후 `configResolved` 이전으로 이동될 수 있습니다.
+
+## Application-Plugin Communication
+
+`environment.hot` allows plugins to communicate with the code on the application side for a given environment. This is the equivalent of [the Client-server Communication feature](/guide/api-plugin#client-server-communication), but supports environments other than the client environment.
+
+:::warning Note
+
+Note that this feature is only available for environments that supports HMR.
+
+:::
+
+### Managing the Application Instances
+
+Be aware that there might be multiple application instances running in the same environment. For example, if you multiple tabs open in the browser, each tab is a separate application instance and have a separate connection to the server.
+
+When a new connection is established, a `vite:client:connect` event is emitted on the environment's `hot` instance. When the connection is closed, a `vite:client:disconnect` event is emitted.
+
+Each event handler receives the `NormalizedHotChannelClient` as the second argument. The client is an object with a `send` method that can be used to send messages to that specific application instance. The client reference is always the same for the same connection, so you can keep it to track the connection.
+
+### Example Usage
+
+The plugin side:
+
+```js
+configureServer(server) {
+  server.environments.ssr.hot.on('my:greetings', (data, client) => {
+    // do something with the data,
+    // and optionally send a response to that application instance
+    client.send('my:foo:reply', `Hello from server! You said: ${data}`)
+  })
+
+  // broadcast a message to all application instances
+  server.environments.ssr.hot.send('my:foo', 'Hello from server!')
+}
+```
+
+The application side is same with the Client-server Communication feature. You can use the `import.meta.hot` object to send messages to the plugin.
 
 ## 빌드 훅에서의 환경 {#environment-in-build-hooks}
 

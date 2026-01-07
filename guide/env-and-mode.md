@@ -2,6 +2,17 @@
 
 Vite는 `import.meta.env` 라는 특수한 객체를 통해 특정 상수들을 노출합니다. 이러한 상수들은 개발 시 전역 변수로 정의되나, 빌드 시에는 정적으로 치환되어 효과적인 트리 셰이킹이 가능합니다.
 
+:::details Example
+
+```js
+if (import.meta.env.DEV) {
+  // code inside here will be tree-shaken in production builds
+  console.log('Dev mode')
+}
+```
+
+:::
+
 ## 내장 상수 {#built-in-constants}
 
 모든 상황에서 사용할 수 있는 내장 상수들은 다음과 같습니다:
@@ -63,6 +74,12 @@ Vite가 실행될 때 이미 존재하던 환경 변수는 가장 높은 우선 
 
 :::
 
+:::warning Bun users
+
+When using [Bun](https://bun.sh), be aware that Bun automatically loads `.env` files before your script runs. This built-in behavior loads environment variables directly into `process.env` and can interfere with Vite's feature, as it respects existing `process.env` values. See [oven-sh/bun#5515](https://github.com/oven-sh/bun/issues/5515) for workarounds.
+
+:::
+
 또한 Vite는 [dotenv-expand](https://github.com/motdotla/dotenv-expand)를 사용해 env 파일에 작성된 환경 변수를 확장합니다. 문법에 대해 더 알아보고 싶다면 [이 문서](https://github.com/motdotla/dotenv-expand#what-rules-does-the-expansion-engine-follow)를 참고하세요.
 
 만약 환경 변수의 값에 `$`를 사용하고 싶다면 `\`를 사용해야 합니다.
@@ -92,7 +109,7 @@ VITE_FOO=foo${VITE_BAR}
 VITE_BAR=bar
 ```
 
-이는 셸 스크립트나 `docker-compose`와 같은 다른 도구에서는 작동하지 않습니다.
+This does not work in shell scripts and other tools like `docker compose`.
 하지만 Vite는 이 동작을 지원하는데, 이는 `dotenv-expand`가 오랫동안 이 기능을 지원해 왔고, JavaScript 생태계 내 다른 도구들도 이 동작을 지원하는 이전 버전을 사용하고 있기 때문입니다.
 
 다만 상호 운용성 문제를 피하기 위해 이러한 동작에 의존하지 않는 것이 좋습니다. Vite는 향후 이러한 동작에 대해 경고를 표시할 수 있습니다.
@@ -106,8 +123,6 @@ VITE_BAR=bar
 `src` 디렉터리 내 `vite-env.d.ts` 파일을 생성한 후, 아래와 같이 `ImportMetaEnv`를 정의하여 `VITE_` 환경 변수에 대한 타입을 정의할 수 있습니다.
 
 ```typescript [vite-env.d.ts]
-/// <reference types="vite/client" />
-
 interface ViteTypeOptions {
   // 아래 라인을 추가하면, ImportMetaEnv 타입을 엄격하게 설정해
   // 알 수 없는 키를 허용하지 않게 할 수 있습니다.

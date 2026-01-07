@@ -22,7 +22,7 @@ Rolldown은 세 가지 핵심 원칙이 있습니다:
 
 3. **추가 기능**: 고급 청크 분할 제어, 내장 HMR, 모듈 페더레이션 등 Rollup이나 esbuild에서 제공하지 않는 기능들을 Rolldown에서 도입합니다.
 
-Rolldown을 개발하게 된 동기에 대해 더 알고자 한다면, [Rolldown이 만들어진 이유](https://rolldown.rs/guide/#why-rolldown)를 참고해 주세요.
+For additional insights on the motivations behind Rolldown, see the [reasons why Rolldown is being built](https://rolldown.rs/guide/introduction#why-rolldown).
 
 ## `rolldown-vite` 이점 {#benefits-of-trying-rolldown-vite}
 
@@ -36,12 +36,18 @@ Rolldown을 개발하게 된 동기에 대해 더 알고자 한다면, [Rolldown
 
 ```json
 {
-  "dependencies": {
+  "devDependencies": {
     "vite": "^7.0.0" // [!code --]
     "vite": "npm:rolldown-vite@latest" // [!code ++]
   }
 }
 ```
+
+::: tip Please pin the version!
+
+While these examples use `@latest`, we recommend using a specific version number to avoid unexpected breaking changes as [`rolldown-vite` is considered experimental](#versioning-policy).
+
+:::
 
 Vitepress나 다른 메타 프레임워크와 같이 Vite를 피어 디펜던시로 사용하고 있다면, `package.json` 파일에서 `vite` 디펜던시를 오버라이드해야 합니다. 사용중인 패키지 매니저에 따라 방법이 조금 다릅니다:
 
@@ -85,6 +91,8 @@ Vitepress나 다른 메타 프레임워크와 같이 Vite를 피어 디펜던시
 
 오버라이드를 추가한 후 디펜던시를 재설치한 뒤, 평소처럼 개발 서버를 시작하거나 프로젝트 빌드를 수행해 주세요. 추가적인 설정 변경은 필요하지 않습니다.
 
+If you are starting a new project, you can use `create-vite` as normal for rolldown-vite, too. The latest version will ask you whether to use `rolldown-vite` or not.
+
 ## 알려진 제약 사항 {#known-limitations}
 
 Rolldown은 Rollup 대체 목적으로 설계되었지만, 아직 구현 중인 기능과 의도적인 동작 차이가 있습니다. 자세한 목록은 정기적으로 업데이트되는 [이 GitHub PR](https://github.com/vitejs/rolldown-vite/pull/84#issue-2903144667)을 참고해 주세요.
@@ -103,7 +111,7 @@ Rolldown은 알 수 없거나 유효하지 않은 옵션이 전달될 때 경고
 
 #### `manualChunks`에서 `advancedChunks`로 {#manualchunks-to-advancedchunks}
 
-Rolldown은 Rollup에서도 제공되는 `manualChunks` 옵션을 지원하지만, 이는 지원 중단으로 표시되어 있습니다. 대신 Rolldown은 webpack의 `splitChunk`와 더 유사한 [`advancedChunks` 옵션](https://rolldown.rs/guide/in-depth/advanced-chunks#advanced-chunks)을 통해 더 세밀한 설정을 제공합니다:
+While Rolldown has support for the `manualChunks` option that is also exposed by Rollup, it is marked deprecated. Instead of it, Rolldown offers a more fine-grained setting via the [`advancedChunks` option](https://rolldown.rs/in-depth/advanced-chunks), which is more similar to webpack's `splitChunk`:
 
 ```js
 // Old configuration (Rollup)
@@ -141,9 +149,9 @@ export default {
 
 ## 네이티브 플러그인 활성화 {#enabling-native-plugins}
 
-Rolldown과 Oxc 덕분에 별칭(alias)이나 resolve 플러그인과 같은 다양한 Vite 내부 플러그인들이 Rust로 전환되었습니다. 다만 현재 시점에서는 플러그인 동작이 JavaScript 버전과 다를 수 있기 때문에, 기본적으로 비활성화되어 있습니다.
+Thanks to Rolldown and Oxc, various internal Vite plugins, such as the alias or resolve plugin, have been converted to Rust. Native plugins are now enabled by default, with the default value set to `'v1'`.
 
-이를 테스트하려면 Vite 설정에서 `experimental.enableNativePlugin` 옵션을 `true`로 설정해 주세요.
+If you encounter any issues, you can change the `experimental.enableNativePlugin` option in your Vite config to `'resolver'` or `false` as a workaround. Note that this option will be removed in the future.
 
 ### Oxc의 React refresh 변환 활용하기 {#utilizing-oxc-s-react-refresh-transform}
 
@@ -314,14 +322,9 @@ const plugin = {
 
 ### 훅 필터 기능 {#hook-filter-features}
 
-Rolldown은 Rust와 JavaScript 런타임 간 통신 오버헤드를 줄이기 위해 [훅 필터 기능](https://rolldown.rs/guide/plugin-development#plugin-hook-filters)을 도입했습니다. 이를 사용해 플러그인 성능을 향상시킬 수 있습니다.
-훅 필터 기능은 Rollup 4.38.0+ 및 Vite 6.3.0+ 에서도 지원합니다. Rollup 4.38.0 미만이나 Vite 6.3.0 미만 버전과 호환되는 플러그인을 만들고자 한다면, 외부 필터 설정과 별개로 훅 함수 내부에서도 동일한 필터링 로직을 구현해야 합니다. (자세한 내용은 [Rolldown 훅 필터 기능 문서](https://rolldown.rs/guide/plugin-development#plugin-hook-filters)를 참고해 주세요 - 옮긴이)
+Rolldown introduced a [hook filter feature](https://rolldown.rs/apis/plugin-hook-filters) to reduce the communication overhead between the Rust and JavaScript runtimes. This feature allows plugins to specify patterns that determine when hooks should be called, improving performance by avoiding unnecessary hook invocations.
 
-::: tip
-
-[`@rolldown/pluginutils`](https://www.npmjs.com/package/@rolldown/pluginutils)는 `exactRegex`나 `prefixRegex`와 같은 훅 필터를 위한 유틸리티들을 익스포트합니다.
-
-:::
+See the [Hook Filters guide](/guide/api-plugin#hook-filters) for more information.
 
 ### `load` 또는 `transform` 훅에서 콘텐츠를 JavaScript로 변환하기 {#converting-content-to-javascript-in-load-or-transform-hooks}
 
@@ -342,4 +345,4 @@ const plugin = {
 }
 ```
 
-이는 [Rolldown이 JavaScript가 아닌 모듈을 지원하며](https://rolldown.rs/guide/in-depth/module-types), 명시적으로 지정하지 않는 한 확장자에서 모듈 타입을 추론하기 때문입니다.
+This is because [Rolldown supports non-JavaScript modules](https://rolldown.rs/in-depth/module-types) and infers the module type from extensions unless specified.

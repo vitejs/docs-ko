@@ -55,15 +55,27 @@ $ npm run preview
 
 ## GitHub Pages {#github-pages}
 
-1. `vite.config.js` 파일 내 `base` 설정값을 적절하게 설정합니다.
+1. **Update Vite Config**
+
+   Set the correct `base` in `vite.config.js`.
 
     만약 GitHub Pages를 통해 `https://<USERNAME>.github.io/`이나 커스텀 도메인(예: `www.example.com`)에 배포하고자 한다면, `base` 설정값을 `'/'`로 지정해 주세요. 또는 `base`의 기본값이 `'/'`이기 때문에 설정에서 `base`를 제거해도 됩니다.
 
    만약 `https://<USERNAME>.github.io/<REPO>/`와 같은 형태로 배포하고자 한다면(예: 리포지토리가 `https://github.com/<USERNAME>/<REPO>`인 경우), `base` 설정값을 `'/<REPO>/'`로 지정해 주세요.
 
-2. 리포지토리 설정 페이지에서 GitHub Pages 설정으로 이동한 후, 배포 소스를 "GitHub Actions"로 지정해 주세요. 이를 통해 프로젝트를 빌드하고 배포하는 워크플로우를 생성할 수 있습니다. 아래는 npm을 이용해 의존성을 설치하고 빌드하는 예시입니다:
+2. **Enable GitHub Pages**
 
-   <<< ./static-deploy-github-pages.yaml#content
+   In your repository, go to **Settings → Pages**. Under **Build and deployment**, open the **Source** dropdown, and select **GitHub Actions**.
+
+   GitHub will now deploy your site using a GitHub Actions [workflow](https://docs.github.com/en/actions/concepts/workflows-and-actions/workflows), which is necessary since Vite requires a build step for deployment.
+
+3. **Create a Workflow**
+
+   Create a new file in your repository at `.github/workflows/deploy.yml`. You can also click on **“create your own”** from the previous step, which will generate a starter workflow file for you.
+
+   Here’s a sample workflow that installs dependencies with npm, builds the site, and deploys it whenever you push changes to the `main` branch:
+
+   <<< ./static-deploy-github-pages.yaml#content [.github/workflows/deploy.yml]
 
 ## GitLab Pages 그리고 GitLab CI {#github-pages-and-gitlab-ci}
 
@@ -296,8 +308,16 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 
 ## Kinsta 정적 사이트 호스팅 {#kinsta-static-site-hosting}
 
-[이 문서](https://kinsta.com/docs/react-vite-example/)를 통해 [Kinsta](https://kinsta.com/static-site-hosting/)로 정적 사이트를 배포할 수 있습니다.
+Deploy your static site using [Kinsta](https://kinsta.com/static-site-hosting/) by following these [instructions](https://kinsta.com/docs/static-site-hosting/static-site-quick-start/react-static-site-examples/#react-with-vite).
 
 ## xmit 정적 사이트 호스팅 {#xmit-static-site-hosting}
 
 [xmit](https://xmit.co)를 사용하여 정적 사이트를 배포하려면 이 [가이드](https://xmit.dev/posts/vite-quickstart/)를 따라주세요.
+
+## Zephyr Cloud
+
+[Zephyr Cloud](https://zephyr-cloud.io) is a deployment platform that integrates directly into your build process and provides global edge distribution for module federation and other kind of applications.
+
+Zephyr follows a different approach than other cloud providers. It integrates directly with Vite build process, so every time you build or run the dev server for your application, it will be automatically deployed with Zephyr Cloud.
+
+Follow the steps in [the Vite deployment guide](https://docs.zephyr-cloud.io/bundlers/vite) to get started.

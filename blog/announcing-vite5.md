@@ -13,7 +13,7 @@ head:
       content: Vite 5.0이 출시되었습니다!
   - - meta
     - property: og:image
-      content: https://vite.dev/og-image-announcing-vite5.png
+      content: https://vite.dev/og-image-announcing-vite5.webp
   - - meta
     - property: og:url
       content: https://vite.dev/blog/announcing-vite5
@@ -29,7 +29,7 @@ head:
 
 _2023년 11월 16일_
 
-![Vite 5 발표 커버 이미지](/og-image-announcing-vite5.png)
+![Vite 5 Announcement Cover Image](/og-image-announcing-vite5.webp)
 
 Vite 4가 거의 1년 전에 [릴리스되었고](./announcing-vite4.md), 생태계에 견고한 기반을 제공했습니다. 프로젝트들이 공유 인프라를 기반으로 계속 구축하면서 주간 npm 다운로드 수는 250만 건에서 750만 건으로 급증했습니다. 프레임워크들은 지속적으로 혁신을 이어갔으며, [Astro](https://astro.build/), [Nuxt](https://nuxt.com/), [SvelteKit](https://kit.svelte.dev/), [Solid Start](https://www.solidjs.com/blog/introducing-solidstart), [Qwik City](https://qwik.builder.io/qwikcity/overview/) 등을 비롯해 새로운 프레임워크들이 합류하여 생태계를 더욱 강화했습니다. [RedwoodJS](https://redwoodjs.com/)와 [Remix](https://remix.run/)가 Vite로 전환하면서 React 생태계에서의 추가 도입 가능성을 열었습니다. [Vitest](https://vitest.dev)는 Vite보다도 빠른 속도로 성장을 지속했습니다. Vitest 팀은 열심히 작업하고 있으며 곧 [Vitest 1.0을 릴리스할 예정](https://github.com/vitest-dev/vitest/issues/3596)입니다. [Storybook](https://storybook.js.org), [Nx](https://nx.dev), [Playwright](https://playwright.dev)와 같은 다른 도구들과 함께 사용할 때의 Vite 경험은 계속 개선되었고, [Deno](https://deno.com)와 [Bun](https://bun.sh)에서 Vite 개발이 작동하는 등 환경 면에서도 마찬가지였습니다.
 

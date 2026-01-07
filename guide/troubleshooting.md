@@ -150,6 +150,45 @@ HTML 파일 출력이 `file` 프로토콜로 열린 경우 다음 오류와 함�
 
 `ENOENT: no such file or directory` 또는 `Module not found`와 같은 오류가 발생하는 경우, 이는 대소문자를 구분하지 않는 파일 시스템(Windows / macOS)에서 개발되었지만 대소문자를 구분하는 시스템(Linux)에서 빌드될 때 자주 발생합니다. import 시 올바른 대소문자를 사용하고 있는지 확인하세요.
 
+### `Failed to fetch dynamically imported module` error
+
+> TypeError: Failed to fetch dynamically imported module
+
+This error occurs in several cases:
+
+- Version skew
+- Poor network conditions
+- Browser extensions blocking requests
+
+#### Version skew
+
+When you deploy a new version of your application, the HTML file and the JS files still reference old chunk names that were deleted in the new deployment. This happens when:
+
+1. Users have an old version of your app cached in their browser
+2. You deploy a new version with different chunk names (due to code changes)
+3. The cached HTML tries to load chunks that no longer exist
+
+If you are using a framework, refer to their documentation first as it may have a built-in solution for this problem.
+
+To resolve this, you can:
+
+- **Keep old chunks temporarily**: Consider keeping the previous deployment's chunks for a period to allow cached users to transition smoothly.
+- **Use a service worker**: Implement a service worker that will prefetch all the assets and cache them.
+- **Prefetch the dynamic chunks**: Note that this does not help if your HTML file is cached by the browser due to `Cache-Control` headers.
+- **Implement a graceful fallback**: Implement error handling for dynamic imports to reload the page when chunks are missing. See [Load Error Handling](./build.md#load-error-handling) for more details.
+
+#### Poor network conditions
+
+This error may occur in unstable network environments. For example, when the request fails due to network errors or server downtime.
+
+Note that you cannot retry the dynamic import due to browser limitations ([whatwg/html#6768](https://github.com/whatwg/html/issues/6768)).
+
+#### Browser extensions blocking requests
+
+The error may also occur if the browser extensions (like ad-blockers) are blocking that request.
+
+It might be possible to work around by selecting a different chunk name by [`build.rollupOptions.output.chunkFileNames`](../config/build-options.md#build-rollupoptions), as these extensions often block requests based on file names (e.g. names containing `ad`, `track`).
+
 ## 디펜던시 최적화 {#optimized-dependencies}
 
 ### 링크된 로컬 패키지의 경우 사전 번들링 된 디펜던시가 갱신되지 않음 {#outdated-pre-bundled-deps-when-linking-to-a-local-package}
@@ -206,7 +245,11 @@ Vite는 엄격하지 않은 모드(느슨한 모드)에서만 실행되는 코�
 이러한 코드들이 의존성 모듈 내부에서 사용된다면, 문제를 해결하기 위해[`patch-package`](https://github.com/ds300/patch-package) (또는 [`yarn patch`](https://yarnpkg.com/cli/patch) 또는 [`pnpm patch`](https://pnpm.io/cli/patch))를 사용할 수 있습니다.
 
 ### 브라우저 확장 프로그램 {#browser-extensions}
+Some browser extensions (like ad-blockers) may prevent the Vite client from sending requests to the Vite dev server. You may see a white screen without logged errors in this case. You may also see the following error:
 
+> TypeError: Failed to fetch dynamically imported module
+
+Try disabling extensions if you have this issue.
 광고 차단기와 같은 일부 브라우저 확장 프로그램은 Vite 클라이언트가 Vite 개발 서버에 요청을 보내는 것을 방지할 수 있습니다. 이 경우 화면이 흰색으로 표시되고 오류가 표시되지 않을 수 있습니다. 이러한 문제가 발생하는 경우 확장 프로그램을 비활성화해 보세요.
 
 ### Windows의 드라이브 간 링크 {#cross-drive-links-on-windows}

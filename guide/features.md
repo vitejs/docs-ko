@@ -53,6 +53,10 @@ export type { T }
 
 ### 타입스크립트 컴파일러 옵션 {#typescript-compiler-options}
 
+Vite respects some of the options in `tsconfig.json` and sets the corresponding esbuild options. For each file, Vite uses the `tsconfig.json` in the closest parent directory. If that `tsconfig.json` contains a [`references`](https://www.typescriptlang.org/tsconfig/#references) field, Vite will use the referenced config file that satisfies the [`include`](https://www.typescriptlang.org/tsconfig/#include) and [`exclude`](https://www.typescriptlang.org/tsconfig/#exclude) fields.
+
+When the options are set in both the Vite config and the `tsconfig.json`, the value in the Vite config takes precedence.
+
 `tsconfig.json` 파일 내 `compilerOptions` 설정들의 값을 조작할 때는 특별한 주의가 필요합니다.
 
 #### `isolatedModules` {#isolatedmodules}
@@ -113,15 +117,7 @@ Vite 스타터 템플릿은 TypeScript의 특정 버전과 설정만을 지원�
 
 ### Client Types {#client-types}
 
-Vite의 기본 타입들은 Node.js API를 위한 것입니다. Vite 애플리케이션의 클라이언트 사이드 코드 환경을 시뮬레이트(Shim)하려면, `d.ts` 선언 파일을 추가해주세요:
-
-```typescript
-/// <reference types="vite/client" />
-```
-
-::: details `compilerOptions.types` 사용하기
-
-`tsconfig.json` 내 `compilerOptions.types`에 `vite/client`를 추가할 수도 있습니다:
+Vite's default types are for its Node.js API. To shim the environment of client-side code in a Vite application, you can add `vite/client` to `compilerOptions.types` inside `tsconfig.json`:
 
 ```json [tsconfig.json]
 {
@@ -131,7 +127,15 @@ Vite의 기본 타입들은 Node.js API를 위한 것입니다. Vite 애플리�
 }
 ```
 
-[`compilerOptions.types`](https://www.typescriptlang.org/tsconfig#types)를 지정하는 경우, 전역 스코프에는 지정된 패키지만이 포함되며, 모든 "@types" 패키지는 포함되지 않습니다.
+Note that if [`compilerOptions.types`](https://www.typescriptlang.org/tsconfig#types) is specified, only these packages will be included in the global scope (instead of all visible ”@types” packages). This is recommended since TS 5.9.
+
+::: details Using triple-slash directive
+
+Alternatively, you can add a `d.ts` declaration file:
+
+```typescript [vite-env.d.ts]
+/// <reference types="vite/client" />
+```
 
 :::
 
@@ -153,7 +157,13 @@ Vite의 기본 타입들은 Node.js API를 위한 것입니다. Vite 애플리�
     export default content
   }
   ```
-- The file containing the reference to `vite/client` (normally `vite-env.d.ts`):
+- If you are using `compilerOptions.types`, ensure the file is included in `tsconfig.json`:
+  ```json [tsconfig.json]
+  {
+    "include": ["src", "./vite-env-override.d.ts"]
+  }
+  ```
+- If you are using triple-slash directives, update the file containing the reference to `vite/client` (normally `vite-env.d.ts`):
   ```ts
   /// <reference types="./vite-env-override.d.ts" />
   /// <reference types="vite/client" />
@@ -213,8 +223,9 @@ HTML 파일은 Vite 프로젝트에서 [중심적인 역할](/guide/#index-html-
 - Vue JSX: [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx)
 - React: [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react)
 - React using SWC support via [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react-swc)
+- [React Server Components (RSC)](https://react.dev/reference/rsc/server-components) support via [@vitejs/plugin-rsc](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-rsc)
 
-자세한 내용은 [플러그인 가이드](https://ko.vite.dev/plugins)를 참고해 주세요.
+Check out the [Plugins Guide](/plugins/) for more information.
 
 ## JSX {#jsx}
 
@@ -543,7 +554,7 @@ const modules = {
 
 #### 커스텀 쿼리 {#custom-queries}
 
-`query` 옵션을 이용해 Import에 대한 쿼리를 작성할 수 있습니다. 예를 들어, [문자열 형태](https://ko.vite.dev/guide/assets.html#importing-asset-as-string) 또는 [URL 형태](https://ko.vite.dev/guide/assets.html#importing-asset-as-url)로 에셋을 가져올 수 있습니다:
+You can also use the `query` option to provide queries to imports, for example, to import assets [as a string](/guide/assets.html#importing-asset-as-string) or [as a url](/guide/assets.html#importing-asset-as-url):
 
 ```ts twoslash
 import 'vite/client'
@@ -612,7 +623,7 @@ Glob 패턴과 관련하여 다음의 사항을 유의해주세요:
 
 - 이 기능들은 Vite에서 제공하는 기능입니다. (ES 표준이나 웹 브라우저에서 제공하는 기능이 아니에요.)
 - Glob 패턴 사용 시, 상대 경로(`./`) 또는 절대 경로(`/`) 또는 [`resolve.alias` 옵션](/config/shared-options.md#resolve-alias)을 통해 별칭으로 지정된 경로 만을 이용해야 합니다.
-- Glob 패턴 매칭은 [`tinyglobby`](https://github.com/SuperchupuDev/tinyglobby)을 이용합니다.
+- The glob matching is done via [`tinyglobby`](https://github.com/SuperchupuDev/tinyglobby) - check out its documentation for [supported glob patterns](https://superchupu.dev/tinyglobby/comparison).
 - `import.meta.glob`으로 전달되는 모든 인자는 **리터럴 값을 전달해야 합니다**. 변수나 표현식을 사용할 수 없습니다.
 
 ## 동적 Import {#dynamic-import}
@@ -781,6 +792,42 @@ CSP를 배포하려면 Vite 내부적으로 특정 지시문 또는 구성을 �
 :::warning
 [`script-src`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src)에 `data:`를 허용하지 마세요. 임의 스크립트 삽입을 허용하게 됩니다.
 :::
+
+## License
+
+Vite can generate a file of all the dependencies' licenses used in the build with the [`build.license`](/config/build-options.md#build-license) option. It can be hosted to display and acknowledge the dependencies used by the app.
+
+```js twoslash [vite.config.js]
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  build: {
+    license: true,
+  },
+})
+```
+
+This will generate a `.vite/license.md` file with an output that may look like this:
+
+```md
+# Licenses
+
+The app bundles dependencies which contain the following licenses:
+
+## dep-1 - 1.2.3 (CC0-1.0)
+
+CC0 1.0 Universal
+
+...
+
+## dep-2 - 4.5.6 (MIT)
+
+MIT License
+
+...
+```
+
+To serve the file at a different path, you can pass `{ fileName: 'license.md' }` for example, so that it's served at `https://example.com/license.md`. See the [`build.license`](/config/build-options.md#build-license) docs for more information.
 
 ## 빌드 최적화 {#build-optimizations}
 

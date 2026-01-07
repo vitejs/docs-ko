@@ -10,31 +10,33 @@
 
 ### [@vitejs/plugin-vue](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue) {#vitejs-plugin-vue}
 
-- Vue 3 단일 파일 컴포넌트(SFC)의 지원을 제공합니다.
+Provides Vue 3 Single File Components support.
 
 ### [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx) {#vitejs-plugin-vue-jsx}
 
-- Vue 3 JSX 지원을 제공합니다. ([전용 `Babel` 변형](https://github.com/vuejs/jsx-next)을 통해)
-
-### [@vitejs/plugin-vue2](https://github.com/vitejs/vite-plugin-vue2) {#vitejs-plugin-vue2}
-
-- Vue 2.7 단일 파일 컴포넌트(SFC)를 지원합니다.
-
-### [@vitejs/plugin-vue2-jsx](https://github.com/vitejs/vite-plugin-vue2-jsx) {#vitejs-plugin-vue2-jsx}
-
-- [전용 바벨 프리셋](https://github.com/vuejs/jsx-vue2/)을 통해 Vue 2.7 JSX를 지원합니다
+Provides Vue 3 JSX support (via [dedicated Babel transform](https://github.com/vuejs/babel-plugin-jsx)).
 
 ### [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react) {#vitejs-plugin-react}
 
-- esbuild와 Babel을 사용하여 작은 패키지 크기와 Babel 변형 파이프라인의 유연성을 통해 빠른 HMR을 달성합니다. 추가 Babel 플러그인이 없으면 빌드 중 esbuild만 사용됩니다.
+Uses esbuild and Babel, achieving fast HMR with a small package footprint and the flexibility of being able to use the Babel transform pipeline. Without additional Babel plugins, only esbuild is used during builds.
 
-### [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) {#vitejs-plugin-react-swc}
+### [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react-swc)
 
-- 개발 중에는 Babel 대신 SWC를 사용합니다. 프로덕션 빌드 중 플러그인을 사용하게 된다면 SWC+esbuild를 사용하고, 그렇지 않다면 esbuild만을 사용합니다. 비표준 React 확장이 필요하지 않은 대규모 프로젝트의 경우, 콜드 스타트와 Hot Module Replacement(HMR)이 훨씬 빠르게 작동할 수 있습니다.
+Replaces Babel with SWC during development. During production builds, SWC+esbuild are used when using plugins, and esbuild only otherwise. For big projects that don't require non-standard React extensions, cold start and Hot Module Replacement (HMR) can be significantly faster.
+
+### [@vitejs/plugin-rsc](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-rsc)
+
+Vite supports [React Server Components (RSC)](https://react.dev/reference/rsc/server-components) through the plugin. It utilizes the [Environment API](/guide/api-environment) to provide low-level primitives that React frameworks can use to integrate RSC features. You can try a minimal standalone RSC application with:
+
+```bash
+npm create vite@latest -- --template rsc
+```
+
+Read the [plugin documentation](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-rsc) to learn more.
 
 ### [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) {#vitejs-plugin-legacy}
 
-- 프로덕션 빌드를 위한 이전 브라우저 지원을 제공합니다.
+Provides legacy browsers support for the production build.
 
 ## 커뮤니티 플러그인 {#community-plugins}
 

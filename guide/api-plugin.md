@@ -6,13 +6,13 @@ Vite의 플러그인은 Rollup의 멋진 플러그인 인터페이스에 몇 가
 
 ## 플러그인 만들기 {#authoring-a-plugin}
 
-Vite는 확립된 패턴을 제공하기 위해 노력하고 있습니다. 따라서 새 플러그인을 만들기 전 [Vite에서 지원하는 기능들](https://ko.vite.dev/guide/features), [호환되는 Rollup 플러그인](https://github.com/rollup/awesome), 그리고 [Vite 플러그인](https://github.com/vitejs/awesome-vite#plugins)을 확인하여 사용 가능한 것이 있는지 확인해주세요.
+Vite strives to offer established patterns out of the box, so before creating a new plugin make sure that you check the [Features guide](/guide/features) to see if your need is covered. Also review available community plugins, both in the form of a [compatible Rollup plugin](https://github.com/rollup/awesome) and [Vite Specific plugins](https://github.com/vitejs/awesome-vite#plugins)
 
 플러그인을 만들 때는 굳이 새로운 패키지를 만들지 않고 `vite.config.js`에 직접 작성할 수도 있습니다. 만약 작성한 플러그인이 프로젝트에서 유용하다고 생각된다면, [Vite를 사용하는 다른 사람들과 공유해보세요](https://chat.vite.dev).
 
 ::: tip
 플러그인을 학습하거나, 디버깅 또는 새롭게 작성할 때, 프로젝트에 [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect)를 설치하는 것이 좋습니다. 이 모듈은 `localhost:5173/__inspect/`를 통해 Vite 플러그인의 중간 상태를 검사할 수 있도록 도와줍니다. 더 자세한 사항은 [vite-plugin-inspect 문서](https://github.com/antfu/vite-plugin-inspect)를 참고해주세요.
-![vite-plugin-inspect](../images/vite-plugin-inspect.png)
+![vite-plugin-inspect](../images/vite-plugin-inspect.webp)
 :::
 
 ## 플러그인 작성 규칙 {#conventions}
@@ -286,7 +286,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
   **서버 인스턴스 저장하기**
 
-  플러그인 훅에서 개발 서버 인스턴스가 필요한 경우도 있습니다. 가령 웹 소켓 서버나, 파일 시스템 감시자, 또는 모듈 디펜던시 그래프에 접근해야 하는 경우와 같이 말이죠. `configureServer` 훅은 다른 훅에서 서버 인스턴스에 접근할 수 있도록 도와줄 수 있습니다:
+  In some cases, other plugin hooks may need access to the dev server instance (e.g. accessing the WebSocket server, the file system watcher, or the module graph). This hook can also be used to store the server instance for access in other hooks:
 
   ```js
   const myPlugin = () => {
@@ -387,6 +387,9 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
   interface HtmlTagDescriptor {
     tag: string
+    /**
+     * attribute values will be escaped automatically if needed
+     */
     attrs?: Record<string, string | boolean>
     children?: string | HtmlTagDescriptor[]
     /**
@@ -403,6 +406,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 ### `handleHotUpdate` {#handlehotupdate}
 
 - **타입:** `(ctx: HmrContext) => Array<ModuleNode> | void | Promise<Array<ModuleNode> | void>`
+- **Kind:** `async`, `sequential`
 - **관련 항목:** [HMR API](./api-hmr)
 
   사용자가 지정한 방식대로 HMR 업데이트를 수행합니다. 이 훅은 아래와 같은 컨텍스트 객체를 전달받습니다:
@@ -546,6 +550,41 @@ normalizePath('foo/bar') // 'foo/bar'
 ## {#filtering-include-exclude-pattern}
 
 Vite는 Vite 전용 플러그인 및 통합(Integration)이 표준 포함(Include)/제외(Exclude) 필터링 패턴을 사용하도록 [`@rollup/pluginutils`의 `createFilter`](https://github.com/rollup/plugins/tree/master/packages/pluginutils#createfilter) 함수를 제공하고 있습니다. 참고로 이 방식은 Vite 코어 자체에서도 사용합니다.
+
+### Hook Filters
+
+Rolldown introduced a [hook filter feature](https://rolldown.rs/plugins/hook-filters) to reduce the communication overhead between the Rust and JavaScript runtimes. This feature allows plugins to specify patterns that determine when hooks should be called, improving performance by avoiding unnecessary hook invocations.
+
+This is also supported by Rollup 4.38.0+ and Vite 6.3.0+. To make your plugin backward compatible with older versions, make sure to also run the filter inside the hook handlers.
+
+```js
+export default function myPlugin() {
+  const jsFileRegex = /\.js$/
+
+  return {
+    name: 'my-plugin',
+    // Example: only call transform for .js files
+    transform: {
+      filter: {
+        id: jsFileRegex,
+      },
+      handler(code, id) {
+        // Additional check for backward compatibility
+        if (!jsFileRegex.test(id)) return null
+
+        return {
+          code: transformCode(code),
+          map: null,
+        }
+      },
+    },
+  }
+}
+```
+
+::: tip
+[`@rolldown/pluginutils`](https://www.npmjs.com/package/@rolldown/pluginutils) exports some utilities for hook filters like `exactRegex` and `prefixRegex`.
+:::
 
 ## 클라이언트-서버 커뮤니케이션 {#client-server-communication}
 
