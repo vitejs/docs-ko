@@ -10,9 +10,9 @@
 import { someMethod } from 'my-dep'
 ```
 
-모듈의 위치를 찾을 수 없기 때문인데, vite는 다음을 기준으로 모듈을 가져오기 때문에 위 코드 역시 정상적으로 실행됩니다.
+The above import will throw an error in the browser. Vite will detect such bare module imports in all served source files and perform the following:
 
-1. [사전 번들링](./dep-pre-bundling)을 통해 페이지 로딩 속도를 개선하고 CommonJS / UMD 모듈을 ESM으로 변환합니다. 이 과정은 [Esbuild](https://esbuild.github.io/)를 통해 이루어지며, JavaScript 기반의 다른 번들러보다 빠른 콜드 스타트가 가능합니다.
+1. [Pre-bundle](./dep-pre-bundling) them to improve page loading speed and convert CommonJS / UMD modules to ESM. The pre-bundling step is performed with [esbuild](https://esbuild.github.io/) and makes Vite's cold start time significantly faster than any JavaScript-based bundler.
 
 2. `/node_modules/.vite/deps/my-dep.js?v=f3sf2ebd`와 같이 URL을 이용해 ESM을 지원하는 브라우저에서 모듈을 가져올 수 있도록 `import` 구문을 수정합니다.
 
@@ -69,7 +69,7 @@ When the options are set in both the Vite config and the `tsconfig.json`, the va
 
 이를 감지하기 위해 `tsconfig.json` 내 `compilerOptions` 설정을 `"isolatedModules": true`와 같이 설정해줘야만 하며, 이 설정으로 TS가 위와 같은 상황에서 작동하지 않는 기능들에 대해 경고할 수 있게 됩니다.
 
-일부 라이브러리는 `"isolatedModules": true`로 설정할 경우 타입 체크가 정상적으로 동작하지 않습니다. 이러한 경우에는 해당 모듈이 이슈를 수정할 때까지 `"skipLibCheck": true`를 사용해 오류가 발생되지 않도록 해주세요.
+If a dependency doesn't work well with `"isolatedModules": true`, you can use `"skipLibCheck": true` to temporarily suppress the errors until it is fixed upstream.
 
 #### `useDefineForClassFields` {#usedefineforclassfields}
 
@@ -91,12 +91,11 @@ Vite는 `esbuild`와 동일하게 `tsconfig.json` 내 `target` 값을 무시합�
 
 개발 시 `target`을 지정하고자 한다면 [`esbuild.target`](/config/shared-options.html#esbuild) 옵션을 사용할 수 있으며, 최소한의 트랜스파일링을 위해 `esnext`로 기본 설정되어 있습니다. 빌드 시 `esbuild.target`보다 높은 우선순위를 갖는 [`build.target`](/config/build-options.html#build-target) 옵션을 사용할 수도 있습니다.
 
-::: warning `useDefineForClassFields`
+#### `emitDecoratorMetadata`
 
-`tsconfig.json` 내 `target`이 `ESNext` 또는 `ES2022` 이상이 아니거나, `tsconfig.json` 파일이 없는 경우, `useDefineForClassFields`는 기본값이 `false`가 됩니다. 이는 기본 `esbuild.target` 값인 `esnext`와 함께 사용할 때 문제가 될 수 있습니다. 브라우저에서 지원하지 않을 수 있는 [정적 초기화 블록](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks#browser_compatibility)으로 트랜스파일될 수 있기 때문입니다.
+- [TypeScript documentation](https://www.typescriptlang.org/tsconfig#emitDecoratorMetadata)
 
-따라서, `target`을 `ESNext` 또는 `ES2022` 이상으로 설정하거나, `tsconfig.json`을 구성할 때 `useDefineForClassFields`를 명시적으로 `true`로 설정하는 것을 권장합니다.
-:::
+This option is only partially supported. Full support requires type inference by the TypeScript compiler, which is not supported. See [Oxc Transformer's documentation](https://oxc.rs/docs/guide/usage/transformer/typescript#decorators) for details.
 
 #### 빌드 결과에 영향을 미치는 또 다른 컴파일러 옵션들 {#other-compiler-options-affecting-the-build-result}
 
@@ -117,7 +116,6 @@ Vite 스타터 템플릿은 TypeScript의 특정 버전과 설정만을 지원�
 
 ### Client Types {#client-types}
 
-Vite's default types are for its Node.js API. To shim the environment of client-side code in a Vite application, you can add `vite/client` to `compilerOptions.types` inside `tsconfig.json`:
 
 ```json [tsconfig.json]
 {
@@ -332,7 +330,7 @@ Vite는 Vite 별칭도 동작할 수 있도록 Sass와 Less에 대한 `@import` 
 
 ### 페이지 내 CSS 주입 비활성화하기 {#disabling-css-injection-into-the-page}
 
-CSS 콘텐츠의 자동 주입은 `?inline` 쿼리 매개변수를 통해 비활성화 할 수 있습니다. 이 경우 처리된 CSS 문자열은 평소와 같이 모듈의 `default export`로 반환되나, 스타일은 페이지에 주입되지 않습니다.
+Vite improves `@import` resolving for Sass and Less so that Vite aliases are also respected. In addition, relative `url()` references inside imported Sass/Less files that are in different directories from the root file are also automatically rebased to ensure correctness. Rebasing `url()` references that start with a variable or a interpolation are not supported due to its API constraints.
 
 ```js twoslash
 import 'vite/client'
@@ -369,6 +367,8 @@ import 'vite/client'
 import imgUrl from './img.png'
 document.getElementById('hero-img').src = imgUrl
 ```
+<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~05pq?via=vite" title="Static Assets in Vite">Watch an interactive lesson on Scrimba</ScrimbaLink>
+
 
 URL 쿼리를 이용해 에셋을 가져올 때 어떻게 이를 가져올 것인지 명시할 수도 있습니다.
 
@@ -644,6 +644,14 @@ const module = await import(`./dir/${file}.js`)
 ```js twoslash
 import 'vite/client'
 // ---cut---
+Also note that the dynamic import must match the following rules to be bundled:
+
+- Imports must start with `./` or `../`: ``import(`./dir/${foo}.js`)`` is valid, but ``import(`${foo}.js`)`` is not.
+- Imports must end with a file extension: ``import(`./dir/${foo}.js`)`` is valid, but ``import(`./dir/${foo}`)`` is not.
+- Imports to the own directory must specify a file name pattern: ``import(`./prefix-${foo}.js`)`` is valid, but ``import(`./${foo}.js`)`` is not.
+
+These rules are enforced to prevent accidentally importing files that are not intended to be bundled. For example, without these rules, `import(foo)` would bundle everything in the file system.
+
 import init from './example.wasm?init'
 
 init().then((instance) => {
@@ -683,6 +691,12 @@ init({
 import 'vite/client'
 // ---cut---
 import wasmUrl from 'foo.wasm?url'
+::: warning For SSR build, Node.js compatible runtimes are only supported
+
+Due to the lack of a universal way to load a file, the internal implementation for `.wasm?init` relies on `node:fs` module. This means that this feature will only work in Node.js compatible runtimes for SSR builds.
+
+:::
+
 
 const main = async () => {
   const responsePromise = fetch(wasmUrl)
@@ -702,31 +716,6 @@ SSR에서 `?init`을 이용해 `fetch()`를 수행하는 경우, `TypeError: Inv
 아래는 이에 대한 대안이며, 프로젝트의 기본 디렉터리는 현재 위치한 디렉터리입니다:
 
 ```js twoslash
-import 'vite/client'
-// ---cut---
-import wasmUrl from 'foo.wasm?url'
-import { readFile } from 'node:fs/promises'
-
-const main = async () => {
-  const resolvedUrl = (await import('./test/boot.test.wasm?url')).default
-  const buffer = await readFile('.' + resolvedUrl)
-  const { instance } = await WebAssembly.instantiate(buffer, {
-    /* ... */
-  })
-  /* ... */
-}
-
-main()
-```
-
-## Web Workers {#web-workers}
-
-### 생성자를 통해 가져오기 {#import-with-constructors}
-
-웹 워커 스크립트는 [`new Worker()`](https://developer.mozilla.org/en-US/docs/Web/API/Worker/Worker) 및 [`new SharedWorker()`](https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker/SharedWorker)를 통해서도 가져올 수 있습니다. 접미사를 사용하는 방식에 비해 이는 표준에 좀 더 가까우며, 일반적으로 워커를 사용할 때 **권장되는** 방식입니다.
-
-```ts
-const worker = new Worker(new URL('./worker.js', import.meta.url))
 ```
 
 "module" 타입의 워커를 생성할 수 있도록 생성자에 옵션을 전달할 수도 있습니다:

@@ -22,6 +22,8 @@ export default {
 vite --config my-config.js
 ```
 
+<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~05jg?via=vite" title="Configuring Vite">Watch an interactive lesson on Scrimba</ScrimbaLink>
+
 ::: tip 설정 파일 로딩
 기본적으로 Vite는 `esbuild`를 사용해 설정 파일을 임시 파일로 번들링한 뒤 로드합니다. 다만 이는 모노리포에서 TypeScript 파일을 불러올 때 문제가 발생할 수 있습니다. 이러한 문제가 발생한다면 `--configLoader runner`를 지정해 [모듈 러너](/guide/api-environment-runtimes.html#modulerunner)를 대신 사용할 수 있습니다. 모듈 러너는 임시 설정 파일을 생성하지 않고 파일을 즉시 변환합니다. 참고로 모듈 러너는 설정 파일에서 CJS를 지원하지 않으나, 그럼에도 외부 CJS 패키지는 정상적으로 동작합니다.
 

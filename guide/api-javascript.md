@@ -13,15 +13,12 @@ async function createServer(inlineConfig?: InlineConfig): Promise<ViteDevServer>
 **사용 예제:**
 
 ```ts twoslash
-import { fileURLToPath } from 'node:url'
 import { createServer } from 'vite'
-
-const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
 const server = await createServer({
   // 유효한 유저 설정 옵션들, 추가적으로 `mode`와 `configFile`가 있습니다.
   configFile: false,
-  root: __dirname,
+  root: import.meta.dirname,
   server: {
     port: 1337,
   },
@@ -210,13 +207,10 @@ async function build(
 
 ```ts twoslash [vite.config.js]
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { build } from 'vite'
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url))
-
 await build({
-  root: path.resolve(__dirname, './project'),
+  root: path.resolve(import.meta.dirname, './project'),
   base: '/foo/',
   build: {
     rollupOptions: {
@@ -449,3 +443,27 @@ interface PreprocessCSSResult {
 사용되는 전처리기는 `filename` 확장자로부터 추론됩니다. 다만 `filename`이 `.module.{ext}`로 끝난다면 [CSS 모듈](https://github.com/css-modules/css-modules)로 추론되며, 반환된 결과에는 원본 클래스 이름을 변환된 이름으로 매핑한 `modules` 객체가 포함됩니다.
 
 참고로 전처리기는 `url()` 또는 `image-set()` 내부에 존재하는 URL을 확인하지 않는다는 점에 유의하세요.
+
+## `version`
+
+**Type:** `string`
+
+The current version of Vite as a string (e.g. `"8.0.0"`).
+
+## `rolldownVersion`
+
+**Type:** `string`
+
+The version of Rolldown used by Vite as a string (e.g. `"1.0.0"`). A re-export of [`VERSION`](https://rolldown.rs/reference/Variable.VERSION) from `rolldown`.
+
+## `esbuildVersion`
+
+**Type:** `string`
+
+Only kept for backward compatibility.
+
+## `rollupVersion`
+
+**Type:** `string`
+
+Only kept for backward compatibility.

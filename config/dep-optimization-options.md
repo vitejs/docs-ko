@@ -53,15 +53,8 @@ export default defineConfig({
 
 ## optimizeDeps.esbuildOptions <NonInheritBadge />
 
-- **타입:** [`Omit`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys)`<`[`EsbuildBuildOptions`](https://esbuild.github.io/api/#general-options)`,
-| 'bundle'
-| 'entryPoints'
-| 'external'
-| 'write'
+- **Type:** <code>Omit<<a href="https://rolldown.rs/reference/Interface.RolldownOptions">RolldownOptions</a>, 'input' | 'logLevel' | 'output'> & { output?: Omit<<a href="https://rolldown.rs/reference/#:~:text=Output%20Options">RolldownOutputOptions</a>, 'format' | 'sourcemap' | 'dir' | 'banner'> }</code>
 | 'watch'
-| 'outdir'
-| 'outfile'
-| 'outbase'
 | 'outExtension'
 | 'metafile'>`
 
@@ -70,17 +63,7 @@ export default defineConfig({
 특정 옵션은 Vite의 디펜던시 최적화와 호환되지 않기에 생략되었습니다.
 
 - `external`은 생략됩니다. 이 대신 Vite의 `optimizeDeps.exclude` 옵션을 사용합니다.
-- `plugins`는 Vite의 디펜던시 플러그인과 병합됩니다.
-
-## optimizeDeps.force <NonInheritBadge />
-
-- **타입:** `boolean`
-
-`true`로 설정하면 최적화되어 캐시된 디펜던시들을 무시하고, 디펜던시 사전 번들링을 강제로 실행합니다.
-
-## optimizeDeps.noDiscovery <NonInheritBadge />
-
-- **타입:** `boolean`
+- **Type:** <code>Omit<<a href="https://esbuild.github.io/api/#general-options">EsbuildBuildOptions</a>, 'bundle' | 'entryPoints' | 'external' | 'write' | 'watch' | 'outdir' | 'outfile' | 'outbase' | 'outExtension' | 'metafile'></code>
 - **기본값:** `false`
 
 `true`로 설정하면 자동 디펜던시 탐색이 비활성화되고 `optimizeDeps.include`에 나열된 디펜던시만 최적화됩니다. CJS 전용 디펜던시는 개발 중에 반드시 `optimizeDeps.include`에 포함되어야 합니다.

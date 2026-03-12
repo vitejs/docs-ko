@@ -8,7 +8,7 @@
 - **기본값:** `'baseline-widely-available'`
 - **관련 항목:** [브라우저 지원 현황](/guide/build#browser-compatibility)
 
-최종 번들에 대한 브라우저 호환성 타깃입니다. 기본값은 Vite 전용 값인 `'baseline-widely-available'`로, 2025-05-01에 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available에 포함된 브라우저를 타깃으로 합니다. 구체적으로는 `['chrome107', 'edge107', 'firefox104', 'safari16']`입니다.
+Browser compatibility target for the final bundle. The default value is a Vite special value, `'baseline-widely-available'`, which targets browsers that are included in the [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available on 2026-01-01. Specifically, it is `['chrome111', 'edge111', 'firefox114', 'safari16.4']`.
 
 또 다른 Vite 한정 옵션은 `'esnext'` 로, 네이티브 동적 Import를 지원하며 트랜스파일링을 최소한만 수행합니다.
 
@@ -149,11 +149,9 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 
 ## build.commonjsOptions {#build-commonjsoptions}
 
-- **타입:** [`RollupCommonJSOptions`](https://github.com/rollup/plugins/tree/master/packages/commonjs#options)
+- **Type:** [`RolldownOptions`](https://rolldown.rs/reference/)
 
-[@rollup/plugin-commonjs](https://github.com/rollup/plugins/tree/master/packages/commonjs)에 전달할 옵션입니다.
-
-## build.dynamicImportVarsOptions {#build-dynamicimportvarsoptions}
+Directly customize the underlying Rolldown bundle. This is the same as options that can be exported from a Rolldown config file and will be merged with Vite's internal Rolldown options. See [Rolldown options docs](https://rolldown.rs/reference/) for more details.
 
 - **타입:** [`RollupDynamicImportVarsOptions`](https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#options)
 - **관련 항목:** [동적 Import](/guide/features#dynamic-import)
@@ -164,12 +162,10 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 
 - **타입:** `{ entry: string | string[] | { [entryAlias: string]: string }, name?: string, formats?: ('es' | 'cjs' | 'umd' | 'iife')[], fileName?: string | ((format: ModuleFormat, entryName: string) => string), cssFileName?: string }`
 - **관련 항목:** [라이브러리 모드](/guide/build#library-mode)
-
+- **Type:** `{ include?: string | RegExp | (string | RegExp)[], exclude?: string | RegExp | (string | RegExp)[] }`
 라이브러리로 빌드합니다. 라이브러리에서 HTML을 진입점으로 사용할 수 없으므로, `entry`가 필요합니다. `name`은 노출된 전역 변수이며 `formats`가 `'umd'` 또는 `'iife'` 일 때 필요합니다. `formats` 기본값은 `['es', 'umd']` 이나, 여러 진입점이 존재한다면 `['es', 'cjs']`가 됩니다.
 
-`fileName`은 패키지 파일 출력의 이름이며, 기본값은 `package.json`의 `"name"` 입니다. `format`과 `entryName`을 인자로 받아 파일 이름을 반환하는 함수로도 정의할 수 있습니다.
-
-패키지가 CSS를 임포트한다면 `cssFileName`을 사용하여 CSS 파일 출력의 이름을 지정할 수도 있습니다. `fileName`이 문자열로 설정되었다면 이를 기본값으로 사용하며, 그렇지 않다면 `package.json`의 `"name"` 값을 사용합니다.
+Whether to transform dynamic imports with variables.
 
 ```js twoslash [vite.config.js]
 import { defineConfig } from 'vite'
@@ -223,6 +219,28 @@ If `fileName` is passed, it will be used as the license file name relative to th
 값이 문자열이면 `build.outDir`을 기준으로 하는 매니페스트 파일 경로로 사용됩니다. `true`면 `.vite/manifest.json`이 경로가 됩니다.
 
 ## build.ssrManifest {#build-ssrmanifest}
+::: tip
+
+If you'd like to reference the license file in the built code, you can use [`build.rolldownOptions.output.postBanner`](https://rolldown.rs/reference/OutputOptions.postBanner#postbanner) to inject a comment at the top of the files. For example:
+
+```js twoslash [vite.config.js]
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  build: {
+    license: true,
+    rolldownOptions: {
+      output: {
+        postBanner:
+          '/* See licenses of bundled dependencies at https://example.com/license.md */',
+      },
+    },
+  },
+})
+```
+
+:::
+
 
 - **타입:** `boolean | string`
 - **기본값:** `false`
@@ -233,6 +251,8 @@ If `fileName` is passed, it will be used as the license file name relative to th
 값이 문자열이면 `build.outDir`을 기준으로 하는 매니페스트 파일 경로로 사용됩니다. `true`면 `.vite/ssr-manifest.json`이 경로가 됩니다.
 
 ## build.ssr {#build-ssr}
+If you are writing a plugin and need to inspect each output chunk or asset's related CSS and static assets during the build, you can also use [`viteMetadata` output bundle metadata API](/guide/api-plugin#output-bundle-metadata).
+
 
 - **타입:** `boolean | string`
 - **기본값:** `false`
@@ -325,3 +345,4 @@ Rollup 감시자를 사용하려면 `{}`로 설정하세요. 이는 대부분 �
 자세한 사항은 [`server.watch`](./server-options.md#server-watch)를 참고해주세요.
 
 :::
+- **Type:** [`WatcherOptions`](https://rolldown.rs/reference/InputOptions.watch)`| null`

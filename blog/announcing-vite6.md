@@ -66,7 +66,7 @@ Vite를 처음 사용하신다면, 먼저 [시작하기](/guide/) 및 [기능](/
 
 이 새로운 메이저를 만드는 데 도움을 준 [Vite Core의 1,000명 이상의 기여자들](https://github.com/vitejs/vite/graphs/contributors)과 Vite 플러그인, 통합, 도구, 번역의 유지보수자 및 기여자들에게 감사드립니다. 참여하여 전체 생태계를 위한 Vite 개선에 도움을 주시기 바랍니다. 자세한 내용은 [기여 가이드](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md)에서 확인하세요.
 
-시작하려면 [이슈 분류](https://github.com/vitejs/vite/issues), [PR 리뷰](https://github.com/vitejs/vite/pulls), 열린 이슈를 기반으로 한 실패 테스트 PR 전송, [Discussions](https://github.com/vitejs/vite/discussions)와 Vite Land의 [도움 포럼](https://discord.com/channels/804011606160703521/1019670660856942652)에서 다른 사람들 지원을 도와주시기 바랍니다. 저희와 대화하고 싶으시다면, [Discord 커뮤니티](http://chat.vite.dev/)에 참여하여 [#contributing 채널](https://discord.com/channels/804011606160703521/804439875226173480)에서 인사해주세요.
+To get started, we suggest helping [triage issues](https://github.com/vitejs/vite/issues), [review PRs](https://github.com/vitejs/vite/pulls), send failing tests PRs based on open issues, and support others in [Discussions](https://github.com/vitejs/vite/discussions) and Vite Land's [help forum](https://discord.com/channels/804011606160703521/1019670660856942652). If you'd like to talk to us, join our [Discord community](https://chat.vite.dev) and say hi on the [#contributing channel](https://discord.com/channels/804011606160703521/804439875226173480).
 
 Vite 생태계와 Vite 코어에 대한 최신 뉴스는 [Bluesky](https://bsky.app/profile/vite.dev), [X](https://twitter.com/vite_js), 또는 [Mastodon](https://webtoo.ls/@vite)에서 저희를 팔로우해주세요.
 

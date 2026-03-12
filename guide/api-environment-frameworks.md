@@ -8,7 +8,7 @@
 리소스:
 
 - [피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 새로운 API에 대한 피드백을 모으고 있습니다.
-- [환경 API PR](https://github.com/vitejs/vite/pull/16471)에서 새로운 API를 구현하고 검토했습니다.
+- [Environment API PR](https://github.com/vitejs/vite/pull/16471) where the new APIs were implemented and reviewed.
 
 여러분의 피드백을 공유해주세요.
 :::
@@ -52,10 +52,7 @@ if (isRunnableDevEnvironment(server.environments.ssr)) {
 ```js
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { createServer } from 'vite'
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const viteServer = await createServer({
   server: { middlewareMode: true },
@@ -75,7 +72,7 @@ app.use('*', async (req, res, next) => {
   const url = req.originalUrl
 
   // 1. index.html 읽기
-  const indexHtmlPath = path.resolve(__dirname, 'index.html')
+  const indexHtmlPath = path.resolve(import.meta.dirname, 'index.html')
   let template = fs.readFileSync(indexHtmlPath, 'utf-8')
 
   // 2. Vite HTML 변환 적용. Vite HMR 클라이언트를 주입하고,
@@ -154,7 +151,7 @@ const server = await createServer({
 // 환경 API 소비자는 이제 `dispatchFetch`를 호출할 수 있습니다
 if (isFetchableDevEnvironment(server.environments.custom)) {
   const response: Response = await server.environments.custom.dispatchFetch(
-    new Request('/request-to-handle'),
+    new Request('http://example.com/request-to-handle'),
   )
 }
 ```
@@ -199,7 +196,7 @@ if (ssrEnvironment instanceof CustomDevEnvironment) {
 // virtual:entrypoint
 const { createHandler } = await import('./entrypoint.js')
 const handler = createHandler(input)
-const response = handler(new Request('/'))
+const response = handler(new Request('http://example.com/'))
 
 // -------------------------------------
 // ./entrypoint.js
@@ -269,7 +266,7 @@ if (ssrEnvironment instanceof RunnableDevEnvironment) {
   throw new Error(`Unsupported runtime for ${ssrEnvironment.name}`)
 }
 
-const req = new Request('/')
+const req = new Request('http://example.com/')
 
 const uniqueId = 'a-unique-id'
 ssrEnvironment.send('request', serialize({ req, uniqueId }))
@@ -293,7 +290,7 @@ import.meta.hot.on('request', (data) => {
   import.meta.hot.send('response', serialize({ res: res, uniqueId }))
 })
 
-const response = handler(new Request('/'))
+const response = handler(new Request('http://example.com/'))
 
 // -------------------------------------
 // ./entrypoint.js
@@ -308,10 +305,12 @@ export function createHandler(input) {
 
 하위 호환성을 위해, CLI에서 `vite build`와 `vite build --ssr`을 실행하면, 동일하게 클라이언트 또는 SSR 전용 환경만을 빌드합니다.
 
-`builder`가 `undefined`가 아닐 때(또는 `vite build --app`을 호출할 때), `vite build`는 전체 앱을 빌드하도록 설정됩니다. 이는 향후 메이저 버전에서 기본 동작이 될 예정입니다. 빌드 시에는 `ViteDevServer`와 대응되는 역할을 하는 `ViteBuilder` 인스턴스가 생성되어 프로덕션을 위해 구성된 모든 환경을 빌드합니다. 기본적으로 환경에 대한 빌드는 `environments` 레코드 순서를 따라 순차적으로 수행됩니다. 프레임워크나 사용자는 다음과 같이 환경 빌드 방식을 추가로 구성할 수 있습니다:
+When `builder` option is not `undefined` (or when calling `vite build --app`), `vite build` will opt-in into building the entire app instead. This would later on become the default in a future major. A `ViteBuilder` instance will be created (build-time equivalent to a `ViteDevServer`) to build all configured environments for production. By default the build of environments is run in series respecting the order of the `environments` record. A framework or user can further configure how the environments are built using `builder.buildApp` option:
 
-```js
-export default {
+```js [vite.config.js]
+import { defineConfig } from 'vite'
+
+export default defineConfig({
   builder: {
     buildApp: async (builder) => {
       const environments = Object.values(builder.environments)
@@ -320,7 +319,7 @@ export default {
       )
     },
   },
-}
+})
 ```
 
 플러그인도 `buildApp` 훅을 정의할 수 있습니다. `'pre'` 및 `null` 순서는 구성된 `builder.buildApp` 이전에 실행되고, `'post'` 순서의 훅은 그 이후에 실행됩니다. `environment.isBuilt`를 사용해 환경이 이미 빌드되었는지 확인할 수 있습니다.

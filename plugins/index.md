@@ -18,11 +18,11 @@ Provides Vue 3 JSX support (via [dedicated Babel transform](https://github.com/v
 
 ### [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react) {#vitejs-plugin-react}
 
-Uses esbuild and Babel, achieving fast HMR with a small package footprint and the flexibility of being able to use the Babel transform pipeline. Without additional Babel plugins, only esbuild is used during builds.
+Provides React Fast Refresh support via [Oxc Transformer](https://oxc.rs/docs/guide/usage/transformer).
 
 ### [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react-swc)
 
-Replaces Babel with SWC during development. During production builds, SWC+esbuild are used when using plugins, and esbuild only otherwise. For big projects that don't require non-standard React extensions, cold start and Hot Module Replacement (HMR) can be significantly faster.
+Replaces Oxc with [SWC](https://swc.rs/) during development for SWC plugin usage. During production builds, SWC+Oxc Transformer are used when using plugins. For big projects that require custom plugins, cold start and Hot Module Replacement (HMR) can be significantly faster, if the plugin is also available for SWC.
 
 ### [@vitejs/plugin-rsc](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-rsc)
 
@@ -40,8 +40,10 @@ Provides legacy browsers support for the production build.
 
 ## 커뮤니티 플러그인 {#community-plugins}
 
-[awesome-vite](https://github.com/vitejs/awesome-vite)를 확인해 보세요. 또한 그곳에서 PR을 제출하여 여러분의 플러그인을 목록에 올릴 수 있습니다.
+Check out [Vite Plugin Registry](https://registry.vite.dev/plugins) for the list of plugins published to npm.
 
 ## `Rollup` 플러그인 {#rollup-plugins}
 
 [Vite 플러그인](../guide/api-plugin)은 `Rollup` 플러그인 인터페이스의 확장입니다. 더 많은 정보를 알려면 [Rollup 플러그인 호환 섹션](../guide/api-plugin#rollup-plugin-compatibility)을 참고하세요.
+## Rolldown / Rollup Plugins
+[Vite plugins](../guide/api-plugin) are an extension of Rollup's plugin interface. Check out the [Rollup Plugin Compatibility section](../guide/api-plugin#rolldown-plugin-compatibility) for more information.

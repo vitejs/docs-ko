@@ -6,7 +6,7 @@
 
 이러한 메시지가 나타나는 이유는 Vite의 "사전 번들링(Pre-bundling)" 기능으로 인한 것인데, 이를 사용하는 목적은 다음과 같습니다.
 
-1. **CommonJS 그리고 UMD 모듈을 ESM으로 가져오기:** 개발 시, Vite의 개발 서버는 모든 코드를 네이티브 ESM으로 가져오게 됩니다. 따라서, vite는 반드시 모든 CommonJS 및 UMD 파일을 ESM으로 불러올 수 있도록 변환 작업을 진행해줘야 합니다.
+1. **CommonJS and UMD compatibility:** During development, Vite serves all code as native ESM. Therefore, Vite must convert dependencies that are shipped as CommonJS or UMD into ESM first.
 
    vite는 조금 영리하게 ESM 파일로 변환을 진행하는데, 가령 CommonJS 디펜던시를 변환해주는 경우 아래와 같이 이름을 지정해 CommonJS 형태의 모듈을 가져올 수도 있습니다.
 
@@ -57,9 +57,7 @@ export default defineConfig({
 ## 디펜던시 탐색 과정 커스터마이즈하기 {#customizing-the-behavior}
 
 Vite의 디펜던시 탐색 휴리스틱이 항상 바람직한 것은 아닙니다. 만약 특정 디펜던시를 명시적으로 포함시키거나 포함시키지 않도록 설정하고자 한다면 [`optimizeDeps` 옵션](/config/dep-optimization-options.md)을 이용해주세요.
-
-`optimizeDeps.include` 또는 `optimizeDeps.exclude`의 일반적인 사용 사례는 소스 코드에서 직접 탐색할 수 없는 Import가 있는 경우입니다. 플러그인 변환의 결과물에 Import가 사용된 경우를 예로 들 수 있습니다. 이는 Vite가 초기 스캔 시 해당 Import를 발견할 수 없음을 의미합니다. 브라우저에서 파일을 요청하고 변환된 이후에만 해당 Import를 발견할 수 있습니다. 이는 서버가 시작된 이후에 서버를 다시 번들링하게 만듭니다.
-
+You can further customize Rolldown too with the [`optimizeDeps.rolldownOptions` option](/config/dep-optimization-options.md#optimizedeps-rolldownoptions). For example, adding a Rolldown plugin to handle special files in dependencies or changing the [build `target`](https://rolldown.rs/reference/InputOptions.transform#target).
 이를 해결하기 위해 `include`와 `exclude` 옵션 둘 다 사용될 수 있습니다. 만약 디펜던시가 크거나(내부 모듈이 많은 경우) CommonJS 포맷이라면 `include` 옵션에 명시해야 합니다. 만약 디펜던시가 작고 이미 ESM 스타일로 작성되어 있다면 `exclude` 옵션에 명시해 브라우저에서 바로 불러올 수 있도록 설정할 수 있습니다.
 
 또한 [`optimizeDeps.esbuildOptions` 옵션](/config/dep-optimization-options.md#optimizedeps-esbuildoptions)을 통해 esbuild를 더욱 세밀하게 커스터마이즈할 수 있습니다. 예를 들어, 특정 파일을 디펜던시에서 처리하기 위한 esbuild 플러그인을 추가하거나, [빌드 `target`](https://esbuild.github.io/api/#target)을 변경할 수 있습니다.

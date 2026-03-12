@@ -8,7 +8,7 @@
 리소스:
 
 - [피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 새로운 API에 대한 피드백을 모으고 있습니다.
-- [환경 API PR](https://github.com/vitejs/vite/pull/16471)에서 새로운 API를 구현하고 검토했습니다.
+- [Environment API PR](https://github.com/vitejs/vite/pull/16471) where the new APIs were implemented and reviewed.
 
 여러분의 피드백을 공유해주세요.
 :::
@@ -47,7 +47,7 @@ Plugins can add new environments in the `config` hook. For example, [RSC support
   }
 ```
 
-빈 객체만으로도 환경을 등록할 수 있으며, 최상위 환경 설정에서 기본값을 가져옵니다(상속).
+An empty object is enough to register the environment, using default values from the root level environment config.
 
 ## 훅을 사용해 환경 구성하기 {#configuring-environment-using-hooks}
 
@@ -233,13 +233,13 @@ export default defineConfig({
 
 :::warning Note
 
-Note that this feature is only available for environments that supports HMR.
+Note that this feature is only available for environments that support HMR.
 
 :::
 
 ### Managing the Application Instances
 
-Be aware that there might be multiple application instances running in the same environment. For example, if you multiple tabs open in the browser, each tab is a separate application instance and have a separate connection to the server.
+Be aware that there might be multiple application instances running in the same environment. For example, if you have multiple tabs open in the browser, each tab is a separate application instance and has a separate connection to the server.
 
 When a new connection is established, a `vite:client:connect` event is emitted on the environment's `hot` instance. When the connection is closed, a `vite:client:disconnect` event is emitted.
 

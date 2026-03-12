@@ -41,7 +41,7 @@ _2022년 7월 23일_ - [Vite 4.0 발표](./announcing-vite4.md)도 확인해보�
 - [마이그레이션 가이드](https://v3.vite.dev/guide/migration.html)
 - [변경 로그](https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md#300-2022-07-13)
 
-Vite를 처음 접하신다면 [Why Vite 가이드](https://vite.dev/guide/why.html)를 읽어보시기를 권합니다. 그런 다음 [시작하기](https://vite.dev/guide/)와 [기능 가이드](https://vite.dev/guide/features)를 확인하여 Vite가 제공하는 것들을 살펴보세요. 언제나 그렇듯이 [GitHub](https://github.com/vitejs/vite)에서의 기여를 환영합니다. 지금까지 [600명 이상의 협력자](https://github.com/vitejs/vite/graphs/contributors)가 Vite 개선에 도움을 주었습니다. [Twitter](https://twitter.com/vite_js)에서 업데이트를 팔로우하거나 [Discord 채팅 서버](http://chat.vite.dev/)에서 다른 Vite 사용자들과 토론에 참여하세요.
+If you are new to Vite, we recommend reading the [Why Vite Guide](https://vite.dev/guide/why.html). Then check out [the Getting Started](https://vite.dev/guide/) and [Features guide](https://vite.dev/guide/features) to see what Vite provides out of the box. As usual, contributions are welcome at [GitHub](https://github.com/vitejs/vite). More than [600 collaborators](https://github.com/vitejs/vite/graphs/contributors) have helped improve Vite so far. Follow the updates on [Twitter](https://twitter.com/vite_js), or join discussions with other Vite users on our [Discord chat server](https://chat.vite.dev).
 
 ## 새로운 문서 {#new-documentation}
 
@@ -255,7 +255,7 @@ Vite 3를 작업하면서 [Vite 코어](https://github.com/vitejs/vite) 협력�
 
 Vite 3는 [Vite 팀](/team) 구성원들이 생태계 프로젝트 메인테이너들 및 Vite 코어의 다른 협력자들과 함께 작업한 총합적인 노력의 결과입니다.
 
-Vite 3에 기능을 구현하고, 수정하고, 피드백을 제공하고, 참여해주신 모든 분들께 감사드립니다:
+We want to thank everyone who has implemented features, and fixes, given feedback, and have been involved in Vite 3:
 
 - Vite 팀 구성원들 [@youyuxi](https://twitter.com/youyuxi), [@patak_dev](https://twitter.com/patak_dev), [@antfu7](https://twitter.com/antfu7), [@bluwyoo](https://twitter.com/bluwyoo), [@sapphi_red](https://twitter.com/sapphi_red), [@haoqunjiang](https://twitter.com/haoqunjiang), [@poyoho](https://github.com/poyoho), [@Shini_92](https://twitter.com/Shini_92), [@retropragma](https://twitter.com/retropragma).
 - [@benmccann](https://github.com/benmccann), [@danielcroe](https://twitter.com/danielcroe), [@brillout](https://twitter.com/brillout), [@sheremet_va](https://twitter.com/sheremet_va), [@userquin](https://twitter.com/userquin), [@enzoinnocenzi](https://twitter.com/enzoinnocenzi), [@maximomussini](https://twitter.com/maximomussini), [@IanVanSchooten](https://twitter.com/IanVanSchooten), [Astro 팀](https://astro.build/), 그리고 v3를 형성하는 데 도움을 준 생태계의 모든 다른 프레임워크 및 플러그인 메인테이너들.

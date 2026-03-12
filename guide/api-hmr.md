@@ -93,6 +93,25 @@ if (import.meta.hot) {
 
 이렇게 Hot updates를 "허용한" 모듈은 **HMR 범위**로 간주됩니다.
 
+```dot
+digraph hmr_boundary {
+  rankdir=RL
+  ranksep=0.3
+  node [shape=box style="rounded,filled" fontname="Arial" fontsize=11 margin="0.2,0.1" fontcolor="${#3c3c43|#ffffff}" color="${#c2c2c4|#3c3f44}"]
+  edge [color="${#67676c|#98989f}" fontname="Arial" fontsize=10 fontcolor="${#67676c|#98989f}"]
+  bgcolor="transparent"
+
+  root [label="main.js" fillcolor="${#f6f6f7|#2e2e32}"]
+  parent [label="App.vue" fillcolor="${#f6f6f7|#2e2e32}"]
+  boundary [label="Component.vue\n(HMR boundary)\nhot.accept()" fillcolor="${#def5ed|#15312d}" color="${#18794e|#3dd68c}" penwidth=2]
+  edited [label="utils.js\n(edited)" fillcolor="${#fcf4dc|#38301a}" color="${#915930|#f9b44e}" penwidth=2]
+
+  boundary -> edited [label="imports" color="${#915930|#f9b44e}" style=bold]
+  parent -> boundary [label="imports" style=dashed]
+  root -> parent [label="imports" style=dashed]
+}
+```
+
 Vite의 HMR은 처음에 불러온 모듈을 교체하지 않습니다: 만약에 HMR 범위의 모듈이 디펜던시로부터 imports를 다시 exports 한다면, 해당 re-exports를 업데이트할 책임이 있습니다 (그리고 그러한 exports는 `let`을 사용했을 것입니다). 또한, 경계 모듈에서 체인 위에 있는 importers에게는 변화가 되었다고 알리지 않습니다. 이렇게 간소화된 HMR 구현은 대부분의 개발 환경에서 충분하며, 프록시 모듈을 생성하는 것과 같이 비용이 큰 작업을 생략할 수 있도록 합니다.
 
 모듈이 업데이트를 수락하고자 한다면, 이 함수에 대한 호출이 소스 코드에서 `import.meta.hot.accept(` (공백 구분)로 나타나야 합니다. 이는 Vite가 HMR 범위를 추적할 수 있도록 합니다.

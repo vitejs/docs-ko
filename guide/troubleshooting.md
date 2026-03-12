@@ -19,7 +19,7 @@
 
 ### This package is ESM only {#this-package-is-esm-only}
 
-ESM만 지원하는 패키지를 `require`로 불러올 때 아래와 같은 에러가 발생합니다.
+When importing an ESM only package by `require`, the following error happens.
 
 > Failed to resolve "foo". This package is ESM only but it was tried to load by `require`.
 
@@ -73,6 +73,31 @@ Ubuntu Linux는 systemd 구성 파일을 업데이트하는 대신 `/etc/securit
 
 서버가 VS Code devcontainer 내부에서 실행 중이라면 요청이 멈춘 것처럼 보일 수 있습니다. 이 문제에 대해서는
 [Dev Containers / VS Code 포트 포워딩](#dev-containers-vs-code-port-forwarding) 섹션을 참고해 주세요.
+
+### Vite crashes with ENOSPC error
+
+If you see an error like this on Linux:
+
+> Error: ENOSPC: System limit for number of file watchers reached
+
+This happens when you have too many files in your project directory (e.g., many images or assets) and exceed the system's file watcher limit. Linux has a default limit of around 8,192-10,000 file watchers.
+
+To solve this, you can:
+
+- Increase the system file watcher limit:
+
+  ```shell
+  # Check current limit
+  $ cat /proc/sys/fs/inotify/max_user_watches
+  # Increase limit (temporary)
+  $ sudo sysctl fs.inotify.max_user_watches=524288
+  # Make it permanent - add to /etc/sysctl.conf (or edit if it already exists)
+  $ echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
+  $ sudo sysctl -p
+  ```
+
+- Exclude directories with many files from file watching using [`server.watch.ignored`](/config/server-options#server-watch)
+- Use polling instead of file system events with [`server.watch.usePolling`](/config/server-options#server-watch). Note that polling uses more CPU resources
 
 ### 네트워크 요청 로딩 중지 {#network-requests-stop-loading}
 

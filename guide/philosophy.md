@@ -2,7 +2,7 @@
 
 ## 간결하고 확장가능한 코어 {#lean-extendable-core}
 
-Vite는 모든 사용 사례를 다루지 않습니다. 대부분의 상황에서 보편적으로 사용할 수 있는 웹 앱 빌드 패턴을 지원하는 것이 Vite의 목표이지만, 프로젝트를 장기적으로 유지하고 관리할 수 있도록 [Vite 코어](https://github.com/vitejs/vite)는 간결한 상태를 유지하고자 합니다. 사용자가 필요로 하는 기능은 충분히 [Vite의 Rollup 기반 플러그인 시스템](./api-plugin.md)을 이용해 가능하기에, 이로 구현할 수 있는 기능은 일반적으로 Vite 코어에 추가되지 않습니다. [vite-plugin-pwa](https://vite-pwa-org.netlify.app/)와 같은 플러그인은 Vite 코어로 무엇을 구현할 수 있는지를 보여주는 좋은 예시이며, 이처럼 [잘 관리되는 플러그인](https://github.com/vitejs/awesome-vite#plugins)을 이용해 개발 요구 사항을 충족할 수 있을 것입니다. 또한 Vite는 Rollup 프로젝트와 긴밀하게 협력하여 플러그인을 일반적인 Rollup 그리고 Vite 프로젝트 모두에서 사용할 수 있게끔 구성했으며, 필요한 확장 기능을 플러그인 API에 가능한 한 많이 도입하고자 노력하고 있습니다.
+Vite aims to support the most common patterns to build Web apps out-of-the-box, while keeping [Vite core](https://github.com/vitejs/vite) lean and maintainable long-term. We believe the best way to support diverse use cases is to provide strong primitives and APIs that plugins can build on, and we actively expand the core to make Vite more extensible. [Vite's plugin system](./api-plugin.md) is based on a superset of Rollup's plugin API, and it enables plugins like [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) and the many [well maintained plugins](https://registry.vite.dev/plugins) available to cover your needs. Vite's bundler, [Rolldown](https://rolldown.rs/), maintains compatibility with Rollup's plugin interface, so plugins can often be used across both Vite and plain Rollup projects.
 
 ## 모던 웹으로 나아가기 {#pushing-the-modern-web}
 
@@ -16,11 +16,11 @@ Vite는 모던 코드를 작성할 수 있도록 유도하고 있습니다. 예�
 
 ## 성능에 대한 실용적인 접근 {#a-pragmatic-approach-to-performance}
 
-Vite has been focused on performance since its [origins](./why.md). Its dev server architecture allows HMR that stays fast as projects scale. Vite uses native tools like [esbuild](https://esbuild.github.io/) and [SWC](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react-swc) to implement intensive tasks but keeps the rest of the code in JS to balance speed with flexibility. When needed, framework plugins will tap into [Babel](https://babeljs.io/) to compile user code. And during build time Vite currently uses [Rollup](https://rollupjs.org/) where bundling size and having access to a wide ecosystem of plugins are more important than raw speed. Vite will continue to evolve internally, using new libraries as they appear to improve DX while keeping its API stable.
+Vite has been focused on performance since its [origins](./why.md). Its dev server architecture allows HMR that stays fast as projects scale. Vite is based on native tools that include the [Oxc toolchain](https://oxc.rs/) and [Rolldown](https://rolldown.rs/) to implement intensive tasks but keeps the rest of the code in JS to balance speed with flexibility. When needed, framework plugins will tap into [Babel](https://babeljs.io/) to compile user code. Thanks to Rolldown's Rollup plugin compatibility, Vite has access to a wide ecosystem of plugins.
 
 ## Vite를 기반으로 프레임워크 구축하기 {#building-frameworks-on-top-of-vite}
 
-Vite는 직접 사용할 수도 있지만, 프레임워크를 만드는 도구로서도 빛을 발합니다. Vite의 코어가 프레임워크에 구애받는 것이 아님에도 불구하고, 각 UI 프레임워크에 대한 완성도 높은 플러그인이 존재합니다. 애플리케이션 프레임워크 개발자는 [JS API](./api-javascript.md)를 통해 Vite의 기능들을 활용하여 사용자에게 맞춤화된 경험을 제공할 수 있으며, 최신 웹 프레임워크 구축에 필수적이지만 일반적으로 높은 수준의 도구에서만 지원하는  [기본적인 SSR 기능들](./ssr.md) 역시 지원하고 있습니다. 또한 Vite 플러그인은 프레임워크 간에 공유할 수 있는 방법을 제공함으로써 이러한 모든 것을 완성합니다. Vite는 [Ruby](https://vite-ruby.netlify.app/)와 [Laravel](https://laravel.com/docs/10.x/vite)과 같은 [백엔드 프레임워크](./backend-integration.md)와 함께 사용할 때도 매우 좋은 선택입니다.
+Although Vite can be used by users directly, it shines as a tool to create frameworks. Vite core is framework agnostic, but there are polished plugins for each UI framework. Its [JS API](./api-javascript.md) allows App Framework authors to use Vite features to create tailored experiences for their users. Vite includes support for [SSR primitives](./ssr.md), usually present in higher-level tools but fundamental to building modern web frameworks. And Vite plugins complete the picture by offering a way to share between frameworks. Vite is also a great fit when paired with [Backend frameworks](./backend-integration.md) like [Ruby](https://vite-ruby.netlify.app/) and [Laravel](https://laravel.com/docs/vite).
 
 ## 활발한 생태계 {#an-active-ecosystem}
 

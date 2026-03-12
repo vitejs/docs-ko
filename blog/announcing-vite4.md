@@ -51,7 +51,7 @@ Vite와 관련 프로젝트들이 경험한 성장을 보여주는 사례로, Vi
 - [日本語](https://ja.vite.dev/)
 - [Español](https://es.vite.dev/)
 
-최근에 Vite를 사용하기 시작했다면 [Why Vite 가이드](https://vite.dev/guide/why.html)를 읽고 [시작하기](https://vite.dev/guide/)와 [기능 가이드](https://vite.dev/guide/features)를 확인해보시기를 권합니다. 참여하고 싶으시다면 [GitHub](https://github.com/vitejs/vite)에서 기여를 환영합니다. 거의 [700명의 협력자](https://github.com/vitejs/vite/graphs/contributors)가 Vite에 기여했습니다. [Twitter](https://twitter.com/vite_js)와 [Mastodon](https://webtoo.ls/@vite)에서 업데이트를 팔로우하거나 [Discord 커뮤니티](http://chat.vite.dev/)에서 다른 사람들과 협력하세요.
+If you recently started using Vite, we suggest reading the [Why Vite Guide](https://vite.dev/guide/why.html) and checking out [the Getting Started](https://vite.dev/guide/) and [Features guide](https://vite.dev/guide/features). If you want to get involved, contributions are welcome at [GitHub](https://github.com/vitejs/vite). Almost [700 collaborators](https://github.com/vitejs/vite/graphs/contributors) have contributed to Vite. Follow the updates on [Twitter](https://twitter.com/vite_js) and [Mastodon](https://webtoo.ls/@vite), or collaborate with others on our [Discord community](https://chat.vite.dev).
 
 ## Vite 4로 체험해보기 시작하기 {#start-playing-with-vite-4}
 
@@ -131,7 +131,7 @@ Vite는 특히 문서와 재현을 위한 플레이그라운드 사용 사례에
 
 Vite 4는 Vite 기여자들의 수많은 시간의 작업 없이는 불가능했을 것입니다. 그들 중 많은 이들이 다운스트림 프로젝트와 플러그인의 메인테이너들이며, [Vite 팀](/team)의 노력도 있었습니다. 저희 모두는 Vite를 사용하는 모든 프레임워크와 앱을 위해 Vite의 DX를 다시 한 번 개선하기 위해 함께 작업했습니다. 이렇게 활기찬 생태계를 위한 공통 기반을 개선할 수 있게 되어 감사합니다.
 
-또한 Vite 팀을 후원하는 개인과 회사들, 그리고 Vite의 미래에 직접 투자하는 회사들에게도 감사드립니다: [@antfu7](https://twitter.com/antfu7)의 Vite와 생태계에 대한 작업은 [Nuxt Labs](https://nuxtlabs.com/)에서의 그의 업무의 일부이며, [Astro](https://astro.build)는 [@bluwyoo](https://twitter.com/bluwyoo)의 Vite 코어 작업에 자금을 지원하고 있으며, [StackBlitz](https://stackblitz.com/)는 [@patak_dev](https://twitter.com/patak_dev)를 Vite에서 풀타임으로 작업하도록 고용했습니다.
+We're also thankful to individuals and companies sponsoring the Vite team, and companies investing directly in Vite's future: [@antfu7](https://twitter.com/antfu7)'s work on Vite and the ecosystem is part of his job at [Nuxt Labs](https://nuxtlabs.com/), [Astro](https://astro.build) is funding [@bluwyoo](https://twitter.com/bluwyoo)'s Vite core work, and [StackBlitz](https://stackblitz.com/) hires [@patak_dev](https://twitter.com/patak_dev) to work full time on Vite.
 
 ## 다음 단계 {#next-steps}
 

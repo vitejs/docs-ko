@@ -13,6 +13,8 @@ if (import.meta.env.DEV) {
 
 :::
 
+<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~05an?via=vite" title="Env Variables in Vite">Watch an interactive lesson on Scrimba</ScrimbaLink>
+
 ## 내장 상수 {#built-in-constants}
 
 모든 상황에서 사용할 수 있는 내장 상수들은 다음과 같습니다:
@@ -29,16 +31,16 @@ if (import.meta.env.DEV) {
 
 ## 환경 변수 {#env-variables}
 
-Vite는 `import.meta.env` 객체를 통해 자동으로 환경 변수를 문자열로 노출합니다.
+Vite exposes env variables under the `import.meta.env` object as strings automatically.
 
-환경 변수가 클라이언트에 실수로 노출되는 것을 방지하기 위해, `VITE_` 접두사가 붙은 변수들만 Vite가 처리하는 코드에서 접근이 가능합니다. 가령, 아래와 같이 환경 변수를 정의했다면:
+Variables prefixed with `VITE_` will be exposed in client-side source code after Vite bundling. To prevent accidentally leaking env variables to the client, avoid using this prefix. As an example, consider the following:
 
 ```[.env]
 VITE_SOME_KEY=123
 DB_PASSWORD=foobar
 ```
 
-`VITE_SOME_KEY` 변수만이 클라이언트에서 `import.meta.env.VITE_SOME_KEY`로 접근이 가능합니다. `DB_PASSWORD`는 노출되지 않습니다.
+The parsed value of `VITE_SOME_KEY` – `"123"` – will be exposed on the client, but the value of `DB_PASSWORD` will not. You can test this by adding the following to your code:
 
 ```js
 console.log(import.meta.env.VITE_SOME_KEY) // "123"
@@ -49,6 +51,12 @@ console.log(import.meta.env.DB_PASSWORD) // undefined
 
 :::tip 환경 변수 파싱
 위와 같이 `VITE_SOME_KEY`는 숫자이지만 파싱 시 문자열로 반환됩니다. 불리얼 환경 변수에 대해서도 동일하게 적용되며, 코드에서 사용할 때는 원하는 타입으로 변환해야 합니다.
+:::
+
+:::warning Protecting secrets
+
+`VITE_*` variables should _not_ contain sensitive information such as API keys. The values of these variables are bundled into your source code at build time. For production deployments, consider a backend server or serverless/edge functions to properly secure secrets.
+
 :::
 
 ### `.env` 파일들 {#env-files}
@@ -91,14 +99,6 @@ NEW_KEY2=test\$foo  # test$foo
 NEW_KEY3=test$KEY   # test123
 ```
 
-:::warning 보안 권고 사항
-
-- `.env.*.local` 파일은 오로지 로컬에서만 접근이 가능한 파일이며, 데이터베이스 비밀번호와 같은 민감한 정보를 이 곳에 저장하도록 합니다. 또한 `.gitignore` 파일에 `*.local` 파일을 명시해 Git에 체크인되는 것을 방지하도록 합니다.
-
-- Vite 소스 코드에 노출되는 모든 환경 변수는 번들링 시 포함되게 됩니다. 따라서, `VITE_*` 환경 변수에는 민감한 정보들이 _포함되어서는 안됩니다_.
-
-:::
-
 ::: details 역순으로 변수 확장하기
 
 Vite는 역순으로 변수를 확장하는 것을 지원합니다.
@@ -110,9 +110,15 @@ VITE_BAR=bar
 ```
 
 This does not work in shell scripts and other tools like `docker compose`.
-하지만 Vite는 이 동작을 지원하는데, 이는 `dotenv-expand`가 오랫동안 이 기능을 지원해 왔고, JavaScript 생태계 내 다른 도구들도 이 동작을 지원하는 이전 버전을 사용하고 있기 때문입니다.
+That said, Vite supports this behavior as this has been supported by `dotenv-expand` for a long time and other tools in JavaScript ecosystem use older versions that support this behavior.
 
 다만 상호 운용성 문제를 피하기 위해 이러한 동작에 의존하지 않는 것이 좋습니다. Vite는 향후 이러한 동작에 대해 경고를 표시할 수 있습니다.
+
+:::
+
+:::warning Ignoring local `.env` files
+
+`.env.*.local` files are local-only and can contain sensitive variables. You should add `*.local` to your `.gitignore` to avoid them being checked into git.
 
 :::
 

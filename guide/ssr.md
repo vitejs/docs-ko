@@ -68,11 +68,8 @@ SSR 앱을 빌드할 때, 메인 서버를 완전히 제어하고 Vite를 프로
 ```js{15-18} twoslash [server.js]
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import express from 'express'
 import { createServer as createViteServer } from 'vite'
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 async function createServer() {
   const app = express()
@@ -111,7 +108,6 @@ createServer()
 // @noErrors
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 
 /** @type {import('express').Express} */
 var app
@@ -125,7 +121,7 @@ app.use('*all', async (req, res, next) => {
   try {
     // 1. index.html 파일을 읽어들입니다.
     let template = fs.readFileSync(
-      path.resolve(__dirname, 'index.html'),
+      path.resolve(import.meta.dirname, 'index.html'),
       'utf-8'
     )
 
@@ -262,7 +258,7 @@ export function mySSRPlugin() {
 }
 ```
 
-`load`와 `transform` 메서드의 옵션 객체는 어디까지나 선택 사항일 뿐입니다. 현재 Rollup에서 이 객체를 사용하지는 않으나, 향후 메타데이터로 이를 확장할 수 있습니다.
+The options object in `load` and `transform` is optional, Rollup is not currently using this object but may extend these hooks with additional metadata in the future.
 
 :::tip 참고
 Vite 2.7 이전에는 `options` 객체를 사용하는 대신 `ssr` 매개변수를 이용했습니다. 따라서 이와 관련된 모든 프레임워크와 플러그인이 업데이트 될 것이지만, 간혹 이전 API를 이용하는 경우를 마주할 수도 있습니다.

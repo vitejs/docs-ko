@@ -20,4 +20,4 @@
 
 [프레임워크를 위한 환경 API 가이드](../guide/api-environment-frameworks.md)를 참고하세요.
 
-Module Runner API를 사용할 때는 `server.ssrFixStacktrace` 및 `server.ssrRewriteStacktrace`를 호출할 필요가 없습니다. `sourcemapInterceptor`가 `false`로 설정되지 않는 한 스택 추적이 자동으로 업데이트됩니다.
+`server.ssrFixStacktrace` and `server.ssrRewriteStacktrace` do not have to be called when using the Module Runner APIs. The stack traces will be updated unless `sourcemapInterceptor` is set to `false`.

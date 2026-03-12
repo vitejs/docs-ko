@@ -2,16 +2,18 @@
 
 앱을 어느정도 완성하셨나요? 프로덕션으로 빌드하고자 한다면 `vite build` 명령을 실행해주세요. 빌드 시 기본적으로 `<root>/index.html` 파일이 빌드를 위한 진입점으로 사용되며, 정적 호스팅을 위한 형태로 진행됩니다. 추가적으로, GitHub Pages와 같은 정적 호스팅 서비스를 위한 빌드 방법을 알고싶다면 [정적 웹 페이지로 배포하기](./static-deploy) 섹션을 참고해주세요.
 
+<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~037q?via=vite" title="Building for Production">Watch an interactive lesson on Scrimba</ScrimbaLink>
+
 ## 브라우저 지원 현황 {#browser-compatibility}
 
 기본적으로 프로덕션 번들은 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available 타겟에 포함된 모던 브라우저를 가정합니다. 기본 브라우저 지원 범위는 다음과 같습니다:
 
 <!-- Search for the `ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET` constant for more information -->
 
-- Chrome >=107
-- Edge >=107
-- Firefox >=104
-- Safari >=16
+- Chrome >=111
+- Edge >=111
+- Firefox >=114
+- Safari >=16.4
 
 타깃을 직접 지정하고자 한다면 [`build.target` 설정](/config/build-options.md#build-target)을 이용할 수 있습니다. 다만 가장 낮은 타깃은 `es2015` 이며, 이보다 더 낮은 타깃으로 설정하더라도 Vite는 최소한 [네이티브 ESM 동적 임포트](https://caniuse.com/es6-module-dynamic-import)와 [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta)를 지원하는 브라우저에서 동작한다고 가정합니다:
 
@@ -50,15 +52,13 @@ JS(`import`), CSS(`url()`), 그리고 `.html` 파일에서 참조되는 에셋 �
 
 ## 빌드 커스터마이즈하기 {#customizing-the-build}
 
-빌드와 관련된 커스터마이즈는 [build 설정](/config/build-options.md)을 통해 가능합니다. 특별히 알아두어야 할 것이 하나 있는데, [Rollup 옵션](https://rollupjs.org/configuration-options/)을 `build.rollupOptions`에 명시해 사용이 가능합니다.
+The build can be customized via various [build config options](/config/build-options.md). Specifically, you can directly adjust the underlying [Rolldown options](https://rolldown.rs/reference/) via `build.rolldownOptions`:
 
-```ts [vite.config.js]
-export default defineConfig({
   build: {
     rollupOptions: {
       // https://rollupjs.org/configuration-options/
     }
-  }
+      // https://rolldown.rs/reference/
 })
 ```
 
@@ -68,7 +68,7 @@ export default defineConfig({
 
 `build.rollupOptions.output.manualChunks`를 사용해 청크를 분할하는 방식을 구성할 수 있습니다([Rollup 문서](https://rollupjs.org/configuration-options/#output-manualchunks)를 참고해 주세요). 프레임워크를 사용하는 경우, 청크 분할 방식 구성은 해당 프레임워크 문서를 참고해 주세요.
 
-## 로드 에러 처리하기 {#load-error-handling}
+You can configure how chunks are split using [`build.rolldownOptions.output.codeSplitting`](https://rolldown.rs/reference/OutputOptions.codeSplitting) (see [Rolldown docs](https://rolldown.rs/in-depth/manual-code-splitting)). If you use a framework, refer to their documentation for configuring how chunks are split.
 
 Vite는 동적 임포트에 실패했을 때 `vite:preloadError` 이벤트를 발생시킵니다. `event.payload`에는 원본 임포트 에러가 포함되어 있으며, `event.preventDefault()`를 호출하면 에러가 발생하지 않습니다.
 
@@ -84,21 +84,19 @@ When a new deployment occurs, the hosting service may delete the assets from pre
 
 `vite build --watch` 명령을 통해 Rollup Watcher를 활성화 할 수 있습니다. 또는, `build.watch` 옵션에서 [`WatcherOptions`](https://rollupjs.org/configuration-options/#watch)를 직접 명시할 수도 있습니다.
 
-```ts [vite.config.js]
+You can enable rollup watcher with `vite build --watch`. Or, you can directly adjust the underlying [`WatcherOptions`](https://rolldown.rs/reference/InputOptions.watch) via `build.watch`:
 export default defineConfig({
-  build: {
-    watch: {
       // https://rollupjs.org/configuration-options/#watch
     }
   }
 })
-```
+      // https://rolldown.rs/reference/InputOptions.watch
 
 `--watch` 플래그가 활성화된 상태에서 `vite.config.js` 또는 번들링 된 파일을 변경하게 되면 다시 빌드가 시작됩니다.
 
 ## Multi-Page App {#multi-page-app}
 
-아래와 같은 구조의 소스 코드를 갖고 있다고 가정해봅시다.
+With the `--watch` flag enabled, changes to files to be bundled will trigger a rebuild. Note that changes to the config and its dependencies require restarting the build command.
 
 ```
 ├── package.json
@@ -120,24 +118,21 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-
 export default defineConfig({
   build: {
-    rollupOptions: {
-      input: {
         main: resolve(__dirname, 'index.html'),
         nested: resolve(__dirname, 'nested/index.html')
       }
     }
-  }
-})
+        main: resolve(import.meta.dirname, 'index.html'),
+        nested: resolve(import.meta.dirname, 'nested/index.html'),
 ```
 
 참고로 루트를 변경한다 해도 `__dirname`은 여전히 `vite.config.js` 파일이 위치한 폴더를 가리키고 있다는 것을 유의하세요. 이를 방지하고자 한다면 `resolve`의 인자로 `root` 엔트리를 함께 전달해 줘야 합니다.
 
 HTML 파일의 경우, Vite는 `rollupOptions.input` 객체에 명시된 엔트리의 이름을 무시하고, 대신 dist 폴더에 HTML 에셋을 생성할 때 확인할 수 있는 파일의 id를 사용합니다. 이는 개발 서버가 작동하는 방식과 일관성을 유지할 수 있도록 합니다.
 
-## 라이브러리 모드 {#library-mode}
+If you specify a different root, remember that `import.meta.dirname` will still be the folder of your `vite.config.js` file when resolving the input paths. Therefore, you will need to add your `root` entry to the arguments for `resolve`.
 
 만약 브라우저 기반의 라이브러리를 개발하고 있다면, 라이브러리 갱신 시마다 테스트 페이지에서 이를 불러오는 데 많은 시간을 소모할 것입니다. Vite는 `index.html`을 이용해 좀 더 나은 개발 환경(경험)을 마련해줍니다.
 
@@ -151,15 +146,12 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-
 export default defineConfig({
   build: {
-    lib: {
-      entry: resolve(__dirname, 'lib/main.js'),
       name: 'MyLib',
       // 적절한 확장자가 추가됩니다.
       fileName: 'my-lib'
-    },
+      entry: resolve(import.meta.dirname, 'lib/main.js'),
     rollupOptions: {
       // 라이브러리에 포함하지 않을
       // 디펜던시를 명시해주세요
@@ -182,17 +174,14 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-
 export default defineConfig({
   build: {
-    lib: {
-      entry: {
         'my-lib': resolve(__dirname, 'lib/main.js'),
         secondary: resolve(__dirname, 'lib/secondary.js'),
       },
       name: 'MyLib',
-    },
-    rollupOptions: {
+        'my-lib': resolve(import.meta.dirname, 'lib/main.js'),
+        secondary: resolve(import.meta.dirname, 'lib/secondary.js'),
       // 라이브러리에 포함하지 않을
       // 디펜던시를 명시해주세요
       external: ['vue'],

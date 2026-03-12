@@ -119,6 +119,12 @@ import InlineWorker from './shader.js?worker&inline'
 
 참고로 `public` 디렉터리에 위치해 있는 에셋을 가져오고자 하는 경우, 항상 루트를 기준으로 하는 절대 경로로 가져와야 합니다. (예: `public/icon.png` 에셋은 소스 코드에서 `/icon.png`으로 접근이 가능)
 
+::: tip Choosing between imports and the `public` directory
+
+In general, prefer **importing assets** unless you specifically need the guarantees provided by the `public` directory.
+
+:::
+
 ## new URL(url, import.meta.url) {#new-url-url-import-meta-url}
 
 네이티브 ESM의 API 중 하나인 [import.meta.url](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import.meta)은 현재 모듈의 URL을 보여주는 기능입니다. [URL 생성자](https://developer.mozilla.org/en-US/docs/Web/API/URL)와 함께 사용하면, 정적 에셋의 전제 URL을 확인할 수 있게 됩니다.
@@ -140,7 +146,7 @@ function getImageUrl(name) {
 }
 ```
 
-프로덕션 빌드 시, Vite는 번들링 및 에셋 해싱 후에도 해당 에셋에 대한 URL을 올바르게 가리키기 위해 필요한 변환 작업을 수행합니다.
+During the production build, Vite will perform necessary transforms so that the URLs still point to the correct location even after bundling and asset hashing. However, the URL string must be static so it can be analyzed, otherwise the code will be left as is, which can cause runtime errors if `build.target` does not support `import.meta.url`.
 
 ```js
 // Vite는 아래 코드를 변환하지 않음

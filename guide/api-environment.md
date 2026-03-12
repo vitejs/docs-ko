@@ -8,7 +8,7 @@
 리소스:
 
 - [피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 새로운 API에 대한 피드백을 모으고 있습니다.
-- [환경 API PR](https://github.com/vitejs/vite/pull/16471)에서 새로운 API를 구현하고 검토했습니다.
+- [Environment API PR](https://github.com/vitejs/vite/pull/16471) where the new APIs were implemented and reviewed.
 
 여러분의 피드백을 공유해주세요.
 :::
@@ -100,6 +100,8 @@ interface UserConfig extends EnvironmentOptions {
 
 런타임 제공자가 자신의 런타임에 맞게 환경을 구성할 수 있도록 저수준 설정 API를 제공합니다. 이렇게 구성한 환경은 개발 중 프로덕션과 더 유사한 런타임에서 모듈을 실행하기 위해 다른 프로세스나 스레드를 생성할 수도 있습니다.
 
+For example, the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/) uses the Environment API to run code in the Cloudflare Workers runtime (`workerd`) during development.
+
 ```js
 import { customEnvironment } from 'vite-environment-provider'
 
@@ -139,4 +141,4 @@ export default {
 
 프레임워크는 다양한 수준에서 환경을 구성해야 할 수 있습니다. 프레임워크 개발자라면, [프레임워크를 위한 환경 API](./api-environment-frameworks)에서 환경 API의 프로그래밍적 측면을 알아보세요.
 
-런타임을 제공한다면, [런타임을 위한 환경 API](./api-environment-runtimes.md)에서 프레임워크와 사용자가 사용할 수 있는 커스텀 환경 제공 방법을 설명합니다.
+For Runtime providers, the [Environment API Runtimes Guide](./api-environment-runtimes.md) explains how to offer custom environments to be consumed by frameworks and users.
