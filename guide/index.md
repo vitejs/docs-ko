@@ -10,7 +10,7 @@ Vite (French word for "quick", pronounced `/viːt/`<button style="border:none;pa
 
 - [네이티브 ES 모듈](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 통해 소스 파일을 제공하는 개발 서버로, [다양한 기능](./features)과 놀라울 정도로 빠른 [Hot Module Replacement(HMR)](./features#hot-module-replacement)를 제공합니다.
 
-- [Rollup](https://rollupjs.org)을 사용해 코드를 번들링하는 빌드 명령어로, 프로덕션을 위해 고도로 최적화된 정적 에셋을 출력하도록 구성되어 있습니다.
+- A build command that bundles your code with [Rolldown](https://rolldown.rs), pre-configured to output highly optimized static assets for production.
 
 Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./features)에서 더 자세히 알아보세요. 프레임워크 지원이나 다른 도구와의 통합은 [플러그인](./using-plugins)을 통해 가능합니다. [Vite 설정 가이드](../config/)에서는 필요에 따라 프로젝트에 Vite를 적용하는 방법을 설명합니다.
 

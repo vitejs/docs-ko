@@ -20,3 +20,4 @@
 
 - **Type:** [`RolldownOptions`](https://rolldown.rs/reference/)
 This option is an alias of `worker.rolldownOptions` option. Use `worker.rolldownOptions` option instead.
+Rolldown options to build worker bundle.
