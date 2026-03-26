@@ -22,7 +22,7 @@ Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./feat
 
 ## 지원하는 브라우저 {#browser-support}
 
-During development, Vite assumes that a modern browser is used. This means the browser supports most of the latest JavaScript and CSS features. For that reason, Vite sets [`esnext` as the transform target](https://esbuild.github.io/api/#target). This prevents syntax lowering, letting Vite serve modules as close as possible to the original source code. Vite injects some runtime code to make the development server work. This code uses features included in [Baseline](https://web-platform-dx.github.io/web-features/) Newly Available at the time of each major release (2026-01-01 for this major).
+During development, Vite assumes that a modern browser is used. This means the browser supports most of the latest JavaScript and CSS features. For that reason, Vite sets [`esnext` as the transform target](https://oxc.rs/docs/guide/usage/transformer/lowering.html#target). This prevents syntax lowering, letting Vite serve modules as close as possible to the original source code. Vite injects some runtime code to make the development server work. This code uses features included in [Baseline](https://web-platform-dx.github.io/web-features/) Newly Available at the time of each major release (2026-01-01 for this major).
 
 프로덕션 빌드의 경우, Vite는 기본적으로 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available 브라우저를 타깃으로 합니다. 최소 2.5년 이전에 릴리스된 브라우저들을 의미합니다. 이 타깃은 설정을 통해 더 낮출 수 있으며, 레거시 브라우저는 공식 플러그인인 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)를 통해 지원이 가능합니다. 이에 대한 더 자세한 내용은 [프로덕션 빌드](./build) 섹션을 참고해 주세요.
 

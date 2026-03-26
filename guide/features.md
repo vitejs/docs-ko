@@ -12,7 +12,7 @@ import { someMethod } from 'my-dep'
 
 The above import will throw an error in the browser. Vite will detect such bare module imports in all served source files and perform the following:
 
-1. [Pre-bundle](./dep-pre-bundling) them to improve page loading speed and convert CommonJS / UMD modules to ESM. The pre-bundling step is performed with [esbuild](https://esbuild.github.io/) and makes Vite's cold start time significantly faster than any JavaScript-based bundler.
+1. [Pre-bundle](./dep-pre-bundling) them to improve page loading speed and convert CommonJS / UMD modules to ESM. The pre-bundling step is performed with [Rolldown](https://rolldown.rs/) and makes Vite's cold start time significantly faster than any JavaScript-based bundler.
 
 2. `/node_modules/.vite/deps/my-dep.js?v=f3sf2ebd`와 같이 URL을 이용해 ESM을 지원하는 브라우저에서 모듈을 가져올 수 있도록 `import` 구문을 수정합니다.
 
@@ -42,7 +42,7 @@ Vite의 역할은 소스 모듈을 가능한 빠르게 브라우저에서 실행
 
 - 개발 중 IDE에서 제공하는 힌트 이상의 기능이 필요하다면, 별도의 프로세스에서 `tsc --noEmit --watch`를 실행해주세요. 만약 브라우저에서 직접 타입 에러를 확인하고 싶다면 [vite-plugin-checker](https://github.com/fi3ework/vite-plugin-checker)를 사용하는 것을 권장합니다.
 
-Vite의 TypeScript 트랜스파일링은 [Esbuild](https://github.com/evanw/esbuild)를 이용하며, TypeScript 소스 코드를 JavaScript 소스 코드로 변환하는 작업에 대해 `tsc` 대비 약 20~30배 정도 빠른 성능을 보이고 있습니다. (HMR은 50ms 미만)
+Vite uses [Oxc Transformer](https://oxc.rs/docs/guide/usage/transformer.html) to transpile TypeScript into JavaScript which is faster than vanilla `tsc`, and HMR updates can reflect in the browser in under 50ms.
 
 참고로 타입만을 가져오는 경우 잘못 번들링이 될 수 있으며, 이는 [타입 전용 Imports와 Exports](https://www.typescriptlang.org/ko/docs/handbook/release-notes/typescript-3-8.html#type-only-imports-and-export)를 사용하여 이 문제를 우회할 수 있습니다:
 
@@ -53,7 +53,7 @@ export type { T }
 
 ### 타입스크립트 컴파일러 옵션 {#typescript-compiler-options}
 
-Vite respects some of the options in `tsconfig.json` and sets the corresponding esbuild options. For each file, Vite uses the `tsconfig.json` in the closest parent directory. If that `tsconfig.json` contains a [`references`](https://www.typescriptlang.org/tsconfig/#references) field, Vite will use the referenced config file that satisfies the [`include`](https://www.typescriptlang.org/tsconfig/#include) and [`exclude`](https://www.typescriptlang.org/tsconfig/#exclude) fields.
+Vite respects some of the options in `tsconfig.json` and sets the corresponding Oxc Transformer options. For each file, Vite uses the `tsconfig.json` in the closest parent directory. If that `tsconfig.json` contains a [`references`](https://www.typescriptlang.org/tsconfig/#references) field, Vite will use the referenced config file that satisfies the [`include`](https://www.typescriptlang.org/tsconfig/#include) and [`exclude`](https://www.typescriptlang.org/tsconfig/#exclude) fields.
 
 When the options are set in both the Vite config and the `tsconfig.json`, the value in the Vite config takes precedence.
 
@@ -65,7 +65,7 @@ When the options are set in both the Vite config and the `tsconfig.json`, the va
 
 `true`로 설정해주세요.
 
-`esbuild`는 타입에 대한 정보 없이 변환(Transpilation)만을 수행하기에, const enum 또는 암시적으로 타입만을 가져오는 것과 같은 특정 기능을 지원하지 않습니다.
+It is because Oxc transformer only performs transpilation without type information, it doesn't support certain features like const enum and implicit type-only imports.
 
 이를 감지하기 위해 `tsconfig.json` 내 `compilerOptions` 설정을 `"isolatedModules": true`와 같이 설정해줘야만 하며, 이 설정으로 TS가 위와 같은 상황에서 작동하지 않는 기능들에 대해 경고할 수 있게 됩니다.
 
@@ -87,9 +87,9 @@ TypeScript 변환 대상이 `ES2022` 또는 `ESNext` 이상인 경우, 기본값
 
 - [TypeScript 문서](https://www.typescriptlang.org/tsconfig#target)
 
-Vite는 `esbuild`와 동일하게 `tsconfig.json` 내 `target` 값을 무시합니다.
+Vite ignores the `target` value in the `tsconfig.json`, following the same behavior as [esbuild](https://esbuild.github.io/).
 
-개발 시 `target`을 지정하고자 한다면 [`esbuild.target`](/config/shared-options.html#esbuild) 옵션을 사용할 수 있으며, 최소한의 트랜스파일링을 위해 `esnext`로 기본 설정되어 있습니다. 빌드 시 `esbuild.target`보다 높은 우선순위를 갖는 [`build.target`](/config/build-options.html#build-target) 옵션을 사용할 수도 있습니다.
+To specify the target in dev, the [`oxc.target`](/config/shared-options.html#oxc) option can be used, which defaults to `esnext` for minimal transpilation. In builds, the [`build.target`](/config/build-options.html#build-target) option takes higher priority over `oxc.target` and can also be set if needed.
 
 #### `emitDecoratorMetadata`
 
@@ -235,24 +235,25 @@ Check out the [Plugins Guide](/plugins/) for more information.
 
 ```js twoslash [vite.config.js]
 import { defineConfig } from 'vite'
-
+`.jsx` and `.tsx` files are also supported out of the box. JSX transpilation is also handled via [Oxc Transformer](https://oxc.rs/docs/guide/usage/transformer/).
 export default defineConfig({
   esbuild: {
     jsxFactory: 'h',
-    jsxFragment: 'Fragment',
+If using JSX with your own framework, custom `jsxFactory` and `jsxFragment` can be configured using the [`oxc` option](/config/shared-options.md#oxc). For example, the Preact plugin would use:
   },
 })
 ```
 
 자세한 내용은 [esbuild 문서](https://esbuild.github.io/content-types/#jsx)를 참고해주세요.
-
-Vite에서 제공하는 옵션인 `jsxInject`를 이용해 JSX 헬퍼를 사용할 수도 있습니다:
-
+  oxc: {
+    jsx: {
+      importSource: 'preact',
+    },
 ```js twoslash [vite.config.js]
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  esbuild: {
+More details in [Oxc Transformer docs](https://oxc.rs/docs/guide/usage/transformer/jsx.html).
     jsxInject: `import React from 'react'`,
   },
 })
@@ -260,7 +261,7 @@ export default defineConfig({
 
 ## CSS {#css}
 
-`.css` 파일을 가져오면 HMR을 지원하는 `<style>` 태그를 통해 페이지에 해당 콘텐츠가 주입됩니다.
+  oxc: {
 
 ### CSS `@import` 그리고 URL 재정의(Rebasing) {#import-inlining-and-rebasing}
 
