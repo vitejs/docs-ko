@@ -16,20 +16,7 @@ CLI에서는 `--host 0.0.0.0` or `--host`로 설정될 수 있습니다.
 
 Vite 대신 다른 서버가 응답하는 경우가 있습니다.
 
-첫 번째 경우는 `localhost`를 사용하는 경우입니다. Node.js 버전이 v17 미만이라면 기본적으로 DNS로 확인된 주소의 결과를 재정렬합니다. `localhost`에 접근할 때 브라우저는 DNS를 사용해 주소를 확인하며, 해당 주소는 Vite가 수신하고 있는 주소와 다를 수 있습니다.
-
-이 재정렬 동작을 비활성화하려면 [`dns.setDefaultResultOrder('verbatim')`](https://nodejs.org/api/dns.html#dns_dns_setdefaultresultorder_order)으로 설정해주세요. 이 때 Vite는 주소를 `localhost`로 표기합니다.
-
-```js twoslash [vite.config.js]
-import { defineConfig } from 'vite'
-import dns from 'node:dns'
-
-dns.setDefaultResultOrder('verbatim')
-
-export default defineConfig({
-  // 생략
-})
-```
+The first case is when `localhost` is used. Node.js's [`dns.setDefaultResultOrder`](https://nodejs.org/docs/latest-v24.x/api/dns.html#dnssetdefaultresultorderorder) changes how DNS-resolved addresses are ordered, and browsers may use a different resolved address than the one Vite is listening to. Vite prints the resolved address when it differs.
 
 두 번째 경우는 와일드카드 호스트(예: `0.0.0.0`)가 사용되는 경우입니다. 와일드카드 호스트는 명시적으로 지정된 호스트보다 우선 순위가 낮기 때문에 이러한 상황이 발생될 수 있습니다.
 
@@ -416,6 +403,12 @@ Vite dev 서버에서 제공되지 않기를 원하는 민감한 파일들에 �
 ::: tip 참고
 
 이 차단 목록은 [Public 디렉터리](/guide/assets.md#the-public-directory)에 적용되지 않습니다. Public 디렉터리 내 모든 파일은 빌드 시 결과물 출력 디렉터리에 직접 복사되며, 어떠한 필터링도 거치지 않습니다.
+
+:::
+
+::: tip NOTE
+
+The deny filter is applied against the module id and the id with query parameters stripped. Since a plugin can read files from any files in its load hook (including resolving symlinks to denied paths), Vite cannot guarantee that a denied file is inaccessible through an alternative path. If you have an alternative path, include it in the deny list as well.
 
 :::
 
