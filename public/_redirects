@@ -1,4 +1,3 @@
-# temporary, we'll flip this around some day
 https://ko.vitejs.dev/* https://ko.vite.dev/:splat 301!
 
 /guide/api-vite-runtime /guide/api-environment 301
