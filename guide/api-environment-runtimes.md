@@ -8,7 +8,7 @@
 리소스:
 
 - [피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 새로운 API에 대한 피드백을 모으고 있습니다.
-- [Environment API PR](https://github.com/vitejs/vite/pull/16471) where the new APIs were implemented and reviewed.
+- 새 API가 구현되고 검토된 [Environment API PR](https://github.com/vitejs/vite/pull/16471)
 
 여러분의 피드백을 공유해주세요.
 :::
@@ -80,7 +80,7 @@ Vite 개발 서버는 기본적으로 두 가지 환경을 제공합니다: `cli
 
 소스 코드가 변환된 결과물을 모듈이라고 하며, 각 환경에서 처리된 모듈 사이의 의존성 관계는 모듈 그래프에 저장됩니다. 이러한 모듈은 각 환경과 연결된 런타임으로 전송되어 실행됩니다. 그리고 런타임에서 모듈이 분석되면서 다른 모듈을 불러오는 요청이 발생하고, 이에 따라 모듈 그래프에서 관련 부분이 처리됩니다.
 
-A Vite Module Runner allows running any code by processing it with Vite plugins first. It is different from `server.ssrLoadModule` because the runner implementation is decoupled from the server. This allows library and framework authors to implement their layer of communication between the Vite server and the runner. The browser communicates with its corresponding environment using the server WebSocket and through HTTP requests. The Node Module runner can directly do function calls to process modules as it is running in the same process. Other environments could run modules connecting to a JS runtime like workerd, or a Worker Thread as Vitest does.
+Vite 모듈 러너는 먼저 Vite 플러그인으로 코드를 처리한 뒤 어떤 코드든 실행할 수 있게 합니다. 러너 구현이 서버와 분리되어 있다는 점에서 `server.ssrLoadModule`과 다릅니다. 이를 통해 라이브러리와 프레임워크 작성자는 Vite 서버와 러너 사이의 통신 레이어를 직접 구현할 수 있습니다. 브라우저는 서버 WebSocket과 HTTP 요청을 사용해 해당 환경과 통신합니다. Node 모듈 러너는 같은 프로세스에서 실행되므로 모듈 처리를 위해 직접 함수 호출을 할 수 있습니다. 다른 환경은 workerd 같은 JS 런타임이나 Vitest처럼 Worker Thread에 연결해 모듈을 실행할 수 있습니다.
 
 ```dot
 digraph module_runner {
@@ -156,7 +156,7 @@ function createWorkerdDevEnvironment(
 }
 ```
 
-By default, `HotChannel` transports have `server.fs` restrictions applied, meaning only files within the allowed directories can be served. If your transport is not exposed over the network (e.g., it communicates via worker threads or in-process calls), you can set `skipFsCheck: true` on the `HotChannel` to bypass these restrictions.
+기본적으로 `HotChannel` 전송에는 `server.fs` 제한이 적용되며, 허용된 디렉터리 안의 파일만 제공될 수 있습니다. 전송이 네트워크에 노출되지 않는다면(예: 워커 스레드나 프로세스 내부 호출로 통신하는 경우), `HotChannel`에 `skipFsCheck: true`를 설정해 이러한 제한을 우회할 수 있습니다.
 
 [`DevEnvironment`를 위한 여러 통신 레벨](/guide/api-environment-frameworks#devenvironment-communication-levels)이 있습니다. 프레임워크가 런타임에 무관한 코드를 작성하기 쉽도록, 가능한 한 가장 유연한 통신 수준을 구현하는 것을 권장합니다.
 
@@ -431,7 +431,7 @@ await createServer({
 
 :::
 
-Make sure to implement the `vite:client:connect` / `vite:client:disconnect` events in the `on` / `off` methods when those methods exist. `vite:client:connect` event should be emitted when the connection is established, and `vite:client:disconnect` event should be emitted when the connection is closed. The `HotChannelClient` object passed to the event handler must have the same reference for the same connection.
+`on` / `off` 메서드가 존재한다면, 해당 메서드에서 `vite:client:connect` / `vite:client:disconnect` 이벤트를 구현해야 합니다. 연결이 설정되면 `vite:client:connect` 이벤트를 발생시켜야 하며, 연결이 닫히면 `vite:client:disconnect` 이벤트를 발생시켜야 합니다. 이벤트 핸들러에 전달되는 `HotChannelClient` 객체는 같은 연결에 대해 동일한 참조를 가져야 합니다.
 
 다음은 HTTP 요청을 통해 실행기와 서버 간 통신하는 다른 예시입니다:
 

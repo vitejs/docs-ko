@@ -6,11 +6,11 @@
 
 ## 들어가기 전에 {#overview}
 
-Vite (French word for "quick", pronounced `/viːt/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" aria-label="pronounce" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="../images/voice.svg?no-inline#voice" /></svg></button>, like "veet") is a build tool that aims to provide a faster and leaner development experience for modern web projects. It consists of two major parts:
+Vite(프랑스어로 "빠르다"를 뜻하며, `/viːt/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" aria-label="pronounce" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="../images/voice.svg?no-inline#voice" /></svg></button>, "veet"처럼 발음합니다)는 모던 웹 프로젝트에 더 빠르고 가벼운 개발 경험을 제공하는 것을 목표로 하는 빌드 도구입니다. 크게 두 부분으로 구성됩니다:
 
 - [네이티브 ES 모듈](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 통해 소스 파일을 제공하는 개발 서버로, [다양한 기능](./features)과 놀라울 정도로 빠른 [Hot Module Replacement(HMR)](./features#hot-module-replacement)를 제공합니다.
 
-- A build command that bundles your code with [Rolldown](https://rolldown.rs), pre-configured to output highly optimized static assets for production.
+- [Rolldown](https://rolldown.rs)으로 코드를 번들링하고, 프로덕션을 위한 고도로 최적화된 정적 에셋을 출력하도록 미리 구성된 빌드 명령.
 
 Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./features)에서 더 자세히 알아보세요. 프레임워크 지원이나 다른 도구와의 통합은 [플러그인](./using-plugins)을 통해 가능합니다. [Vite 설정 가이드](../config/)에서는 필요에 따라 프로젝트에 Vite를 적용하는 방법을 설명합니다.
 
@@ -18,11 +18,11 @@ Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./feat
 
 왜 Vite를 만들게 되었는지 알고 싶다면 [Vite를 사용해야 하는 이유](./why) 섹션을 참고해주세요.
 
-<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq?via=vite" title="Free Vite Course on Scrimba">Learn Vite through interactive tutorials on Scrimba</ScrimbaLink>
+<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq?via=vite" title="Free Vite Course on Scrimba">Scrimba의 인터랙티브 튜토리얼로 Vite를 배워보세요</ScrimbaLink>
 
 ## 지원하는 브라우저 {#browser-support}
 
-During development, Vite assumes that a modern browser is used. This means the browser supports most of the latest JavaScript and CSS features. For that reason, Vite sets [`esnext` as the transform target](https://oxc.rs/docs/guide/usage/transformer/lowering.html#target). This prevents syntax lowering, letting Vite serve modules as close as possible to the original source code. Vite injects some runtime code to make the development server work. This code uses features included in [Baseline](https://web-platform-dx.github.io/web-features/) Newly Available at the time of each major release (2026-01-01 for this major).
+개발 중 Vite는 모던 브라우저가 사용된다고 가정합니다. 이는 브라우저가 최신 JavaScript와 CSS 기능 대부분을 지원한다는 뜻입니다. 따라서 Vite는 [변환 타깃을 `esnext`로 설정](https://oxc.rs/docs/guide/usage/transformer/lowering.html#target)합니다. 이렇게 하면 문법 다운레벨링을 피하고, Vite가 원본 소스 코드에 최대한 가까운 형태로 모듈을 제공할 수 있습니다. Vite는 개발 서버가 동작하도록 일부 런타임 코드를 주입합니다. 이 코드는 각 메이저 릴리스 시점(이번 메이저는 2026-01-01)에 [Baseline](https://web-platform-dx.github.io/web-features/) Newly Available에 포함된 기능을 사용합니다.
 
 프로덕션 빌드의 경우, Vite는 기본적으로 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available 브라우저를 타깃으로 합니다. 최소 2.5년 이전에 릴리스된 브라우저들을 의미합니다. 이 타깃은 설정을 통해 더 낮출 수 있으며, 레거시 브라우저는 공식 플러그인인 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)를 통해 지원이 가능합니다. 이에 대한 더 자세한 내용은 [프로덕션 빌드](./build) 섹션을 참고해 주세요.
 
@@ -71,7 +71,7 @@ $ deno init --npm vite
 
 이후에는 프롬프트 창에 출력된 메시지를 따라주세요.
 
-<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~0yhj?via=vite" title="Scaffolding Your First Vite Project">Watch an interactive lesson on Scrimba</ScrimbaLink>
+<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~0yhj?via=vite" title="Scaffolding Your First Vite Project">Scrimba에서 인터랙티브 강의를 시청하세요</ScrimbaLink>
 
 ::: tip 호환성 참고 사항
 Vite는 [Node.js](https://nodejs.org/en/) 20.19+ 또는 22.12+를 요구합니다. 다만 일부 템플릿의 경우 더 높은 버전의 Node.js를 요구할 수 있으니, 패키지 관리자에서 경고가 표시되면 업그레이드해 주세요.
@@ -106,11 +106,11 @@ $ deno init --npm vite my-vue-app --template vue
 
 :::
 
-See [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite) for more details on each supported template: `vanilla`, `vanilla-ts`, `vue`, `vue-ts`, `react`, `react-ts`, `preact`, `preact-ts`, `lit`, `lit-ts`, `svelte`, `svelte-ts`, `solid`, `solid-ts`, `qwik`, `qwik-ts`.
+지원되는 각 템플릿에 대한 자세한 내용은 [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)를 참고해 주세요: `vanilla`, `vanilla-ts`, `vue`, `vue-ts`, `react`, `react-ts`, `preact`, `preact-ts`, `lit`, `lit-ts`, `svelte`, `svelte-ts`, `solid`, `solid-ts`, `qwik`, `qwik-ts`.
 
 현재 디렉터리에 프로젝트를 생성하려면 프로젝트 이름으로 `.`을 사용하세요.
 
-To create a project without interactive prompts, you can use the `--no-interactive` flag.
+인터랙티브 프롬프트 없이 프로젝트를 생성하려면 `--no-interactive` 플래그를 사용할 수 있습니다.
 
 ::::
 
@@ -120,7 +120,7 @@ create-vite는 인기 있는 프레임워크로 작성된 템플릿을 기반으
 
 템플릿이 `https://github.com/user/project`와 같이 GitHub에 호스팅되어 있다면, `https://github.stackblitz.com/user/project`로 접속해 온라인에서 템플릿을 체험해 볼 수 있습니다. (프로젝트 URL의 `github` 뒷부분에 `.stackblitz`를 붙여주세요.)
 
-You can also use a tool like [tiged](https://github.com/tiged/tiged) to scaffold your project with one of the templates. Assuming the project is on GitHub and uses `main` as the default branch, you can create a local copy using:
+[tiged](https://github.com/tiged/tiged) 같은 도구를 사용해 템플릿 중 하나로 프로젝트를 스캐폴딩할 수도 있습니다. 프로젝트가 GitHub에 있고 기본 브랜치가 `main`이라고 가정하면, 다음과 같이 로컬 사본을 만들 수 있습니다:
 
 ```bash
 npx tiged user/project my-project
@@ -263,9 +263,9 @@ pnpm run build
 pnpm link # use your preferred package manager for this step
 ```
 
-Then go to your Vite based project and run `pnpm link vite` (or the package manager that you used to link `vite` globally). Now restart the development server to ride on the bleeding edge!
+그런 다음 Vite 기반 프로젝트로 이동해 `pnpm link vite`를 실행하세요. 또는 `vite`를 전역으로 링크할 때 사용한 패키지 매니저를 사용하세요. 이제 개발 서버를 다시 시작하면 최신 변경 사항을 사용할 수 있습니다.
 
-To learn more about how and when Vite does releases, check out the [Releases](../releases.md) documentation.
+Vite가 어떻게, 언제 릴리스되는지 더 알아보려면 [릴리스](../releases.md) 문서를 확인해 주세요.
 
 ::: tip Vite를 사용하는 디펜던시
 디펜던시에서 간접적으로 사용되는 Vite 버전을 교체하려면, [npm overrides](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#overrides) 또는 [pnpm overrides](https://pnpm.io/9.x/package_json#pnpmoverrides)를 사용해야 합니다.

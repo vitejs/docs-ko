@@ -1,19 +1,19 @@
 <!--
-  READ THIS IF YOU WANT TO ADD A NEW DEPLOYMENT PLATFORM.
+  새로운 배포 플랫폼을 추가하려면 이 내용을 읽어주세요.
 
-  Feel free to submit a PR that adds a new section with a link to your platform's
-  deployment guide, as long as it meets these criteria:
+  아래 기준을 충족한다면, 플랫폼의 배포 가이드 링크가 포함된 새 섹션을
+  추가하는 PR을 자유롭게 보내주세요:
 
-  1. Users should be able to deploy their site for free.
-  2. Free tier offerings should host the site indefinitely and are not time-bound.
-     Offering a limited number of computation resource or site counts in exchange is fine.
-  3. The linked guides should not contain any malicious content.
+  1. 사용자가 사이트를 무료로 배포할 수 있어야 합니다.
+  2. 무료 티어는 사이트를 기간 제한 없이 계속 호스팅할 수 있어야 합니다.
+     대신 제한된 컴퓨팅 리소스나 사이트 개수를 제공하는 것은 괜찮습니다.
+  3. 링크된 가이드에는 악성 콘텐츠가 없어야 합니다.
 
-  New sections should be added last in the file. Please reference the existing sections at
-  the bottom of this file for examples of how to format the new section.
+  새 섹션은 파일 맨 아래에 추가해야 합니다. 새 섹션 형식 예시는
+  이 파일 아래쪽의 기존 섹션을 참고해 주세요.
 
-  The Vite team may change the criteria and audit the current list from time to time.
-  If a section is removed, we will ping the original PR authors before doing so.
+  Vite 팀은 기준을 변경하고 현재 목록을 수시로 감사할 수 있습니다.
+  섹션을 제거하는 경우, 제거 전에 원래 PR 작성자에게 알립니다.
 -->
 
 # 정적 웹 페이지로 배포하기 {#deploying-a-static-site}
@@ -73,27 +73,27 @@ $ npm run preview
 
 ## GitHub Pages {#github-pages}
 
-1. **Update Vite Config**
+1. **Vite 설정 업데이트**
 
-   Set the correct `base` in `vite.config.js`.
+   `vite.config.js`에서 올바른 `base`를 설정합니다.
 
     만약 GitHub Pages를 통해 `https://<USERNAME>.github.io/`이나 커스텀 도메인(예: `www.example.com`)에 배포하고자 한다면, `base` 설정값을 `'/'`로 지정해 주세요. 또는 `base`의 기본값이 `'/'`이기 때문에 설정에서 `base`를 제거해도 됩니다.
 
    만약 `https://<USERNAME>.github.io/<REPO>/`와 같은 형태로 배포하고자 한다면(예: 리포지토리가 `https://github.com/<USERNAME>/<REPO>`인 경우), `base` 설정값을 `'/<REPO>/'`로 지정해 주세요.
 
-2. **Enable GitHub Pages**
+2. **GitHub Pages 활성화**
 
-   In your repository, go to **Settings → Pages**. Under **Build and deployment**, open the **Source** dropdown, and select **GitHub Actions**.
+   리포지토리에서 **Settings → Pages**로 이동합니다. **Build and deployment** 아래의 **Source** 드롭다운을 열고 **GitHub Actions**를 선택합니다.
 
-   GitHub will now deploy your site using a GitHub Actions [workflow](https://docs.github.com/en/actions/concepts/workflows-and-actions/workflows), which is necessary since Vite requires a build step for deployment.
+   이제 GitHub는 GitHub Actions [워크플로](https://docs.github.com/en/actions/concepts/workflows-and-actions/workflows)를 사용해 사이트를 배포합니다. Vite는 배포를 위해 빌드 단계가 필요하므로 이 과정이 필요합니다.
 
-3. **Create a Workflow**
+3. **워크플로 생성**
 
-   Create a new file in your repository at `.github/workflows/deploy.yml`. You can also click on **“create your own”** from the previous step, which will generate a starter workflow file for you.
+   리포지토리에 `.github/workflows/deploy.yml` 파일을 새로 만듭니다. 이전 단계에서 **“create your own”**을 클릭하면 시작용 워크플로 파일을 생성할 수도 있습니다.
 
-   Here’s a sample workflow that installs dependencies with npm, builds the site, and deploys it whenever you push changes to the `main` branch:
+   다음은 `main` 브랜치에 변경 사항을 push할 때마다 npm으로 디펜던시를 설치하고, 사이트를 빌드하고, 배포하는 샘플 워크플로입니다:
 
-   <<< ./static-deploy-github-pages.yaml#content [.github/workflows/deploy.yml]
+   <<< ./static-deploy-github-pages.yaml#content [배포 워크플로]
 
 ## GitLab Pages 그리고 GitLab CI {#github-pages-and-gitlab-ci}
 
@@ -105,7 +105,7 @@ $ npm run preview
 
 2. 아래와 같은 내용으로 프로젝트의 루트에 `.gitlab-ci.yml` 파일을 생성해주세요. 이와 같이 설정하게 되면, 콘텐츠가 변경될 때마다 사이트가 빌드 및 배포됩니다.
 
-   ```yaml [.gitlab-ci.yml]
+```yaml [.gitlab-ci.yml]
    image: node:lts
    pages:
      stage: deploy
@@ -125,19 +125,19 @@ $ npm run preview
          - public
      rules:
        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-   ```
+```
 
 ## Netlify {#netlify}
 
 ### Netlify CLI {#netlify-cli}
 
-1. Install the [Netlify CLI](https://docs.netlify.com/api-and-cli-guides/cli-guides/get-started-with-cli/) via `npm install -g netlify-cli`.
-2. Create a new site using `netlify init`.
-3. Deploy using `netlify deploy`.
+1. `npm install -g netlify-cli`로 [Netlify CLI](https://docs.netlify.com/api-and-cli-guides/cli-guides/get-started-with-cli/)를 설치합니다.
+2. `netlify init`으로 새 사이트를 생성합니다.
+3. `netlify deploy`로 배포합니다.
 
-The Netlify CLI will share with you a preview URL to inspect. When you are ready to go into production, use the `prod` flag: `netlify deploy --prod`.
+Netlify CLI는 확인할 수 있는 프리뷰 URL을 제공합니다. 프로덕션으로 전환할 준비가 되면 `prod` 플래그를 사용하세요: `netlify deploy --prod`.
 
-### Netlify with Git {#netlify-with-git}
+### Git으로 Netlify 사용하기 {#netlify-with-git}
 
 1. 코드를 Git 리포지토리(GitHub, GitLab, BitBucket, Azure DevOps)에 Push 해주세요.
 2. Netlify에서 [프로젝트를 불러와주세요](https://app.netlify.com/start).
@@ -145,17 +145,17 @@ The Netlify CLI will share with you a preview URL to inspect. When you are ready
 4. **Deploy** 를 클릭해주세요.
 5. Vite 앱이 배포되었습니다!
 
-After your project has been imported and deployed, all subsequent pushes to branches other than the production branch along with pull requests will generate [Preview Deployments](https://docs.netlify.com/deploy/deploy-types/deploy-previews/), and all changes made to the Production Branch (commonly “main”) will result in a [Production Deployment](https://docs.netlify.com/deploy/deploy-overview/#definitions).
+프로젝트를 가져오고 배포한 뒤에는 프로덕션 브랜치가 아닌 브랜치로의 모든 push와 pull request가 [프리뷰 배포](https://docs.netlify.com/deploy/deploy-types/deploy-previews/)를 생성하며, 프로덕션 브랜치(일반적으로 “main”)에 대한 모든 변경 사항은 [프로덕션 배포](https://docs.netlify.com/deploy/deploy-overview/#definitions)가 됩니다.
 
 ## Vercel {#vercel}
 
 ### Vercel CLI {#vercel-cli}
 
-1. Install the [Vercel CLI](https://vercel.com/cli) via `npm i -g vercel` and run `vercel` to deploy.
+1. `npm i -g vercel`로 [Vercel CLI](https://vercel.com/cli)를 설치하고, `vercel`을 실행해 배포합니다.
 2. Vercel은 Vite를 사용하고 있음을 감지하게 되며, 배포와 관련된 올바른 설정을 활성화합니다.
 3. 애플리케이션이 배포되었습니다! (예시: [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
 
-### Vercel with Git
+### Git으로 Vercel 사용하기 {#vercel-with-git}
 
 1. 사용하고 있는 Git 리포지토리(GitHub, GitLab, Bitbucket)으로 소스 코드를 Push 합니다.
 2. Vercel로 [Vite 프로젝트를 가져옵니다](https://vercel.com/new).
@@ -166,13 +166,13 @@ Vercel로 프로젝트를 불러오고 배포까지 완료했다면, 이후 브�
 
 이에 대해 좀 더 알고 싶다면 Vercel의 [Git](https://vercel.com/docs/concepts/git) 문서를 참고해주세요.
 
-## Cloudflare
+## Cloudflare {#cloudflare}
 
-### Cloudflare Workers
+### Cloudflare Workers {#cloudflare-workers}
 
-The [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/) provides integration with Cloudflare Workers and uses Vite's Environment API to run your server-side code in the Cloudflare Workers runtime during development.
+[Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/)은 Cloudflare Workers와의 통합을 제공하며, 개발 중 Vite의 Environment API를 사용해 서버 측 코드를 Cloudflare Workers 런타임에서 실행합니다.
 
-To add Cloudflare Workers to an existing Vite project, install the plugin and add it to your config:
+기존 Vite 프로젝트에 Cloudflare Workers를 추가하려면 플러그인을 설치하고 설정에 추가하세요:
 
 ```bash
 $ npm install --save-dev @cloudflare/vite-plugin
@@ -193,37 +193,37 @@ export default defineConfig({
 }
 ```
 
-After running `npm run build`, your application can now be deployed with `npx wrangler deploy`.
+`npm run build`를 실행한 뒤, `npx wrangler deploy`로 애플리케이션을 배포할 수 있습니다.
 
-You can also easily add backend APIs to your Vite application to securely communicate with Cloudflare resources. This runs in the Workers runtime during development and deploys alongside your frontend. See the [Cloudflare Vite plugin tutorial](https://developers.cloudflare.com/workers/vite-plugin/tutorial/) for a complete walkthrough.
+Cloudflare 리소스와 안전하게 통신하기 위해 Vite 애플리케이션에 백엔드 API를 쉽게 추가할 수도 있습니다. 이는 개발 중 Workers 런타임에서 실행되고 프런트엔드와 함께 배포됩니다. 전체 단계는 [Cloudflare Vite plugin 튜토리얼](https://developers.cloudflare.com/workers/vite-plugin/tutorial/)을 참고해 주세요.
 
-### Cloudflare Pages
+### Cloudflare Pages {#cloudflare-pages}
 
-#### Cloudflare Pages with Git
+#### Git으로 Cloudflare Pages 사용하기 {#cloudflare-pages-with-git}
 
-Cloudflare Pages gives you a way to deploy directly to Cloudflare without having to manage a Wrangler file.
+Cloudflare Pages는 Wrangler 파일을 관리하지 않고도 Cloudflare에 직접 배포할 수 있는 방법을 제공합니다.
 
 1. Git 리포지토리(GitHub, GitLab)에 코드를 Push 합니다.
-2. Log in to the Cloudflare dashboard and select your account in **Account Home** > **Workers & Pages**.
-3. Select **Create a new Project** and the **Pages** option, then select Git.
+2. Cloudflare 대시보드에 로그인하고 **Account Home** > **Workers & Pages**에서 계정을 선택합니다.
+3. **Create a new Project**와 **Pages** 옵션을 선택한 뒤 Git을 선택합니다.
 4. 배포할 Git 프로젝트를 선택하고 **Begin setup** 을 클릭합니다.
-5. Select the corresponding framework preset in the build setting depending on the Vite framework you have selected. Otherwise enter your build commands for your project and your expected output directory.
+5. 선택한 Vite 프레임워크에 따라 빌드 설정에서 해당 프레임워크 프리셋을 선택합니다. 그렇지 않다면 프로젝트의 빌드 명령과 예상 출력 디렉터리를 입력합니다.
 6. 저장 후 배포합니다!
 7. 애플리케이션이 배포되었습니다! (사이트는 `https://<PROJECTNAME>.pages.dev/`에서 볼 수 있습니다.)
 
-After your project has been imported and deployed, all subsequent pushes to branches will generate [Preview Deployments](https://developers.cloudflare.com/pages/platform/preview-deployments/) unless specified not to in your [branch build controls](https://developers.cloudflare.com/pages/platform/branch-build-controls/). All changes to the Production Branch (commonly "main") will result in a Production Deployment.
+프로젝트를 가져오고 배포한 뒤에는 [브랜치 빌드 제어](https://developers.cloudflare.com/pages/platform/branch-build-controls/)에서 달리 지정하지 않는 한 브랜치로의 모든 후속 push가 [프리뷰 배포](https://developers.cloudflare.com/pages/platform/preview-deployments/)를 생성합니다. 프로덕션 브랜치(일반적으로 "main")에 대한 모든 변경 사항은 프로덕션 배포가 됩니다.
 
 커스텀 도메인을 추가하거나 커스텀 빌드 설정을 처리할 수도 있습니다. 자세한 내용은 [Cloudflare Pages Git Integration](https://developers.cloudflare.com/pages/get-started/#manage-your-site) 문서를 참고해 주세요.
 
 ## Google Firebase {#google-firebase}
 
-1. Install [firebase-tools](https://www.npmjs.com/package/firebase-tools) via `npm i -g firebase-tools`.
+1. `npm i -g firebase-tools`로 [firebase-tools](https://www.npmjs.com/package/firebase-tools)를 설치합니다.
 
-2. Create the following files at the root of your project:
+2. 프로젝트 루트에 다음 파일을 생성합니다:
 
    ::: code-group
 
-    ```json [firebase.json]
+```json [firebase.json]
     {
       "hosting": {
         "public": "dist",
@@ -236,15 +236,15 @@ After your project has been imported and deployed, all subsequent pushes to bran
         ]
       }
     }
-    ```
+```
 
-    ```js [.firebaserc]
+```js [.firebaserc]
     {
       "projects": {
         "default": "<YOUR_FIREBASE_ID>"
       }
     }
-    ```
+```
 
    :::
 
@@ -252,11 +252,11 @@ After your project has been imported and deployed, all subsequent pushes to bran
 
 ## Surge {#surge}
 
-1. Install [surge](https://www.npmjs.com/package/surge) via `npm i -g surge`.
+1. `npm i -g surge`로 [surge](https://www.npmjs.com/package/surge)를 설치합니다.
 2. `npm run build` 명령을 실행해주세요.
 3. `surge dist` 명령을 통해 Surge로 배포해주세요.
 
-You can also deploy to a [custom domain](https://surge.sh/help/adding-a-custom-domain) by adding `surge dist yourdomain.com`.
+`surge dist yourdomain.com`을 추가해 [커스텀 도메인](https://surge.sh/help/adding-a-custom-domain)으로도 배포할 수 있습니다.
 
 ## Azure 정적 웹 앱 {#azure-static-web-apps}
 
@@ -283,10 +283,10 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 3. GitHub/GitLab 계정을 연결하거나, 공개 리포지토리를 사용합니다.
 
 4. 프로젝트 이름과 브랜치를 지정합니다.
-   - **Build Command**: `npm install && npm run build`
-   - **Publish Directory**: `dist`
+   - **빌드 명령**: `npm install && npm run build`
+   - **게시 디렉터리**: `dist`
 
-5. Click **Create Static Site**. Your app should be deployed at `https://<PROJECTNAME>.onrender.com/`.
+5. **Create Static Site**를 클릭합니다. 앱은 `https://<PROJECTNAME>.onrender.com/`에 배포됩니다.
 
 기본적으로 지정된 브랜치에 새로운 커밋이 Push되면 자동으로 새로운 배포가 트리거됩니다. [자동 배포](https://render.com/docs/deploys#toggling-auto-deploy-for-a-service)는 프로젝트 설정에서 구성할 수 있습니다.
 
@@ -299,20 +299,20 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 
 ## Kinsta 정적 사이트 호스팅 {#kinsta-static-site-hosting}
 
-Deploy your static site using [Kinsta](https://kinsta.com/static-site-hosting/) by following these [instructions](https://kinsta.com/docs/static-site-hosting/static-site-quick-start/react-static-site-examples/#react-with-vite).
+이 [안내](https://kinsta.com/docs/static-site-hosting/static-site-quick-start/react-static-site-examples/#react-with-vite)를 따라 [Kinsta](https://kinsta.com/static-site-hosting/)로 정적 사이트를 배포할 수 있습니다.
 
 ## xmit 정적 사이트 호스팅 {#xmit-static-site-hosting}
 
 [xmit](https://xmit.co)를 사용하여 정적 사이트를 배포하려면 이 [가이드](https://xmit.dev/posts/vite-quickstart/)를 따라주세요.
 
-## Zephyr Cloud
+## Zephyr Cloud {#zephyr-cloud}
 
-[Zephyr Cloud](https://zephyr-cloud.io) is a deployment platform that integrates directly into your build process and provides global edge distribution for module federation and other kind of applications.
+[Zephyr Cloud](https://zephyr-cloud.io)는 빌드 프로세스에 직접 통합되며, 모듈 페더레이션 및 다른 종류의 애플리케이션을 위한 글로벌 엣지 배포를 제공하는 배포 플랫폼입니다.
 
-Zephyr follows a different approach than other cloud providers. It integrates directly with Vite build process, so every time you build or run the dev server for your application, it will be automatically deployed with Zephyr Cloud.
+Zephyr는 다른 클라우드 제공자와 다른 접근 방식을 따릅니다. Vite 빌드 프로세스와 직접 통합되므로, 애플리케이션을 빌드하거나 개발 서버를 실행할 때마다 Zephyr Cloud로 자동 배포됩니다.
 
-Follow the steps in [the Vite deployment guide](https://docs.zephyr-cloud.io/bundlers/vite) to get started.
+시작하려면 [Vite 배포 가이드](https://docs.zephyr-cloud.io/bundlers/vite)의 단계를 따르세요.
 
-## EdgeOne Pages
+## EdgeOne Pages {#edgeone-pages}
 
-Deploy your static site using [EdgeOne Pages](https://edgeone.ai/products/pages) by following these [instructions](https://pages.edgeone.ai/document/vite).
+이 [안내](https://pages.edgeone.ai/document/vite)를 따라 [EdgeOne Pages](https://edgeone.ai/products/pages)로 정적 사이트를 배포할 수 있습니다.

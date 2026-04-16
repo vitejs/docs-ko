@@ -2,7 +2,7 @@
 
 Vite는 몇 가지 추가적인 Vite 전용 옵션과 함께 잘 설계된 Rollup의 플러그인 인터페이스를 기반으로 하는 플러그인들을 사용하여 확장할 수 있습니다. 이는 Vite 사용자가 필요에 따라 개발 서버나 SSR과 같은 기능들을 확장할 수 있는 것과 동시에, 검증된 Rollup 플러그인 생태계에도 의존할 수 있음을 의미합니다.
 
-<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~0y4g?via=vite" title="Using Plugins in Vite">Watch an interactive lesson on Scrimba</ScrimbaLink>
+<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~0y4g?via=vite" title="Using Plugins in Vite">Scrimba에서 인터랙티브 강의를 시청하세요</ScrimbaLink>
 
 ## 플러그인 추가하기 {#adding-a-plugin}
 
@@ -35,7 +35,7 @@ export default defineConfig({
 Vite는 웹 개발 시 일반적으로 필요한 대부분의 기능들을 제공하고 있습니다. 따라서 Vite 또는 호환되는 Rollup 플러그인을 검색하기 전, [지원하는 기능들](../guide/features.md) 섹션을 먼저 확인해주세요. Rollup으로 프로젝트를 구성할 때 필요했던 플러그인 대부분은 이미 Vite에서 자체적으로 제공하고 있습니다.
 :::
 
-Check out the [Plugins section](../plugins/) for information about official plugins. Community plugins that are published to npm are listed in [Vite Plugin Registry](https://registry.vite.dev/plugins).
+공식 플러그인에 대한 정보는 [플러그인 섹션](../plugins/)을 확인해 주세요. npm에 게시된 커뮤니티 플러그인은 [Vite Plugin Registry](https://registry.vite.dev/plugins)에 나열되어 있습니다.
 
 ## 플러그인 순서 정하기 {#enforcing-plugin-ordering}
 

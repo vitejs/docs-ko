@@ -3,12 +3,12 @@
 :::tip 참고
 기존의 백엔드(Rails, Laravel 등)를 사용해 HTML을 제공하기를 원하지만, 에셋은 Vite를 이용하고자 한다면, [Awesome Vite](https://github.com/vitejs/awesome-vite#integrations-with-backends)의 방법을 확인해 보세요.
 
-If you need a custom integration, you can follow the steps in this guide to configure it manually.
+커스텀 통합이 필요하다면, 이 가이드의 단계를 따라 수동으로 구성할 수 있습니다.
 :::
 
 1. Vite 설정 파일에서, 진입점을 설정하고 매니페스트를 활성화합니다:
 
-   ```js twoslash [vite.config.js]
+```js twoslash [vite.config.js]
    import { defineConfig } from 'vite'
    // ---cut---
    export default defineConfig({
@@ -27,22 +27,22 @@ If you need a custom integration, you can follow the steps in this guide to conf
        }
      }
    })
-   ```
+```
 
    만약 [module preload polyfill](/config/build-options.md#build-polyfillmodulepreload)을 비활성화하지 않았다면, 진입점에 폴리필을 가져와야 합니다.
 
-   ```js
+```js
    // 앱 진입점에 추가
    import 'vite/modulepreload-polyfill'
-   ```
+```
 
 2. 개발 단계에서는 서버의 HTML 템플릿에 다음을 추가합니다(`http://localhost:5173`을 Vite가 실행 중인 로컬 URL로 대체):
 
-   ```html
+```html
    <!-- 개발 시 -->
    <script type="module" src="http://localhost:5173/@vite/client"></script>
    <script type="module" src="http://localhost:5173/main.js"></script>
-   ```
+```
 
    이후 Vite의 에셋에 접근할 수 있도록 아래 두 가지 옵션 중 하나를 적용해 주세요:
    - 백엔드 서버가 Vite 서버에 대한 에셋 요청을 프록시 하도록 설정
@@ -52,7 +52,7 @@ If you need a custom integration, you can follow the steps in this guide to conf
 
    만약 React를 `@vitejs/plugin-react`와 함께 사용한다면, 플러그인이 HTML을 수정할 수 없기 때문에, 위의 스크립트 이전에 다음을 추가해야 합니다(`http://localhost:5173`을 Vite가 실행 중인 로컬 URL로 대체):
 
-   ```html
+```html
    <script type="module">
      import RefreshRuntime from "http://localhost:5173/@react-refresh"
      RefreshRuntime.injectIntoGlobalHook(window) 
@@ -60,11 +60,11 @@ If you need a custom integration, you can follow the steps in this guide to conf
      window.$RefreshSig$ = () => (type) => type
      window.__vite_plugin_react_preamble_installed__ = true
    </script>
-   ```
+```
 
-3. For production, after running `vite build`, a `.vite/manifest.json` file will be generated alongside other asset files. An example manifest file looks like this:
+3. 프로덕션에서는 `vite build` 실행 후 다른 에셋 파일과 함께 `.vite/manifest.json` 파일이 생성됩니다. 매니페스트 파일의 예시는 다음과 같습니다:
 
-   ```json [.vite/manifest.json] style:max-height:400px
+```json [.vite/manifest.json] style:max-height:400px
    {
      "_shared-B7PI925R.js": {
        "file": "assets/shared-B7PI925R.js",
@@ -102,11 +102,11 @@ If you need a custom integration, you can follow the steps in this guide to conf
        "css": ["assets/foo-5UjPuW-k.css"]
      }
    }
-   ```
+```
 
-   The manifest maps source files to their build outputs and dependencies:
+   매니페스트는 소스 파일을 빌드 출력 및 디펜던시에 매핑합니다:
 
-   ```dot
+```dot
    digraph manifest {
      rankdir=TB
      node [shape=box style="rounded,filled" fontname="Arial" fontsize=10 margin="0.2,0.1" fontcolor="${#3c3c43|#ffffff}" color="${#c2c2c4|#3c3f44}"]
@@ -127,11 +127,11 @@ If you need a custom integration, you can follow the steps in this guide to conf
      foo -> foocss [label="css"]
      shared -> sharedcss [label="css"]
    }
-   ```
+```
 
    매니페스트는 `Record<name, chunk>` 구조를 가지며, 각 청크는 `ManifestChunk` 인터페이스를 따릅니다:
 
-   ```ts style:max-height:400px
+```ts style:max-height:400px
    interface ManifestChunk {
      /**
       * The input file name of this chunk / asset if known
@@ -176,7 +176,7 @@ If you need a custom integration, you can follow the steps in this guide to conf
       */
      dynamicImports?: string[]
    }
-   ```
+```
 
    매니페스트의 각 항목은 다음 중 하나를 나타냅니다:
    - **진입 청크**: [`build.rollupOptions.input`](https://rollupjs.org/configuration-options/#input)에 지정된 파일에서 생성됩니다. 이러한 청크는 `isEntry: true`를 가지며, 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
@@ -185,7 +185,7 @@ If you need a custom integration, you can follow the steps in this guide to conf
    - **에셋 청크**: 이미지나 폰트와 같은 에셋에서 생성됩니다. 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
    - **CSS 파일**: [`build.cssCodeSplit`](/config/build-options.md#build-csscodesplit)이 `false`인 경우, `style.css` 키로 단일 CSS 파일이 생성됩니다. `build.cssCodeSplit`이 `false`가 아닌 경우, 키는 JS 청크와 유사하게 생성됩니다(즉, 진입 청크는 `_` 접두사가 없고 비진입 청크는 `_` 접두사가 있음).
 
-   JS chunks (chunks other than assets or CSS) will contain information on their static and dynamic imports (both are keys that map to the corresponding chunk in the manifest). Chunks also list their corresponding CSS and asset files if they have any.
+   JS 청크(에셋이나 CSS가 아닌 청크)는 정적 및 동적 임포트 정보를 포함합니다. 두 값은 모두 매니페스트에서 해당 청크에 매핑되는 키입니다. 청크는 관련 CSS와 에셋 파일이 있는 경우 그 목록도 포함합니다.
 
 4. 해시된 파일 이름으로 링크를 렌더링하거나 지시문을 미리 로드하기 위해 이 파일을 사용할 수 있습니다.
 
@@ -193,7 +193,7 @@ If you need a custom integration, you can follow the steps in this guide to conf
    여기서 사용된 구문은 설명을 위한 것이므로, 실제 사용 시에는 서버 템플릿 언어로 대체해 주세요.
    `importedChunks` 함수 역시 예시를 위한 것이며, Vite에서 제공하지 않습니다.
 
-   ```html
+```html
    <!-- 프로덕션 (아래 `for ... of` 는 구문입니다 - 옮긴이) -->
 
    <!-- for cssFile of manifest[name].css -->
@@ -207,7 +207,7 @@ If you need a custom integration, you can follow the steps in this guide to conf
 
    <!-- for chunk of importedChunks(manifest, name) -->
    <link rel="modulepreload" href="/{{ chunk.file }}" />
-   ```
+```
 
    구체적으로, HTML을 생성하는 백엔드는 매니페스트 파일과 진입점이 주어졌을 때
    다음 순서를 따라야 합니다. 최적 성능을 위해 이 순서를 따르는 것을 권장합니다:
@@ -220,28 +220,28 @@ If you need a custom integration, you can follow the steps in this guide to conf
 
    위 예시 매니페스트를 예로 들자면, 진입점 `views/foo.js`에 대해 다음 태그가 포함되어야 합니다.
 
-   ```html
+```html
    <link rel="stylesheet" href="assets/foo-5UjPuW-k.css" />
    <link rel="stylesheet" href="assets/shared-ChJ_j-JJ.css" />
    <script type="module" src="assets/foo-BRBmoGS9.js"></script>
    <!-- 선택 사항 -->
    <link rel="modulepreload" href="assets/shared-B7PI925R.js" />
-   ```
+```
 
    진입점 `views/foo.js`에 대해서는 아래 코드가 포함되어야 합니다.
 
-   ```html
+```html
    <link rel="stylesheet" href="assets/shared-ChJ_j-JJ.css" />
    <script type="module" src="assets/bar-gkvgaI9m.js"></script>
    <!-- 선택 사항 -->
    <link rel="modulepreload" href="assets/shared-B7PI925R.js" />
-   ```
+```
 
    ::: details `importedChunks` 의사 구현체
    아래 예시 코드는 `importedChunks` 의사 구현체입니다. TypeScript로 작성되어 있으며,
    실제 적용 시에는 사용하는 프로그래밍 언어와 템플릿 언어에 맞게 수정이 필요합니다:
 
-   ```ts
+```ts
    import type { Manifest, ManifestChunk } from 'vite'
 
    export default function importedChunks(
@@ -268,6 +268,6 @@ If you need a custom integration, you can follow the steps in this guide to conf
 
      return getImportedChunks(manifest[name])
    }
-   ```
+```
 
    :::

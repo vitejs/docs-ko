@@ -106,7 +106,7 @@ vite optimize [root]
 
 프로덕션 빌드를 로컬에서 미리 봅니다. 프로덕션 서버용으로 설계되지 않았기에 프로덕션 서버로 사용하면 안 됩니다.
 
-This command starts a server in the build directory (by default `dist`). Run `vite build` beforehand to ensure that the build directory is up-to-date. Depending on the project's configured [`appType`](/config/shared-options.html#apptype), it makes use of certain middleware.
+이 명령은 빌드 디렉터리(기본값은 `dist`)에서 서버를 시작합니다. 빌드 디렉터리가 최신 상태인지 확인하려면 먼저 `vite build`를 실행하세요. 프로젝트에 구성된 [`appType`](/config/shared-options.html#apptype)에 따라 특정 미들웨어를 사용합니다.
 
 #### 사용 방법 {#usage-3}
 

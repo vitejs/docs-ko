@@ -8,7 +8,7 @@
 리소스:
 
 - [피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 새로운 API에 대한 피드백을 모으고 있습니다.
-- [Environment API PR](https://github.com/vitejs/vite/pull/16471) where the new APIs were implemented and reviewed.
+- 새 API가 구현되고 검토된 [Environment API PR](https://github.com/vitejs/vite/pull/16471)
 
 여러분의 피드백을 공유해주세요.
 :::
@@ -223,11 +223,11 @@ export class EnvironmentModuleGraph {
 }
 ```
 
-## `FetchResult`
+## `FetchResult` {#fetchresult}
 
-The `environment.fetchModule` method returns a `FetchResult` that is meant to be consumed by the module runner. `FetchResult` is a union of `CachedFetchResult`, `ExternalFetchResult`, and `ViteFetchResult`.
+`environment.fetchModule` 메서드는 모듈 러너가 소비하도록 설계된 `FetchResult`를 반환합니다. `FetchResult`는 `CachedFetchResult`, `ExternalFetchResult`, `ViteFetchResult`의 유니언입니다.
 
-`CachedFetchResult` is analogous to the `304` (Not Modified) HTTP status code.
+`CachedFetchResult`는 `304`(Not Modified) HTTP 상태 코드와 유사합니다.
 
 ```ts
 export interface CachedFetchResult {
@@ -239,7 +239,7 @@ export interface CachedFetchResult {
 }
 ```
 
-`ExternalFetchResult` instructs the module runner to import the module using the `runExternalModule` method on the [`ModuleEvaluator`](/guide/api-environment-runtimes#moduleevaluator). In this case, the default module evaluator will use the runtime's native `import` instead of processing the file through Vite.
+`ExternalFetchResult`는 모듈 러너에게 [`ModuleEvaluator`](/guide/api-environment-runtimes#moduleevaluator)의 `runExternalModule` 메서드를 사용해 모듈을 임포트하도록 지시합니다. 이 경우 기본 모듈 평가자는 파일을 Vite로 처리하는 대신 런타임의 네이티브 `import`를 사용합니다.
 
 ```ts
 export interface ExternalFetchResult {
@@ -257,9 +257,9 @@ export interface ExternalFetchResult {
 }
 ```
 
-`ViteFetchResult` returns information about the current module, including the `code` to execute and the module's `id`, `file`, and `url`.
+`ViteFetchResult`는 실행할 `code`와 모듈의 `id`, `file`, `url`을 포함해 현재 모듈에 대한 정보를 반환합니다.
 
-The `invalidate` field instructs the module runner to invalidate the module before executing it again rather than serving it from cache. This is usually `true` when an HMR update was triggered.
+`invalidate` 필드는 모듈 러너에게 캐시에서 제공하는 대신 다시 실행하기 전에 모듈을 무효화하도록 지시합니다. 일반적으로 HMR 업데이트가 트리거되었을 때 `true`입니다.
 
 ```ts
 export interface ViteFetchResult {

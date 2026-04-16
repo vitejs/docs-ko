@@ -46,7 +46,7 @@ document.getElementById('hero-img').style.background = `url("${imgUrl}")`
 
 ### 접미사를 이용해 URL로 에셋 가져오기 {#explicit-url-imports}
 
-Assets that are not included in the internal list or in `assetsInclude` can be explicitly imported as a URL using the `?url` suffix. This is useful, for example, to import [Houdini Paint Worklets](https://developer.mozilla.org/en-US/docs/Web/API/CSS/paintWorklet_static).
+내부 목록이나 `assetsInclude`에 포함되지 않은 에셋은 `?url` 접미사를 사용해 URL로 명시적으로 임포트할 수 있습니다. 예를 들어 [Houdini Paint Worklets](https://developer.mozilla.org/en-US/docs/Web/API/CSS/paintWorklet_static)를 임포트할 때 유용합니다.
 
 ```js twoslash
 import 'vite/client'
@@ -119,13 +119,13 @@ import InlineWorker from './shader.js?worker&inline'
 
 참고로 `public` 디렉터리에 위치해 있는 에셋을 가져오고자 하는 경우, 항상 루트를 기준으로 하는 절대 경로로 가져와야 합니다. (예: `public/icon.png` 에셋은 소스 코드에서 `/icon.png`으로 접근이 가능)
 
-::: tip Choosing between imports and the `public` directory
+::: tip 임포트와 `public` 디렉터리 중 선택하기
 
-In general, prefer **importing assets** unless you specifically need the guarantees provided by the `public` directory.
+`public` 디렉터리가 제공하는 보장이 꼭 필요한 경우가 아니라면, 일반적으로 **에셋 임포트**를 선호하세요.
 
 :::
 
-## new URL(url, import.meta.url) {#new-url-url-import-meta-url}
+## `new URL(url, import.meta.url)` 사용하기 {#new-url-url-import-meta-url}
 
 네이티브 ESM의 API 중 하나인 [import.meta.url](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import.meta)은 현재 모듈의 URL을 보여주는 기능입니다. [URL 생성자](https://developer.mozilla.org/en-US/docs/Web/API/URL)와 함께 사용하면, 정적 에셋의 전제 URL을 확인할 수 있게 됩니다.
 
@@ -146,7 +146,7 @@ function getImageUrl(name) {
 }
 ```
 
-During the production build, Vite will perform necessary transforms so that the URLs still point to the correct location even after bundling and asset hashing. However, the URL string must be static so it can be analyzed, otherwise the code will be left as is, which can cause runtime errors if `build.target` does not support `import.meta.url`.
+프로덕션 빌드 중 Vite는 번들링과 에셋 해싱 이후에도 URL이 올바른 위치를 가리키도록 필요한 변환을 수행합니다. 다만 URL 문자열은 분석할 수 있도록 정적이어야 합니다. 그렇지 않으면 코드는 그대로 남게 되고, `build.target`이 `import.meta.url`을 지원하지 않는 경우 런타임 오류가 발생할 수 있습니다.
 
 ```js
 // Vite는 아래 코드를 변환하지 않음
@@ -173,5 +173,5 @@ function getImageUrl(name) {
 :::
 
 ::: warning SSR과 함께 사용하지 마세요!
-This pattern does not work if you are using Vite for Server-Side Rendering, because `import.meta.url` has different semantics in browsers vs. Node.js. The server bundle also cannot determine the client host URL ahead of time.
+Vite를 Server-Side Rendering에 사용하는 경우 이 패턴은 동작하지 않습니다. `import.meta.url`의 의미가 브라우저와 Node.js에서 서로 다르기 때문입니다. 서버 번들은 클라이언트 호스트 URL도 미리 알 수 없습니다.
 :::

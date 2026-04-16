@@ -8,7 +8,7 @@
 리소스:
 
 - [피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 새로운 API에 대한 피드백을 모으고 있습니다.
-- [Environment API PR](https://github.com/vitejs/vite/pull/16471) where the new APIs were implemented and reviewed.
+- 새 API가 구현되고 검토된 [Environment API PR](https://github.com/vitejs/vite/pull/16471)
 
 여러분의 피드백을 공유해주세요.
 :::
@@ -17,7 +17,7 @@
 
 환경은 다양한 런타임에서 실행될 수 있기 때문에, 환경과의 통신은 런타임에 따라 제약이 있을 수 있습니다. 프레임워크가 런타임에 구애받지 않는 코드를 쉽게 작성할 수 있도록, 환경 API는 세 종류의 통신 레벨을 제공합니다.
 
-### `RunnableDevEnvironment`
+### `RunnableDevEnvironment` {#runnabledevenvironment}
 
 `RunnableDevEnvironment`는 임의의 값을 주고받을 수 있는 환경입니다. 암시적인 `ssr` 환경을 포함해, 클라이언트가 아닌 환경은 개발 중 기본적으로 `RunnableDevEnvironment`를 사용합니다. 이 경우 Vite 서버가 실행되는 런타임과 동일해야 하지만, `ssrLoadModule`과 유사하게 작동하여 프레임워크가 SSR 개발 환경에서 HMR을 활성화하고 마이그레이션할 수 있도록 만듭니다. 또한 `isRunnableDevEnvironment` 함수를 사용하여 실행 가능한 환경인지 확인할 수 있습니다.
 
@@ -111,7 +111,7 @@ if (import.meta.hot) {
 }
 ```
 
-### `FetchableDevEnvironment`
+### `FetchableDevEnvironment` {#fetchabledevenvironment}
 
 :::info
 
@@ -305,7 +305,7 @@ export function createHandler(input) {
 
 하위 호환성을 위해, CLI에서 `vite build`와 `vite build --ssr`을 실행하면, 동일하게 클라이언트 또는 SSR 전용 환경만을 빌드합니다.
 
-When `builder` option is not `undefined` (or when calling `vite build --app`), `vite build` will opt-in into building the entire app instead. This would later on become the default in a future major. A `ViteBuilder` instance will be created (build-time equivalent to a `ViteDevServer`) to build all configured environments for production. By default the build of environments is run in series respecting the order of the `environments` record. A framework or user can further configure how the environments are built using `builder.buildApp` option:
+`builder` 옵션이 `undefined`가 아니거나 `vite build --app`을 호출하면, `vite build`는 전체 앱을 빌드하도록 동작합니다. 이는 향후 메이저 버전에서 기본값이 될 예정입니다. 구성된 모든 환경을 프로덕션용으로 빌드하기 위해 빌드 시점의 `ViteDevServer`에 해당하는 `ViteBuilder` 인스턴스가 생성됩니다. 기본적으로 환경 빌드는 `environments` 레코드의 순서를 존중해 순차적으로 실행됩니다. 프레임워크나 사용자는 `builder.buildApp` 옵션을 사용해 환경이 빌드되는 방식을 추가로 구성할 수 있습니다:
 
 ```js [vite.config.js]
 import { defineConfig } from 'vite'

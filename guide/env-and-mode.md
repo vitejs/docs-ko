@@ -2,7 +2,7 @@
 
 Vite는 `import.meta.env` 라는 특수한 객체를 통해 특정 상수들을 노출합니다. 이러한 상수들은 개발 시 전역 변수로 정의되나, 빌드 시에는 정적으로 치환되어 효과적인 트리 셰이킹이 가능합니다.
 
-:::details Example
+:::details 예제
 
 ```js
 if (import.meta.env.DEV) {
@@ -13,7 +13,7 @@ if (import.meta.env.DEV) {
 
 :::
 
-<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~05an?via=vite" title="Env Variables in Vite">Watch an interactive lesson on Scrimba</ScrimbaLink>
+<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~05an?via=vite" title="Env Variables in Vite">Scrimba에서 인터랙티브 강의를 시청하세요</ScrimbaLink>
 
 ## 내장 상수 {#built-in-constants}
 
@@ -31,16 +31,16 @@ if (import.meta.env.DEV) {
 
 ## 환경 변수 {#env-variables}
 
-Vite exposes env variables under the `import.meta.env` object as strings automatically.
+Vite는 환경 변수를 `import.meta.env` 객체 아래에 문자열로 자동 노출합니다.
 
-Variables prefixed with `VITE_` will be exposed in client-side source code after Vite bundling. To prevent accidentally leaking env variables to the client, avoid using this prefix. As an example, consider the following:
+`VITE_` 접두사가 붙은 변수는 Vite 번들링 이후 클라이언트 측 소스 코드에 노출됩니다. 환경 변수가 실수로 클라이언트에 유출되지 않도록, 민감한 변수에는 이 접두사를 사용하지 마세요. 예를 들어 다음을 살펴보겠습니다:
 
 ```[.env]
 VITE_SOME_KEY=123
 DB_PASSWORD=foobar
 ```
 
-The parsed value of `VITE_SOME_KEY` – `"123"` – will be exposed on the client, but the value of `DB_PASSWORD` will not. You can test this by adding the following to your code:
+파싱된 `VITE_SOME_KEY` 값인 `"123"`은 클라이언트에 노출되지만, `DB_PASSWORD` 값은 노출되지 않습니다. 코드에 다음을 추가해 테스트할 수 있습니다:
 
 ```js
 console.log(import.meta.env.VITE_SOME_KEY) // "123"
@@ -53,9 +53,9 @@ console.log(import.meta.env.DB_PASSWORD) // undefined
 위와 같이 `VITE_SOME_KEY`는 숫자이지만 파싱 시 문자열로 반환됩니다. 불리얼 환경 변수에 대해서도 동일하게 적용되며, 코드에서 사용할 때는 원하는 타입으로 변환해야 합니다.
 :::
 
-:::warning Protecting secrets
+:::warning 시크릿 보호하기
 
-`VITE_*` variables should _not_ contain sensitive information such as API keys. The values of these variables are bundled into your source code at build time. For production deployments, consider a backend server or serverless/edge functions to properly secure secrets.
+`VITE_*` 변수에는 API 키 같은 민감한 정보를 포함해서는 _안 됩니다_. 이 변수들의 값은 빌드 시 소스 코드에 번들링됩니다. 프로덕션 배포에서는 시크릿을 안전하게 보호하기 위해 백엔드 서버 또는 서버리스/엣지 함수를 고려하세요.
 
 :::
 
@@ -82,9 +82,9 @@ Vite가 실행될 때 이미 존재하던 환경 변수는 가장 높은 우선 
 
 :::
 
-:::warning Bun users
+:::warning Bun 사용자
 
-When using [Bun](https://bun.sh), be aware that Bun automatically loads `.env` files before your script runs. This built-in behavior loads environment variables directly into `process.env` and can interfere with Vite's feature, as it respects existing `process.env` values. See [oven-sh/bun#5515](https://github.com/oven-sh/bun/issues/5515) for workarounds.
+[Bun](https://bun.sh)을 사용할 때는 Bun이 스크립트 실행 전에 `.env` 파일을 자동으로 로드한다는 점에 유의하세요. 이 내장 동작은 환경 변수를 `process.env`에 직접 로드하며, 기존 `process.env` 값을 존중하는 Vite 기능과 충돌할 수 있습니다. 우회 방법은 [oven-sh/bun#5515](https://github.com/oven-sh/bun/issues/5515)를 참고하세요.
 
 :::
 
@@ -109,16 +109,16 @@ VITE_FOO=foo${VITE_BAR}
 VITE_BAR=bar
 ```
 
-This does not work in shell scripts and other tools like `docker compose`.
-That said, Vite supports this behavior as this has been supported by `dotenv-expand` for a long time and other tools in JavaScript ecosystem use older versions that support this behavior.
+이는 셸 스크립트나 `docker compose` 같은 다른 도구에서는 동작하지 않습니다.
+그럼에도 Vite는 이 동작을 지원합니다. `dotenv-expand`가 오랫동안 이를 지원해 왔고, JavaScript 생태계의 다른 도구들도 이 동작을 지원하는 이전 버전을 사용하기 때문입니다.
 
 다만 상호 운용성 문제를 피하기 위해 이러한 동작에 의존하지 않는 것이 좋습니다. Vite는 향후 이러한 동작에 대해 경고를 표시할 수 있습니다.
 
 :::
 
-:::warning Ignoring local `.env` files
+:::warning 로컬 `.env` 파일 무시하기
 
-`.env.*.local` files are local-only and can contain sensitive variables. You should add `*.local` to your `.gitignore` to avoid them being checked into git.
+`.env.*.local` 파일은 로컬 전용이며 민감한 변수를 포함할 수 있습니다. git에 체크인되지 않도록 `.gitignore`에 `*.local`을 추가해야 합니다.
 
 :::
 

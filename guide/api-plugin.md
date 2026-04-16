@@ -1,36 +1,39 @@
 # 플러그인 API {#plugin-api}
 
-Vite plugins extends Rolldown's plugin interface with a few extra Vite-specific options. As a result, you can write a Vite plugin once and have it work for both dev and build.
+Vite 플러그인은 몇 가지 Vite 전용 옵션이 추가된 Rolldown의 플러그인 인터페이스를 확장합니다. 그 결과 Vite 플러그인을 한 번 작성하면 개발과 빌드 모두에서 동작하게 할 수 있습니다.
 
-**It is recommended to go through [Rolldown's plugin documentation](https://rolldown.rs/apis/plugin-api) first before reading the sections below.**
+**아래 섹션을 읽기 전에 먼저 [Rolldown 플러그인 문서](https://rolldown.rs/apis/plugin-api)를 살펴보는 것을 권장합니다.**
 
-Vite strives to offer established patterns out of the box, so before creating a new plugin make sure that you check the [Features guide](/guide/features) to see if your need is covered. Also review available community plugins, both in the form of a [compatible Rollup plugin](https://github.com/rollup/awesome) and [Vite Specific plugins](https://github.com/vitejs/awesome-vite#plugins)
+## 플러그인 작성하기 {#authoring-a-plugin}
 
-Vite strives to offer established patterns out of the box, so before creating a new plugin make sure that you check the [Features guide](/guide/features) to see if your need is covered. Also review available community plugins, both in the form of a [compatible Rollup plugin](https://github.com/rollup/awesome) and [Vite Specific plugins](https://github.com/vitejs/awesome-vite#plugins).
+Vite는 기본적으로 검증된 패턴을 제공하려고 합니다. 따라서 새 플러그인을 만들기 전에 먼저 [기능 가이드](/guide/features)를 확인해 필요한 기능이 이미 다뤄지는지 확인하세요. 또한 [호환되는 Rollup 플러그인](https://github.com/rollup/awesome)과 [Vite 전용 플러그인](https://github.com/vitejs/awesome-vite#plugins) 형태로 제공되는 커뮤니티 플러그인도 검토하세요.
+
+플러그인을 만들 때는 `vite.config.js` 안에 인라인으로 작성할 수 있습니다. 이를 위해 새 패키지를 만들 필요는 없습니다. 어떤 플러그인이 여러 프로젝트에서 유용하다는 것을 확인했다면, [생태계](https://chat.vite.dev)의 다른 사람들을 돕기 위해 공유하는 것을 고려해 보세요.
 
 ::: tip
-플러그인을 학습하거나, 디버깅 또는 새롭게 작성할 때, 프로젝트에 [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect)를 설치하는 것이 좋습니다. 이 모듈은 `localhost:5173/__inspect/`를 통해 Vite 플러그인의 중간 상태를 검사할 수 있도록 도와줍니다. 더 자세한 사항은 [vite-plugin-inspect 문서](https://github.com/antfu/vite-plugin-inspect)를 참고해주세요.
+플러그인을 학습하거나, 디버깅하거나, 작성할 때는 프로젝트에 [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect)를 포함하는 것을 권장합니다. 이 플러그인은 Vite 플러그인의 중간 상태를 검사할 수 있게 합니다. 설치 후 `localhost:5173/__inspect/`에 접속하면 프로젝트의 모듈과 변환 스택을 검사할 수 있습니다. 설치 방법은 [vite-plugin-inspect 문서](https://github.com/antfu/vite-plugin-inspect)를 확인하세요.
 ![vite-plugin-inspect](../images/vite-plugin-inspect.webp)
 :::
 
 ## 플러그인 작성 규칙 {#conventions}
 
-만약 플러그인이 Vite에서 제공하는 훅을 사용하지 않고, 또 [호환되는 Rollup 플러그인](#rollup-plugin-compatibility)으로 구성될 수 있는 경우에는 [Rollup 플러그인 명명 규칙](https://rollupjs.org/plugin-development/#conventions)을 따르는 것이 좋습니다.
+플러그인이 Vite 전용 훅을 사용하지 않고 [호환되는 Rolldown 플러그인](#rolldown-plugin-compatibility)으로 구현될 수 있다면, [Rolldown 플러그인 명명 규칙](https://rolldown.rs/apis/plugin-api#conventions)을 사용하는 것을 권장합니다.
 
-If the plugin doesn't use Vite specific hooks and can be implemented as a [Compatible Rolldown Plugin](#rolldown-plugin-compatibility), then it is recommended to use the [Rolldown Plugin naming conventions](https://rolldown.rs/apis/plugin-api#conventions).
-- package.json 파일의 `keywords` 항목에는 `rollup-plugin` 및 `vite-plugin`을 포함시키도록 합니다.
-- Rolldown Plugins should have a clear name with `rolldown-plugin-` prefix.
-- Include `rolldown-plugin` and `vite-plugin` keywords in package.json `keywords` field.
+- Rolldown 플러그인은 `rolldown-plugin-` 접두사를 가진 명확한 이름을 가져야 합니다.
+- package.json의 `keywords` 필드에 `rolldown-plugin`과 `vite-plugin` 키워드를 포함하세요.
 
-This exposes the plugin to be also used in pure Rolldown or Rollup based projects.
+이렇게 하면 순수 Rolldown 또는 Rollup 기반 프로젝트에서도 플러그인을 사용할 수 있습니다.
+
+Vite 전용 플러그인의 경우:
 
 - Vite 플러그인은 `vite-plugin-` 접두사가 있는 명확한 이름을 갖습니다.
 - package.json 파일의 `keywords` 항목에는 `vite-plugin`을 포함시키도록 합니다.
 - 플러그인 문서에 Vite 플러그인으로 구성한 이유를 설명하는 섹션을 추가합니다. (가령 'Vite 전용 플러그인 훅 사용'과 같이 말이죠.)
-- Include `vite-plugin` keyword in package.json `keywords` field.
-특정 프레임워크에서만 동작하는 Vite 플러그인은 프레임워크의 이름이 접두사의 일부로 포함되도록 합니다.
+- package.json의 `keywords` 필드에 `vite-plugin` 키워드를 포함하세요.
 
-If your plugin is only going to work for a particular framework, its name should be included as part of the prefix.
+특정 프레임워크에서만 동작하는 플러그인은 접두사에 해당 프레임워크 이름을 포함해야 합니다.
+
+- `vite-plugin-vue-`는 Vue 플러그인을 의미합니다.
 - `vite-plugin-react-`는 React만을 지원하는 Vite 플러그인을 의미합니다.
 - `vite-plugin-svelte-`는 Svelte만을 지원하는 Vite 플러그인을 의미합니다.
 
@@ -49,7 +52,7 @@ export default defineConfig({
 })
 ```
 
-다른 플러그인을 쉽게 활성화하거나 비활성화하는 데 사용될 수 있는 잘못된 플러그인은 무시됩니다.
+거짓으로 평가되는 플러그인은 무시되며, 이를 통해 플러그인을 쉽게 활성화하거나 비활성화할 수 있습니다.
 
 `plugins` 항목은 여러 플러그인을 하나의 요소로 포함할 수도 있습니다. 이는 특정 프레임워크를 타깃으로 여러 플러그인을 사용하는 경우와 같이 복잡한 기능을 구현하는 데 유용합니다. 이 때 플러그인 배열은 자동으로 병합됩니다.
 
@@ -77,7 +80,8 @@ export default defineConfig({
 :::tip
 Vite 또는 Rollup 플러그인을 구현할 때는 실제 플러그인 객체를 반환하는 팩토리 함수로 작성하는 것이 일반적인 관례입니다. 또한 이렇게 구성할 경우 플러그인을 사용하는 사용자가 플러그인의 세부적인 동작을 정의할 수 있는 옵션을 허용할 수 있게 만들어 줄 수도 있습니다.
 :::
-It is common convention to author a Vite/Rolldown/Rollup plugin as a factory function that returns the actual plugin object. The function can accept options which allows users to customize the behavior of the plugin.
+Vite/Rolldown/Rollup 플러그인은 실제 플러그인 객체를 반환하는 팩토리 함수로 작성하는 것이 일반적인 컨벤션입니다. 이 함수는 사용자가 플러그인의 동작을 커스터마이즈할 수 있도록 옵션을 받을 수 있습니다.
+
 ### 파일 타입 변환하기 {#transforming-custom-file-types}
 
 ```js
@@ -87,18 +91,18 @@ export default function myPlugin() {
   return {
     name: 'transform-file',
 
-    transform(src, id) {
-      if (fileRegex.test(id)) {
     transform: {
       filter: {
         id: fileRegex,
       },
       handler(src, id) {
-          map: null // 가능하다면 소스 맵을 제공
+        return {
+          code: compileFileToJS(src),
+          map: null, // 가능하다면 소스 맵을 제공
         }
-      }
-    }
       },
+    },
+  }
 }
 ```
 
@@ -111,27 +115,27 @@ export default function myPlugin() {
 가상 모듈은 ESM의 일반적인 `import` 구문을 사용해 소스 파일에 빌드 시의 정보를 전달할 수 있는 유용한 기법입니다.
 
 ```js
-export default function myPlugin() {
-  const virtualModuleId = 'virtual:my-module'
 import { exactRegex } from '@rolldown/pluginutils'
 
+export default function myPlugin() {
+  const virtualModuleId = 'virtual:my-module'
   const resolvedVirtualModuleId = '\0' + virtualModuleId
 
   return {
     name: 'my-plugin', // 필수 항목이며, 경고나 오류를 나타낼 때 사용됩니다.
-    resolveId(id) {
-      if (id === virtualModuleId) {
     resolveId: {
       filter: { id: exactRegex(virtualModuleId) },
       handler() {
-    },
+        return resolvedVirtualModuleId
       },
-      if (id === resolvedVirtualModuleId) {
+    },
     load: {
       filter: { id: exactRegex(resolvedVirtualModuleId) },
       handler() {
-    }
+        return `export const msg = "from virtual module"`
       },
+    },
+  }
 }
 ```
 
@@ -143,26 +147,26 @@ import { msg } from 'virtual:my-module'
 console.log(msg)
 ```
 
-[가상 모듈](https://rollupjs.org/plugin-development/#a-simple-example)은 Vite와 Rollup에서 `virtual:` 접두사를 붙여 표현 및 사용합니다. 또한, 가능한 플러그인의 이름을 네임스페이스로 사용하여 다른 플러그인과의 충돌을 방지해야 합니다. 가령 `vite-plugin-posts` 라는 이름을 가진 플러그인이 있고, 이 플러그인을 사용하는 사용자는 가상 모듈을 포함(Import)해야 한다고 가정하겠습니다. 이 때 가상 모듈의 이름은 `virtual:posts` 또는 `virtual:posts/helpers`와 같이 플러그인 이름인 `posts`를 사용하는 것이 적절합니다. 그리고 이름 규칙에 대해 내부적으로 보자면, 가상 모듈을 사용하는 플러그인은 Rollup의 규칙과 같이 모듈의 ID를 확인하는 과정에서 ID 앞에 `\0`을 붙여줘야 합니다. 이는 다른 플러그인이 노드를 확인하는 작업(Node Resolution) 등과 같이 가상 모듈의 ID를 처리하는 것을 방지하고, 또 소스 맵과 같은 핵심 기능에서는 가상 모듈과 일반 모듈을 구별하기 위해 사용하기 때문입니다. 다만 `\0`은 `import` 시 사용되는 URL에서 허용되는 문자가 아니기에, `import` 분석 중에는 이 문자열을 대체해줘야 합니다. 브라우저에서는 `\0{id}` 라는 ID가 `/@id/__x00__{id}`로 인코딩되며, 이 ID는 플러그인 파이프라인을 진행하기 전 다시 디코딩되기에 플러그인 훅 내부에서는 이를 볼 수 없습니다.
+[가상 모듈](https://rollupjs.org/plugin-development/#a-simple-example)은 Vite와 Rolldown / Rollup에서 사용자에게 보이는 경로에 `virtual:` 접두사를 붙이는 컨벤션을 사용합니다. 가능하다면 생태계의 다른 플러그인과 충돌하지 않도록 플러그인 이름을 네임스페이스로 사용해야 합니다. 예를 들어 `vite-plugin-posts`는 사용자가 빌드 시점 정보를 얻기 위해 `virtual:posts` 또는 `virtual:posts/helpers` 가상 모듈을 임포트하도록 할 수 있습니다. 내부적으로 가상 모듈을 사용하는 플러그인은 id를 해석할 때 Rollup 생태계의 컨벤션에 따라 모듈 ID 앞에 `\0`을 붙여야 합니다. 이렇게 하면 다른 플러그인이 해당 id를 노드 해석처럼 처리하려는 것을 방지하고, 소스 맵 같은 핵심 기능이 가상 모듈과 일반 파일을 구분할 수 있습니다. `\0`은 임포트 URL에서 허용되지 않는 문자이므로 임포트 분석 중 대체해야 합니다. 개발 중 브라우저에서는 `\0{id}` 가상 id가 `/@id/__x00__{id}`로 인코딩됩니다. 이 id는 플러그인 파이프라인에 들어가기 전에 다시 디코딩되므로 플러그인 훅 코드에서는 보이지 않습니다.
 
-Virtual modules in Vite (and Rolldown / Rollup) are prefixed with `virtual:` for the user-facing path by convention. If possible the plugin name should be used as a namespace to avoid collisions with other plugins in the ecosystem. For example, a `vite-plugin-posts` could ask users to import a `virtual:posts` or `virtual:posts/helpers` virtual modules to get build time information. Internally, plugins that use virtual modules should prefix the module ID with `\0` while resolving the id, a convention from the rollup ecosystem. This prevents other plugins from trying to process the id (like node resolution), and core features like sourcemaps can use this info to differentiate between virtual modules and regular files. `\0` is not a permitted char in import URLs so we have to replace them during import analysis. A `\0{id}` virtual id ends up encoded as `/@id/__x00__{id}` during dev in the browser. The id will be decoded back before entering the plugins pipeline, so this is not seen by plugins hooks code.
+실제 파일에서 직접 파생된 모듈, 예를 들어 Single File Component(.vue 또는 .svelte SFC)의 스크립트 모듈은 이 컨벤션을 따를 필요가 없습니다. SFC는 일반적으로 처리 과정에서 여러 하위 모듈을 생성하지만, 그 안의 코드는 파일 시스템으로 다시 매핑될 수 있습니다. 이러한 하위 모듈에 `\0`을 사용하면 소스 맵이 올바르게 동작하지 않습니다.
 
 ## 범용 훅 {#universal-hooks}
 
-개발 시, Vite 개발 서버는 Rollup과 동일한 방식으로 [Rollup 빌드 훅](https://rollupjs.org/plugin-development/#build-hooks)을 호출하는 플러그인 컨테이너를 생성합니다.
+개발 시 Vite 개발 서버는 Rolldown과 동일한 방식으로 [Rolldown 빌드 훅](https://rolldown.rs/apis/plugin-api#build-hooks)을 호출하는 플러그인 컨테이너를 생성합니다.
 
-During dev, the Vite dev server creates a plugin container that invokes [Rolldown Build Hooks](https://rolldown.rs/apis/plugin-api#build-hooks) the same way Rolldown does it.
+다음 훅은 서버 시작 시 한 번 호출됩니다:
 
-- [`options`](https://rollupjs.org/plugin-development/#options)
-- [`buildStart`](https://rollupjs.org/plugin-development/#buildstart)
 - [`options`](https://rolldown.rs/reference/interface.plugin#options)
 - [`buildStart`](https://rolldown.rs/reference/Interface.Plugin#buildstart)
 
-- [`resolveId`](https://rollupjs.org/plugin-development/#resolveid)
-- [`load`](https://rollupjs.org/plugin-development/#load)
+다음 훅은 들어오는 각 모듈 요청마다 호출됩니다:
+
 - [`resolveId`](https://rolldown.rs/reference/Interface.Plugin#resolveid)
 - [`load`](https://rolldown.rs/reference/Interface.Plugin#load)
 - [`transform`](https://rolldown.rs/reference/Interface.Plugin#transform)
+
+이 훅들은 Vite 전용 프로퍼티가 추가된 확장 `options` 매개변수도 가집니다. 자세한 내용은 [SSR 문서](/guide/ssr#ssr-specific-plugin-logic)에서 확인할 수 있습니다.
 
 일부 `resolveId` 호출의 `importer` 값은 루트의 일반적인 `index.html`에 대한 절대 경로일 수 있습니다. 이는 Vite의 번들되지 않은 개발 서버 패턴으로 인해 실제 Importer를 도출하는 것이 항상 가능한 것은 아니기 때문입니다. 다만 Vite의 리졸브 파이프라인 내에서 처리되는 Import의 경우, Import 분석 단계에서 Importer를 추적할 수 있기에, 올바른 `importer` 값을 제공할 수 있습니다.
 
@@ -173,9 +177,9 @@ During dev, the Vite dev server creates a plugin container that invokes [Rolldow
 - [`buildEnd`](https://rolldown.rs/reference/Interface.Plugin#buildend)
 - [`closeBundle`](https://rolldown.rs/reference/Interface.Plugin#closebundle)
 
-Note that the [`moduleParsed`](https://rolldown.rs/reference/Interface.Plugin#moduleparsed) hook is **not** called during dev, because Vite avoids full AST parses for better performance.
+[`moduleParsed`](https://rolldown.rs/reference/Interface.Plugin#moduleparsed) 훅은 개발 중 호출되지 않습니다. Vite는 더 나은 성능을 위해 전체 AST 파싱을 피하기 때문입니다.
 
-[Output Generation Hooks](https://rolldown.rs/apis/plugin-api#output-generation-hooks) (except `closeBundle`) are **not** called during dev.
+[Output Generation Hooks](https://rolldown.rs/apis/plugin-api#output-generation-hooks)(`closeBundle` 제외)는 개발 중 호출되지 않습니다.
 
 Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 이러한 훅은 Rollup에서 무시됩니다.
 
@@ -188,7 +192,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
   **예제:**
 
-  ```js
+```js
   // 설정 값 일부를 반환 (권고)
   const partialConfigPlugin = () => ({
     name: 'return-partial',
@@ -210,7 +214,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
       }
     }
   })
-  ```
+```
 
   ::: warning 참고
   `config` 훅 안에서 다른 플러그인을 사용하지 마세요. 플러그인 자체는 이 훅이 실행되기 전에 모두 확정(Resolve)되며, 따라서 아무런 효과가 없습니다.
@@ -225,7 +229,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
   **예제:**
 
-  ```js
+```js
   const examplePlugin = () => {
     let config
 
@@ -247,7 +251,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
       }
     }
   }
-  ```
+```
 
   참고로 `command` 값은 개발 서버에서 `serve` 입니다(cli에서 `vite`, `vite dev` 및 `vite serve` 모두 별칭입니다).
 
@@ -259,7 +263,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
   개발 서버를 구성하기 위한 훅입니다. 일반적으로 커스텀 미들웨어를 내부의 [connect](https://github.com/senchalabs/connect) 앱에 추가하기 위해 사용합니다:
 
-  ```js
+```js
   const myPlugin = () => ({
     name: 'configure-server',
     configureServer(server) {
@@ -268,13 +272,13 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
       })
     }
   })
-  ```
+```
 
   **내부 미들웨어 설치 이후에 호출되는 커스텀 미들웨어 구성하기**
 
   `configureServer` 훅은 내부의 미들웨어가 설치되기 전 호출됩니다. 따라서 위와 같은 방식의 커스텀 미들웨어는 내부의 미들웨어보다 먼저 실행됩니다. 만약 내부의 미들웨어가 설치된 **이후에** 커스텀 미들웨어를 호출하고자 한다면, `configureServer`의 반환 값으로 함수를 반환해주세요:
 
-  ```js
+```js
   const myPlugin = () => ({
     name: 'configure-server',
     configureServer(server) {
@@ -287,13 +291,13 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
       }
     },
   })
-  ```
+```
 
   **서버 인스턴스 저장하기**
 
-  In some cases, other plugin hooks may need access to the dev server instance (e.g. accessing the WebSocket server, the file system watcher, or the module graph). This hook can also be used to store the server instance for access in other hooks:
+경우에 따라 다른 플러그인 훅에서 개발 서버 인스턴스에 접근해야 할 수 있습니다(예: WebSocket 서버, 파일 시스템 watcher, 모듈 그래프 접근). 이 훅은 다른 훅에서 접근할 수 있도록 서버 인스턴스를 저장하는 데에도 사용할 수 있습니다:
 
-  ```js
+```js
   const myPlugin = () => {
     let server
     return {
@@ -308,7 +312,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
       }
     }
   }
-  ```
+```
 
   참고로 `configureServer`는 프로덕션 버전으로 빌드할 때 호출되지 않으므로 위 예시와 같이 훅이 존재하지 않는 경우를 분기해줘야 합니다.
 
@@ -320,7 +324,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
   [`configureServer`](/guide/api-plugin.html#configureserver)와 같지만 프리뷰 서버에 대한 것입니다. `configureServer`와 마찬가지로 `configurePreviewServer` 훅은 다른 미들웨어가 설치되기 전에 호출됩니다. 만약 다른 미들웨어가 설치된 **이후에** 커스텀 미들웨어를 호출하고자 한다면, `configurePreviewServer`의 반환 값으로 함수를 반환해주세요. 이렇게 하면 내부 미들웨어가 설치된 후에 호출됩니다:
 
-  ```js
+```js
   const myPlugin = () => ({
     name: 'configure-preview-server',
     configurePreviewServer(server) {
@@ -333,7 +337,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
       }
     },
   })
-  ```
+```
 
 ### `transformIndexHtml` {#transformindexhtml}
 
@@ -351,7 +355,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
   **예제:**
 
-  ```js
+```js
   const htmlPlugin = () => {
     return {
       name: 'html-transform',
@@ -363,11 +367,11 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
       },
     }
   }
-  ```
+```
 
   **훅 시그니처:**
 
-  ```ts
+```ts
   type IndexHtmlTransformHook = (
     html: string,
     ctx: {
@@ -402,7 +406,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
      */
     injectTo?: 'head' | 'body' | 'head-prepend' | 'body-prepend'
   }
-  ```
+```
 
 ::: warning 참고
 이 훅은 진입점이 되는 파일을 커스텀 처리하는 프레임워크(예: [SvelteKit](https://github.com/sveltejs/kit/discussions/8269#discussioncomment-4509145))를 사용하는 경우 호출되지 않습니다.
@@ -411,12 +415,12 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 ### `handleHotUpdate` {#handlehotupdate}
 
 - **타입:** `(ctx: HmrContext) => Array<ModuleNode> | void | Promise<Array<ModuleNode> | void>`
-- **Kind:** `async`, `sequential`
+- **종류:** `async`, `sequential`
 - **관련 항목:** [HMR API](./api-hmr)
 
   사용자가 지정한 방식대로 HMR 업데이트를 수행합니다. 이 훅은 아래와 같은 컨텍스트 객체를 전달받습니다:
 
-  ```ts
+```ts
   interface HmrContext {
     file: string
     timestamp: number
@@ -424,7 +428,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
     read: () => string | Promise<string>
     server: ViteDevServer
   }
-  ```
+```
 
   - `modules`는 변경된 파일의 영향을 받는 모듈의 배열입니다. Vue SFC와 같이 단일 파일이 여러 모듈에 매핑될 수 있기 때문에 배열 형태로 제공됩니다.
 
@@ -435,7 +439,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
   - 빈 배열을 반환하고 전체 리로드를 수행:
 
-    ```js
+```js
     handleHotUpdate({ server, modules, timestamp }) {
       // 모듈을 수동으로 무효화합니다
       const invalidatedModules = new Set()
@@ -450,11 +454,11 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
       server.ws.send({ type: 'full-reload' })
       return []
     }
-    ```
+```
 
   - 빈 배열을 반환하고 클라이언트에게 커스텀 이벤트를 전송하여, 완전한 커스텀 HMR 처리를 수행:
 
-    ```js
+```js
     handleHotUpdate({ server }) {
       server.ws.send({
         type: 'custom',
@@ -463,29 +467,29 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
       })
       return []
     }
-    ```
+```
 
     위 커스텀 이벤트는 [HMR API](./api-hmr)를 사용하여 핸들러를 등록해야 합니다(이는 동일한 플러그인의 `transform` 훅에 주입될 수 있습니다):
 
-    ```js
+```js
     if (import.meta.hot) {
       import.meta.hot.on('special-update', (data) => {
         // 커스텀 업데이트 수행
       })
     }
-    ```
+```
 
 ## 플러그인 순서 {#plugin-ordering}
 
-## Plugin Context Meta
+## 플러그인 컨텍스트 메타 {#plugin-context-meta}
 
-For plugin hooks that has access to the plugin context, Vite exposes additional properties on `this.meta`:
+플러그인 컨텍스트에 접근할 수 있는 플러그인 훅의 경우, Vite는 `this.meta`에 추가 프로퍼티를 노출합니다:
 
-- `this.meta.viteVersion`: The current Vite version string (e.g. `"8.0.0"`).
+- `this.meta.viteVersion`: 현재 Vite 버전 문자열입니다(예: `"8.0.0"`).
 
-::: tip Detecting Rolldown powered Vite
+::: tip Rolldown 기반 Vite 감지하기
 
-[`this.meta.rolldownVersion`](https://rolldown.rs/reference/Interface.PluginContextMeta#rolldownversion) is only available for Rolldown powered Vite (i.e. Vite 8+). You can use it to detect whether the current Vite instance is powered by Rolldown:
+[`this.meta.rolldownVersion`](https://rolldown.rs/reference/Interface.PluginContextMeta#rolldownversion)은 Rolldown 기반 Vite(즉 Vite 8+)에서만 사용할 수 있습니다. 이를 사용해 현재 Vite 인스턴스가 Rolldown 기반인지 감지할 수 있습니다:
 
 ```ts
 function versionCheckPlugin(): Plugin {
@@ -504,23 +508,23 @@ function versionCheckPlugin(): Plugin {
 
 :::
 
-## Output Bundle Metadata
+## 출력 번들 메타데이터 {#output-bundle-metadata}
 
-During build, Vite augments Rolldown's build output objects with a Vite-specific `viteMetadata` field.
+빌드 중 Vite는 Rolldown의 빌드 출력 객체에 Vite 전용 `viteMetadata` 필드를 추가합니다.
 
-This is available through:
+이는 다음을 통해 사용할 수 있습니다:
 
-- `RenderedChunk` (for example in `renderChunk` and `augmentChunkHash`)
-- `OutputChunk` and `OutputAsset` (for example in `generateBundle` and `writeBundle`)
+- `RenderedChunk`(예: `renderChunk`와 `augmentChunkHash`에서)
+- `OutputChunk`와 `OutputAsset`(예: `generateBundle`과 `writeBundle`에서)
 
 `viteMetadata` provides:
 
 - `viteMetadata.importedCss: Set<string>`
 - `viteMetadata.importedAssets: Set<string>`
 
-This is useful when writing plugins that need to inspect emitted CSS and static assets without relying on [`build.manifest`](/config/build-options#build-manifest).
+이는 [`build.manifest`](/config/build-options#build-manifest)에 의존하지 않고 방출된 CSS와 정적 에셋을 검사해야 하는 플러그인을 작성할 때 유용합니다.
 
-Example:
+예시:
 
 ```ts [vite.config.ts]
 function outputMetadataPlugin(): Plugin {
@@ -554,7 +558,7 @@ Vite 플러그인은 Webpack 로더와 유사한 `enforce` 프로퍼티를 추�
 
 참고로 이는 훅 순서를 지정하는 것과는 별개이며, [Rollup 훅](https://rollupjs.org/plugin-development/#build-hooks)과 같이 `order` 속성이 별도로 적용된다는 점에 유의하세요.
 
-Note that this is separate from hooks ordering, those are still separately subject to their [`order` attribute](https://rolldown.rs/reference/TypeAlias.ObjectHook#order) as usual for Rolldown hooks.
+이는 훅 순서 지정과는 별개입니다. Rolldown 훅은 평소처럼 [`order` 속성](https://rolldown.rs/reference/TypeAlias.ObjectHook#order)의 영향을 별도로 받습니다.
 
 기본적으로 플러그인은 개발 서버 및 빌드 시 모두 호출됩니다. 만약 플러그인이 개발 조건부로 호출되어야 하는 경우, `apply` 프로퍼티를 사용하여 `'build'` 또는 `'serve'` 중에만 플러그인이 호출되도록 구성해주세요:
 
@@ -576,24 +580,24 @@ apply(config, { command }) {
 }
 ```
 
-## Rollup 플러그인 호환성 {#rollup-plugin-compatibility}
+## Rolldown 플러그인 호환성 {#rolldown-plugin-compatibility}
 
-## Rolldown Plugin Compatibility
+상당수 Rolldown / Rollup 플러그인은 Vite 플러그인으로 바로 동작합니다(예: `@rollup/plugin-alias` 또는 `@rollup/plugin-json`). 하지만 번들링되지 않은 개발 서버 컨텍스트에서는 일부 플러그인 훅이 의미가 없기 때문에, 모든 플러그인이 동작하는 것은 아닙니다.
 
-A fair number of Rolldown / Rollup plugins will work directly as a Vite plugin (e.g. `@rollup/plugin-alias` or `@rollup/plugin-json`), but not all of them, since some plugin hooks do not make sense in an unbundled dev server context.
+일반적으로 Rolldown / Rollup 플러그인이 다음 기준을 충족한다면 Vite 플러그인으로 동작해야 합니다:
 
-In general, as long as a Rolldown / Rollup plugin fits the following criteria then it should just work as a Vite plugin:
-- 번들 단계의 훅과 번들링 이후 출력 단계의 훅 사이에 강력한 결합이 없음
-- It doesn't use the [`moduleParsed`](https://rolldown.rs/reference/Interface.Plugin#moduleparsed) hook.
-- It doesn't rely on the Rolldown specific options like [`transform.inject`](https://rolldown.rs/reference/InputOptions.transform#inject)
-만약 Rollup 플러그인이 빌드 단계에서만 의미가 있는 경우라면, `build.rollupOptions.plugins` 옵션에 해당 플러그인을 사용하도록 지정할 수 있습니다. 이는 `enforce: 'post'` 및 `apply: 'build'` 옵션으로 지정된 Vite 플러그인과 동일하게 동작합니다.
+- [`moduleParsed`](https://rolldown.rs/reference/Interface.Plugin#moduleparsed) 훅을 사용하지 않습니다.
+- [`transform.inject`](https://rolldown.rs/reference/InputOptions.transform#inject) 같은 Rolldown 전용 옵션에 의존하지 않습니다.
+- 번들 단계 훅과 출력 단계 훅 사이에 강한 결합이 없습니다.
 
-If a Rolldown / Rollup plugin only makes sense for the build phase, then it can be specified under `build.rolldownOptions.plugins` instead. It will work the same as a Vite plugin with `enforce: 'post'` and `apply: 'build'`.
+Rolldown / Rollup 플러그인이 빌드 단계에서만 의미가 있다면, 대신 `build.rolldownOptions.plugins` 아래에 지정할 수 있습니다. 이는 `enforce: 'post'`와 `apply: 'build'`가 있는 Vite 플러그인과 동일하게 동작합니다.
 
-You can also augment an existing Rolldown / Rollup plugin with Vite-only properties:
-import example from 'rollup-plugin-example'
-import { defineConfig } from 'vite'
+기존 Rolldown / Rollup 플러그인에 Vite 전용 프로퍼티를 추가할 수도 있습니다:
+
+```js [vite.config.js]
 import example from 'rolldown-plugin-example'
+import { defineConfig } from 'vite'
+
 export default defineConfig({
   plugins: [
     {
@@ -618,15 +622,15 @@ normalizePath('foo\\bar') // 'foo/bar'
 normalizePath('foo/bar') // 'foo/bar'
 ```
 
-## {#filtering-include-exclude-pattern}
+## 필터링, include/exclude 패턴 {#filtering-include-exclude-pattern}
 
 Vite는 Vite 전용 플러그인 및 통합(Integration)이 표준 포함(Include)/제외(Exclude) 필터링 패턴을 사용하도록 [`@rollup/pluginutils`의 `createFilter`](https://github.com/rollup/plugins/tree/master/packages/pluginutils#createfilter) 함수를 제공하고 있습니다. 참고로 이 방식은 Vite 코어 자체에서도 사용합니다.
 
-### Hook Filters
+### 훅 필터 {#hook-filters}
 
-Rolldown introduced a [hook filter feature](https://rolldown.rs/plugins/hook-filters) to reduce the communication overhead between the Rust and JavaScript runtimes. This feature allows plugins to specify patterns that determine when hooks should be called, improving performance by avoiding unnecessary hook invocations.
+Rolldown은 Rust와 JavaScript 런타임 사이의 통신 오버헤드를 줄이기 위해 [훅 필터 기능](https://rolldown.rs/apis/plugin-api/hook-filters)을 도입했습니다. 이 기능을 통해 플러그인은 훅이 호출되어야 하는 시점을 결정하는 패턴을 지정할 수 있으며, 불필요한 훅 호출을 피해서 성능을 개선합니다.
 
-Rolldown introduced a [hook filter feature](https://rolldown.rs/apis/plugin-api/hook-filters) to reduce the communication overhead between the Rust and JavaScript runtimes. This feature allows plugins to specify patterns that determine when hooks should be called, improving performance by avoiding unnecessary hook invocations.
+이는 Rollup 4.38.0+와 Vite 6.3.0+에서도 지원됩니다. 플러그인이 이전 버전과 하위 호환되도록 하려면, 훅 핸들러 내부에서도 필터를 실행해야 합니다.
 
 ```js
 export default function myPlugin() {
@@ -654,9 +658,8 @@ export default function myPlugin() {
 ```
 
 ::: tip
-[`@rolldown/pluginutils`](https://www.npmjs.com/package/@rolldown/pluginutils) exports some utilities for hook filters like `exactRegex` and `prefixRegex`.
+[`@rolldown/pluginutils`](https://www.npmjs.com/package/@rolldown/pluginutils)는 `exactRegex`와 `prefixRegex` 같은 훅 필터용 유틸리티를 익스포트합니다. 편의를 위해 이 유틸리티들은 `rolldown/filter`에서도 다시 익스포트됩니다.
 :::
-[`@rolldown/pluginutils`](https://www.npmjs.com/package/@rolldown/pluginutils) exports some utilities for hook filters like `exactRegex` and `prefixRegex`. These are also re-exported from `rolldown/filter` for convenience.
 ## 클라이언트-서버 커뮤니케이션 {#client-server-communication}
 
 Vite 2.9부터 클라이언트와의 통신을 처리하는 데 도움이 되는 플러그인용 유틸을 제공합니다.

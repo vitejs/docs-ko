@@ -62,7 +62,7 @@ if (import.meta.hot) {
 
 ## TypeScript를 위한 인텔리센스 {#intellisense-for-typescript}
 
-Vite provides type definitions for `import.meta.hot` in [`vite/client.d.ts`](https://github.com/vitejs/vite/blob/main/packages/vite/client.d.ts). You can add "vite/client" in the `tsconfig.json` so TypeScript picks up the type definitions:
+Vite는 [`vite/client.d.ts`](https://github.com/vitejs/vite/blob/main/packages/vite/client.d.ts)에서 `import.meta.hot`에 대한 타입 정의를 제공합니다. TypeScript가 타입 정의를 가져오도록 `tsconfig.json`에 "vite/client"를 추가할 수 있습니다:
 
 ```json [tsconfig.json]
 {
@@ -255,4 +255,4 @@ HMR 이벤트에 대한 핸들러를 정의합니다.
 
 HMR API에 대한 사용 방법과 내부 작동 방식에 대해 자세히 알아보고 싶다면, 다음 리소스를 확인해 보세요:
 
-- [Hot Module Replacement is Easy](https://bjornlu.com/blog/hot-module-replacement-is-easy)
+- [Hot Module Replacement is Easy](https://bjornlu.com/blog/hot-module-replacement-is-easy) 문서

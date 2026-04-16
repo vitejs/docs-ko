@@ -444,26 +444,26 @@ interface PreprocessCSSResult {
 
 참고로 전처리기는 `url()` 또는 `image-set()` 내부에 존재하는 URL을 확인하지 않는다는 점에 유의하세요.
 
-## `version`
+## `version` {#version}
 
-**Type:** `string`
+**타입:** `string`
 
-The current version of Vite as a string (e.g. `"8.0.0"`).
+문자열로 표현된 현재 Vite 버전입니다(예: `"8.0.0"`).
 
-## `rolldownVersion`
+## `rolldownVersion` {#rolldownversion}
 
-**Type:** `string`
+**타입:** `string`
 
-The version of Rolldown used by Vite as a string (e.g. `"1.0.0"`). A re-export of [`VERSION`](https://rolldown.rs/reference/Variable.VERSION) from `rolldown`.
+문자열로 표현된 Vite가 사용하는 Rolldown 버전입니다(예: `"1.0.0"`). `rolldown`의 [`VERSION`](https://rolldown.rs/reference/Variable.VERSION)을 다시 익스포트한 값입니다.
 
-## `esbuildVersion`
+## `esbuildVersion` {#esbuildversion}
 
-**Type:** `string`
+**타입:** `string`
 
-Only kept for backward compatibility.
+하위 호환성을 위해서만 유지됩니다.
 
-## `rollupVersion`
+## `rollupVersion` {#rollupversion}
 
-**Type:** `string`
+**타입:** `string`
 
-Only kept for backward compatibility.
+하위 호환성을 위해서만 유지됩니다.

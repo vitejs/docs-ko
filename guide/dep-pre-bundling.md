@@ -6,14 +6,14 @@
 
 이러한 메시지가 나타나는 이유는 Vite의 "사전 번들링(Pre-bundling)" 기능으로 인한 것인데, 이를 사용하는 목적은 다음과 같습니다.
 
-1. **CommonJS and UMD compatibility:** During development, Vite serves all code as native ESM. Therefore, Vite must convert dependencies that are shipped as CommonJS or UMD into ESM first.
+1. **CommonJS 및 UMD 호환성:** 개발 중 Vite는 모든 코드를 네이티브 ESM으로 제공합니다. 따라서 Vite는 CommonJS 또는 UMD로 배포되는 디펜던시를 먼저 ESM으로 변환해야 합니다.
 
    vite는 조금 영리하게 ESM 파일로 변환을 진행하는데, 가령 CommonJS 디펜던시를 변환해주는 경우 아래와 같이 이름을 지정해 CommonJS 형태의 모듈을 가져올 수도 있습니다.
 
-   ```js
+```js
    // 아래 코드는 정상적으로 동작합니다.
    import React, { useState } from 'react'
-   ```
+```
 
 2. **성능:** vite는 여러 디펜던시가 존재하는 ESM 모듈을 하나의 모듈로 변환하여 페이지 로드에 대한 성능을 향상시킵니다.
 
@@ -57,7 +57,7 @@ export default defineConfig({
 ## 디펜던시 탐색 과정 커스터마이즈하기 {#customizing-the-behavior}
 
 Vite의 디펜던시 탐색 휴리스틱이 항상 바람직한 것은 아닙니다. 만약 특정 디펜던시를 명시적으로 포함시키거나 포함시키지 않도록 설정하고자 한다면 [`optimizeDeps` 옵션](/config/dep-optimization-options.md)을 이용해주세요.
-You can further customize Rolldown too with the [`optimizeDeps.rolldownOptions` option](/config/dep-optimization-options.md#optimizedeps-rolldownoptions). For example, adding a Rolldown plugin to handle special files in dependencies or changing the [build `target`](https://rolldown.rs/reference/InputOptions.transform#target).
+[`optimizeDeps.rolldownOptions` 옵션](/config/dep-optimization-options.md#optimizedeps-rolldownoptions)으로 Rolldown도 추가로 커스터마이즈할 수 있습니다. 예를 들어 디펜던시의 특수 파일을 처리하기 위해 Rolldown 플러그인을 추가하거나 [빌드 `target`](https://rolldown.rs/reference/InputOptions.transform#target)을 변경할 수 있습니다.
 이를 해결하기 위해 `include`와 `exclude` 옵션 둘 다 사용될 수 있습니다. 만약 디펜던시가 크거나(내부 모듈이 많은 경우) CommonJS 포맷이라면 `include` 옵션에 명시해야 합니다. 만약 디펜던시가 작고 이미 ESM 스타일로 작성되어 있다면 `exclude` 옵션에 명시해 브라우저에서 바로 불러올 수 있도록 설정할 수 있습니다.
 
 또한 [`optimizeDeps.esbuildOptions` 옵션](/config/dep-optimization-options.md#optimizedeps-esbuildoptions)을 통해 esbuild를 더욱 세밀하게 커스터마이즈할 수 있습니다. 예를 들어, 특정 파일을 디펜던시에서 처리하기 위한 esbuild 플러그인을 추가하거나, [빌드 `target`](https://esbuild.github.io/api/#target)을 변경할 수 있습니다.

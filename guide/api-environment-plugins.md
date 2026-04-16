@@ -8,7 +8,7 @@
 리소스:
 
 - [피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 새로운 API에 대한 피드백을 모으고 있습니다.
-- [Environment API PR](https://github.com/vitejs/vite/pull/16471) where the new APIs were implemented and reviewed.
+- 새 API가 구현되고 검토된 [Environment API PR](https://github.com/vitejs/vite/pull/16471)
 
 여러분의 피드백을 공유해주세요.
 :::
@@ -31,7 +31,7 @@ Vite 서버는 모든 환경이 공유하는 하나의 플러그인 파이프라
 
 ## 훅을 사용해 새로운 환경 등록하기 {#registering-new-environments-using-hooks}
 
-Plugins can add new environments in the `config` hook. For example, [RSC support](/plugins/#vitejs-plugin-rsc) uses an additional environment to have a separate module graph with the `react-server` condition:
+플러그인은 `config` 훅에서 새 환경을 추가할 수 있습니다. 예를 들어 [RSC 지원](/plugins/#vitejs-plugin-rsc)은 `react-server` 조건을 가진 별도의 모듈 그래프를 갖기 위해 추가 환경을 사용합니다:
 
 ```ts
   config(config: UserConfig) {
@@ -47,7 +47,7 @@ Plugins can add new environments in the `config` hook. For example, [RSC support
   }
 ```
 
-An empty object is enough to register the environment, using default values from the root level environment config.
+환경을 등록하려면 빈 객체만으로 충분하며, 루트 레벨 환경 설정의 기본값이 사용됩니다.
 
 ## 훅을 사용해 환경 구성하기 {#configuring-environment-using-hooks}
 
@@ -70,7 +70,7 @@ An empty object is enough to register the environment, using default values from
 ## `hotUpdate` 훅 {#the-hotupdate-hook}
 
 - **타입:** `(this: { environment: DevEnvironment }, options: HotUpdateOptions) => Array<EnvironmentModuleNode> | void | Promise<Array<EnvironmentModuleNode> | void>`
-- **Kind:** `async`, `sequential`
+- **종류:** `async`, `sequential`
 - **참고:** [HMR API](./api-hmr)
 
 `hotUpdate` 훅을 사용하면 플러그인이 특정 환경에 대해 HMR 업데이트 처리를 커스텀할 수 있습니다. 파일이 변경되면 `server.environments`의 순서에 따라 각 환경에 대해 순차적으로 HMR 알고리즘이 실행되므로, `hotUpdate` 훅은 여러 번 호출됩니다. 훅은 다음과 같은 시그니처를 가진 컨텍스트 객체를 받습니다:
@@ -98,7 +98,7 @@ interface HotUpdateOptions {
 
 - 빈 배열을 반환하고 전체 새로고침을 수행합니다:
 
-  ```js
+```js
   hotUpdate({ modules, timestamp }) {
     if (this.environment.name !== 'client')
       return
@@ -116,11 +116,11 @@ interface HotUpdateOptions {
     this.environment.hot.send({ type: 'full-reload' })
     return []
   }
-  ```
+```
 
 - 빈 배열을 반환하고 클라이언트에 커스텀 이벤트를 보내 완전한 커스텀 HMR 처리를 수행합니다:
 
-  ```js
+```js
   hotUpdate() {
     if (this.environment.name !== 'client')
       return
@@ -132,21 +132,21 @@ interface HotUpdateOptions {
     })
     return []
   }
-  ```
+```
 
   클라이언트 코드는 [HMR API](./api-hmr)를 사용해 해당 핸들러를 등록해야 합니다(동일한 플러그인의 `transform` 훅에서 주입할 수 있음):
 
-  ```js
+```js
   if (import.meta.hot) {
     import.meta.hot.on('special-update', (data) => {
       // 커스텀 업데이트 수행
     })
   }
-  ```
+```
 
 ## 플러그인에서의 환경별 상태 관리 {#per-environment-state-in-plugins}
 
-Given that the same plugin instance is used for different environments, the plugin state needs to be keyed with `this.environment`. This is the same pattern the ecosystem has already been using to keep state about modules using the `ssr` boolean as key to avoid mixing client and ssr modules state. A `Map<Environment, State>` can be used to keep the state for each environment separately. Note that for backward compatibility, `buildStart` and `buildEnd` are only called for the client environment without the `perEnvironmentStartEndDuringDev: true` flag. Same for `watchChange` and the `perEnvironmentWatchChangeDuringDev: true` flag.
+동일한 플러그인 인스턴스가 여러 환경에 사용되므로, 플러그인 상태는 `this.environment`를 키로 관리해야 합니다. 이는 생태계가 클라이언트와 SSR 모듈 상태가 섞이지 않도록 `ssr` 불리언을 키로 사용해 모듈 상태를 관리해 온 패턴과 같습니다. `Map<Environment, State>`를 사용해 각 환경의 상태를 별도로 유지할 수 있습니다. 하위 호환성을 위해 `perEnvironmentStartEndDuringDev: true` 플래그가 없으면 `buildStart`와 `buildEnd`는 클라이언트 환경에 대해서만 호출됩니다. `watchChange`와 `perEnvironmentWatchChangeDuringDev: true` 플래그도 마찬가지입니다.
 
 ```js
 function PerEnvironmentCountTransformedModulesPlugin() {
@@ -227,27 +227,27 @@ export default defineConfig({
 
 `applyToEnvironment` 훅은 설정 시점에 호출되며, 현재는 생태계의 프로젝트들이 플러그인을 수정하기 때문에 `configResolved` 이후에 호출됩니다. 환경 플러그인 해석은 향후 `configResolved` 이전으로 이동될 수 있습니다.
 
-## Application-Plugin Communication
+## 애플리케이션-플러그인 통신 {#application-plugin-communication}
 
-`environment.hot` allows plugins to communicate with the code on the application side for a given environment. This is the equivalent of [the Client-server Communication feature](/guide/api-plugin#client-server-communication), but supports environments other than the client environment.
+`environment.hot`은 플러그인이 특정 환경의 애플리케이션 측 코드와 통신할 수 있게 합니다. 이는 [클라이언트-서버 통신 기능](/guide/api-plugin#client-server-communication)에 해당하지만, 클라이언트 환경이 아닌 다른 환경도 지원합니다.
 
-:::warning Note
+:::warning 참고
 
-Note that this feature is only available for environments that support HMR.
+이 기능은 HMR을 지원하는 환경에서만 사용할 수 있습니다.
 
 :::
 
-### Managing the Application Instances
+### 애플리케이션 인스턴스 관리하기 {#managing-the-application-instances}
 
-Be aware that there might be multiple application instances running in the same environment. For example, if you have multiple tabs open in the browser, each tab is a separate application instance and has a separate connection to the server.
+같은 환경에서 여러 애플리케이션 인스턴스가 실행될 수 있다는 점에 유의하세요. 예를 들어 브라우저에서 여러 탭을 열어두면, 각 탭은 별도의 애플리케이션 인스턴스이며 서버와 별도의 연결을 가집니다.
 
-When a new connection is established, a `vite:client:connect` event is emitted on the environment's `hot` instance. When the connection is closed, a `vite:client:disconnect` event is emitted.
+새 연결이 설정되면 환경의 `hot` 인스턴스에서 `vite:client:connect` 이벤트가 발생합니다. 연결이 닫히면 `vite:client:disconnect` 이벤트가 발생합니다.
 
-Each event handler receives the `NormalizedHotChannelClient` as the second argument. The client is an object with a `send` method that can be used to send messages to that specific application instance. The client reference is always the same for the same connection, so you can keep it to track the connection.
+각 이벤트 핸들러는 두 번째 인자로 `NormalizedHotChannelClient`를 받습니다. 클라이언트는 특정 애플리케이션 인스턴스에 메시지를 보내는 데 사용할 수 있는 `send` 메서드를 가진 객체입니다. 같은 연결에 대해서는 클라이언트 참조가 항상 동일하므로, 이를 보관해 연결을 추적할 수 있습니다.
 
-### Example Usage
+### 사용 예제 {#example-usage}
 
-The plugin side:
+플러그인 측:
 
 ```js
 configureServer(server) {
@@ -262,7 +262,7 @@ configureServer(server) {
 }
 ```
 
-The application side is same with the Client-server Communication feature. You can use the `import.meta.hot` object to send messages to the plugin.
+애플리케이션 측은 클라이언트-서버 통신 기능과 동일합니다. `import.meta.hot` 객체를 사용해 플러그인에 메시지를 보낼 수 있습니다.
 
 ## 빌드 훅에서의 환경 {#environment-in-build-hooks}
 

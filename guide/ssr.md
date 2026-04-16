@@ -258,7 +258,7 @@ export function mySSRPlugin() {
 }
 ```
 
-The options object in `load` and `transform` is optional, Rollup is not currently using this object but may extend these hooks with additional metadata in the future.
+`load`와 `transform`의 options 객체는 선택 사항입니다. Rollup은 현재 이 객체를 사용하지 않지만, 향후 추가 메타데이터로 이 훅들을 확장할 수 있습니다.
 
 :::tip 참고
 Vite 2.7 이전에는 `options` 객체를 사용하는 대신 `ssr` 매개변수를 이용했습니다. 따라서 이와 관련된 모든 프레임워크와 플러그인이 업데이트 될 것이지만, 간혹 이전 API를 이용하는 경우를 마주할 수도 있습니다.
