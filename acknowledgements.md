@@ -7,7 +7,7 @@ description: Vite는 거인의 어깨 위에 세워졌습니다. Vite를 가능�
 import { computed } from 'vue' // 계산된 값
 import { data } from './_data/acknowledgements.data' // 감사 데이터
 import { useSponsor, voidZero } from './.vitepress/theme/composables/sponsor' // 후원자 데이터
-import VPSponsors from '@components/vitepress-default/VPSponsors.vue' // 후원자 컴포넌트
+import { VPSponsors } from '@voidzero-dev/vitepress-theme' // 후원자 컴포넌트
 
 const { data: sponsorData } = useSponsor() // 후원자 목록
 

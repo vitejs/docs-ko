@@ -119,10 +119,10 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return {
     define: {
-      // Provide an explicit app-level constant derived from an env var.
+      // 환경 변수에서 가져온 명시적인 앱 수준 상수를 제공합니다.
       __APP_ENV__: JSON.stringify(env.APP_ENV),
-    }
-    // Example: use an env var to set the dev server port conditionally.
+    },
+    // 예: 환경 변수로 개발 서버 포트를 조건부 설정합니다.
     server: {
       port: env.APP_PORT ? Number(env.APP_PORT) : 5173,
     },
