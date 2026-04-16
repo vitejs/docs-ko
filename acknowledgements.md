@@ -7,7 +7,6 @@ description: Vite는 거인의 어깨 위에 세워졌습니다. Vite를 가능�
 import { computed } from 'vue' // 계산된 값
 import { data } from './_data/acknowledgements.data' // 감사 데이터
 import { useSponsor, voidZero } from './.vitepress/theme/composables/sponsor' // 후원자 데이터
-import { VPSponsors } from '@voidzero-dev/vitepress-theme' // 후원자 컴포넌트
 
 const { data: sponsorData } = useSponsor() // 후원자 목록
 
@@ -43,7 +42,14 @@ Vite는 전 세계 기여자 팀이 개발합니다. 코어 팀 구성원은 [�
 Vite 개발은 너그러운 후원자들의 지원을 받고 있습니다. [GitHub Sponsors](https://github.com/sponsors/vitejs) 또는 [Open Collective](https://opencollective.com/vite)를 통해 Vite를 후원할 수 있습니다.
 
 <div class="sponsors-container">
-  <VPSponsors :data="allSponsors" />
+  <div v-for="tier in allSponsors" :key="tier.tier" class="dep-item">
+    <h3>{{ tier.tier /* 티어 */ }}</h3>
+    <p>
+      <a v-for="item in tier.items" :key="item.name" :href="item.url" target="_blank" rel="noopener">
+        {{ item.name /* 이름 */ }}
+      </a>
+    </p>
+  </div>
 </div>
 
 ## 디펜던시 {#dependencies}
