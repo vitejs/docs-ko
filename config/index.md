@@ -22,7 +22,7 @@ export default {
 vite --config my-config.js
 ```
 
-<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~05jg?via=vite" title="Configuring Vite">Watch an interactive lesson on Scrimba</ScrimbaLink>
+<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~05jg?via=vite" title="Configuring Vite">Scrimba에서 인터랙티브 강의를 시청하세요</ScrimbaLink>
 
 ::: tip 설정 파일 로딩
 기본적으로 Vite는 `esbuild`를 사용해 설정 파일을 임시 파일로 번들링한 뒤 로드합니다. 다만 이는 모노리포에서 TypeScript 파일을 불러올 때 문제가 발생할 수 있습니다. 이러한 문제가 발생한다면 `--configLoader runner`를 지정해 [모듈 러너](/guide/api-environment-runtimes.html#modulerunner)를 대신 사용할 수 있습니다. 모듈 러너는 임시 설정 파일을 생성하지 않고 파일을 즉시 변환합니다. 참고로 모듈 러너는 설정 파일에서 CJS를 지원하지 않으나, 그럼에도 외부 CJS 패키지는 정상적으로 동작합니다.
@@ -103,11 +103,11 @@ export default defineConfig(async ({ command, mode }) => {
 
 ## 설정에서 환경 변수 사용하기 {#using-environment-variables-in-config}
 
-Environment variables available while the config itself is being evaluated are only those that already exist in the current process environment (`process.env`). Vite deliberately defers loading any `.env*` files until _after_ the user config has been resolved because the set of files to load depends on config options like [`root`](/guide/#index-html-and-project-root) and [`envDir`](/config/shared-options.md#envdir), and also on the final `mode`.
+설정 자체가 평가되는 동안 사용할 수 있는 환경 변수는 현재 프로세스 환경(`process.env`)에 이미 존재하는 값뿐입니다. Vite는 사용자 설정이 해석된 _이후_ 로 `.env*` 파일 로드를 의도적으로 미룹니다. 로드할 파일 집합이 [`root`](/guide/#index-html-and-project-root), [`envDir`](/config/shared-options.md#envdir) 같은 설정 옵션과 최종 `mode`에 따라 달라지기 때문입니다.
 
-This means: variables defined in `.env`, `.env.local`, `.env.[mode]`, or `.env.[mode].local` are **not** automatically injected into `process.env` while your `vite.config.*` is running. They _are_ automatically loaded later and exposed to application code via `import.meta.env` (with the default `VITE_` prefix filter) exactly as documented in [Env Variables and Modes](/guide/env-and-mode.html). So if you only need to pass values from `.env*` files to the app, you don't need to call anything in the config.
+즉, `vite.config.*`가 실행되는 동안 `.env`, `.env.local`, `.env.[mode]`, `.env.[mode].local`에 정의된 변수는 `process.env`에 **자동으로 주입되지 않습니다**. 이 변수들은 나중에 자동으로 로드되며, [환경 변수와 모드](/guide/env-and-mode.html)에 문서화된 것처럼 기본 `VITE_` 접두사 필터를 거쳐 `import.meta.env`로 애플리케이션 코드에 노출됩니다. 따라서 `.env*` 파일의 값을 앱에 전달하기만 하면 된다면 설정에서 아무것도 호출할 필요가 없습니다.
 
-If, however, values from `.env*` files must influence the config itself (for example to set `server.port`, conditionally enable plugins, or compute `define` replacements), you can load them manually using the exported [`loadEnv`](/guide/api-javascript.html#loadenv) helper.
+하지만 `.env*` 파일의 값이 설정 자체에 영향을 주어야 한다면(예: `server.port` 설정, 조건부 플러그인 활성화, `define` 치환 계산), 익스포트된 [`loadEnv`](/guide/api-javascript.html#loadenv) 헬퍼를 사용해 수동으로 로드할 수 있습니다.
 
 ```js twoslash
 import { defineConfig, loadEnv } from 'vite'

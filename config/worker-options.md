@@ -14,10 +14,9 @@
 - **타입:** [`() => (Plugin | Plugin[])[]`](./shared-options#plugins)
 
 워커 번들에 적용되는 Vite 플러그인입니다. [config.plugins](./shared-options#plugins)은 개발 모드에서만 워커에 적용되며, 빌드 시에는 여기에 설정해야 합니다.
-The function should return new plugin instances as they are used in parallel rolldown worker builds. As such, modifying `config.worker` options in the `config` hook will be ignored.
+이 함수는 병렬 Rolldown 워커 빌드에서 사용되므로 새 플러그인 인스턴스를 반환해야 합니다. 따라서 `config` 훅에서 `config.worker` 옵션을 수정해도 무시됩니다.
 
-## worker.rolldownOptions
+## worker.rolldownOptions {#worker-rolldownoptions}
 
-- **Type:** [`RolldownOptions`](https://rolldown.rs/reference/)
-This option is an alias of `worker.rolldownOptions` option. Use `worker.rolldownOptions` option instead.
-Rolldown options to build worker bundle.
+- **타입:** [`RolldownOptions`](https://rolldown.rs/reference/)
+워커 번들을 빌드하기 위한 Rolldown 옵션입니다.

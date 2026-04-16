@@ -8,7 +8,7 @@
 - **기본값:** `'baseline-widely-available'`
 - **관련 항목:** [브라우저 지원 현황](/guide/build#browser-compatibility)
 
-Browser compatibility target for the final bundle. The default value is a Vite special value, `'baseline-widely-available'`, which targets browsers that are included in the [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available on 2026-01-01. Specifically, it is `['chrome111', 'edge111', 'firefox114', 'safari16.4']`.
+최종 번들의 브라우저 호환성 타깃입니다. 기본값은 Vite의 특수 값인 `'baseline-widely-available'`로, 2026-01-01 기준 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available에 포함된 브라우저를 대상으로 합니다. 구체적으로는 `['chrome111', 'edge111', 'firefox114', 'safari16.4']`입니다.
 
 또 다른 Vite 한정 옵션은 `'esnext'` 로, 네이티브 동적 Import를 지원하며 트랜스파일링을 최소한만 수행합니다.
 
@@ -130,7 +130,7 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 ## build.cssMinify {#build-cssminify}
 
 - **타입:** `boolean | 'esbuild' | 'lightningcss'`
-- **Default:** `'lightningcss'`, but `false` if [`build.minify`](#build-minify) is disabled for client build
+- **기본값:** `'lightningcss'`, 단 클라이언트 빌드에서 [`build.minify`](#build-minify)가 비활성화된 경우 `false`
 
 이 옵션을 사용하면 기본값이 `build.minify`로 설정되는 대신 CSS 축소화를 구체적으로 재정의할 수 있으므로, JS와 CSS를 별도로 축소화할 수 있습니다. Vite는 기본적으로 `esbuild`를 사용해 CSS를 축소화하지만, 옵션을 `'lightningcss'`로 설정하면 [Lightning CSS](https://lightningcss.dev/minification.html)를 사용할 수도 있습니다. 이를 선택한 경우, [`css.lightningcss`](./shared-options.md#css-lightningcss)를 통해 설정이 가능합니다.
 
@@ -149,9 +149,9 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 
 ## build.commonjsOptions {#build-commonjsoptions}
 
-- **Type:** [`RolldownOptions`](https://rolldown.rs/reference/)
+- **타입:** [`RolldownOptions`](https://rolldown.rs/reference/)
 
-Directly customize the underlying Rolldown bundle. This is the same as options that can be exported from a Rolldown config file and will be merged with Vite's internal Rolldown options. See [Rolldown options docs](https://rolldown.rs/reference/) for more details.
+내부 Rolldown 번들을 직접 커스터마이즈합니다. 이는 Rolldown 설정 파일에서 익스포트할 수 있는 옵션과 같으며, Vite의 내부 Rolldown 옵션과 병합됩니다. 자세한 내용은 [Rolldown 옵션 문서](https://rolldown.rs/reference/)를 참고하세요.
 
 - **타입:** [`RollupDynamicImportVarsOptions`](https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#options)
 - **관련 항목:** [동적 Import](/guide/features#dynamic-import)
@@ -162,10 +162,10 @@ Directly customize the underlying Rolldown bundle. This is the same as options t
 
 - **타입:** `{ entry: string | string[] | { [entryAlias: string]: string }, name?: string, formats?: ('es' | 'cjs' | 'umd' | 'iife')[], fileName?: string | ((format: ModuleFormat, entryName: string) => string), cssFileName?: string }`
 - **관련 항목:** [라이브러리 모드](/guide/build#library-mode)
-- **Type:** `{ include?: string | RegExp | (string | RegExp)[], exclude?: string | RegExp | (string | RegExp)[] }`
+- **타입:** `{ include?: string | RegExp | (string | RegExp)[], exclude?: string | RegExp | (string | RegExp)[] }`
 라이브러리로 빌드합니다. 라이브러리에서 HTML을 진입점으로 사용할 수 없으므로, `entry`가 필요합니다. `name`은 노출된 전역 변수이며 `formats`가 `'umd'` 또는 `'iife'` 일 때 필요합니다. `formats` 기본값은 `['es', 'umd']` 이나, 여러 진입점이 존재한다면 `['es', 'cjs']`가 됩니다.
 
-Whether to transform dynamic imports with variables.
+변수를 사용하는 동적 임포트를 변환할지 여부입니다.
 
 ```js twoslash [vite.config.js]
 import { defineConfig } from 'vite'
@@ -181,15 +181,15 @@ export default defineConfig({
 })
 ```
 
-## build.license
+## build.license {#build-license}
 
-- **Type:** `boolean | { fileName?: string }`
-- **Default:** `false`
-- **Related:** [License](/guide/features#license)
+- **타입:** `boolean | { fileName?: string }`
+- **기본값:** `false`
+- **관련 항목:** [라이선스](/guide/features#license)
 
-When set to `true`, the build will generate a `.vite/license.md` file that includes all bundled dependencies' licenses.
+`true`로 설정하면 빌드가 번들링된 모든 디펜던시의 라이선스를 포함하는 `.vite/license.md` 파일을 생성합니다.
 
-If `fileName` is passed, it will be used as the license file name relative to the `outDir`. If it ends with `.json`, the raw JSON metadata will be generated instead and can be used for further processing. For example:
+`fileName`이 전달되면 `outDir`을 기준으로 한 라이선스 파일 이름으로 사용됩니다. `.json`으로 끝나면 원본 JSON 메타데이터가 대신 생성되어 추가 처리에 사용할 수 있습니다. 예시는 다음과 같습니다:
 
 ```json
 [
@@ -221,7 +221,7 @@ If `fileName` is passed, it will be used as the license file name relative to th
 ## build.ssrManifest {#build-ssrmanifest}
 ::: tip
 
-If you'd like to reference the license file in the built code, you can use [`build.rolldownOptions.output.postBanner`](https://rolldown.rs/reference/OutputOptions.postBanner#postbanner) to inject a comment at the top of the files. For example:
+빌드된 코드에서 라이선스 파일을 참조하려면 [`build.rolldownOptions.output.postBanner`](https://rolldown.rs/reference/OutputOptions.postBanner#postbanner)를 사용해 파일 상단에 주석을 주입할 수 있습니다. 예시는 다음과 같습니다:
 
 ```js twoslash [vite.config.js]
 import { defineConfig } from 'vite'
@@ -251,7 +251,7 @@ export default defineConfig({
 값이 문자열이면 `build.outDir`을 기준으로 하는 매니페스트 파일 경로로 사용됩니다. `true`면 `.vite/ssr-manifest.json`이 경로가 됩니다.
 
 ## build.ssr {#build-ssr}
-If you are writing a plugin and need to inspect each output chunk or asset's related CSS and static assets during the build, you can also use [`viteMetadata` output bundle metadata API](/guide/api-plugin#output-bundle-metadata).
+플러그인을 작성하면서 빌드 중 각 출력 청크나 에셋과 관련된 CSS 및 정적 에셋을 검사해야 한다면, [`viteMetadata` 출력 번들 메타데이터 API](/guide/api-plugin#output-bundle-metadata)도 사용할 수 있습니다.
 
 
 - **타입:** `boolean | string`

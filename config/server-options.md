@@ -16,7 +16,7 @@ CLI에서는 `--host 0.0.0.0` or `--host`로 설정될 수 있습니다.
 
 Vite 대신 다른 서버가 응답하는 경우가 있습니다.
 
-The first case is when `localhost` is used. Node.js's [`dns.setDefaultResultOrder`](https://nodejs.org/docs/latest-v24.x/api/dns.html#dnssetdefaultresultorderorder) changes how DNS-resolved addresses are ordered, and browsers may use a different resolved address than the one Vite is listening to. Vite prints the resolved address when it differs.
+첫 번째 경우는 `localhost`를 사용할 때입니다. Node.js의 [`dns.setDefaultResultOrder`](https://nodejs.org/docs/latest-v24.x/api/dns.html#dnssetdefaultresultorderorder)는 DNS로 해석된 주소의 순서를 바꾸며, 브라우저는 Vite가 수신 중인 주소와 다른 해석 주소를 사용할 수 있습니다. 이 주소가 다르면 Vite가 해석된 주소를 출력합니다.
 
 두 번째 경우는 와일드카드 호스트(예: `0.0.0.0`)가 사용되는 경우입니다. 와일드카드 호스트는 명시적으로 지정된 호스트보다 우선 순위가 낮기 때문에 이러한 상황이 발생될 수 있습니다.
 
@@ -211,16 +211,16 @@ Direct websocket connection fallback. Check out https://vite.dev/config/server-o
 
 :::
 
-## server.forwardConsole
+## server.forwardConsole {#server-forwardconsole}
 
-- **Type:** `boolean | { unhandledErrors?: boolean, logLevels?: ('error' | 'warn' | 'info' | 'log' | 'debug')[] }`
-- **Default:** auto (`true` when an AI coding agent is detected based on [`@vercel/detect-agent`](https://www.npmjs.com/package/@vercel/detect-agent), otherwise `false`)
+- **타입:** `boolean | { unhandledErrors?: boolean, logLevels?: ('error' | 'warn' | 'info' | 'log' | 'debug')[] }`
+- **기본값:** 자동([`@vercel/detect-agent`](https://www.npmjs.com/package/@vercel/detect-agent)를 기준으로 AI 코딩 에이전트가 감지되면 `true`, 아니면 `false`)
 
-Forward browser runtime events to the Vite server console during development.
+개발 중 브라우저 런타임 이벤트를 Vite 서버 콘솔로 전달합니다.
 
-- `true` enables forwarding unhandled errors and `console.error` / `console.warn` logs.
-- `unhandledErrors` controls forwarding uncaught exceptions and unhandled promise rejections.
-- `logLevels` controls which `console.*` calls are forwarded.
+- `true`는 처리되지 않은 오류와 `console.error` / `console.warn` 로그 전달을 활성화합니다.
+- `unhandledErrors`는 잡히지 않은 예외와 처리되지 않은 promise rejection 전달을 제어합니다.
+- `logLevels`는 어떤 `console.*` 호출을 전달할지 제어합니다.
 
 For example:
 
@@ -235,7 +235,7 @@ export default defineConfig({
 })
 ```
 
-When unhandled errors are forwarded, they are logged in the server terminal with enhanced formatting, for example:
+처리되지 않은 오류가 전달되면 서버 터미널에 향상된 형식으로 기록됩니다. 예시는 다음과 같습니다:
 
 ```log
 1:18:38 AM [vite] (client) [Unhandled error] Error: this is test error
@@ -256,7 +256,7 @@ When unhandled errors are forwarded, they are logged in the server terminal with
 
 미리 변환하고 그 결과물을 캐시할 파일 목록입니다. 서버 시작 시 초기 페이지 로드를 개선하고 변환 워터폴(변환이 순차적으로 이루어지는 현상 - 옮긴이)을 방지합니다.
 
-`clientFiles` are files that are used in the client only, while `ssrFiles` are files that are used in SSR only. They accept an array of file paths or [`tinyglobby` patterns](https://superchupu.dev/tinyglobby/comparison) relative to the `root`.
+`clientFiles`는 클라이언트에서만 사용되는 파일이고, `ssrFiles`는 SSR에서만 사용되는 파일입니다. 두 옵션은 `root` 기준 상대 파일 경로 배열이나 [`tinyglobby` 패턴](https://superchupu.dev/tinyglobby/comparison)을 받습니다.
 
 Vite 개발 서버 시작 시 과부하가 걸리지 않도록 자주 사용되는 파일만 추가해주세요.
 
@@ -279,7 +279,7 @@ export default defineConfig({
 
 Vite 서버 감시자는 기본적으로 `root`를 감시하며, `.git/`, `node_modules/`, `test-results/`, 그리고 Vite의 `cacheDir` 및 `build.outDir` 디렉터리는 건너뜁니다. 감시하는 파일이 업데이트되면, Vite는 필요한 경우에만 HMR을 적용하고 페이지를 업데이트합니다.
 
-If set to `null`, no files will be watched. [`server.watcher`](/guide/api-javascript.html#vitedevserver) will provide a compatible event emitter, but calling `add` or `unwatch` will have no effect.
+`null`로 설정하면 어떤 파일도 감시하지 않습니다. [`server.watcher`](/guide/api-javascript.html#vitedevserver)는 호환되는 이벤트 이미터를 제공하지만, `add`나 `unwatch`를 호출해도 효과가 없습니다.
 
 ::: warning `node_modules` 디렉터리에서 파일 감시하기
 
@@ -406,9 +406,9 @@ Vite dev 서버에서 제공되지 않기를 원하는 민감한 파일들에 �
 
 :::
 
-::: tip NOTE
+::: tip 참고
 
-The deny filter is applied against the module id and the id with query parameters stripped. Since a plugin can read files from any files in its load hook (including resolving symlinks to denied paths), Vite cannot guarantee that a denied file is inaccessible through an alternative path. If you have an alternative path, include it in the deny list as well.
+deny 필터는 모듈 id와 쿼리 매개변수가 제거된 id에 적용됩니다. 플러그인은 load 훅에서 어떤 파일이든 읽을 수 있으므로(차단된 경로를 가리키는 심볼릭 링크 해석 포함), Vite는 차단된 파일이 대체 경로를 통해 접근 불가능하다고 보장할 수 없습니다. 대체 경로가 있다면 그 경로도 deny 목록에 포함하세요.
 
 :::
 
