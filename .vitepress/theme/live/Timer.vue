@@ -45,13 +45,13 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="wrapper wrapper--ticks grid md:grid-cols-3 w-full border-nickel border-t md:divide-x"
+    class="wrapper wrapper--ticks grid md:grid-cols-3 w-full border-nickel border-t md:divide-x" data-ko-49="표시"
   >
     <div
-      class="flex flex-col md:col-span-2 p-10 gap-5 justify-center text-center md:text-left"
+      class="flex flex-col md:col-span-2 p-10 gap-5 justify-center text-center md:text-left" data-ko-52="표시"
     >
       <h2
-        class="text-white text-[10vw] md:text-[min(8vw,7rem)] xxl:text-8xl font-semibold font-mono tracking-tight"
+        class="text-white text-[10vw] md:text-[min(8vw,7rem)] xxl:text-8xl font-semibold font-mono tracking-tight" data-ko-55="표시"
       >
         {{ formattedCountdown }}
       </h2>
@@ -61,7 +61,7 @@ onUnmounted(() => {
         src="../../../images/vite-play.webp"
         width="600"
         height="660"
-        class="block max-w-[40%] md:max-w-[60%]"
+        class="block max-w-[40%] md:max-w-[60%]" data-ko-65="표시"
         inert
         loading="lazy"
         alt=""

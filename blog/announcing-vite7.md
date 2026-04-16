@@ -29,7 +29,7 @@ head:
 
 _2025년 6월 24일_
 
-![Vite 7 Announcement Cover Image](/og-image-announcing-vite7.webp)
+![Vite 7 발표 커버 이미지](/og-image-announcing-vite7.webp)
 
 Vite 7의 출시를 공유하게 되어 기쁩니다! Evan You가 Vite 저장소에 첫 커밋을 보낸 지 5년이 지났으며, 그 이후로 프론트엔드 생태계가 얼마나 많이 변화했는지는 아무도 예측할 수 없었습니다. 이제 대부분의 현대적인 프론트엔드 프레임워크와 도구들이 함께 작업하며, Vite의 공유 인프라 위에 구축되고 있습니다. 그리고 더 높은 수준에서 공유함으로써 더 빠른 속도로 혁신할 수 있게 되었습니다. Vite는 이제 주간 3,100만 회 다운로드되고 있으며, 이전 메이저 릴리스 이후 지난 7개월 동안 1,400만 회 증가했습니다.
 
@@ -49,7 +49,7 @@ VoidZero와 [NuxtLabs](https://nuxtlabs.com/) 간의 파트너십을 통해, Ant
 
 [vite.new](https://vite.new)를 사용하여 Vite 7을 온라인으로 체험하거나 `pnpm create vite`를 실행하여 선호하는 프레임워크로 Vite 앱을 로컬에서 스캐폴딩하세요. 자세한 정보는 [시작하기 가이드](/guide/)를 확인하세요.
 
-We invite you to help us improve Vite (joining the more than [1.1K contributors to Vite Core](https://github.com/vitejs/vite/graphs/contributors)), our dependencies, or plugins and projects in the ecosystem. Learn more at our [Contributing Guide](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md). A good way to get started is by [triaging issues](https://github.com/vitejs/vite/issues), [reviewing PRs](https://github.com/vitejs/vite/pulls), sending tests PRs based on open issues, and supporting others in [Discussions](https://github.com/vitejs/vite/discussions) or Vite Land's [help forum](https://discord.com/channels/804011606160703521/1019670660856942652). If you have questions, join our [Discord community](https://chat.vite.dev) and talk to us in the [#contributing channel](https://discord.com/channels/804011606160703521/804439875226173480).
+Vite([Vite Core의 1.1K명 이상의 기여자](https://github.com/vitejs/vite/graphs/contributors)에 합류), 디펜던시, 또는 생태계의 플러그인과 프로젝트를 개선하는 데 도움을 주시기 바랍니다. 자세한 내용은 [기여 가이드](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md)에서 확인하세요. 시작하기 좋은 방법은 [이슈 트리아징](https://github.com/vitejs/vite/issues), [PR 리뷰](https://github.com/vitejs/vite/pulls), 열린 이슈를 기반으로 한 테스트 PR 제출, [Discussions](https://github.com/vitejs/vite/discussions) 또는 Vite Land의 [도움말 포럼](https://discord.com/channels/804011606160703521/1019670660856942652)에서 다른 사람을 돕는 것입니다. 질문이 있다면 [Discord 커뮤니티](https://chat.vite.dev)에 참여해 [#contributing 채널](https://discord.com/channels/804011606160703521/804439875226173480)에서 이야기해 주세요.
 
 [Bluesky](https://bsky.app/profile/vite.dev), [X](https://twitter.com/vite_js), 또는 [Mastodon](https://webtoo.ls/@vite)에서 저희를 팔로우하여 최신 소식을 받고 Vite 위에 구축하는 다른 사람들과 소통하세요.
 
@@ -65,10 +65,10 @@ Vite는 이제 Node.js 20.19+, 22.12+가 필요합니다. 2025년 4월 말에 [E
 
 Vite 7에서는 기본 브라우저 타겟이 `'modules'`에서 새로운 기본값인 `'baseline-widely-available'`로 변경됩니다. 브라우저 세트는 각 메이저마다 Baseline Widely available 기능과 호환되는 최소 브라우저 버전 목록에 맞춰 업데이트됩니다. Vite 7.0에서 `build.target`의 기본 브라우저 값이 변경됩니다:
 
-- Chrome 87 → 107
-- Edge 88 → 107
-- Firefox 78 → 104
-- Safari 14.0 → 16.0
+- Chrome 87 → 107 이상
+- Edge 88 → 107 이상
+- Firefox 78 → 104 이상
+- Safari 14.0 → 16.0 이상
 
 이 변경은 향후 릴리스에서 기본 브라우저 타겟에 예측 가능성을 추가합니다.
 

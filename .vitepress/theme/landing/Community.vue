@@ -92,53 +92,53 @@ const testimonials: Testimonial[] = [
 <template>
   <div class="wrapper wrapper--ticks border-t pt-14 sm:pt-30 px-5 sm:px-10">
     <div
-      class="flex flex-col sm:flex-row justify-between items-center gap-8 sm:gap-20 text-center sm:text-left"
+      class="flex flex-col sm:flex-row justify-between items-center gap-8 sm:gap-20 text-center sm:text-left" data-ko-96="표시"
     >
       <div class="flex flex-col gap-3">
-        <h3 class="text-white max-w-xl text-balance">Loved by the community</h3>
+        <h3 class="text-white max-w-xl text-balance">커뮤니티의 사랑을 받습니다</h3>
         <p class="max-w-md text-white/70 text-balance">
-          Don't take our word for it - listen to what Vite community members
-          have to say.
+          저희 말만 믿지 마세요. Vite 커뮤니티 구성원들의 이야기를
+          직접 들어보세요.
         </p>
       </div>
       <div
-        class="flex gap-8 sm:gap-12 items-start justify-center sm:justify-start sm:pr-20"
+        class="flex gap-8 sm:gap-12 items-start justify-center sm:justify-start sm:pr-20" data-ko-106="표시"
       >
         <!-- GitHub Stars -->
         <div class="flex flex-col gap-3">
           <h2 class="text-white">75k+</h2>
           <p class="text-grey flex items-center gap-2">
             <Icon icon="simple-icons:github" width="20px" height="20px" />
-            Github Stars
+            GitHub Stars
           </p>
         </div>
 
         <!-- NPM Downloads -->
         <div class="flex flex-col gap-3">
           <h2 class="text-white">40m+</h2>
-          <p class="text-grey">Weekly NPM downloads</p>
+          <p class="text-grey">주간 NPM 다운로드</p>
         </div>
       </div>
     </div>
     <div
-      class="pt-14 sm:pt-30 h-[50rem] overflow-clip [mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)]"
+      class="pt-14 sm:pt-30 h-[50rem] overflow-clip [mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)]" data-ko-125="표시"
     >
       <!-- Masonry Grid -->
       <div class="columns-1 sm:columns-2 lg:columns-3 gap-5">
         <div
-          v-for="(testimonial, index) in testimonials"
+          v-for="(testimonial, index) in testimonials" data-ko-130="표시"
           :key="index"
           class="break-inside-avoid mb-5"
         >
           <div
-            class="testimonial-card relative overflow-clip isolate rounded-lg p-6 sm:px-8 sm:py-10 flex flex-col gap-6 before:content-[''] before:absolute before:inset-0 before:opacity-0 before:z-0 before:pointer-events-none before:transition-opacity before:duration-100 before:ease-in-out after:content-[''] after:absolute after:inset-px after:z-[1] after:rounded-lg after:bg-slate after:border after:border-nickel after:transition-[border-color,background] after:duration-100 after:ease-in-out hover:before:opacity-100 hover:after:border-transparent"
+            class="testimonial-card relative overflow-clip isolate rounded-lg p-6 sm:px-8 sm:py-10 flex flex-col gap-6 before:content-[''] before:absolute before:inset-0 before:opacity-0 before:z-0 before:pointer-events-none before:transition-opacity before:duration-100 before:ease-in-out after:content-[''] after:absolute after:inset-px after:z-[1] after:rounded-lg after:bg-slate after:border after:border-nickel after:transition-[border-color,background] after:duration-100 after:ease-in-out hover:before:opacity-100 hover:after:border-transparent" data-ko-135="표시"
           >
             <!-- Comment -->
             <div class="relative z-[2] flex flex-col gap-4">
               <p
-                v-for="(paragraph, pIndex) in testimonial.comment"
+                v-for="(paragraph, pIndex) in testimonial.comment" data-ko-140="표시"
                 :key="pIndex"
-                class="text-white/70 leading-relaxed text-sm sm:text-base"
+                class="text-white/70 leading-relaxed text-sm sm:text-base" data-ko-142="표시"
               >
                 {{ paragraph }}
               </p>
@@ -150,7 +150,7 @@ const testimonials: Testimonial[] = [
               <img
                 :src="testimonial.avatar"
                 :alt="testimonial.name"
-                class="w-12 h-12 rounded-sm object-cover flex-shrink-0"
+                class="w-12 h-12 rounded-sm object-cover flex-shrink-0" data-ko-154="표시"
                 loading="lazy"
               />
 

@@ -1,20 +1,20 @@
 <template>
   <div
-    class="wrapper wrapper--ticks grid md:grid-cols-2 w-full border-nickel md:divide-x"
+    class="wrapper wrapper--ticks grid md:grid-cols-2 w-full border-nickel md:divide-x" data-ko-4="표시"
   >
     <div
-      class="flex flex-col items-center text-center md:text-left md:items-start p-10 gap-5 justify-center"
+      class="flex flex-col items-center text-center md:text-left md:items-start p-10 gap-5 justify-center" data-ko-7="표시"
     >
       <h1 class="text-white text-pretty max-w-[35rem]">
-        5th anniversary of the Vite Team Creation
+        Vite 팀 창립 5주년
       </h1>
       <p class="text-white text-3xl text-pretty max-w-[35rem]">
-        Vite: The Documentary re-premiere
+        Vite: The Documentary 재상영
       </p>
       <p class="text-white/70 md:text-lg max-w-[35rem] text-pretty">
-        Join the ecosystem this March 19th at 3 PM UTC to remember the story we
-        wrote together. And participate in the live stage to discuss our past,
-        present, and future. We'll be waiting for you!
+        3월 19일 15:00 UTC에 생태계와 함께 모여 우리가 함께 써온 이야기를
+        기억하세요. 라이브 무대에 참여해 우리의 과거, 현재, 미래를 함께
+        이야기해 주세요. 기다리고 있겠습니다!
       </p>
       <div class="flex items-start justify-between w-full gap-5 mt-8">
         <div class="flex items-center gap-5">
@@ -22,24 +22,24 @@
             href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Vite.%20The%20documentary&dates=20260319T150000/20260319T160000&ctz=Europe/London&details=5th%20anniversary%20Community%20time%0A%0AJoin%20on%20Discord:%20https%3A%2F%2Fdiscord.gg%2FPsQ3SfhhDQ"
             target="_blank"
             rel="noopener noreferrer"
-            class="button button--primary inline-block w-fit"
+            class="button button--primary inline-block w-fit" data-ko-26="표시"
           >
-            Add to Calendar
+            캘린더에 추가
           </a>
           <a
             href="https://chat.vite.dev"
             target="_blank"
             rel="noopener noreferrer"
-            class="button inline-block w-fit"
+            class="button inline-block w-fit" data-ko-34="표시"
           >
-            Join Community
+            커뮤니티 참여
           </a>
         </div>
         <a
           href="https://www.cultrepo.com/"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-block w-fit grayscale hover:grayscale-0 hover:scale-105 transition-all duration-100"
+          class="inline-block w-fit grayscale hover:grayscale-0 hover:scale-105 transition-all duration-100" data-ko-43="표시"
         >
           <img
             src="../../../images/cultrepo-tv.svg"
@@ -58,10 +58,10 @@
         src="../../../images/vite-live-community.webp"
         width="1832"
         height="1388"
-        class="block sm:max-w-[80%] lg:max-w-[70%]"
+        class="block sm:max-w-[80%] lg:max-w-[70%]" data-ko-62="표시"
         inert
         loading="lazy"
-        alt="Vite community: Evan You, Matias Capeletto, Bjorn Lu, Anthony Fu, Sapphi Red, Dominik Göpel, Vladimir Sheremet, Ryan Carniato, Pedro Cattori, Mark Dalgleish, Rich Harris, Fred Schott, Eric Simons, Theo Browne, David Cramer, Misko Hevery"
+        alt="Vite 커뮤니티: Evan You, Matias Capeletto, Bjorn Lu, Anthony Fu, Sapphi Red, Dominik Göpel, Vladimir Sheremet, Ryan Carniato, Pedro Cattori, Mark Dalgleish, Rich Harris, Fred Schott, Eric Simons, Theo Browne, David Cramer, Misko Hevery"
       />
     </div>
   </div>

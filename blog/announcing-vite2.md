@@ -81,4 +81,4 @@ Vite는 기본적으로 네이티브 ESM 지원이 있는 현대 브라우저를
 npm init @vitejs/app
 ```
 
-Then, check out [the guide](https://vite.dev/guide/) to see what Vite provides out of the box. You can also check out the source code on [GitHub](https://github.com/vitejs/vite), follow updates on [Twitter](https://twitter.com/vite_js), or join discussions with other Vite users on our [Discord chat server](https://chat.vite.dev).
+그런 다음 [가이드](https://vite.dev/guide/)를 확인해 Vite가 기본적으로 제공하는 기능을 살펴보세요. [GitHub](https://github.com/vitejs/vite)에서 소스 코드를 확인하거나, [Twitter](https://twitter.com/vite_js)에서 업데이트를 팔로우하거나, [Discord 채팅 서버](https://chat.vite.dev)에서 다른 Vite 사용자와 토론에 참여할 수도 있습니다.

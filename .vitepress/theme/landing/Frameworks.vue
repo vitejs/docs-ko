@@ -2,15 +2,15 @@
   <section class="wrapper wrapper--ticks border-t py-8 sm:py-16 px-5 sm:px-10">
     <img
       src="@assets/vite/vite-frameworks-mobile.png"
-      alt="Frameworks powered by Vite"
+      alt="Vite 기반 프레임워크"
       loading="lazy"
-      class="w-full block sm:hidden"
+      class="w-full block sm:hidden" data-ko-8="표시"
     />
     <img
       src="@assets/vite/vite-frameworks.png"
-      alt="Frameworks powered by Vite"
+      alt="Vite 기반 프레임워크"
       loading="lazy"
-      class="w-full hidden sm:block"
+      class="w-full hidden sm:block" data-ko-14="표시"
     />
   </section>
 </template>

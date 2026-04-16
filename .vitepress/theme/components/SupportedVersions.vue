@@ -107,30 +107,30 @@ function isValidViteVersion(version: string) {
   <div>
     <ul>
       <li v-if="supportInfo.regularPatches.length">
-        Regular patches are released for
-        <span v-html="versionsToText(supportInfo.regularPatches)"></span>.
+        정기 패치는
+        <span v-html="versionsToText(supportInfo.regularPatches)"></span>에 릴리스됩니다.
       </li>
       <li v-if="supportInfo.importantFixes.length">
-        Important fixes and security patches are backported to
-        <span v-html="versionsToText(supportInfo.importantFixes)"></span>.
+        중요한 수정 사항과 보안 패치는
+        <span v-html="versionsToText(supportInfo.importantFixes)"></span>에 백포트됩니다.
       </li>
       <li v-if="supportInfo.securityPatches.length">
-        Security patches are also backported to
-        <span v-html="versionsToText(supportInfo.securityPatches)"></span>.
+        보안 패치는
+        <span v-html="versionsToText(supportInfo.securityPatches)"></span>에도 백포트됩니다.
       </li>
       <li>
-        All versions before these are no longer supported. Users should upgrade
-        to receive updates.
+        이보다 이전의 모든 버전은 더 이상 지원되지 않습니다. 업데이트를 받으려면
+        업그레이드해야 합니다.
       </li>
     </ul>
     <p>
-      If you're using Vite
+      사용 중인 Vite 버전이
       <input
         class="checked-input"
         type="text"
         v-model="checkedVersion"
         placeholder="0.0.0"
-      />, it is
+      />이면
       <strong :style="{ color: checkedResult.color }">{{
         checkedResult.text
       }}</strong

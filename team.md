@@ -10,8 +10,8 @@ import {
   VPTeamPageTitle,
   VPTeamPageSection,
   VPTeamMembers
-} from '@voidzero-dev/vitepress-theme'
-import { core, emeriti } from './_data/team'
+} from '@voidzero-dev/vitepress-theme' // VitePress 테마
+import { core, emeriti } from './_data/team' // 팀 데이터
 </script>
 
 <VPTeamPage>

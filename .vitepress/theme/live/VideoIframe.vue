@@ -134,7 +134,7 @@ onBeforeUnmount(() => {
 <template>
   <div
     ref="containerEl"
-    class="wrapper wrapper--ticks relative w-full border-nickel border-t md:divide-x"
+    class="wrapper wrapper--ticks relative w-full border-nickel border-t md:divide-x" data-ko-138="표시"
   >
     <Header v-if="isFullscreen" class="video-iframe-header" />
     <div
@@ -145,9 +145,9 @@ onBeforeUnmount(() => {
       @touchstart="showActionsOnTouch"
     >
       <div
-        class="video-iframe-mask absolute inset-0 bg-black/50 backdrop-blur-2xl transition-opacity duration-50"
+        class="video-iframe-mask absolute inset-0 bg-black/50 backdrop-blur-2xl transition-opacity duration-50" data-ko-149="표시"
         :class="
-          player.state === 'pause' ? 'opacity-100' : 'opacity-0 delay-400'
+          player.state === 'pause' ? 'opacity-100' : 'opacity-0 delay-400' /* 상태 */
         "
         @click="togglePlayback"
       />
@@ -156,25 +156,25 @@ onBeforeUnmount(() => {
           href="https://discord.gg/spmbbvPb9Q"
           target="_blank"
           rel="noopener noreferrer"
-          class="button block w-fit backdrop-blur transition-opacity"
+          class="button block w-fit backdrop-blur transition-opacity" data-ko-160="표시"
           :class="
-            actionsVisible || player.state !== 'play'
+            actionsVisible || player.state !== 'play' /* 상태 */
               ? 'opacity-100'
-              : 'opacity-0 delay-100 pointer-events-none'
+              : 'opacity-0 delay-100 pointer-events-none' /* 상태 */
           "
           @focus="showActions"
         >
-          Chat with us
+          함께 채팅하기
         </a>
         <button
           type="button"
-          class="button block py-1.5 px-2.25 backdrop-blur transition-opacity"
+          class="button block py-1.5 px-2.25 backdrop-blur transition-opacity" data-ko-172="표시"
           @click="toggleFullscreen"
-          :aria-label="isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'"
+          :aria-label="isFullscreen ? '전체 화면 종료' : '전체 화면 시작'"
           :class="
-            actionsVisible || player.state !== 'play'
+            actionsVisible || player.state !== 'play' /* 상태 */
               ? 'opacity-100'
-              : 'opacity-0 delay-100 pointer-events-none'
+              : 'opacity-0 delay-100 pointer-events-none' /* 상태 */
           "
           @focus="showActions"
         >
@@ -182,7 +182,7 @@ onBeforeUnmount(() => {
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
-            viewBox="0 0 24 24"
+            viewBox="0 0 24 24" data-ko-186="표시"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
@@ -208,13 +208,13 @@ onBeforeUnmount(() => {
       </div>
       <button
         type="button"
-        class="absolute button block left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 p-4 backdrop-blur transition"
+        class="absolute button block left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 p-4 backdrop-blur transition" data-ko-212="표시"
         @click="togglePlayback"
-        :aria-label="player.state === 'play' ? 'Pause video' : 'Play video'"
+        :aria-label="player.state === 'play' ? '동영상 일시정지' : '동영상 재생'"
         :class="
-          actionsVisible || player.state !== 'play'
+          actionsVisible || player.state !== 'play' /* 상태 */
             ? 'opacity-100'
-            : 'opacity-0 delay-100 pointer-events-none'
+            : 'opacity-0 delay-100 pointer-events-none' /* 상태 */
         "
         @focus="showActions"
         ref="playButtonEl"
@@ -223,7 +223,7 @@ onBeforeUnmount(() => {
           xmlns="http://www.w3.org/2000/svg"
           width="40"
           height="40"
-          viewBox="0 0 24 24"
+          viewBox="0 0 24 24" data-ko-227="표시"
           fill="none"
           stroke="currentColor"
           stroke-width="2"
@@ -236,7 +236,7 @@ onBeforeUnmount(() => {
           </g>
           <path
             v-else
-            d="M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z"
+            d="M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z" data-ko-240="표시"
           />
           <circle cx="12" cy="12" r="10" />
         </svg>
@@ -246,9 +246,9 @@ onBeforeUnmount(() => {
         @load="initPlayer"
         width="560"
         height="315"
-        class="w-full h-auto max-h-[calc(100vh-5rem-var(--vp-banner-height,0px))] aspect-video pointer-events-none"
+        class="w-full h-auto max-h-[calc(100vh-5rem-var(--vp-banner-height,0px))] aspect-video pointer-events-none" data-ko-250="표시"
         :src="iframeSrc"
-        title="YouTube video player"
+        title="YouTube 동영상 플레이어"
         frameborder="0"
         allow="
           accelerometer;

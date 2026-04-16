@@ -31,13 +31,13 @@ _2022년 12월 9일_ - [Vite 5.0 발표](./announcing-vite5.md)도 확인해보�
 
 Vite 3가 5개월 전에 [릴리스되었습니다](./announcing-vite3.md). 그 이후로 주간 npm 다운로드 수가 100만 건에서 250만 건으로 증가했습니다. 생태계도 성숙해졌으며 계속해서 성장하고 있습니다. 올해 [Jamstack Conf 설문조사](https://twitter.com/vite_js/status/1589665610119585793)에서 커뮤니티 사용률이 14%에서 32%로 급증했으며 9.7점의 높은 만족도를 유지했습니다. [Astro 1.0](https://astro.build/), [Nuxt 3](https://v3.nuxtjs.org/), 그리고 혁신하고 협력하는 다른 Vite 기반 프레임워크들의 안정적인 릴리스를 보았습니다: [SvelteKit](https://kit.svelte.dev/), [Solid Start](https://www.solidjs.com/blog/introducing-solidstart), [Qwik City](https://qwik.builder.io/qwikcity/overview/). Storybook은 [Storybook 7.0](https://storybook.js.org/blog/first-class-vite-support-in-storybook/)의 주요 기능 중 하나로 Vite에 대한 일급 지원을 발표했습니다. Deno도 이제 [Vite를 지원합니다](https://www.youtube.com/watch?v=Zjojo9wdvmY). [Vitest](https://vitest.dev) 채택이 폭발적으로 증가하고 있으며, 곧 Vite npm 다운로드의 절반을 차지할 것입니다. Nx도 생태계에 투자하고 있으며 [공식적으로 Vite를 지원합니다](https://nx.dev/packages/vite).
 
-[![Vite 4 Ecosystem](../images/ecosystem-vite4.webp)](https://viteconf.org/2022/replay)
+[![Vite 4 생태계](../images/ecosystem-vite4.webp)](https://viteconf.org/2022/replay)
 
 Vite와 관련 프로젝트들이 경험한 성장을 보여주는 사례로, Vite 생태계는 10월 11일 [ViteConf 2022](https://viteconf.org/2022/replay)에서 모였습니다. 주요 웹 프레임워크와 도구들의 대표자들이 혁신과 협력의 이야기를 들려주었습니다. 그리고 상징적인 움직임으로, Rollup 팀은 바로 그 날 [Rollup 3](https://rollupjs.org) 릴리스를 선택했습니다.
 
 오늘, Vite [팀](https://vite.dev/team)은 생태계 파트너들의 도움으로 빌드 시점에 Rollup 3로 구동되는 Vite 4의 릴리스를 발표하게 되어 기쁩니다. 저희는 이 새로운 메이저 버전을 위한 원활한 업그레이드 경로를 보장하기 위해 생태계와 함께 작업했습니다. Vite는 이제 [Rollup 3](https://github.com/vitejs/vite/issues/9870)를 사용하며, 이를 통해 Vite의 내부 에셋 처리를 단순화하고 많은 개선사항을 가져올 수 있었습니다. [Rollup 3 릴리스 노트는 여기에서](https://github.com/rollup/rollup/releases/tag/v3.0.0) 확인하세요.
 
-![Vite 4 Announcement Cover Image](/og-image-announcing-vite4.webp)
+![Vite 4 발표 커버 이미지](/og-image-announcing-vite4.webp)
 
 빠른 링크:
 
@@ -51,7 +51,7 @@ Vite와 관련 프로젝트들이 경험한 성장을 보여주는 사례로, Vi
 - [日本語](https://ja.vite.dev/)
 - [Español](https://es.vite.dev/)
 
-If you recently started using Vite, we suggest reading the [Why Vite Guide](https://vite.dev/guide/why.html) and checking out [the Getting Started](https://vite.dev/guide/) and [Features guide](https://vite.dev/guide/features). If you want to get involved, contributions are welcome at [GitHub](https://github.com/vitejs/vite). Almost [700 collaborators](https://github.com/vitejs/vite/graphs/contributors) have contributed to Vite. Follow the updates on [Twitter](https://twitter.com/vite_js) and [Mastodon](https://webtoo.ls/@vite), or collaborate with others on our [Discord community](https://chat.vite.dev).
+최근 Vite를 사용하기 시작했다면 [Vite를 사용해야 하는 이유 가이드](https://vite.dev/guide/why.html)를 읽고 [시작하기](https://vite.dev/guide/)와 [기능 가이드](https://vite.dev/guide/features)를 확인해 보세요. 참여하고 싶다면 [GitHub](https://github.com/vitejs/vite)에서 기여를 환영합니다. 거의 [700명의 협력자](https://github.com/vitejs/vite/graphs/contributors)가 Vite에 기여했습니다. [Twitter](https://twitter.com/vite_js)와 [Mastodon](https://webtoo.ls/@vite)에서 업데이트를 팔로우하거나 [Discord 커뮤니티](https://chat.vite.dev)에서 다른 사람들과 협업하세요.
 
 ## Vite 4로 체험해보기 시작하기 {#start-playing-with-vite-4}
 
@@ -131,7 +131,7 @@ Vite는 특히 문서와 재현을 위한 플레이그라운드 사용 사례에
 
 Vite 4는 Vite 기여자들의 수많은 시간의 작업 없이는 불가능했을 것입니다. 그들 중 많은 이들이 다운스트림 프로젝트와 플러그인의 메인테이너들이며, [Vite 팀](/team)의 노력도 있었습니다. 저희 모두는 Vite를 사용하는 모든 프레임워크와 앱을 위해 Vite의 DX를 다시 한 번 개선하기 위해 함께 작업했습니다. 이렇게 활기찬 생태계를 위한 공통 기반을 개선할 수 있게 되어 감사합니다.
 
-We're also thankful to individuals and companies sponsoring the Vite team, and companies investing directly in Vite's future: [@antfu7](https://twitter.com/antfu7)'s work on Vite and the ecosystem is part of his job at [Nuxt Labs](https://nuxtlabs.com/), [Astro](https://astro.build) is funding [@bluwyoo](https://twitter.com/bluwyoo)'s Vite core work, and [StackBlitz](https://stackblitz.com/) hires [@patak_dev](https://twitter.com/patak_dev) to work full time on Vite.
+Vite 팀을 후원하는 개인과 회사, 그리고 Vite의 미래에 직접 투자하는 회사들에도 감사드립니다. [@antfu7](https://twitter.com/antfu7)의 Vite와 생태계 작업은 [Nuxt Labs](https://nuxtlabs.com/)에서의 업무 일부이며, [Astro](https://astro.build)는 [@bluwyoo](https://twitter.com/bluwyoo)의 Vite 코어 작업을 후원하고, [StackBlitz](https://stackblitz.com/)는 [@patak_dev](https://twitter.com/patak_dev)가 Vite에 풀타임으로 일할 수 있도록 고용하고 있습니다.
 
 ## 다음 단계 {#next-steps}
 

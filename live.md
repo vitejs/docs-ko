@@ -28,7 +28,7 @@ head:
 ---
 
 <script setup>
-import Live from './.vitepress/theme/live/Layout.vue'
+import Live from './.vitepress/theme/live/Layout.vue' // 라이브 레이아웃
 </script>
 
 <Live />

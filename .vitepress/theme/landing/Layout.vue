@@ -18,24 +18,24 @@ const { data: sponsors } = useSponsor()
 <template>
   <Hero />
   <TrustedBy
-    :logos="['openai', 'shopify', 'stripe', 'linear', 'clickup', 'wiz']"
+    :logos="['openai', 'shopify', 'stripe', 'linear', 'clickup', 'wiz']" data-ko-22="표시"
   />
   <HeadingSection
-    heading="Redefining developer experience"
-    subheading="Vite makes web development enjoyable again"
+    heading="개발자 경험을 다시 정의합니다"
+    subheading="Vite는 웹 개발을 다시 즐겁게 만듭니다"
   />
   <ViteFeatureGrid1 />
-  <HeadingSection heading="A shared foundation to build upon" />
+  <HeadingSection heading="함께 구축할 공유 기반" />
   <ViteFeatureGrid2 />
-  <HeadingSection heading="Powering your favorite frameworks and tools" />
+  <HeadingSection heading="좋아하는 프레임워크와 도구를 구동합니다" />
   <ViteFrameworks />
   <ViteCommunity />
   <Sponsors :sponsors="sponsors" />
   <Spacer />
   <Footer
-    heading="Start building with Vite"
-    subheading="Prepare for a development environment that can finally keep pace with the speed of your mind."
-    button-text="Get Started"
+    heading="Vite로 구축을 시작하세요"
+    subheading="마침내 생각의 속도를 따라잡는 개발 환경을 준비하세요."
+    button-text="시작하기"
     button-link="/guide/"
   />
 </template>

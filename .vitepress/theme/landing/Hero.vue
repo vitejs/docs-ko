@@ -24,21 +24,21 @@ const installTabs = [
 
 <template>
   <div
-    class="wrapper wrapper--ticks grid md:grid-cols-2 w-full border-nickel md:divide-x"
+    class="wrapper wrapper--ticks grid md:grid-cols-2 w-full border-nickel md:divide-x" data-ko-28="표시"
   >
     <div
-      class="flex flex-col p-10 justify-between gap-20 items-center md:items-start"
+      class="flex flex-col p-10 justify-between gap-20 items-center md:items-start" data-ko-31="표시"
     >
       <div
-        class="flex flex-col gap-5 items-center md:items-start text-center md:text-left"
+        class="flex flex-col gap-5 items-center md:items-start text-center md:text-left" data-ko-34="표시"
       >
         <a
-          class="flex items-center gap-2"
+          class="flex items-center gap-2" data-ko-37="표시"
           href="https://voidzero.dev"
           target="_blank"
         >
-          <span class="text-grey text-xs font-mono uppercase tracking-wide"
-            >By</span
+          <span class="text-grey text-xs font-mono uppercase tracking-wide" data-ko-41="표시"
+            >제공</span
           >
           <img
             src="@assets/logos/voidzero-light.svg"
@@ -47,29 +47,29 @@ const installTabs = [
           />
         </a>
         <h1 class="text-white text-pretty max-w-[25rem]">
-          The Build Tool for the Web
+          웹을 위한 빌드 도구
         </h1>
         <p class="text-white/70 md:text-lg max-w-[27rem] text-pretty">
-          Vite is a blazing fast frontend build tool powering the next
-          generation of web applications.
+          Vite는 차세대 웹 애플리케이션을 구동하는 매우 빠른
+          프런트엔드 빌드 도구입니다.
         </p>
         <div class="flex items-center gap-5 mt-8">
           <a href="/guide/" class="button button--primary inline-block w-fit">
-            Get Started
+            시작하기
           </a>
           <a
             href="https://github.com/vitejs/vite"
             target="_blank"
             rel="noopener noreferrer"
-            class="button inline-block w-fit"
+            class="button inline-block w-fit" data-ko-65="표시"
           >
-            View on GitHub
+            GitHub에서 보기
           </a>
         </div>
       </div>
       <CodeGroup
         :tabs="installTabs"
-        class="hidden md:block w-full -mb-[16px]"
+        class="hidden md:block w-full -mb-[16px]" data-ko-73="표시"
         style="
           --vp-code-tab-bg: var(--color-slate);
           --vp-code-block-bg: var(--color-slate);
@@ -79,7 +79,7 @@ const installTabs = [
     </div>
     <div class="flex flex-col sm:min-h-[30rem]">
       <div
-        class="relative px-10 pb-10 md:pt-10 h-full flex flex-col justify-center overflow-clip"
+        class="relative px-10 pb-10 md:pt-10 h-full flex flex-col justify-center overflow-clip" data-ko-83="표시"
       >
         <RiveAnimation
           :desktop-src="viteAnimation"

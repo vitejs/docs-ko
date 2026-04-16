@@ -33,7 +33,7 @@ const sponsors = computed(() => {
     <span>
       <p class="extra-info">Building Together</p>
       <p class="heading">ViteConf 2025</p>
-      <p class="extra-info">View the replays</p>
+      <p class="extra-info">다시 보기</p>
     </span>
   </a>
   <VPDocAsideSponsors v-if="data" :data="sponsors" />

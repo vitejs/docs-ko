@@ -29,7 +29,7 @@ head:
 
 _2024년 11월 26일_
 
-![Vite 6 Announcement Cover Image](/og-image-announcing-vite6.webp)
+![Vite 6 발표 커버 이미지](/og-image-announcing-vite6.webp)
 
 오늘, 저희는 Vite의 이야기에서 또 다른 큰 발걸음을 내딛게 되었습니다. Vite [팀](/team), [기여자들](https://github.com/vitejs/vite/graphs/contributors), 그리고 생태계 파트너들은 Vite 6의 출시를 발표하게 되어 기쁩니다.
 
@@ -39,7 +39,7 @@ _2024년 11월 26일_
 
 Vite는 OpenAI, Google, Apple, Microsoft, NASA, Shopify, Cloudflare, GitLab, Reddit, Linear 등 많은 기업에서 사용되고 있습니다. 두 달 전, 저희는 [Vite를 사용하는 기업들](https://github.com/vitejs/companies-using-vite) 목록을 시작했습니다. 많은 개발자들이 자신들의 회사를 목록에 추가하기 위해 PR을 보내주시는 것을 보니 기쁩니다. Vite가 첫 걸음을 내딛은 이후 함께 구축한 생태계가 이렇게 크게 성장한 것이 믿기 어려울 정도입니다.
 
-![Vite weekly npm downloads](../images/vite6-npm-weekly-downloads.webp)
+![Vite 주간 npm 다운로드](../images/vite6-npm-weekly-downloads.webp)
 
 ## Vite 생태계 가속화 {#speeding-up-the-vite-ecosystem}
 
@@ -66,7 +66,7 @@ Vite를 처음 사용하신다면, 먼저 [시작하기](/guide/) 및 [기능](/
 
 이 새로운 메이저를 만드는 데 도움을 준 [Vite Core의 1,000명 이상의 기여자들](https://github.com/vitejs/vite/graphs/contributors)과 Vite 플러그인, 통합, 도구, 번역의 유지보수자 및 기여자들에게 감사드립니다. 참여하여 전체 생태계를 위한 Vite 개선에 도움을 주시기 바랍니다. 자세한 내용은 [기여 가이드](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md)에서 확인하세요.
 
-To get started, we suggest helping [triage issues](https://github.com/vitejs/vite/issues), [review PRs](https://github.com/vitejs/vite/pulls), send failing tests PRs based on open issues, and support others in [Discussions](https://github.com/vitejs/vite/discussions) and Vite Land's [help forum](https://discord.com/channels/804011606160703521/1019670660856942652). If you'd like to talk to us, join our [Discord community](https://chat.vite.dev) and say hi on the [#contributing channel](https://discord.com/channels/804011606160703521/804439875226173480).
+시작하려면 [이슈 트리아징](https://github.com/vitejs/vite/issues), [PR 리뷰](https://github.com/vitejs/vite/pulls), 열린 이슈를 기반으로 한 실패 테스트 PR 제출, [Discussions](https://github.com/vitejs/vite/discussions)와 Vite Land의 [도움말 포럼](https://discord.com/channels/804011606160703521/1019670660856942652)에서 다른 사람 돕기를 권장합니다. 저희와 이야기하고 싶다면 [Discord 커뮤니티](https://chat.vite.dev)에 참여해 [#contributing 채널](https://discord.com/channels/804011606160703521/804439875226173480)에서 인사해 주세요.
 
 Vite 생태계와 Vite 코어에 대한 최신 뉴스는 [Bluesky](https://bsky.app/profile/vite.dev), [X](https://twitter.com/vite_js), 또는 [Mastodon](https://webtoo.ls/@vite)에서 저희를 팔로우해주세요.
 
@@ -95,7 +95,7 @@ Vite 팀의 모든 구성원이 새로운 API 정의에 참여했으며, 이는 
 ## 주요 변경사항 {#main-changes}
 
 - [`resolve.conditions`의 기본값](/guide/migration#default-value-for-resolve-conditions)
-- [JSON stringify](/guide/migration#json-stringify)
+- [JSON 문자열화](/guide/migration#json-stringify)
 - [HTML 요소의 애셋 참조에 대한 확장 지원](/guide/migration#extended-support-of-asset-references-in-html-elements)
 - [postcss-load-config](/guide/migration#postcss-load-config)
 - [Sass가 이제 기본적으로 modern API를 사용](/guide/migration#sass-now-uses-modern-api-by-default)

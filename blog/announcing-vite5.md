@@ -29,7 +29,7 @@ head:
 
 _2023년 11월 16일_
 
-![Vite 5 Announcement Cover Image](/og-image-announcing-vite5.webp)
+![Vite 5 발표 커버 이미지](/og-image-announcing-vite5.webp)
 
 Vite 4가 거의 1년 전에 [릴리스되었고](./announcing-vite4.md), 생태계에 견고한 기반을 제공했습니다. 프로젝트들이 공유 인프라를 기반으로 계속 구축하면서 주간 npm 다운로드 수는 250만 건에서 750만 건으로 급증했습니다. 프레임워크들은 지속적으로 혁신을 이어갔으며, [Astro](https://astro.build/), [Nuxt](https://nuxt.com/), [SvelteKit](https://kit.svelte.dev/), [Solid Start](https://www.solidjs.com/blog/introducing-solidstart), [Qwik City](https://qwik.builder.io/qwikcity/overview/) 등을 비롯해 새로운 프레임워크들이 합류하여 생태계를 더욱 강화했습니다. [RedwoodJS](https://redwoodjs.com/)와 [Remix](https://remix.run/)가 Vite로 전환하면서 React 생태계에서의 추가 도입 가능성을 열었습니다. [Vitest](https://vitest.dev)는 Vite보다도 빠른 속도로 성장을 지속했습니다. Vitest 팀은 열심히 작업하고 있으며 곧 [Vitest 1.0을 릴리스할 예정](https://github.com/vitest-dev/vitest/issues/3596)입니다. [Storybook](https://storybook.js.org), [Nx](https://nx.dev), [Playwright](https://playwright.dev)와 같은 다른 도구들과 함께 사용할 때의 Vite 경험은 계속 개선되었고, [Deno](https://deno.com)와 [Bun](https://bun.sh)에서 Vite 개발이 작동하는 등 환경 면에서도 마찬가지였습니다.
 
@@ -58,7 +58,7 @@ Vite 5는 API 정리(더 이상 사용되지 않는 기능 제거)에 집중하�
 
 Vite를 처음 사용하신다면 먼저 [시작하기](/guide/)와 [기능](/guide/features) 가이드를 읽어보시기를 권합니다.
 
-We appreciate the more than [850 contributors to Vite Core](https://github.com/vitejs/vite/graphs/contributors), and the maintainers and contributors of Vite plugins, integrations, tools, and translations that have helped us reach here. We encourage you to get involved and continue to improve Vite with us. You can learn more at our [Contributing Guide](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md). To get started, we recommend [triaging issues](https://github.com/vitejs/vite/issues), [reviewing PRs](https://github.com/vitejs/vite/pulls), sending failing tests PRs based on open issues, and helping others in [Discussions](https://github.com/vitejs/vite/discussions) and Vite Land's [help forum](https://discord.com/channels/804011606160703521/1019670660856942652). You'll learn a lot along the way and have a smooth path to further contributions to the project. If you have doubts, join us on our [Discord community](https://chat.vite.dev) and say hi on the [#contributing channel](https://discord.com/channels/804011606160703521/804439875226173480).
+여기까지 올 수 있도록 도와준 [Vite Core의 850명 이상의 기여자](https://github.com/vitejs/vite/graphs/contributors), 그리고 Vite 플러그인, 통합, 도구, 번역의 메인테이너와 기여자들에게 감사드립니다. 여러분도 참여하여 저희와 함께 Vite를 계속 개선해 주시기를 바랍니다. 자세한 내용은 [기여 가이드](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md)에서 확인할 수 있습니다. 시작하려면 [이슈 트리아징](https://github.com/vitejs/vite/issues), [PR 리뷰](https://github.com/vitejs/vite/pulls), 열린 이슈를 기반으로 한 실패 테스트 PR 제출, [Discussions](https://github.com/vitejs/vite/discussions)와 Vite Land의 [도움말 포럼](https://discord.com/channels/804011606160703521/1019670660856942652)에서 다른 사람 돕기를 권장합니다. 그 과정에서 많은 것을 배우고 프로젝트에 더 기여하기 위한 자연스러운 경로를 얻을 수 있습니다. 궁금한 점이 있다면 [Discord 커뮤니티](https://chat.vite.dev)에 참여해 [#contributing 채널](https://discord.com/channels/804011606160703521/804439875226173480)에서 인사해 주세요.
 
 최신 소식을 받아보려면 [X](https://twitter.com/vite_js) 또는 [Mastodon](https://webtoo.ls/@vite)에서 팔로우해 주세요.
 

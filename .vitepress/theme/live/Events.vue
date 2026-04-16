@@ -36,15 +36,15 @@ const EVENTS = [
 <template>
   <div class="wrapper wrapper--ticks w-full text-center md:text-left">
     <h2
-      class="text-white text-2xl px-10 py-5 text-pretty border-nickel border-y"
+      class="text-white text-2xl px-10 py-5 text-pretty border-nickel border-y" data-ko-40="표시"
     >
-      Previous events
+      이전 이벤트
     </h2>
     <div class="relative grid md:grid-cols-2 xl:grid-cols-4 wrapper--ticks">
       <a
-        v-for="event in EVENTS"
+        v-for="event in EVENTS" data-ko-46="표시"
         :key="event.date"
-        class="group event-card block p-0.5"
+        class="group event-card block p-0.5" data-ko-48="표시"
         :style="`background-image: url(${background});`"
         :href="event.url"
         target="_blank"
@@ -53,7 +53,7 @@ const EVENTS = [
         <img
           :src="event.image"
           :alt="event.title"
-          class="w-full aspect-video object-cover"
+          class="w-full aspect-video object-cover" data-ko-57="표시"
         />
         <div class="bg-primary group-hover:bg-primary/95 bg-blur-lg">
           <h3 class="text-white text-xl px-10 py-3 text-pretty">

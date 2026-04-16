@@ -10,7 +10,7 @@ defineProps({
       width="560"
       height="315"
       :src="`https://www.youtube.com/embed/${videoId}`"
-      title="YouTube video player"
+      title="YouTube 동영상 플레이어"
       frameborder="0"
       allow="
         accelerometer;
