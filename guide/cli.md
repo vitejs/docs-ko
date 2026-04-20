@@ -48,30 +48,30 @@ vite build [root]
 
 #### 옵션 {#options-1}
 
-| Options                        |                                                                                                                       |
-| ------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
-| `--target <target>`            | 트랜스파일 대상 (기본값: `"modules"`) (`string`)                                                                      |
-| `--outDir <dir>`               | 빌드 결과 디렉터리 지정 (기본값: `dist`) (`string`)                                                                   |
-| `--assetsDir <dir>`            | outDir 내부의 에셋이 위치할 디렉터리 (기본값: `"assets"`) (`string`)                                                  |
-| `--assetsInlineLimit <number>` | base64로 인라인되는 에셋의 바이트 임계값 (기본값: `4096`) (`number`)                                                  |
-| `--ssr [entry]`                | 지정된 엔트리를 서버 사이드 렌더링을 위해 빌드 (`string`)                                                             |
-| `--sourcemap [output]`         | 빌드에 소스 맵 포함 (기본값: `false`) (`boolean \| "inline" \| "hidden"`)                                             |
-| `--minify [minifier]`          | minify 옵션을 활성화/비활성화하거나 사용할 minifier를 지정 (기본값: `"esbuild"`) (`boolean \| "terser" \| "esbuild"`) |
-| `--manifest [name]`            | 빌드 매니페스트 JSON 내보내기 (`boolean \| string`)                                                                   |
-| `--ssrManifest [name]`         | SSR 매니페스트 JSON 내보내기 (`boolean \| string`)                                                                    |
-| `--emptyOutDir`                | outDir가 프로젝트 루트 밖에 있을 때 강제로 outDir 디렉터리를 비우기 (`boolean`)                                       |
-| `-w, --watch`                  | 디스크의 모듈이 변경되면 다시 빌드 (`boolean`)                                                                        |
-| `-c, --config <file>`          | 설정 파일 지정 (`string`)                                                                                             |
-| `--base <path>`                | `base` 옵션 위치 지정 (기본값: `/`) (`string`)                                                                        |
-| `-l, --logLevel <level>`       | Info \| warn \| error \| silent (`string`)                                                                            |
-| `--clearScreen`                | 로깅 시 화면을 지우는 것을 허용/비허용 (`boolean`)                                                                    |
-| `--configLoader <loader>`      | esbuild로 설정을 번들링하려면 `bundle`을, 실시간으로 처리하려면 `runner`(실험적 기능)를 사용 (기본값: `bundle`)       |
-| `--profile`                    | 빌트인 Node.js 인스펙터 실행 ([성능 병목현상](/guide/troubleshooting#performance-bottlenecks) 참고)                   |
-| `-d, --debug [feat]`           | 디버그 로그 표시 (`string \| boolean`)                                                                                |
-| `-f, --filter <filter>`        | 디버그 로그 필터 (`string`)                                                                                           |
-| `-m, --mode <mode>`            | env 모드 설정 (`string`)                                                                                              |
-| `-h, --help`                   | 사용 가능한 CLI 옵션 표시                                                                                             |
-| `--app`                        | 모든 환경을 빌드, `builder: {}`와 동일 (`boolean`, 실험적 기능)                                                       |
+| Options                        |                                                                                                                          |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `--target <target>`            | Transpile target (default: `"baseline-widely-available"`) (`string`)                                                     |
+| `--outDir <dir>`               | Output directory (default: `dist`) (`string`)                                                                            |
+| `--assetsDir <dir>`            | Directory under outDir to place assets in (default: `"assets"`) (`string`)                                               |
+| `--assetsInlineLimit <number>` | Static asset base64 inline threshold in bytes (default: `4096`) (`number`)                                               |
+| `--ssr [entry]`                | Build specified entry for server-side rendering (`string`)                                                               |
+| `--sourcemap [output]`         | Output source maps for build (default: `false`) (`boolean \| "inline" \| "hidden"`)                                      |
+| `--minify [minifier]`          | Enable/disable minification, or specify minifier to use (default: `"oxc"`) (`boolean \| "oxc" \| "terser" \| "esbuild"`) |
+| `--manifest [name]`            | Emit build manifest json (`boolean \| string`)                                                                           |
+| `--ssrManifest [name]`         | Emit ssr manifest json (`boolean \| string`)                                                                             |
+| `--emptyOutDir`                | Force empty outDir when it's outside of root (`boolean`)                                                                 |
+| `-w, --watch`                  | Rebuilds when modules have changed on disk (`boolean`)                                                                   |
+| `-c, --config <file>`          | Use specified config file (`string`)                                                                                     |
+| `--base <path>`                | Public base path (default: `/`) (`string`)                                                                               |
+| `-l, --logLevel <level>`       | Info \| warn \| error \| silent (`string`)                                                                               |
+| `--clearScreen`                | Allow/disable clear screen when logging (`boolean`)                                                                      |
+| `--configLoader <loader>`      | Use `bundle` to bundle the config with Rolldown or `runner` (experimental) to process it on the fly (default: `bundle`)  |
+| `--profile`                    | Start built-in Node.js inspector (check [Performance bottlenecks](/guide/troubleshooting#performance-bottlenecks))       |
+| `-d, --debug [feat]`           | Show debug logs (`string \| boolean`)                                                                                    |
+| `-f, --filter <filter>`        | Filter debug logs (`string`)                                                                                             |
+| `-m, --mode <mode>`            | Set env mode (`string`)                                                                                                  |
+| `-h, --help`                   | Display available CLI options                                                                                            |
+| `--app`                        | Build all environments, same as `builder: {}` (`boolean`, experimental)                                                  |
 
 ## 기타 {#others}
 
@@ -106,7 +106,7 @@ vite optimize [root]
 
 프로덕션 빌드를 로컬에서 미리 봅니다. 프로덕션 서버용으로 설계되지 않았기에 프로덕션 서버로 사용하면 안 됩니다.
 
-This command starts a server in the build directory (by default `dist`). Run `vite build` beforehand to ensure that the build directory is up-to-date. Depending on the project's configured [`appType`](/config/shared-options.html#apptype), it makes use of certain middleware.
+This command starts a server in the build directory (by default `dist`). Run `vite build` beforehand to ensure that the build directory is up-to-date. Depending on the project's configured [`appType`](/config/shared-options#apptype), it makes use of certain middleware.
 
 #### 사용 방법 {#usage-3}
 

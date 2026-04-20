@@ -287,6 +287,18 @@ Windows에서 프로젝트에 드라이브 간 링크가 있는 경우 Vite가 �
 - `mklink` 명령으로 다른 드라이브에 대한 소프트 링크(Junction)/심볼릭 링크 (예: Yarn 글로벌 캐시)
 
 관련 이슈: [#10802](https://github.com/vitejs/vite/issues/10802)
+### Default import unexpectedly returns an object
+
+The default import returns the `module.exports` object for CJS modules, while you may expect it to return the `module.exports.default` value.
+
+This may cause errors like:
+
+> Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: object.
+
+> foo is not a function
+
+See Rolldown's docs about this problem for more details: [Ambiguous `default` import from CJS modules - Bundling CJS | Rolldown](https://rolldown.rs/in-depth/bundling-cjs#ambiguous-default-import-from-cjs-modules).
+
 
 <script setup lang="ts">
 // 해시가 있는 오래된 링크를 이전 버전 문서로 리디렉션
