@@ -28,7 +28,7 @@ Vite 6는 환경이라는 개념을 공식화합니다. Vite 5까지는 두 가�
 
 개발 시 Vite는 서버 코드를 Vite 개발 서버와 동일한 Node.js 프로세스에서 실행해 프로덕션 환경과 유사한 환경을 제공합니다. 하지만 서버는 [Cloudflare의 workerd](https://github.com/cloudflare/workerd)처럼 다른 제약 조건을 가진 JS 런타임에서도 실행될 수 있습니다. 또한 최신 앱은 브라우저, Node.js 서버, 엣지 서버 등 두 개 이상 환경에서 실행될 수도 있습니다. Vite 5는 이러한 환경을 제대로 구성할 수 없었습니다.
 
-Vite 6는 빌드 및 개발 단계에서 모든 환경에 맞춰 앱을 구성할 수 있습니다. 개발 단계에서, 하나의 Vite 개발 서버를 통해 여러 다른 환경에서 동시에 코드를 실행할 수 있습니다. 물론 앱 소스 코드는 여전히 Vite 개발 서버가 변환합니다. 공유된 HTTP 서버, 미들웨어, 확인된 설정, 플러그인 파이프라인 위에서 Vite 개발 서버는 이제 독립적인 개발 환경을 가질 수 있습니다. 각각은 프로덕션 환경과 최대한 가깝게 구성되며, 코드 실행을 위한 개발 런타임에 연결됩니다(workerd의 경우, 서버 코드는 로컬에서 miniflare로 실행 가능). 클라이언트에서는 브라우저가 코드를 임포트하고 실행합니다. 다른 환경에서는 모듈을 사용하는 측에서 변환된 코드를 가져와 실행합니다.
+Vite 6는 빌드 및 개발 단계에서 모든 환경에 맞춰 앱을 구성할 수 있습니다. 개발 단계에서, 하나의 Vite 개발 서버를 통해 여러 다른 환경에서 동시에 코드를 실행할 수 있습니다. 물론 앱 소스 코드는 여전히 Vite 개발 서버가 변환합니다. 공유된 HTTP 서버, 미들웨어, 확인된 설정, 플러그인 파이프라인 위에서 Vite 개발 서버는 이제 독립적인 개발 환경을 가질 수 있습니다. 각각은 프로덕션 환경과 최대한 가깝게 구성되며, 코드 실행을 위한 개발 런타임에 연결됩니다(workerd의 경우, 서버 코드는 로컬에서 miniflare로 실행 가능). 클라이언트에서는 브라우저가 코드를 임포트하고 실행합니다. 다른 환경에서는 모듈 러너가 변환된 코드를 가져와 평가합니다.
 
 ![Vite 환경](../images/vite-environments.svg)
 
@@ -99,6 +99,8 @@ interface UserConfig extends EnvironmentOptions {
 ## 커스텀 환경 인스턴스 {#custom-environment-instances}
 
 런타임 제공자가 자신의 런타임에 맞게 환경을 구성할 수 있도록 저수준 설정 API를 제공합니다. 이렇게 구성한 환경은 개발 중 프로덕션과 더 유사한 런타임에서 모듈을 실행하기 위해 다른 프로세스나 스레드를 생성할 수도 있습니다.
+
+예를 들어, [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/)은 Environment API를 사용해 개발 중 Cloudflare Workers 런타임(`workerd`)에서 코드를 실행합니다.
 
 ```js
 import { customEnvironment } from 'vite-environment-provider'
