@@ -18,7 +18,7 @@ Vite의 내부 및 공식 플러그인은 가능한 최소한의 작업을 수�
 
 그러나 커뮤니티 플러그인의 성능은 Vite가 통제할 수 없으며 이로 인해 개발자 경험에 영향을 줄 수 있습니다. 아래는 추가적인 Vite 플러그인을 사용할 때 주의해야 할 몇 가지 사항입니다:
 
-1. 특정 상황에서만 사용되는 대형 종속성은 Node.js 시작 시간을 줄이기 위해 동적으로 임포트되어야 합니다. 예시: [vite-plugin-react#212](https://github.com/vitejs/vite-plugin-react/pull/212) 및 [vite-plugin-pwa#224](https://github.com/vite-pwa/vite-plugin-pwa/pull/244).
+1. 특정 상황에서만 사용되는 대형 종속성은 Node.js 시작 시간을 줄이기 위해 동적으로 임포트되어야 합니다. 리팩터링 예시: [vite-plugin-react#212](https://github.com/vitejs/vite-plugin-react/pull/212) 및 [vite-plugin-pwa#224](https://github.com/vite-pwa/vite-plugin-pwa/pull/244).
 
 2. `buildStart`, `config`, `configResolved` 훅은 길고 복잡한 작업을 수행해서는 안 됩니다. 이 훅들은 개발 서버가 시작되는 동안 기다려야 하므로, 브라우저에서 사이트에 접근할 수 있는 시간이 지연됩니다.
 
@@ -79,7 +79,7 @@ Vite 개발 서버는 브라우저에서 요청한 파일만 변환하기 때문
 main.js -> BigComponent.vue -> big-utils.js -> large-data.json
 ```
 
-파일의 임포트 관계는 변환된 후에만 알 수 있습니다. 따라서 만약 `BigComponent.vue` 파일 변환에 시간이 걸린다면, `big-utils.js`는 그만큼 기다릴 수밖에 없고, 이후의 파일들도 마찬가지입니다. 이러한 내부적인 워터폴은 곧 요청될 것으로 예상되는 파일을 미리 변환하는 것만으로는 막기 어렵습니다.
+파일의 임포트 관계는 변환된 후에만 알 수 있습니다. 따라서 만약 `BigComponent.vue` 파일 변환에 시간이 걸린다면, `big-utils.js`는 그만큼 기다릴 수밖에 없고, 이후의 파일들도 마찬가지입니다. 이러한 내부적인 워터폴은 빌트인된 사전 변환이 있어도 발생합니다.
 
 이를 위해 Vite는 [`server.warmup`](/config/server-options.md#server-warmup) 옵션을 통해 `big-utils.js`와 같이 자주 사용되는 파일을 워밍업할 수 있도록 제공하고 있습니다. 이렇게 하면 `big-utils.js`는 요청 즉시 제공할 수 있도록 준비되고 캐시됩니다.
 
@@ -112,16 +112,13 @@ export default defineConfig({
 
 코드베이스가 커져도 Vite를 빠르게 유지하는 방법은 소스 파일(JS/TS/CSS)의 작업량을 줄이는 것입니다.
 
-이에 대한 예시는 다음과 같습니다:
+작업량을 줄이는 예시는 다음과 같습니다:
 
-- 가능하다면 Sass/Less/Stylus 대신 CSS를 사용하세요. 중첩된 스타일은 PostCSS에서 처리할 수 있습니다.
+- 가능하다면 Sass/Less/Stylus 대신 CSS를 사용하세요. 중첩된 스타일은 PostCSS / Lightning CSS에서 처리할 수 있습니다.
 - SVG를 UI 프레임워크 컴포넌트(React, Vue 등)로 변환하지 마세요. 대신 문자열이나 URL로 임포트하세요.
-- `@vitejs/plugin-react`를 사용하는 경우, 빌드 중 변환을 수행하지 않기 위해 Babel 옵션을 구성하지 마세요. 이 경우 esbuild만 사용됩니다.
 
 네이티브 툴링을 사용하는 예시:
 
-네이티브 툴링을 사용하면 설치 시 크기가 커지는 경우가 많으므로 새로운 Vite 프로젝트를 시작할 때는 기본적으로 사용되지 않습니다. 그러나 대규모 애플리케이션의 경우에는 그 비용을 감당할 가치가 있을 수 있습니다.
+Vite 코어는 네이티브 툴링을 기반으로 하지만, 일부 기능은 더 나은 호환성과 기능 세트를 제공하기 위해 기본적으로 여전히 비네이티브 툴링을 사용합니다. 그러나 대규모 애플리케이션의 경우에는 그 비용을 감당할 가치가 있을 수 있습니다.
 
-- Rollup과 esbuild 대신 [Rolldown](./rolldown)을 사용해 보세요. 더 빠른 빌드와 개발-빌드 간 일관된 경험을 누릴 수 있습니다.
 - 실험적으로 도입된 [LightningCSS](https://github.com/vitejs/vite/discussions/13835)를 사용해 보세요.
-- `@vitejs/plugin-react` 대신 [`@vitejs/plugin-react-swc`](https://github.com/vitejs/vite-plugin-react-swc)를 사용하세요.
