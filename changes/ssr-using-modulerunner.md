@@ -8,7 +8,7 @@
 
 영향을 받는 범위: `Vite 플러그인 개발자`
 
-::: warning 지원 중단
+::: warning 향후 지원 중단
 `ModuleRunner`는 `v6.0`에서 처음 도입되었습니다. `server.ssrLoadModule`의 지원 중단은 향후 메이저 버전에서 계획되어 있습니다. 사용 현황을 확인하려면 Vite 설정에서 `future.removeSsrLoadModule`을 `"warn"`으로 설정하세요.
 :::
 
