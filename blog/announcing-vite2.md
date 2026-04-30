@@ -29,7 +29,7 @@ _2021년 2월 16일_ - [Vite 3.0 발표](./announcing-vite3.md)도 확인해보�
 
 오늘 Vite 2.0의 공식 릴리스를 발표하게 되어 매우 기쁩니다!
 
-Vite(프랑스어로 "빠르다"는 뜻, `/vit/`로 발음)는 프론트엔드 웹 개발을 위한 새로운 종류의 빌드 도구입니다. 미리 구성된 개발 서버 + 번들러 조합이라고 생각하시면 되지만, 더 가볍고 빠릅니다. 브라우저의 [네이티브 ES 모듈](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) 지원과 [esbuild](https://esbuild.github.io/)와 같이 네이티브로 컴파일되는 언어로 작성된 도구들을 활용하여 빠르고 현대적인 개발 경험을 제공합니다.
+Vite(프랑스어로 "빠르다"는 뜻, `/vit/`로 발음)는 프런트엔드 웹 개발을 위한 새로운 종류의 빌드 도구입니다. 미리 구성된 개발 서버 + 번들러 조합이라고 생각하시면 되지만, 더 가볍고 빠릅니다. 브라우저의 [네이티브 ES 모듈](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) 지원과 [esbuild](https://esbuild.github.io/)와 같이 네이티브로 컴파일되는 언어로 작성된 도구들을 활용하여 빠르고 현대적인 개발 경험을 제공합니다.
 
 Vite가 얼마나 빠른지 느껴보시려면, Repl.it에서 Vite와 `create-react-app`(CRA)을 사용하여 React 애플리케이션을 부팅하는 [이 영상 비교](https://twitter.com/amasad/status/1355379680275128321)를 확인해보세요.
 
@@ -47,25 +47,25 @@ Vite 2.0은 그 과정에서 배운 것들을 바탕으로 더 견고한 내부 
 
 ### 새로운 플러그인 형식 및 API {#new-plugin-format-and-api}
 
-[WMR](https://github.com/preactjs/wmr)에서 영감을 받은 새로운 플러그인 시스템은 Rollup의 플러그인 인터페이스를 확장하며 [많은 Rollup 플러그인](https://vite-rollup-plugins.patak.dev/)과 즉시 호환됩니다. 플러그인은 Rollup 호환 훅을 사용할 수 있으며, Vite 전용 동작을 위한 추가적인 Vite 전용 훅과 속성을 가집니다(예: 개발 vs 빌드 구분 또는 HMR의 사용자 정의 처리).
+[WMR](https://github.com/preactjs/wmr)에서 영감을 받은 새로운 플러그인 시스템은 Rollup의 플러그인 인터페이스를 확장하며 [많은 Rollup 플러그인](https://vite-rollup-plugins.patak.dev/)과 즉시 호환됩니다. 플러그인은 Rollup 호환 훅을 사용할 수 있으며, Vite 전용 동작을 조정하기 위한 추가적인 Vite 전용 훅과 프로퍼티를 가집니다(예: 개발 vs 빌드 구분 또는 HMR의 사용자 정의 처리).
 
 [프로그래매틱 API](https://vite.dev/guide/api-javascript.html)도 Vite 위에 구축된 상위 레벨 도구/프레임워크를 용이하게 하기 위해 크게 개선되었습니다.
 
-### esbuild 기반 의존성 사전 번들링 {#esbuild-powered-dep-pre-bundling}
+### esbuild 기반 디펜던시 사전 번들링 {#esbuild-powered-dep-pre-bundling}
 
-Vite는 네이티브 ESM 개발 서버이므로, 브라우저 요청 수를 줄이고 CommonJS에서 ESM으로의 변환을 처리하기 위해 의존성을 사전 번들링합니다. 이전에 Vite는 이를 Rollup을 사용하여 수행했지만, 2.0에서는 `esbuild`를 사용하여 10-100배 빠른 의존성 사전 번들링을 구현했습니다. 참고로, React Material UI와 같은 무거운 의존성을 가진 테스트 앱의 콜드 부팅은 M1 기반 MacBook Pro에서 이전에는 28초가 걸렸지만 이제는 약 1.5초가 걸립니다. 전통적인 번들러 기반 설정에서 전환하신다면 비슷한 개선을 기대하실 수 있습니다.
+Vite는 네이티브 ESM 개발 서버이므로, 브라우저 요청 수를 줄이고 CommonJS에서 ESM으로의 변환을 처리하기 위해 디펜던시를 사전 번들링합니다. 이전에 Vite는 이를 Rollup을 사용하여 수행했지만, 2.0에서는 `esbuild`를 사용하여 10-100배 빠른 디펜던시 사전 번들링을 구현했습니다. 참고로, React Material UI와 같은 무거운 디펜던시를 가진 테스트 앱의 콜드 부팅은 M1 기반 MacBook Pro에서 이전에는 28초가 걸렸지만 이제는 약 1.5초가 걸립니다. 전통적인 번들러 기반 설정에서 전환하신다면 비슷한 개선을 기대하실 수 있습니다.
 
 ### 일급 CSS 지원 {#first-class-css-support}
 
 Vite는 CSS를 모듈 그래프의 일급 시민으로 취급하며 다음을 즉시 지원합니다:
 
-- **리졸버 성능 향상**: Vite 리졸버를 통해 CSS의 `@import`와 `url()` 경로는 별칭과 npm 의존성을 사용할 수 있습니다.
+- **리졸버 성능 향상**: Vite 리졸버를 통해 CSS의 `@import`와 `url()` 경로는 별칭과 npm 디펜던시를 사용할 수 있습니다.
 - **URL 경로 재조정**: `url()` 경로는 파일이 어디서 가져와지든 상관없이 자동으로 재조정됩니다.
 - **CSS 코드 분할**: 코드 분할되는 JS 청크는 이 곳에서 사용하는 CSS 파일도 함께 내보내며, 요청 시 JS 청크와 병렬로 자동 로드됩니다.
 
 ### 서버 사이드 렌더링(SSR) 지원 {#server-side-rendering-ssr-support}
 
-Vite 2.0은 [실험적 SSR 지원](https://vite.dev/guide/ssr.html)과 함께 제공됩니다. Vite는 개발 중에 Node.js에서 ESM 기반 소스 코드를 효율적으로 로드하고 업데이트하는 API를 제공하며(거의 서버 사이드 HMR과 같음), 개발 및 SSR 빌드 속도를 향상시키기 위해 CommonJS 호환 의존성을 자동으로 외부화합니다. 프로덕션 서버는 Vite와 완전히 분리될 수 있으며, 동일한 설정을 사전 렌더링/SSG를 수행하도록 쉽게 적응시킬 수 있습니다.
+Vite 2.0은 [실험적 SSR 지원](https://vite.dev/guide/ssr.html)과 함께 제공됩니다. Vite는 개발 중에 Node.js에서 ESM 기반 소스 코드를 효율적으로 로드하고 업데이트하는 API를 제공하며(거의 서버 사이드 HMR과 같음), 개발 및 SSR 빌드 속도를 향상시키기 위해 CommonJS 호환 디펜던시를 자동으로 외부화합니다. 프로덕션 서버는 Vite와 완전히 분리될 수 있으며, 동일한 설정을 사전 렌더링/SSG를 수행하도록 쉽게 적응시킬 수 있습니다.
 
 Vite SSR은 저수준 기능으로 제공되며, 상위 레벨 프레임워크들이 이를 내부적으로 활용할 것으로 기대합니다.
 
@@ -81,4 +81,4 @@ Vite는 기본적으로 네이티브 ESM 지원이 있는 현대 브라우저를
 npm init @vitejs/app
 ```
 
-그런 다음, [가이드](https://vite.dev/guide/)를 확인하여 Vite가 즉시 제공하는 것들을 살펴보세요. [GitHub](https://github.com/vitejs/vite)에서 소스 코드를 확인하거나, [Twitter](https://twitter.com/vite_js)에서 업데이트를 팔로우하거나, [Discord 채팅 서버](http://chat.vite.dev/)에서 다른 Vite 사용자들과 토론에 참여할 수도 있습니다.
+그런 다음, [가이드](https://vite.dev/guide/)를 확인하여 Vite가 즉시 제공하는 것들을 살펴보세요. [GitHub](https://github.com/vitejs/vite)에서 소스 코드를 확인하거나, [Twitter](https://twitter.com/vite_js)에서 업데이트를 팔로우하거나, [Discord 채팅 서버](https://chat.vite.dev)에서 다른 Vite 사용자들과 토론에 참여할 수도 있습니다.
