@@ -10,10 +10,10 @@ head:
       content: website
   - - meta
     - property: og:title
-      content: Vite 4.3이 출시되었습니다!
+      content: Announcing Vite 4.3
   - - meta
     - property: og:image
-      content: https://vite.dev/og-image-announcing-vite4-3.png
+      content: https://vite.dev/og-image-announcing-vite4-3.webp
   - - meta
     - property: og:url
       content: https://vite.dev/blog/announcing-vite4-3
@@ -29,7 +29,7 @@ head:
 
 _2023년 4월 20일_
 
-![Vite 4.3 Announcement Cover Image](/og-image-announcing-vite4-3.png)
+![Vite 4.3 Announcement Cover Image](/og-image-announcing-vite4-3.webp)
 
 빠른 링크:
 
@@ -60,9 +60,9 @@ Vite 기여자 중 한 명이 작성한 이 블로그 포스트에서 성능 작
 | **Root HMR**       |    30.5ms |   24.0ms |      -21.3% |
 | **Leaf HMR**       |    16.9ms |   10.0ms |      -40.8% |
 
-![Vite 4.3 vs 4.2 startup time comparison](/vite4-3-startup-time.png)
+![Vite 4.3 vs 4.2 startup time comparison](../images/vite4-3-startup-time.webp)
 
-![Vite 4.3 vs 4.2 HMR time comparison](/vite4-3-hmr-time.png)
+![Vite 4.3 vs 4.2 HMR time comparison](../images/vite4-3-hmr-time.webp)
 
 벤치마크에 대한 자세한 정보는 [여기](https://gist.github.com/sapphi-red/25be97327ee64a3c1dce793444afdf6e)에서 확인할 수 있습니다. 이 성능 테스트의 사양과 버전:
 
@@ -79,11 +79,11 @@ Vite 기여자 중 한 명이 작성한 이 블로그 포스트에서 성능 작
 
 ## 프로파일링 {#profiling}
 
-Vite의 성능 향상 작업을 계속 진행할 예정입니다. 각 Pull Request에 대한 성능 메트릭을 얻을 수 있는 공식 [벤치마크 도구](https://github.com/vitejs/vite-benchmark)를 작업하고 있습니다.
+Vite의 성능 향상 작업을 계속 진행할 예정입니다. 각 Pull Request에 대한 성능 메트릭을 얻을 수 있는 Vite용 공식 [벤치마크 도구](https://github.com/vitejs/vite-benchmark)를 작업하고 있습니다.
 
 그리고 [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect)는 이제 어떤 플러그인이나 미들웨어가 애플리케이션의 병목인지 식별하는 데 도움이 되는 더 많은 성능 관련 기능을 제공합니다.
 
-페이지가 로드된 후 `vite --profile`을 사용하고 (그 다음 `p`를 누르면) 개발 서버 시작의 CPU 프로파일이 저장됩니다. [speedscope](https://www.speedscope.app/)와 같은 앱에서 열어 성능 문제를 식별할 수 있습니다. 그리고 [Discussion](https://github.com/vitejs/vite/discussions)이나 [Vite Discord](https://chat.vite.dev)에서 Vite 팀과 발견한 내용을 공유할 수 있습니다.
+페이지가 로드된 후 `vite --profile`을 사용하고 (그 다음 `p`를 누르면) 개발 서버 시작의 CPU 프로파일이 저장됩니다. [speedscope](https://www.speedscope.app/)와 같은 앱에서 열어 성능 문제를 식별할 수 있습니다. 그리고 [Discussion](https://github.com/vitejs/vite/discussions)이나 [Vite's Discord](https://chat.vite.dev)에서 Vite 팀과 발견한 내용을 공유할 수 있습니다.
 
 ## 다음 단계 {#next-steps}
 
