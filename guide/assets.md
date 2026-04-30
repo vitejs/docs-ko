@@ -1,11 +1,11 @@
-# 에셋 가져오기 {#static-asset-handling}
+# 정적 에셋 처리 {#static-asset-handling}
 
 - 관련 항목: [Public Base Path](./build#public-base-path)
 - 관련 항목: [`assetsInclude` 설정 옵션](/config/shared-options.md#assetsinclude)
 
 ## URL을 통해 에셋 가져오기 {#importing-asset-as-url}
 
-정적 에셋을 가져오게 되면 에셋에 접근할 수 있는 URL이 반환됩니다.
+정적 에셋을 가져오면, 해당 에셋이 제공될 때 해석된 공개 URL이 반환됩니다.
 
 ```js twoslash
 import 'vite/client'
@@ -14,9 +14,9 @@ import imgUrl from './img.png'
 document.getElementById('hero-img').src = imgUrl
 ```
 
-예를 들어 `imgUrl` 객체는 개발 시 `/src/img.png` 값으로 할당되지만, 프로덕션에서는 `/assets/img.2d8efhg.png`와 같은 값이 할당됩니다.
+예를 들어 `imgUrl`은 개발 시 `/src/img.png`가 되고, 프로덕션 빌드에서는 `/assets/img.2d8efhg.png`가 됩니다.
 
-Webpack의 `file-loader`와 비슷한데, 하나 차이점이 있다면 Vite는 절대 경로와 상대 경로 둘 다 사용할 수 있습니다.
+동작은 webpack의 `file-loader`와 비슷합니다. 차이점은 임포트가 절대 공개 경로(개발 중에는 프로젝트 루트 기준) 또는 상대 경로를 사용할 수 있다는 점입니다.
 
 - `url()`로 참조되는 CSS의 경우 동일한 방식으로 동작합니다.
 
@@ -26,9 +26,9 @@ Webpack의 `file-loader`와 비슷한데, 하나 차이점이 있다면 Vite는 
 
 - 참조된 에셋은 빌드 에셋 그래프의 일부 요소로 포함되며, 파일 이름이 해싱되거나 최적화를 위해 플러그인으로 처리될 수 있습니다.
 
-- [`assetsInlineLimit` 옵션](/config/shared-options.md#assetsinlinelimit)의 값보다 작은 에셋 파일의 경우, Base64 포맷의 데이터 URL 문자열로 가져옵니다.
+- [`assetsInlineLimit` 옵션](/config/build-options.md#build-assetsinlinelimit)의 값보다 바이트 크기가 작은 에셋은 Base64 데이터 URL로 인라인됩니다.
 
-- Git LFS 자리 표시자는 파일 내용을 포함하지 않기에 인라인에서 자동으로 제외됩니다. 만약 이 역시 인라인에 포함하고자 한다면 빌드하기 전 Git LFS를 통해 파일을 다운로드해주세요.
+- Git LFS 자리 표시자는 자신이 나타내는 파일의 내용을 포함하지 않으므로 인라인에서 자동으로 제외됩니다. 인라인하려면 빌드하기 전에 Git LFS를 통해 파일 내용을 다운로드해야 합니다.
 
 - TypeScript의 경우, 기본적으로 정적 에셋 가져오기를 유효한 모듈로 인식하지 않습니다. 이를 해결하려면 [`vite/client`](./features#client-types)를 포함해주세요.
 
@@ -57,7 +57,7 @@ CSS.paintWorklet.addModule(workletURL)
 
 ### 명시적인 인라인 처리 {#explicit-inline-handling}
 
-에셋은 `?inline` 또는 `?no-inline` 접미사를 사용해 인라인 처리 여부를 명시적으로 지정하여 가져올 수 있습니다.
+에셋은 `?inline` 또는 `?no-inline` 접미사를 각각 사용해 인라인 처리 여부를 명시적으로 지정하여 가져올 수 있습니다.
 
 ```js twoslash
 import 'vite/client'
@@ -68,7 +68,7 @@ import imgUrl2 from './img.png?inline'
 
 ### 문자열 형태로 에셋 가져오기 {#importing-asset-as-string}
 
-`?raw` 접미사를 붙여 가져오는 에셋은 문자열 형태로 가져와지게 됩니다.
+에셋은 `?raw` 접미사를 사용해 문자열로 가져올 수 있습니다.
 
 ```js twoslash
 import 'vite/client'
@@ -78,12 +78,12 @@ import shaderString from './shader.glsl?raw'
 
 ### 스크립트를 Worker로 가져오기 {#importing-script-as-a-worker}
 
-스크립트는 웹 워커로 가져올 수 있는데, 이 때는 `?worker` 접미사를 이용합니다.
+스크립트는 `?worker` 또는 `?sharedworker` 접미사를 사용해 웹 워커로 가져올 수 있습니다.
 
 ```js twoslash
 import 'vite/client'
 // ---cut---
-// 프로덕션 빌드 시에는 청크로 분리됩니다.
+// 프로덕션 빌드에서는 별도의 청크입니다.
 import Worker from './shader.js?worker'
 const worker = new Worker()
 ```
@@ -99,29 +99,35 @@ const sharedWorker = new SharedWorker()
 ```js twoslash
 import 'vite/client'
 // ---cut---
-// `inline` 접미사는 Base64 포맷의 문자열로 에셋을 가져옵니다.
+// Base64 문자열로 인라인됩니다.
 import InlineWorker from './shader.js?worker&inline'
 ```
 
-좀 더 자세한 사항은 [웹 워커 섹션](./features#web-workers)을 참고해주세요.
+좀 더 자세한 사항은 [웹 워커 섹션](./features.md#web-workers)을 참고해주세요.
 
 ## `public` 디렉터리 {#the-public-directory}
 
-아래와 같은 에셋은:
+다음과 같은 에셋이 있다면:
 
-- `robots.txt`와 같이 소스 코드에서 참조되지 않는 에셋
-- 해싱을 거치지 않고 항상 같은 이름을 가져야 하는 에셋
-- ...또는 URL을 얻기 위해 `import` 할 필요 없는 에셋
+- 소스 코드에서 절대 참조되지 않는 에셋(예: `robots.txt`)
+- 정확히 같은 파일 이름을 유지해야 하는 에셋(해싱 없음)
+- ...또는 URL을 얻기 위해 먼저 에셋을 가져오고 싶지 않은 경우
 
-`public` 디렉터리 아래에 에셋을 위치시키세요. 이 곳에 위치한 에셋은 개발 시 `/` 경로에, 배포 시 `dist` 디렉터리에 위치하게 됩니다.
+프로젝트 루트 아래의 특별한 `public` 디렉터리에 에셋을 배치할 수 있습니다. 이 디렉터리의 에셋은 개발 중에는 루트 경로 `/`에서 제공되고, dist 디렉터리의 루트로 그대로 복사됩니다.
 
-만약 `<root>/public` 이 아닌 다른 디렉터리를 사용하고자 하는 경우, [`publicDir` 옵션](/config/shared-options.md#publicdir)을 이용할 수 있습니다.
+디렉터리는 기본적으로 `<root>/public`이지만, [`publicDir` 옵션](/config/shared-options.md#publicdir)을 통해 설정할 수 있습니다.
 
-참고로 `public` 디렉터리에 위치해 있는 에셋을 가져오고자 하는 경우, 항상 루트를 기준으로 하는 절대 경로로 가져와야 합니다. (예: `public/icon.png` 에셋은 소스 코드에서 `/icon.png`으로 접근이 가능)
+참고로 `public` 에셋은 항상 루트 절대 경로로 참조해야 합니다. 예를 들어 `public/icon.png`는 소스 코드에서 `/icon.png`로 참조해야 합니다.
+
+::: tip 임포트와 `public` 디렉터리 중 선택하기
+
+일반적으로 `public` 디렉터리가 제공하는 보장이 꼭 필요한 경우가 아니라면 **에셋을 임포트하는 방식**을 선호하세요.
+
+:::
 
 ## new URL(url, import.meta.url) {#new-url-url-import-meta-url}
 
-네이티브 ESM의 API 중 하나인 [import.meta.url](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import.meta)은 현재 모듈의 URL을 보여주는 기능입니다. [URL 생성자](https://developer.mozilla.org/en-US/docs/Web/API/URL)와 함께 사용하면, 정적 에셋의 전제 URL을 확인할 수 있게 됩니다.
+[import.meta.url](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import.meta)은 현재 모듈의 URL을 노출하는 네이티브 ESM 기능입니다. 네이티브 [URL 생성자](https://developer.mozilla.org/en-US/docs/Web/API/URL)와 함께 사용하면, JavaScript 모듈의 상대 경로를 사용해 정적 에셋의 완전히 해석된 URL을 얻을 수 있습니다.
 
 ```js
 const imgUrl = new URL('./img.png', import.meta.url).href
@@ -129,9 +135,9 @@ const imgUrl = new URL('./img.png', import.meta.url).href
 document.getElementById('hero-img').src = imgUrl
 ```
 
-위 코드는 네이티브 ESM을 지원하는 모던 브라우저에서 동작합니다. 물론, Vite는 위 동작을 자동으로 수행해주기에 따로 처리할 필요는 없습니다.
+이 코드는 모던 브라우저에서 네이티브로 동작합니다. 실제로 개발 중에는 Vite가 이 코드를 전혀 처리할 필요가 없습니다!
 
-참고로 위 코드는 템플릿 리터럴을 이용해 동적으로 생성되는 URL에서도 동작합니다.
+이 패턴은 템플릿 리터럴을 통한 동적 URL도 지원합니다.
 
 ```js
 function getImageUrl(name) {
@@ -140,10 +146,10 @@ function getImageUrl(name) {
 }
 ```
 
-프로덕션 빌드 시, Vite는 번들링 및 에셋 해싱 후에도 해당 에셋에 대한 URL을 올바르게 가리키기 위해 필요한 변환 작업을 수행합니다.
+프로덕션 빌드 시, Vite는 번들링 및 에셋 해싱 후에도 URL이 올바른 위치를 가리키도록 필요한 변환을 수행합니다. 하지만 URL 문자열은 분석할 수 있도록 정적이어야 합니다. 그렇지 않으면 코드는 그대로 남게 되며, `build.target`이 `import.meta.url`을 지원하지 않는 경우 런타임 오류가 발생할 수 있습니다.
 
 ```js
-// Vite는 아래 코드를 변환하지 않음
+// Vite will not transform this
 const imgUrl = new URL(imagePath, import.meta.url).href
 ```
 
@@ -166,6 +172,6 @@ function getImageUrl(name) {
 
 :::
 
-::: warning SSR과 함께 사용하지 마세요!
-`import.meta.url`은 브라우저와 Node.js 간 서로 다른 의미를 갖기 때문에, 이 패턴은 서버-사이드 렌더링(SSR)에 Vite를 사용하는 경우 동작하지 않습니다. 또한 서버 번들은 클라이언트 호스트의 URL을 미리 결정할 수 없습니다.
+::: warning SSR과 함께 동작하지 않습니다
+이 패턴은 `import.meta.url`이 브라우저와 Node.js에서 서로 다른 의미를 가지므로, 서버 사이드 렌더링에 Vite를 사용하는 경우 동작하지 않습니다. 또한 서버 번들은 클라이언트 호스트 URL을 미리 결정할 수 없습니다.
 :::
