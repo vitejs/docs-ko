@@ -17,9 +17,9 @@
 
 환경은 다양한 런타임에서 실행될 수 있기 때문에, 환경과의 통신은 런타임에 따라 제약이 있을 수 있습니다. 프레임워크가 런타임에 구애받지 않는 코드를 쉽게 작성할 수 있도록, 환경 API는 세 종류의 통신 레벨을 제공합니다.
 
-### `RunnableDevEnvironment`
+### `RunnableDevEnvironment` {#runnabledevenvironment}
 
-`RunnableDevEnvironment`는 임의의 값을 주고받을 수 있는 환경입니다. 암시적인 `ssr` 환경을 포함해, 클라이언트가 아닌 환경은 개발 중 기본적으로 `RunnableDevEnvironment`를 사용합니다. 이 경우 Vite 서버가 실행되는 런타임과 동일해야 하지만, `ssrLoadModule`과 유사하게 작동하여 프레임워크가 SSR 개발 환경에서 HMR을 활성화하고 마이그레이션할 수 있도록 만듭니다. 또한 `isRunnableDevEnvironment` 함수를 사용하여 실행 가능한 환경인지 확인할 수 있습니다.
+`RunnableDevEnvironment`는 임의의 값을 주고받을 수 있는 환경입니다. 암시적인 `ssr` 환경과 클라이언트가 아닌 다른 환경은 개발 중 기본적으로 `RunnableDevEnvironment`를 사용합니다. 이 경우 Vite 서버가 실행되는 런타임과 동일해야 하지만, `ssrLoadModule`과 유사하게 작동하여 프레임워크가 SSR 개발 환경에서 HMR을 활성화하고 마이그레이션할 수 있도록 만듭니다. 또한 `isRunnableDevEnvironment` 함수를 사용하여 실행 가능한 환경인지 확인할 수 있습니다.
 
 ```ts
 export class RunnableDevEnvironment extends DevEnvironment {
@@ -52,10 +52,7 @@ if (isRunnableDevEnvironment(server.environments.ssr)) {
 ```js
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { createServer } from 'vite'
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const viteServer = await createServer({
   server: { middlewareMode: true },
@@ -75,30 +72,30 @@ app.use('*', async (req, res, next) => {
   const url = req.originalUrl
 
   // 1. index.html 읽기
-  const indexHtmlPath = path.resolve(__dirname, 'index.html')
+  const indexHtmlPath = path.resolve(import.meta.dirname, 'index.html')
   let template = fs.readFileSync(indexHtmlPath, 'utf-8')
 
   // 2. Vite HTML 변환 적용. Vite HMR 클라이언트를 주입하고,
-  //    @vitejs/plugin-react의 전역 초기화 코드와 같은
-  //    Vite 플러그인을 통한 HTML 변환도 적용합니다
+  //    Vite 플러그인의 HTML 변환도 적용합니다. 예를 들어
+  //    @vitejs/plugin-react의 전역 preamble이 있습니다
   template = await viteServer.transformIndexHtml(url, template)
 
-  // 3. 서버 진입점 불러오기. import(url)은 자동으로 ESM 소스 코드를
-  //    Node.js에서 사용할 수 있도록 변환합니다! 번들링이 필요하지 않으며,
-  //    HMR 지원을 완벽히 제공합니다.
+  // 3. 서버 진입점 불러오기. import(url)은 ESM 소스 코드를
+  //    Node.js에서 사용할 수 있도록 자동으로 변환합니다! 번들링이
+  //    필요하지 않으며, 완전한 HMR 지원을 제공합니다.
   const { render } = await serverEnvironment.runner.import(
     '/src/entry-server.js',
   )
 
-  // 4. 앱 HTML 렌더링. entry-server.js에서 제공하는 `render` 함수가
-  //    ReactDOMServer.renderToString()과 같은 적절한 프레임워크 SSR API를
-  //    호출한다고 가정합니다
+  // 4. 앱 HTML 렌더링. 이는 entry-server.js에서 익스포트된
+  //     `render` 함수가 적절한 프레임워크 SSR API를 호출한다고 가정합니다.
+  //    예: ReactDOMServer.renderToString()
   const appHtml = await render(url)
 
   // 5. 앱에서 렌더링된 HTML을 템플릿에 주입합니다.
   const html = template.replace(`<!--ssr-outlet-->`, appHtml)
 
-  // 6. 렌더링된 HTML을 반환합니다.
+  // 6. 렌더링된 HTML을 다시 보냅니다.
   res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
 })
 ```
@@ -114,7 +111,7 @@ if (import.meta.hot) {
 }
 ```
 
-### `FetchableDevEnvironment`
+### `FetchableDevEnvironment` {#fetchabledevenvironment}
 
 :::info
 
@@ -154,7 +151,7 @@ const server = await createServer({
 // 환경 API 소비자는 이제 `dispatchFetch`를 호출할 수 있습니다
 if (isFetchableDevEnvironment(server.environments.custom)) {
   const response: Response = await server.environments.custom.dispatchFetch(
-    new Request('/request-to-handle'),
+    new Request('http://example.com/request-to-handle'),
   )
 }
 ```
@@ -165,11 +162,11 @@ Vite는 `dispatchFetch` 메서드의 입력과 출력을 검증합니다: 요청
 `FetchableDevEnvironment`가 클래스로 구현되어 있지만, Vite 팀은 이를 구현 세부사항으로 간주하며 언제든지 변경될 수 있습니다.
 :::
 
-### 기본 `DevEnvironment` {#raw-devenvironment}
+### 원시 `DevEnvironment` {#raw-devenvironment}
 
 환경이 `RunnableDevEnvironment` 또는 `FetchableDevEnvironment` 인터페이스를 구현하지 않는 경우, 통신을 수동으로 설정해야 합니다.
 
-또한 작성한 코드가 사용자 모듈과 동일한 런타임에서 실행될 수 있다면(즉, Node.js 특정 API에 의존하지 않는다면), 가상 모듈을 사용할 수도 있습니다. 이 방식은 Vite API를 사용하는 측에서 모듈 값에 접근하는 코드를 생략할 수 있습니다.
+작성한 코드가 사용자 모듈과 동일한 런타임에서 실행될 수 있다면(즉, Node.js 특정 API에 의존하지 않는다면), 가상 모듈을 사용할 수 있습니다. 이 접근 방식은 Vite API를 사용하는 코드에서 값에 접근할 필요를 없애줍니다.
 
 ```ts
 // Vite API를 사용하는 코드
@@ -188,7 +185,7 @@ const ssrEnvironment = server.environment.ssr
 const input = {}
 
 // 코드를 실행하는 각 환경 팩토리가 제공하는 함수 사용
-// 각 환경 팩토리가 제공하는 함수를 확인하세요
+// 각 환경 팩토리가 무엇을 제공하는지 확인하세요
 if (ssrEnvironment instanceof CustomDevEnvironment) {
   ssrEnvironment.runEntrypoint('virtual:entrypoint')
 } else {
@@ -199,7 +196,7 @@ if (ssrEnvironment instanceof CustomDevEnvironment) {
 // virtual:entrypoint
 const { createHandler } = await import('./entrypoint.js')
 const handler = createHandler(input)
-const response = handler(new Request('/'))
+const response = handler(new Request('http://example.com/'))
 
 // -------------------------------------
 // ./entrypoint.js
@@ -210,7 +207,7 @@ export function createHandler(input) {
 }
 ```
 
-가상 모듈을 사용하는 예시 중 하나로, 사용자 모듈에서 Vite API 중 하나인 `transformIndexHtml`을 사용하고자 한다면, 다음과 같은 플러그인을 구성할 수 있습니다:
+예를 들어, 사용자 모듈에서 `transformIndexHtml`을 호출하려면 다음 플러그인을 사용할 수 있습니다:
 
 ```ts {13-21}
 function vitePluginVirtualIndexHtml(): Plugin {
@@ -241,7 +238,7 @@ function vitePluginVirtualIndexHtml(): Plugin {
 }
 ```
 
-만약 작성한 코드가 Node.js API를 필요로 한다면, `hot.send`를 사용해 사용자 모듈에서 Vite API를 사용하는 코드와 통신할 수 있습니다. 하지만 이 방식은 빌드 이후 동일하게 작동하지 않을 수 있다는 점에 유의하세요.
+작성한 코드에 Node.js API가 필요하다면, `hot.send`를 사용해 사용자 모듈에서 Vite API를 사용하는 코드와 통신할 수 있습니다. 하지만 이 접근 방식은 빌드 프로세스 이후 동일하게 작동하지 않을 수 있다는 점에 유의하세요.
 
 ```ts
 // Vite API를 사용하는 코드
@@ -260,7 +257,7 @@ const ssrEnvironment = server.environment.ssr
 const input = {}
 
 // 코드를 실행하는 각 환경 팩토리가 제공하는 함수 사용
-// 각 환경 팩토리가 제공하는 함수를 확인하세요
+// 각 환경 팩토리가 무엇을 제공하는지 확인하세요
 if (ssrEnvironment instanceof RunnableDevEnvironment) {
   ssrEnvironment.runner.import('virtual:entrypoint')
 } else if (ssrEnvironment instanceof CustomDevEnvironment) {
@@ -269,7 +266,7 @@ if (ssrEnvironment instanceof RunnableDevEnvironment) {
   throw new Error(`Unsupported runtime for ${ssrEnvironment.name}`)
 }
 
-const req = new Request('/')
+const req = new Request('http://example.com/')
 
 const uniqueId = 'a-unique-id'
 ssrEnvironment.send('request', serialize({ req, uniqueId }))
@@ -293,7 +290,7 @@ import.meta.hot.on('request', (data) => {
   import.meta.hot.send('response', serialize({ res: res, uniqueId }))
 })
 
-const response = handler(new Request('/'))
+const response = handler(new Request('http://example.com/'))
 
 // -------------------------------------
 // ./entrypoint.js
@@ -306,25 +303,27 @@ export function createHandler(input) {
 
 ## 빌드 단계에서의 환경 {#environments-during-build}
 
-하위 호환성을 위해, CLI에서 `vite build`와 `vite build --ssr`을 실행하면, 동일하게 클라이언트 또는 SSR 전용 환경만을 빌드합니다.
+하위 호환성을 위해 CLI에서 `vite build`와 `vite build --ssr`을 호출하면, 여전히 클라이언트 전용 환경과 ssr 전용 환경만 빌드합니다.
 
-`builder`가 `undefined`가 아닐 때(또는 `vite build --app`을 호출할 때), `vite build`는 전체 앱을 빌드하도록 설정됩니다. 이는 향후 메이저 버전에서 기본 동작이 될 예정입니다. 빌드 시에는 `ViteDevServer`와 대응되는 역할을 하는 `ViteBuilder` 인스턴스가 생성되어 프로덕션을 위해 구성된 모든 환경을 빌드합니다. 기본적으로 환경에 대한 빌드는 `environments` 레코드 순서를 따라 순차적으로 수행됩니다. 프레임워크나 사용자는 다음과 같이 환경 빌드 방식을 추가로 구성할 수 있습니다:
+`builder` 옵션이 `undefined`가 아닐 때(또는 `vite build --app`을 호출할 때), `vite build`는 대신 전체 앱 빌드를 선택합니다. 이는 향후 메이저 버전에서 기본값이 될 예정입니다. `ViteBuilder` 인스턴스가 생성되어(`ViteDevServer`의 빌드 시점 대응 역할) 프로덕션을 위해 구성된 모든 환경을 빌드합니다. 기본적으로 환경 빌드는 `environments` 레코드의 순서를 존중하며 순차적으로 실행됩니다. 프레임워크나 사용자는 `builder.buildApp` 옵션을 사용하여 환경 빌드 방식을 추가로 구성할 수 있습니다:
 
-```js
-export default {
+```js [vite.config.js]
+import { defineConfig } from 'vite'
+
+export default defineConfig({
   builder: {
     buildApp: async (builder) => {
       const environments = Object.values(builder.environments)
-      return Promise.all(
+      await Promise.all(
         environments.map((environment) => builder.build(environment)),
       )
     },
   },
-}
+})
 ```
 
-플러그인도 `buildApp` 훅을 정의할 수 있습니다. `'pre'` 및 `null` 순서는 구성된 `builder.buildApp` 이전에 실행되고, `'post'` 순서의 훅은 그 이후에 실행됩니다. `environment.isBuilt`를 사용해 환경이 이미 빌드되었는지 확인할 수 있습니다.
+플러그인도 `buildApp` 훅을 정의할 수 있습니다. 순서가 `'pre'` 및 `null`인 훅은 구성된 `builder.buildApp` 이전에 실행되고, 순서가 `'post'`인 훅은 그 이후에 실행됩니다. `environment.isBuilt`를 사용해 환경이 이미 빌드되었는지 확인할 수 있습니다.
 
 ## 환경에 구애받지 않는 코드 {#environment-agnostic-code}
 
-대부분의 경우 `environment` 인스턴스는 컨텍스트에 이미 존재하기에, `server.environments`로 직접 접근할 필요가 없습니다. 예를 들어, 플러그인 훅 내부에서는 `this.environment`로 환경에 접근할 수 있습니다. 환경을 인식하는 플러그인을 만드는 방법은 [플러그인을 위한 환경 API](./api-environment-plugins.md) 섹션을 참조하세요.
+대부분의 경우 실행 중인 코드의 컨텍스트 일부로 현재 `environment` 인스턴스를 사용할 수 있으므로, `server.environments`를 통해 접근해야 하는 경우는 드뭅니다. 예를 들어, 플러그인 훅 내부에서는 환경이 `PluginContext`의 일부로 노출되므로 `this.environment`를 사용해 접근할 수 있습니다. 환경을 인식하는 플러그인을 만드는 방법은 [플러그인을 위한 환경 API](./api-environment-plugins.md)를 참조하세요.
