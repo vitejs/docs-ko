@@ -1,31 +1,31 @@
-# static-deploy.md 에서 임포트
-# renovate가 액션 버전 업데이트를 수행할 수 있도록 이 파일로 분리
+# Imported in static-deploy.md
+# This file is extracted as a separate file so that renovate can update the action versions
 #
 #region content
-# GitHub Pages를 통해 정적 콘텐츠를 배포하는 간단한 워크플로우
+# Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
 on:
-  # 기본 브랜치에 대한 푸시 이벤트 발생 시 실행
+  # Runs on pushes targeting the default branch
   push:
     branches: ['main']
 
-  # Actions 탭에서 수동으로 워크플로우를 실행할 수 있도록 구성
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# GITHUB_TOKEN의 권한을 설정하여 GitHub Pages에 배포할 수 있도록 함
+# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# 동시에 하나의 배포만 허용하도록 구성
+# Allow one concurrent deployment
 concurrency:
   group: 'pages'
   cancel-in-progress: true
 
 jobs:
-  # 단순히 배포만 수행하기에 하나의 잡으로만 구성
+  # Single deploy job since we're just deploying
   deploy:
     environment:
       name: github-pages
@@ -33,9 +33,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: lts/*
           cache: 'npm'
@@ -44,13 +44,13 @@ jobs:
       - name: Build
         run: npm run build
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
-          # dist 폴더 업로드
+          # Upload dist folder
           path: './dist'
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 #endregion content
