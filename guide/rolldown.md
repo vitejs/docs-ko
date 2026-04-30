@@ -22,9 +22,9 @@ Rolldown은 세 가지 핵심 원칙이 있습니다:
 
 3. **추가 기능**: 고급 청크 분할 제어, 내장 HMR, 모듈 페더레이션 등 Rollup이나 esbuild에서 제공하지 않는 기능들을 Rolldown에서 도입합니다.
 
-Rolldown을 개발하게 된 동기에 대해 더 알고자 한다면, [Rolldown이 만들어진 이유](https://rolldown.rs/guide/introduction#why-rolldown)를 참고해 주세요.
+Rolldown을 개발하게 된 동기에 대해 더 알고자 한다면, [Rolldown이 만들어진 이유](https://rolldown.rs/guide/#why-rolldown)를 참고해 주세요.
 
-## `rolldown-vite` 이점 {#benefits-of-trying-rolldown-vite}
+## `rolldown-vite`를 사용해 볼 때의 이점 {#benefits-of-trying-rolldown-vite}
 
 - 특히 대규모 프로젝트에서 훨씬 더 빠른 빌드 성능
 - Vite 번들링의 미래를 만들어가는 데 도움이 되는 귀중한 피드백 제공
@@ -32,24 +32,24 @@ Rolldown을 개발하게 된 동기에 대해 더 알고자 한다면, [Rolldown
 
 ## Rolldown 시작하기 {#how-to-try-rolldown}
 
-현재 Rolldown 기반 Vite는 `rolldown-vite`라는 별도 패키지로 제공하고 있습니다. 만약 `vite`를 직접 디펜던시로 명시해 사용하고 있다면, 패키지 내 `package.json`에서 `vite` 패키지를 `rolldown-vite`에 대한 별칭으로 등록할 수 있습니다. 기존 코드를 수정하지 않고 간단히 대체가 가능합니다:
+현재 Rolldown 기반 Vite는 `rolldown-vite`라는 별도 패키지로 제공하고 있습니다. 만약 `vite`를 직접 디펜던시로 명시해 사용하고 있다면, 프로젝트의 `package.json`에서 `vite` 패키지를 `rolldown-vite`에 대한 별칭으로 등록할 수 있으며, 기존 코드를 수정하지 않고 간단히 대체할 수 있습니다.
 
 ```json
 {
-  "devDependencies": {
+  "dependencies": {
     "vite": "^7.0.0" // [!code --]
     "vite": "npm:rolldown-vite@latest" // [!code ++]
   }
 }
 ```
 
-Vitepress나 다른 메타 프레임워크와 같이 Vite를 피어 디펜던시로 사용하고 있다면, `package.json` 파일에서 `vite` 디펜던시를 오버라이드해야 합니다. 사용중인 패키지 매니저에 따라 방법이 조금 다릅니다:
-
 ::: tip 버전을 고정해주세요!
 
-이 예제에서는 `@latest`를 사용하고 있지만,[`rolldown-vite는 아직 실험 단계`](#versioning-policy)이므로 예상치 못한 변경 사항을 방지하기 위해 특정 버전 번호를 사용하는 것을 권장합니다.
+이 예제에서는 `@latest`를 사용하지만, [`rolldown-vite`는 실험적인 것으로 간주되므로](#versioning-policy) 예상치 못한 호환성이 깨지는 변경사항을 피하기 위해 특정 버전 번호를 사용하는 것을 권장합니다.
 
 :::
+
+Vitepress나 Vite를 피어 디펜던시로 사용하는 메타 프레임워크를 사용하고 있다면, `package.json` 파일에서 `vite` 디펜던시를 오버라이드해야 합니다. 사용 중인 패키지 매니저에 따라 방법이 조금 다릅니다:
 
 :::code-group
 
@@ -91,6 +91,8 @@ Vitepress나 다른 메타 프레임워크와 같이 Vite를 피어 디펜던시
 
 오버라이드를 추가한 후 디펜던시를 재설치한 뒤, 평소처럼 개발 서버를 시작하거나 프로젝트 빌드를 수행해 주세요. 추가적인 설정 변경은 필요하지 않습니다.
 
+새 프로젝트를 시작하는 경우에도 rolldown-vite에 대해 평소처럼 `create-vite`를 사용할 수 있습니다. 최신 버전에서는 `rolldown-vite`를 사용할지 여부를 묻습니다.
+
 ## 알려진 제약 사항 {#known-limitations}
 
 Rolldown은 Rollup 대체 목적으로 설계되었지만, 아직 구현 중인 기능과 의도적인 동작 차이가 있습니다. 자세한 목록은 정기적으로 업데이트되는 [이 GitHub PR](https://github.com/vitejs/rolldown-vite/pull/84#issue-2903144667)을 참고해 주세요.
@@ -109,10 +111,10 @@ Rolldown은 알 수 없거나 유효하지 않은 옵션이 전달될 때 경고
 
 #### `manualChunks`에서 `advancedChunks`로 {#manualchunks-to-advancedchunks}
 
-Rolldown은 Rollup에서도 제공되는 `manualChunks` 옵션을 지원하지만, 이는 지원 중단으로 표시되어 있습니다. 대신 Rolldown은 webpack의 `splitChunk`와 더 유사한 [`advancedChunks` 옵션](https://rolldown.rs/in-depth/manual-code-splitting)을 통해 더 세밀한 설정을 제공합니다:
+Rolldown은 Rollup에서도 제공되는 `manualChunks` 옵션을 지원하지만, 이는 지원 중단으로 표시되어 있습니다. 대신 Rolldown은 webpack의 `splitChunk`와 더 유사한 [`advancedChunks` 옵션](https://rolldown.rs/guide/in-depth/advanced-chunks#advanced-chunks)을 통해 더 세밀한 설정을 제공합니다:
 
 ```js
-// Old configuration (Rollup)
+// 기존 설정 (Rollup)
 export default {
   build: {
     rollupOptions: {
@@ -127,7 +129,7 @@ export default {
   }
 }
 
-// New configuration (Rolldown)
+// 새로운 설정 (Rolldown)
 export default {
   build: {
     rollupOptions: {
@@ -145,7 +147,7 @@ export default {
 
 `rolldown-vite`는 추가적인 설정 없이도 원활한 전환이 가능하도록 기존 생태계에 대한 호환성을 보장하고 있습니다. 추가적인 성능 향상이 필요하다면, 더 빠른 Rust 기반 내부 플러그인과 관련 커스텀 설정을 사용해 보세요.
 
-## 네이티브 플러그인 활성화 {#enabling-native-plugins}
+### 네이티브 플러그인 활성화 {#enabling-native-plugins}
 
 Rolldown과 Oxc 덕분에 별칭(alias)이나 resolve 플러그인과 같은 다양한 Vite 내부 플러그인들이 Rust로 전환되었습니다. 이제 네이티브 플러그인이 기본적으로 활성화되며, 기본값은 `'v1'`으로 설정됩니다.
 
@@ -188,9 +190,9 @@ export default defineConfig({
 
 ## 보고된 이슈 {#reporting-issues}
 
-실험적인 통합 단계이므로 이슈가 발생할 수 있습니다. 문제가 발생하면 **Vite 리포지토리가 아닌** [`vitejs/rolldown-vite`](https://github.com/vitejs/rolldown-vite) 리포지토리에 보고해 주세요.
+실험적인 통합 단계이므로 이슈가 발생할 수 있습니다. 문제가 발생하면 [`vitejs/rolldown-vite`](https://github.com/vitejs/rolldown-vite) 리포지토리에 보고해 주세요. **메인 Vite 리포지토리가 아닙니다**.
 
-[이슈 생성](https://github.com/vitejs/rolldown-vite/issues/new) 시, 적절한 이슈 템플릿을 따라 필요한 내용을 입력해 주세요:
+[이슈 생성](https://github.com/vitejs/rolldown-vite/issues/new) 시, 적절한 이슈 템플릿을 따라 필요한 내용을 입력해 주세요. 일반적으로 다음을 포함합니다:
 
 - 이슈에 대한 가장 작은 재현 방법
 - 실행 환경 세부 정보 (OS, Node 버전, 패키지 관리자)
@@ -231,7 +233,7 @@ Rolldown 덕분에 독보적인 Vite 성능을 유지하면서도 개발과 프�
 
 전체 번들 모드가 도입되면, 처음에는 옵션(Opt-in)으로 제공될 예정입니다. Rolldown 통합과 마찬가지로, 피드백을 수집하고 안정성을 확보한 후 기본값으로 만들고자 합니다.
 
-## Plugin / Framework Authors Guide
+## 플러그인 / 프레임워크 개발자 가이드 {#plugin-framework-authors-guide}
 
 ::: tip
 이 섹션은 주로 플러그인 및 프레임워크 개발자에게 관련이 있습니다. 일반 사용자라면 건너뛰어도 됩니다.
@@ -293,7 +295,7 @@ if (vite.rolldownVersion) {
 
 ### Rolldown에서 옵션 검증 무시하기 {#ignoring-option-validation-in-rolldown}
 
-[위에서 언급했듯이](#option-validation-warnings), Rolldown은 알 수 없거나 유효하지 않은 옵션이 전달될 때 경고를 출력합니다.
+[위에서 언급했듯이](#option-validation-errors), Rolldown은 알 수 없거나 유효하지 않은 옵션이 전달될 때 경고를 출력합니다.
 
 이는 [앞서 설명했듯](#detecting-rolldown-vite) `rolldown-vite` 실행 여부 확인을 통해 조건부로 옵션을 전달하는 방식으로 해결할 수 있습니다.
 
@@ -318,16 +320,11 @@ const plugin = {
 },
 ```
 
-### 훅 필터 기능 {#hook-filter-features}
+### 훅 필터 기능 {#hook-filter-feature}
 
-Rolldown은 Rust와 JavaScript 런타임 간 통신 오버헤드를 줄이기 위해 [훅 필터 기능](https://rolldown.rs/apis/plugin-api/hook-filters)을 도입했습니다. 이를 사용해 플러그인 성능을 향상시킬 수 있습니다.
-훅 필터 기능은 Rollup 4.38.0+ 및 Vite 6.3.0+ 에서도 지원합니다. Rollup 4.38.0 미만이나 Vite 6.3.0 미만 버전과 호환되는 플러그인을 만들고자 한다면, 외부 필터 설정과 별개로 훅 함수 내부에서도 동일한 필터링 로직을 구현해야 합니다. (자세한 내용은 [Rolldown 훅 필터 기능 문서](https://rolldown.rs/guide/plugin-development#plugin-hook-filters)를 참고해 주세요 - 옮긴이)
+Rolldown은 Rust와 JavaScript 런타임 간 통신 오버헤드를 줄이기 위해 [훅 필터 기능](https://rolldown.rs/plugins/hook-filters)을 도입했습니다. 이 기능을 사용하면 플러그인이 훅이 호출되어야 하는 시점을 결정하는 패턴을 지정할 수 있으며, 불필요한 훅 호출을 피함으로써 성능을 향상시킬 수 있습니다.
 
-::: tip
-
-[`@rolldown/pluginutils`](https://www.npmjs.com/package/@rolldown/pluginutils)는 `exactRegex`나 `prefixRegex`와 같은 훅 필터를 위한 유틸리티들을 익스포트합니다.
-
-:::
+자세한 내용은 [Hook Filters 가이드](/guide/api-plugin#hook-filters)를 참고해 주세요.
 
 ### `load` 또는 `transform` 훅에서 콘텐츠를 JavaScript로 변환하기 {#converting-content-to-javascript-in-load-or-transform-hooks}
 
@@ -348,4 +345,4 @@ const plugin = {
 }
 ```
 
-이는 [Rolldown이 JavaScript가 아닌 모듈을 지원하며](https://rolldown.rs/in-depth/module-types), 명시적으로 지정하지 않는 한 확장자에서 모듈 타입을 추론하기 때문입니다.
+이는 [Rolldown이 JavaScript가 아닌 모듈을 지원하며](https://rolldown.rs/guide/in-depth/module-types), 명시적으로 지정하지 않는 한 확장자에서 모듈 타입을 추론하기 때문입니다.
