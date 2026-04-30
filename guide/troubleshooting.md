@@ -74,6 +74,31 @@ Ubuntu Linux는 systemd 구성 파일을 업데이트하는 대신 `/etc/securit
 서버가 VS Code devcontainer 내부에서 실행 중이라면 요청이 멈춘 것처럼 보일 수 있습니다. 이 문제에 대해서는
 [Dev Containers / VS Code 포트 포워딩](#dev-containers-vs-code-port-forwarding) 섹션을 참고해 주세요.
 
+### Vite가 ENOSPC 에러와 함께 종료됨 {#vite-crashes-with-enospc-error}
+
+Linux에서 다음과 같은 에러가 표시된다면:
+
+> Error: ENOSPC: System limit for number of file watchers reached
+
+프로젝트 디렉토리에 파일이 너무 많아(예: 많은 이미지 또는 에셋) 시스템의 file watcher 제한을 초과할 때 발생합니다. Linux의 기본 제한은 약 8,192-10,000개의 file watcher입니다.
+
+이 문제를 해결하기 위해 다음을 수행할 수 있습니다:
+
+- 시스템 file watcher 제한 늘리기:
+
+  ```shell
+  # Check current limit
+  $ cat /proc/sys/fs/inotify/max_user_watches
+  # Increase limit (temporary)
+  $ sudo sysctl fs.inotify.max_user_watches=524288
+  # Make it permanent - add to /etc/sysctl.conf (or edit if it already exists)
+  $ echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
+  $ sudo sysctl -p
+  ```
+
+- [`server.watch.ignored`](/config/server-options#server-watch)를 사용해 파일이 많은 디렉토리를 파일 감시에서 제외하기
+- [`server.watch.usePolling`](/config/server-options#server-watch)를 사용해 파일 시스템 이벤트 대신 polling 사용하기. polling은 더 많은 CPU 리소스를 사용한다는 점에 유의하세요
+
 ### 네트워크 요청 로딩 중지 {#network-requests-stop-loading}
 
 자체 서명된 SSL 인증서를 사용하는 경우 Chrome은 모든 캐싱 지시문을 무시하고 콘텐츠를 다시 로드합니다. Vite는 이러한 캐싱 지시문에 의존합니다.
@@ -150,6 +175,45 @@ HTML 파일 출력이 `file` 프로토콜로 열린 경우 다음 오류와 함�
 
 `ENOENT: no such file or directory` 또는 `Module not found`와 같은 오류가 발생하는 경우, 이는 대소문자를 구분하지 않는 파일 시스템(Windows / macOS)에서 개발되었지만 대소문자를 구분하는 시스템(Linux)에서 빌드될 때 자주 발생합니다. import 시 올바른 대소문자를 사용하고 있는지 확인하세요.
 
+### `Failed to fetch dynamically imported module` 에러 {#failed-to-fetch-dynamically-imported-module-error}
+
+> TypeError: Failed to fetch dynamically imported module
+
+이 에러는 여러 경우에 발생합니다:
+
+- 버전 불일치
+- 좋지 않은 네트워크 상태
+- 요청을 차단하는 브라우저 확장 프로그램
+
+#### 버전 불일치 {#version-skew}
+
+애플리케이션의 새 버전을 배포하면, HTML 파일과 JS 파일이 새 배포에서 삭제된 이전 chunk 이름을 계속 참조할 수 있습니다. 이는 다음과 같은 경우에 발생합니다:
+
+1. 사용자의 브라우저에 앱의 이전 버전이 캐시되어 있습니다
+2. 코드 변경으로 인해 다른 chunk 이름을 가진 새 버전을 배포합니다
+3. 캐시된 HTML이 더 이상 존재하지 않는 chunk를 로드하려고 합니다
+
+프레임워크를 사용하고 있다면, 이 문제에 대한 빌트인 해결책이 있을 수 있으므로 먼저 해당 문서를 참고하세요.
+
+이 문제를 해결하기 위해 다음을 수행할 수 있습니다:
+
+- **이전 chunk를 임시로 유지**: 캐시된 사용자가 원활하게 전환할 수 있도록 이전 배포의 chunk를 일정 기간 유지하는 것을 고려하세요.
+- **service worker 사용**: 모든 에셋을 prefetch하고 캐시할 service worker를 구현하세요.
+- **동적 chunk prefetch**: `Cache-Control` 헤더 때문에 브라우저가 HTML 파일을 캐시한 경우에는 도움이 되지 않는다는 점에 유의하세요.
+- **graceful fallback 구현**: chunk가 없을 때 페이지를 다시 로드하도록 동적 import에 대한 에러 처리를 구현하세요. 자세한 내용은 [Load Error Handling](./build.md#load-error-handling)을 참고하세요.
+
+#### 좋지 않은 네트워크 상태 {#poor-network-conditions}
+
+이 에러는 불안정한 네트워크 환경에서 발생할 수 있습니다. 예를 들어 네트워크 에러나 서버 중단으로 인해 요청이 실패하는 경우입니다.
+
+브라우저 제한 때문에 동적 import를 재시도할 수 없다는 점에 유의하세요([whatwg/html#6768](https://github.com/whatwg/html/issues/6768)).
+
+#### 요청을 차단하는 브라우저 확장 프로그램 {#browser-extensions-blocking-requests}
+
+브라우저 확장 프로그램(예: 광고 차단기)이 해당 요청을 차단하는 경우에도 이 에러가 발생할 수 있습니다.
+
+이러한 확장 프로그램은 파일 이름(예: `ad`, `track`이 포함된 이름)을 기준으로 요청을 차단하는 경우가 많으므로, [`build.rolldownOptions.output.chunkFileNames`](../config/build-options.md#build-rolldownoptions)를 통해 다른 chunk 이름을 선택해 우회할 수 있을지도 모릅니다.
+
 ## 디펜던시 최적화 {#optimized-dependencies}
 
 ### 링크된 로컬 패키지의 경우 사전 번들링 된 디펜던시가 갱신되지 않음 {#outdated-pre-bundled-deps-when-linking-to-a-local-package}
@@ -187,7 +251,6 @@ Node.js 인스펙터가 루트 폴더에 `vite-profile-0.cpuprofile`을 생성�
 브라우저에서 Node.js 모듈을 사용할 때 Vite는 다음 경고를 출력합니다.
 
 > Module "fs" has been externalized for browser compatibility. Cannot access "fs.readFile" in client code.
-This is because Vite does not automatically polyfill Node.js modules.
 
 이는 Vite가 Node.js 모듈을 자동으로 폴리필하지 않기 때문입니다.
 
@@ -207,7 +270,11 @@ Vite는 엄격하지 않은 모드(느슨한 모드)에서만 실행되는 코�
 
 ### 브라우저 확장 프로그램 {#browser-extensions}
 
-광고 차단기와 같은 일부 브라우저 확장 프로그램은 Vite 클라이언트가 Vite 개발 서버에 요청을 보내는 것을 방지할 수 있습니다. 이 경우 화면이 흰색으로 표시되고 오류가 표시되지 않을 수 있습니다. 이러한 문제가 발생하는 경우 확장 프로그램을 비활성화해 보세요.
+광고 차단기와 같은 일부 브라우저 확장 프로그램은 Vite 클라이언트가 Vite 개발 서버에 요청을 보내는 것을 방지할 수 있습니다. 이 경우 화면이 흰색으로 표시되고 로그된 오류가 없을 수 있습니다. 다음 에러가 표시될 수도 있습니다:
+
+> TypeError: Failed to fetch dynamically imported module
+
+이러한 문제가 발생하는 경우 확장 프로그램을 비활성화해 보세요.
 
 ### Windows의 드라이브 간 링크 {#cross-drive-links-on-windows}
 
@@ -219,6 +286,18 @@ Windows에서 프로젝트에 드라이브 간 링크가 있는 경우 Vite가 �
 - `mklink` 명령으로 다른 드라이브에 대한 소프트 링크(Junction)/심볼릭 링크 (예: Yarn 글로벌 캐시)
 
 관련 이슈: [#10802](https://github.com/vitejs/vite/issues/10802)
+
+### Default import가 예상과 달리 객체를 반환함 {#default-import-unexpectedly-returns-an-object}
+
+CJS 모듈에서 default import는 `module.exports.default` 값을 반환할 것으로 예상할 수 있지만, 실제로는 `module.exports` 객체를 반환합니다.
+
+이로 인해 다음과 같은 에러가 발생할 수 있습니다:
+
+> Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: object.
+
+> foo is not a function
+
+이 문제에 대한 자세한 내용은 Rolldown 문서를 참고하세요: [Ambiguous `default` import from CJS modules - Bundling CJS | Rolldown](https://rolldown.rs/in-depth/bundling-cjs#ambiguous-default-import-from-cjs-modules).
 
 <script setup lang="ts">
 // 해시가 있는 오래된 링크를 이전 버전 문서로 리디렉션
