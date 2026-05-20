@@ -13,7 +13,7 @@ head:
       content: Vite 4.3이 출시되었습니다!
   - - meta
     - property: og:image
-      content: https://vite.dev/og-image-announcing-vite4-3.png
+      content: https://vite.dev/og-image-announcing-vite4-3.webp
   - - meta
     - property: og:url
       content: https://vite.dev/blog/announcing-vite4-3
@@ -29,7 +29,7 @@ head:
 
 _2023년 4월 20일_
 
-![Vite 4.3 Announcement Cover Image](/og-image-announcing-vite4-3.png)
+![Vite 4.3 Announcement Cover Image](/og-image-announcing-vite4-3.webp)
 
 빠른 링크:
 
@@ -60,9 +60,9 @@ Vite 기여자 중 한 명이 작성한 이 블로그 포스트에서 성능 작
 | **Root HMR**       |    30.5ms |   24.0ms |      -21.3% |
 | **Leaf HMR**       |    16.9ms |   10.0ms |      -40.8% |
 
-![Vite 4.3 vs 4.2 startup time comparison](/vite4-3-startup-time.png)
+![Vite 4.3 vs 4.2 startup time comparison](../images/vite4-3-startup-time.webp)
 
-![Vite 4.3 vs 4.2 HMR time comparison](/vite4-3-hmr-time.png)
+![Vite 4.3 vs 4.2 HMR time comparison](../images/vite4-3-hmr-time.webp)
 
 벤치마크에 대한 자세한 정보는 [여기](https://gist.github.com/sapphi-red/25be97327ee64a3c1dce793444afdf6e)에서 확인할 수 있습니다. 이 성능 테스트의 사양과 버전:
 

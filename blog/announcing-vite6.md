@@ -13,7 +13,7 @@ head:
       content: Vite 6.0이 출시되었습니다!
   - - meta
     - property: og:image
-      content: https://vite.dev/og-image-announcing-vite6.png
+      content: https://vite.dev/og-image-announcing-vite6.webp
   - - meta
     - property: og:url
       content: https://vite.dev/blog/announcing-vite6
@@ -29,7 +29,7 @@ head:
 
 _2024년 11월 26일_
 
-![Vite 6 발표 커버 이미지](/og-image-announcing-vite6.png)
+![Vite 6 발표 커버 이미지](/og-image-announcing-vite6.webp)
 
 오늘, 저희는 Vite의 이야기에서 또 다른 큰 발걸음을 내딛게 되었습니다. Vite [팀](/team), [기여자들](https://github.com/vitejs/vite/graphs/contributors), 그리고 생태계 파트너들은 Vite 6의 출시를 발표하게 되어 기쁩니다.
 
@@ -39,11 +39,11 @@ _2024년 11월 26일_
 
 Vite는 OpenAI, Google, Apple, Microsoft, NASA, Shopify, Cloudflare, GitLab, Reddit, Linear 등 많은 기업에서 사용되고 있습니다. 두 달 전, 저희는 [Vite를 사용하는 기업들](https://github.com/vitejs/companies-using-vite) 목록을 시작했습니다. 많은 개발자들이 자신들의 회사를 목록에 추가하기 위해 PR을 보내주시는 것을 보니 기쁩니다. Vite가 첫 걸음을 내딛은 이후 함께 구축한 생태계가 이렇게 크게 성장한 것이 믿기 어려울 정도입니다.
 
-![Vite 주간 npm 다운로드](/vite6-npm-weekly-downloads.png)
+![Vite 주간 npm 다운로드](../images/vite6-npm-weekly-downloads.webp)
 
 ## Vite 생태계 가속화 {#speeding-up-the-vite-ecosystem}
 
-지난달, 커뮤니티는 [StackBlitz](https://stackblitz.com)가 다시 한 번 주최한 세 번째 [ViteConf](https://viteconf.org/24/replay)에 모였습니다. 이는 생태계 빌더들의 폭넓은 참여로 가장 큰 Vite 컨퍼런스였습니다. 다른 발표들 중에서도, Evan You는 JavaScript 생태계를 위한 오픈소스, 고성능, 통합 개발 툴체인 구축에 전념하는 회사인 [VoidZero](https://staging.voidzero.dev/posts/announcing-voidzero-inc)를 발표했습니다. VoidZero는 [Rolldown](https://rolldown.rs)과 [Oxc](https://oxc.rs)를 뒷받침하고 있으며, 그들의 팀은 Vite에서 채택될 수 있도록 빠르게 준비시키며 상당한 진전을 이루고 있습니다. Vite의 Rust 기반 미래에 대한 다음 단계를 더 자세히 알아보려면 Evan의 기조연설을 시청해보세요.
+지난달, 커뮤니티는 세 번째 [ViteConf](https://viteconf.org/24/replay)에 모였고, [StackBlitz](https://stackblitz.com)가 다시 한 번 주최했습니다. 이는 생태계 빌더들의 폭넓은 참여로 가장 큰 Vite 컨퍼런스였습니다. 다른 발표들 중에서도, Evan You는 JavaScript 생태계를 위한 오픈소스, 고성능, 통합 개발 툴체인 구축에 전념하는 회사인 [VoidZero](https://staging.voidzero.dev/posts/announcing-voidzero-inc)를 발표했습니다. VoidZero는 [Rolldown](https://rolldown.rs)과 [Oxc](https://oxc.rs)를 뒷받침하고 있으며, 그들의 팀은 Vite에서 채택될 수 있도록 빠르게 준비시키며 상당한 진전을 이루고 있습니다. Vite의 Rust 기반 미래에 대한 다음 단계를 더 자세히 알아보려면 Evan의 기조연설을 시청해보세요.
 
 <YouTubeVideo videoId="EKvvptbTx6k?si=EZ-rFJn4pDW3tUvp" />
 
@@ -66,7 +66,7 @@ Vite를 처음 사용하신다면, 먼저 [시작하기](/guide/) 및 [기능](/
 
 이 새로운 메이저를 만드는 데 도움을 준 [Vite Core의 1,000명 이상의 기여자들](https://github.com/vitejs/vite/graphs/contributors)과 Vite 플러그인, 통합, 도구, 번역의 유지보수자 및 기여자들에게 감사드립니다. 참여하여 전체 생태계를 위한 Vite 개선에 도움을 주시기 바랍니다. 자세한 내용은 [기여 가이드](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md)에서 확인하세요.
 
-시작하려면 [이슈 분류](https://github.com/vitejs/vite/issues), [PR 리뷰](https://github.com/vitejs/vite/pulls), 열린 이슈를 기반으로 한 실패 테스트 PR 전송, [Discussions](https://github.com/vitejs/vite/discussions)와 Vite Land의 [도움 포럼](https://discord.com/channels/804011606160703521/1019670660856942652)에서 다른 사람들 지원을 도와주시기 바랍니다. 저희와 대화하고 싶으시다면, [Discord 커뮤니티](http://chat.vite.dev/)에 참여하여 [#contributing 채널](https://discord.com/channels/804011606160703521/804439875226173480)에서 인사해주세요.
+시작하려면 [이슈 분류](https://github.com/vitejs/vite/issues), [PR 리뷰](https://github.com/vitejs/vite/pulls), 열린 이슈를 기반으로 한 실패 테스트 PR 전송, [Discussions](https://github.com/vitejs/vite/discussions)와 Vite Land의 [도움 포럼](https://discord.com/channels/804011606160703521/1019670660856942652)에서 다른 사람들 지원을 도와주시기 바랍니다. 저희와 대화하고 싶으시다면, [Discord 커뮤니티](https://chat.vite.dev)에 참여하여 [#contributing 채널](https://discord.com/channels/804011606160703521/804439875226173480)에서 인사해주세요.
 
 Vite 생태계와 Vite 코어에 대한 최신 뉴스는 [Bluesky](https://bsky.app/profile/vite.dev), [X](https://twitter.com/vite_js), 또는 [Mastodon](https://webtoo.ls/@vite)에서 저희를 팔로우해주세요.
 
@@ -112,4 +112,4 @@ Vite 팀의 모든 구성원이 새로운 API 정의에 참여했으며, 이는 
 
 ## 감사의 말 {#acknowledgments}
 
-Vite 6는 기여자 커뮤니티, 다운스트림 유지보수자들, 플러그인 개발자들, 그리고 [Vite 팀](/team)의 오랜 작업 시간의 결과입니다. Vite 개발을 후원하는 개인과 기업들에게 감사드립니다. Vite는 [StackBlitz](https://stackblitz.com/), [Nuxt Labs](https://nuxtlabs.com/), [Astro](https://astro.build)와의 파트너십으로 [VoidZero](https://voidzero.dev)에서 제공합니다. [Vite의 GitHub Sponsors](https://github.com/sponsors/vitejs)와 [Vite의 Open Collective](https://opencollective.com/vite)의 후원자들에게 감사드립니다.
+Vite 6는 기여자 커뮤니티, 다운스트림 유지보수자들, 플러그인 개발자들, 그리고 [Vite 팀](/team)의 오랜 작업 시간의 결과입니다. Vite 개발을 후원하는 개인과 기업들에게 감사드립니다. Vite는 [VoidZero](https://voidzero.dev)에서 제공하며, [StackBlitz](https://stackblitz.com/), [Nuxt Labs](https://nuxtlabs.com/), [Astro](https://astro.build)와 파트너십을 맺고 있습니다. [Vite의 GitHub Sponsors](https://github.com/sponsors/vitejs)와 [Vite의 Open Collective](https://opencollective.com/vite)의 후원자들에게 감사드립니다.

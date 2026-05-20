@@ -13,7 +13,7 @@ head:
       content: Vite 7.0이 출시되었습니다!
   - - meta
     - property: og:image
-      content: https://vite.dev/og-image-announcing-vite7.png
+      content: https://vite.dev/og-image-announcing-vite7.webp
   - - meta
     - property: og:url
       content: https://vite.dev/blog/announcing-vite7
@@ -29,7 +29,7 @@ head:
 
 _2025년 6월 24일_
 
-![Vite 7 발표 커버 이미지](/og-image-announcing-vite7.png)
+![Vite 7 발표 커버 이미지](/og-image-announcing-vite7.webp)
 
 Vite 7의 출시를 공유하게 되어 기쁩니다! Evan You가 Vite 저장소에 첫 커밋을 보낸 지 5년이 지났으며, 그 이후로 프론트엔드 생태계가 얼마나 많이 변화했는지는 아무도 예측할 수 없었습니다. 이제 대부분의 현대적인 프론트엔드 프레임워크와 도구들이 함께 작업하며, Vite의 공유 인프라 위에 구축되고 있습니다. 그리고 더 높은 수준에서 공유함으로써 더 빠른 속도로 혁신할 수 있게 되었습니다. Vite는 이제 주간 3,100만 회 다운로드되고 있으며, 이전 메이저 릴리스 이후 지난 7개월 동안 1,400만 회 증가했습니다.
 
@@ -49,7 +49,7 @@ VoidZero와 [NuxtLabs](https://nuxtlabs.com/) 간의 파트너십을 통해, Ant
 
 [vite.new](https://vite.new)를 사용하여 Vite 7을 온라인으로 체험하거나 `pnpm create vite`를 실행하여 선호하는 프레임워크로 Vite 앱을 로컬에서 스캐폴딩하세요. 자세한 정보는 [시작하기 가이드](/guide/)를 확인하세요.
 
-Vite 개선에 참여해주시기 바랍니다([Vite Core의 1,100명 이상의 기여자](https://github.com/vitejs/vite/graphs/contributors)에 합류), 저희 의존성, 또는 생태계의 플러그인과 프로젝트에 참여해주세요. 자세한 내용은 [기여 가이드](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md)에서 확인하세요. 시작하기 좋은 방법은 [이슈 분류](https://github.com/vitejs/vite/issues), [PR 리뷰](https://github.com/vitejs/vite/pulls), 열린 이슈를 기반으로 한 테스트 PR 전송, [Discussions](https://github.com/vitejs/vite/discussions)나 Vite Land의 [도움 포럼](https://discord.com/channels/804011606160703521/1019670660856942652)에서 다른 사람들 지원입니다. 질문이 있으시면, [Discord 커뮤니티](http://chat.vite.dev/)에 참여하여 [#contributing 채널](https://discord.com/channels/804011606160703521/804439875226173480)에서 저희와 대화하세요.
+Vite 개선에 참여해주시기 바랍니다([Vite Core의 1,100명 이상의 기여자](https://github.com/vitejs/vite/graphs/contributors)에 합류), 저희 의존성, 또는 생태계의 플러그인과 프로젝트에 참여해주세요. 자세한 내용은 [기여 가이드](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md)에서 확인하세요. 시작하기 좋은 방법은 [이슈 분류](https://github.com/vitejs/vite/issues), [PR 리뷰](https://github.com/vitejs/vite/pulls), 열린 이슈를 기반으로 한 테스트 PR 전송, [Discussions](https://github.com/vitejs/vite/discussions)나 Vite Land의 [도움 포럼](https://discord.com/channels/804011606160703521/1019670660856942652)에서 다른 사람들 지원입니다. 질문이 있으시면, [Discord 커뮤니티](https://chat.vite.dev)에 참여하여 [#contributing 채널](https://discord.com/channels/804011606160703521/804439875226173480)에서 저희와 대화하세요.
 
 [Bluesky](https://bsky.app/profile/vite.dev), [X](https://twitter.com/vite_js), 또는 [Mastodon](https://webtoo.ls/@vite)에서 저희를 팔로우하여 최신 소식을 받고 Vite 위에 구축하는 다른 사람들과 소통하세요.
 
@@ -92,4 +92,4 @@ Vite 7은 Vite 6에서 원활한 업데이트가 되어야 합니다. 저희는 
 
 ## 감사의 말 {#acknowledgments}
 
-Vite 7은 광범위한 기여자 커뮤니티, 다운스트림 유지보수자들, 플러그인 개발자들의 도움으로 [Vite 팀](/team)이 제작했습니다. `rolldown-vite`와 이번 릴리스에 대한 놀라운 작업을 해준 [sapphi-red](https://github.com/sapphi-red)에게 특별히 감사드립니다. Vite는 [Bolt](https://bolt.new/)와 [Nuxt Labs](https://nuxtlabs.com/)와의 파트너십으로 [VoidZero](https://voidzero.dev)에서 제공합니다. 또한 [Vite의 GitHub Sponsors](https://github.com/sponsors/vitejs)와 [Vite의 Open Collective](https://opencollective.com/vite)의 후원자들에게도 감사드립니다.
+Vite 7은 광범위한 기여자 커뮤니티, 다운스트림 유지보수자들, 플러그인 개발자들의 도움으로 [Vite 팀](/team)이 제작했습니다. `rolldown-vite`와 이번 릴리스에 대한 놀라운 작업을 해준 [sapphi-red](https://github.com/sapphi-red)에게 특별히 감사드립니다. Vite는 [VoidZero](https://voidzero.dev)에서 제공하며, [Bolt](https://bolt.new/)와 [Nuxt Labs](https://nuxtlabs.com/)와 파트너십을 맺고 있습니다. 또한 [Vite의 GitHub Sponsors](https://github.com/sponsors/vitejs)와 [Vite의 Open Collective](https://opencollective.com/vite)의 후원자들에게도 감사드립니다.
