@@ -251,7 +251,6 @@ Node.js 인스펙터가 루트 폴더에 `vite-profile-0.cpuprofile`을 생성�
 브라우저에서 Node.js 모듈을 사용할 때 Vite는 다음 경고를 출력합니다.
 
 > "fs" 모듈은 브라우저 호환성을 위해 외부화되었습니다. 클라이언트 코드에서 "fs.readFile"에 접근할 수 없습니다.
-이는 Vite가 Node.js 모듈을 자동으로 폴리필하지 않기 때문입니다.
 
 이는 Vite가 Node.js 모듈을 자동으로 폴리필하지 않기 때문입니다.
 
@@ -267,15 +266,15 @@ Vite는 엄격하지 않은 모드(느슨한 모드)에서만 실행되는 코�
 
 > TypeError: boolean 'false'에 프로퍼티 'foo'를 생성할 수 없습니다.
 
-이러한 코드들이 의존성 모듈 내부에서 사용된다면, 문제를 해결하기 위해[`patch-package`](https://github.com/ds300/patch-package) (또는 [`yarn patch`](https://yarnpkg.com/cli/patch) 또는 [`pnpm patch`](https://pnpm.io/cli/patch))를 사용할 수 있습니다.
+이러한 코드들이 디펜던시 모듈 내부에서 사용된다면, 문제를 해결하기 위해[`patch-package`](https://github.com/ds300/patch-package) (또는 [`yarn patch`](https://yarnpkg.com/cli/patch) 또는 [`pnpm patch`](https://pnpm.io/cli/patch))를 사용할 수 있습니다.
 
 ### 브라우저 확장 프로그램 {#browser-extensions}
+
 일부 브라우저 확장 프로그램(예: 광고 차단기)은 Vite 클라이언트가 Vite 개발 서버에 요청을 보내지 못하게 할 수 있습니다. 이 경우 기록된 오류 없이 흰 화면이 보일 수 있습니다. 다음 오류가 표시될 수도 있습니다:
 
 > TypeError: 동적으로 임포트한 모듈을 가져오지 못했습니다.
 
 이 문제가 있다면 확장 프로그램을 비활성화해 보세요.
-광고 차단기와 같은 일부 브라우저 확장 프로그램은 Vite 클라이언트가 Vite 개발 서버에 요청을 보내는 것을 방지할 수 있습니다. 이 경우 화면이 흰색으로 표시되고 오류가 표시되지 않을 수 있습니다. 이러한 문제가 발생하는 경우 확장 프로그램을 비활성화해 보세요.
 
 ### Windows의 드라이브 간 링크 {#cross-drive-links-on-windows}
 

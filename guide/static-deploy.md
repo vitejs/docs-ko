@@ -292,7 +292,6 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 
 프로젝트에 [커스텀 도메인](https://render.com/docs/custom-domains)을 추가할 수도 있습니다.
 
-
 ## Flightcontrol {#flightcontrol}
 
 [이 문서](https://www.flightcontrol.dev/docs/reference/examples/vite?ref=docs-vite)를 따라 [Flightcontrol](https://www.flightcontrol.dev/?ref=docs-vite)을 이용해 정적 사이트를 배포할 수 있습니다.

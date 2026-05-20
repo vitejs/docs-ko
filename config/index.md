@@ -10,7 +10,7 @@ title: Vite 설정하기
 
 ```js [vite.config.js]
 export default {
-  // config options
+  // 설정 옵션
 }
 ```
 
@@ -71,12 +71,12 @@ import { defineConfig } from 'vite'
 export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
   if (command === 'serve') {
     return {
-      // dev specific config
+      // 개발 전용 설정
     }
   } else {
     // command === 'build'
     return {
-      // build specific config
+      // 빌드 전용 설정
     }
   }
 })
@@ -96,31 +96,33 @@ import { defineConfig } from 'vite'
 export default defineConfig(async ({ command, mode }) => {
   const data = await asyncFunction()
   return {
-    // vite config
+    // Vite 설정
   }
 })
 ```
 
 ## 설정에서 환경 변수 사용하기 {#using-environment-variables-in-config}
 
-환경 변수 역시 `process.env` 객체를 통해 가져올 수 있습니다.
+설정 자체가 평가되는 동안 사용할 수 있는 환경 변수는 현재 프로세스 환경(`process.env`)에 이미 존재하는 값뿐입니다. Vite는 사용자 설정이 해결된 _뒤에_ `.env*` 파일 로딩을 의도적으로 지연합니다. 로드할 파일 집합이 [`root`](/guide/#index-html-and-project-root), [`envDir`](/config/shared-options.md#envdir) 같은 설정 옵션과 최종 `mode`에 따라 달라지기 때문입니다.
 
-참고로 Vite는 Vite의 설정을 끝마친 뒤 어떻게 파일을 불러올 것인지 알 수 있기 때문에, 기본적으로 `.env` 파일을 로드하지 않습니다. 가령 `root` 또는 `envDir` 설정 값에 따라 어떻게 파일을 불러올 것인지 달라집니다. 다만 필요하다면 `loadEnv` 헬퍼를 사용해 `.env` 파일을 불러올 수도 있습니다.
+즉, `.env`, `.env.local`, `.env.[mode]`, `.env.[mode].local`에 정의된 변수는 `vite.config.*`가 실행되는 동안 `process.env`에 자동으로 주입되지 않습니다. 이 변수들은 나중에 자동으로 로드되어 [환경 변수와 모드](/guide/env-and-mode.html)에 문서화된 대로 기본 `VITE_` 접두사 필터를 거쳐 애플리케이션 코드의 `import.meta.env`에 노출됩니다. 따라서 `.env*` 파일의 값을 앱에 전달하기만 하면 된다면 설정에서 별도로 호출할 필요가 없습니다.
+
+하지만 `.env*` 파일의 값이 설정 자체에 영향을 주어야 한다면(예: `server.port` 설정, 플러그인 조건부 활성화, `define` 치환 값 계산), 내보내진 [`loadEnv`](/guide/api-javascript.html#loadenv) 헬퍼를 사용해 직접 로드할 수 있습니다.
 
 ```js twoslash
 import { defineConfig, loadEnv } from 'vite'
 
 export default defineConfig(({ mode }) => {
-  // Load env file based on `mode` in the current working directory.
-  // Set the third parameter to '' to load all env regardless of the
-  // `VITE_` prefix.
+  // 현재 작업 디렉터리에서 `mode`에 맞는 env 파일을 로드합니다.
+  // 세 번째 매개변수를 ''로 설정하면 `VITE_` 접두사와 관계없이
+  // 모든 env를 로드합니다.
   const env = loadEnv(mode, process.cwd(), '')
   return {
     define: {
-      // Provide an explicit app-level constant derived from an env var.
+      // env 변수에서 파생한 앱 수준 상수를 명시적으로 제공합니다.
       __APP_ENV__: JSON.stringify(env.APP_ENV),
     },
-    // Example: use an env var to set the dev server port conditionally.
+    // 예: env 변수를 사용해 개발 서버 포트를 조건부로 설정합니다.
     server: {
       port: env.APP_PORT ? Number(env.APP_PORT) : 5173,
     },

@@ -312,6 +312,8 @@ function mergeConfig(
 
 Vite 설정을 깊이(Deep) 병합합니다. `isRoot`는 병합되는 Vite 설정의 레벨을 나타냅니다. 예를 들어, `build` 옵션을 두 개 병합한다면 `false`로 설정합니다.
 
+`overrides`의 `null`과 `undefined` 값은 건너뛰며 병합하지 않습니다. `defaults`의 값을 명시적으로 지워야 한다면 `mergeConfig` 결과를 직접 수정하세요.
+
 ::: tip 참고
 `mergeConfig` 함수는 오직 객체 형태의 설정만 전달받습니다. 만약 콜백 형태의 설정이 있다면, `mergeConfig`에 전달하기 전에 호출해야 합니다.
 

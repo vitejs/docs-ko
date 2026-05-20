@@ -29,7 +29,6 @@ Vite 전용 플러그인의 경우:
 - Vite 플러그인은 `vite-plugin-` 접두사가 있는 명확한 이름을 갖습니다.
 - package.json 파일의 `keywords` 항목에는 `vite-plugin`을 포함시키도록 합니다.
 - 플러그인 문서에 Vite 플러그인으로 구성한 이유를 설명하는 섹션을 추가합니다. (가령 'Vite 전용 플러그인 훅 사용'과 같이 말이죠.)
-- package.json의 `keywords` 필드에 `vite-plugin` 키워드를 포함하세요.
 
 특정 프레임워크에서만 동작하는 플러그인은 접두사에 해당 프레임워크 이름을 포함해야 합니다.
 
@@ -78,9 +77,8 @@ export default defineConfig({
 ## 간단한 예제들 {#simple-examples}
 
 :::tip
-Vite 또는 Rollup 플러그인을 구현할 때는 실제 플러그인 객체를 반환하는 팩토리 함수로 작성하는 것이 일반적인 관례입니다. 또한 이렇게 구성할 경우 플러그인을 사용하는 사용자가 플러그인의 세부적인 동작을 정의할 수 있는 옵션을 허용할 수 있게 만들어 줄 수도 있습니다.
-:::
 Vite/Rolldown/Rollup 플러그인은 실제 플러그인 객체를 반환하는 팩토리 함수로 작성하는 것이 일반적인 컨벤션입니다. 이 함수는 사용자가 플러그인의 동작을 커스터마이즈할 수 있도록 옵션을 받을 수 있습니다.
+:::
 
 ### 파일 타입 변환하기 {#transforming-custom-file-types}
 
@@ -172,8 +170,6 @@ console.log(msg)
 
 아래의 훅은 서버가 종료될 때 호출됩니다:
 
-- [`buildEnd`](https://rollupjs.org/plugin-development/#buildend)
-- [`closeBundle`](https://rollupjs.org/plugin-development/#closebundle)
 - [`buildEnd`](https://rolldown.rs/reference/Interface.Plugin#buildend)
 - [`closeBundle`](https://rolldown.rs/reference/Interface.Plugin#closebundle)
 
@@ -558,9 +554,7 @@ Vite 플러그인은 Webpack 로더와 유사한 `enforce` 프로퍼티를 추�
 - `enforce: 'post'`로 지정된 플러그인
 - 빌드 후 실행되는 Vite의 플러그인 (minify, manifest, reporting)
 
-참고로 이는 훅 순서를 지정하는 것과는 별개이며, [Rollup 훅](https://rollupjs.org/plugin-development/#build-hooks)과 같이 `order` 속성이 별도로 적용된다는 점에 유의하세요.
-
-이는 훅 순서 지정과는 별개입니다. Rolldown 훅은 평소처럼 [`order` 속성](https://rolldown.rs/reference/TypeAlias.ObjectHook#order)의 영향을 별도로 받습니다.
+이는 훅 순서와는 별개입니다. Rolldown 훅은 평소처럼 [`order` 속성](https://rolldown.rs/reference/TypeAlias.ObjectHook#order)의 영향을 별도로 받습니다.
 
 ## 조건부 적용 {#conditional-application}
 

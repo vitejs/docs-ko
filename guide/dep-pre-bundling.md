@@ -22,12 +22,12 @@
    만약 `lodash-es` 모듈을 하나의 모듈로 번들링하게 된다면 어떻게 될까요? 브라우저는 단지 하나의 HTTP 요청만을 전송하게 됩니다.
 
 ::: tip 참고
-디펜던시 사전 번들링 기능은 개발 모드에서만 적용되며, `esbuild`를 이용해 디펜던시를 ESM으로 변환합니다. 프로덕션 빌드의 경우, 이 대신 `@rollup/plugin-commonjs`가 대신 사용됩니다.
+디펜던시 사전 번들링 기능은 개발 모드에서만 적용됩니다.
 :::
 
 ## 자동으로 디펜던시 탐색하기 {#automatic-dependency-discovery}
 
-만약 디펜던시가 캐시되지 않았다면 어떻게 될까요? vite는 프로젝트 내 모든 소스 코드를 탐색하여 디펜던시를 찾아낸 뒤, 사전 번들링을 이용해 Import 합니다(`node_modules`에서 디펜던시를 가져오듯이 말이죠). 물론, 이 사전 번들링 과정은 `esbuild`를 이용하기에 보통 매우 빠른 속도로 진행됩니다.
+만약 디펜던시가 캐시되지 않았다면 어떻게 될까요? vite는 프로젝트 내 모든 소스 코드를 탐색하여 디펜던시를 찾아낸 뒤, 사전 번들링을 이용해 Import 합니다(`node_modules`에서 디펜던시를 가져오듯이 말이죠). 물론, 이 사전 번들링 과정은 [Rolldown](https://rolldown.rs/)을 이용하기에 보통 매우 빠른 속도로 진행됩니다.
 
 서버가 이미 시작된 이후에 캐시되지 않은 새로운 디펜던시가 추가되는 경우라면, vite는 디펜던시 번들링 과정을 재시작하고 이후 필요하다면 해당 페이지를 다시 불러오게 됩니다.
 
@@ -35,7 +35,7 @@
 
 모노리포 프로젝트의 경우 디펜던시는 동일한 하나의 리포지토리에 연결된 패키지일 수 있습니다. Vite는 사용하는 디펜던시가 `node_modules`에 존재하지 않더라도 스스로 탐색하여 이를 소스 코드로 가져올 수 있지만, 이를 번들로 묶지는 않습니다. 그저 연결된 디펜던시 목록을 분석할 뿐이죠.
 
-이를 위해서는 연결된 디펜던시가 ESM 형태로 내보내져야 합니다. 만약 그렇지 않다면, 해당되는 디펜던시들을 [`optimizeDeps.include`](/config/dep-optimization-options.md#optimizedeps-include)와 [`build.commonjsOptions.include`](/config/build-options.md#build-commonjsoptions) 설정에 추가해주세요.
+이를 위해서는 연결된 디펜던시가 ESM 형태로 내보내져야 합니다. 만약 그렇지 않다면, 해당 디펜던시를 설정의 [`optimizeDeps.include`](/config/dep-optimization-options.md#optimizedeps-include)에 추가할 수 있습니다.
 
 ```js twoslash [vite.config.js]
 import { defineConfig } from 'vite'
@@ -52,10 +52,12 @@ export default defineConfig({
 ## 디펜던시 탐색 과정 커스터마이즈하기 {#customizing-the-behavior}
 
 Vite의 디펜던시 탐색 휴리스틱이 항상 바람직한 것은 아닙니다. 만약 특정 디펜던시를 명시적으로 포함시키거나 포함시키지 않도록 설정하고자 한다면 [`optimizeDeps` 옵션](/config/dep-optimization-options.md)을 이용해주세요.
-[`optimizeDeps.rolldownOptions` 옵션](/config/dep-optimization-options.md#optimizedeps-rolldownoptions)으로 Rolldown도 추가로 커스터마이즈할 수 있습니다. 예를 들어 디펜던시의 특수 파일을 처리하기 위해 Rolldown 플러그인을 추가하거나 [빌드 `target`](https://rolldown.rs/reference/InputOptions.transform#target)을 변경할 수 있습니다.
-이를 해결하기 위해 `include`와 `exclude` 옵션 둘 다 사용될 수 있습니다. 만약 디펜던시가 크거나(내부 모듈이 많은 경우) CommonJS 포맷이라면 `include` 옵션에 명시해야 합니다. 만약 디펜던시가 작고 이미 ESM 스타일로 작성되어 있다면 `exclude` 옵션에 명시해 브라우저에서 바로 불러올 수 있도록 설정할 수 있습니다.
 
-또한 [`optimizeDeps.esbuildOptions` 옵션](/config/dep-optimization-options.md#optimizedeps-esbuildoptions)을 통해 esbuild를 더욱 세밀하게 커스터마이즈할 수 있습니다. 예를 들어, 특정 파일을 디펜던시에서 처리하기 위한 esbuild 플러그인을 추가하거나, [빌드 `target`](https://esbuild.github.io/api/#target)을 변경할 수 있습니다.
+`optimizeDeps.include` 또는 `optimizeDeps.exclude`의 일반적인 사용 사례는 소스 코드에서 직접 발견할 수 없는 import가 있을 때입니다. 예를 들어 플러그인 변환 결과로 import가 만들어질 수 있습니다. 이 경우 Vite는 초기 스캔에서 해당 import를 발견할 수 없고, 브라우저가 파일을 요청해 변환된 뒤에야 발견할 수 있습니다. 그러면 서버가 시작 직후 다시 번들링을 수행합니다.
+
+이를 해결하기 위해 `include`와 `exclude` 옵션 둘 다 사용할 수 있습니다. 만약 디펜던시가 크거나(내부 모듈이 많은 경우) CommonJS 포맷이라면 `include` 옵션에 명시해야 합니다. 만약 디펜던시가 작고 이미 ESM 스타일로 작성되어 있다면 `exclude` 옵션에 명시해 브라우저에서 바로 불러올 수 있도록 설정할 수 있습니다.
+
+[`optimizeDeps.rolldownOptions` 옵션](/config/dep-optimization-options.md#optimizedeps-rolldownoptions)으로 Rolldown도 추가로 커스터마이즈할 수 있습니다. 예를 들어 디펜던시의 특수 파일을 처리하기 위해 Rolldown 플러그인을 추가하거나 [빌드 `target`](https://rolldown.rs/reference/InputOptions.transform#target)을 변경할 수 있습니다.
 
 ## 캐싱 {#caching}
 
