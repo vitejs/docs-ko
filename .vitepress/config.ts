@@ -36,8 +36,15 @@ const deployType = (() => {
   }
 })()
 
+const viteVersion = '8.0.13'
+const viteMajorVersion = 8
+
 const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
   const oldVersions: DefaultTheme.NavItemWithLink[] = [
+    {
+      text: 'Vite 7 문서',
+      link: 'https://v7.vite.dev',
+    },
     {
       text: 'Vite 6 문서',
       link: 'https://v6.vite.dev',
@@ -65,7 +72,7 @@ const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
     case 'local':
       return [
         {
-          text: 'Vite 7 문서 (릴리스)',
+          text: `Vite ${viteMajorVersion} 문서 (릴리스)`,
           link: 'https://ko.vite.dev',
         },
         ...oldVersions,
@@ -80,7 +87,7 @@ function inlineScript(file: string): HeadConfig {
     'script',
     {},
     fs.readFileSync(
-      path.resolve(__dirname, `./inlined-scripts/${file}`),
+      path.resolve(import.meta.dirname, `./inlined-scripts/${file}`),
       'utf-8',
     ),
   ]
@@ -90,14 +97,22 @@ const config = defineConfig({
   title: 'Vite',
   lang: 'ko',
   description: '프런트엔드 개발의 새로운 기준',
+  cleanUrls: true,
+  sitemap: {
+    hostname: 'https://ko.vite.dev',
+  },
 
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
+    [
+      'link',
+      { rel: 'icon', type: 'image/svg+xml', href: '/logo-without-border.svg' },
+    ],
     [
       'link',
       { rel: 'alternate', type: 'application/rss+xml', href: '/blog.rss' },
     ],
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
+    inlineScript('banner.js'),
     [
       'link',
       {
@@ -156,6 +171,12 @@ const config = defineConfig({
     variant: 'vite',
     logo: '/logo.svg',
 
+    banner: {
+      id: 'viteplus-alpha',
+      text: 'Vite+ Alpha 발표: 오픈 소스. 통합. 차세대.',
+      url: 'https://voidzero.dev/posts/announcing-vite-plus-alpha?utm_source=vite&utm_content=top_banner',
+    },
+
     editLink: {
       pattern: 'https://github.com/vitejs/docs-ko/edit/main/:path',
       text: '이 페이지 수정하기',
@@ -172,6 +193,18 @@ const config = defineConfig({
 
     search: {
       provider: 'local',
+      options: {
+        miniSearch: {
+          searchOptions: {
+            boostDocument(page) {
+              if (page.startsWith('/guide/')) return 2
+              if (page.startsWith('/config/')) return 1.5
+              if (page.startsWith('/blog/')) return 0
+              return 1
+            },
+          },
+        },
+      },
     },
 
     carbonAds: {
@@ -180,7 +213,7 @@ const config = defineConfig({
     },
 
     footer: {
-      message: `Released under the MIT License. (${commitRef})`,
+      message: `MIT 라이선스로 배포됩니다. (${commitRef})`,
       copyright: 'Copyright © 2019-present VoidZero Inc. & Vite Contributors',
     },
 
@@ -194,6 +227,15 @@ const config = defineConfig({
           { text: 'Vite 팀', link: '/team' },
           { text: '블로그', link: '/blog' },
           { text: '릴리스', link: '/releases' },
+          { text: '감사의 말', link: '/acknowledgements' },
+          {
+            text: '플러그인 레지스트리',
+            link: 'https://registry.vite.dev/plugins',
+          },
+          {
+            text: '다큐멘터리',
+            link: 'https://www.youtube.com/watch?v=bmWQqAKLgT4',
+          },
           {
             items: [
               {
@@ -209,7 +251,7 @@ const config = defineConfig({
                 link: 'https://x.com/vite_js',
               },
               {
-                text: 'Discord',
+                text: 'Discord 채팅',
                 link: 'https://chat.vite.dev',
               },
               {
@@ -221,24 +263,28 @@ const config = defineConfig({
                 link: 'https://viteconf.org',
               },
               {
-                text: 'DEV',
+                text: 'DEV 커뮤니티',
                 link: 'https://dev.to/t/vite',
-              },
-              {
-                text: '변경 사항',
-                link: 'https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md',
-              },
-              {
-                text: '기여하기',
-                link: 'https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md',
               },
             ],
           },
         ],
       },
       {
-        text: '버전',
-        items: versionLinks,
+        text: `v${viteVersion}`,
+        items: [
+          {
+            text: '변경 사항',
+            link: 'https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md',
+          },
+          {
+            text: '기여하기',
+            link: 'https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md',
+          },
+          {
+            items: versionLinks,
+          },
+        ],
       },
     ],
 
@@ -318,7 +364,7 @@ const config = defineConfig({
             },
             {
               text: 'v6에서 마이그레이션하기',
-              link: '/guide/migration'
+              link: '/guide/migration',
             },
             {
               text: 'v5에서 마이그레이션하기',
@@ -347,7 +393,7 @@ const config = defineConfig({
           ],
         },
         {
-          text: 'APIs',
+          text: 'API',
           items: [
             {
               text: '플러그인 API',
@@ -524,6 +570,9 @@ const config = defineConfig({
         'gsap/dist/ScrollTrigger',
         'gsap/dist/MotionPathPlugin',
       ],
+    },
+    define: {
+      __VITE_VERSION__: JSON.stringify(viteVersion),
     },
   },
   buildEnd,

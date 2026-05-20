@@ -6,11 +6,11 @@ declare const __VITE_VERSION__: string
 // Constants
 const supportedVersionMessage = {
   color: 'var(--vp-c-brand-1)',
-  text: 'supported',
+  text: '지원됩니다',
 }
 const notSupportedVersionMessage = {
   color: 'var(--vp-c-danger-1)',
-  text: 'not supported',
+  text: '지원되지 않습니다',
 }
 const previousMajorLatestMinors: Record<string, string> = {
   '2': '2.9',
@@ -91,7 +91,7 @@ function versionsToText(versions: string[]) {
   if (versions.length === 0) return ''
   if (versions.length === 1) return versions[0]
   return (
-    versions.slice(0, -1).join(', ') + ' and ' + versions[versions.length - 1]
+    versions.slice(0, -1).join(', ') + ' 및 ' + versions[versions.length - 1]
   )
 }
 
@@ -107,30 +107,33 @@ function isValidViteVersion(version: string) {
   <div>
     <ul>
       <li v-if="supportInfo.regularPatches.length">
-        Regular patches are released for
-        <span v-html="versionsToText(supportInfo.regularPatches)"></span>.
+        정기 패치는
+        <span v-html="versionsToText(supportInfo.regularPatches)"></span>
+        대상으로 릴리스됩니다.
       </li>
       <li v-if="supportInfo.importantFixes.length">
-        Important fixes and security patches are backported to
-        <span v-html="versionsToText(supportInfo.importantFixes)"></span>.
+        중요한 수정 사항과 보안 패치는
+        <span v-html="versionsToText(supportInfo.importantFixes)"></span>
+        대상으로 백포트됩니다.
       </li>
       <li v-if="supportInfo.securityPatches.length">
-        Security patches are also backported to
-        <span v-html="versionsToText(supportInfo.securityPatches)"></span>.
+        보안 패치는
+        <span v-html="versionsToText(supportInfo.securityPatches)"></span>
+        대상으로도 백포트됩니다.
       </li>
       <li>
-        All versions before these are no longer supported. Users should upgrade
-        to receive updates.
+        이보다 이전 버전은 더 이상 지원되지 않습니다. 업데이트를 받으려면
+        업그레이드해야 합니다.
       </li>
     </ul>
     <p>
-      If you're using Vite
+      Vite
       <input
         class="checked-input"
         type="text"
         v-model="checkedVersion"
         placeholder="0.0.0"
-      />, it is
+      />을 사용 중이라면, 이 버전은
       <strong :style="{ color: checkedResult.color }">{{
         checkedResult.text
       }}</strong

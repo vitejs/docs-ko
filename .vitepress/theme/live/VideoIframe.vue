@@ -164,13 +164,13 @@ onBeforeUnmount(() => {
           "
           @focus="showActions"
         >
-          Chat with us
+          함께 채팅하기
         </a>
         <button
           type="button"
           class="button block py-1.5 px-2.25 backdrop-blur transition-opacity"
           @click="toggleFullscreen"
-          :aria-label="isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'"
+          :aria-label="isFullscreen ? '전체 화면 종료' : '전체 화면 시작'"
           :class="
             actionsVisible || player.state !== 'play'
               ? 'opacity-100'
@@ -210,7 +210,7 @@ onBeforeUnmount(() => {
         type="button"
         class="absolute button block left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 p-4 backdrop-blur transition"
         @click="togglePlayback"
-        :aria-label="player.state === 'play' ? 'Pause video' : 'Play video'"
+        :aria-label="player.state === 'play' ? '동영상 일시정지' : '동영상 재생'"
         :class="
           actionsVisible || player.state !== 'play'
             ? 'opacity-100'
