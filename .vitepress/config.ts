@@ -14,6 +14,7 @@ import {
 } from 'vitepress-plugin-group-icons'
 import { buildEnd } from './buildEnd.config'
 import { markdownItImageSize } from 'markdown-it-image-size'
+import { extendConfig } from '@voidzero-dev/vitepress-theme/config'
 
 const ogDescription = 'Vite, 프런트엔드 개발의 새로운 기준'
 const ogImage = 'https://ko.vite.dev/og-image.jpg'
@@ -85,7 +86,7 @@ function inlineScript(file: string): HeadConfig {
   ]
 }
 
-export default defineConfig({
+const config = defineConfig({
   title: 'Vite',
   lang: 'ko',
   description: '프런트엔드 개발의 새로운 기준',
@@ -152,6 +153,7 @@ export default defineConfig({
   },
 
   themeConfig: {
+    variant: 'vite',
     logo: '/logo.svg',
 
     editLink: {
@@ -526,3 +528,5 @@ export default defineConfig({
   },
   buildEnd,
 })
+
+export default extendConfig(config)
