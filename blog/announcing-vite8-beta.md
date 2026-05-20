@@ -31,7 +31,7 @@ _2025년 12월 3일_
 
 ![Vite 8 베타 발표 커버 이미지](/og-image-announcing-vite8-beta.webp)
 
-요약: [Rolldown](https://rolldown.rs/)으로 구동되는 Vite 8의 첫 번째 베타가 공개되었습니다. Vite 8은 훨씬 더 빠른 프로덕션 빌드를 제공하며, 앞으로의 개선 가능성도 열어줍니다. `vite`를 `8.0.0-beta.0` 버전으로 업그레이드하고 [마이그레이션 가이드](/guide/migration)를 읽어 새 릴리스를 사용해볼 수 있습니다.
+요약: [Rolldown](https://rolldown.rs/)으로 구동되는 Vite 8의 첫 번째 베타가 공개되었습니다. Vite 8은 훨씬 더 빠른 프로덕션 빌드를 제공하며, 앞으로의 개선 가능성도 넓힙니다. `vite`를 `8.0.0-beta.0` 버전으로 업그레이드하고 [마이그레이션 가이드](/guide/migration)를 읽어 새 릴리스를 사용해볼 수 있습니다.
 
 ---
 
@@ -39,7 +39,7 @@ Vite 8의 첫 번째 베타를 공개하게 되어 기쁩니다. 이번 릴리�
 
 ## 웹을 위한 새로운 번들러 {#a-new-bundler-for-the-web}
 
-Vite는 이전에 개발 빌드와 프로덕션 빌드의 서로 다른 요구를 충족하기 위해 두 개의 번들러에 의존했습니다.
+Vite는 이전에 개발 빌드와 프로덕션 빌드의 서로 다른 요구를 충족하기 위해 두 개의 번들러를 사용했습니다.
 
 1. 개발 중 빠른 컴파일을 위한 esbuild
 2. 프로덕션 빌드의 번들링, 청크 분할, 최적화를 위한 Rollup
@@ -50,7 +50,7 @@ Vite는 이전에 개발 빌드와 프로덕션 빌드의 서로 다른 요구�
 
 - **성능**: Rolldown은 Rust로 작성되어 네이티브 속도로 동작합니다. esbuild 수준의 성능을 제공하며 [**Rollup보다 10-30배 빠릅니다**](https://github.com/rolldown/benchmarks).
 - **호환성**: Rolldown은 Rollup 및 Vite와 동일한 플러그인 API를 지원합니다. 대부분의 Vite 플러그인은 Vite 8에서 별도 설정 없이 동작합니다.
-- **더 많은 기능**: Rolldown은 전체 번들 모드, 더 유연한 청크 분할 제어, 모듈 수준 영속 캐시, Module Federation 등 Vite를 위한 더 고급 기능을 열어줍니다.
+- **더 많은 기능**: Rolldown은 전체 번들링 모드, 더 유연한 청크 분할 제어, 모듈 수준 영속 캐시, Module Federation 등 Vite를 위한 더 고급 기능을 제공합니다.
 
 ## 툴체인 통합 {#unifying-the-toolchain}
 
@@ -58,11 +58,11 @@ Vite의 번들러 교체가 미치는 영향은 성능을 넘어섭니다. 번�
 
 **즉, Vite는 같은 팀이 유지보수하는 엔드 투 엔드 툴체인의 진입점이 됩니다. 빌드 도구(Vite), 번들러(Rolldown), 컴파일러(Oxc)가 하나의 흐름으로 이어집니다.**
 
-이 정렬은 스택 전반의 동작 일관성을 보장하고, JavaScript가 계속 진화함에 따라 새로운 언어 명세를 빠르게 채택하고 맞춰갈 수 있게 합니다. 또한 이전에는 Vite만으로 할 수 없었던 다양한 개선을 가능하게 합니다. 예를 들어 Oxc의 의미 분석을 활용해 Rolldown에서 더 나은 트리 셰이킹을 수행할 수 있습니다.
+이 정렬은 스택 전반의 동작 일관성을 보장하고, JavaScript가 계속 진화함에 따라 새로운 언어 명세를 빠르게 채택하고 대응할 수 있게 합니다. 또한 이전에는 Vite만으로 할 수 없었던 다양한 개선을 실현합니다. 예를 들어 Oxc의 의미 분석을 활용해 Rolldown에서 더 나은 트리 셰이킹을 수행할 수 있습니다.
 
 ## Vite가 Rolldown으로 마이그레이션한 방법 {#how-vite-migrated-to-rolldown}
 
-Rolldown 기반 Vite로의 마이그레이션은 기반을 바꾸는 변화입니다. 그래서 저희 팀은 안정성과 생태계 호환성을 희생하지 않도록 신중한 단계를 거쳐 구현했습니다.
+Rolldown 기반 Vite로의 마이그레이션은 기반을 바꾸는 변화입니다. 그래서 Vite 팀은 안정성과 생태계 호환성을 희생하지 않도록 신중한 단계를 거쳐 구현했습니다.
 
 먼저 별도의 `rolldown-vite` 패키지를 [기술 프리뷰로 릴리스](https://voidzero.dev/posts/announcing-rolldown-vite)했습니다. 이를 통해 Vite의 안정 버전에 영향을 주지 않고 얼리 어답터와 함께 작업할 수 있었습니다. 얼리 어답터들은 Rolldown의 성능 향상을 경험하는 동시에 값진 피드백을 제공했습니다. 주요 사례는 다음과 같습니다.
 
@@ -79,7 +79,7 @@ Rolldown 기반 Vite로의 마이그레이션은 기반을 바꾸는 변화입�
 
 ## Vite 8 베타로 마이그레이션 {#migrating-to-vite-8-beta}
 
-Vite 8은 핵심 빌드 동작을 다루기 때문에, 저희는 구성 API와 플러그인 훅을 바꾸지 않는 데 집중했습니다. 업그레이드를 돕기 위해 [마이그레이션 가이드](/guide/migration)를 만들었습니다.
+Vite 8은 핵심 빌드 동작을 다루기 때문에, Vite 팀은 구성 API와 플러그인 훅을 바꾸지 않는 데 집중했습니다. 업그레이드를 돕기 위해 [마이그레이션 가이드](/guide/migration)를 만들었습니다.
 
 사용 가능한 업그레이드 경로는 두 가지입니다.
 
@@ -90,7 +90,7 @@ Vite 8은 핵심 빌드 동작을 다루기 때문에, 저희는 구성 API와 �
 > 특정 Rollup 또는 esbuild 옵션에 의존하고 있다면 Vite 설정을 일부 조정해야 할 수 있습니다. 자세한 지침과 예시는 [마이그레이션 가이드](/guide/migration)를 참고하세요.
 > 안정 버전이 아닌 모든 메이저 릴리스와 마찬가지로, 업그레이드 후에는 모든 것이 예상대로 동작하는지 충분히 테스트하는 것이 좋습니다. 발견한 [이슈](https://github.com/vitejs/rolldown-vite/issues)는 꼭 보고해주세요.
 
-Astro, Nuxt, Vitest처럼 Vite를 의존성으로 사용하는 프레임워크나 도구를 사용한다면, 패키지 매니저에 따라 조금씩 다른 방식으로 `package.json`에서 `vite` 의존성을 오버라이드해야 합니다.
+Astro, Nuxt, Vitest처럼 Vite를 디펜던시로 사용하는 프레임워크나 도구를 사용한다면, 패키지 매니저에 따라 조금씩 다른 방식으로 `package.json`에서 `vite` 디펜던시를 오버라이드해야 합니다.
 
 :::code-group
 
@@ -130,7 +130,7 @@ Astro, Nuxt, Vitest처럼 Vite를 의존성으로 사용하는 프레임워크�
 
 :::
 
-이 오버라이드를 추가한 뒤 의존성을 다시 설치하고, 평소처럼 개발 서버를 시작하거나 프로젝트를 빌드하세요.
+이 오버라이드를 추가한 뒤 디펜던시를 다시 설치하고, 평소처럼 개발 서버를 시작하거나 프로젝트를 빌드하세요.
 
 ## Vite 8의 추가 기능 {#additional-features-in-vite-8}
 
@@ -143,13 +143,13 @@ Rolldown과 함께 제공되는 것 외에도 Vite 8에는 다음이 포함됩�
 
 속도는 언제나 Vite를 정의하는 특징이었습니다. Rolldown, 나아가 Oxc와의 통합은 JavaScript 개발자가 Rust의 속도에서 이점을 얻는다는 뜻입니다. Vite 8로 업그레이드하면 Rust를 사용하는 것만으로도 성능 향상을 기대할 수 있습니다.
 
-또한 곧 Vite의 전체 번들 모드를 제공하게 되어 기대하고 있습니다. 이 모드는 대규모 프로젝트에서 Vite 개발 서버 속도를 크게 개선합니다. 예비 결과에 따르면 개발 서버 시작은 3배 빨라지고, 전체 리로드는 40% 빨라지며, 네트워크 요청은 10배 줄어듭니다.
+또한 곧 Vite의 전체 번들링 모드를 제공하게 되어 기대하고 있습니다. 이 모드는 대규모 프로젝트에서 Vite 개발 서버 속도를 크게 개선합니다. 예비 결과에 따르면 개발 서버 시작은 3배 빨라지고, 전체 리로드는 40% 빨라지며, 네트워크 요청은 10배 줄어듭니다.
 
-Vite를 정의하는 또 다른 특징은 플러그인 생태계입니다. 저희는 JavaScript 개발자가 익숙한 언어인 JavaScript로 Vite를 계속 확장하고 사용자화하면서도 Rust의 성능 향상에서 이점을 얻기를 바랍니다. 저희 팀은 VoidZero 팀과 협력해 이러한 Rust 기반 시스템에서 JavaScript 플러그인 사용을 가속화하고 있습니다.
+Vite를 정의하는 또 다른 특징은 플러그인 생태계입니다. JavaScript 개발자가 익숙한 언어인 JavaScript로 Vite를 계속 확장하고 사용자화하면서도 Rust의 성능 향상에서 이점을 얻기를 바랍니다. Vite 팀은 VoidZero 팀과 협력해 이러한 Rust 기반 시스템에서 JavaScript 플러그인 사용을 가속화하고 있습니다.
 
 현재 실험 중인 향후 최적화는 다음과 같습니다.
 
-- [**Raw AST transfer**](https://github.com/oxc-project/oxc/issues/2409). JavaScript 플러그인이 Rust가 생성한 AST에 최소한의 오버헤드로 접근할 수 있게 합니다.
+- [**Raw AST transfer**](https://github.com/oxc-project/oxc/issues/2409). JavaScript 플러그인이 Rust가 생성한 AST에 최소한의 오버헤드로 접근하게 합니다.
 - [**Native MagicString transforms**](https://rolldown.rs/in-depth/native-magic-string#native-magicstring). 로직은 JavaScript에 두고 계산은 Rust에서 수행하는 간단한 커스텀 변환입니다.
 
 ## **연락하기** {#connect-with-us}
