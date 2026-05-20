@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Meet the Team
-description: The development of Vite is guided by an international team.
+title: 팀 소개
+description: Vite 개발은 국제적인 팀이 이끌고 있습니다.
 ---
 
 <script setup>
@@ -10,7 +10,7 @@ import {
   VPTeamPageTitle,
   VPTeamPageSection,
   VPTeamMembers
-} from 'vitepress/theme'
+} from '@voidzero-dev/vitepress-theme'
 import { core, emeriti } from './_data/team'
 </script>
 
@@ -18,14 +18,14 @@ import { core, emeriti } from './_data/team'
   <VPTeamPageTitle>
     <template #title>팀 소개</template>
     <template #lead>
-      Vite 개발은 국제적인 팀에 의해 진행되며, 그들 중 일부를 소개합니다.
+      Vite 개발은 국제적인 팀이 이끌고 있으며, 그중 일부는 아래에 소개되기를 선택했습니다.
     </template>
   </VPTeamPageTitle>
   <VPTeamMembers :members="core" />
   <VPTeamPageSection>
     <template #title>명예 팀원</template>
     <template #lead>
-      더 이상 활동하지는 않지만, 과거에 귀중한 공헌을 했던 팀원들을 소개합니다.
+      여기서는 과거에 귀중한 공헌을 했던, 더 이상 활동하지 않는 일부 팀원들을 기립니다.
     </template>
     <template #members>
       <VPTeamMembers size="small" :members="emeriti" />
