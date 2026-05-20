@@ -10,7 +10,7 @@ title: Vite 설정하기
 
 ```js [vite.config.js]
 export default {
-  // 설정 옵션들
+  // config options
 }
 ```
 
@@ -22,8 +22,10 @@ export default {
 vite --config my-config.js
 ```
 
+<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~05jg?via=vite" title="Vite 설정하기">Scrimba에서 인터랙티브 강의 보기</ScrimbaLink>
+
 ::: tip 설정 파일 로딩
-기본적으로 Vite는 `esbuild`를 사용해 설정 파일을 임시 파일로 번들링한 뒤 로드합니다. 다만 이는 모노리포에서 TypeScript 파일을 불러올 때 문제가 발생할 수 있습니다. 이러한 문제가 발생한다면 `--configLoader runner`를 지정해 [모듈 러너](/guide/api-environment-runtimes.html#modulerunner)를 대신 사용할 수 있습니다. 모듈 러너는 임시 설정 파일을 생성하지 않고 파일을 즉시 변환합니다. 참고로 모듈 러너는 설정 파일에서 CJS를 지원하지 않으나, 그럼에도 외부 CJS 패키지는 정상적으로 동작합니다.
+기본적으로 Vite는 [Rolldown](https://rolldown.rs/)을 사용해 설정 파일을 임시 파일로 번들링한 뒤 로드합니다. 다만 이는 모노리포에서 TypeScript 파일을 불러올 때 문제가 발생할 수 있습니다. 이러한 문제가 발생한다면 `--configLoader runner`를 지정해 [모듈 러너](/guide/api-environment-runtimes.html#modulerunner)를 대신 사용할 수 있습니다. 모듈 러너는 임시 설정 파일을 생성하지 않고 파일을 즉시 변환합니다. 참고로 모듈 러너는 설정 파일에서 CJS를 지원하지 않으나, 그럼에도 외부 CJS 패키지는 정상적으로 동작합니다.
 
 또는 TypeScript를 지원하는 환경(예: `node --experimental-strip-types`)을 사용하거나 순수 JavaScript만 작성하는 경우, `--configLoader native`를 지정하여 현재 환경의 네이티브 런타임으로 설정 파일을 로드할 수 있습니다. 단, 설정 파일에서 불러온 모듈의 업데이트는 감지되지 않으므로 Vite 서버가 자동으로 재시작되지 않습니다.
 :::
@@ -69,12 +71,12 @@ import { defineConfig } from 'vite'
 export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
   if (command === 'serve') {
     return {
-      // 개발 서버 설정
+      // dev specific config
     }
   } else {
     // command === 'build'
     return {
-      // 빌드 설정
+      // build specific config
     }
   }
 })
@@ -94,7 +96,7 @@ import { defineConfig } from 'vite'
 export default defineConfig(async ({ command, mode }) => {
   const data = await asyncFunction()
   return {
-    // Vite 설정 값 전달
+    // vite config
   }
 })
 ```
@@ -109,15 +111,19 @@ export default defineConfig(async ({ command, mode }) => {
 import { defineConfig, loadEnv } from 'vite'
 
 export default defineConfig(({ mode }) => {
-  // 현재 작업 디렉터리의 `mode`를 기반으로 env 파일을 불러옴
-  // 세 번째 매개변수를 ''로 설정하면 `VITE_` 접두사에 관계없이
-  // 모든 환경 변수를 불러옴
+  // Load env file based on `mode` in the current working directory.
+  // Set the third parameter to '' to load all env regardless of the
+  // `VITE_` prefix.
   const env = loadEnv(mode, process.cwd(), '')
   return {
-    // Vite 설정
     define: {
+      // Provide an explicit app-level constant derived from an env var.
       __APP_ENV__: JSON.stringify(env.APP_ENV),
-    }
+    },
+    // Example: use an env var to set the dev server port conditionally.
+    server: {
+      port: env.APP_PORT ? Number(env.APP_PORT) : 5173,
+    },
   }
 })
 ```
