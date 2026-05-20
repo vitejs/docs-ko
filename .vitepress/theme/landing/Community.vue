@@ -99,7 +99,7 @@ const testimonials: Testimonial[] = [
           커뮤니티에서 사랑받는 도구
         </h3>
         <p class="max-w-md text-white/70 text-balance">
-          저희 말만 믿지 마세요. Vite 커뮤니티 구성원들의 이야기를 직접
+          Vite 커뮤니티 구성원들의 이야기를 직접
           들어보세요.
         </p>
       </div>

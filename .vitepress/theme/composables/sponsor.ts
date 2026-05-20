@@ -8,6 +8,8 @@ interface Sponsors {
   gold: Sponsor[]
 }
 
+export const MAIN_SPONSOR_TIER = 'Brought to you by'
+
 // shared data across instances so we load only once.
 const data = ref<SponsorTier[]>()
 
@@ -20,22 +22,22 @@ export function useSponsor() {
 
     data.value = [
       {
-        tier: 'Brought to you by',
+        tier: MAIN_SPONSOR_TIER,
         size: 'big',
         items: sponsors.main,
       },
       {
-        tier: 'In partnership with',
+        tier: '함께하는 파트너',
         size: 'big',
         items: sponsors.partnership,
       },
       {
-        tier: 'Platinum Sponsors',
+        tier: '플래티넘 스폰서',
         size: 'big',
         items: sponsors.platinum,
       },
       {
-        tier: 'Gold Sponsors',
+        tier: '골드 스폰서',
         size: 'medium',
         items: sponsors.gold,
       },

@@ -12,7 +12,7 @@ import flexiblePluginAnimation from '@assets/vite/animations/640_x_300_flexible_
         유연한 플러그인 시스템
       </h5>
       <p class="sm:max-w-[28rem] text-pretty">
-        Vite 플러그인은 Rollup의 잘 설계된 플러그인 인터페이스를 확장하고,
+        Vite 플러그인은 잘 설계된 Rollup 플러그인 인터페이스를 확장하고,
         Vite 전용 옵션을 몇 가지 더 제공합니다.
       </p>
       <RiveAnimation
@@ -51,7 +51,7 @@ import flexiblePluginAnimation from '@assets/vite/animations/640_x_300_flexible_
     </div>
 
     <div class="p-5 sm:p-10 flex flex-col gap-3 lg:border-b-0">
-      <h5 class="text-white">일급 SSR 지원</h5>
+      <h5 class="text-white">SSR 기본 지원</h5>
       <p class="sm:max-w-[28rem] text-pretty mb-12 sm:mb-16">
         커스텀 SSR(Server-Side Rendering)을 설정하거나 직접 SSR 프레임워크를
         만드는 일이 그 어느 때보다 쉬워졌습니다.
@@ -70,8 +70,8 @@ import flexiblePluginAnimation from '@assets/vite/animations/640_x_300_flexible_
       <div class="p-5 sm:p-10 flex flex-col gap-3">
         <h5 class="text-white">지속적인 생태계 통합</h5>
         <p class="max-w-[25rem] text-pretty">
-          Vite의 CI는 downstream 프로젝트를 대상으로 변경 사항을 지속적으로
-          테스트해, 안정성과 확신을 가지고 Vite를 개선할 수 있게 해줍니다.
+          Vite의 CI는 다운스트림 프로젝트를 대상으로 변경 사항을 지속적으로
+          테스트해, 안정성과 확신을 바탕으로 Vite를 개선합니다.
         </p>
       </div>
       <div class="px-5 sm:px-10 flex justify-center">

@@ -6,17 +6,17 @@ import ViteFeatureGrid1 from './FeatureGrid1.vue'
 import ViteFeatureGrid2 from './FeatureGrid2.vue'
 import ViteFrameworks from './Frameworks.vue'
 import ViteCommunity from './Community.vue'
-import TrustedBy from '@components/oss/TrustedBy.vue'
+import TrustedBy from './TrustedBy.vue'
 import HeadingSection from '@components/oss/HeadingSection.vue'
 import Sponsors from '@components/oss/Sponsors.vue'
 import Spacer from '@components/shared/Spacer.vue'
 import Footer from '@components/oss/Footer.vue'
-import { useSponsor } from '../composables/sponsor'
+import { MAIN_SPONSOR_TIER, useSponsor } from '../composables/sponsor'
 
 const data = useSponsor()
 
 const sponsors = computed(
-  () => data.value?.filter((s) => s.tier !== 'Brought to you by') ?? [],
+  () => data.value?.filter((s) => s.tier !== MAIN_SPONSOR_TIER) ?? [],
 )
 </script>
 
@@ -35,7 +35,12 @@ const sponsors = computed(
   <HeadingSection heading="여러분이 사랑하는 프레임워크와 도구를 구동합니다" />
   <ViteFrameworks />
   <ViteCommunity />
-  <Sponsors :sponsors="sponsors" />
+  <Sponsors
+    :sponsors="sponsors"
+    heading="무료 오픈 소스"
+    description="Vite는 MIT 라이선스를 따르며 언제나 무료 오픈 소스로 제공됩니다. 이는 기여자와 다음 기업들의 지원 덕분입니다:"
+    sponsor-link-text="스폰서 되기"
+  />
   <Spacer />
   <Footer
     heading="Vite로 빌드를 시작하세요"
