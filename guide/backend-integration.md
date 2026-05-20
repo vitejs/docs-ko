@@ -3,7 +3,7 @@
 :::tip 참고
 기존의 백엔드(Rails, Laravel 등)를 사용해 HTML을 제공하기를 원하지만, 에셋은 Vite를 이용하고자 한다면, [Awesome Vite](https://github.com/vitejs/awesome-vite#integrations-with-backends)의 방법을 확인해 보세요.
 
-만약 이를 직접 구성하고자 한다면, 아래의 가이드를 따라 진행할 수 있습니다.
+커스텀 통합이 필요하다면, 이 가이드의 단계를 따라 수동으로 구성할 수 있습니다.
 :::
 
 1. Vite 설정 파일에서, 진입점을 설정하고 매니페스트를 활성화합니다:
@@ -14,32 +14,32 @@
    export default defineConfig({
      server: {
        cors: {
-         // 브라우저를 통해 접근하고자 하는 출처
+         // the origin you will be accessing via browser
          origin: 'http://my-backend.example.com',
        },
      },
      build: {
-       // outDir 위치에 .vite/manifest.json 파일을 생성
+       // generate .vite/manifest.json in outDir
        manifest: true,
-       rollupOptions: {
-         // 기본 .html 진입점을 변경
-         input: '/path/to/main.js'
-       }
-     }
+       rolldownOptions: {
+         // overwrite default .html entry
+         input: '/path/to/main.js',
+       },
+     },
    })
    ```
 
    만약 [module preload polyfill](/config/build-options.md#build-polyfillmodulepreload)을 비활성화하지 않았다면, 진입점에 폴리필을 가져와야 합니다.
 
    ```js
-   // 앱 진입점에 추가
+   // add the beginning of your app entry
    import 'vite/modulepreload-polyfill'
    ```
 
 2. 개발 단계에서는 서버의 HTML 템플릿에 다음을 추가합니다(`http://localhost:5173`을 Vite가 실행 중인 로컬 URL로 대체):
 
    ```html
-   <!-- 개발 시 -->
+   <!-- if development -->
    <script type="module" src="http://localhost:5173/@vite/client"></script>
    <script type="module" src="http://localhost:5173/main.js"></script>
    ```
@@ -54,17 +54,17 @@
 
    ```html
    <script type="module">
-     import RefreshRuntime from "http://localhost:5173/@react-refresh"
-     RefreshRuntime.injectIntoGlobalHook(window) 
+     import RefreshRuntime from 'http://localhost:5173/@react-refresh'
+     RefreshRuntime.injectIntoGlobalHook(window)
      window.$RefreshReg$ = () => {}
      window.$RefreshSig$ = () => (type) => type
      window.__vite_plugin_react_preamble_installed__ = true
    </script>
    ```
 
-3. 프로덕션 빌드 단계: `vite build`를 실행하게 되면 `.vite/manifest.json` 파일이 에셋 파일과 함께 생성됩니다. 매니페스트 파일은 다음과 같은 구조를 가집니다:
+3. 프로덕션에서는 `vite build` 실행 후 다른 에셋 파일과 함께 `.vite/manifest.json` 파일이 생성됩니다. 매니페스트 파일의 예시는 다음과 같습니다:
 
-   ```json [.vite/manifest.json]
+   ```json [.vite/manifest.json] style:max-height:400px
    {
      "_shared-B7PI925R.js": {
        "file": "assets/shared-B7PI925R.js",
@@ -104,19 +104,76 @@
    }
    ```
 
+   매니페스트는 소스 파일을 빌드 출력 및 디펜던시에 매핑합니다:
+
+   ```dot
+   digraph manifest {
+     rankdir=TB
+     node [shape=box style="rounded,filled" fontname="Arial" fontsize=10 margin="0.2,0.1" fontcolor="${#3c3c43|#ffffff}" color="${#c2c2c4|#3c3f44}"]
+     edge [color="${#67676c|#98989f}" fontname="Arial" fontsize=9 fontcolor="${#67676c|#98989f}"]
+     bgcolor="transparent"
+
+     foo [label="views/foo.js\n(entry)" fillcolor="${#e9eaff|#222541}"]
+     bar [label="views/bar.js\n(entry)" fillcolor="${#e9eaff|#222541}"]
+     shared [label="_shared-B7PI925R.js\n(common chunk)" fillcolor="${#f2ecfc|#2c273e}"]
+     baz [label="baz.js\n(dynamic import)" fillcolor="${#fcf4dc|#38301a}"]
+     foocss [label="foo.css" shape=ellipse fillcolor="${#fde4e8|#3a1d27}"]
+     sharedcss [label="shared.css" shape=ellipse fillcolor="${#fde4e8|#3a1d27}"]
+     logo [label="logo.svg\n(asset)" shape=ellipse fillcolor="${#def5ed|#15312d}"]
+
+     foo -> shared [label="imports"]
+     bar -> shared [label="imports"]
+     bar -> baz [label="dynamicImports" style=dashed]
+     foo -> foocss [label="css"]
+     shared -> sharedcss [label="css"]
+   }
+   ```
+
    매니페스트는 `Record<name, chunk>` 구조를 가지며, 각 청크는 `ManifestChunk` 인터페이스를 따릅니다:
 
-   ```ts
+   ```ts style:max-height:400px
    interface ManifestChunk {
+     /**
+      * The input file name of this chunk / asset if known
+      */
      src?: string
+     /**
+      * The output file name of this chunk / asset
+      */
      file: string
+     /**
+      * The list of CSS files imported by this chunk
+      */
      css?: string[]
+     /**
+      * The list of asset files imported by this chunk, excluding CSS files
+      */
      assets?: string[]
+     /**
+      * Whether this chunk or asset is an entry point
+      */
      isEntry?: boolean
+     /**
+      * The name of this chunk / asset if known
+      */
      name?: string
-     names?: string[]
+     /**
+      * Whether this chunk is a dynamic entry point
+      *
+      * This field is only present in JS chunks.
+      */
      isDynamicEntry?: boolean
+     /**
+      * The list of statically imported chunks by this chunk
+      *
+      * The values are the keys of the manifest. This field is only present in JS chunks.
+      */
      imports?: string[]
+     /**
+      * The list of dynamically imported chunks by this chunk
+      *
+      * The values are the keys of the manifest. This field is only present in JS chunks.
+      */
      dynamicImports?: string[]
    }
    ```
@@ -128,7 +185,7 @@
    - **에셋 청크**: 이미지나 폰트와 같은 에셋에서 생성됩니다. 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
    - **CSS 파일**: [`build.cssCodeSplit`](/config/build-options.md#build-csscodesplit)이 `false`인 경우, `style.css` 키로 단일 CSS 파일이 생성됩니다. `build.cssCodeSplit`이 `false`가 아닌 경우, 키는 JS 청크와 유사하게 생성됩니다(즉, 진입 청크는 `_` 접두사가 없고 비진입 청크는 `_` 접두사가 있음).
 
-   청크는 정적 및 동적 가져오기에 대한 정보(둘 다 매니페스트의 해당 청크에 매핑되는 키)와 해당 CSS 및 에셋 파일(있는 경우)을 포함합니다.
+   JS 청크(에셋이나 CSS가 아닌 청크)는 정적 및 동적 임포트 정보를 포함합니다. 두 값은 모두 매니페스트에서 해당 청크에 매핑되는 키입니다. 청크는 관련 CSS와 에셋 파일이 있는 경우 그 목록도 포함합니다.
 
 4. 해시된 파일 이름으로 링크를 렌더링하거나 지시문을 미리 로드하기 위해 이 파일을 사용할 수 있습니다.
 
@@ -137,7 +194,7 @@
    `importedChunks` 함수 역시 예시를 위한 것이며, Vite에서 제공하지 않습니다.
 
    ```html
-   <!-- 프로덕션 (아래 `for ... of` 는 구문입니다 - 옮긴이) -->
+   <!-- if production -->
 
    <!-- for cssFile of manifest[name].css -->
    <link rel="stylesheet" href="/{{ cssFile }}" />
@@ -167,7 +224,7 @@
    <link rel="stylesheet" href="assets/foo-5UjPuW-k.css" />
    <link rel="stylesheet" href="assets/shared-ChJ_j-JJ.css" />
    <script type="module" src="assets/foo-BRBmoGS9.js"></script>
-   <!-- 선택 사항 -->
+   <!-- optional -->
    <link rel="modulepreload" href="assets/shared-B7PI925R.js" />
    ```
 
@@ -176,7 +233,7 @@
    ```html
    <link rel="stylesheet" href="assets/shared-ChJ_j-JJ.css" />
    <script type="module" src="assets/bar-gkvgaI9m.js"></script>
-   <!-- 선택 사항 -->
+   <!-- optional -->
    <link rel="modulepreload" href="assets/shared-B7PI925R.js" />
    ```
 

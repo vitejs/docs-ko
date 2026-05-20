@@ -8,7 +8,7 @@
 리소스:
 
 - [피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 새로운 API에 대한 피드백을 모으고 있습니다.
-- [환경 API PR](https://github.com/vitejs/vite/pull/16471)에서 새로운 API를 구현하고 검토했습니다.
+- 새 API가 구현되고 검토된 [Environment API PR](https://github.com/vitejs/vite/pull/16471)
 
 여러분의 피드백을 공유해주세요.
 :::
@@ -17,7 +17,7 @@
 
 환경은 다양한 런타임에서 실행될 수 있기 때문에, 환경과의 통신은 런타임에 따라 제약이 있을 수 있습니다. 프레임워크가 런타임에 구애받지 않는 코드를 쉽게 작성할 수 있도록, 환경 API는 세 종류의 통신 레벨을 제공합니다.
 
-### `RunnableDevEnvironment`
+### `RunnableDevEnvironment` {#runnabledevenvironment}
 
 `RunnableDevEnvironment`는 임의의 값을 주고받을 수 있는 환경입니다. 암시적인 `ssr` 환경을 포함해, 클라이언트가 아닌 환경은 개발 중 기본적으로 `RunnableDevEnvironment`를 사용합니다. 이 경우 Vite 서버가 실행되는 런타임과 동일해야 하지만, `ssrLoadModule`과 유사하게 작동하여 프레임워크가 SSR 개발 환경에서 HMR을 활성화하고 마이그레이션할 수 있도록 만듭니다. 또한 `isRunnableDevEnvironment` 함수를 사용하여 실행 가능한 환경인지 확인할 수 있습니다.
 
@@ -28,13 +28,13 @@ export class RunnableDevEnvironment extends DevEnvironment {
 
 class ModuleRunner {
   /**
-   * 실행할 URL.
-   * 파일 경로, 서버 경로, 또는 루트를 기준으로 한 ID를 허용합니다.
-   * 인스턴스화된 모듈을 반환합니다(ssrLoadModule과 동일).
+   * URL to execute.
+   * Accepts file path, server path, or id relative to the root.
+   * Returns an instantiated module (same as in ssrLoadModule)
    */
   public async import(url: string): Promise<Record<string, any>>
   /**
-   * 다른 ModuleRunner 메서드들...
+   * Other ModuleRunner methods...
    */
 }
 
@@ -52,53 +52,50 @@ if (isRunnableDevEnvironment(server.environments.ssr)) {
 ```js
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { createServer } from 'vite'
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const viteServer = await createServer({
   server: { middlewareMode: true },
   appType: 'custom',
   environments: {
     server: {
-      // 기본적으로 모듈은 vite 서버와 같은 프로세스에서 실행됩니다
+      // by default, modules are run in the same process as the vite server
     },
   },
 })
 
-// TypeScript에서는 RunnableDevEnvironment로 캐스팅하거나
-// isRunnableDevEnvironment를 사용해 runner에 대한 접근을 보호해야 할 수 있습니다
+// You might need to cast this to RunnableDevEnvironment in TypeScript or
+// use isRunnableDevEnvironment to guard the access to the runner
 const serverEnvironment = viteServer.environments.server
 
 app.use('*', async (req, res, next) => {
   const url = req.originalUrl
 
-  // 1. index.html 읽기
-  const indexHtmlPath = path.resolve(__dirname, 'index.html')
+  // 1. Read index.html
+  const indexHtmlPath = path.resolve(import.meta.dirname, 'index.html')
   let template = fs.readFileSync(indexHtmlPath, 'utf-8')
 
-  // 2. Vite HTML 변환 적용. Vite HMR 클라이언트를 주입하고,
-  //    @vitejs/plugin-react의 전역 초기화 코드와 같은
-  //    Vite 플러그인을 통한 HTML 변환도 적용합니다
+  // 2. Apply Vite HTML transforms. This injects the Vite HMR client,
+  //    and also applies HTML transforms from Vite plugins, e.g. global
+  //    preambles from @vitejs/plugin-react
   template = await viteServer.transformIndexHtml(url, template)
 
-  // 3. 서버 진입점 불러오기. import(url)은 자동으로 ESM 소스 코드를
-  //    Node.js에서 사용할 수 있도록 변환합니다! 번들링이 필요하지 않으며,
-  //    HMR 지원을 완벽히 제공합니다.
+  // 3. Load the server entry. import(url) automatically transforms
+  //    ESM source code to be usable in Node.js! There is no bundling
+  //    required, and provides full HMR support.
   const { render } = await serverEnvironment.runner.import(
     '/src/entry-server.js',
   )
 
-  // 4. 앱 HTML 렌더링. entry-server.js에서 제공하는 `render` 함수가
-  //    ReactDOMServer.renderToString()과 같은 적절한 프레임워크 SSR API를
-  //    호출한다고 가정합니다
+  // 4. render the app HTML. This assumes entry-server.js's exported
+  //     `render` function calls appropriate framework SSR APIs,
+  //    e.g. ReactDOMServer.renderToString()
   const appHtml = await render(url)
 
-  // 5. 앱에서 렌더링된 HTML을 템플릿에 주입합니다.
+  // 5. Inject the app-rendered HTML into the template.
   const html = template.replace(`<!--ssr-outlet-->`, appHtml)
 
-  // 6. 렌더링된 HTML을 반환합니다.
+  // 6. Send the rendered HTML back.
   res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
 })
 ```
@@ -114,7 +111,7 @@ if (import.meta.hot) {
 }
 ```
 
-### `FetchableDevEnvironment`
+### `FetchableDevEnvironment` {#fetchabledevenvironment}
 
 :::info
 
@@ -142,7 +139,7 @@ const server = await createServer({
         createEnvironment(name, config) {
           return createFetchableDevEnvironment(name, config, {
             handleRequest(request: Request): Promise<Response> | Response {
-              // Request를 처리하고 Response를 반환
+              // handle Request and return a Response
             },
           })
         },
@@ -151,10 +148,10 @@ const server = await createServer({
   },
 })
 
-// 환경 API 소비자는 이제 `dispatchFetch`를 호출할 수 있습니다
+// Any consumer of the environment API can now call `dispatchFetch`
 if (isFetchableDevEnvironment(server.environments.custom)) {
   const response: Response = await server.environments.custom.dispatchFetch(
-    new Request('/request-to-handle'),
+    new Request('http://example.com/request-to-handle'),
   )
 }
 ```
@@ -172,23 +169,23 @@ Vite는 `dispatchFetch` 메서드의 입력과 출력을 검증합니다: 요청
 또한 작성한 코드가 사용자 모듈과 동일한 런타임에서 실행될 수 있다면(즉, Node.js 특정 API에 의존하지 않는다면), 가상 모듈을 사용할 수도 있습니다. 이 방식은 Vite API를 사용하는 측에서 모듈 값에 접근하는 코드를 생략할 수 있습니다.
 
 ```ts
-// Vite API를 사용하는 코드
+// code using the Vite's APIs
 import { createServer } from 'vite'
 
 const server = createServer({
   plugins: [
-    // `virtual:entrypoint`를 처리하는 플러그인
+    // a plugin that handles `virtual:entrypoint`
     {
       name: 'virtual-module',
-      /* 플러그인 구현 */
+      /* plugin implementation */
     },
   ],
 })
 const ssrEnvironment = server.environment.ssr
 const input = {}
 
-// 코드를 실행하는 각 환경 팩토리가 제공하는 함수 사용
-// 각 환경 팩토리가 제공하는 함수를 확인하세요
+// use exposed functions by each environment factories that runs the code
+// check for each environment factories what they provide
 if (ssrEnvironment instanceof CustomDevEnvironment) {
   ssrEnvironment.runEntrypoint('virtual:entrypoint')
 } else {
@@ -199,7 +196,7 @@ if (ssrEnvironment instanceof CustomDevEnvironment) {
 // virtual:entrypoint
 const { createHandler } = await import('./entrypoint.js')
 const handler = createHandler(input)
-const response = handler(new Request('/'))
+const response = handler(new Request('http://example.com/'))
 
 // -------------------------------------
 // ./entrypoint.js
@@ -244,23 +241,23 @@ function vitePluginVirtualIndexHtml(): Plugin {
 만약 작성한 코드가 Node.js API를 필요로 한다면, `hot.send`를 사용해 사용자 모듈에서 Vite API를 사용하는 코드와 통신할 수 있습니다. 하지만 이 방식은 빌드 이후 동일하게 작동하지 않을 수 있다는 점에 유의하세요.
 
 ```ts
-// Vite API를 사용하는 코드
+// code using the Vite's APIs
 import { createServer } from 'vite'
 
 const server = createServer({
   plugins: [
-    // `virtual:entrypoint`를 처리하는 플러그인
+    // a plugin that handles `virtual:entrypoint`
     {
       name: 'virtual-module',
-      /* 플러그인 구현 */
+      /* plugin implementation */
     },
   ],
 })
 const ssrEnvironment = server.environment.ssr
 const input = {}
 
-// 코드를 실행하는 각 환경 팩토리가 제공하는 함수 사용
-// 각 환경 팩토리가 제공하는 함수를 확인하세요
+// use exposed functions by each environment factories that runs the code
+// check for each environment factories what they provide
 if (ssrEnvironment instanceof RunnableDevEnvironment) {
   ssrEnvironment.runner.import('virtual:entrypoint')
 } else if (ssrEnvironment instanceof CustomDevEnvironment) {
@@ -269,7 +266,7 @@ if (ssrEnvironment instanceof RunnableDevEnvironment) {
   throw new Error(`Unsupported runtime for ${ssrEnvironment.name}`)
 }
 
-const req = new Request('/')
+const req = new Request('http://example.com/')
 
 const uniqueId = 'a-unique-id'
 ssrEnvironment.send('request', serialize({ req, uniqueId }))
@@ -293,7 +290,7 @@ import.meta.hot.on('request', (data) => {
   import.meta.hot.send('response', serialize({ res: res, uniqueId }))
 })
 
-const response = handler(new Request('/'))
+const response = handler(new Request('http://example.com/'))
 
 // -------------------------------------
 // ./entrypoint.js
@@ -308,19 +305,21 @@ export function createHandler(input) {
 
 하위 호환성을 위해, CLI에서 `vite build`와 `vite build --ssr`을 실행하면, 동일하게 클라이언트 또는 SSR 전용 환경만을 빌드합니다.
 
-`builder`가 `undefined`가 아닐 때(또는 `vite build --app`을 호출할 때), `vite build`는 전체 앱을 빌드하도록 설정됩니다. 이는 향후 메이저 버전에서 기본 동작이 될 예정입니다. 빌드 시에는 `ViteDevServer`와 대응되는 역할을 하는 `ViteBuilder` 인스턴스가 생성되어 프로덕션을 위해 구성된 모든 환경을 빌드합니다. 기본적으로 환경에 대한 빌드는 `environments` 레코드 순서를 따라 순차적으로 수행됩니다. 프레임워크나 사용자는 다음과 같이 환경 빌드 방식을 추가로 구성할 수 있습니다:
+`builder` 옵션이 `undefined`가 아니거나 `vite build --app`을 호출하면, `vite build`는 전체 앱을 빌드하도록 동작합니다. 이는 향후 메이저 버전에서 기본값이 될 예정입니다. 구성된 모든 환경을 프로덕션용으로 빌드하기 위해 빌드 시점의 `ViteDevServer`에 해당하는 `ViteBuilder` 인스턴스가 생성됩니다. 기본적으로 환경 빌드는 `environments` 레코드의 순서를 존중해 순차적으로 실행됩니다. 프레임워크나 사용자는 `builder.buildApp` 옵션을 사용해 환경이 빌드되는 방식을 추가로 구성할 수 있습니다:
 
-```js
-export default {
+```js [vite.config.js]
+import { defineConfig } from 'vite'
+
+export default defineConfig({
   builder: {
     buildApp: async (builder) => {
       const environments = Object.values(builder.environments)
-      return Promise.all(
+      await Promise.all(
         environments.map((environment) => builder.build(environment)),
       )
     },
   },
-}
+})
 ```
 
 플러그인도 `buildApp` 훅을 정의할 수 있습니다. `'pre'` 및 `null` 순서는 구성된 `builder.buildApp` 이전에 실행되고, `'post'` 순서의 훅은 그 이후에 실행됩니다. `environment.isBuilt`를 사용해 환경이 이미 빌드되었는지 확인할 수 있습니다.

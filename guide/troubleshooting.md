@@ -17,14 +17,14 @@
 
 ## 설정 {#config}
 
-### This package is ESM only {#this-package-is-esm-only}
+### 이 패키지는 ESM 전용입니다 {#this-package-is-esm-only}
 
-ESM만 지원하는 패키지를 `require`로 불러올 때 아래와 같은 에러가 발생합니다.
+ESM 전용 패키지를 `require`로 임포트하면 다음 오류가 발생합니다.
 
-> Failed to resolve "foo". This package is ESM only but it was tried to load by `require`.
+> "foo"를 해석하지 못했습니다. 이 패키지는 ESM 전용이지만 `require`로 로드하려고 했습니다.
 
-> Error [ERR_REQUIRE_ESM]: require() of ES Module /path/to/dependency.js from /path/to/vite.config.js not supported.
-> Instead change the require of index.js in /path/to/vite.config.js to a dynamic import() which is available in all CommonJS modules.
+> Error [ERR_REQUIRE_ESM]: /path/to/vite.config.js에서 ES Module /path/to/dependency.js에 require()를 사용하는 것은 지원되지 않습니다.
+> 대신 /path/to/vite.config.js의 index.js require를 모든 CommonJS 모듈에서 사용할 수 있는 동적 import()로 변경하세요.
 
 Node.js <=22 환경에서, ESM 파일은 기본적으로 [`require`](https://nodejs.org/docs/latest-v22.x/api/esm.html#require)를 통해 불러올 수 없습니다.
 
@@ -74,6 +74,31 @@ Ubuntu Linux는 systemd 구성 파일을 업데이트하는 대신 `/etc/securit
 서버가 VS Code devcontainer 내부에서 실행 중이라면 요청이 멈춘 것처럼 보일 수 있습니다. 이 문제에 대해서는
 [Dev Containers / VS Code 포트 포워딩](#dev-containers-vs-code-port-forwarding) 섹션을 참고해 주세요.
 
+### Vite가 ENOSPC 오류로 중단됩니다 {#vite-crashes-with-enospc-error}
+
+Linux에서 다음과 같은 오류가 보인다면:
+
+> Error: ENOSPC: 파일 감시자 수에 대한 시스템 제한에 도달했습니다.
+
+프로젝트 디렉터리에 파일이 너무 많아(예: 많은 이미지나 에셋) 시스템의 파일 감시자 제한을 초과하면 발생합니다. Linux의 기본 제한은 대략 8,192-10,000개의 파일 감시자입니다.
+
+이를 해결하려면 다음을 수행할 수 있습니다:
+
+- 시스템 파일 감시자 제한 늘리기:
+
+  ```shell
+  # Check current limit
+  $ cat /proc/sys/fs/inotify/max_user_watches
+  # Increase limit (temporary)
+  $ sudo sysctl fs.inotify.max_user_watches=524288
+  # Make it permanent - add to /etc/sysctl.conf (or edit if it already exists)
+  $ echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
+  $ sudo sysctl -p
+  ```
+
+- [`server.watch.ignored`](/config/server-options#server-watch)를 사용해 파일이 많은 디렉터리를 파일 감시 대상에서 제외합니다.
+- [`server.watch.usePolling`](/config/server-options#server-watch)을 사용해 파일 시스템 이벤트 대신 폴링을 사용합니다. 폴링은 더 많은 CPU 리소스를 사용한다는 점에 유의하세요.
+
 ### 네트워크 요청 로딩 중지 {#network-requests-stop-loading}
 
 자체 서명된 SSL 인증서를 사용하는 경우 Chrome은 모든 캐싱 지시문을 무시하고 콘텐츠를 다시 로드합니다. Vite는 이러한 캐싱 지시문에 의존합니다.
@@ -92,11 +117,11 @@ security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain-
 
 또는 인증서를 키체인 액세스 앱으로 가져오고 인증서에 대한 신뢰도를 "항상 신뢰"로 변경하세요.
 
-### 431 Request Header Fields Too Large {#_431-request-header-fields-too-large}
+### 431 요청 헤더 필드가 너무 큼 {#_431-request-header-fields-too-large}
 
 서버/WebSocket 서버가 큰 HTTP 헤더를 수신하면 요청이 삭제되고 다음 경고가 표시됩니다.
 
-> Server responded with status code 431. See https://vite.dev/guide/troubleshooting.html#_431-request-header-fields-too-large.
+> 서버가 431 상태 코드로 응답했습니다. https://vite.dev/guide/troubleshooting.html#_431-request-header-fields-too-large 를 참고하세요.
 
 이는 Node.js가 [CVE-2018-12121](https://www.cve.org/CVERecord?id=CVE-2018-12121) 완화를 위해 요청 헤더 크기를 제한하기 때문입니다..
 
@@ -117,7 +142,7 @@ Dev Container나 VS Code의 포트 포워딩 기능을 사용하는 경우, 정�
 대소문자가 다른 파일을 가져왔을지도 모릅니다. 예를 들어 `src/foo.js`가 존재하고 `src/bar.js`에는 다음이 포함됩니다:
 
 ```js
-import './Foo.js' // './foo.js' 이어야 합니다.
+import './Foo.js' // should be './foo.js'
 ```
 
 관련 이슈: [#964](https://github.com/vitejs/vite/issues/964)
@@ -138,9 +163,9 @@ HMR이 처리되지만 순환 참조 내부에 있는 경우에도 실행 순서
 
 HTML 파일 출력이 `file` 프로토콜로 열린 경우 다음 오류와 함께 스크립트가 실행되지 않습니다.
 
-> Access to script at 'file:///foo/bar.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: http, data, isolated-app, chrome-extension, chrome, https, chrome-untrusted.
+> origin 'null'에서 'file:///foo/bar.js' 스크립트에 접근하는 것이 CORS 정책에 의해 차단되었습니다. 교차 출처 요청은 http, data, isolated-app, chrome-extension, chrome, https, chrome-untrusted 프로토콜 스킴에서만 지원됩니다.
 
-> Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at file:///foo/bar.js. (Reason: CORS request not http).
+> 교차 출처 요청이 차단되었습니다. 동일 출처 정책이 file:///foo/bar.js 원격 리소스 읽기를 허용하지 않습니다. (이유: CORS 요청이 http가 아님)
 
 이러한 상황이 나타나는 이유에 대한 자세한 정보는 [Reason: CORS request not HTTP - HTTP | MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors/CORSRequestNotHttp)을 참조하세요.
 
@@ -149,6 +174,45 @@ HTML 파일 출력이 `file` 프로토콜로 열린 경우 다음 오류와 함�
 ### 대소문자 구분으로 인한 No such file or directory 오류 {#no-such-file-or-directory-error-due-to-case-sensitivity}
 
 `ENOENT: no such file or directory` 또는 `Module not found`와 같은 오류가 발생하는 경우, 이는 대소문자를 구분하지 않는 파일 시스템(Windows / macOS)에서 개발되었지만 대소문자를 구분하는 시스템(Linux)에서 빌드될 때 자주 발생합니다. import 시 올바른 대소문자를 사용하고 있는지 확인하세요.
+
+### `Failed to fetch dynamically imported module` 오류 {#failed-to-fetch-dynamically-imported-module-error}
+
+> TypeError: 동적으로 임포트한 모듈을 가져오지 못했습니다.
+
+이 오류는 여러 경우에 발생합니다:
+
+- 버전 불일치
+- 좋지 않은 네트워크 상태
+- 브라우저 확장 프로그램의 요청 차단
+
+#### 버전 불일치 {#version-skew}
+
+애플리케이션의 새 버전을 배포했지만 HTML 파일과 JS 파일이 새 배포에서 삭제된 이전 청크 이름을 계속 참조할 때 발생합니다. 이는 다음 상황에서 발생합니다:
+
+1. 사용자의 브라우저에 앱의 이전 버전이 캐시되어 있습니다.
+2. 코드 변경으로 인해 다른 청크 이름을 가진 새 버전을 배포합니다.
+3. 캐시된 HTML이 더 이상 존재하지 않는 청크를 로드하려고 합니다.
+
+프레임워크를 사용 중이라면, 이 문제에 대한 내장 해결책이 있을 수 있으므로 먼저 해당 문서를 참고하세요.
+
+이를 해결하려면 다음을 고려할 수 있습니다:
+
+- **이전 청크를 일시적으로 유지하기**: 캐시된 사용자가 부드럽게 전환할 수 있도록 이전 배포의 청크를 일정 기간 유지하는 것을 고려하세요.
+- **서비스 워커 사용하기**: 모든 에셋을 미리 가져오고 캐시하는 서비스 워커를 구현하세요.
+- **동적 청크 미리 가져오기**: HTML 파일이 `Cache-Control` 헤더 때문에 브라우저에 캐시된 경우에는 도움이 되지 않는다는 점에 유의하세요.
+- **우아한 폴백 구현하기**: 청크가 누락되었을 때 페이지를 다시 로드하도록 동적 임포트 오류 처리를 구현하세요. 자세한 내용은 [로드 오류 처리](./build.md#load-error-handling)를 참고하세요.
+
+#### 좋지 않은 네트워크 상태 {#poor-network-conditions}
+
+이 오류는 불안정한 네트워크 환경에서 발생할 수 있습니다. 예를 들어 네트워크 오류나 서버 다운타임으로 요청이 실패하는 경우입니다.
+
+브라우저 제한으로 인해 동적 임포트를 다시 시도할 수 없다는 점에 유의하세요([whatwg/html#6768](https://github.com/whatwg/html/issues/6768)).
+
+#### 브라우저 확장 프로그램의 요청 차단 {#browser-extensions-blocking-requests}
+
+브라우저 확장 프로그램(예: 광고 차단기)이 해당 요청을 차단하는 경우에도 이 오류가 발생할 수 있습니다.
+
+이러한 확장 프로그램은 파일 이름을 기준으로 요청을 차단하는 경우가 많으므로(예: `ad`, `track`이 포함된 이름), [`build.rollupOptions.output.chunkFileNames`](../config/build-options.md#build-rollupoptions)로 다른 청크 이름을 선택해 우회할 수 있을 수도 있습니다.
 
 ## 디펜던시 최적화 {#optimized-dependencies}
 
@@ -162,11 +226,11 @@ HTML 파일 출력이 `file` 프로토콜로 열린 경우 다음 오류와 함�
 
 ::: code-group
 
-```bash [개발 서버]
+```bash [dev server]
 vite --profile --open
 ```
 
-```bash [빌드]
+```bash [build]
 vite build --profile
 ```
 
@@ -182,12 +246,12 @@ Node.js 인스펙터가 루트 폴더에 `vite-profile-0.cpuprofile`을 생성�
 
 ## 그 외 {#others}
 
-### Module externalized for browser compatibility {#module-externalized-for-browser-compatibility}
+### 브라우저 호환성을 위해 모듈이 외부화됨 {#module-externalized-for-browser-compatibility}
 
 브라우저에서 Node.js 모듈을 사용할 때 Vite는 다음 경고를 출력합니다.
 
-> Module "fs" has been externalized for browser compatibility. Cannot access "fs.readFile" in client code.
-This is because Vite does not automatically polyfill Node.js modules.
+> "fs" 모듈은 브라우저 호환성을 위해 외부화되었습니다. 클라이언트 코드에서 "fs.readFile"에 접근할 수 없습니다.
+이는 Vite가 Node.js 모듈을 자동으로 폴리필하지 않기 때문입니다.
 
 이는 Vite가 Node.js 모듈을 자동으로 폴리필하지 않기 때문입니다.
 
@@ -199,14 +263,18 @@ Vite는 엄격하지 않은 모드(느슨한 모드)에서만 실행되는 코�
 
 예를 들어 이러한 오류가 표시될 수 있습니다.
 
-> [ERROR] With statements cannot be used with the "esm" output format due to strict mode
+> [ERROR] 엄격 모드 때문에 "with" 문은 "esm" 출력 형식에서 사용할 수 없습니다.
 
-> TypeError: Cannot create property 'foo' on boolean 'false'
+> TypeError: boolean 'false'에 프로퍼티 'foo'를 생성할 수 없습니다.
 
 이러한 코드들이 의존성 모듈 내부에서 사용된다면, 문제를 해결하기 위해[`patch-package`](https://github.com/ds300/patch-package) (또는 [`yarn patch`](https://yarnpkg.com/cli/patch) 또는 [`pnpm patch`](https://pnpm.io/cli/patch))를 사용할 수 있습니다.
 
 ### 브라우저 확장 프로그램 {#browser-extensions}
+일부 브라우저 확장 프로그램(예: 광고 차단기)은 Vite 클라이언트가 Vite 개발 서버에 요청을 보내지 못하게 할 수 있습니다. 이 경우 기록된 오류 없이 흰 화면이 보일 수 있습니다. 다음 오류가 표시될 수도 있습니다:
 
+> TypeError: 동적으로 임포트한 모듈을 가져오지 못했습니다.
+
+이 문제가 있다면 확장 프로그램을 비활성화해 보세요.
 광고 차단기와 같은 일부 브라우저 확장 프로그램은 Vite 클라이언트가 Vite 개발 서버에 요청을 보내는 것을 방지할 수 있습니다. 이 경우 화면이 흰색으로 표시되고 오류가 표시되지 않을 수 있습니다. 이러한 문제가 발생하는 경우 확장 프로그램을 비활성화해 보세요.
 
 ### Windows의 드라이브 간 링크 {#cross-drive-links-on-windows}
@@ -220,17 +288,29 @@ Windows에서 프로젝트에 드라이브 간 링크가 있는 경우 Vite가 �
 
 관련 이슈: [#10802](https://github.com/vitejs/vite/issues/10802)
 
+### 기본 import가 예기치 않게 객체를 반환함 {#default-import-unexpectedly-returns-an-object}
+
+CJS 모듈에서 default import는 `module.exports.default` 값이 반환되기를 기대할 수 있지만, 실제로는 `module.exports` 객체를 반환합니다.
+
+이로 인해 다음과 같은 오류가 발생할 수 있습니다:
+
+> Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: object.
+
+> foo is not a function
+
+자세한 내용은 Rolldown 문서의 [Ambiguous `default` import from CJS modules - Bundling CJS | Rolldown](https://rolldown.rs/in-depth/bundling-cjs#ambiguous-default-import-from-cjs-modules)를 참고하세요.
+
 <script setup lang="ts">
 // 해시가 있는 오래된 링크를 이전 버전 문서로 리디렉션
-if (typeof window !== "undefined") {
-  const hashForOldVersion = {
+if (typeof window !== "undefined") { // 브라우저 환경 확인
+  const hashForOldVersion = { // 이전 버전 해시
     'vite-cjs-node-api-deprecated': 6
   }
 
-  const version = hashForOldVersion[location.hash.slice(1)]
-  if (version) {
+  const version = hashForOldVersion[location.hash.slice(1)] // 리디렉션 버전
+  if (version) { // 버전이 있으면 이동
     // 로컬 미리보기에서도 동작하도록 스키마 및 포트 업데이트 (로컬에서는 http와 4173)
-    location.href = `https://v${version}.vite.dev` + location.pathname + location.search + location.hash
+    location.href = `https://v${version}.vite.dev` + location.pathname + location.search + location.hash // 이전 문서로 이동
   }
 }
 </script>

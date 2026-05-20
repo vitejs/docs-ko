@@ -8,7 +8,7 @@
 리소스:
 
 - [피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 새로운 API에 대한 피드백을 모으고 있습니다.
-- [환경 API PR](https://github.com/vitejs/vite/pull/16471)에서 새로운 API를 구현하고 검토했습니다.
+- 새 API가 구현되고 검토된 [Environment API PR](https://github.com/vitejs/vite/pull/16471)
 
 여러분의 피드백을 공유해주세요.
 :::
@@ -18,7 +18,7 @@
 개발 단계에서, `server.environments`로 개발 서버의 사용 가능한 환경에 접근할 수 있습니다:
 
 ```js
-// 서버를 생성하거나 configureServer 훅에서 가져옵니다
+// create the server, or get it from the configureServer hook
 const server = await createServer(/* options */)
 
 const clientEnvironment = server.environments.client
@@ -35,34 +35,34 @@ console.log(server.environments.ssr.moduleGraph)
 ```ts
 class DevEnvironment {
   /**
-   * Vite 서버에서 환경을 식별하는 고유 식별자입니다.
-   * 기본적으로 Vite는 'client'와 'ssr' 환경을 제공합니다.
+   * Unique identifier for the environment in a Vite server.
+   * By default Vite exposes 'client' and 'ssr' environments.
    */
   name: string
   /**
-   * 런타임 모듈 러너와 메시지를 주고받기 위한
-   * 통신 채널입니다.
+   * Communication channel to send and receive messages from the
+   * associated module runner in the target runtime.
    */
   hot: NormalizedHotChannel
   /**
-   * 모듈 노드 그래프로, 처리된 모듈 간 의존성 관계와
-   * 처리된 코드의 캐시를 포함합니다.
+   * Graph of module nodes, with the imported relationship between
+   * processed modules and the cached result of the processed code.
    */
   moduleGraph: EnvironmentModuleGraph
   /**
-   * 이 환경에 구성된 플러그인 목록이며, 환경별
-   * `create` 훅으로 생성된 플러그인도 포함합니다.
+   * Resolved plugins for this environment, including the ones
+   * created using the per-environment `create` hook
    */
   plugins: Plugin[]
   /**
-   * 환경 플러그인 파이프라인으로 코드를 해석, 로드,
-   * 변환합니다.
+   * Allows to resolve, load, and transform code through the
+   * environment plugins pipeline
    */
   pluginContainer: EnvironmentPluginContainer
   /**
-   * 이 환경에 구성된 설정입니다. 서버 전역 범위의
-   * 옵션은 모든 환경의 기본값으로 사용되며, 재정의할 수
-   * 있습니다(resolve 조건, external, optimizedDeps).
+   * Resolved config options for this environment. Options at the server
+   * global scope are taken as defaults for all environments, and can
+   * be overridden (resolve conditions, external, optimizedDeps)
    */
   config: ResolvedConfig & ResolvedDevEnvironmentOptions
 
@@ -73,18 +73,30 @@ class DevEnvironment {
   )
 
   /**
-   * URL을 ID로 해석하고 로드한 뒤, 플러그인 파이프라인으로
-   * 코드를 처리합니다. 모듈 그래프도 함께 업데이트됩니다.
+   * Resolve the URL to an id, load it, and process the code using the
+   * plugins pipeline. The module graph is also updated.
    */
   async transformRequest(url: string): Promise<TransformResult | null>
 
   /**
-   * 요청을 낮은 우선순위로 등록하여 폭포수 현상을
-   * 방지합니다. Vite 서버는 다른 요청에서 가져온
-   * 모듈 정보를 활용해 모듈 그래프를 미리 준비할
-   * 수 있습니다.
+   * Register a request to be processed with low priority. This is useful
+   * to avoid waterfalls. The Vite server has information about the
+   * imported modules by other requests, so it can warmup the module graph
+   * so the modules are already processed when they are requested.
    */
   async warmupRequest(url: string): Promise<void>
+
+  /**
+   * Called by the module runner to retrieve information about the specified
+   * module. Internally calls `transformRequest` and wraps the result in the
+   * format that the module runner understands.
+   * This method is not meant to be called manually.
+   */
+  async fetchModule(
+    id: string,
+    importer?: string,
+    options?: FetchFunctionOptions,
+  ): Promise<FetchResult>
 }
 ```
 
@@ -208,5 +220,71 @@ export class EnvironmentModuleGraph {
   ): void
 
   getModuleByEtag(etag: string): EnvironmentModuleNode | undefined
+}
+```
+
+## `FetchResult` {#fetchresult}
+
+`environment.fetchModule` 메서드는 모듈 러너가 소비하도록 설계된 `FetchResult`를 반환합니다. `FetchResult`는 `CachedFetchResult`, `ExternalFetchResult`, `ViteFetchResult`의 유니언입니다.
+
+`CachedFetchResult`는 `304`(Not Modified) HTTP 상태 코드와 유사합니다.
+
+```ts
+export interface CachedFetchResult {
+  /**
+   * If the module is cached in the runner, this confirms
+   * it was not invalidated on the server side.
+   */
+  cache: true
+}
+```
+
+`ExternalFetchResult`는 모듈 러너에게 [`ModuleEvaluator`](/guide/api-environment-runtimes#moduleevaluator)의 `runExternalModule` 메서드를 사용해 모듈을 임포트하도록 지시합니다. 이 경우 기본 모듈 평가자는 파일을 Vite로 처리하는 대신 런타임의 네이티브 `import`를 사용합니다.
+
+```ts
+export interface ExternalFetchResult {
+  /**
+   * The path to the externalized module starting with file://.
+   * By default this will be imported via a dynamic "import"
+   * instead of being transformed by Vite and loaded with the Vite runner.
+   */
+  externalize: string
+  /**
+   * Type of the module. Used to determine if the import statement is correct.
+   * For example, if Vite needs to throw an error if a variable is not actually exported.
+   */
+  type: 'module' | 'commonjs' | 'builtin' | 'network'
+}
+```
+
+`ViteFetchResult`는 실행할 `code`와 모듈의 `id`, `file`, `url`을 포함해 현재 모듈에 대한 정보를 반환합니다.
+
+`invalidate` 필드는 모듈 러너에게 캐시에서 제공하는 대신 다시 실행하기 전에 모듈을 무효화하도록 지시합니다. 일반적으로 HMR 업데이트가 트리거되었을 때 `true`입니다.
+
+```ts
+export interface ViteFetchResult {
+  /**
+   * Code that will be evaluated by the Vite runner.
+   * By default this will be wrapped in an async function.
+   */
+  code: string
+  /**
+   * File path of the module on disk.
+   * This will be resolved as import.meta.url/filename.
+   * Will be `null` for virtual modules.
+   */
+  file: string | null
+  /**
+   * Module ID in the server module graph.
+   */
+  id: string
+  /**
+   * Module URL used in the import.
+   */
+  url: string
+  /**
+   * Invalidate module on the client side.
+   */
+  invalidate: boolean
 }
 ```

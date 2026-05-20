@@ -13,15 +13,12 @@ async function createServer(inlineConfig?: InlineConfig): Promise<ViteDevServer>
 **사용 예제:**
 
 ```ts twoslash
-import { fileURLToPath } from 'node:url'
 import { createServer } from 'vite'
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url))
-
 const server = await createServer({
-  // 유효한 유저 설정 옵션들, 추가적으로 `mode`와 `configFile`가 있습니다.
+  // any valid user config options, plus `mode` and `configFile`
   configFile: false,
-  root: __dirname,
+  root: import.meta.dirname,
   server: {
     port: 1337,
   },
@@ -46,19 +43,19 @@ server.bindCLIShortcuts({ print: true })
 import http from 'http'
 import { createServer } from 'vite'
 
-const parentServer = http.createServer() // 또는 express, koa 등
+const parentServer = http.createServer() // or express, koa, etc.
 
 const vite = await createServer({
   server: {
-    // 미들웨어 모드 활성화
+    // Enable middleware mode
     middlewareMode: {
-      // 프록시 WebSocket을 위해 부모 http 서버 제공
+      // Provide the parent http server for proxy WebSocket
       server: parentServer,
     },
     proxy: {
       '/ws': {
         target: 'ws://localhost:3000',
-        // WebSocket 프록시
+        // Proxying WebSocket
         ws: true,
       },
     },
@@ -90,57 +87,57 @@ parentServer.use(vite.middlewares)
 ```ts
 interface ViteDevServer {
   /**
-   * 수용된 Vite 설정 객체.
+   * The resolved Vite config object.
    */
   config: ResolvedConfig
   /**
-   * 연결 앱 인스턴스
-   * - 개발 서버에 커스텀 미들웨어들을 붙이는데 사용될 수 있습니다.
-   * - 커스텀 http 서버 제어 함수로 사용될 수 있습니다.
-   *   또는 모든 연결 스타일의 Node.js 프레임워크에서 미들웨어로 사용됩니다.
+   * A connect app instance
+   * - Can be used to attach custom middlewares to the dev server.
+   * - Can also be used as the handler function of a custom http server
+   *   or as a middleware in any connect-style Node.js frameworks.
    *
    * https://github.com/senchalabs/connect#use-middleware
    */
   middlewares: Connect.Server
   /**
-   * Native Node http 서버 인스턴스.
-   * middleware 모드에서는 null이 됩니다.
+   * Native Node http server instance.
+   * Will be null in middleware mode.
    */
   httpServer: http.Server | null
   /**
-   * Chokidar watcher 인스턴스. `config.server.watch`가 `null` 이라면
-   * 어떠한 파일도 감시하지 않으며, `add` 또는 `unwatch`를 호출해도 아무런 효과가 없습니다.
+   * Chokidar watcher instance. If `config.server.watch` is set to `null`,
+   * it will not watch any files and calling `add` or `unwatch` will have no effect.
    * https://github.com/paulmillr/chokidar/tree/3.6.0#api
    */
   watcher: FSWatcher
   /**
-   * `send(payload)` 함수가 있는 web socket 서버
+   * WebSocket server with `send(payload)` method.
    */
   ws: WebSocketServer
   /**
-   * 주어진 파일에 플러그인 hooks를 실행할 수 있는 rollup 플러그인 컨테이너
+   * Rollup plugin container that can run plugin hooks on a given file.
    */
   pluginContainer: PluginContainer
   /**
-   * Url로 파일이 맵핑되어 있고 hmr 상태들의 import 관계들을 볼 수 있는
-   * 모듈 그래프.
+   * Module graph that tracks the import relationships, url to file mapping
+   * and hmr state.
    */
   moduleGraph: ModuleGraph
   /**
-   * Vite가 CLI에 출력하는 인코딩된 URL입니다. 미들웨어 모드이거나
-   * 서버가 어떤 포트에서도 수신하고 있지 않은 경우 `null`을 반환합니다.
+   * The resolved urls Vite prints on the CLI (URL-encoded). Returns `null`
+   * in middleware mode or if the server is not listening on any port.
    */
   resolvedUrls: ResolvedServerUrls | null
   /**
-   * 프로그래밍 방식으로 URL을 확인, 로드 및 변환하고 http 요청 파이프 라인을 
-   * 거치지 않고도 결과를 얻을 수 있습니다.
+   * Programmatically resolve, load and transform a URL and get the result
+   * without going through the http request pipeline.
    */
   transformRequest(
     url: string,
-    options?: TransformOptions
+    options?: TransformOptions,
   ): Promise<TransformResult | null>
   /**
-   * Vite 빌트인 HTML 변환 및 플러그인 HTML 변환을 적용합니다.
+   * Apply Vite built-in HTML transforms and any plugin HTML transforms.
    */
   transformIndexHtml(
     url: string,
@@ -148,44 +145,44 @@ interface ViteDevServer {
     originalUrl?: string,
   ): Promise<string>
   /**
-   * 주어진 URL을 SSR을 위해 인스턴스화 된 모듈로 로드합니다.
+   * Load a given URL as an instantiated module for SSR.
    */
   ssrLoadModule(
     url: string,
-    options?: { fixStacktrace?: boolean }
+    options?: { fixStacktrace?: boolean },
   ): Promise<Record<string, any>>
   /**
-   * SSR 에러 stacktrace 수정
+   * Fix ssr error stacktrace.
    */
   ssrFixStacktrace(e: Error): void
   /**
-   * 모듈 그래프의 모듈에 대한 HMR을 트리거합니다. `server.moduleGraph` API를 사용하여 다시 로드할 모듈을 검색할 수 있습니다.
-   * `hmr`이 false이면 아무것도 하지 않습니다.
+   * Triggers HMR for a module in the module graph. You can use the `server.moduleGraph`
+   * API to retrieve the module to be reloaded. If `hmr` is false, this is a no-op.
    */
   reloadModule(module: ModuleNode): Promise<void>
   /**
-   * 서버 시작
+   * Start the server.
    */
   listen(port?: number, isRestart?: boolean): Promise<ViteDevServer>
   /**
-   * 서버 재시작
+   * Restart the server.
    *
-   * @param forceOptimize - optimizer가 re-bundle를 강제시킵니다. --force cli flag를 쓴 것과 똑같습니다.
+   * @param forceOptimize - force the optimizer to re-bundle, same as --force cli flag
    */
   restart(forceOptimize?: boolean): Promise<void>
   /**
-   * 서버 종료
+   * Stop the server.
    */
   close(): Promise<void>
   /**
-   * CLI 단축키 바인딩
+   * Bind CLI shortcuts
    */
   bindCLIShortcuts(options?: BindCLIShortcutsOptions<ViteDevServer>): void
   /**
-   * `await server.waitForRequestsIdle(id)`를 호출하면 모든 정적 임포트가 처리될 때까지
-   * 대기합니다. 로드 또는 변환 플러그인 훅에서 호출하는 경우, 교착 상태를 피하기 위해 id를
-   * 매개변수로 전달해야 합니다. 모듈 그래프의 첫 번째 정적 임포트를 처리한 후 이 함수를 호출하면
-   * 즉시 처리됩니다.
+   * Calling `await server.waitForRequestsIdle(id)` will wait until all static imports
+   * are processed. If called from a load or transform plugin hook, the id needs to be
+   * passed as a parameter to avoid deadlocks. Calling this function after the first
+   * static imports section of the module graph has been processed will resolve immediately.
    * @experimental
    */
   waitForRequestsIdle: (ignoredId?: string) => Promise<void>
@@ -202,7 +199,7 @@ interface ViteDevServer {
 
 ```ts
 async function build(
-  inlineConfig?: InlineConfig
+  inlineConfig?: InlineConfig,
 ): Promise<RollupOutput | RollupOutput[]>
 ```
 
@@ -210,16 +207,13 @@ async function build(
 
 ```ts twoslash [vite.config.js]
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { build } from 'vite'
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url))
-
 await build({
-  root: path.resolve(__dirname, './project'),
+  root: path.resolve(import.meta.dirname, './project'),
   base: '/foo/',
   build: {
-    rollupOptions: {
+    rolldownOptions: {
       // ...
     },
   },
@@ -236,11 +230,11 @@ async function preview(inlineConfig?: InlineConfig): Promise<PreviewServer>
 
 **사용 예제:**
 
-```js twoslash
+```ts twoslash
 import { preview } from 'vite'
 
 const previewServer = await preview({
-  // 유효한 유저 설정 옵션들, 추가적으로 `mode`와 `configFile`가 있습니다.
+  // any valid user config options, plus `mode` and `configFile`
   preview: {
     port: 8080,
     open: true,
@@ -256,33 +250,33 @@ previewServer.bindCLIShortcuts({ print: true })
 ```ts
 interface PreviewServer {
   /**
-   * 해석된 Vite 설정 객체
+   * The resolved vite config object
    */
   config: ResolvedConfig
   /**
-   * connect 앱 인스턴스.
-   * - 커스텀 미들웨어를 프리뷰 서버에 연결할 수 있습니다.
-   * - 또한 커스텀 http 서버의 핸들러 함수 또는 connect 스타일의 Node.js 프레임워크의
-   *   미들웨어로 사용할 수 있습니다.
+   * A connect app instance.
+   * - Can be used to attach custom middlewares to the preview server.
+   * - Can also be used as the handler function of a custom http server
+   *   or as a middleware in any connect-style Node.js frameworks
    *
    * https://github.com/senchalabs/connect#use-middleware
    */
   middlewares: Connect.Server
   /**
-   * 네이티브 Node http 서버 인스턴스
+   * native Node http server instance
    */
   httpServer: http.Server
   /**
-   * Vite가 CLI에 출력하는 인코딩된 URL입니다. 서버가 어떤
-   * 포트에서도 수신하고 있지 않은 경우 `null`을 반환합니다.
+   * The resolved urls Vite prints on the CLI (URL-encoded). Returns `null`
+   * if the server is not listening on any port.
    */
   resolvedUrls: ResolvedServerUrls | null
   /**
-   * 서버 URL 출력하기
+   * Print server urls
    */
   printUrls(): void
   /**
-   * CLI 단축키 바인딩하기
+   * Bind CLI shortcuts
    */
   bindCLIShortcuts(options?: BindCLIShortcutsOptions<PreviewServer>): void
 }
@@ -296,7 +290,7 @@ interface PreviewServer {
 async function resolveConfig(
   inlineConfig: InlineConfig,
   command: 'build' | 'serve',
-  defaultMode = 'development'
+  defaultMode = 'development',
   defaultNodeEnv = 'development',
   isPreview = false,
 ): Promise<ResolvedConfig>
@@ -312,7 +306,7 @@ async function resolveConfig(
 function mergeConfig(
   defaults: Record<string, any>,
   overrides: Record<string, any>,
-  isRoot = true
+  isRoot = true,
 ): Record<string, any>
 ```
 
@@ -348,7 +342,7 @@ export default defineConfig((configEnv) =>
 ```ts
 function searchForWorkspaceRoot(
   current: string,
-  root = searchForPackageRoot(current)
+  root = searchForPackageRoot(current),
 ): string
 ```
 
@@ -369,7 +363,7 @@ function searchForWorkspaceRoot(
 function loadEnv(
   mode: string,
   envDir: string,
-  prefixes: string | string[] = 'VITE_'
+  prefixes: string | string[] = 'VITE_',
 ): Record<string, string>
 ```
 
@@ -389,7 +383,22 @@ function normalizePath(id: string): string
 
 Vite 플러그인 간에 상호 작용할 수 있도록 경로를 정규화합니다.
 
-## `transformWithEsbuild` {#transformwitesbuild}
+## `transformWithOxc` {#transformwithoxc}
+
+**타입 시그니처:**
+
+```ts
+async function transformWithOxc(
+  code: string,
+  filename: string,
+  options?: OxcTransformOptions,
+  inMap?: object,
+): Promise<Omit<OxcTransformResult, 'errors'> & { warnings: string[] }>
+```
+
+[Oxc Transformer](https://oxc.rs/docs/guide/usage/transformer)를 사용해 JavaScript 또는 TypeScript를 변환합니다. Vite의 내부 Oxc Transformer 변환 과정과 동일하게 수행하고자 하는 플러그인 작성 시 유용합니다.
+
+## `transformWithEsbuild` {#transformwithesbuild}
 
 **타입 시그니처:**
 
@@ -398,9 +407,11 @@ async function transformWithEsbuild(
   code: string,
   filename: string,
   options?: EsbuildTransformOptions,
-  inMap?: object
+  inMap?: object,
 ): Promise<ESBuildTransformResult>
 ```
+
+**Deprecated:** 대신 `transformWithOxc`를 사용하세요.
 
 esbuild를 사용하여 JavaScript 또는 TypeScript를 변환합니다. Vite의 내부 esbuild 변환 과정과 동일하게 수행하고자 하는 플러그인 작성 시 유용합니다.
 
@@ -436,6 +447,7 @@ async function preprocessCSS(
   filename: string,
   config: ResolvedConfig,
 ): Promise<PreprocessCSSResult>
+
 interface PreprocessCSSResult {
   code: string
   map?: SourceMapInput
@@ -449,3 +461,27 @@ interface PreprocessCSSResult {
 사용되는 전처리기는 `filename` 확장자로부터 추론됩니다. 다만 `filename`이 `.module.{ext}`로 끝난다면 [CSS 모듈](https://github.com/css-modules/css-modules)로 추론되며, 반환된 결과에는 원본 클래스 이름을 변환된 이름으로 매핑한 `modules` 객체가 포함됩니다.
 
 참고로 전처리기는 `url()` 또는 `image-set()` 내부에 존재하는 URL을 확인하지 않는다는 점에 유의하세요.
+
+## `version` {#version}
+
+**타입:** `string`
+
+문자열로 표현된 현재 Vite 버전입니다(예: `"8.0.0"`).
+
+## `rolldownVersion` {#rolldownversion}
+
+**타입:** `string`
+
+문자열로 표현된 Vite가 사용하는 Rolldown 버전입니다(예: `"1.0.0"`). `rolldown`의 [`VERSION`](https://rolldown.rs/reference/Variable.VERSION)을 다시 익스포트한 값입니다.
+
+## `esbuildVersion` {#esbuildversion}
+
+**타입:** `string`
+
+하위 호환성을 위해서만 유지됩니다.
+
+## `rollupVersion` {#rollupversion}
+
+**타입:** `string`
+
+하위 호환성을 위해서만 유지됩니다.

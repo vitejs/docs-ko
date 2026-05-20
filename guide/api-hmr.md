@@ -28,7 +28,7 @@ interface ViteHotContext {
   accept(dep: string, cb: (mod: ModuleNamespace | undefined) => void): void
   accept(
     deps: readonly string[],
-    cb: (mods: Array<ModuleNamespace | undefined>) => void
+    cb: (mods: Array<ModuleNamespace | undefined>) => void,
   ): void
 
   dispose(cb: (data: any) => void): void
@@ -62,10 +62,14 @@ if (import.meta.hot) {
 
 ## TypeScript를 위한 인텔리센스 {#intellisense-for-typescript}
 
-Vite는 [`vite/client.d.ts`](https://github.com/vitejs/vite/blob/main/packages/vite/client.d.ts)을 통해 `import.meta.hot`에 대한 타입 정의를 제공하고 있습니다. `src` 디렉터리 아래에 `vite-env.d.ts`를 생성해 TypeScript가 타입 정의를 찾을 수 있도록 할 수 있습니다:
+Vite는 [`vite/client.d.ts`](https://github.com/vitejs/vite/blob/main/packages/vite/client.d.ts)에서 `import.meta.hot`에 대한 타입 정의를 제공합니다. TypeScript가 타입 정의를 가져오도록 `tsconfig.json`에 "vite/client"를 추가할 수 있습니다:
 
-```ts [vite-env.d.ts]
-/// <reference types="vite/client" />
+```json [tsconfig.json]
+{
+  "compilerOptions": {
+    "types": ["vite/client"]
+  }
+}
 ```
 
 ## `hot.accept(cb)` {#hot-accept-cb}
@@ -80,7 +84,7 @@ export const count = 1
 if (import.meta.hot) {
   import.meta.hot.accept((newModule) => {
     if (newModule) {
-      // SyntaxError 발생 시 newModule은 undefined 값을 갖습니다.
+      // newModule is undefined when SyntaxError happened
       console.log('updated: count is now ', newModule.count)
     }
   })
@@ -88,6 +92,25 @@ if (import.meta.hot) {
 ```
 
 이렇게 Hot updates를 "허용한" 모듈은 **HMR 범위**로 간주됩니다.
+
+```dot
+digraph hmr_boundary {
+  rankdir=RL
+  ranksep=0.3
+  node [shape=box style="rounded,filled" fontname="Arial" fontsize=11 margin="0.2,0.1" fontcolor="${#3c3c43|#ffffff}" color="${#c2c2c4|#3c3f44}"]
+  edge [color="${#67676c|#98989f}" fontname="Arial" fontsize=10 fontcolor="${#67676c|#98989f}"]
+  bgcolor="transparent"
+
+  root [label="main.js" fillcolor="${#f6f6f7|#2e2e32}"]
+  parent [label="App.vue" fillcolor="${#f6f6f7|#2e2e32}"]
+  boundary [label="Component.vue\n(HMR boundary)\nhot.accept()" fillcolor="${#def5ed|#15312d}" color="${#18794e|#3dd68c}" penwidth=2]
+  edited [label="utils.js\n(edited)" fillcolor="${#fcf4dc|#38301a}" color="${#915930|#f9b44e}" penwidth=2]
+
+  boundary -> edited [label="imports" color="${#915930|#f9b44e}" style=bold]
+  parent -> boundary [label="imports" style=dashed]
+  root -> parent [label="imports" style=dashed]
+}
+```
 
 Vite의 HMR은 처음에 불러온 모듈을 교체하지 않습니다: 만약에 HMR 범위의 모듈이 디펜던시로부터 imports를 다시 exports 한다면, 해당 re-exports를 업데이트할 책임이 있습니다 (그리고 그러한 exports는 `let`을 사용했을 것입니다). 또한, 경계 모듈에서 체인 위에 있는 importers에게는 변화가 되었다고 알리지 않습니다. 이렇게 간소화된 HMR 구현은 대부분의 개발 환경에서 충분하며, 프록시 모듈을 생성하는 것과 같이 비용이 큰 작업을 생략할 수 있도록 합니다.
 
@@ -110,18 +133,18 @@ foo()
 
 if (import.meta.hot) {
   import.meta.hot.accept('./foo.js', (newFoo) => {
-    // 콜백으로 변경된 './foo.js' 모듈을 받을 수 있습니다.
+    // the callback receives the updated './foo.js' module
     newFoo?.foo()
   })
 
-  // 또한 dep 모듈들을 어레이로 받을 수 있습니다.
+  // Can also accept an array of dep modules:
   import.meta.hot.accept(
     ['./foo.js', './bar.js'],
     ([newFooModule, newBarModule]) => {
-      // 콜백은 null이 아닌 값을 갖는 업데이트된 모듈에 대한 배열을 전달받습니다.
-      // 구문 오류와 같이 만약 업데이트가 성공하지 않았다면
-      // 배열은 비어있습니다.
-    }
+      // The callback receives an array where only the updated module is
+      // non null. If the update was not successful (syntax error for ex.),
+      // the array is empty
+    },
   )
 }
 ```
@@ -139,7 +162,7 @@ setupSideEffect()
 
 if (import.meta.hot) {
   import.meta.hot.dispose((data) => {
-    // side effect를 처리함
+    // cleanup side effect
   })
 }
 ```
@@ -157,7 +180,7 @@ setupOrReuseSideEffect()
 
 if (import.meta.hot) {
   import.meta.hot.prune((data) => {
-    // 사이드 이펙트를 정리
+    // cleanup side effect
   })
 }
 ```
@@ -174,7 +197,7 @@ import 'vite/client'
 // ok
 import.meta.hot.data.someValue = 'hello'
 
-// 지원되지 않음
+// not supported
 import.meta.hot.data = { someValue: 'hello' }
 ```
 
@@ -191,8 +214,8 @@ import.meta.hot.data = { someValue: 'hello' }
 ```js twoslash
 import 'vite/client'
 // ---cut---
-import.meta.hot.accept(module => {
-  // 새로운 모듈 인스턴스를 사용하여 무효화할지 결정할 수 있습니다.
+import.meta.hot.accept((module) => {
+  // You may use the new module instance to decide whether to invalidate.
   if (cannotHandleUpdate(module)) {
     import.meta.hot.invalidate()
   }
@@ -232,4 +255,4 @@ HMR 이벤트에 대한 핸들러를 정의합니다.
 
 HMR API에 대한 사용 방법과 내부 작동 방식에 대해 자세히 알아보고 싶다면, 다음 리소스를 확인해 보세요:
 
-- [Hot Module Replacement is Easy](https://bjornlu.com/blog/hot-module-replacement-is-easy)
+- [Hot Module Replacement is Easy](https://bjornlu.com/blog/hot-module-replacement-is-easy) 문서

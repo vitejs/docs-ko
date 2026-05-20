@@ -114,14 +114,12 @@ export default defineConfig({
 
 이에 대한 예시는 다음과 같습니다:
 
-- 가능하다면 Sass/Less/Stylus 대신 CSS를 사용하세요. 중첩된 스타일은 PostCSS에서 처리할 수 있습니다.
+- 가능하면 Sass/Less/Stylus 대신 CSS를 사용하세요. 중첩은 PostCSS / Lightning CSS로 처리할 수 있습니다.
 - SVG를 UI 프레임워크 컴포넌트(React, Vue 등)로 변환하지 마세요. 대신 문자열이나 URL로 임포트하세요.
-- `@vitejs/plugin-react`를 사용하는 경우, 빌드 중 변환을 수행하지 않기 위해 Babel 옵션을 구성하지 마세요. 이 경우 esbuild만 사용됩니다.
 
 네이티브 툴링을 사용하는 예시:
 
-네이티브 툴링을 사용하면 설치 시 크기가 커지는 경우가 많으므로 새로운 Vite 프로젝트를 시작할 때는 기본적으로 사용되지 않습니다. 그러나 대규모 애플리케이션의 경우에는 그 비용을 감당할 가치가 있을 수 있습니다.
+Vite 코어는 네이티브 도구를 기반으로 하지만, 더 나은 호환성과 기능 집합을 제공하기 위해 일부 기능은 여전히 기본적으로 네이티브가 아닌 도구를 사용합니다. 하지만 대규모 애플리케이션에서는 그 비용을 감수할 가치가 있을 수 있습니다.
 
 - Rollup과 esbuild 대신 [Rolldown](./rolldown)을 사용해 보세요. 더 빠른 빌드와 개발-빌드 간 일관된 경험을 누릴 수 있습니다.
-- 실험적으로 도입된 [LightningCSS](https://github.com/vitejs/vite/discussions/13835)를 사용해 보세요.
 - `@vitejs/plugin-react` 대신 [`@vitejs/plugin-react-swc`](https://github.com/vitejs/vite-plugin-react-swc)를 사용하세요.

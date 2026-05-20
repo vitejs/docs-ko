@@ -8,7 +8,7 @@
 리소스:
 
 - [피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 새로운 API에 대한 피드백을 모으고 있습니다.
-- [환경 API PR](https://github.com/vitejs/vite/pull/16471)에서 새로운 API를 구현하고 검토했습니다.
+- 새 API가 구현되고 검토된 [Environment API PR](https://github.com/vitejs/vite/pull/16471)
 
 여러분의 피드백을 공유해주세요.
 :::
@@ -31,15 +31,23 @@ Vite 서버는 모든 환경이 공유하는 하나의 플러그인 파이프라
 
 ## 훅을 사용해 새로운 환경 등록하기 {#registering-new-environments-using-hooks}
 
-플러그인은 `config` 훅에서 새로운 환경을 구성할 수 있습니다(예: [RSC](https://react.dev/blog/2023/03/22/react-labs-what-we-have-been-working-on-march-2023#react-server-components)를 위한 별도의 모듈 그래프 구성하기):
+플러그인은 `config` 훅에서 새 환경을 추가할 수 있습니다. 예를 들어 [RSC 지원](/plugins/#vitejs-plugin-rsc)은 `react-server` 조건을 가진 별도의 모듈 그래프를 갖기 위해 추가 환경을 사용합니다:
 
 ```ts
   config(config: UserConfig) {
-    config.environments.rsc ??= {}
+    return {
+      environments: {
+        rsc: {
+          resolve: {
+            conditions: ['react-server', ...defaultServerConditions],
+          },
+        },
+      },
+    }
   }
 ```
 
-빈 객체만으로도 환경을 등록할 수 있으며, 최상위 환경 설정에서 기본값을 가져옵니다(상속).
+환경을 등록하려면 빈 객체만으로 충분하며, 루트 레벨 환경 설정의 기본값이 사용됩니다.
 
 ## 훅을 사용해 환경 구성하기 {#configuring-environment-using-hooks}
 
@@ -48,13 +56,21 @@ Vite 서버는 모든 환경이 공유하는 하나의 플러그인 파이프라
 
 ```ts
   configEnvironment(name: string, options: EnvironmentOptions) {
+    // add "workerd" condition to the rsc environment
     if (name === 'rsc') {
-      options.resolve.conditions = // ...
+      return {
+        resolve: {
+          conditions: ['workerd'],
+        },
+      }
+    }
+  }
 ```
 
 ## `hotUpdate` 훅 {#the-hotupdate-hook}
 
 - **타입:** `(this: { environment: DevEnvironment }, options: HotUpdateOptions) => Array<EnvironmentModuleNode> | void | Promise<Array<EnvironmentModuleNode> | void>`
+- **종류:** `async`, `sequential`
 - **참고:** [HMR API](./api-hmr)
 
 `hotUpdate` 훅을 사용하면 플러그인이 특정 환경에 대해 HMR 업데이트 처리를 커스텀할 수 있습니다. 파일이 변경되면 `server.environments`의 순서에 따라 각 환경에 대해 순차적으로 HMR 알고리즘이 실행되므로, `hotUpdate` 훅은 여러 번 호출됩니다. 훅은 다음과 같은 시그니처를 가진 컨텍스트 객체를 받습니다:
@@ -87,7 +103,7 @@ interface HotUpdateOptions {
     if (this.environment.name !== 'client')
       return
 
-    // 수동으로 모듈 무효화
+    // Invalidate modules manually
     const invalidatedModules = new Set()
     for (const mod of modules) {
       this.environment.moduleGraph.invalidateModule(
@@ -123,14 +139,14 @@ interface HotUpdateOptions {
   ```js
   if (import.meta.hot) {
     import.meta.hot.on('special-update', (data) => {
-      // 커스텀 업데이트 수행
+      // perform custom update
     })
   }
   ```
 
 ## 플러그인에서의 환경별 상태 관리 {#per-environment-state-in-plugins}
 
-동일한 플러그인 인스턴스가 여러 환경에서 사용되기 때문에, 플러그인 상태는 `this.environment`를 키로 사용해야 합니다. 이는 생태계에서 이미 클라이언트와 SSR 모듈 상태가 섞이지 않도록 `ssr` 불리언 값을 키로 사용해 모듈 상태를 유지하는 패턴과 동일합니다. `Map<Environment, State>`를 사용하여 각 환경의 상태를 별도로 유지할 수 있습니다. 하위 호환성을 위해 `perEnvironmentStartEndDuringDev: true` 플래그 없이는 `buildStart`와 `buildEnd`가 클라이언트 환경에서만 호출됩니다.
+동일한 플러그인 인스턴스가 여러 환경에 사용되므로, 플러그인 상태는 `this.environment`를 키로 관리해야 합니다. 이는 생태계가 클라이언트와 SSR 모듈 상태가 섞이지 않도록 `ssr` 불리언을 키로 사용해 모듈 상태를 관리해 온 패턴과 같습니다. `Map<Environment, State>`를 사용해 각 환경의 상태를 별도로 유지할 수 있습니다. 하위 호환성을 위해 `perEnvironmentStartEndDuringDev: true` 플래그가 없으면 `buildStart`와 `buildEnd`는 클라이언트 환경에 대해서만 호출됩니다. `watchChange`와 `perEnvironmentWatchChangeDuringDev: true` 플래그도 마찬가지입니다.
 
 ```js
 function PerEnvironmentCountTransformedModulesPlugin() {
@@ -157,22 +173,22 @@ function PerEnvironmentCountTransformedModulesPlugin() {
 
 ```js
 const UnoCssPlugin = () => {
-  // 공유 전역 상태
+  // shared global state
   return {
     buildStart() {
-      // this.environment를 이용해
-      // WeakMap<Environment,Data>로 환경별 상태 초기화
+      // init per-environment state with WeakMap<Environment,Data>
+      // using this.environment
     },
     configureServer() {
-      // 전역 훅은 평소처럼 사용
+      // use global hooks normally
     },
     applyToEnvironment(environment) {
-      // 플러그인이 해당 환경에서 활성화되어야 한다면 true를 반환하거나,
-      // 대체할 새로운 플러그인을 반환합니다.
-      // 이 훅을 사용하지 않는다면 플러그인은 모든 환경에서 활성화됩니다
+      // return true if this plugin should be active in this environment,
+      // or return a new plugin to replace it.
+      // if the hook is not used, the plugin is active in all environments
     },
     resolveId(id, importer) {
-      // 플러그인이 적용되는 환경에서만 호출
+      // only called for environments this plugin apply to
     },
   }
 }
@@ -188,7 +204,7 @@ export default defineConfig({
     {
       name: 'per-environment-plugin',
       applyToEnvironment(environment) {
-        return nonShareablePlugin({ outputName: environment.name }) // 각 환경마다 독립된 플러그인 인스턴스를 생성 - 옮긴이
+        return nonShareablePlugin({ outputName: environment.name })
       },
     },
   ],
@@ -210,6 +226,43 @@ export default defineConfig({
 ```
 
 `applyToEnvironment` 훅은 설정 시점에 호출되며, 현재는 생태계의 프로젝트들이 플러그인을 수정하기 때문에 `configResolved` 이후에 호출됩니다. 환경 플러그인 해석은 향후 `configResolved` 이전으로 이동될 수 있습니다.
+
+## 애플리케이션-플러그인 통신 {#application-plugin-communication}
+
+`environment.hot`은 플러그인이 특정 환경의 애플리케이션 측 코드와 통신할 수 있게 합니다. 이는 [클라이언트-서버 통신 기능](/guide/api-plugin#client-server-communication)에 해당하지만, 클라이언트 환경이 아닌 다른 환경도 지원합니다.
+
+:::warning 참고
+
+이 기능은 HMR을 지원하는 환경에서만 사용할 수 있습니다.
+
+:::
+
+### 애플리케이션 인스턴스 관리하기 {#managing-the-application-instances}
+
+같은 환경에서 여러 애플리케이션 인스턴스가 실행될 수 있다는 점에 유의하세요. 예를 들어 브라우저에서 여러 탭을 열어두면, 각 탭은 별도의 애플리케이션 인스턴스이며 서버와 별도의 연결을 가집니다.
+
+새 연결이 설정되면 환경의 `hot` 인스턴스에서 `vite:client:connect` 이벤트가 발생합니다. 연결이 닫히면 `vite:client:disconnect` 이벤트가 발생합니다.
+
+각 이벤트 핸들러는 두 번째 인자로 `NormalizedHotChannelClient`를 받습니다. 클라이언트는 특정 애플리케이션 인스턴스에 메시지를 보내는 데 사용할 수 있는 `send` 메서드를 가진 객체입니다. 같은 연결에 대해서는 클라이언트 참조가 항상 동일하므로, 이를 보관해 연결을 추적할 수 있습니다.
+
+### 사용 예제 {#example-usage}
+
+플러그인 측:
+
+```js
+configureServer(server) {
+  server.environments.ssr.hot.on('my:greetings', (data, client) => {
+    // do something with the data,
+    // and optionally send a response to that application instance
+    client.send('my:foo:reply', `Hello from server! You said: ${data}`)
+  })
+
+  // broadcast a message to all application instances
+  server.environments.ssr.hot.send('my:foo', 'Hello from server!')
+}
+```
+
+애플리케이션 측은 클라이언트-서버 통신 기능과 동일합니다. `import.meta.hot` 객체를 사용해 플러그인에 메시지를 보낼 수 있습니다.
 
 ## 빌드 훅에서의 환경 {#environment-in-build-hooks}
 
@@ -237,13 +290,13 @@ Vite 6 이전에는 플러그인 파이프라인이 개발과 빌드 단계에�
 
 ```js
 function myPlugin() {
-  // 개발 및 빌드 단계에서 모든 환경 간 상태 공유
+  // Share state among all environments in dev and build
   const sharedState = ...
   return {
     name: 'shared-plugin',
     transform(code, id) { ... },
 
-    // 모든 환경에서 단일 인스턴스 사용
+    // Opt-in into a single instance for all environments
     sharedDuringBuild: true,
   }
 }
