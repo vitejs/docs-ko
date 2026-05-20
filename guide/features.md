@@ -67,7 +67,7 @@ Vite 설정과 `tsconfig.json`에 같은 옵션이 모두 설정된 경우, Vite
 
 이는 Oxc Transformer가 타입 정보 없이 트랜스파일만 수행하기 때문에, const enum이나 암시적 타입 전용 임포트 같은 일부 기능을 지원하지 않기 때문입니다.
 
-이를 감지하기 위해 `tsconfig.json` 내 `compilerOptions` 설정을 `"isolatedModules": true`와 같이 설정해줘야만 하며, 이 설정으로 TS가 위와 같은 상황에서 작동하지 않는 기능들에 대해 경고할 수 있게 됩니다.
+이를 감지하기 위해 `tsconfig.json` 내 `compilerOptions` 설정을 `"isolatedModules": true`와 같이 설정해줘야만 하며, 이 설정으로 TS가 위와 같은 상황에서 작동하지 않는 기능들에 대해 경고합니다.
 
 디펜던시가 `"isolatedModules": true`와 잘 동작하지 않는다면, upstream에서 수정될 때까지 `"skipLibCheck": true`를 사용해 오류를 일시적으로 억제할 수 있습니다.
 
@@ -119,7 +119,7 @@ Vite는 [esbuild](https://esbuild.github.io/)와 동일한 동작을 따라 `tsc
 - [`alwaysStrict`](https://www.typescriptlang.org/tsconfig#alwaysStrict)
 
 ::: tip `skipLibCheck`
-Vite 스타터 템플릿은 TypeScript의 특정 버전과 설정만을 지원하는 라이브러리가 있을 수 있기 때문에, 의존성에 대한 타입 체크를 수행하지 않기 위해 기본값으로 `"skipLibCheck": "true"`를 설정하고 있습니다. 자세한 내용은 [vuejs/vue-cli#5688](https://github.com/vuejs/vue-cli/pull/5688)을 참고해 주세요.
+Vite 스타터 템플릿은 TypeScript의 특정 버전과 설정만을 지원하는 라이브러리가 있을 수 있기 때문에, 디펜던시에 대한 타입 체크를 수행하지 않기 위해 기본값으로 `"skipLibCheck": "true"`를 설정하고 있습니다. 자세한 내용은 [vuejs/vue-cli#5688](https://github.com/vuejs/vue-cli/pull/5688)을 참고해 주세요.
 :::
 
 ### Client Types {#client-types}
@@ -378,28 +378,28 @@ document.getElementById('hero-img').src = imgUrl
 ```js twoslash
 import 'vite/client'
 // ---cut---
-// Explicitly load assets as URL (automatically inlined depending on the file size)
+// 에셋을 명시적으로 URL로 로드합니다(파일 크기에 따라 자동으로 인라인 처리됨).
 import assetAsURL from './asset.js?url'
 ```
 
 ```js twoslash
 import 'vite/client'
 // ---cut---
-// Load assets as strings
+// 에셋을 문자열로 로드합니다.
 import assetAsString from './shader.glsl?raw'
 ```
 
 ```js twoslash
 import 'vite/client'
 // ---cut---
-// Load Web Workers
+// Web Worker를 로드합니다.
 import Worker from './worker.js?worker'
 ```
 
 ```js twoslash
 import 'vite/client'
 // ---cut---
-// Web Workers inlined as base64 strings at build time
+// 빌드 시 Web Worker를 base64 문자열로 인라인 처리합니다.
 import InlineWorker from './worker.js?worker&inline'
 ```
 
@@ -412,9 +412,9 @@ JSON 파일은 직접 임포트할 수 있으며, 명명된 임포트도 지원�
 ```js twoslash
 import 'vite/client'
 // ---cut---
-// import the entire object
+// 전체 객체를 import합니다.
 import json from './example.json'
-// import a root field as named exports - helps with tree-shaking!
+// 루트 필드를 명명된 export로 import합니다. 트리 셰이킹에 도움이 됩니다.
 import { field } from './example.json'
 ```
 
@@ -431,7 +431,7 @@ const modules = import.meta.glob('./dir/*.js')
 위 코드는 다음과 같이 변환됩니다:
 
 ```js
-// code produced by vite
+// Vite가 생성한 코드
 const modules = {
   './dir/bar.js': () => import('./dir/bar.js'),
   './dir/foo.js': () => import('./dir/foo.js'),
@@ -459,7 +459,7 @@ const modules = import.meta.glob('./dir/*.js', { eager: true })
 위 코드는 다음과 같이 변환됩니다:
 
 ```js
-// code produced by vite
+// Vite가 생성한 코드
 import * as __vite_glob_0_0 from './dir/bar.js'
 import * as __vite_glob_0_1 from './dir/foo.js'
 const modules = {
@@ -489,7 +489,7 @@ const modules = import.meta.glob(['./dir/*.js', '!**/bar.js'])
 ```
 
 ```js
-// code produced by vite
+// Vite가 생성한 코드
 const modules = {
   './dir/foo.js': () => import('./dir/foo.js'),
 }
@@ -506,7 +506,7 @@ const modules = import.meta.glob('./dir/*.js', { import: 'setup' })
 ```
 
 ```ts
-// code produced by vite
+// Vite가 생성한 코드
 const modules = {
   './dir/bar.js': () => import('./dir/bar.js').then((m) => m.setup),
   './dir/foo.js': () => import('./dir/foo.js').then((m) => m.setup),
@@ -525,7 +525,7 @@ const modules = import.meta.glob('./dir/*.js', {
 ```
 
 ```ts
-// code produced by vite:
+// Vite가 생성한 코드:
 import { setup as __vite_glob_0_0 } from './dir/bar.js'
 import { setup as __vite_glob_0_1 } from './dir/foo.js'
 const modules = {
@@ -546,7 +546,7 @@ const modules = import.meta.glob('./dir/*.js', {
 ```
 
 ```ts
-// code produced by vite:
+// Vite가 생성한 코드:
 import { default as __vite_glob_0_0 } from './dir/bar.js'
 import { default as __vite_glob_0_1 } from './dir/foo.js'
 const modules = {
@@ -573,7 +573,7 @@ const moduleUrls = import.meta.glob('./dir/*.svg', {
 ```
 
 ```ts
-// code produced by vite:
+// Vite가 생성한 코드:
 const moduleStrings = {
   './dir/bar.svg': () => import('./dir/bar.svg?raw').then((m) => m['default']),
   './dir/foo.svg': () => import('./dir/foo.svg?raw').then((m) => m['default']),
@@ -607,7 +607,7 @@ const modulesWithBase = import.meta.glob('./**/*.js', {
 ```
 
 ```ts
-// code produced by vite:
+// Vite가 생성한 코드:
 const modulesWithBase = {
   './dir/foo.js': () => import('./base/dir/foo.js'),
   './dir/bar.js': () => import('./base/dir/bar.js'),
@@ -827,13 +827,13 @@ MIT License
 
 ### CSS 코드 분리 {#css-code-splitting}
 
-vite는 비동기적으로 불러와지는 청크 내에 CSS 코드가 포함된 경우, 이를 자동으로 추출해 파일로 분리합니다. 이후 해당 청크를 불러올 때 `<link>` 태그를 이용해 분리된 CSS 코드를 불러오게끔 하며, CSS가 모두 계산된 후에 청크를 렌더하도록 합니다. 굳이 왜 이렇게 복잡한 과정을 거칠까요? 바로 이 과정을 통해 CSS가 렌더링될 때 화면이 잠깐 반짝이는 [FOUC 현상](https://en.wikipedia.org/wiki/Flash_of_unstyled_content#:~:text=A%20flash%20of%20unstyled%20content,before%20all%20information%20is%20retrieved.)을 회피할 수 있게 되기 때문입니다.
+vite는 비동기적으로 불러와지는 청크 내에 CSS 코드가 포함된 경우, 이를 자동으로 추출해 파일로 분리합니다. 이후 해당 청크를 불러올 때 `<link>` 태그를 이용해 분리된 CSS 코드를 불러오며, CSS가 모두 계산된 후에 청크를 렌더하도록 합니다. 굳이 왜 이렇게 복잡한 과정을 거칠까요? 바로 이 과정을 통해 CSS가 렌더링될 때 화면이 잠깐 반짝이는 [FOUC 현상](https://en.wikipedia.org/wiki/Flash_of_unstyled_content#:~:text=A%20flash%20of%20unstyled%20content,before%20all%20information%20is%20retrieved.)을 회피할 수 있기 때문입니다.
 
 물론, 모든 CSS가 그냥 일반적인 각각의 파일로 저장된 경우라면 굳이 이러한 기능을 사용할 필요가 없습니다. 이러한 경우 [`build.cssCodeSplit`](/config/build-options.md#build-csscodesplit) 옵션의 값을 `false`로 설정해 비활성화가 가능합니다.
 
 ### 프리로드 디렉티브 생성 {#preload-directives-generation}
 
-vite는 빌드 시 Direct Import 구문에 대해 `<link ref="modulepreload">` 디렉티브를 이용해 미리 모듈을 캐싱하도록 자동으로 변환합니다. 덕분에 해당 모듈을 필요로 하는 경우 이를 바로 사용할 수 있게 됩니다. (`modulepreload`에 대한 더 자세한 내용은 [MDN doc](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/modulepreload) 또는 [Google developers](https://developers.google.com/web/updates/2017/12/modulepreload) 문서를 참고해주세요. - 옮긴이)
+vite는 빌드 시 Direct Import 구문에 대해 `<link ref="modulepreload">` 디렉티브를 이용해 미리 모듈을 캐싱하도록 자동으로 변환합니다. 덕분에 해당 모듈이 필요할 때 바로 사용할 수 있습니다. (`modulepreload`에 대한 더 자세한 내용은 [MDN doc](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/modulepreload) 또는 [Google developers](https://developers.google.com/web/updates/2017/12/modulepreload) 문서를 참고해주세요. - 옮긴이)
 
 ### 비동기 청크 로딩 최적화 {#async-chunk-loading-optimization}
 

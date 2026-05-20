@@ -18,8 +18,8 @@
 개발 단계에서, `server.environments`로 개발 서버의 사용 가능한 환경에 접근할 수 있습니다:
 
 ```js
-// create the server, or get it from the configureServer hook
-const server = await createServer(/* options */)
+// 서버를 생성하거나 configureServer 훅에서 가져옵니다.
+const server = await createServer(/* 옵션 */)
 
 const clientEnvironment = server.environments.client
 clientEnvironment.transformRequest(url)
@@ -35,34 +35,34 @@ console.log(server.environments.ssr.moduleGraph)
 ```ts
 class DevEnvironment {
   /**
-   * Unique identifier for the environment in a Vite server.
-   * By default Vite exposes 'client' and 'ssr' environments.
+   * Vite 서버에서 환경을 식별하는 고유 값입니다.
+   * 기본적으로 Vite는 'client'와 'ssr' 환경을 노출합니다.
    */
   name: string
   /**
-   * Communication channel to send and receive messages from the
-   * associated module runner in the target runtime.
+   * 대상 런타임에서 연결된 모듈 러너와 메시지를 주고받는
+   * 통신 채널입니다.
    */
   hot: NormalizedHotChannel
   /**
-   * Graph of module nodes, with the imported relationship between
-   * processed modules and the cached result of the processed code.
+   * 처리된 모듈 간 import 관계와 처리된 코드의 캐시 결과를 담는
+   * 모듈 노드 그래프입니다.
    */
   moduleGraph: EnvironmentModuleGraph
   /**
-   * Resolved plugins for this environment, including the ones
-   * created using the per-environment `create` hook
+   * 환경별 `create` 훅으로 생성된 플러그인을 포함해
+   * 이 환경에 대해 해석된 플러그인입니다.
    */
   plugins: Plugin[]
   /**
-   * Allows to resolve, load, and transform code through the
-   * environment plugins pipeline
+   * 환경 플러그인 파이프라인을 통해 코드를 resolve, load,
+   * transform합니다.
    */
   pluginContainer: EnvironmentPluginContainer
   /**
-   * Resolved config options for this environment. Options at the server
-   * global scope are taken as defaults for all environments, and can
-   * be overridden (resolve conditions, external, optimizedDeps)
+   * 이 환경에 대해 해석된 설정 옵션입니다. 서버 전역 범위의 옵션은
+   * 모든 환경의 기본값으로 사용되며, 재정의할 수 있습니다
+   * (resolve conditions, external, optimizedDeps).
    */
   config: ResolvedConfig & ResolvedDevEnvironmentOptions
 
@@ -73,24 +73,23 @@ class DevEnvironment {
   )
 
   /**
-   * Resolve the URL to an id, load it, and process the code using the
-   * plugins pipeline. The module graph is also updated.
+   * URL을 id로 해석하고 로드한 뒤, 플러그인 파이프라인으로
+   * 코드를 처리합니다. 모듈 그래프도 함께 업데이트됩니다.
    */
   async transformRequest(url: string): Promise<TransformResult | null>
 
   /**
-   * Register a request to be processed with low priority. This is useful
-   * to avoid waterfalls. The Vite server has information about the
-   * imported modules by other requests, so it can warmup the module graph
-   * so the modules are already processed when they are requested.
+   * 낮은 우선순위로 처리할 요청을 등록합니다. 워터폴을 피하는 데
+   * 유용합니다. Vite 서버는 다른 요청이 import한 모듈 정보를 가지고
+   * 있으므로, 요청 시점에는 모듈이 이미 처리되어 있도록 모듈 그래프를
+   * 워밍업할 수 있습니다.
    */
   async warmupRequest(url: string): Promise<void>
 
   /**
-   * Called by the module runner to retrieve information about the specified
-   * module. Internally calls `transformRequest` and wraps the result in the
-   * format that the module runner understands.
-   * This method is not meant to be called manually.
+   * 모듈 러너가 지정된 모듈의 정보를 가져올 때 호출됩니다.
+   * 내부적으로 `transformRequest`를 호출하고, 모듈 러너가 이해하는
+   * 형식으로 결과를 감쌉니다. 이 메서드는 직접 호출하기 위한 것이 아닙니다.
    */
   async fetchModule(
     id: string,
@@ -126,7 +125,7 @@ interface TransformResult {
 }
 ```
 
-Vite 서버의 환경 인스턴스는 `environment.transformRequest(url)` 메서드로 URL을 처리합니다. 이 함수는 플러그인 파이프라인을 사용해 `url`을 모듈 `id`로 해석하고, 로드한 뒤(파일 시스템에서 파일을 읽거나 가상 모듈을 구현하는 플러그인을 통해), 코드를 변환합니다. 모듈 변환 중에는 의존성 관계(`import` 구문)와 메타데이터를 분석하여 모듈 노드를 생성하거나 업데이트하고, 이를 환경 모듈 그래프에 기록합니다. 처리가 완료되면 변환 결과도 모듈에 저장됩니다.
+Vite 서버의 환경 인스턴스는 `environment.transformRequest(url)` 메서드로 URL을 처리합니다. 이 함수는 플러그인 파이프라인을 사용해 `url`을 모듈 `id`로 해석하고, 로드한 뒤(파일 시스템에서 파일을 읽거나 가상 모듈을 구현하는 플러그인을 통해), 코드를 변환합니다. 모듈 변환 중에는 디펜던시 관계(`import` 구문)와 메타데이터를 분석하여 모듈 노드를 생성하거나 업데이트하고, 이를 환경 모듈 그래프에 기록합니다. 처리가 완료되면 변환 결과도 모듈에 저장됩니다.
 
 :::info transformRequest 이름에 대해
 현재 제안 버전에서는 Vite API에 익숙한 사용자들이 쉽게 이해하고 논의할 수 있도록 `transformRequest(url)`와 `warmupRequest(url)`를 사용했습니다. 릴리스 전에 이름을 검토할 기회가 있을 것입니다. 예를 들어, Rollup 플러그인 훅인 `context.load(id)`를 참고해 `environment.processModule(url)` 또는 `environment.loadModule(url)`로 이름을 지을 수 있습니다. 현재로서는 기존 이름을 유지하고 이 논의를 나중으로 미루고자 합니다.
@@ -232,8 +231,8 @@ export class EnvironmentModuleGraph {
 ```ts
 export interface CachedFetchResult {
   /**
-   * If the module is cached in the runner, this confirms
-   * it was not invalidated on the server side.
+   * 모듈이 러너에 캐시되어 있다면, 서버 측에서 무효화되지 않았음을
+   * 확인합니다.
    */
   cache: true
 }
@@ -244,14 +243,15 @@ export interface CachedFetchResult {
 ```ts
 export interface ExternalFetchResult {
   /**
-   * The path to the externalized module starting with file://.
-   * By default this will be imported via a dynamic "import"
-   * instead of being transformed by Vite and loaded with the Vite runner.
+   * file://로 시작하는 외부화된 모듈 경로입니다.
+   * 기본적으로 이 모듈은 Vite가 변환해 Vite 러너로 로드하는 대신
+   * 동적 "import"로 import됩니다.
    */
   externalize: string
   /**
-   * Type of the module. Used to determine if the import statement is correct.
-   * For example, if Vite needs to throw an error if a variable is not actually exported.
+   * 모듈 타입입니다. import 문이 올바른지 판단하는 데 사용됩니다.
+   * 예를 들어 실제로 export되지 않은 변수를 Vite가 오류로 처리해야 하는지
+   * 판단할 때 사용됩니다.
    */
   type: 'module' | 'commonjs' | 'builtin' | 'network'
 }
@@ -264,26 +264,26 @@ export interface ExternalFetchResult {
 ```ts
 export interface ViteFetchResult {
   /**
-   * Code that will be evaluated by the Vite runner.
-   * By default this will be wrapped in an async function.
+   * Vite 러너가 평가할 코드입니다.
+   * 기본적으로 async 함수로 감싸집니다.
    */
   code: string
   /**
-   * File path of the module on disk.
-   * This will be resolved as import.meta.url/filename.
-   * Will be `null` for virtual modules.
+   * 디스크에 있는 모듈 파일 경로입니다.
+   * import.meta.url/filename으로 해석됩니다.
+   * 가상 모듈에서는 `null`입니다.
    */
   file: string | null
   /**
-   * Module ID in the server module graph.
+   * 서버 모듈 그래프 안의 모듈 ID입니다.
    */
   id: string
   /**
-   * Module URL used in the import.
+   * import에 사용된 모듈 URL입니다.
    */
   url: string
   /**
-   * Invalidate module on the client side.
+   * 클라이언트 측 모듈을 무효화합니다.
    */
   invalidate: boolean
 }

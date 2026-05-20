@@ -56,7 +56,7 @@ interface ViteHotContext {
 
 ```js
 if (import.meta.hot) {
-  // HMR code
+  // HMR 코드
 }
 ```
 
@@ -84,7 +84,7 @@ export const count = 1
 if (import.meta.hot) {
   import.meta.hot.accept((newModule) => {
     if (newModule) {
-      // newModule is undefined when SyntaxError happened
+      // SyntaxError가 발생하면 newModule은 undefined입니다.
       console.log('updated: count is now ', newModule.count)
     }
   })
@@ -118,7 +118,7 @@ Vite의 HMR은 처음에 불러온 모듈을 교체하지 않습니다: 만약�
 
 ## `hot.accept(deps, cb)` {#hot-accept-deps-cb}
 
-모듈은 자체적으로 리로딩을 하지 않고 직접적인 의존성으로 변경을 수락할 수 있습니다:
+모듈은 자체적으로 리로딩을 하지 않고 직접적인 디펜던시로 변경을 수락할 수 있습니다:
 
 ```js twoslash
 // @filename: /foo.d.ts
@@ -133,17 +133,17 @@ foo()
 
 if (import.meta.hot) {
   import.meta.hot.accept('./foo.js', (newFoo) => {
-    // the callback receives the updated './foo.js' module
+    // 콜백은 업데이트된 './foo.js' 모듈을 받습니다.
     newFoo?.foo()
   })
 
-  // Can also accept an array of dep modules:
+  // 디펜던시 모듈 배열도 받을 수 있습니다:
   import.meta.hot.accept(
     ['./foo.js', './bar.js'],
     ([newFooModule, newBarModule]) => {
-      // The callback receives an array where only the updated module is
-      // non null. If the update was not successful (syntax error for ex.),
-      // the array is empty
+      // 콜백은 업데이트된 모듈만
+      // null이 아닌 배열을 받습니다.
+      // 업데이트가 성공하지 못하면(예: 문법 오류) 배열은 비어 있습니다.
     },
   )
 }
@@ -162,7 +162,7 @@ setupSideEffect()
 
 if (import.meta.hot) {
   import.meta.hot.dispose((data) => {
-    // cleanup side effect
+    // 사이드 이펙트 정리
   })
 }
 ```
@@ -180,7 +180,7 @@ setupOrReuseSideEffect()
 
 if (import.meta.hot) {
   import.meta.hot.prune((data) => {
-    // cleanup side effect
+    // 사이드 이펙트 정리
   })
 }
 ```
@@ -197,7 +197,7 @@ import 'vite/client'
 // ok
 import.meta.hot.data.someValue = 'hello'
 
-// not supported
+// 지원되지 않음
 import.meta.hot.data = { someValue: 'hello' }
 ```
 
@@ -215,7 +215,7 @@ import.meta.hot.data = { someValue: 'hello' }
 import 'vite/client'
 // ---cut---
 import.meta.hot.accept((module) => {
-  // You may use the new module instance to decide whether to invalidate.
+  // 새 모듈 인스턴스를 사용해 무효화 여부를 결정할 수 있습니다.
   if (cannotHandleUpdate(module)) {
     import.meta.hot.invalidate()
   }

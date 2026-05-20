@@ -17,7 +17,7 @@
 
 Vite 6 이전에는 두 가지 환경(`client`와 `ssr`)만 있었기에, Vite API에서 현재 환경을 식별하기 위해서는 `ssr` 불리언 값이면 충분했습니다. 플러그인 훅은 마지막 옵션 매개변수로 `ssr` 불리언 값을 받았고, 여러 API에서도 모듈을 올바른 환경과 연결하기 위해 마지막 매개변수로 `ssr` 값을 옵션으로 받았습니다(예: `server.moduleGraph.getModuleByUrl(url, { ssr })`).
 
-이제 환경을 구성할 수 있게 되면서, 플러그인 내에서 환경 옵션과 인스턴스에 접근하는 방법이 통일되었습니다. 플러그인 훅에서는 `this.environment`로 환경에 접근할 수 있으며, `ssr` 불리언 값을 받던 API는 환경에 맞게 적절히 범위가 지정됩니다(예: `environment.moduleGraph.getModuleByUrl(url)`).
+이제 환경을 구성하면서, 플러그인 내에서 환경 옵션과 인스턴스에 접근하는 방법이 통일되었습니다. 플러그인 훅에서는 `this.environment`로 환경에 접근할 수 있으며, `ssr` 불리언 값을 받던 API는 환경에 맞게 적절히 범위가 지정됩니다(예: `environment.moduleGraph.getModuleByUrl(url)`).
 
 Vite 서버는 모든 환경이 공유하는 하나의 플러그인 파이프라인을 가지고 있습니다. 하지만 모듈을 처리할 때는 항상 특정 환경에 속하게 되며, 플러그인은 이 환경에 대한 정보를 `environment` 인스턴스를 통해 접근할 수 있습니다.
 
@@ -56,7 +56,7 @@ Vite 서버는 모든 환경이 공유하는 하나의 플러그인 파이프라
 
 ```ts
   configEnvironment(name: string, options: EnvironmentOptions) {
-    // add "workerd" condition to the rsc environment
+    // rsc 환경에 "workerd" 조건을 추가합니다.
     if (name === 'rsc') {
       return {
         resolve: {
@@ -173,22 +173,22 @@ function PerEnvironmentCountTransformedModulesPlugin() {
 
 ```js
 const UnoCssPlugin = () => {
-  // shared global state
+  // 공유 전역 상태
   return {
     buildStart() {
-      // init per-environment state with WeakMap<Environment,Data>
-      // using this.environment
+      // WeakMap<Environment,Data>와 this.environment를 사용해
+      // 환경별 상태를 초기화합니다.
     },
     configureServer() {
-      // use global hooks normally
+      // 전역 훅을 일반적으로 사용합니다.
     },
     applyToEnvironment(environment) {
-      // return true if this plugin should be active in this environment,
-      // or return a new plugin to replace it.
-      // if the hook is not used, the plugin is active in all environments
+      // 이 환경에서 플러그인을 활성화해야 한다면 true를 반환하고,
+      // 대체할 새 플러그인을 반환할 수도 있습니다.
+      // 훅을 사용하지 않으면 플러그인은 모든 환경에서 활성화됩니다.
     },
     resolveId(id, importer) {
-      // only called for environments this plugin apply to
+      // 이 플러그인이 적용되는 환경에서만 호출됩니다.
     },
   }
 }
@@ -229,7 +229,7 @@ export default defineConfig({
 
 ## 애플리케이션-플러그인 통신 {#application-plugin-communication}
 
-`environment.hot`은 플러그인이 특정 환경의 애플리케이션 측 코드와 통신할 수 있게 합니다. 이는 [클라이언트-서버 통신 기능](/guide/api-plugin#client-server-communication)에 해당하지만, 클라이언트 환경이 아닌 다른 환경도 지원합니다.
+`environment.hot`은 플러그인이 특정 환경의 애플리케이션 측 코드와 통신하도록 합니다. 이는 [클라이언트-서버 통신 기능](/guide/api-plugin#client-server-communication)에 해당하지만, 클라이언트 환경이 아닌 다른 환경도 지원합니다.
 
 :::warning 참고
 
@@ -252,12 +252,12 @@ export default defineConfig({
 ```js
 configureServer(server) {
   server.environments.ssr.hot.on('my:greetings', (data, client) => {
-    // do something with the data,
-    // and optionally send a response to that application instance
+    // 데이터로 작업을 수행하고,
+    // 필요하다면 해당 애플리케이션 인스턴스에 응답을 보냅니다.
     client.send('my:foo:reply', `Hello from server! You said: ${data}`)
   })
 
-  // broadcast a message to all application instances
+  // 모든 애플리케이션 인스턴스에 메시지를 브로드캐스트합니다.
   server.environments.ssr.hot.send('my:foo', 'Hello from server!')
 }
 ```
@@ -276,7 +276,7 @@ Vite 6 이전에는 플러그인 파이프라인이 개발과 빌드 단계에�
 - **개발 단계:** 플러그인이 모든 환경에서 공유됨
 - **빌드 단계:** 각 환경마다 플러그인이 격리됨(클라이언트를 위한 `vite build` 명령 후, SSR을 위한 `vite build --ssr` 명령을 실행하기에, 별도 프로세스에서 빌드가 수행되어 플러그인도 환경별로 격리)
 
-따라서 프레임워크는 `client` 빌드와 `ssr` 빌드 간 정보를 공유하기 위해 매니페스트 파일을 파일 시스템에 작성해 공유해야 했습니다. Vite 6에서는 모든 환경에 대한 빌드를 단일 프로세스에서 수행하므로, 플러그인 파이프라인과 환경 간 통신 시 개발 단계에서와 같이 메모리를 이용할 수 있게 되었습니다.
+따라서 프레임워크는 `client` 빌드와 `ssr` 빌드 간 정보를 공유하기 위해 매니페스트 파일을 파일 시스템에 작성해 공유해야 했습니다. Vite 6에서는 모든 환경에 대한 빌드를 단일 프로세스에서 수행하므로, 플러그인 파이프라인과 환경 간 통신 시 개발 단계에서와 같이 메모리를 이용할 수 있습니다.
 
 향후 메이저 릴리즈에서는 완전한 일치(Alignment)를 달성할 수 있을 것입니다:
 
@@ -290,13 +290,13 @@ Vite 6 이전에는 플러그인 파이프라인이 개발과 빌드 단계에�
 
 ```js
 function myPlugin() {
-  // Share state among all environments in dev and build
+  // dev와 build의 모든 환경에서 상태를 공유합니다.
   const sharedState = ...
   return {
     name: 'shared-plugin',
     transform(code, id) { ... },
 
-    // Opt-in into a single instance for all environments
+    // 모든 환경에 대해 단일 인스턴스를 사용하도록 옵트인합니다.
     sharedDuringBuild: true,
   }
 }

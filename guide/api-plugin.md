@@ -11,7 +11,7 @@ Vite는 기본적으로 검증된 패턴을 제공하려고 합니다. 따라서
 플러그인을 만들 때는 `vite.config.js` 안에 인라인으로 작성할 수 있습니다. 이를 위해 새 패키지를 만들 필요는 없습니다. 어떤 플러그인이 여러 프로젝트에서 유용하다는 것을 확인했다면, [생태계](https://chat.vite.dev)의 다른 사람들을 돕기 위해 공유하는 것을 고려해 보세요.
 
 ::: tip
-플러그인을 학습하거나, 디버깅하거나, 작성할 때는 프로젝트에 [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect)를 포함하는 것을 권장합니다. 이 플러그인은 Vite 플러그인의 중간 상태를 검사할 수 있게 합니다. 설치 후 `localhost:5173/__inspect/`에 접속하면 프로젝트의 모듈과 변환 스택을 검사할 수 있습니다. 설치 방법은 [vite-plugin-inspect 문서](https://github.com/antfu/vite-plugin-inspect)를 확인하세요.
+플러그인을 학습하거나, 디버깅하거나, 작성할 때는 프로젝트에 [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect)를 포함하는 것을 권장합니다. 이 플러그인으로 Vite 플러그인의 중간 상태를 검사할 수 있습니다. 설치 후 `localhost:5173/__inspect/`에 접속하면 프로젝트의 모듈과 변환 스택을 검사할 수 있습니다. 설치 방법은 [vite-plugin-inspect 문서](https://github.com/antfu/vite-plugin-inspect)를 확인하세요.
 ![vite-plugin-inspect](../images/vite-plugin-inspect.webp)
 :::
 
@@ -56,7 +56,7 @@ export default defineConfig({
 `plugins` 항목은 여러 플러그인을 하나의 요소로 포함할 수도 있습니다. 이는 특정 프레임워크를 타깃으로 여러 플러그인을 사용하는 경우와 같이 복잡한 기능을 구현하는 데 유용합니다. 이 때 플러그인 배열은 자동으로 병합됩니다.
 
 ```js
-// framework-plugin
+// 프레임워크 플러그인
 import frameworkRefresh from 'vite-plugin-framework-refresh'
 import frameworkDevtools from 'vite-plugin-framework-devtools'
 
@@ -493,9 +493,9 @@ function versionCheckPlugin(): Plugin {
     name: 'version-check',
     buildStart() {
       if (this.meta.rolldownVersion) {
-        // only do something if running on a Rolldown powered Vite
+        // Rolldown 기반 Vite에서 실행 중일 때만 작업합니다.
       } else {
-        // do something else if running on a Rollup powered Vite
+        // Rollup 기반 Vite에서 실행 중이면 다른 작업을 합니다.
       }
     },
   }
@@ -573,7 +573,7 @@ function myPlugin() {
 
 ```js
 apply(config, { command }) {
-  // apply only on build but not for SSR
+  // SSR이 아닌 빌드에만 적용합니다.
   return command === 'build' && !config.build.ssr
 }
 ```
@@ -609,7 +609,7 @@ export default defineConfig({
 
 ## 경로 정규화 {#path-normalization}
 
-Vite는 Windows에서도 POSIX 구분 기호( / )를 사용할 수 있도록 파일의 ID를 확인할 때 경로를 같이 정규화합니다. 반면 Rollup은 기본적으로 파일의 경로를 그대로 유지하기에, Windows에서 파일의 ID는 win32 구분 기호( \\ )를 포함하고 있습니다. 따라서 Rollup 플러그인은 이 구분 기호를 POSIX로 변환하는 `@rollup/pluginutils`의 [`normalizePath` 유틸리티 함수](https://github.com/rollup/plugins/tree/master/packages/pluginutils#normalizepath)를 사용합니다. 이 덕분에 Rollup 플러그인이 Vite에서 사용될 때도 파일의 ID에 대한 `include` 및 `exclude` 패턴 및 이와 유사한 경로 관련 작업이 올바르게 동작할 수 있게 됩니다.
+Vite는 Windows에서도 POSIX 구분 기호( / )를 사용할 수 있도록 파일의 ID를 확인할 때 경로를 같이 정규화합니다. 반면 Rollup은 기본적으로 파일의 경로를 그대로 유지하기에, Windows에서 파일의 ID는 win32 구분 기호( \\ )를 포함하고 있습니다. 따라서 Rollup 플러그인은 이 구분 기호를 POSIX로 변환하는 `@rollup/pluginutils`의 [`normalizePath` 유틸리티 함수](https://github.com/rollup/plugins/tree/master/packages/pluginutils#normalizepath)를 사용합니다. 이 덕분에 Rollup 플러그인이 Vite에서 사용될 때도 파일의 ID에 대한 `include` 및 `exclude` 패턴과 비슷한 경로 관련 작업이 올바르게 동작합니다.
 
 따라서 만약 새로이 Vite 플러그인을 작성하는 경우, 파일의 ID와 실제 경로를 비교할 때 먼저 POSIX 구분 기호를 사용하도록 경로를 정규화해줘야 합니다. 이는 `vite` 모듈의 `normalizePath` 유틸리티 함수를 이용할 수 있습니다.
 
@@ -636,13 +636,13 @@ export default function myPlugin() {
 
   return {
     name: 'my-plugin',
-    // Example: only call transform for .js files
+    // 예: .js 파일에 대해서만 transform을 호출합니다.
     transform: {
       filter: {
         id: jsFileRegex,
       },
       handler(code, id) {
-        // Additional check for backward compatibility
+        // 하위 호환성을 위한 추가 검사
         if (!jsFileRegex.test(id)) return null
 
         return {
@@ -690,7 +690,7 @@ export default defineConfig({
 ```ts twoslash
 import 'vite/client'
 // ---cut---
-// client side
+// 클라이언트 측
 if (import.meta.hot) {
   import.meta.hot.on('my:greetings', (data) => {
     console.log(data.msg) // hello
@@ -703,7 +703,7 @@ if (import.meta.hot) {
 클라이언트에서 서버로 이벤트를 보낼 때는 [`hot.send`](/guide/api-hmr.html#hot-send-event-payload)를 사용할 수 있습니다:
 
 ```ts
-// client side
+// 클라이언트 측
 if (import.meta.hot) {
   import.meta.hot.send('my:from-client', { msg: 'Hey!' })
 }
@@ -719,7 +719,7 @@ export default defineConfig({
       configureServer(server) {
         server.ws.on('my:from-client', (data, client) => {
           console.log('Message from client:', data.msg) // Hey!
-          // reply only to the client (if needed)
+          // 필요한 경우 해당 클라이언트에만 응답합니다.
           client.send('my:ack', { msg: 'Hi! I got your message!' })
         })
       },
@@ -742,7 +742,7 @@ import 'vite/types/customEvent.d.ts'
 declare module 'vite/types/customEvent.d.ts' {
   interface CustomEventMap {
     'custom:foo': { msg: string }
-    // 'event-key': payload
+    // 'event-key': 페이로드
   }
 }
 ```
@@ -760,9 +760,9 @@ declare module 'vite/types/customEvent.d.ts' {
 // ---cut---
 type CustomFooPayload = InferCustomEventPayload<'custom:foo'>
 import.meta.hot?.on('custom:foo', (payload) => {
-  // The type of payload will be { msg: string }
+  // payload 타입은 { msg: string }입니다.
 })
 import.meta.hot?.on('unknown:event', (payload) => {
-  // The type of payload will be any
+  // payload 타입은 any입니다.
 })
 ```

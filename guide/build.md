@@ -153,16 +153,16 @@ export default defineConfig({
     lib: {
       entry: resolve(import.meta.dirname, 'lib/main.js'),
       name: 'MyLib',
-      // the proper extensions will be added
+      // 적절한 확장자가 추가됩니다.
       fileName: 'my-lib',
     },
     rolldownOptions: {
-      // make sure to externalize deps that shouldn't be bundled
-      // into your library
+      // 라이브러리에 번들링하면 안 되는 디펜던시를
+      // 반드시 외부화하세요.
       external: ['vue'],
       output: {
-        // Provide global variables to use in the UMD build
-        // for externalized deps
+        // 외부화된 디펜던시에 대해 UMD 빌드에서 사용할
+        // 전역 변수를 제공합니다.
         globals: {
           vue: 'Vue',
         },
@@ -186,12 +186,12 @@ export default defineConfig({
       name: 'MyLib',
     },
     rolldownOptions: {
-      // make sure to externalize deps that shouldn't be bundled
-      // into your library
+      // 라이브러리에 번들링하면 안 되는 디펜던시를
+      // 반드시 외부화하세요.
       external: ['vue'],
       output: {
-        // Provide global variables to use in the UMD build
-        // for externalized deps
+        // 외부화된 디펜던시에 대해 UMD 빌드에서 사용할
+        // 전역 변수를 제공합니다.
         globals: {
           vue: 'Vue',
         },

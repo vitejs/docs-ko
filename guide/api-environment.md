@@ -85,12 +85,12 @@ interface EnvironmentOptions {
 }
 ```
 
-`EnvironmentOptions` 인터페이스를 확장한 `UserConfig` 인터페이스는, `environments` 옵션을 통해 클라이언트 외 다른 환경에 대한 기본값을 구성할 수 있게 합니다. 개발 중에는 `client`와 `ssr` 서버 환경이 항상 존재하며, 이를 통해 `server.ssrLoadModule(url)`과 `server.moduleGraph`에 대한 하위 호환성을 유지할 수 있습니다. 빌드 중에는 `client` 환경이 항상 존재하며, `ssr` 환경은 명시적으로 구성한 경우에만 존재합니다(`environments.ssr` 또는 하위 호환성용 `build.ssr`이 사용됩니다). SSR 환경에 대한 이름은 `ssr` 외 `server` 등으로도 지정이 가능합니다.
+`EnvironmentOptions` 인터페이스를 확장한 `UserConfig` 인터페이스는, `environments` 옵션을 통해 클라이언트 외 다른 환경에 대한 기본값을 구성합니다. 개발 중에는 `client`와 `ssr` 서버 환경이 항상 존재하며, 이를 통해 `server.ssrLoadModule(url)`과 `server.moduleGraph`에 대한 하위 호환성을 유지할 수 있습니다. 빌드 중에는 `client` 환경이 항상 존재하며, `ssr` 환경은 명시적으로 구성한 경우에만 존재합니다(`environments.ssr` 또는 하위 호환성용 `build.ssr`이 사용됩니다). SSR 환경 이름은 `ssr` 외 `server` 등으로도 지정할 수 있습니다.
 
 ```ts
 interface UserConfig extends EnvironmentOptions {
   environments: Record<string, EnvironmentOptions>
-  // other options
+  // 기타 옵션
 }
 ```
 

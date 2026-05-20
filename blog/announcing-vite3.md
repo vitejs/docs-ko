@@ -33,7 +33,7 @@ _2022년 7월 23일_ - [Vite 4.0 발표](./announcing-vite4.md)도 확인해보�
 
 ![Vite 3 발표 커버 이미지](/og-image-announcing-vite3.webp)
 
-오늘, v2 출시로부터 16개월 후 Vite 3의 릴리스를 발표하게 되어 기쁩니다. 저희는 [Node.js의 EOL](https://nodejs.org/en/about/releases/)에 맞춰 최소 매년 새로운 Vite 메이저 버전을 릴리스하기로 결정했으며, 생태계 프로젝트들을 위한 간단한 마이그레이션 가이드와 함께 Vite의 API를 정기적으로 검토할 기회를 갖기로 했습니다.
+오늘, v2 출시로부터 16개월 후 Vite 3의 릴리스를 발표하게 되어 기쁩니다. Vite 팀은 [Node.js의 EOL](https://nodejs.org/en/about/releases/)에 맞춰 최소 매년 새로운 Vite 메이저 버전을 릴리스하기로 결정했으며, 생태계 프로젝트들을 위한 간단한 마이그레이션 가이드와 함께 Vite의 API를 정기적으로 검토할 기회를 갖기로 했습니다.
 
 빠른 링크:
 
@@ -122,12 +122,12 @@ Vite 2의 문제점 중 하나는 프록시 뒤에서 실행할 때 서버를 �
 
 ### 콜드 스타트 개선사항 {#cold-start-improvements}
 
-Vite는 이제 초기 정적으로 가져온 모듈을 크롤링하는 동안 플러그인이 의존성을 주입하더라도, 콜드 스타트 시 전체 페이지 리로드가 발생하지 않도록 방지합니다([#8869](https://github.com/vitejs/vite/issues/8869)).
+Vite는 이제 초기 정적으로 가져온 모듈을 크롤링하는 동안 플러그인이 디펜던시를 주입하더라도, 콜드 스타트 시 전체 페이지 리로드가 발생하지 않도록 방지합니다([#8869](https://github.com/vitejs/vite/issues/8869)).
 
 <details>
   <summary><b>자세히 알아보기</b></summary>
 
-Vite 2.9에서는 스캐너와 옵티마이저가 모두 백그라운드에서 실행되었습니다. 스캐너가 모든 의존성을 찾는 최선의 시나리오에서는 콜드 스타트에서 리로드가 필요하지 않았습니다. 하지만 스캐너가 의존성을 놓친 경우, 새로운 최적화 단계와 그 다음 리로드가 필요했습니다. Vite는 v2.9에서 새로 최적화된 청크가 브라우저가 가진 것과 호환되는지 감지하여 이러한 리로드 중 일부를 피할 수 있었습니다. 하지만 공통 의존성이 있는 경우, 하위 청크가 변경될 수 있어 중복된 상태를 피하기 위해 리로드가 필요했습니다. Vite 3에서는 정적 가져오기의 크롤링이 완료될 때까지 최적화된 의존성이 브라우저에 전달되지 않습니다. 누락된 의존성이 있는 경우(예: 플러그인에 의해 주입된 경우) 빠른 최적화 단계가 실행되고, 그 후에만 번들된 의존성이 전송됩니다. 따라서 이러한 경우에는 더 이상 페이지 리로드가 필요하지 않습니다.
+Vite 2.9에서는 스캐너와 옵티마이저가 모두 백그라운드에서 실행되었습니다. 스캐너가 모든 디펜던시를 찾는 최선의 시나리오에서는 콜드 스타트에서 리로드가 필요하지 않았습니다. 하지만 스캐너가 디펜던시를 놓친 경우, 새로운 최적화 단계와 그 다음 리로드가 필요했습니다. Vite는 v2.9에서 새로 최적화된 청크가 브라우저가 가진 것과 호환되는지 감지하여 이러한 리로드 중 일부를 피할 수 있었습니다. 하지만 공통 디펜던시가 있는 경우, 하위 청크가 변경될 수 있어 중복된 상태를 피하기 위해 리로드가 필요했습니다. Vite 3에서는 정적 가져오기의 크롤링이 완료될 때까지 최적화된 디펜던시가 브라우저에 전달되지 않습니다. 누락된 디펜던시가 있는 경우(예: 플러그인에 의해 주입된 경우) 빠른 최적화 단계가 실행되고, 그 후에만 번들된 디펜던시가 전송됩니다. 따라서 이러한 경우에는 더 이상 페이지 리로드가 필요하지 않습니다.
 
 </details>
 
@@ -185,7 +185,7 @@ init().then((instance) => {
 
 ### 기본적으로 ESM SSR 빌드 {#esm-ssr-build-by-default}
 
-생태계의 대부분 SSR 프레임워크는 이미 ESM 빌드를 사용하고 있었습니다. 따라서 Vite 3는 ESM을 SSR 빌드의 기본 형식으로 만듭니다. 이를 통해 이전의 [SSR 외부화 휴리스틱](https://vite.dev/guide/ssr.html#ssr-externals)을 간소화하여 기본적으로 의존성을 외부화할 수 있습니다.
+생태계의 대부분 SSR 프레임워크는 이미 ESM 빌드를 사용하고 있었습니다. 따라서 Vite 3는 ESM을 SSR 빌드의 기본 형식으로 만듭니다. 이를 통해 이전의 [SSR 외부화 휴리스틱](https://vite.dev/guide/ssr.html#ssr-externals)을 간소화하여 기본적으로 디펜던시를 외부화할 수 있습니다.
 
 ### 개선된 상대 Base 지원 {#improved-relative-base-support}
 
@@ -197,19 +197,19 @@ Vite 3는 이제 상대 base(`base: ''` 사용)를 적절히 지원하여 빌드
 
 이것만으로는 충분하지 않은 다른 배포 시나리오들이 있습니다. 예를 들어, 생성된 해시된 에셋을 공용 파일과 다른 CDN에 배포해야 하는 경우, 빌드 시점에 경로 생성에 대한 더 세밀한 제어가 필요합니다. Vite 3는 빌드된 파일 경로를 수정하는 실험적 API를 제공합니다. 자세한 내용은 [빌드 고급 Base 옵션](/guide/build.html#advanced-base-options)을 확인하세요.
 
-### 빌드 시점의 Esbuild 의존성 최적화 (실험적) {#esbuild-deps-optimization-at-build-time-experimental}
+### 빌드 시점의 Esbuild 디펜던시 최적화 (실험적) {#esbuild-deps-optimization-at-build-time-experimental}
 
-개발과 빌드 시점의 주요 차이점 중 하나는 Vite가 의존성을 처리하는 방식입니다. 빌드 시점에는 [`@rollup/plugin-commonjs`](https://github.com/rollup/plugins/tree/master/packages/commonjs)를 사용하여 CJS 전용 의존성(React와 같은)을 가져올 수 있습니다. 개발 서버를 사용할 때는 대신 esbuild를 사용하여 의존성을 사전 번들링하고 최적화하며, CJS 의존성을 가져오는 사용자 코드를 변환하는 동안 인라인 상호 운용 스키마가 적용됩니다. Vite 3 개발 중에 [빌드 시점에도 esbuild를 사용하여 의존성을 최적화](https://v3.vite.dev/guide/migration.html#using-esbuild-deps-optimization-at-build-time)할 수 있도록 필요한 변경사항을 도입했습니다. 그러면 [`@rollup/plugin-commonjs`](https://github.com/rollup/plugins/tree/master/packages/commonjs)를 피할 수 있어 개발과 빌드 시점이 동일한 방식으로 작동하게 됩니다.
+개발과 빌드 시점의 주요 차이점 중 하나는 Vite가 디펜던시를 처리하는 방식입니다. 빌드 시점에는 [`@rollup/plugin-commonjs`](https://github.com/rollup/plugins/tree/master/packages/commonjs)를 사용하여 CJS 전용 디펜던시(React와 같은)를 가져올 수 있습니다. 개발 서버를 사용할 때는 대신 esbuild를 사용하여 디펜던시를 사전 번들링하고 최적화하며, CJS 디펜던시를 가져오는 사용자 코드를 변환하는 동안 인라인 상호 운용 스키마가 적용됩니다. Vite 3 개발 중에 [빌드 시점에도 esbuild를 사용하여 디펜던시를 최적화](https://v3.vite.dev/guide/migration.html#using-esbuild-deps-optimization-at-build-time)할 수 있도록 필요한 변경사항을 도입했습니다. 그러면 [`@rollup/plugin-commonjs`](https://github.com/rollup/plugins/tree/master/packages/commonjs)를 피할 수 있어 개발과 빌드 시점이 동일한 방식으로 작동하게 됩니다.
 
-Rollup v3가 앞으로 몇 달 안에 출시될 예정이고, 우리는 또 다른 Vite 메이저로 후속 작업을 진행할 예정이므로, v3 범위를 줄이고 Vite와 생태계가 빌드 시점의 새로운 CJS 상호 운용 접근법과 관련된 잠재적 문제를 해결할 시간을 더 주기 위해 이 모드를 선택 사항으로 만들기로 결정했습니다. 프레임워크들은 Vite 4 이전에 자신들의 속도에 맞춰 빌드 시점에 esbuild 의존성 최적화를 기본으로 사용하도록 전환할 수 있습니다.
+Rollup v3가 앞으로 몇 달 안에 출시될 예정이고, 우리는 또 다른 Vite 메이저로 후속 작업을 진행할 예정이므로, v3 범위를 줄이고 Vite와 생태계가 빌드 시점의 새로운 CJS 상호 운용 접근법과 관련된 잠재적 문제를 해결할 시간을 더 주기 위해 이 모드를 선택 사항으로 만들기로 결정했습니다. 프레임워크들은 Vite 4 이전에 자신들의 속도에 맞춰 빌드 시점에 esbuild 디펜던시 최적화를 기본으로 사용하도록 전환할 수 있습니다.
 
 ### HMR 부분 수용 (실험적) {#hmr-partial-accept-experimental}
 
-[HMR 부분 수용](https://github.com/vitejs/vite/pull/7324)에 대한 옵트인 지원이 있습니다. 이 기능은 동일한 모듈에서 여러 바인딩을 내보내는 프레임워크 컴포넌트에 대해 더 세밀한 HMR을 가능하게 할 수 있습니다. [이 제안에 대한 토론](https://github.com/vitejs/vite/discussions/7309)에서 자세히 알아볼 수 있습니다.
+[HMR 부분 수용](https://github.com/vitejs/vite/pull/7324)에 대한 옵트인 지원이 있습니다. 이 기능은 동일한 모듈에서 여러 바인딩을 내보내는 프레임워크 컴포넌트에 대해 더 세밀한 HMR을 제공할 수 있습니다. [이 제안에 대한 토론](https://github.com/vitejs/vite/discussions/7309)에서 자세히 알아볼 수 있습니다.
 
 ## 번들 크기 감소 {#bundle-size-reduction}
 
-Vite는 배포 및 설치 용량을 중요하게 생각합니다. 새 앱의 빠른 설치는 하나의 기능입니다. Vite는 대부분의 의존성을 번들링하고 가능한 곳에서는 현대적이고 가벼운 대안을 사용하려고 합니다. 이러한 지속적인 목표를 계속하여, Vite 3 배포 용량은 v2보다 30% 작습니다.
+Vite는 배포 및 설치 용량을 중요하게 생각합니다. 새 앱의 빠른 설치는 하나의 기능입니다. Vite는 대부분의 디펜던시를 번들링하고 가능한 곳에서는 현대적이고 가벼운 대안을 사용하려고 합니다. 이러한 지속적인 목표를 계속하여, Vite 3 배포 용량은 v2보다 30% 작습니다.
 
 |             | 배포 용량 | 설치 용량 |
 | ----------- | :----------: | :----------: |
@@ -217,7 +217,7 @@ Vite는 배포 및 설치 용량을 중요하게 생각합니다. 새 앱의 빠
 | Vite 3.0.0  |    3.05MB    |    17.8MB    |
 | 감소   |     -30%     |     -7%      |
 
-부분적으로, 이 감소는 대부분의 사용자가 필요로 하지 않는 일부 의존성을 선택 사항으로 만든 것으로 가능했습니다. 먼저, [Terser](https://github.com/terser/terser)는 더 이상 기본적으로 설치되지 않습니다. 이 의존성은 Vite 2에서 이미 esbuild를 JS와 CSS 모두의 기본 미니파이어로 만들었기 때문에 더 이상 필요하지 않았습니다. `build.minify: 'terser'`를 사용한다면 설치해야 합니다(`npm add -D terser`). 또한 [node-forge](https://github.com/digitalbazaar/forge)를 모노레포에서 제거하고, 자동 https 인증서 생성 지원을 새로운 플러그인으로 구현했습니다: [`@vitejs/plugin-basic-ssl`](https://v3.vite.dev/guide/migration.html#automatic-https-certificate-generation). 이 기능은 로컬 저장소에 추가되지 않는 신뢰할 수 없는 인증서만 생성하므로, 추가된 크기를 정당화하지 못했습니다.
+부분적으로, 이 감소는 대부분의 사용자가 필요로 하지 않는 일부 디펜던시를 선택 사항으로 만든 것으로 가능했습니다. 먼저, [Terser](https://github.com/terser/terser)는 더 이상 기본적으로 설치되지 않습니다. 이 디펜던시는 Vite 2에서 이미 esbuild를 JS와 CSS 모두의 기본 미니파이어로 만들었기 때문에 더 이상 필요하지 않았습니다. `build.minify: 'terser'`를 사용한다면 설치해야 합니다(`npm add -D terser`). 또한 [node-forge](https://github.com/digitalbazaar/forge)를 모노레포에서 제거하고, 자동 https 인증서 생성 지원을 새로운 플러그인으로 구현했습니다: [`@vitejs/plugin-basic-ssl`](https://v3.vite.dev/guide/migration.html#automatic-https-certificate-generation). 이 기능은 로컬 저장소에 추가되지 않는 신뢰할 수 없는 인증서만 생성하므로, 추가된 크기를 정당화하지 못했습니다.
 
 ## 버그 수정 {#bug-fixing}
 

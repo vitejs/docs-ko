@@ -31,7 +31,7 @@ _2024년 2월 8일_
 
 ![Vite 5.1 발표 커버 이미지](/og-image-announcing-vite5-1.webp)
 
-Vite 5는 지난 11월에 [출시되었으며](./announcing-vite5.md), Vite와 생태계에 또 다른 큰 도약을 의미했습니다. 몇 주 전에는 주간 npm 다운로드 1천만 건과 Vite 저장소 기여자 900명을 축하했습니다. 오늘, 저희는 Vite 5.1의 출시를 발표하게 되어 기쁩니다.
+Vite 5는 지난 11월에 [출시되었으며](./announcing-vite5.md), Vite와 생태계에 또 다른 큰 도약을 의미했습니다. 몇 주 전에는 주간 npm 다운로드 1천만 건과 Vite 저장소 기여자 900명을 축하했습니다. 오늘 Vite 5.1의 출시를 발표하게 되어 기쁩니다.
 
 빠른 링크: [문서](/), [변경 사항](https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md#510-2024-02-08)
 
@@ -41,11 +41,11 @@ StackBlitz에서 Vite 5.1을 온라인으로 체험해보세요: [vanilla](https
 
 Vite를 처음 사용하신다면, 먼저 [시작하기](/guide/) 및 [기능](/guide/features) 가이드를 읽어보시기 바랍니다.
 
-최신 소식을 받아보시려면 [X](https://x.com/vite_js) 또는 [Mastodon](https://webtoo.ls/@vite)에서 저희를 팔로우해주세요.
+최신 소식을 받아보시려면 [X](https://x.com/vite_js) 또는 [Mastodon](https://webtoo.ls/@vite)에서 Vite를 팔로우해주세요.
 
 ## Vite Runtime API {#vite-runtime-api}
 
-Vite 5.1은 새로운 Vite Runtime API에 대한 실험적 지원을 추가합니다. 이는 Vite 플러그인으로 먼저 처리하여 모든 코드를 실행할 수 있게 해줍니다. 런타임 구현이 서버에서 분리되어 있기 때문에 `server.ssrLoadModule`과는 다릅니다. 이를 통해 라이브러리와 프레임워크 개발자들이 서버와 런타임 간에 자체적인 통신 계층을 구현할 수 있습니다. 이 새로운 API는 안정화되면 Vite의 현재 SSR 프리미티브를 대체할 예정입니다.
+Vite 5.1은 새로운 Vite Runtime API에 대한 실험적 지원을 추가합니다. 이 API는 모든 코드를 먼저 Vite 플러그인으로 처리한 뒤 실행합니다. 런타임 구현이 서버에서 분리되어 있기 때문에 `server.ssrLoadModule`과는 다릅니다. 이를 통해 라이브러리와 프레임워크 개발자들이 서버와 런타임 간에 자체적인 통신 계층을 구현할 수 있습니다. 이 새로운 API는 안정화되면 Vite의 현재 SSR 프리미티브를 대체할 예정입니다.
 
 새로운 API는 많은 이점을 제공합니다:
 
@@ -84,7 +84,7 @@ Vite 5.0에서는 순환 import 내의 수락된 모듈이 클라이언트에서
 
 ## 성능 개선 {#performance-improvements}
 
-Vite는 각 릴리스마다 계속 빨라지고 있으며, Vite 5.1은 성능 개선으로 가득합니다. 저희는 [vite-dev-server-perf](https://github.com/yyx990803/vite-dev-server-perf)를 사용하여 Vite 4.0부터 모든 마이너 버전에 대해 10K 모듈(25단계 깊이 트리)의 로딩 시간을 측정했습니다. 이는 Vite의 번들 없는 접근 방식의 효과를 측정하는 좋은 벤치마크입니다. 각 모듈은 카운터와 트리의 다른 파일에 대한 import를 가진 작은 TypeScript 파일이므로, 이는 주로 개별 모듈로 요청을 처리하는 데 걸리는 시간을 측정합니다. Vite 4.0에서는 10K 모듈을 로드하는 데 M1 MAX에서 8초가 걸렸습니다. [성능에 집중한 Vite 4.3에서 획기적인 발전](./announcing-vite4-3.md)이 있었고, 6.35초에 로드할 수 있었습니다. Vite 5.1에서는 또 다른 성능 도약을 이뤄냈습니다. Vite는 이제 10K 모듈을 5.35초에 서빙합니다.
+Vite는 각 릴리스마다 계속 빨라지고 있으며, Vite 5.1은 성능 개선으로 가득합니다. Vite 팀은 [vite-dev-server-perf](https://github.com/yyx990803/vite-dev-server-perf)를 사용하여 Vite 4.0부터 모든 마이너 버전에 대해 10K 모듈(25단계 깊이 트리)의 로딩 시간을 측정했습니다. 이는 Vite의 번들 없는 접근 방식의 효과를 측정하는 좋은 벤치마크입니다. 각 모듈은 카운터와 트리의 다른 파일에 대한 import를 가진 작은 TypeScript 파일이므로, 이는 주로 개별 모듈로 요청을 처리하는 데 걸리는 시간을 측정합니다. Vite 4.0에서는 10K 모듈을 로드하는 데 M1 MAX에서 8초가 걸렸습니다. [성능에 집중한 Vite 4.3에서 획기적인 발전](./announcing-vite4-3.md)이 있었고, 6.35초에 로드할 수 있었습니다. Vite 5.1에서는 또 다른 성능 도약을 이뤄냈습니다. Vite는 이제 10K 모듈을 5.35초에 서빙합니다.
 
 ![Vite 10K 모듈 로딩 시간 진행 상황](../images/vite5-1-10K-modules-loading-time.webp)
 
@@ -103,7 +103,7 @@ Vite는 이제 스레드에서 CSS 전처리기를 실행하는 옵트인 지원
 
 ### 서버 콜드 스타트를 개선하는 새로운 옵션 {#new-options-to-improve-server-cold-starts}
 
-대규모 프로젝트에서 도움이 될 수 있는 deps 최적화를 위한 새로운 전략으로 전환하기 위해 `optimizeDeps.holdUntilCrawlEnd: false`를 설정할 수 있습니다. 저희는 향후 이 전략을 기본값으로 전환하는 것을 고려하고 있습니다. [피드백 제공하기](https://github.com/vitejs/vite/discussions/15834). ([#15244](https://github.com/vitejs/vite/issues/15244))
+대규모 프로젝트에서 도움이 될 수 있는 deps 최적화를 위한 새로운 전략으로 전환하기 위해 `optimizeDeps.holdUntilCrawlEnd: false`를 설정할 수 있습니다. 향후 이 전략을 기본값으로 전환하는 것을 고려하고 있습니다. [피드백 제공하기](https://github.com/vitejs/vite/discussions/15834). ([#15244](https://github.com/vitejs/vite/issues/15244))
 
 ### 캐시된 검사로 더 빠른 리졸빙 {#faster-resolving-with-cached-checks}
 
@@ -123,11 +123,11 @@ Vite는 이제 스레드에서 CSS 전처리기를 실행하는 옵트인 지원
 
 ### 실험적 빌드 타임 사전 번들링 제거 {#removed-experimental-build-time-pre-bundling}
 
-Vite 3에서 추가된 실험적 기능인 빌드 타임 사전 번들링이 제거되었습니다. Rollup 4가 파서를 네이티브로 전환하고 Rolldown이 작업 중인 상황에서, 이 기능의 성능과 dev-vs-build 불일치 스토리가 더 이상 유효하지 않습니다. 저희는 dev/build 일관성을 계속 개선하고 싶으며, "개발 중 사전 번들링"과 "프로덕션 빌드"에 Rolldown을 사용하는 것이 앞으로 더 나은 선택이라고 결론지었습니다. Rolldown은 또한 빌드 중 deps 사전 번들링보다 훨씬 더 효율적인 방식으로 캐싱을 구현할 수도 있습니다. 참조 ([#15184](https://github.com/vitejs/vite/issues/15184)).
+Vite 3에서 추가된 실험적 기능인 빌드 타임 사전 번들링이 제거되었습니다. Rollup 4가 파서를 네이티브로 전환하고 Rolldown이 작업 중인 상황에서, 이 기능의 성능과 dev-vs-build 불일치 스토리가 더 이상 유효하지 않습니다. Vite 팀은 dev/build 일관성을 계속 개선하고 싶으며, "개발 중 사전 번들링"과 "프로덕션 빌드"에 Rolldown을 사용하는 것이 앞으로 더 나은 선택이라고 결론지었습니다. Rolldown은 또한 빌드 중 deps 사전 번들링보다 훨씬 더 효율적인 방식으로 캐싱을 구현할 수도 있습니다. 참조 ([#15184](https://github.com/vitejs/vite/issues/15184)).
 
 ## 참여하기 {#get-involved}
 
-[Vite Core의 900명의 기여자](https://github.com/vitejs/vite/graphs/contributors)와 생태계를 계속 발전시키는 플러그인, 통합, 도구, 번역의 유지보수자들에게 감사드립니다. Vite를 즐겁게 사용하고 계시다면, 참여하여 저희를 도와주시기 바랍니다. [기여 가이드](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md)를 확인하고, [이슈 분류](https://github.com/vitejs/vite/issues), [PR 리뷰](https://github.com/vitejs/vite/pulls), [GitHub Discussions](https://github.com/vitejs/vite/discussions)에서 질문 답변, [Vite Land](https://chat.vite.dev)에서 커뮤니티의 다른 사람들 도움에 참여해보세요.
+[Vite Core의 900명의 기여자](https://github.com/vitejs/vite/graphs/contributors)와 생태계를 계속 발전시키는 플러그인, 통합, 도구, 번역의 유지보수자들에게 감사드립니다. Vite를 즐겁게 사용하고 계시다면, 참여하여 Vite를 도와주시기 바랍니다. [기여 가이드](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md)를 확인하고, [이슈 분류](https://github.com/vitejs/vite/issues), [PR 리뷰](https://github.com/vitejs/vite/pulls), [GitHub Discussions](https://github.com/vitejs/vite/discussions)에서 질문 답변, [Vite Land](https://chat.vite.dev)에서 커뮤니티의 다른 사람들 도움에 참여해보세요.
 
 ## 감사의 말 {#acknowledgments}
 

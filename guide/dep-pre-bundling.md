@@ -8,7 +8,7 @@
 
 1. **CommonJS 및 UMD 호환성:** 개발 중 Vite는 모든 코드를 네이티브 ESM으로 제공합니다. 따라서 Vite는 CommonJS 또는 UMD로 배포되는 디펜던시를 먼저 ESM으로 변환해야 합니다.
 
-   vite는 조금 영리하게 ESM 파일로 변환을 진행하는데, 가령 CommonJS 디펜던시를 변환해주는 경우 아래와 같이 이름을 지정해 CommonJS 형태의 모듈을 가져올 수도 있습니다.
+   vite는 조금 영리하게 ESM 파일로 변환을 진행하는데, 가령 CommonJS 디펜던시를 변환하는 경우 아래와 같이 이름을 지정해 CommonJS 형태의 모듈을 가져올 수도 있습니다.
 
    ```js
    // works as expected

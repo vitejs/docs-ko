@@ -1,6 +1,6 @@
 ---
 title: 감사의 말
-description: Vite는 거인들의 어깨 위에 세워졌습니다. Vite를 가능하게 해준 모든 프로젝트와 기여자들에게 감사드립니다.
+description: Vite는 거인들의 어깨 위에 세워졌습니다. Vite의 기반이 된 모든 프로젝트와 기여자에게 감사드립니다.
 ---
 
 <script setup>
@@ -18,7 +18,7 @@ function npmUrl(name) {
 
 # 감사의 말 {#acknowledgements}
 
-Vite는 거인들의 어깨 위에 세워졌습니다. Vite를 가능하게 해준 모든 프로젝트, 기여자, 후원자에게 감사의 마음을 전합니다.
+Vite는 거인들의 어깨 위에 세워졌습니다. Vite의 기반이 된 모든 프로젝트, 기여자, 후원자에게 감사의 마음을 전합니다.
 
 ## 기여자 {#contributors}
 
@@ -34,11 +34,11 @@ Vite 개발은 관대한 후원자들의 지원을 받고 있습니다. [GitHub 
   <VPSponsors :data="sponsors ?? []" />
 </div>
 
-## 의존성 {#dependencies}
+## 디펜던시 {#dependencies}
 
 Vite는 다음의 훌륭한 오픈 소스 프로젝트들에 의존합니다.
 
-### 주요 의존성 {#notable-dependencies}
+### 주요 디펜던시 {#notable-dependencies}
 
 <div class="deps-list notable">
   <div v-for="dep in data.notableDependencies" :key="dep.name" class="dep-item">
@@ -56,7 +56,7 @@ Vite는 다음의 훌륭한 오픈 소스 프로젝트들에 의존합니다.
   </div>
 </div>
 
-### 번들된 의존성 작성자 {#bundled-dependency-authors}
+### 번들된 디펜던시 작성자 {#bundled-dependency-authors}
 
 <table class="authors-table">
   <thead>
@@ -105,7 +105,7 @@ Vite의 개발 워크플로는 다음 도구들로 구동됩니다.
   </div>
 </div>
 
-## 이전 주요 의존성 {#past-notable-dependencies}
+## 이전 주요 디펜던시 {#past-notable-dependencies}
 
 이전 버전의 Vite가 사용했던 다음 프로젝트의 유지보수자들에게도 감사드립니다.
 

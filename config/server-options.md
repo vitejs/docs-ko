@@ -38,7 +38,7 @@ Vite가 응답할 수 있는 호스트 이름 목록입니다.
 기본적으로 `localhost`와 `.localhost` 하위 도메인, 그리고 모든 IP 주소가 허용됩니다.
 HTTPS를 사용하는 경우 이 검사는 건너뜁니다.
 
-문자열이 `.`으로 시작하는 경우, `.`이 제외된 호스트 이름과 모든 서브도메인을 허용합니다. 예를 들어, `.example.com`은 `example.com`, `foo.example.com`, `foo.bar.example.com`을 허용합니다. `true`로 설정하면 서버가 모든 호스트에 대한 요청에 응답할 수 있게 됩니다.
+문자열이 `.`으로 시작하는 경우, `.`이 제외된 호스트 이름과 모든 서브도메인을 허용합니다. 예를 들어, `.example.com`은 `example.com`, `foo.example.com`, `foo.bar.example.com`을 허용합니다. `true`로 설정하면 서버가 모든 호스트 요청에 응답합니다.
 
 ::: details 어떤 호스트가 안전한가요?
 
@@ -117,11 +117,11 @@ export default defineConfig({
 export default defineConfig({
   server: {
     proxy: {
-      // string shorthand:
+      // 문자열 단축 표기:
       // http://localhost:5173/foo
       //   -> http://localhost:4567/foo
       '/foo': 'http://localhost:4567',
-      // with options:
+      // 옵션 사용:
       // http://localhost:5173/api/bar
       //   -> http://jsonplaceholder.typicode.com/bar
       '/api': {
@@ -129,7 +129,7 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
-      // with RegExp:
+      // 정규식 사용:
       // http://localhost:5173/fallback/
       //   -> http://jsonplaceholder.typicode.com/
       '^/fallback/.*': {
@@ -137,19 +137,19 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/fallback/, ''),
       },
-      // Using the proxy instance
+      // 프록시 인스턴스 사용
       '/api': {
         target: 'http://jsonplaceholder.typicode.com',
         changeOrigin: true,
         configure: (proxy, options) => {
-          // proxy will be an instance of 'http-proxy'
+          // proxy는 'http-proxy'의 인스턴스입니다.
         },
       },
-      // Proxying websockets or socket.io:
+      // WebSocket 또는 socket.io 프록시:
       // ws://localhost:5173/socket.io
       //   -> ws://localhost:5174/socket.io
-      // Exercise caution using `rewriteWsOrigin` as it can leave the
-      // proxying open to CSRF attacks.
+      // `rewriteWsOrigin`은 프록시를 CSRF 공격에 노출할 수 있으므로
+      // 사용할 때 주의해야 합니다.
       '/socket.io': {
         target: 'ws://localhost:5174',
         ws: true,
@@ -169,7 +169,7 @@ export default defineConfig({
 
 ::: danger
 
-`server.cors`를 `true`로 설정하면 모든 웹사이트에서 개발 서버에 요청을 보내고 소스 코드와 콘텐츠를 다운로드할 수 있게 됩니다. 따라서 항상 명시적으로 허용할 출처(origin) 목록을 사용할 것을 권장합니다.
+`server.cors`를 `true`로 설정하면 모든 웹사이트에서 개발 서버에 요청을 보내고 소스 코드와 콘텐츠를 다운로드할 수 있습니다. 따라서 항상 명시적으로 허용할 출처(origin) 목록을 사용할 것을 권장합니다.
 
 :::
 
@@ -318,20 +318,20 @@ import { createServer as createViteServer } from 'vite'
 async function createServer() {
   const app = express()
 
-  // Create Vite server in middleware mode
+  // 미들웨어 모드로 Vite 서버를 생성합니다.
   const vite = await createViteServer({
     server: { middlewareMode: true },
-    // don't include Vite's default HTML handling middlewares
+    // Vite의 기본 HTML 처리 미들웨어를 포함하지 않습니다.
     appType: 'custom',
   })
-  // Use vite's connect instance as middleware
+  // Vite의 connect 인스턴스를 미들웨어로 사용합니다.
   app.use(vite.middlewares)
 
   app.use('*', async (req, res) => {
-    // Since `appType` is `'custom'`, should serve response here.
-    // Note: if `appType` is `'spa'` or `'mpa'`, Vite includes middlewares
-    // to handle HTML requests and 404s so user middlewares should be added
-    // before Vite's middlewares to take effect instead
+    // `appType`이 `'custom'`이므로 여기서 응답을 제공해야 합니다.
+    // 참고: `appType`이 `'spa'` 또는 `'mpa'`이면 Vite는 HTML 요청과
+    // 404를 처리하는 미들웨어를 포함하므로, 사용자 미들웨어가 대신
+    // 적용되도록 Vite 미들웨어보다 먼저 추가해야 합니다.
   })
 }
 
@@ -366,7 +366,7 @@ Vite는 잠재적인 작업 공간의 루트를 검색하여 기본값으로 사
 export default defineConfig({
   server: {
     fs: {
-      // Allow serving files from one level up to the project root
+      // 프로젝트 루트의 한 단계 상위 파일 제공을 허용합니다.
       allow: ['..'],
     },
   },
@@ -382,9 +382,9 @@ export default defineConfig({
   server: {
     fs: {
       allow: [
-        // search up for workspace root
+        // 상위 디렉터리에서 워크스페이스 루트를 찾습니다.
         searchForWorkspaceRoot(process.cwd()),
-        // your custom rules
+        // 사용자 정의 규칙
         '/path/to/custom/allow_directory',
         '/path/to/custom/allow_file.demo',
       ],
@@ -440,8 +440,8 @@ export default defineConfig({
 ```js
 export default defineConfig({
   server: {
-    // This is the default value, and will add all files with node_modules
-    // in their paths to the ignore list.
+    // 기본값입니다. 경로에 node_modules가 있는 모든 파일을
+    // 무시 목록에 추가합니다.
     sourcemapIgnoreList(sourcePath, sourcemapPath) {
       return sourcePath.includes('node_modules')
     },

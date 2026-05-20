@@ -83,7 +83,7 @@ import shaderString from './shader.glsl?raw'
 ```js twoslash
 import 'vite/client'
 // ---cut---
-// Separate chunk in the production build
+// 프로덕션 빌드에서 별도 청크
 import Worker from './shader.js?worker'
 const worker = new Worker()
 ```
@@ -91,7 +91,7 @@ const worker = new Worker()
 ```js twoslash
 import 'vite/client'
 // ---cut---
-// sharedworker
+// Shared Worker
 import SharedWorker from './shader.js?sharedworker'
 const sharedWorker = new SharedWorker()
 ```
@@ -99,7 +99,7 @@ const sharedWorker = new SharedWorker()
 ```js twoslash
 import 'vite/client'
 // ---cut---
-// Inlined as base64 strings
+// base64 문자열로 인라인 처리
 import InlineWorker from './shader.js?worker&inline'
 ```
 
@@ -127,7 +127,7 @@ import InlineWorker from './shader.js?worker&inline'
 
 ## `new URL(url, import.meta.url)` 사용하기 {#new-url-url-import-meta-url}
 
-네이티브 ESM의 API 중 하나인 [import.meta.url](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import.meta)은 현재 모듈의 URL을 보여주는 기능입니다. [URL 생성자](https://developer.mozilla.org/en-US/docs/Web/API/URL)와 함께 사용하면, 정적 에셋의 전제 URL을 확인할 수 있게 됩니다.
+네이티브 ESM의 API 중 하나인 [import.meta.url](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import.meta)은 현재 모듈의 URL을 보여주는 기능입니다. [URL 생성자](https://developer.mozilla.org/en-US/docs/Web/API/URL)와 함께 사용하면, 정적 에셋의 전체 URL을 확인할 수 있습니다.
 
 ```js
 const imgUrl = new URL('./img.png', import.meta.url).href
@@ -141,7 +141,7 @@ document.getElementById('hero-img').src = imgUrl
 
 ```js
 function getImageUrl(name) {
-  // note that this does not include files in subdirectories
+  // 하위 디렉터리의 파일은 포함되지 않습니다.
   return new URL(`./dir/${name}.png`, import.meta.url).href
 }
 ```
@@ -149,7 +149,7 @@ function getImageUrl(name) {
 프로덕션 빌드 중 Vite는 번들링과 에셋 해싱 이후에도 URL이 올바른 위치를 가리키도록 필요한 변환을 수행합니다. 다만 URL 문자열은 분석할 수 있도록 정적이어야 합니다. 그렇지 않으면 코드는 그대로 남게 되고, `build.target`이 `import.meta.url`을 지원하지 않는 경우 런타임 오류가 발생할 수 있습니다.
 
 ```js
-// Vite will not transform this
+// Vite는 이를 변환하지 않습니다.
 const imgUrl = new URL(imagePath, import.meta.url).href
 ```
 

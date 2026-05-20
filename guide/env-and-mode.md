@@ -6,7 +6,7 @@ Vite는 `import.meta.env` 라는 특수한 객체를 통해 특정 상수들을 
 
 ```js
 if (import.meta.env.DEV) {
-  // code inside here will be tree-shaken in production builds
+  // 이 블록 안의 코드는 프로덕션 빌드에서 트리 셰이킹됩니다.
   console.log('Dev mode')
 }
 ```
@@ -130,14 +130,14 @@ VITE_BAR=bar
 
 ```typescript [vite-env.d.ts]
 interface ViteTypeOptions {
-  // By adding this line, you can make the type of ImportMetaEnv strict
-  // to disallow unknown keys.
+  // 이 줄을 추가하면 ImportMetaEnv 타입을 엄격하게 만들어
+  // 알 수 없는 키를 허용하지 않을 수 있습니다.
   // strictImportMetaEnv: unknown
 }
 
 interface ImportMetaEnv {
   readonly VITE_APP_TITLE: string
-  // more env variables...
+  // 추가 env 변수...
 }
 
 interface ImportMeta {

@@ -21,7 +21,7 @@ Vite 8은 [esbuild](https://esbuild.github.io/)와 [Rollup](https://rollupjs.org
 
 `rolldown-vite` 패키지는 다른 Vite 8 변경 없이 Rolldown이 적용된 Vite 7을 구현합니다. 이는 Vite 8로 마이그레이션하기 위한 중간 단계로 사용할 수 있습니다. Vite 7에서 `rolldown-vite`로 전환하려면 Vite 7 문서의 [Rolldown 통합 가이드](https://v7.vite.dev/guide/rolldown)를 참고하세요.
 
-`rolldown-vite`에서 Vite 8로 마이그레이션하는 사용자는 `package.json`의 의존성 변경을 되돌리고 Vite 8로 업데이트할 수 있습니다:
+`rolldown-vite`에서 Vite 8로 마이그레이션하는 사용자는 `package.json`의 디펜던시 변경을 되돌리고 Vite 8로 업데이트할 수 있습니다:
 
 ```json
 {
@@ -32,9 +32,9 @@ Vite 8은 [esbuild](https://esbuild.github.io/)와 [Rollup](https://rollupjs.org
 }
 ```
 
-### 의존성 최적화 도구가 이제 Rolldown을 사용합니다 {#dependency-optimizer-now-uses-rolldown}
+### 디펜던시 최적화 도구가 이제 Rolldown을 사용합니다 {#dependency-optimizer-now-uses-rolldown}
 
-이제 의존성 최적화에는 esbuild 대신 Rolldown이 사용됩니다. Vite는 하위 호환성을 위해 [`optimizeDeps.esbuildOptions`](/config/dep-optimization-options#optimizedeps-esbuildoptions)를 계속 지원하며, 이를 자동으로 [`optimizeDeps.rolldownOptions`](/config/dep-optimization-options#optimizedeps-rolldownoptions)로 변환합니다. `optimizeDeps.esbuildOptions`는 이제 지원 중단되었고 향후 제거될 예정이므로 `optimizeDeps.rolldownOptions`로 마이그레이션하는 것을 권장합니다.
+이제 디펜던시 최적화에는 esbuild 대신 Rolldown이 사용됩니다. Vite는 하위 호환성을 위해 [`optimizeDeps.esbuildOptions`](/config/dep-optimization-options#optimizedeps-esbuildoptions)를 계속 지원하며, 이를 자동으로 [`optimizeDeps.rolldownOptions`](/config/dep-optimization-options#optimizedeps-rolldownoptions)로 변환합니다. `optimizeDeps.esbuildOptions`는 이제 지원 중단되었고 향후 제거될 예정이므로 `optimizeDeps.rolldownOptions`로 마이그레이션하는 것을 권장합니다.
 
 다음 옵션은 자동으로 변환됩니다:
 
@@ -138,7 +138,7 @@ function decoratorPreset(options: Record<string, unknown>) {
       plugins: [['@babel/plugin-proposal-decorators', options]],
     }),
     rolldown: {
-      // Only run this transform if the file contains a decorator.
+      // 파일에 데코레이터가 포함된 경우에만 이 변환을 실행합니다.
       filter: {
         code: '@',
       },
@@ -192,7 +192,7 @@ export default defineConfig({
           },
         },
       }),
-      // Only run this transform if the file contains a decorator.
+      // 파일에 데코레이터가 포함된 경우에만 이 변환을 실행합니다.
       { transform: { code: '@' } },
     ),
   ],
@@ -203,7 +203,7 @@ export default defineConfig({
 
 #### esbuild 폴백 {#esbuild-fallbacks}
 
-`esbuild`는 더 이상 Vite에서 직접 사용되지 않으며 이제 선택적 의존성입니다. `transformWithEsbuild` 함수를 사용하는 플러그인을 사용 중이라면 `esbuild`를 `devDependency`로 설치해야 합니다. `transformWithEsbuild` 함수는 지원 중단되었고 향후 제거될 예정입니다. 대신 새로운 `transformWithOxc` 함수로 마이그레이션하는 것을 권장합니다.
+`esbuild`는 더 이상 Vite에서 직접 사용되지 않으며 이제 선택적 디펜던시입니다. `transformWithEsbuild` 함수를 사용하는 플러그인을 사용 중이라면 `esbuild`를 `devDependency`로 설치해야 합니다. `transformWithEsbuild` 함수는 지원 중단되었고 향후 제거될 예정입니다. 대신 새로운 `transformWithOxc` 함수로 마이그레이션하는 것을 권장합니다.
 
 ### Oxc를 통한 JavaScript 최소화 {#javascript-minification-by-oxc}
 
@@ -240,8 +240,8 @@ CommonJS(CJS) 모듈의 `default` 임포트가 이제 일관된 방식으로 처
 
 개발 중에는 다음 조건 중 하나와 일치하면 `default` 임포트가 임포트 대상 CJS 모듈의 `module.exports` 값이었습니다. 그렇지 않으면 `default` 임포트는 임포트 대상 CJS 모듈의 `module.exports.default` 값이었습니다:
 
-- _임포터가 의존성 최적화에 포함되어 있고_ `.mjs` 또는 `.mts`입니다.
-- _임포터가 의존성 최적화에 포함되어 있고_ 임포터에 가장 가까운 `package.json`의 `type` 필드가 `module`로 설정되어 있습니다.
+- _임포터가 디펜던시 최적화에 포함되어 있고_ `.mjs` 또는 `.mts`입니다.
+- _임포터가 디펜던시 최적화에 포함되어 있고_ 임포터에 가장 가까운 `package.json`의 `type` 필드가 `module`로 설정되어 있습니다.
 - 임포트 대상 CJS 모듈의 `module.exports.__esModule` 값이 true로 설정되어 있지 않습니다.
 
 빌드에서는 조건이 다음과 같았습니다:

@@ -78,9 +78,9 @@ const ssrEnvironment = server.environments.ssr
 
 Vite 개발 서버는 기본적으로 두 가지 환경을 제공합니다: `client` 환경과 `ssr` 환경입니다. 클라이언트 환경은 기본적으로 브라우저 환경이며, 이 때 모듈 실행기는 클라이언트 앱에 `/@vite/client` 가상 모듈을 가져와 구현됩니다. SSR 환경은 기본적으로 Vite 서버와 동일한 Node 런타임에서 실행되며, 개발 단계에서 완전한 HMR 지원과 함께 애플리케이션 서버를 사용해 요청을 렌더링할 수 있습니다.
 
-소스 코드가 변환된 결과물을 모듈이라고 하며, 각 환경에서 처리된 모듈 사이의 의존성 관계는 모듈 그래프에 저장됩니다. 이러한 모듈은 각 환경과 연결된 런타임으로 전송되어 실행됩니다. 그리고 런타임에서 모듈이 분석되면서 다른 모듈을 불러오는 요청이 발생하고, 이에 따라 모듈 그래프에서 관련 부분이 처리됩니다.
+소스 코드가 변환된 결과물을 모듈이라고 하며, 각 환경에서 처리된 모듈 사이의 디펜던시 관계는 모듈 그래프에 저장됩니다. 이러한 모듈은 각 환경과 연결된 런타임으로 전송되어 실행됩니다. 그리고 런타임에서 모듈이 분석되면서 다른 모듈을 불러오는 요청이 발생하고, 이에 따라 모듈 그래프에서 관련 부분이 처리됩니다.
 
-Vite 모듈 러너는 먼저 Vite 플러그인으로 코드를 처리한 뒤 어떤 코드든 실행할 수 있게 합니다. 러너 구현이 서버와 분리되어 있다는 점에서 `server.ssrLoadModule`과 다릅니다. 이를 통해 라이브러리와 프레임워크 작성자는 Vite 서버와 러너 사이의 통신 레이어를 직접 구현할 수 있습니다. 브라우저는 서버 WebSocket과 HTTP 요청을 사용해 해당 환경과 통신합니다. Node 모듈 러너는 같은 프로세스에서 실행되므로 모듈 처리를 위해 직접 함수 호출을 할 수 있습니다. 다른 환경은 workerd 같은 JS 런타임이나 Vitest처럼 Worker Thread에 연결해 모듈을 실행할 수 있습니다.
+Vite 모듈 러너는 먼저 Vite 플러그인으로 코드를 처리한 뒤 어떤 코드든 실행합니다. 러너 구현이 서버와 분리되어 있다는 점에서 `server.ssrLoadModule`과 다릅니다. 이를 통해 라이브러리와 프레임워크 작성자는 Vite 서버와 러너 사이의 통신 레이어를 직접 구현할 수 있습니다. 브라우저는 서버 WebSocket과 HTTP 요청을 사용해 해당 환경과 통신합니다. Node 모듈 러너는 같은 프로세스에서 실행되므로 모듈 처리를 위해 직접 함수 호출을 할 수 있습니다. 다른 환경은 workerd 같은 JS 런타임이나 Vitest처럼 Worker Thread에 연결해 모듈을 실행할 수 있습니다.
 
 ```dot
 digraph module_runner {
@@ -174,21 +174,21 @@ export class ModuleRunner {
     private debug?: ModuleRunnerDebugger,
   ) {}
   /**
-   * URL to execute.
-   * Accepts file path, server path, or id relative to the root.
+   * 실행할 URL입니다.
+   * 파일 경로, 서버 경로, 또는 루트 기준 상대 id를 받습니다.
    */
   public async import<T = any>(url: string): Promise<T>
   /**
-   * Clear all caches including HMR listeners.
+   * HMR 리스너를 포함한 모든 캐시를 지웁니다.
    */
   public clearCache(): void
   /**
-   * Clear all caches, remove all HMR listeners, reset sourcemap support.
-   * This method doesn't stop the HMR connection.
+   * 모든 캐시를 지우고, HMR 리스너를 제거하며, 소스맵 지원을 재설정합니다.
+   * 이 메서드는 HMR 연결을 중지하지 않습니다.
    */
   public async close(): Promise<void>
   /**
-   * Returns `true` if the runner has been closed by calling `close()`.
+   * `close()` 호출로 러너가 닫혔다면 `true`를 반환합니다.
    */
   public isClosed(): boolean
 }
@@ -237,16 +237,16 @@ type ModuleRunnerTransport = unknown
 // ---cut---
 interface ModuleRunnerOptions {
   /**
-   * A set of methods to communicate with the server.
+   * 서버와 통신하는 메서드 집합입니다.
    */
   transport: ModuleRunnerTransport
   /**
-   * Configure how source maps are resolved.
-   * Prefers `node` if `process.setSourceMapsEnabled` is available.
-   * Otherwise it will use `prepareStackTrace` by default which overrides
-   * `Error.prepareStackTrace` method.
-   * You can provide an object to configure how file contents and
-   * source maps are resolved for files that were not processed by Vite.
+   * 소스맵 해석 방식을 설정합니다.
+   * `process.setSourceMapsEnabled`를 사용할 수 있으면 `node`를 우선합니다.
+   * 그렇지 않으면 기본적으로 `Error.prepareStackTrace` 메서드를 오버라이드하는
+   * `prepareStackTrace`를 사용합니다.
+   * Vite가 처리하지 않은 파일의 파일 내용과 소스맵 해석 방식을 설정하는 객체를
+   * 제공할 수도 있습니다.
    */
   sourcemapInterceptor?:
     | false
@@ -254,14 +254,14 @@ interface ModuleRunnerOptions {
     | 'prepareStackTrace'
     | InterceptorOptions
   /**
-   * Disable HMR or configure HMR options.
+   * HMR을 비활성화하거나 HMR 옵션을 설정합니다.
    *
    * @default true
    */
   hmr?: boolean | ModuleRunnerHmr
   /**
-   * Custom module cache. If not provided, it creates a separate module
-   * cache for each module runner instance.
+   * 커스텀 모듈 캐시입니다. 제공하지 않으면 각 모듈 러너 인스턴스마다
+   * 별도 모듈 캐시를 생성합니다.
    */
   evaluatedModules?: EvaluatedModules
 }
@@ -280,14 +280,14 @@ type ModuleRunnerContext = Debug<ModuleRunnerContextRaw>
 // ---cut---
 export interface ModuleEvaluator {
   /**
-   * Number of prefixed lines in the transformed code.
+   * 변환된 코드 앞에 붙은 줄 수입니다.
    */
   startOffset?: number
   /**
-   * Evaluate code that was transformed by Vite.
-   * @param context Function context
-   * @param code Transformed code
-   * @param id ID that was used to fetch the module
+   * Vite가 변환한 코드를 평가합니다.
+   * @param context 함수 컨텍스트
+   * @param code 변환된 코드
+   * @param id 모듈을 가져오는 데 사용된 ID
    */
   runInlinedModule(
     context: ModuleRunnerContext,
@@ -295,8 +295,8 @@ export interface ModuleEvaluator {
     id: string,
   ): Promise<any>
   /**
-   * evaluate externalized module.
-   * @param file File URL to the external module
+   * 외부화된 모듈을 평가합니다.
+   * @param file 외부 모듈의 파일 URL
    */
   runExternalModule(file: string): Promise<any>
 }
@@ -371,11 +371,11 @@ function createWorkerEnvironment(name, config, context) {
   }
 
   const workerHotChannel = {
-    // Worker threads post messages are not exposed over the network, skip server.fs checks
+    // Worker thread의 postMessage는 네트워크에 노출되지 않으므로 server.fs 검사를 건너뜁니다.
     skipFsCheck: true,
     send: (data) => worker.postMessage(data),
     on: (event, handler) => {
-      // client is already connected
+      // 클라이언트는 이미 연결되어 있습니다.
       if (event === 'vite:client:connect') return
       if (event === 'vite:client:disconnect') {
         const listener = () => {
