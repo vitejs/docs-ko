@@ -12,6 +12,7 @@ import {
   groupIconMdPlugin,
   groupIconVitePlugin,
 } from 'vitepress-plugin-group-icons'
+import { graphvizMarkdownPlugin } from 'vitepress-plugin-graphviz'
 import { buildEnd } from './buildEnd.config'
 import { markdownItImageSize } from 'markdown-it-image-size'
 import { extendConfig } from '@voidzero-dev/vitepress-theme/config'
@@ -197,9 +198,15 @@ const config = defineConfig({
         miniSearch: {
           searchOptions: {
             boostDocument(page) {
-              if (page.startsWith('/guide/')) return 2
-              if (page.startsWith('/config/')) return 1.5
-              if (page.startsWith('/blog/')) return 0
+              if (page.startsWith('/guide/')) {
+                return 2
+              }
+              if (page.startsWith('/config/')) {
+                return 1.5
+              }
+              if (page.startsWith('/blog/')) {
+                return 0
+              }
               return 1
             },
           },
@@ -542,7 +549,7 @@ const config = defineConfig({
       // @ts-ignore
       renderPermalink,
     },
-    config: (md) => {
+    async config(md) {
       md.use(markdownItCustomAnchor)
       // @ts-ignore
       md.use(markdownItFootnote)
@@ -552,6 +559,7 @@ const config = defineConfig({
       md.use(markdownItImageSize, {
         publicDir: path.resolve(import.meta.dirname, '../public')
       })
+      await graphvizMarkdownPlugin(md)
     },
   },
   vite: {
