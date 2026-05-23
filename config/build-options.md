@@ -219,7 +219,7 @@ export default defineConfig({
 ]
 ```
 
-::: tip 참고
+::: tip
 
 빌드된 코드에서 라이선스 파일을 참조하고 싶다면 [`build.rolldownOptions.output.postBanner`](https://rolldown.rs/reference/OutputOptions.postBanner#postbanner)를 사용해 파일 상단에 주석을 삽입할 수 있습니다. 예를 들면 다음과 같습니다:
 
