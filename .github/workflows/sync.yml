@@ -24,12 +24,6 @@ jobs:
 
       # https://github.com/Gumball12/yuki-no/
       - uses: Gumball12/yuki-no@wip
-        env:
-          YUKI_NO_BATCH_PR_ROOT_DIR: docs
-          YUKI_NO_BATCH_PR_EXCLUDE: |
-            **/guide/migration*.md
-            **/package.json
-            **/.vitepress/config.ts
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
           head-repo: https://github.com/vitejs/vite.git
@@ -38,4 +32,3 @@ jobs:
             docs/**
           plugins: |
             @yuki-no/plugin-release-tracking@latest
-            @yuki-no/plugin-batch-pr@latest
