@@ -12,8 +12,10 @@ import {
   groupIconMdPlugin,
   groupIconVitePlugin,
 } from 'vitepress-plugin-group-icons'
+import { graphvizMarkdownPlugin } from 'vitepress-plugin-graphviz'
 import { buildEnd } from './buildEnd.config'
 import { markdownItImageSize } from 'markdown-it-image-size'
+import { extendConfig } from '@voidzero-dev/vitepress-theme/config'
 
 const ogDescription = 'Vite, 프런트엔드 개발의 새로운 기준'
 const ogImage = 'https://ko.vite.dev/og-image.jpg'
@@ -35,8 +37,15 @@ const deployType = (() => {
   }
 })()
 
+const viteVersion = '8.0.13'
+const viteMajorVersion = 8
+
 const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
   const oldVersions: DefaultTheme.NavItemWithLink[] = [
+    {
+      text: 'Vite 7 문서',
+      link: 'https://v7.vite.dev',
+    },
     {
       text: 'Vite 6 문서',
       link: 'https://v6.vite.dev',
@@ -64,7 +73,7 @@ const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
     case 'local':
       return [
         {
-          text: 'Vite 7 문서 (릴리스)',
+          text: `Vite ${viteMajorVersion} 문서 (릴리스)`,
           link: 'https://ko.vite.dev',
         },
         ...oldVersions,
@@ -79,24 +88,32 @@ function inlineScript(file: string): HeadConfig {
     'script',
     {},
     fs.readFileSync(
-      path.resolve(__dirname, `./inlined-scripts/${file}`),
+      path.resolve(import.meta.dirname, `./inlined-scripts/${file}`),
       'utf-8',
     ),
   ]
 }
 
-export default defineConfig({
+const config = defineConfig({
   title: 'Vite',
   lang: 'ko',
   description: '프런트엔드 개발의 새로운 기준',
+  cleanUrls: true,
+  sitemap: {
+    hostname: 'https://ko.vite.dev',
+  },
 
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
+    [
+      'link',
+      { rel: 'icon', type: 'image/svg+xml', href: '/logo-without-border.svg' },
+    ],
     [
       'link',
       { rel: 'alternate', type: 'application/rss+xml', href: '/blog.rss' },
     ],
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
+    inlineScript('banner.js'),
     [
       'link',
       {
@@ -126,17 +143,18 @@ export default defineConfig({
     ['meta', { property: 'og:image', content: ogImage }],
     ['meta', { property: 'og:url', content: ogUrl }],
     ['meta', { property: 'og:description', content: ogDescription }],
+    ['meta', { property: 'og:site_name', content: 'vitejs' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:site', content: '@vite_js' }],
     ['meta', { name: 'theme-color', content: '#646cff' }],
     [
       'script',
-      { src: 'https://www.googletagmanager.com/gtag/js?id=G-V8ZS1G7X21' },
-    ],
-    [
-      'script',
-      {},
-      `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-V8ZS1G7X21');`,
+      {
+        src: 'https://cdn.usefathom.com/script.js',
+        'data-site': 'CBDFBSLI',
+        'data-spa': 'auto',
+        defer: '',
+      },
     ],
   ],
 
@@ -152,7 +170,14 @@ export default defineConfig({
   },
 
   themeConfig: {
+    variant: 'vite',
     logo: '/logo.svg',
+
+    banner: {
+      id: 'viteplus-alpha',
+      text: 'Vite+ Alpha 발표: 오픈 소스. 통합. 차세대.',
+      url: 'https://voidzero.dev/posts/announcing-vite-plus-alpha?utm_source=vite&utm_content=top_banner',
+    },
 
     editLink: {
       pattern: 'https://github.com/vitejs/docs-ko/edit/main/:path',
@@ -170,6 +195,24 @@ export default defineConfig({
 
     search: {
       provider: 'local',
+      options: {
+        miniSearch: {
+          searchOptions: {
+            boostDocument(page) {
+              if (page.startsWith('/guide/')) {
+                return 2
+              }
+              if (page.startsWith('/config/')) {
+                return 1.5
+              }
+              if (page.startsWith('/blog/')) {
+                return 0
+              }
+              return 1
+            },
+          },
+        },
+      },
     },
 
     carbonAds: {
@@ -178,8 +221,38 @@ export default defineConfig({
     },
 
     footer: {
-      message: `Released under the MIT License. (${commitRef})`,
-      copyright: 'Copyright © 2019-present VoidZero Inc. & Vite Contributors',
+      copyright: `© 2019-present VoidZero Inc. and Vite contributors. (${commitRef})`,
+      nav: [
+        {
+          title: 'Vite',
+          items: [
+            { text: '가이드', link: '/guide/' },
+            { text: '설정', link: '/config/' },
+            { text: '플러그인', link: '/plugins/' },
+          ],
+        },
+        {
+          title: '리소스',
+          items: [
+            { text: 'Vite 팀', link: '/team' },
+            { text: '블로그', link: '/blog' },
+            {
+              text: '릴리스',
+              link: 'https://github.com/vitejs/vite/releases',
+            },
+          ],
+        },
+        {
+          title: '버전',
+          items: versionLinks,
+        },
+      ],
+      social: [
+        { icon: 'github', link: 'https://github.com/vitejs/vite' },
+        { icon: 'discord', link: 'https://chat.vite.dev' },
+        { icon: 'bluesky', link: 'https://bsky.app/profile/vite.dev' },
+        { icon: 'x', link: 'https://x.com/vite_js' },
+      ],
     },
 
     nav: [
@@ -192,6 +265,15 @@ export default defineConfig({
           { text: 'Vite 팀', link: '/team' },
           { text: '블로그', link: '/blog' },
           { text: '릴리스', link: '/releases' },
+          { text: '감사의 말', link: '/acknowledgements' },
+          {
+            text: '플러그인 레지스트리',
+            link: 'https://registry.vite.dev/plugins',
+          },
+          {
+            text: '다큐멘터리',
+            link: 'https://www.youtube.com/watch?v=bmWQqAKLgT4',
+          },
           {
             items: [
               {
@@ -207,7 +289,7 @@ export default defineConfig({
                 link: 'https://x.com/vite_js',
               },
               {
-                text: 'Discord',
+                text: 'Discord 채팅',
                 link: 'https://chat.vite.dev',
               },
               {
@@ -219,24 +301,28 @@ export default defineConfig({
                 link: 'https://viteconf.org',
               },
               {
-                text: 'DEV',
+                text: 'DEV 커뮤니티',
                 link: 'https://dev.to/t/vite',
-              },
-              {
-                text: '변경 사항',
-                link: 'https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md',
-              },
-              {
-                text: '기여하기',
-                link: 'https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md',
               },
             ],
           },
         ],
       },
       {
-        text: '버전',
-        items: versionLinks,
+        text: `v${viteVersion}`,
+        items: [
+          {
+            text: '변경 사항',
+            link: 'https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md',
+          },
+          {
+            text: '기여하기',
+            link: 'https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md',
+          },
+          {
+            items: versionLinks,
+          },
+        ],
       },
     ],
 
@@ -311,32 +397,8 @@ export default defineConfig({
               link: '/guide/performance',
             },
             {
-              text: 'Rolldown',
-              link: '/guide/rolldown',
-            },
-            {
-              text: 'v6에서 마이그레이션하기',
-              link: '/guide/migration'
-            },
-            {
-              text: 'v5에서 마이그레이션하기',
-              link: '/guide/migration-from-v5',
-            },
-            {
-              text: 'v4에서 마이그레이션하기',
-              link: '/guide/migration-from-v4',
-            },
-            {
-              text: 'v3에서 마이그레이션하기',
-              link: '/guide/migration-from-v3',
-            },
-            {
-              text: 'v2에서 마이그레이션하기',
-              link: '/guide/migration-from-v2',
-            },
-            {
-              text: 'v1에서 마이그레이션하기',
-              link: '/guide/migration-from-v1',
+              text: 'v7에서 마이그레이션하기',
+              link: '/guide/migration',
             },
             {
               text: '주요 변경 사항',
@@ -345,7 +407,7 @@ export default defineConfig({
           ],
         },
         {
-          text: 'APIs',
+          text: 'API',
           items: [
             {
               text: '플러그인 API',
@@ -475,35 +537,85 @@ export default defineConfig({
       level: [2, 3],
     },
   },
-  transformPageData(pageData) {
-    const canonicalUrl = `${ogUrl}/${pageData.relativePath}`
-      .replace(/\/index\.md$/, '/')
-      .replace(/\.md$/, '')
-    pageData.frontmatter.head ??= []
-    pageData.frontmatter.head.unshift(
-      ['link', { rel: 'canonical', href: canonicalUrl }],
-      ['meta', { property: 'og:title', content: pageData.title }],
-    )
-    return pageData
+  transformHead(ctx) {
+    const path = ctx.page.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')
+
+    if (path !== '404') {
+      const canonicalUrl = path ? `${ogUrl}/${path}` : ogUrl
+      ctx.head.push(
+        ['link', { rel: 'canonical', href: canonicalUrl }],
+        ['meta', { property: 'og:title', content: ctx.pageData.title }],
+      )
+    }
+
+    // For the landing page, move the google font links to the top for better performance
+    if (path === '') {
+      const googleFontLinks: HeadConfig[] = []
+      for (let i = 0; i < ctx.head.length; i++) {
+        const tag = ctx.head[i]
+        if (
+          tag[0] === 'link' &&
+          (tag[1]?.href?.includes('fonts.googleapis.com') ||
+            tag[1]?.href?.includes('fonts.gstatic.com'))
+        ) {
+          ctx.head.splice(i, 1)
+          googleFontLinks.push(tag)
+          i--
+        }
+      }
+      ctx.head.unshift(...googleFontLinks)
+    }
   },
   markdown: {
     // languages used for twoslash and jsdocs in twoslash
     languages: ['ts', 'js', 'json'],
-    codeTransformers: [transformerTwoslash()],
+    codeTransformers: [
+      transformerTwoslash({
+        twoslashOptions: {
+          compilerOptions: {
+            moduleResolution: 100, // bundler
+            ignoreDeprecations: '5.0', // remove the options entirely when twoslash doesn't set `baseUrl`
+          },
+        },
+      }),
+      // add `style:*` support
+      {
+        root(hast) {
+          const meta = this.options.meta?.__raw
+            ?.split(' ')
+            .find((m) => m.startsWith('style:'))
+          if (meta) {
+            const style = meta.slice('style:'.length)
+            const rootPre = hast.children.find(
+              (n): n is typeof n & { type: 'element'; tagName: 'pre' } =>
+                n.type === 'element' && n.tagName === 'pre',
+            )
+            if (rootPre) {
+              rootPre.properties.style += '; ' + style
+            }
+          }
+        },
+      },
+    ],
     anchor: {
       // @ts-ignore
       renderPermalink,
     },
-    config: (md) => {
+    async config(md) {
       md.use(markdownItCustomAnchor)
       // @ts-ignore
       md.use(markdownItFootnote)
       // @ts-ignore
-      md.use(groupIconMdPlugin)
+      md.use(groupIconMdPlugin, {
+        titleBar: {
+          includeSnippet: true,
+        },
+      })
       // @ts-ignore
       md.use(markdownItImageSize, {
         publicDir: path.resolve(import.meta.dirname, '../public')
       })
+      await graphvizMarkdownPlugin(md)
     },
   },
   vite: {
@@ -523,6 +635,11 @@ export default defineConfig({
         'gsap/dist/MotionPathPlugin',
       ],
     },
+    define: {
+      __VITE_VERSION__: JSON.stringify(viteVersion),
+    },
   },
   buildEnd,
 })
+
+export default extendConfig(config)

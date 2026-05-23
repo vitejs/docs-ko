@@ -33,9 +33,9 @@ Vite는 서버 측 렌더링(SSR, Server-side Rendering)을 기본적으로 지�
 - index.html
 - server.js # main application server
 - src/
-  - main.js          # 환경에 구애받지 않는(Env-agnostic) 범용 앱 코드로 내보내는(Export) 스크립트
-  - entry-client.js  # 앱을 DOM 엘리먼트에 마운트하는 스크립트
-  - entry-server.js  # 프레임워크의 SSR API를 사용해 앱을 렌더링하는 스크립트
+  - main.js          # exports env-agnostic (universal) app code
+  - entry-client.js  # mounts the app to a DOM element
+  - entry-server.js  # renders the app using the framework's SSR API
 ```
 
 `index.html`은 `entry-client.js`를 반드시 참조해야 하며, 서버에서 렌더링된 페이지를 삽입해야 하는 자리 표시자를 포함해야 합니다:
@@ -55,7 +55,7 @@ Vite는 서버 측 렌더링(SSR, Server-side Rendering)을 기본적으로 지�
 import 'vite/client'
 // ---cut---
 if (import.meta.env.SSR) {
-  // ... SSR 에서만 작동하는 코드
+  // ... 서버 전용 로직
 }
 ```
 
@@ -68,33 +68,30 @@ SSR 앱을 빌드할 때, 메인 서버를 완전히 제어하고 Vite를 프로
 ```js{15-18} twoslash [server.js]
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import express from 'express'
 import { createServer as createViteServer } from 'vite'
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 async function createServer() {
   const app = express()
 
-  // 미들웨어 모드로 Vite 서버를 생성하고 애플리케이션의 타입을 'custom'으로 설정합니다.
-  // 이는 Vite의 자체 HTML 제공 로직을 비활성화하고,
-  // 상위 서버에서 이를 제어할 수 있도록 합니다.
+  // 미들웨어 모드로 Vite 서버를 생성하고 앱 타입을 'custom'으로 설정합니다.
+  // 그러면 Vite 자체 HTML 제공 로직이 비활성화되어 부모 서버가
+  // 제어를 맡을 수 있습니다.
   const vite = await createViteServer({
-    server: { middlewareMode: 'ssr' },
+    server: { middlewareMode: true },
     appType: 'custom'
   })
 
-  // Vite를 미들웨어로 사용합니다.
-  // 만약 Express 라우터(express.Router())를 사용하는 경우, router.use를 사용해야 합니다.
-  // 서버가 다시 시작되어도(예: 사용자가 vite.config.js를 수정한 후)
-  // 새로운 내부 스택의 Vite 및 플러그인이 주입된 미들웨어를 포함해,
-  // `vite.middlewares`는 여전히 동일한 참조를 유지합니다.
-  // 다음은 재시작 후에도 유효합니다.
+  // Vite의 connect 인스턴스를 미들웨어로 사용합니다. 자체 express 라우터
+  // (express.Router())를 사용한다면 router.use를 사용해야 합니다.
+  // 서버가 다시 시작되어도(예: 사용자가 vite.config.js를 수정한 뒤)
+  // `vite.middlewares`는 동일한 참조를 유지합니다
+  // (Vite와 플러그인이 주입한 미들웨어의 새 내부 스택 포함).
+  // 따라서 아래 코드는 재시작 후에도 유효합니다.
   app.use(vite.middlewares)
 
   app.use('*all', async (req, res) => {
-    // index.html 파일을 제공합니다 - 아래에서 이를 다룰 예정입니다.
+    // index.html을 제공합니다. 다음 단계에서 다룹니다.
   })
 
   app.listen(5173)
@@ -111,7 +108,6 @@ createServer()
 // @noErrors
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 
 /** @type {import('express').Express} */
 var app
@@ -123,42 +119,42 @@ app.use('*all', async (req, res, next) => {
   const url = req.originalUrl
 
   try {
-    // 1. index.html 파일을 읽어들입니다.
+    // 1. index.html을 읽습니다.
     let template = fs.readFileSync(
-      path.resolve(__dirname, 'index.html'),
-      'utf-8'
+      path.resolve(import.meta.dirname, 'index.html'),
+      'utf-8',
     )
 
-    // 2. Vite의 HTML 변환 작업을 통해 Vite HMR 클라이언트를 주입하고,
-    //    Vite 플러그인의 HTML 변환도 적용합니다.
-    //    (예: @vitejs/plugin-react의 전역 초기화 코드)
+    // 2. Vite HTML 변환을 적용합니다. 이 과정에서 Vite HMR 클라이언트를 주입하고,
+    //    Vite 플러그인의 HTML 변환도 적용합니다. 예를 들어 @vitejs/plugin-react의
+    //    전역 프리앰블이 여기에 포함됩니다.
     template = await vite.transformIndexHtml(url, template)
 
-    // 3. 서버의 진입점(Entry)을 로드합니다.
-    //    ssrLoadModule은 Node.js에서 사용할 수 있도록 ESM 소스 코드를 자동으로 변환합니다.
-    //    추가적인 번들링이 필요하지 않으며, HMR과 유사한 동작을 수행합니다.
+    // 3. 서버 엔트리를 로드합니다. ssrLoadModule은 ESM 소스 코드를 Node.js에서
+    //    사용할 수 있도록 자동 변환합니다. 번들링은 필요 없으며,
+    //    HMR과 비슷한 효율적인 무효화를 제공합니다.
     const { render } = await vite.ssrLoadModule('/src/entry-server.js')
 
-    // 4. 앱의 HTML을 렌더링합니다.
-    //    이는 entry-server.js에서 내보낸(Export) `render` 함수가
-    //    ReactDOMServer.renderToString()과 같은 적절한 프레임워크의 SSR API를 호출한다고 가정합니다.
+    // 4. 앱 HTML을 렌더링합니다. entry-server.js에서 export한 `render` 함수가
+    //    적절한 프레임워크 SSR API를 호출한다고 가정합니다.
+    //    예: ReactDOMServer.renderToString()
     const appHtml = await render(url)
 
-    // 5. 렌더링된 HTML을 템플릿에 주입합니다.
+    // 5. 앱이 렌더링한 HTML을 템플릿에 주입합니다.
     const html = template.replace(`<!--ssr-outlet-->`, () => appHtml)
 
-    // 6. 렌더링된 HTML을 응답으로 전송합니다.
+    // 6. 렌더링된 HTML을 반환합니다.
     res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
   } catch (e) {
-    // 만약 오류가 발생된다면, Vite는 스택트레이스(Stacktrace)를 수정하여
-    // 오류가 실제 코드에 매핑되도록 재구성합니다.
+    // 오류를 잡으면 Vite가 스택 트레이스를 실제 소스 코드에 매핑되도록
+    // 수정하게 합니다.
     vite.ssrFixStacktrace(e)
     next(e)
   }
 })
 ```
 
-`package.json`의 `dev` 스크립트도 서버 스크립트를 사용하도록 변경해줍니다:
+`package.json`의 `dev` 스크립트도 서버 스크립트를 사용하도록 변경합니다:
 
 ```diff [package.json]
   "scripts": {
@@ -194,7 +190,7 @@ SSR 프로젝트를 프로덕션으로 제공하기 위해서는 다음이 필�
 
 - `await vite.ssrLoadModule('/src/entry-server.js')` 대신, `import('./dist/server/entry-server.js')`를 사용하여 스크립트를 로드하도록 합니다. (이 파일은 SSR 빌드 결과물 입니다.)
 
-- `vite` 개발 서버의 생성과 모든 사용은 개발 전용으로 구분된 조건문 아래로 이동한 다음, `dist/client`를 통해 파일을 제공할 수 있도록 미들웨어를 추가해줍니다.
+- `vite` 개발 서버의 생성과 모든 사용은 개발 전용으로 구분된 조건문 아래로 이동한 다음, `dist/client`를 통해 파일을 제공할 수 있도록 미들웨어를 추가합니다.
 
 자세한 프로젝트 구성은 [예제 프로젝트](#example-projects)를 참고해주세요.
 
@@ -216,7 +212,7 @@ SSR 프로젝트를 프로덕션으로 제공하기 위해서는 다음이 필�
 ```js [src/entry-server.js]
 const ctx = {}
 const html = await vueServerRenderer.renderToString(app, ctx)
-// ctx.modules는 이제 렌더링 중에 사용된 모듈 ID의 집합(Set)입니다.
+// ctx.modules는 렌더링 중 사용된 모듈 ID의 Set입니다.
 ```
 
 `server.js`의 프로덕션 분기문에서는 매니페스트 파일을 읽고, `src/entry-server.js`에서 내보낸(Export) `render` 함수에 전달해야 합니다. 이는 비동기 라우팅에서 사용되는 파일에 대한 사전 로드 지시문(Directives)을 렌더링하기에 충분한 정보를 제공합니다. 전체 예제는 [데모 소스 코드](https://github.com/vitejs/vite-plugin-vue/blob/main/playground/ssr-vue/src/entry-server.js)를 참고해주세요. 추가로 이 정보를 이용해 [103 Early Hints](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103)를 사용할 수도 있습니다.
@@ -255,14 +251,14 @@ export function mySSRPlugin() {
     name: 'my-ssr',
     transform(code, id, options) {
       if (options?.ssr) {
-        // SSR인 경우에만 수행될 변환 작업 관련 코드들...
+        // SSR 전용 변환 수행...
       }
-    }
+    },
   }
 }
 ```
 
-`load`와 `transform` 메서드의 옵션 객체는 어디까지나 선택 사항일 뿐입니다. 현재 Rollup에서 이 객체를 사용하지는 않으나, 향후 메타데이터로 이를 확장할 수 있습니다.
+`load`와 `transform`의 options 객체는 선택 사항입니다. Rollup은 현재 이 객체를 사용하지 않지만, 향후 추가 메타데이터로 이 훅들을 확장할 수 있습니다.
 
 :::tip 참고
 Vite 2.7 이전에는 `options` 객체를 사용하는 대신 `ssr` 매개변수를 이용했습니다. 따라서 이와 관련된 모든 프레임워크와 플러그인이 업데이트 될 것이지만, 간혹 이전 API를 이용하는 경우를 마주할 수도 있습니다.

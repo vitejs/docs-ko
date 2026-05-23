@@ -8,9 +8,9 @@
 
 - **타입:** `string | string[]`
 
-기본적으로 Vite는 모든 `.html` 파일을 크롤링해 사전 번들링이 필요한 디펜던시를 탐지합니다(`node_modules`, `build.outDir`, `__tests__` 및 `coverage` 디렉터리는 무시). 만약 `build.rollupOptions.input`이 지정된 경우 Vite가 대신 해당 진입점을 탐색합니다.
+기본적으로 Vite는 모든 `.html` 파일을 크롤링해 사전 번들링이 필요한 디펜던시를 탐지합니다(`node_modules`, `build.outDir`, `__tests__` 및 `coverage` 디렉터리는 무시). 만약 `build.rolldownOptions.input`이 지정된 경우 Vite가 대신 해당 진입점을 탐색합니다.
 
-이 방식들이 맞지 않는다면 이 옵션을 사용해 커스텀 진입점을 지정할 수 있습니다. 값은 [`tinyglobby` 패턴](https://github.com/SuperchupuDev/tinyglobby) 또는 패턴 배열이어야 하며, 이는 Vite 프로젝트 루트를 기준으로 합니다. 이는 기본 진입점 추론 방식을 덮어쓰게 됩니다. `optimizeDeps.entries`가 명시적으로 정의된 경우 기본적으로 `node_modules`와 `build.outDir` 폴더만 무시됩니다. 다른 폴더들을 무시해야 하는 경우에는 진입점 목록의 일부로 `!`로 시작하는 무시 패턴을 사용할 수 있습니다. `node_modules` 문자열을 명시적으로 포함하는 패턴의 경우 `node_modules`는 무시되지 않습니다.
+이 방식들이 맞지 않는다면 이 옵션을 사용해 커스텀 진입점을 지정할 수 있습니다. 값은 [`tinyglobby` 패턴](https://superchupu.dev/tinyglobby/comparison) 또는 패턴 배열이어야 하며, 이는 Vite 프로젝트 루트를 기준으로 합니다. 이는 기본 진입점 추론 방식을 덮어쓰게 됩니다. `optimizeDeps.entries`가 명시적으로 정의된 경우 기본적으로 `node_modules`와 `build.outDir` 폴더만 무시됩니다. 다른 폴더들을 무시해야 하는 경우에는 진입점 목록의 일부로 `!`로 시작하는 무시 패턴을 사용할 수 있습니다. `node_modules` 문자열을 명시적으로 포함하는 패턴의 경우 `node_modules`는 무시되지 않습니다.
 
 ## optimizeDeps.exclude <NonInheritBadge />
 
@@ -51,26 +51,22 @@ export default defineConfig({
 })
 ```
 
-## optimizeDeps.esbuildOptions <NonInheritBadge />
+## optimizeDeps.rolldownOptions <NonInheritBadge />
 
-- **타입:** [`Omit`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys)`<`[`EsbuildBuildOptions`](https://esbuild.github.io/api/#general-options)`,
-| 'bundle'
-| 'entryPoints'
-| 'external'
-| 'write'
-| 'watch'
-| 'outdir'
-| 'outfile'
-| 'outbase'
-| 'outExtension'
-| 'metafile'>`
+- **타입:** <code>Omit<<a href="https://rolldown.rs/reference/Interface.RolldownOptions">RolldownOptions</a>, 'input' | 'logLevel' | 'output'> & { output?: Omit<<a href="https://rolldown.rs/reference/#:~:text=Output%20Options">RolldownOutputOptions</a>, 'format' | 'sourcemap' | 'dir' | 'banner'> }</code>
 
-디펜던시 스캐닝 및 최적화 중 Esbuild에 전달할 옵션입니다.
+디펜던시 스캐닝 및 최적화 중 Rolldown에 전달할 옵션입니다.
 
 특정 옵션은 Vite의 디펜던시 최적화와 호환되지 않기에 생략되었습니다.
 
-- `external`은 생략됩니다. 이 대신 Vite의 `optimizeDeps.exclude` 옵션을 사용합니다.
 - `plugins`는 Vite의 디펜던시 플러그인과 병합됩니다.
+
+## optimizeDeps.esbuildOptions <NonInheritBadge />
+
+- **타입:** <code>Omit<<a href="https://esbuild.github.io/api/#general-options">EsbuildBuildOptions</a>, 'bundle' | 'entryPoints' | 'external' | 'write' | 'watch' | 'outdir' | 'outfile' | 'outbase' | 'outExtension' | 'metafile'></code>
+- **사용 중단**
+
+이 옵션은 내부적으로 `optimizeDeps.rolldownOptions`로 변환됩니다. 대신 `optimizeDeps.rolldownOptions`를 사용하세요.
 
 ## optimizeDeps.force <NonInheritBadge />
 
@@ -95,7 +91,7 @@ export default defineConfig({
 
 ## optimizeDeps.disabled <NonInheritBadge />
 
-- **지원 중단 예정**
+- **사용 중단**
 - **실험적 기능:** [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/13839)
 - **타입:** `boolean | 'build' | 'dev'`
 - **기본값:** `'build'`

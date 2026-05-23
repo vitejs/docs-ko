@@ -2,6 +2,19 @@
 
 Vite는 `import.meta.env` 라는 특수한 객체를 통해 특정 상수들을 노출합니다. 이러한 상수들은 개발 시 전역 변수로 정의되나, 빌드 시에는 정적으로 치환되어 효과적인 트리 셰이킹이 가능합니다.
 
+:::details 예제
+
+```js
+if (import.meta.env.DEV) {
+  // 이 블록 안의 코드는 프로덕션 빌드에서 트리 셰이킹됩니다.
+  console.log('Dev mode')
+}
+```
+
+:::
+
+<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~05an?via=vite" title="Env Variables in Vite">Scrimba에서 인터랙티브 강의를 시청하세요</ScrimbaLink>
+
 ## 내장 상수 {#built-in-constants}
 
 모든 상황에서 사용할 수 있는 내장 상수들은 다음과 같습니다:
@@ -18,16 +31,16 @@ Vite는 `import.meta.env` 라는 특수한 객체를 통해 특정 상수들을 
 
 ## 환경 변수 {#env-variables}
 
-Vite는 `import.meta.env` 객체를 통해 자동으로 환경 변수를 문자열로 노출합니다.
+Vite는 환경 변수를 `import.meta.env` 객체 아래에 문자열로 자동 노출합니다.
 
-환경 변수가 클라이언트에 실수로 노출되는 것을 방지하기 위해, `VITE_` 접두사가 붙은 변수들만 Vite가 처리하는 코드에서 접근이 가능합니다. 가령, 아래와 같이 환경 변수를 정의했다면:
+`VITE_` 접두사가 붙은 변수는 Vite 번들링 이후 클라이언트 측 소스 코드에 노출됩니다. 환경 변수가 실수로 클라이언트에 유출되지 않도록, 민감한 변수에는 이 접두사를 사용하지 마세요. 예를 들어 다음을 살펴보겠습니다:
 
 ```[.env]
 VITE_SOME_KEY=123
 DB_PASSWORD=foobar
 ```
 
-`VITE_SOME_KEY` 변수만이 클라이언트에서 `import.meta.env.VITE_SOME_KEY`로 접근이 가능합니다. `DB_PASSWORD`는 노출되지 않습니다.
+파싱된 `VITE_SOME_KEY` 값인 `"123"`은 클라이언트에 노출되지만, `DB_PASSWORD` 값은 노출되지 않습니다. 코드에 다음을 추가해 테스트할 수 있습니다:
 
 ```js
 console.log(import.meta.env.VITE_SOME_KEY) // "123"
@@ -40,15 +53,21 @@ console.log(import.meta.env.DB_PASSWORD) // undefined
 위와 같이 `VITE_SOME_KEY`는 숫자이지만 파싱 시 문자열로 반환됩니다. 불리얼 환경 변수에 대해서도 동일하게 적용되며, 코드에서 사용할 때는 원하는 타입으로 변환해야 합니다.
 :::
 
+:::warning 시크릿 보호하기
+
+`VITE_*` 변수에는 API 키 같은 민감한 정보를 포함해서는 _안 됩니다_. 이 변수들의 값은 빌드 시 소스 코드에 번들링됩니다. 프로덕션 배포에서는 시크릿을 안전하게 보호하기 위해 백엔드 서버 또는 서버리스/엣지 함수를 고려하세요.
+
+:::
+
 ### `.env` 파일들 {#env-files}
 
 Vite는 [dotenv](https://github.com/motdotla/dotenv)를 이용해 [환경 변수가 저장된 디렉터리](/config/shared-options.md#envdir) 내 아래의 파일에서 환경 변수를 가져옵니다.
 
 ```
-.env                # 모든 상황에서 사용될 환경 변수
-.env.local          # 모든 상황에서 사용되나, 로컬 개발 환경에서만 사용될(Git에 의해 무시될) 환경 변수
-.env.[mode]         # 특정 모드에서만 사용될 환경 변수
-.env.[mode].local   # 특정 모드에서만 사용되나, 로컬 개발 환경에서만 사용될(Git에 의해 무시될) 환경 변수
+.env                # loaded in all cases
+.env.local          # loaded in all cases, ignored by git
+.env.[mode]         # only loaded in specified mode
+.env.[mode].local   # only loaded in specified mode, ignored by git
 ```
 
 :::tip 환경 변수 우선순위
@@ -63,6 +82,12 @@ Vite가 실행될 때 이미 존재하던 환경 변수는 가장 높은 우선 
 
 :::
 
+:::warning Bun 사용자
+
+[Bun](https://bun.sh)을 사용할 때는 Bun이 스크립트 실행 전에 `.env` 파일을 자동으로 로드한다는 점에 유의하세요. 이 내장 동작은 환경 변수를 `process.env`에 직접 로드하며, 기존 `process.env` 값을 존중하는 Vite 기능과 충돌할 수 있습니다. 우회 방법은 [oven-sh/bun#5515](https://github.com/oven-sh/bun/issues/5515)를 참고하세요.
+
+:::
+
 또한 Vite는 [dotenv-expand](https://github.com/motdotla/dotenv-expand)를 사용해 env 파일에 작성된 환경 변수를 확장합니다. 문법에 대해 더 알아보고 싶다면 [이 문서](https://github.com/motdotla/dotenv-expand#what-rules-does-the-expansion-engine-follow)를 참고하세요.
 
 만약 환경 변수의 값에 `$`를 사용하고 싶다면 `\`를 사용해야 합니다.
@@ -74,14 +99,6 @@ NEW_KEY2=test\$foo  # test$foo
 NEW_KEY3=test$KEY   # test123
 ```
 
-:::warning 보안 권고 사항
-
-- `.env.*.local` 파일은 오로지 로컬에서만 접근이 가능한 파일이며, 데이터베이스 비밀번호와 같은 민감한 정보를 이 곳에 저장하도록 합니다. 또한 `.gitignore` 파일에 `*.local` 파일을 명시해 Git에 체크인되는 것을 방지하도록 합니다.
-
-- Vite 소스 코드에 노출되는 모든 환경 변수는 번들링 시 포함되게 됩니다. 따라서, `VITE_*` 환경 변수에는 민감한 정보들이 _포함되어서는 안됩니다_.
-
-:::
-
 ::: details 역순으로 변수 확장하기
 
 Vite는 역순으로 변수를 확장하는 것을 지원합니다.
@@ -92,10 +109,16 @@ VITE_FOO=foo${VITE_BAR}
 VITE_BAR=bar
 ```
 
-이는 셸 스크립트나 `docker-compose`와 같은 다른 도구에서는 작동하지 않습니다.
-하지만 Vite는 이 동작을 지원하는데, 이는 `dotenv-expand`가 오랫동안 이 기능을 지원해 왔고, JavaScript 생태계 내 다른 도구들도 이 동작을 지원하는 이전 버전을 사용하고 있기 때문입니다.
+이는 셸 스크립트나 `docker compose` 같은 다른 도구에서는 동작하지 않습니다.
+그럼에도 Vite는 이 동작을 지원합니다. `dotenv-expand`가 오랫동안 이를 지원해 왔고, JavaScript 생태계의 다른 도구들도 이 동작을 지원하는 이전 버전을 사용하기 때문입니다.
 
 다만 상호 운용성 문제를 피하기 위해 이러한 동작에 의존하지 않는 것이 좋습니다. Vite는 향후 이러한 동작에 대해 경고를 표시할 수 있습니다.
+
+:::
+
+:::warning 로컬 `.env` 파일 무시하기
+
+`.env.*.local` 파일은 로컬 전용이며 민감한 변수를 포함할 수 있습니다. git에 체크인되지 않도록 `.gitignore`에 `*.local`을 추가해야 합니다.
 
 :::
 
@@ -106,17 +129,15 @@ VITE_BAR=bar
 `src` 디렉터리 내 `vite-env.d.ts` 파일을 생성한 후, 아래와 같이 `ImportMetaEnv`를 정의하여 `VITE_` 환경 변수에 대한 타입을 정의할 수 있습니다.
 
 ```typescript [vite-env.d.ts]
-/// <reference types="vite/client" />
-
 interface ViteTypeOptions {
-  // 아래 라인을 추가하면, ImportMetaEnv 타입을 엄격하게 설정해
-  // 알 수 없는 키를 허용하지 않게 할 수 있습니다.
+  // 이 줄을 추가하면 ImportMetaEnv 타입을 엄격하게 만들어
+  // 알 수 없는 키를 허용하지 않을 수 있습니다.
   // strictImportMetaEnv: unknown
 }
 
 interface ImportMetaEnv {
   readonly VITE_APP_TITLE: string
-  // 다른 환경 변수들에 대한 타입 정의...
+  // 추가 env 변수...
 }
 
 interface ImportMeta {

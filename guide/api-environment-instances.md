@@ -8,7 +8,7 @@
 리소스:
 
 - [피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 새로운 API에 대한 피드백을 모으고 있습니다.
-- [환경 API PR](https://github.com/vitejs/vite/pull/16471)에서 새로운 API를 구현하고 검토했습니다.
+- 새 API가 구현되고 검토된 [Environment API PR](https://github.com/vitejs/vite/pull/16471)
 
 여러분의 피드백을 공유해주세요.
 :::
@@ -18,8 +18,8 @@
 개발 단계에서, `server.environments`로 개발 서버의 사용 가능한 환경에 접근할 수 있습니다:
 
 ```js
-// 서버를 생성하거나 configureServer 훅에서 가져옵니다
-const server = await createServer(/* options */)
+// 서버를 생성하거나 configureServer 훅에서 가져옵니다.
+const server = await createServer(/* 옵션 */)
 
 const clientEnvironment = server.environments.client
 clientEnvironment.transformRequest(url)
@@ -35,34 +35,34 @@ console.log(server.environments.ssr.moduleGraph)
 ```ts
 class DevEnvironment {
   /**
-   * Vite 서버에서 환경을 식별하는 고유 식별자입니다.
-   * 기본적으로 Vite는 'client'와 'ssr' 환경을 제공합니다.
+   * Vite 서버에서 환경을 식별하는 고유 값입니다.
+   * 기본적으로 Vite는 'client'와 'ssr' 환경을 노출합니다.
    */
   name: string
   /**
-   * 런타임 모듈 러너와 메시지를 주고받기 위한
+   * 대상 런타임에서 연결된 모듈 러너와 메시지를 주고받는
    * 통신 채널입니다.
    */
   hot: NormalizedHotChannel
   /**
-   * 모듈 노드 그래프로, 처리된 모듈 간 의존성 관계와
-   * 처리된 코드의 캐시를 포함합니다.
+   * 처리된 모듈 간 import 관계와 처리된 코드의 캐시 결과를 담는
+   * 모듈 노드 그래프입니다.
    */
   moduleGraph: EnvironmentModuleGraph
   /**
-   * 이 환경에 구성된 플러그인 목록이며, 환경별
-   * `create` 훅으로 생성된 플러그인도 포함합니다.
+   * 환경별 `create` 훅으로 생성된 플러그인을 포함해
+   * 이 환경에 대해 해석된 플러그인입니다.
    */
   plugins: Plugin[]
   /**
-   * 환경 플러그인 파이프라인으로 코드를 해석, 로드,
-   * 변환합니다.
+   * 환경 플러그인 파이프라인을 통해 코드를 resolve, load,
+   * transform합니다.
    */
   pluginContainer: EnvironmentPluginContainer
   /**
-   * 이 환경에 구성된 설정입니다. 서버 전역 범위의
-   * 옵션은 모든 환경의 기본값으로 사용되며, 재정의할 수
-   * 있습니다(resolve 조건, external, optimizedDeps).
+   * 이 환경에 대해 해석된 설정 옵션입니다. 서버 전역 범위의 옵션은
+   * 모든 환경의 기본값으로 사용되며, 재정의할 수 있습니다
+   * (resolve conditions, external, optimizedDeps).
    */
   config: ResolvedConfig & ResolvedDevEnvironmentOptions
 
@@ -73,18 +73,29 @@ class DevEnvironment {
   )
 
   /**
-   * URL을 ID로 해석하고 로드한 뒤, 플러그인 파이프라인으로
+   * URL을 id로 해석하고 로드한 뒤, 플러그인 파이프라인으로
    * 코드를 처리합니다. 모듈 그래프도 함께 업데이트됩니다.
    */
   async transformRequest(url: string): Promise<TransformResult | null>
 
   /**
-   * 요청을 낮은 우선순위로 등록하여 폭포수 현상을
-   * 방지합니다. Vite 서버는 다른 요청에서 가져온
-   * 모듈 정보를 활용해 모듈 그래프를 미리 준비할
-   * 수 있습니다.
+   * 낮은 우선순위로 처리할 요청을 등록합니다. 워터폴을 피하는 데
+   * 유용합니다. Vite 서버는 다른 요청이 import한 모듈 정보를 가지고
+   * 있으므로, 요청 시점에는 모듈이 이미 처리되어 있도록 모듈 그래프를
+   * 워밍업할 수 있습니다.
    */
   async warmupRequest(url: string): Promise<void>
+
+  /**
+   * 모듈 러너가 지정된 모듈의 정보를 가져올 때 호출됩니다.
+   * 내부적으로 `transformRequest`를 호출하고, 모듈 러너가 이해하는
+   * 형식으로 결과를 감쌉니다. 이 메서드는 직접 호출하기 위한 것이 아닙니다.
+   */
+  async fetchModule(
+    id: string,
+    importer?: string,
+    options?: FetchFunctionOptions,
+  ): Promise<FetchResult>
 }
 ```
 
@@ -114,7 +125,7 @@ interface TransformResult {
 }
 ```
 
-Vite 서버의 환경 인스턴스는 `environment.transformRequest(url)` 메서드로 URL을 처리합니다. 이 함수는 플러그인 파이프라인을 사용해 `url`을 모듈 `id`로 해석하고, 로드한 뒤(파일 시스템에서 파일을 읽거나 가상 모듈을 구현하는 플러그인을 통해), 코드를 변환합니다. 모듈 변환 중에는 의존성 관계(`import` 구문)와 메타데이터를 분석하여 모듈 노드를 생성하거나 업데이트하고, 이를 환경 모듈 그래프에 기록합니다. 처리가 완료되면 변환 결과도 모듈에 저장됩니다.
+Vite 서버의 환경 인스턴스는 `environment.transformRequest(url)` 메서드로 URL을 처리합니다. 이 함수는 플러그인 파이프라인을 사용해 `url`을 모듈 `id`로 해석하고, 로드한 뒤(파일 시스템에서 파일을 읽거나 가상 모듈을 구현하는 플러그인을 통해), 코드를 변환합니다. 모듈 변환 중에는 디펜던시 관계(`import` 구문)와 메타데이터를 분석하여 모듈 노드를 생성하거나 업데이트하고, 이를 환경 모듈 그래프에 기록합니다. 처리가 완료되면 변환 결과도 모듈에 저장됩니다.
 
 :::info transformRequest 이름에 대해
 현재 제안 버전에서는 Vite API에 익숙한 사용자들이 쉽게 이해하고 논의할 수 있도록 `transformRequest(url)`와 `warmupRequest(url)`를 사용했습니다. 릴리스 전에 이름을 검토할 기회가 있을 것입니다. 예를 들어, Rollup 플러그인 훅인 `context.load(id)`를 참고해 `environment.processModule(url)` 또는 `environment.loadModule(url)`로 이름을 지을 수 있습니다. 현재로서는 기존 이름을 유지하고 이 논의를 나중으로 미루고자 합니다.
@@ -208,5 +219,72 @@ export class EnvironmentModuleGraph {
   ): void
 
   getModuleByEtag(etag: string): EnvironmentModuleNode | undefined
+}
+```
+
+## `FetchResult` {#fetchresult}
+
+`environment.fetchModule` 메서드는 모듈 러너가 소비하도록 설계된 `FetchResult`를 반환합니다. `FetchResult`는 `CachedFetchResult`, `ExternalFetchResult`, `ViteFetchResult`의 유니언입니다.
+
+`CachedFetchResult`는 `304`(Not Modified) HTTP 상태 코드와 유사합니다.
+
+```ts
+export interface CachedFetchResult {
+  /**
+   * 모듈이 러너에 캐시되어 있다면, 서버 측에서 무효화되지 않았음을
+   * 확인합니다.
+   */
+  cache: true
+}
+```
+
+`ExternalFetchResult`는 모듈 러너에게 [`ModuleEvaluator`](/guide/api-environment-runtimes#moduleevaluator)의 `runExternalModule` 메서드를 사용해 모듈을 임포트하도록 지시합니다. 이 경우 기본 모듈 평가자는 파일을 Vite로 처리하는 대신 런타임의 네이티브 `import`를 사용합니다.
+
+```ts
+export interface ExternalFetchResult {
+  /**
+   * file://로 시작하는 외부화된 모듈 경로입니다.
+   * 기본적으로 이 모듈은 Vite가 변환해 Vite 러너로 로드하는 대신
+   * 동적 "import"로 import됩니다.
+   */
+  externalize: string
+  /**
+   * 모듈 타입입니다. import 문이 올바른지 판단하는 데 사용됩니다.
+   * 예를 들어 실제로 export되지 않은 변수를 Vite가 오류로 처리해야 하는지
+   * 판단할 때 사용됩니다.
+   */
+  type: 'module' | 'commonjs' | 'builtin' | 'network'
+}
+```
+
+`ViteFetchResult`는 실행할 `code`와 모듈의 `id`, `file`, `url`을 포함해 현재 모듈에 대한 정보를 반환합니다.
+
+`invalidate` 필드는 모듈 러너에게 캐시에서 제공하는 대신 다시 실행하기 전에 모듈을 무효화하도록 지시합니다. 일반적으로 HMR 업데이트가 트리거되었을 때 `true`입니다.
+
+```ts
+export interface ViteFetchResult {
+  /**
+   * Vite 러너가 평가할 코드입니다.
+   * 기본적으로 async 함수로 감싸집니다.
+   */
+  code: string
+  /**
+   * 디스크에 있는 모듈 파일 경로입니다.
+   * import.meta.url/filename으로 해석됩니다.
+   * 가상 모듈에서는 `null`입니다.
+   */
+  file: string | null
+  /**
+   * 서버 모듈 그래프 안의 모듈 ID입니다.
+   */
+  id: string
+  /**
+   * import에 사용된 모듈 URL입니다.
+   */
+  url: string
+  /**
+   * 클라이언트 측 모듈을 무효화합니다.
+   */
+  invalidate: boolean
 }
 ```

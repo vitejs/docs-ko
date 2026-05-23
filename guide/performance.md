@@ -18,7 +18,7 @@ Vite의 내부 및 공식 플러그인은 가능한 최소한의 작업을 수�
 
 그러나 커뮤니티 플러그인의 성능은 Vite가 통제할 수 없으며 이로 인해 개발자 경험에 영향을 줄 수 있습니다. 아래는 추가적인 Vite 플러그인을 사용할 때 주의해야 할 몇 가지 사항입니다:
 
-1. 특정 상황에서만 사용되는 대형 종속성은 Node.js 시작 시간을 줄이기 위해 동적으로 임포트되어야 합니다. 예시: [vite-plugin-react#212](https://github.com/vitejs/vite-plugin-react/pull/212) 및 [vite-plugin-pwa#224](https://github.com/vite-pwa/vite-plugin-pwa/pull/244).
+1. 특정 상황에서만 사용되는 대형 디펜던시는 Node.js 시작 시간을 줄이기 위해 동적으로 임포트되어야 합니다. 예시: [vite-plugin-react#212](https://github.com/vitejs/vite-plugin-react/pull/212) 및 [vite-plugin-pwa#224](https://github.com/vite-pwa/vite-plugin-pwa/pull/244).
 
 2. `buildStart`, `config`, `configResolved` 훅은 길고 복잡한 작업을 수행해서는 안 됩니다. 이 훅들은 개발 서버가 시작되는 동안 기다려야 하므로, 브라우저에서 사이트에 접근할 수 있는 시간이 지연됩니다.
 
@@ -114,14 +114,11 @@ export default defineConfig({
 
 이에 대한 예시는 다음과 같습니다:
 
-- 가능하다면 Sass/Less/Stylus 대신 CSS를 사용하세요. 중첩된 스타일은 PostCSS에서 처리할 수 있습니다.
+- 가능하면 Sass/Less/Stylus 대신 CSS를 사용하세요. 중첩은 PostCSS / Lightning CSS로 처리할 수 있습니다.
 - SVG를 UI 프레임워크 컴포넌트(React, Vue 등)로 변환하지 마세요. 대신 문자열이나 URL로 임포트하세요.
-- `@vitejs/plugin-react`를 사용하는 경우, 빌드 중 변환을 수행하지 않기 위해 Babel 옵션을 구성하지 마세요. 이 경우 esbuild만 사용됩니다.
 
 네이티브 툴링을 사용하는 예시:
 
-네이티브 툴링을 사용하면 설치 시 크기가 커지는 경우가 많으므로 새로운 Vite 프로젝트를 시작할 때는 기본적으로 사용되지 않습니다. 그러나 대규모 애플리케이션의 경우에는 그 비용을 감당할 가치가 있을 수 있습니다.
+Vite 코어는 네이티브 도구를 기반으로 하지만, 더 나은 호환성과 기능 집합을 제공하기 위해 일부 기능은 여전히 기본적으로 네이티브가 아닌 도구를 사용합니다. 하지만 대규모 애플리케이션에서는 그 비용을 감수할 가치가 있을 수 있습니다.
 
-- Rollup과 esbuild 대신 [Rolldown](./rolldown)을 사용해 보세요. 더 빠른 빌드와 개발-빌드 간 일관된 경험을 누릴 수 있습니다.
-- 실험적으로 도입된 [LightningCSS](https://github.com/vitejs/vite/discussions/13835)를 사용해 보세요.
-- `@vitejs/plugin-react` 대신 [`@vitejs/plugin-react-swc`](https://github.com/vitejs/vite-plugin-react-swc)를 사용하세요.
+- [Lightning CSS](https://github.com/vitejs/vite/discussions/13835)의 실험적 지원을 사용해 보세요.
