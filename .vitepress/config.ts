@@ -143,17 +143,18 @@ const config = defineConfig({
     ['meta', { property: 'og:image', content: ogImage }],
     ['meta', { property: 'og:url', content: ogUrl }],
     ['meta', { property: 'og:description', content: ogDescription }],
+    ['meta', { property: 'og:site_name', content: 'vitejs' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:site', content: '@vite_js' }],
     ['meta', { name: 'theme-color', content: '#646cff' }],
     [
       'script',
-      { src: 'https://www.googletagmanager.com/gtag/js?id=G-V8ZS1G7X21' },
-    ],
-    [
-      'script',
-      {},
-      `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-V8ZS1G7X21');`,
+      {
+        src: 'https://cdn.usefathom.com/script.js',
+        'data-site': 'CBDFBSLI',
+        'data-spa': 'auto',
+        defer: '',
+      },
     ],
   ],
 
@@ -220,8 +221,38 @@ const config = defineConfig({
     },
 
     footer: {
-      message: `MIT 라이선스로 배포됩니다. (${commitRef})`,
-      copyright: 'Copyright © 2019-present VoidZero Inc. & Vite Contributors',
+      copyright: `© 2019-present VoidZero Inc. and Vite contributors. (${commitRef})`,
+      nav: [
+        {
+          title: 'Vite',
+          items: [
+            { text: '가이드', link: '/guide/' },
+            { text: '설정', link: '/config/' },
+            { text: '플러그인', link: '/plugins/' },
+          ],
+        },
+        {
+          title: '리소스',
+          items: [
+            { text: 'Vite 팀', link: '/team' },
+            { text: '블로그', link: '/blog' },
+            {
+              text: '릴리스',
+              link: 'https://github.com/vitejs/vite/releases',
+            },
+          ],
+        },
+        {
+          title: '버전',
+          items: versionLinks,
+        },
+      ],
+      social: [
+        { icon: 'github', link: 'https://github.com/vitejs/vite' },
+        { icon: 'discord', link: 'https://chat.vite.dev' },
+        { icon: 'bluesky', link: 'https://bsky.app/profile/vite.dev' },
+        { icon: 'x', link: 'https://x.com/vite_js' },
+      ],
     },
 
     nav: [
@@ -366,32 +397,8 @@ const config = defineConfig({
               link: '/guide/performance',
             },
             {
-              text: 'Rolldown',
-              link: '/guide/rolldown',
-            },
-            {
-              text: 'v6에서 마이그레이션하기',
+              text: 'v7에서 마이그레이션하기',
               link: '/guide/migration',
-            },
-            {
-              text: 'v5에서 마이그레이션하기',
-              link: '/guide/migration-from-v5',
-            },
-            {
-              text: 'v4에서 마이그레이션하기',
-              link: '/guide/migration-from-v4',
-            },
-            {
-              text: 'v3에서 마이그레이션하기',
-              link: '/guide/migration-from-v3',
-            },
-            {
-              text: 'v2에서 마이그레이션하기',
-              link: '/guide/migration-from-v2',
-            },
-            {
-              text: 'v1에서 마이그레이션하기',
-              link: '/guide/migration-from-v1',
             },
             {
               text: '주요 변경 사항',
@@ -530,21 +537,66 @@ const config = defineConfig({
       level: [2, 3],
     },
   },
-  transformPageData(pageData) {
-    const canonicalUrl = `${ogUrl}/${pageData.relativePath}`
-      .replace(/\/index\.md$/, '/')
-      .replace(/\.md$/, '')
-    pageData.frontmatter.head ??= []
-    pageData.frontmatter.head.unshift(
-      ['link', { rel: 'canonical', href: canonicalUrl }],
-      ['meta', { property: 'og:title', content: pageData.title }],
-    )
-    return pageData
+  transformHead(ctx) {
+    const path = ctx.page.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')
+
+    if (path !== '404') {
+      const canonicalUrl = path ? `${ogUrl}/${path}` : ogUrl
+      ctx.head.push(
+        ['link', { rel: 'canonical', href: canonicalUrl }],
+        ['meta', { property: 'og:title', content: ctx.pageData.title }],
+      )
+    }
+
+    // For the landing page, move the google font links to the top for better performance
+    if (path === '') {
+      const googleFontLinks: HeadConfig[] = []
+      for (let i = 0; i < ctx.head.length; i++) {
+        const tag = ctx.head[i]
+        if (
+          tag[0] === 'link' &&
+          (tag[1]?.href?.includes('fonts.googleapis.com') ||
+            tag[1]?.href?.includes('fonts.gstatic.com'))
+        ) {
+          ctx.head.splice(i, 1)
+          googleFontLinks.push(tag)
+          i--
+        }
+      }
+      ctx.head.unshift(...googleFontLinks)
+    }
   },
   markdown: {
     // languages used for twoslash and jsdocs in twoslash
     languages: ['ts', 'js', 'json'],
-    codeTransformers: [transformerTwoslash()],
+    codeTransformers: [
+      transformerTwoslash({
+        twoslashOptions: {
+          compilerOptions: {
+            moduleResolution: 100, // bundler
+            ignoreDeprecations: '5.0', // remove the options entirely when twoslash doesn't set `baseUrl`
+          },
+        },
+      }),
+      // add `style:*` support
+      {
+        root(hast) {
+          const meta = this.options.meta?.__raw
+            ?.split(' ')
+            .find((m) => m.startsWith('style:'))
+          if (meta) {
+            const style = meta.slice('style:'.length)
+            const rootPre = hast.children.find(
+              (n): n is typeof n & { type: 'element'; tagName: 'pre' } =>
+                n.type === 'element' && n.tagName === 'pre',
+            )
+            if (rootPre) {
+              rootPre.properties.style += '; ' + style
+            }
+          }
+        },
+      },
+    ],
     anchor: {
       // @ts-ignore
       renderPermalink,
@@ -554,7 +606,11 @@ const config = defineConfig({
       // @ts-ignore
       md.use(markdownItFootnote)
       // @ts-ignore
-      md.use(groupIconMdPlugin)
+      md.use(groupIconMdPlugin, {
+        titleBar: {
+          includeSnippet: true,
+        },
+      })
       // @ts-ignore
       md.use(markdownItImageSize, {
         publicDir: path.resolve(import.meta.dirname, '../public')
