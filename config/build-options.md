@@ -156,7 +156,7 @@ npm add -D esbuild
 
 청크 캐시 효율을 최적화하기 위해 임포트 맵 기능을 사용할지 여부입니다.
 
-이 옵션을 사용하려면 [`import.meta.resolve`를 지원](https://caniuse.com/mdn-javascript_operators_import_meta_resolve)해야 합니다. 이전 브라우저를 지원해야 한다면 [`@vitejs/plugin-legacy`](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)를 참고하세요.
+이 옵션을 사용하려면 실행 환경에서 [`import.meta.resolve`](https://caniuse.com/mdn-javascript_operators_import_meta_resolve)를 지원해야 합니다. 구형 브라우저를 지원해야 한다면 [`@vitejs/plugin-legacy`](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)를 참고하세요.
 
 ## build.rolldownOptions {#build-rolldownoptions}
 

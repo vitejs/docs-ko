@@ -129,7 +129,7 @@ console.log(add(1, 2)) // 3
 PostCSS는 지원하지만 Lightning CSS에는 없던 기능을 추가하기 위해 Lightning CSS 팀과 협력했습니다. Vite 8.1은 이제 다음 두 기능을 제공합니다:
 
 - CSS 파일에서 임포트한 외부 CSS 파일 허용 ([lightningcss#479](https://github.com/parcel-bundler/lightningcss/issues/479))
-- 플러그인의 파일 디펜던시 등록 ([lightningcss#877](https://github.com/parcel-bundler/lightningcss/issues/877))
+- 플러그인이 파일 디펜던시를 등록하도록 지원 ([lightningcss#877](https://github.com/parcel-bundler/lightningcss/issues/877))
 
 다음 메이저 릴리스에서 기본 CSS 전처리기를 Lightning CSS로 변경하는 방안을 검토 중입니다. [`css.transformer: 'lightningcss'`](/config/shared-options#css-transformer) 설정을 사용해 보시고 [논의](https://github.com/vitejs/vite/discussions/13835)에 피드백을 공유해 주세요.
 

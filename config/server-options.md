@@ -189,7 +189,7 @@ HMR 동작을 비활성화하거나 설정합니다.
 
 ::: warning 사용 중단된 옵션
 
-WebSocket 관련 옵션(`protocol`, `host`, `port`, `path`, `clientPort`, `timeout`, `server`)은 사용 중단되었습니다. 대신 [`server.ws`](#server-ws)를 사용하세요. 이 옵션은 자동으로 동기화되므로 기존 설정은 계속 동작합니다.
+WebSocket 관련 옵션(`protocol`, `host`, `port`, `path`, `clientPort`, `timeout`, `server`)은 사용 중단되었습니다. 대신 [`server.ws`](#server-ws)를 사용하세요. 사용 중단된 옵션은 자동으로 동기화되므로 기존 설정은 계속 동작합니다.
 
 :::
 
@@ -207,7 +207,7 @@ WebSocket 연결 옵션을 설정합니다. WebSocket 연결을 완전히 비활
 - `timeout` - 연결 제한 시간(밀리초 단위, 기본값: 30000)
 - `server` - WebSocket 연결에 커스텀 HTTP 서버 사용
 
-`server.ws.server` 옵션이 정의되면 Vite는 제공된 서버를 통해 WebSocket 연결 요청을 처리합니다. 미들웨어 모드가 아니라면 Vite는 기존 서버를 통해 WebSocket 연결 요청을 처리하려고 시도합니다. 이는 자체 서명 인증서를 사용하거나 단일 포트로 네트워크에 Vite를 노출하려는 경우 유용합니다.
+`server.ws.server` 옵션이 정의되면 Vite는 제공된 서버를 통해 WebSocket 연결 요청을 처리합니다. 미들웨어 모드가 아니라면 Vite는 기존 서버를 통해 WebSocket 연결 요청을 처리하려고 시도합니다. 이는 자체 서명된 인증서를 사용하거나 네트워크에서 Vite를 단일 포트로 제공하려는 경우 유용합니다.
 
 ```js
 export default defineConfig({

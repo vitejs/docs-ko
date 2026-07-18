@@ -19,7 +19,7 @@ head:
       content: https://vite.dev/blog/cloudflare-supports-vite
   - - meta
     - property: og:description
-      content: VoidZero 팀이 Cloudflare에 합류합니다. Vite는 MIT 라이선스와 벤더 중립성을 유지하며, 기존의 폭넓은 팀이 계속 관리합니다.
+      content: VoidZero 팀이 Cloudflare에 합류합니다. Vite는 MIT 라이선스와 벤더 중립성을 유지하며, 기존처럼 다양한 구성원으로 이뤄진 팀이 계속 관리합니다.
   - - meta
     - name: twitter:card
       content: summary_large_image
@@ -52,7 +52,7 @@ Cloudflare는 Vite가 중립성을 유지하도록 지원하는 데 전념하며
 - 표준화 기구와 협력해 새로운 웹 플랫폼 기능을 더 빠르게 도입합니다.
 - 보안 이슈를 더 신속하게 점검하고 공개합니다.
 
-이 가운데 다수는 이미 작업을 시작했으며, 이번 지원으로 진행 속도를 높일 수 있습니다.
+이 중 다수는 이미 진행 중이며, 이번 지원으로 속도를 더 낼 수 있습니다.
 
 ## 감사합니다 {#thank-you}
 
