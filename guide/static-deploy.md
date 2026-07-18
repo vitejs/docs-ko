@@ -162,7 +162,7 @@ Netlify CLI는 확인할 수 있는 프리뷰 URL을 제공합니다. 프로덕�
 3. Vercel은 Vite를 사용하고 있음을 감지하게 되며, 배포와 관련된 올바른 설정을 활성화합니다.
 4. 애플리케이션이 배포되었습니다! (예시: [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
 
-Vercel로 프로젝트를 불러오고 배포까지 완료했다면, 이후 브랜치에 대한 모든 Push 동작은 애플리케이션에 대한 [프리뷰 배포](https://vercel.com/docs/concepts/deployments/environments#preview)를 생성하게 됩니다. 그리고 프로덕션용 브랜치(일반적으로 "main")에 대한 모든 변경 사항은 [프로덕션 배포](https://vercel.com/docs/concepts/deployments/environments#production)가 됩니다.
+Vercel로 프로젝트를 불러오고 배포까지 완료했다면, 이후 브랜치에 대한 모든 Push 동작은 애플리케이션에 대한 [프리뷰 배포](https://vercel.com/docs/deployments/environments#preview-environment-pre-production)를 생성하게 됩니다. 그리고 프로덕션용 브랜치(일반적으로 "main")에 대한 모든 변경 사항은 [프로덕션 배포](https://vercel.com/docs/deployments/environments#production-environment)가 됩니다.
 
 이에 대해 좀 더 알고 싶다면 Vercel의 [Git](https://vercel.com/docs/concepts/git) 문서를 참고해주세요.
 
@@ -302,7 +302,7 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 
 ## xmit 정적 사이트 호스팅 {#xmit-static-site-hosting}
 
-[xmit](https://xmit.co)를 사용하여 정적 사이트를 배포하려면 이 [가이드](https://xmit.dev/posts/vite-quickstart/)를 따라주세요.
+[xmit](https://xmit.co)를 사용하여 정적 사이트를 배포하려면 이 [가이드](https://xmit.dev/guides/vite-quickstart/)를 따라주세요.
 
 ## Zephyr Cloud {#zephyr-cloud}
 

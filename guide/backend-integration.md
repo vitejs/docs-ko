@@ -179,7 +179,7 @@
    ```
 
    매니페스트의 각 항목은 다음 중 하나를 나타냅니다:
-   - **진입 청크**: [`build.rollupOptions.input`](https://rollupjs.org/configuration-options/#input)에 지정된 파일에서 생성됩니다. 이러한 청크는 `isEntry: true`를 가지며, 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
+   - **진입 청크**: [`build.rollupOptions.input`](https://rolldown.rs/reference/InputOptions.input#input)에 지정된 파일에서 생성됩니다. 이러한 청크는 `isEntry: true`를 가지며, 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
    - **동적 진입 청크**: 동적 가져오기에서 생성됩니다. 이러한 청크는 `isDynamicEntry: true`를 가지며, 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
    - **비진입(Non-entry) 청크**: 생성된 파일 이름에 `_` 접두사를 붙여 키로 사용합니다.
    - **에셋 청크**: 이미지나 폰트와 같은 에셋에서 생성됩니다. 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
@@ -270,4 +270,11 @@
    }
    ```
 
+   :::
+
+   :::info 청크 임포트 맵 지원(실험적 기능)
+
+   실험적인 [`build.chunkImportMap`](/config/build-options#build-chunkimportmap) 옵션을 사용한다면 HTML에 임포트 맵도 삽입해야 합니다.
+
+   임포트 맵은 출력 디렉터리의 `importmap.json`으로 생성됩니다. `<script type="module">` 태그나 `<link rel="modulepreload">` 태그보다 먼저 `<script type="importmap">` 태그를 삽입해야 합니다.
    :::

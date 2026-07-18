@@ -200,7 +200,7 @@ interface ViteDevServer {
 ```ts
 async function build(
   inlineConfig?: InlineConfig,
-): Promise<RollupOutput | RollupOutput[]>
+): Promise<RolldownOutput | RolldownOutput[] | RolldownWatcher>
 ```
 
 **사용 예제:**
@@ -371,7 +371,7 @@ function loadEnv(
 
 **관련 문서:** [`.env` Files](./env-and-mode.md#env-files)
 
-`envDir` 내부의 `.env` 파일을 로드합니다. 기본적으로 `VITE_`로 시작하는 환경 변수만 로드되나, `prefixes`를 통해 이를 변경할 수 있습니다.
+`envDir` 내부의 `.env` 파일을 로드하고 `process.env`에 이미 있는 일치하는 변수와 병합합니다. 기본적으로 `VITE_`로 시작하는 환경 변수만 로드되나, `prefixes`를 통해 이를 변경할 수 있습니다.
 
 ## `normalizePath` {#normalizepath}
 
@@ -435,7 +435,7 @@ async function loadConfigFromFile(
 } | null>
 ```
 
-esbuild를 사용하여 Vite 설정 파일을 수동으로 로드합니다.
+Rolldown을 사용하여 Vite 설정 파일을 수동으로 로드합니다.
 
 ## `preprocessCSS` {#preprocesscss}
 

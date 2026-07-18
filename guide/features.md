@@ -53,7 +53,7 @@ export type { T }
 
 ### 타입스크립트 컴파일러 옵션 {#typescript-compiler-options}
 
-Vite는 `tsconfig.json`의 일부 옵션을 존중하고, 이에 대응하는 Oxc Transformer 옵션을 설정합니다. 각 파일에 대해 Vite는 가장 가까운 상위 디렉터리의 `tsconfig.json`을 사용합니다. 해당 `tsconfig.json`에 [`references`](https://www.typescriptlang.org/tsconfig/#references) 필드가 있다면, Vite는 [`include`](https://www.typescriptlang.org/tsconfig/#include)와 [`exclude`](https://www.typescriptlang.org/tsconfig/#exclude) 필드를 만족하는 참조된 설정 파일을 사용합니다.
+Vite는 `tsconfig.json`의 일부 옵션을 존중하고, 이에 대응하는 Oxc Transformer 옵션을 설정합니다. 각 파일에 대해 Vite는 해당 파일과 일치하는 가장 가까운 상위 `tsconfig.json`이나, 그 설정의 [`references`](https://www.typescriptlang.org/tsconfig/#references) 필드가 참조하는 설정 중 파일과 일치하는 설정을 사용합니다. 파일이 설정의 [`files`](https://www.typescriptlang.org/tsconfig/#files), [`include`](https://www.typescriptlang.org/tsconfig/#include), [`exclude`](https://www.typescriptlang.org/tsconfig/#exclude) 필드를 만족하면 해당 설정과 일치하는 것으로 봅니다.
 
 Vite 설정과 `tsconfig.json`에 같은 옵션이 모두 설정된 경우, Vite 설정의 값이 우선합니다.
 
@@ -95,13 +95,13 @@ Vite는 [esbuild](https://esbuild.github.io/)와 동일한 동작을 따라 `tsc
 
 - [TypeScript 문서](https://www.typescriptlang.org/tsconfig#emitDecoratorMetadata)
 
-이 옵션은 부분적으로만 지원됩니다. 완전한 지원에는 TypeScript 컴파일러의 타입 추론이 필요하지만, 이는 지원되지 않습니다. 자세한 내용은 [Oxc Transformer 문서](https://oxc.rs/docs/guide/usage/transformer/typescript#decorators)를 참고해 주세요.
+이 옵션은 부분적으로만 지원됩니다. 완전한 지원에는 TypeScript 컴파일러의 타입 추론이 필요하지만, 이는 지원되지 않습니다. 자세한 내용은 [Oxc Transformer 문서](https://oxc.rs/docs/guide/usage/transformer/typescript.html#decorators)를 참고해 주세요.
 
 #### `paths` {#paths}
 
 - [TypeScript 문서](https://www.typescriptlang.org/tsconfig/#paths)
 
-`resolve.tsconfigPaths: true`를 지정하면 Vite가 `tsconfig.json`의 `paths` 옵션을 사용해 import를 해석하도록 할 수 있습니다.
+[`resolve.tsconfigPaths: true`](/config/shared-options.md#resolve-tsconfigpaths)를 지정하면 Vite가 `tsconfig.json`의 `paths` 옵션을 사용해 import를 해석하도록 할 수 있습니다.
 
 이 기능에는 성능 비용이 있으며, [TypeScript 팀은 외부 도구의 동작을 변경하기 위해 이 옵션을 사용하는 것을 권장하지 않습니다](https://www.typescriptlang.org/tsconfig/#paths:~:text=Note%20that%20this%20feature%20does%20not%20change%20how%20import%20paths%20are%20emitted%20by%20tsc%2C%20so%20paths%20should%20only%20be%20used%20to%20inform%20TypeScript%20that%20another%20tool%20has%20this%20mapping%20and%20will%20use%20it%20at%20runtime%20or%20when%20bundling.). 이 점에 유의하세요.
 
@@ -119,7 +119,7 @@ Vite는 [esbuild](https://esbuild.github.io/)와 동일한 동작을 따라 `tsc
 - [`alwaysStrict`](https://www.typescriptlang.org/tsconfig#alwaysStrict)
 
 ::: tip `skipLibCheck`
-Vite 스타터 템플릿은 TypeScript의 특정 버전과 설정만을 지원하는 라이브러리가 있을 수 있기 때문에, 디펜던시에 대한 타입 체크를 수행하지 않기 위해 기본값으로 `"skipLibCheck": "true"`를 설정하고 있습니다. 자세한 내용은 [vuejs/vue-cli#5688](https://github.com/vuejs/vue-cli/pull/5688)을 참고해 주세요.
+Vite 스타터 템플릿은 TypeScript의 특정 버전과 설정만을 지원하는 라이브러리가 있을 수 있기 때문에, 디펜던시에 대한 타입 체크를 수행하지 않기 위해 기본값으로 `"skipLibCheck": true`를 설정하고 있습니다. 자세한 내용은 [vuejs/vue-cli#5688](https://github.com/vuejs/vue-cli/pull/5688)을 참고해 주세요.
 :::
 
 ### Client Types {#client-types}
@@ -235,7 +235,7 @@ HTML 파일은 Vite 프로젝트에서 [중심적인 역할](/guide/#index-html-
 
 ## JSX {#jsx}
 
-`.jsx`와 `.tsx` 파일은 기본적으로 지원됩니다. JSX 트랜스파일링 역시 [Oxc Transformer](https://oxc.rs/docs/guide/usage/transformer/)를 통해 처리됩니다.
+`.jsx`와 `.tsx` 파일은 기본적으로 지원됩니다. JSX 트랜스파일링 역시 [Oxc Transformer](https://oxc.rs/docs/guide/usage/transformer.html)를 통해 처리됩니다.
 
 선택한 프레임워크는 일반적으로 JSX를 기본적으로 구성해 둡니다. 예를 들어 Vue 사용자는 HMR, 전역 컴포넌트 해석, 디렉티브, 슬롯 등 Vue 3 전용 기능을 제공하는 공식 [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx) 플러그인을 사용해야 합니다.
 
@@ -620,6 +620,20 @@ const modulesWithBase = {
 
 `base`가 제공되면 결과 모듈 키는 모두 해당 `base`를 기준으로 상대 경로가 되도록 수정됩니다.
 
+#### 대소문자 구분 {#case-sensitive-matching}
+
+기본적으로 glob 패턴 매칭은 대소문자를 구분합니다. `caseSensitive` 옵션으로 이 동작을 변경할 수 있습니다:
+
+```ts twoslash
+import 'vite/client'
+// ---cut---
+const modules = import.meta.glob('./dir/module*.js', {
+  caseSensitive: false,
+})
+```
+
+`caseSensitive: false`로 설정하면 glob은 대소문자와 관계없이 파일을 매칭합니다(예: `Module.js`, `module.js`, `MODULE.js`는 모두 `module*.js`와 매칭됩니다).
+
 ### Glob Import 유의 사항 {#glob-import-caveats}
 
 Glob 패턴과 관련하여 다음의 사항을 유의해주세요:
@@ -649,8 +663,35 @@ const module = await import(`./dir/${file}.js`)
 
 ## WebAssembly {#webassembly}
 
-사전에 컴파일 된 `.wasm` 파일 역시 `?init` 쿼리를 이용해 가져올 수 있습니다.
-불러와진 모듈의 `export default`는 [`WebAssembly.Instance`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/Instance)의 `Promise`를 반환하는 초기화 함수가 들어가 있습니다:
+Vite는 사전 컴파일된 `.wasm` 파일을 두 가지 방식으로 임포트할 수 있습니다. 모듈의 익스포트만 필요하다면 [ES 모듈](#esm-integration)로 직접 임포트하고, 인스턴스화를 명시적으로 제어해야 한다면 [`?init`](#manual-initialization)을 사용합니다.
+
+### ESM 통합 {#esm-integration}
+
+`.wasm` 파일을 직접 임포트할 수 있습니다. Vite는 바이너리에서 모듈의 임포트와 익스포트를 읽고 인스턴스화한 뒤, 익스포트를 이름 있는 ES 모듈 익스포트로 다시 노출합니다:
+
+```js
+import { add } from './add.wasm'
+
+console.log(add(1, 2)) // 3
+```
+
+WebAssembly 모듈이 자체 임포트를 선언하면 Vite는 JavaScript 모듈에서 이를 해석합니다. 각 임포트의 모듈 이름은 임포트 지정자로 취급되어 `.wasm` 파일을 기준으로 해석되며, 요청된 멤버는 인스턴스에 자동으로 연결됩니다.
+
+이 방식은 [WebAssembly/ES 모듈 통합 제안](https://github.com/WebAssembly/esm-integration)을 따릅니다. WebAssembly 모듈은 비동기적으로 인스턴스화되므로, 직접 임포트한 `.wasm` 파일은 비동기 모듈처럼 동작하며 최상위 `await` 지원이 필요합니다.
+
+::: tip TypeScript 지원
+
+`.wasm` 파일의 타입을 알 수 없으므로 TypeScript는 `Module '"*.wasm"' has no exported member 'add'` 같은 오류를 보고합니다. 이를 해결하려면 `tsconfig.json`에서 [`allowArbitraryExtensions`](https://www.typescriptlang.org/tsconfig/#allowArbitraryExtensions)를 활성화하고 `.wasm` 파일 옆에 선언 파일을 만드세요. `allowArbitraryExtensions`를 활성화하면 TypeScript는 `.wasm` 임포트를 해석할 때 `{filename}.d.wasm.ts`라는 선언 파일을 찾습니다. 예를 들어 `add.wasm`에는 `add.d.wasm.ts`를 만듭니다:
+
+```ts [add.d.wasm.ts]
+export function add(a: number, b: number): number
+```
+
+:::
+
+### 수동 초기화 {#manual-initialization}
+
+모듈을 언제 어떻게 인스턴스화할지 제어해야 한다면 `?init`으로 임포트하세요. 기본 익스포트는 [`WebAssembly.Instance`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/Instance)의 `Promise`를 반환하는 초기화 함수입니다:
 
 ```js twoslash
 import 'vite/client'
@@ -662,7 +703,7 @@ init().then((instance) => {
 })
 ```
 
-초기화 함수를 호출할 때 `imports` 옵션을 사용할 수도 있는데, 이 값은 [`WebAssembly.instantiate`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate) 함수의 두 번째 인자인 importObject로 전달됩니다:
+초기화 함수는 importObject를 인수로 받을 수 있으며, 이 값은 [`WebAssembly.instantiate`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate)의 두 번째 인자로 전달됩니다:
 
 ```js twoslash
 import 'vite/client'
@@ -681,14 +722,9 @@ init({
 
 프로덕션 빌드 시 `assetsInlineLimit` 옵션의 값보다 작은 크기를 갖는 `.wasm` 파일은 Base64 문자열 포맷으로 변환됩니다. 파일의 크기가 그보다 크다면 [정적 에셋](./assets)으로 처리되어 요청(Fetch) 시 이를 가져오는 방식으로 동작합니다.
 
-::: tip 참고
-[WebAssembly를 위한 ES 모듈 제안 사항](https://github.com/WebAssembly/esm-integration)은 현재 지원되지 않습니다.
-이 대신 [`vite-plugin-wasm`](https://github.com/Menci/vite-plugin-wasm) 또는 기타 커뮤니티 플러그인을 사용해 이를 처리하세요.
-:::
-
 ::: warning SSR 빌드에서는 Node.js 호환 런타임만 지원됩니다
 
-파일을 로드하는 범용 방식이 없기 때문에, `.wasm?init`의 내부 구현은 `node:fs` 모듈에 의존합니다. 따라서 이 기능은 SSR 빌드에서 Node.js 호환 런타임에서만 동작합니다.
+파일을 로드하는 범용 방식이 없기 때문에, 직접 `.wasm`을 임포트하는 방식과 `.wasm?init` 방식의 내부 구현은 모두 `node:fs` 모듈에 의존합니다. 따라서 이 기능들은 SSR 빌드에서 Node.js 호환 런타임에서만 동작합니다.
 
 :::
 
@@ -729,7 +765,7 @@ const worker = new Worker(new URL('./worker.js', import.meta.url), {
 })
 ```
 
-워커 탐지는 `new Worker()` 선언 내부에서 직접 `new URL()` 생성자를 사용할 때만 작동합니다. 또한 모든 옵션 매개변수는 정적 값(예: 문자열 리터럴)이어야 합니다.
+워커 탐지는 `new Worker()` 선언 내부에서 직접 `new URL()` 생성자를 사용할 때만 작동합니다. 그렇지 않으면 [정적 에셋 URL](./assets#new-url-url-import-meta-url)로 처리됩니다. 또한 모든 옵션 매개변수는 정적 값(예: 문자열 리터럴)이어야 합니다.
 
 ### 쿼리 접미사를 통해 가져오기 {#import-with-query-suffixes}
 
@@ -823,7 +859,7 @@ MIT License
 
 ## 빌드 최적화 {#build-optimizations}
 
-> 아래는 추가적인 설정 없이 기본적으로 빌드 프로세스에 적용되는 기능들에 대한 목록입니다. 물론, 필요 시 각각의 기능들에 대한 비활성화가 가능합니다.
+> 아래 기능은 빌드 프로세스의 일부로 자동 적용됩니다(실험적인 청크 임포트 맵 기능 제외). 비활성화하려는 경우가 아니라면 명시적으로 설정할 필요가 없습니다.
 
 ### CSS 코드 분리 {#css-code-splitting}
 
@@ -857,3 +893,21 @@ Entry ---> (A + C)
 ```
 
 vite는 모든 Direct Import 구문에 대해 Preload 하도록 함으로써, 쓸 데 없이 낭비되는 네트워크 왕복을 줄이도록 구성합니다.
+
+### 청크 임포트 맵 최적화 {#chunk-import-map-optimization}
+
+Vite는 청크의 캐시 적중률을 높이기 위해 청크용 임포트 맵을 만들 수 있습니다. 이를 통해 ES 모듈에서 발생하는 연쇄 캐시 무효화 문제를 방지합니다.
+
+예를 들어 다음 상황을 살펴보겠습니다:
+
+```
+Entry --> A ---> C
+```
+
+`C`가 업데이트되면 본질적으로 무효화해야 하는 청크는 `C`뿐입니다. 하지만 `A`가 정적 임포트의 일반 URL로 `C`를 참조하면(즉, `C`의 해시가 URL에 포함되면) `A`의 내용도 변경되어 `A` 역시 무효화해야 합니다. `Entry`에도 같은 문제가 발생합니다.
+
+임포트 맵을 사용하면 이 문제를 피할 수 있습니다. 이 최적화를 활성화하면 Vite는 각 청크의 ID를 URL에 매핑하는 임포트 맵을 만들고, 임포트 문에서 URL 대신 청크 ID를 사용합니다. 따라서 청크가 업데이트될 때 해당 청크만 무효화되고, 이를 참조하는 청크는 무효화되지 않습니다.
+
+현재 이 최적화는 CSS와 에셋에 적용되지 않습니다. 에셋을 업데이트하면 이를 참조하는 청크가 무효화됩니다. 다만 무효화가 연쇄적으로 이어지지는 않으므로, 무효화된 청크를 임포트하는 청크까지 무효화되지는 않습니다.
+
+이 기능을 활성화하려면 [`build.chunkImportMap`](/config/build-options.md#build-chunkimportmap)을 `true`로 설정하세요.
