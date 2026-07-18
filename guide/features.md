@@ -703,7 +703,7 @@ init().then((instance) => {
 })
 ```
 
-초기화 함수는 importObject를 인수로 받을 수 있으며, 이 값은 [`WebAssembly.instantiate`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate)의 두 번째 인자로 전달됩니다:
+초기화 함수를 호출할 때 `imports` 옵션을 사용할 수도 있는데, 이 값은 [`WebAssembly.instantiate`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate) 함수의 두 번째 인자인 importObject로 전달됩니다:
 
 ```js twoslash
 import 'vite/client'
