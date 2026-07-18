@@ -98,6 +98,8 @@
 
 - 작업용 spec, plan, audit, inventory 문서는 `.context/` 아래에 둘 수 있지만 커밋하지 않습니다.
 - sync inventory에는 upstream 도입/변경 commit, Base 존재 여부, 현재 번역 상태, 번역/비번역 판정, intentional-divergence 근거, 최종 처리를 기록합니다.
+- 여러 upstream 변경을 한 번에 동기화하는 작업을 시작할 때 `.github/PULL_REQUEST_TEMPLATE/upstream-sync.md`를 먼저 읽고, PR 필드에 필요한 근거를 작업 inventory에 수집합니다.
+- PR 준비 시 같은 템플릿을 다시 읽고 live label, assignee, Target ancestry를 재확인합니다. 빈 항목, placeholder, 미분류 Target hunk가 있으면 PR을 생성하지 않으며, 검증이 끝난 이슈에만 종료 키워드를 사용합니다.
 - 커밋 메시지는 `<type>: <description>` 형식을 사용합니다.
 - 번역 외 최신화와 번역 품질 개정이 섞이는 대형 작업은 batch commit으로 분리합니다.
 - 외부 push, PR 생성, PR comment 작성, merge 같은 네트워크 쓰기 작업은 사용자 승인 후에만 합니다.
