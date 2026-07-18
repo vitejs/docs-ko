@@ -54,7 +54,7 @@ Vite 5.1은 새로운 Vite Runtime API에 대한 실험적 지원을 추가합�
 - node/bun/deno 내장 API에 의존하지 않으므로 어떤 환경에서도 실행할 수 있습니다.
 - 자체적인 코드 실행 메커니즘을 가진 도구와 쉽게 통합할 수 있습니다(예를 들어 `new AsyncFunction` 대신 `eval`을 사용하는 러너를 제공할 수 있습니다).
 
-초기 아이디어는 [Pooya Parsa가 제안했고](https://github.com/nuxt/vite/pull/201) [Anthony Fu](https://github.com/antfu)가 [vite-node](https://github.com/vitest-dev/vitest/tree/main/packages/vite-node#readme) 패키지로 구현하여 [Nuxt 3 Dev SSR을 지원하고](https://antfu.me/posts/dev-ssr-on-nuxt) 나중에 [Vitest](https://vitest.dev)의 기반으로도 사용되었습니다. 따라서 vite-node의 일반적인 아이디어는 상당한 시간 동안 실전에서 검증되었습니다. 이는 [Vladimir Sheremet](https://github.com/sheremet-va)에 의한 API의 새로운 반복으로, 그는 이미 Vitest에서 vite-node를 재구현했으며 학습한 내용을 바탕으로 Vite Core에 추가할 때 API를 더욱 강력하고 유연하게 만들었습니다. 이 PR은 1년간 제작되었으며, 생태계 유지보수자들과의 발전과 논의 과정을 [여기서](https://github.com/vitejs/vite/issues/12165) 확인할 수 있습니다.
+초기 아이디어는 [Pooya Parsa가 제안했고](https://github.com/nuxt/vite/pull/201) [Anthony Fu](https://github.com/antfu)가 [vite-node](https://www.npmjs.com/package/vite-node) 패키지로 구현하여 [Nuxt 3 Dev SSR을 지원하고](https://antfu.me/posts/dev-ssr-on-nuxt) 나중에 [Vitest](https://vitest.dev)의 기반으로도 사용되었습니다. 따라서 vite-node의 일반적인 아이디어는 상당한 시간 동안 실전에서 검증되었습니다. 이는 [Vladimir Sheremet](https://github.com/sheremet-va)에 의한 API의 새로운 반복으로, 그는 이미 Vitest에서 vite-node를 재구현했으며 학습한 내용을 바탕으로 Vite Core에 추가할 때 API를 더욱 강력하고 유연하게 만들었습니다. 이 PR은 1년간 제작되었으며, 생태계 유지보수자들과의 발전과 논의 과정을 [여기서](https://github.com/vitejs/vite/issues/12165) 확인할 수 있습니다.
 
 ::: info
 Vite Runtime API는 Module Runner API로 발전하여 [Environment API](/guide/api-environment)의 일부로 Vite 6에서 출시되었습니다.

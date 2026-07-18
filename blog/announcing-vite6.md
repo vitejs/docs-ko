@@ -43,7 +43,7 @@ Vite는 OpenAI, Google, Apple, Microsoft, NASA, Shopify, Cloudflare, GitLab, Red
 
 ## Vite 생태계 가속화 {#speeding-up-the-vite-ecosystem}
 
-지난달, 커뮤니티는 세 번째 [ViteConf](https://viteconf.org/24/replay)에 모였고, [StackBlitz](https://stackblitz.com)가 다시 한 번 주최했습니다. 이는 생태계 빌더들의 폭넓은 참여로 가장 큰 Vite 컨퍼런스였습니다. 다른 발표들 중에서도, Evan You는 JavaScript 생태계를 위한 오픈소스, 고성능, 통합 개발 툴체인 구축에 전념하는 회사인 [VoidZero](https://staging.voidzero.dev/posts/announcing-voidzero-inc)를 발표했습니다. VoidZero는 [Rolldown](https://rolldown.rs)과 [Oxc](https://oxc.rs)를 뒷받침하고 있으며, 그들의 팀은 Vite에서 채택될 수 있도록 빠르게 준비시키며 상당한 진전을 이루고 있습니다. Vite의 Rust 기반 미래에 대한 다음 단계를 더 자세히 알아보려면 Evan의 기조연설을 시청해보세요.
+지난달, 커뮤니티는 세 번째 [ViteConf](https://viteconf.org/24/replay)에 모였고, [StackBlitz](https://stackblitz.com)가 다시 한 번 주최했습니다. 이는 생태계 빌더들의 폭넓은 참여로 가장 큰 Vite 컨퍼런스였습니다. 다른 발표들 중에서도, Evan You는 JavaScript 생태계를 위한 오픈소스, 고성능, 통합 개발 툴체인 구축에 전념하는 회사인 [VoidZero](https://voidzero.dev/posts/announcing-voidzero-inc)를 발표했습니다. VoidZero는 [Rolldown](https://rolldown.rs)과 [Oxc](https://oxc.rs)를 뒷받침하고 있으며, 그들의 팀은 Vite에서 채택될 수 있도록 빠르게 준비시키며 상당한 진전을 이루고 있습니다. Vite의 Rust 기반 미래에 대한 다음 단계를 더 자세히 알아보려면 Evan의 기조연설을 시청해보세요.
 
 <YouTubeVideo videoId="EKvvptbTx6k?si=EZ-rFJn4pDW3tUvp" />
 
