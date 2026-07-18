@@ -8,7 +8,7 @@
 - **기본값:** `'baseline-widely-available'`
 - **관련 항목:** [브라우저 지원 현황](/guide/build#browser-compatibility)
 
-최종 번들에 대한 브라우저 호환성 타깃입니다. 기본값은 Vite 전용 값인 `'baseline-widely-available'`로, 2026-01-01에 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available에 포함된 브라우저를 타깃으로 합니다. 구체적으로는 `['chrome111', 'edge111', 'firefox114', 'safari16.4']`입니다.
+최종 번들에 대한 브라우저 호환성 타깃입니다. 기본값은 Vite 전용 값인 `'baseline-widely-available'`로, 2026-01-01에 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available에 포함된 브라우저를 타깃으로 합니다. 구체적으로는 `['chrome111', 'edge111', 'firefox114', 'safari16.4', 'ios16.4']`입니다.
 
 또 다른 Vite 한정 옵션은 `'esnext'` 로, 네이티브 동적 Import를 지원하며 트랜스파일링을 최소한만 수행합니다.
 
@@ -146,6 +146,17 @@ npm add -D esbuild
 - **기본값:** `false`
 
 프로덕션에서 소스 맵을 생성합니다. `true`인 경우 별도의 소스 맵 파일이 생성됩니다. `'inline'`인 경우 소스 맵이 결과 출력 파일에 데이터 URI로 추가됩니다. `'hidden'`은 번들 파일의 해당 소스 맵 설명이 표시되지 않는 경우를 제외하고 `true`와 같이 작동합니다.
+
+## build.chunkImportMap {#build-chunkimportmap}
+
+- **타입:** `boolean`
+- **기본값:** `false`
+- **실험적 기능**
+- **관련 항목:** [청크 임포트 맵 최적화](/guide/features#chunk-import-map-optimization)
+
+청크 캐시 효율을 최적화하기 위해 임포트 맵 기능을 사용할지 여부입니다.
+
+이 옵션을 사용하려면 [`import.meta.resolve`를 지원](https://caniuse.com/mdn-javascript_operators_import_meta_resolve)해야 합니다. 이전 브라우저를 지원해야 한다면 [`@vitejs/plugin-legacy`](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)를 참고하세요.
 
 ## build.rolldownOptions {#build-rolldownoptions}
 
