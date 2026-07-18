@@ -57,7 +57,7 @@ HTTPS를 사용하는 경우 이 검사는 건너뜁니다.
 :::
 
 ::: details 환경 변수를 통해 설정하기
-`__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS` 환경 변수를 통해 허용할 호스트를 추가로 지정할 수 있습니다.
+`__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS` 환경 변수로 허용할 호스트를 추가할 수 있습니다. 여러 호스트는 쉼표로 구분하세요(예: `host1.example.com,host2.example.com`).
 :::
 
 ## server.port {#server-port}
@@ -142,7 +142,7 @@ export default defineConfig({
         target: 'http://jsonplaceholder.typicode.com',
         changeOrigin: true,
         configure: (proxy, options) => {
-          // proxy는 'http-proxy'의 인스턴스입니다.
+          // proxy는 'http-proxy-3'의 인스턴스입니다.
         },
       },
       // WebSocket 또는 socket.io 프록시:
@@ -181,17 +181,45 @@ export default defineConfig({
 
 ## server.hmr {#server-hmr}
 
-- **타입:** `boolean | { protocol?: string, host?: string, port?: number, path?: string, timeout?: number, overlay?: boolean, clientPort?: number, server?: Server }`
+- **타입:** `boolean | { overlay?: boolean }`
 
-HMR 연결을 설정하거나 사용하지 않을 수 있습니다. (HMR 웹 소켓이 http 서버와 다른 주소를 사용해야 하는 경우)
+HMR 동작을 비활성화하거나 설정합니다.
 
 서버 오류 오버레이를 사용하지 않으려면 `server.hmr.overlay`를 `false`로 설정하세요.
 
-`protocol`은 HMR 연결에 사용되는 웹소켓 프로토콜을 설정합니다: `ws` (웹소켓) 또는 `wss` (보안 웹소켓) 값을 갖습니다.
+::: warning 사용 중단된 옵션
 
-`clientPort`는 클라이언트 측의 포트만 재정의하는 고급 옵션으로, 클라이언트 코드에서 찾는 것과 다른 포트에서 웹 소켓을 제공할 수 있습니다.
+WebSocket 관련 옵션(`protocol`, `host`, `port`, `path`, `clientPort`, `timeout`, `server`)은 사용 중단되었습니다. 대신 [`server.ws`](#server-ws)를 사용하세요. 사용 중단된 옵션은 자동으로 동기화되므로 기존 설정은 계속 동작합니다.
 
-`server.hmr.server` 옵션이 정의되면 Vite는 제공된 서버를 통해 HMR 연결 요청을 처리합니다. 미들웨어 모드가 아니라면, Vite는 기존 서버를 통해 HMR 연결 요청을 처리합니다. 이는 자체적으로 서명된 인증서를 사용하거나 단일 포트의 네트워크를 통해 Vite를 제공하려는 경우 유용합니다.
+:::
+
+## server.ws {#server-ws}
+
+- **타입:** `false | { protocol?: string, host?: string, port?: number, path?: string, timeout?: number, clientPort?: number, server?: Server }`
+
+WebSocket 연결 옵션을 설정합니다. WebSocket 연결을 완전히 비활성화하려면 `false`로 설정하세요.
+
+- `protocol` - WebSocket 프로토콜(`ws` 또는 `wss`)
+- `host` - WebSocket 서버 호스트
+- `port` - WebSocket 서버 포트
+- `path` - WebSocket 경로
+- `clientPort` - 클라이언트 측 포트를 재정의하여 클라이언트 코드가 찾는 포트와 다른 포트에서 WebSocket을 제공할 수 있습니다.
+- `timeout` - 연결 제한 시간(밀리초 단위, 기본값: 30000)
+- `server` - WebSocket 연결에 커스텀 HTTP 서버 사용
+
+`server.ws.server` 옵션이 정의되면 Vite는 제공된 서버를 통해 WebSocket 연결 요청을 처리합니다. 미들웨어 모드가 아니라면 Vite는 기존 서버를 통해 WebSocket 연결 요청을 처리하려고 시도합니다. 이는 자체 서명된 인증서를 사용하거나 네트워크에서 Vite를 단일 포트로 제공하려는 경우 유용합니다.
+
+```js
+export default defineConfig({
+  server: {
+    ws: {
+      protocol: 'wss',
+      host: 'localhost',
+      port: 3001,
+    },
+  },
+})
+```
 
 예제는 [`vite-setup-catalogue`](https://github.com/sapphi-red/vite-setup-catalogue)를 참고해주세요.
 
@@ -200,14 +228,14 @@ HMR 연결을 설정하거나 사용하지 않을 수 있습니다. (HMR 웹 소
 기본적으로 Vite는 리버스 프록시가 WebSocket 프록시를 지원한다고 가정하고 동작합니다. 만약 Vite HMR 클라이언트가 WebSocket 연결에 실패하게 되면, 클라이언트는 리버스 프록시 대신 WebSocket을 Vite HMR 서버에 직접 연결합니다:
 
 ```
-Direct websocket connection fallback. Check out https://vite.dev/config/server-options.html#server-hmr to remove the previous connection error.
+Direct websocket connection fallback. Check out https://vite.dev/config/server-options.html#server-ws to remove the previous connection error.
 ```
 
 위와 같은 상황이 발생될 때 브라우저에 나타나는 이 오류는 무시해도 됩니다. 다만 아래의 작업들 중 하나를 통해 직접 리버스 프록시를 우회해서 오류를 나타나지 않게끔 할 수도 있습니다:
 
 - WebSocket도 프록시하도록 리버스 프록시를 구성
-- [`server.strictPort` 옵션의 값을 `true`로](#server-strictport), 그리고 `server.hmr.clientPort`를 `server.port`와 동일한 값으로 설정
-- `server.hmr.port`를 [`server.port`](#server-port)와 다른 값으로 설정
+- [`server.strictPort = true`](#server-strictport)로 설정하고 `server.ws.clientPort`를 `server.port`와 동일한 값으로 설정
+- `server.ws.port`를 [`server.port`](#server-port)와 다른 값으로 설정
 
 :::
 
@@ -396,7 +424,7 @@ export default defineConfig({
 ## server.fs.deny {#server-fs-deny}
 
 - **타입:** `string[]`
-- **기본값:** `['.env', '.env.*', '*.{crt,pem}', '**/.git/**']`
+- **기본값:** `['.env', '.env.*', '*.{crt,pem,key,p12,pfx,cer,der}', '.npmrc', '.yarnrc.yml', '**/.git/**']`
 
 Vite dev 서버에서 제공되지 않기를 원하는 민감한 파일들에 대한 차단 목록입니다. 이 옵션은 [`server.fs.allow`](#server-fs-allow)보다 높은 우선 순위를 가지며, [피코매치 패턴](https://github.com/micromatch/picomatch#globbing-features)을 사용할 수 있습니다.
 

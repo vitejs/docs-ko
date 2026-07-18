@@ -19,7 +19,13 @@
 
 ### `RunnableDevEnvironment` {#runnabledevenvironment}
 
-`RunnableDevEnvironment`는 임의의 값을 주고받을 수 있는 환경입니다. 암시적인 `ssr` 환경을 포함해, 클라이언트가 아닌 환경은 개발 중 기본적으로 `RunnableDevEnvironment`를 사용합니다. 이 경우 Vite 서버가 실행되는 런타임과 동일해야 하지만, `ssrLoadModule`과 유사하게 작동하여 프레임워크가 SSR 개발 환경에서 HMR을 활성화하고 마이그레이션할 수 있도록 만듭니다. 또한 `isRunnableDevEnvironment` 함수를 사용하여 실행 가능한 환경인지 확인할 수 있습니다.
+`RunnableDevEnvironment`는 애플리케이션 코드와 임의의 JavaScript 값을 주고받을 수 있는 환경입니다. 모듈을 임포트하면 함수, 클래스 인스턴스 등 실제 익스포트 값을 그대로 반환하므로, 프레임워크는 서버 진입점을 직접 실행할 수 있습니다. 암시적인 `ssr` 환경과 그 밖의 비클라이언트 환경은 개발 중 기본적으로 `RunnableDevEnvironment`를 사용합니다. `isRunnableDevEnvironment` 함수로 러너에 대한 접근을 보호할 수 있습니다.
+
+`runner`는 `ModuleRunner`입니다. `runner.import(url)`로 모듈을 임포트하면 Vite 모듈 그래프에서 모듈을 가져와 변환하고 평가합니다(`url`은 파일 경로, 서버 경로 또는 루트 기준 상대 id를 받습니다). 그 결과 완전한 HMR 지원과 함께 인스턴스화된 모듈을 반환합니다. 이는 `server.ssrLoadModule`을 대체하는 현대적인 방식이며, 프레임워크가 SSR 개발 흐름에서 HMR을 활성화하도록 마이그레이션할 수 있습니다.
+
+:::info 임의의 값을 주고받을 수 있는 이유
+`RunnableDevEnvironment`는 Vite 서버와 같은 런타임에서 모듈을 평가하므로, 값이 직렬화되지 않고 프로세스 안에서 경계를 넘습니다. 이 점이 Fetch API를 통해 직렬화된 `Request`/`Response` 객체만 주고받을 수 있는 [`FetchableDevEnvironment`](#fetchabledevenvironment)와 다릅니다. 따라서 `RunnableDevEnvironment`를 사용하려면 러너의 런타임이 Vite 서버의 런타임과 같아야 합니다.
+:::
 
 ```ts
 export class RunnableDevEnvironment extends DevEnvironment {
@@ -120,6 +126,8 @@ if (import.meta.hot) {
 :::
 
 `FetchableDevEnvironment`는 [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch) 인터페이스를 통해 런타임과 통신할 수 있는 환경입니다. `RunnableDevEnvironment`는 제한된 런타임에서만 구현이 가능하기 때문에, `RunnableDevEnvironment` 대신 `FetchableDevEnvironment`를 사용하는 것을 권장합니다.
+
+프레임워크에서 Vite를 직접 실행할 수 없는 런타임(예: Cloudflare Workers)을 지원할 때 주로 사용합니다. `RunnableDevEnvironment`는 값이 프로세스 안에서 경계를 넘도록 러너가 Vite 서버와 같은 런타임을 사용해야 하므로 이런 환경에서는 사용할 수 없습니다. Fetch API를 표준으로 삼으면 프레임워크는 모든 대상 런타임에서 하나의 요청 처리 경로를 유지할 수 있습니다. 개발 미들웨어는 브라우저의 각 요청을 `Request`로 전달하고 반환된 `Response`를 다시 브라우저로 보내, 프로덕션에서 앱이 요청을 처리하는 방식을 그대로 재현합니다.
 
 이 환경은 `handleRequest` 메서드를 통해 요청을 처리하는 표준화된 방법을 제공합니다:
 
@@ -305,7 +313,11 @@ export function createHandler(input) {
 
 하위 호환성을 위해, CLI에서 `vite build`와 `vite build --ssr`을 실행하면, 동일하게 클라이언트 또는 SSR 전용 환경만을 빌드합니다.
 
-`builder` 옵션이 `undefined`가 아니거나 `vite build --app`을 호출하면, `vite build`는 전체 앱을 빌드하도록 동작합니다. 이는 향후 메이저 버전에서 기본값이 될 예정입니다. 구성된 모든 환경을 프로덕션용으로 빌드하기 위해 빌드 시점의 `ViteDevServer`에 해당하는 `ViteBuilder` 인스턴스가 생성됩니다. 기본적으로 환경 빌드는 `environments` 레코드의 순서를 존중해 순차적으로 실행됩니다. 프레임워크나 사용자는 `builder.buildApp` 옵션을 사용해 환경이 빌드되는 방식을 추가로 구성할 수 있습니다:
+`builder` 옵션을 설정하면(`vite build --app`이 설정하는 빈 객체 `{}`도 포함), `vite build`는 전체 앱을 빌드합니다. 이는 향후 메이저 버전에서 기본값이 될 예정입니다. 이 모드에서 Vite는 빌드 시점의 `ViteDevServer`에 해당하는 `ViteBuilder` 인스턴스를 생성하고, 이를 사용해 구성된 모든 환경을 프로덕션용으로 빌드합니다. 기본적으로 환경은 `environments` 레코드의 순서에 따라 순차적으로 빌드됩니다.
+
+### `builder.buildApp`으로 앱 빌드 구성하기 {#configuring-the-app-build-with-builder-buildapp}
+
+프레임워크나 사용자는 `builder.buildApp` 옵션으로 환경을 빌드하는 방식을 제어할 수 있습니다. 이 옵션은 `ViteBuilder` 인스턴스(아래 예제에서는 `builder`)를 받고 각 환경을 빌드합니다. 예를 들어 다음과 같이 일부 환경을 병렬로 빌드할 수 있습니다:
 
 ```js [vite.config.js]
 import { defineConfig } from 'vite'
@@ -322,7 +334,22 @@ export default defineConfig({
 })
 ```
 
-플러그인도 `buildApp` 훅을 정의할 수 있습니다. `'pre'` 및 `null` 순서는 구성된 `builder.buildApp` 이전에 실행되고, `'post'` 순서의 훅은 그 이후에 실행됩니다. `environment.isBuilt`를 사용해 환경이 이미 빌드되었는지 확인할 수 있습니다.
+### `buildApp` 플러그인 훅 {#the-buildapp-plugin-hook}
+
+플러그인은 `builder.buildApp` 설정 옵션 외에도 `buildApp` 훅을 정의해 앱 빌드에 참여할 수 있습니다. 설정 옵션과 플러그인 훅은 정해진 순서로 실행됩니다. 먼저 순서가 `'pre'` 또는 `null`인 훅을 실행하고, 구성된 `builder.buildApp`을 실행한 뒤, 순서가 `'post'`인 훅을 실행합니다. 훅에서는 `environment.isBuilt`로 환경이 이미 빌드되었는지 확인하여 중복 빌드를 피할 수 있습니다.
+
+### `createBuilder`로 프로그래밍 방식 빌드하기 {#building-programmatically-with-createbuilder}
+
+코드에서 앱 빌드를 실행하려면 독립형 `build` 함수 대신 `createBuilder`를 사용하세요. `createBuilder`는 빌드 시점의 `createServer`에 해당합니다. 설정을 해석하고 `ViteBuilder`를 반환하며, 이 객체의 `buildApp` 메서드는 구성된 모든 환경을 빌드합니다. `builder.build(environment)`로 환경 하나만 빌드할 수도 있습니다.
+
+```js [build.js]
+import { createBuilder } from 'vite'
+
+const builder = await createBuilder()
+await builder.buildApp()
+```
+
+환경을 인식하는 빌드에서는 `createBuilder`가 독립형 `build` 함수를 대체합니다. `build`는 위에서 설명한 레거시 클라이언트 전용 및 SSR 전용 빌드의 단순 진입점으로 계속 사용할 수 있지만, 임의의 환경을 빌드할 수는 없습니다. `builder.buildApp()` 실행은 프로그래밍 방식의 `vite build --app`과 같습니다.
 
 ## 환경에 구애받지 않는 코드 {#environment-agnostic-code}
 

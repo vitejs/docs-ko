@@ -1,5 +1,4 @@
 import path from 'node:path'
-import fs from 'node:fs'
 import type { DefaultTheme, HeadConfig } from 'vitepress'
 import { defineConfig } from 'vitepress'
 import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
@@ -37,7 +36,7 @@ const deployType = (() => {
   }
 })()
 
-const viteVersion = '8.0.13'
+const viteVersion = '8.1.5'
 const viteMajorVersion = 8
 
 const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
@@ -83,17 +82,6 @@ const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
   }
 })()
 
-function inlineScript(file: string): HeadConfig {
-  return [
-    'script',
-    {},
-    fs.readFileSync(
-      path.resolve(import.meta.dirname, `./inlined-scripts/${file}`),
-      'utf-8',
-    ),
-  ]
-}
-
 const config = defineConfig({
   title: 'Vite',
   lang: 'ko',
@@ -113,7 +101,6 @@ const config = defineConfig({
       { rel: 'alternate', type: 'application/rss+xml', href: '/blog.rss' },
     ],
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
-    inlineScript('banner.js'),
     [
       'link',
       {
@@ -147,15 +134,6 @@ const config = defineConfig({
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:site', content: '@vite_js' }],
     ['meta', { name: 'theme-color', content: '#646cff' }],
-    [
-      'script',
-      {
-        src: 'https://cdn.usefathom.com/script.js',
-        'data-site': 'CBDFBSLI',
-        'data-spa': 'auto',
-        defer: '',
-      },
-    ],
   ],
 
   locales: {
@@ -171,12 +149,10 @@ const config = defineConfig({
 
   themeConfig: {
     variant: 'vite',
-    logo: '/logo.svg',
-
     banner: {
-      id: 'viteplus-alpha',
-      text: 'Vite+ Alpha 발표: 오픈 소스. 통합. 차세대.',
-      url: 'https://voidzero.dev/posts/announcing-vite-plus-alpha?utm_source=vite&utm_content=top_banner',
+      id: 'cloudflare-supports-vite',
+      text: `Cloudflare가 Vite의 사명을 지원합니다`,
+      url: '/blog/cloudflare-supports-vite',
     },
 
     editLink: {
@@ -266,6 +242,10 @@ const config = defineConfig({
           { text: '블로그', link: '/blog' },
           { text: '릴리스', link: '/releases' },
           { text: '감사의 말', link: '/acknowledgements' },
+          {
+            text: '행동 강령',
+            link: 'https://github.com/vitejs/.github/blob/main/CODE_OF_CONDUCT.md',
+          },
           {
             text: '플러그인 레지스트리',
             link: 'https://registry.vite.dev/plugins',
@@ -619,6 +599,14 @@ const config = defineConfig({
     },
   },
   vite: {
+    resolve: {
+      alias: {
+        '@components/oss/TopBanner.vue': path.resolve(
+          import.meta.dirname,
+          'theme/components/TopBanner.vue',
+        ),
+      },
+    },
     plugins: [
       groupIconVitePlugin({
         customIcon: {

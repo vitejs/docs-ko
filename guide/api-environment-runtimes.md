@@ -13,9 +13,11 @@
 여러분의 피드백을 공유해주세요.
 :::
 
+이 페이지는 JavaScript 런타임을 Vite와 통합하는 런타임 제공자를 위한 문서입니다. 여기서 런타임은 Node.js, 브라우저, Cloudflare의 workerd, 워커 스레드처럼 변환된 코드가 실행되는 JavaScript 엔진을 뜻합니다. 런타임 제공자는 이러한 런타임 중 하나를 위한 통합을 패키지로 제공하므로, 프레임워크 작성자와 최종 사용자(앱을 만드는 개발자)가 직접 설정할 필요가 없습니다.
+
 ## 환경 팩토리 {#environment-factories}
 
-환경 팩토리는 일반적으로 Cloudflare와 같은 환경을 제공하는 쪽에서 구현하며, 이를 최종 사용자가 직접 작성하지는 않습니다. 환경 팩토리는 개발과 빌드 환경에서 사용할 런타임에 대한 일반적인 설정을 `EnvironmentOptions`로 반환합니다. 사용자가 직접 설정할 필요가 없도록 기본 환경 옵션도 구성할 수도 있습니다.
+환경 팩토리는 최종 사용자가 아닌 런타임 제공자가 구현합니다. 환경 팩토리는 대상 런타임을 개발 및 빌드 환경 모두에서 사용하는 일반적인 사례를 위한 `EnvironmentOptions`를 반환합니다. 사용자가 직접 설정하지 않아도 되도록 기본 환경 옵션도 지정할 수 있습니다.
 
 ```ts
 function createWorkerdEnvironment(
@@ -24,9 +26,7 @@ function createWorkerdEnvironment(
   return mergeConfig(
     {
       resolve: {
-        conditions: [
-          /*...*/
-        ],
+        conditions: [/*...*/],
       },
       dev: {
         createEnvironment(name, config) {
@@ -249,10 +249,7 @@ interface ModuleRunnerOptions {
    * 제공할 수도 있습니다.
    */
   sourcemapInterceptor?:
-    | false
-    | 'node'
-    | 'prepareStackTrace'
-    | InterceptorOptions
+    false | 'node' | 'prepareStackTrace' | InterceptorOptions
   /**
    * HMR을 비활성화하거나 HMR 옵션을 설정합니다.
    *
@@ -475,4 +472,13 @@ server.onRequest((request: Request) => {
 
 단, HMR을 지원하려면 `send`와 `connect` 메서드가 필요합니다. `send` 메서드는 일반적으로 커스텀 이벤트가 발생할 때 호출됩니다(예: `import.meta.hot.send("my-event")`).
 
-Vite는 Vite SSR에서 HMR을 지원하기 위해 메인 진입점에서 `createServerHotChannel`을 제공합니다.
+Vite 서버와 같은 Node.js 프로세스에서 실행되는 SSR 환경을 위해 Vite는 바로 사용할 수 있는 `HotChannel`인 `createServerHotChannel`을 제공합니다:
+
+```js
+import { createServerHotChannel, DevEnvironment } from 'vite'
+
+new DevEnvironment(name, config, {
+  hot: true,
+  transport: createServerHotChannel(),
+})
+```

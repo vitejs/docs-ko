@@ -216,7 +216,7 @@ export default defineConfig({
 esbuild와 Oxc Minifier는 소스 코드에 대해 약간 다른 가정을 합니다. 최소화 도구 때문에 코드가 깨진다고 의심된다면 다음 문서에서 이러한 가정을 비교할 수 있습니다:
 
 - [esbuild minify assumptions](https://esbuild.github.io/api/#minify-considerations)
-- [Oxc Minifier assumptions](https://oxc.rs/docs/guide/usage/minifier.html#assumptions)
+- [Oxc Minifier assumptions](https://github.com/oxc-project/oxc/blob/main/crates/oxc_minifier/docs/ASSUMPTIONS.md)
 
 JavaScript 앱에서 최소화와 관련된 문제를 발견하면 보고해 주세요.
 

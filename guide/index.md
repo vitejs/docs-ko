@@ -268,7 +268,7 @@ pnpm link # use your preferred package manager for this step
 Vite가 어떻게, 언제 릴리스되는지 더 알아보려면 [릴리스](../releases.md) 문서를 확인해 주세요.
 
 ::: tip Vite를 사용하는 디펜던시
-디펜던시에서 간접적으로 사용되는 Vite 버전을 교체하려면, [npm overrides](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#overrides) 또는 [pnpm overrides](https://pnpm.io/9.x/package_json#pnpmoverrides)를 사용해야 합니다.
+디펜던시에서 간접적으로 사용되는 Vite 버전을 교체하려면, [npm overrides](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#overrides) 또는 [pnpm overrides](https://pnpm.io/settings#overrides)를 사용해야 합니다.
 :::
 
 ## 커뮤니티 {#community}

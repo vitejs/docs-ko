@@ -105,7 +105,7 @@ Linux에서 다음과 같은 오류가 보인다면:
 
 문제를 해결하려면 신뢰할 수 있는 SSL 인증서를 사용하십시오.
 
-참조: [Cache problems](https://helpx.adobe.com/mt/experience-manager/kb/cache-problems-on-chrome-with-SSL-certificate-errors.html), [Chrome issue](https://bugs.chromium.org/p/chromium/issues/detail?id=110649#c8)
+참조: [Chrome issue](https://bugs.chromium.org/p/chromium/issues/detail?id=110649#c8)
 
 #### macOS {#macos}
 
