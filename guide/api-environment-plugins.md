@@ -13,6 +13,14 @@
 여러분의 피드백을 공유해주세요.
 :::
 
+## 환경별 훅과 전역 훅 {#per-environment-hooks-and-global-hooks}
+
+플러그인은 공유된 파이프라인에서 실행되지만, 각 훅은 서버 전체에 한 번 실행되는지 아니면 환경마다 한 번씩 실행되는지에 따라 두 종류로 나뉩니다.
+
+전역 훅은 구성된 환경과 무관하게 한 번만 호출됩니다. 설정을 해석하거나 개발 서버와 프리뷰 서버를 준비하는 등 앱 전체에 걸친 일을 다루기에, `this.environment`는 이러한 훅과 관련이 없습니다. 설정 해석과 관련된 훅, 그리고 서버와 관련된 훅이 전역 훅입니다.
+
+환경별 훅은 환경마다 한 번씩 호출되며, 컨텍스트의 `this.environment`로 현재 환경을 노출합니다. [Rolldown 훅](/guide/api-plugin#rolldown-hooks)은 모두 환경별 훅이며, 모듈을 다루는 그 외 Vite 전용 훅도 마찬가지입니다. 다만 `buildStart`와 `buildEnd`는 [`perEnvironmentStartEndDuringDev: true` 플래그](#per-environment-state-in-plugins) 없이는 client 환경에서만 호출됩니다.
+
 ## 훅에서 현재 환경에 접근하기 {#accessing-the-current-environment-in-hooks}
 
 Vite 6 이전에는 두 가지 환경(`client`와 `ssr`)만 있었기에, Vite API에서 현재 환경을 식별하기 위해서는 `ssr` 불리언 값이면 충분했습니다. 플러그인 훅은 마지막 옵션 매개변수로 `ssr` 불리언 값을 받았고, 여러 API에서도 모듈을 올바른 환경과 연결하기 위해 마지막 매개변수로 `ssr` 값을 옵션으로 받았습니다(예: `server.moduleGraph.getModuleByUrl(url, { ssr })`).
@@ -49,7 +57,11 @@ Vite 서버는 모든 환경이 공유하는 하나의 플러그인 파이프라
 
 환경을 등록하려면 빈 객체만으로 충분하며, 루트 레벨 환경 설정의 기본값이 사용됩니다.
 
-## 훅을 사용해 환경 구성하기 {#configuring-environment-using-hooks}
+## `configEnvironment` 훅을 사용해 환경 구성하기 {#configuring-environment-using-the-configenvironment-hook}
+
+- **타입:** `(name: string, config: EnvironmentOptions, env: { mode: string, command: 'build' | 'serve', isSsrBuild?: boolean, isPreview?: boolean, isSsrTargetWebworker?: boolean }) => EnvironmentOptions | null | void`
+- **종류:** `async`, `sequential`
+- **범위:** [환경별](#per-environment-hooks-and-global-hooks)
 
 `config` 훅이 실행되는 동안에는 전체 환경 목록을 알 수 없으며, 환경은 최상위 환경 설정에서 가져와지는 기본값이나 `config.environments` 값을 통해 직접적으로 영향을 받을 수 있습니다.
 플러그인은 `config` 훅으로 기본값을 설정할 수 있습니다. 또는, 이를 위한 `configEnvironment` 훅을 사용할 수도 있습니다. 이 훅은 각 환경에 대해, 기본값이 적용된 초기 설정과 함께 호출됩니다.
@@ -71,6 +83,7 @@ Vite 서버는 모든 환경이 공유하는 하나의 플러그인 파이프라
 
 - **타입:** `(this: { environment: DevEnvironment }, options: HotUpdateOptions) => Array<EnvironmentModuleNode> | void | Promise<Array<EnvironmentModuleNode> | void>`
 - **종류:** `async`, `sequential`
+- **범위:** [환경별](#per-environment-hooks-and-global-hooks)
 - **참고:** [HMR API](./api-hmr)
 
 `hotUpdate` 훅을 사용하면 플러그인이 특정 환경에 대해 HMR 업데이트 처리를 커스텀할 수 있습니다. 파일이 변경되면 `server.environments`의 순서에 따라 각 환경에 대해 순차적으로 HMR 알고리즘이 실행되므로, `hotUpdate` 훅은 여러 번 호출됩니다. 훅은 다음과 같은 시그니처를 가진 컨텍스트 객체를 받습니다:
@@ -167,7 +180,11 @@ function PerEnvironmentCountTransformedModulesPlugin() {
 }
 ```
 
-## 환경별 플러그인 {#per-environment-plugins}
+## `applyToEnvironment` 훅을 사용하는 환경별 플러그인 {#per-environment-plugins-using-the-applytoenvironment-hook}
+
+- **타입:** `(environment: PartialEnvironment) => boolean | PluginOption | Promise<boolean>`
+- **종류:** `async`, `sequential`
+- **범위:** [환경별](#per-environment-hooks-and-global-hooks)
 
 플러그인은 `applyToEnvironment` 함수로 적용할 환경을 정의할 수 있습니다.
 
@@ -280,7 +297,7 @@ Vite 6 이전에는 플러그인 파이프라인이 개발과 빌드 단계에�
 
 향후 메이저 릴리즈에서는 완전한 일치(Alignment)를 달성할 수 있을 것입니다:
 
-- **개발과 빌드 모두:** 플러그인이 공유되며, [환경별 필터링 됨](#per-environment-plugins)
+- **개발과 빌드 모두:** 플러그인이 공유되며, [환경별 필터링 됨](#per-environment-plugins-using-the-applytoenvironment-hook)
 
 또한 빌드 시에도 모든 환경이 단일 `ResolvedConfig` 인스턴스를 공유하기에, 개발 단계에서처럼 `WeakMap<ResolvedConfig, CachedData>`로 전체 앱 빌드 프로세스 수준에서 캐싱이 가능해집니다.
 
