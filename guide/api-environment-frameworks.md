@@ -305,7 +305,11 @@ export function createHandler(input) {
 
 하위 호환성을 위해, CLI에서 `vite build`와 `vite build --ssr`을 실행하면, 동일하게 클라이언트 또는 SSR 전용 환경만을 빌드합니다.
 
-`builder` 옵션이 `undefined`가 아니거나 `vite build --app`을 호출하면, `vite build`는 전체 앱을 빌드하도록 동작합니다. 이는 향후 메이저 버전에서 기본값이 될 예정입니다. 구성된 모든 환경을 프로덕션용으로 빌드하기 위해 빌드 시점의 `ViteDevServer`에 해당하는 `ViteBuilder` 인스턴스가 생성됩니다. 기본적으로 환경 빌드는 `environments` 레코드의 순서를 존중해 순차적으로 실행됩니다. 프레임워크나 사용자는 `builder.buildApp` 옵션을 사용해 환경이 빌드되는 방식을 추가로 구성할 수 있습니다:
+`builder` 옵션을 설정하면(`vite build --app`이 설정하는 빈 객체 `{}`도 포함), `vite build`는 전체 앱을 빌드합니다. 이는 향후 메이저 버전에서 기본값이 될 예정입니다. 이 모드에서 Vite는 빌드 시점의 `ViteDevServer`에 해당하는 `ViteBuilder` 인스턴스를 생성하고, 이를 사용해 구성된 모든 환경을 프로덕션용으로 빌드합니다. 기본적으로 환경은 `environments` 레코드의 순서에 따라 순차적으로 빌드됩니다.
+
+### `builder.buildApp`으로 앱 빌드 구성하기 {#configuring-the-app-build-with-builder-buildapp}
+
+프레임워크나 사용자는 `builder.buildApp` 옵션으로 환경을 빌드하는 방식을 제어할 수 있습니다. 이 옵션은 `ViteBuilder` 인스턴스(아래 예제에서는 `builder`)를 받고 각 환경을 빌드합니다. 예를 들어 다음과 같이 일부 환경을 병렬로 빌드할 수 있습니다:
 
 ```js [vite.config.js]
 import { defineConfig } from 'vite'
@@ -322,7 +326,26 @@ export default defineConfig({
 })
 ```
 
-플러그인도 `buildApp` 훅을 정의할 수 있습니다. `'pre'` 및 `null` 순서는 구성된 `builder.buildApp` 이전에 실행되고, `'post'` 순서의 훅은 그 이후에 실행됩니다. `environment.isBuilt`를 사용해 환경이 이미 빌드되었는지 확인할 수 있습니다.
+### `buildApp` 플러그인 훅 {#the-buildapp-plugin-hook}
+
+- **타입:** `(this: MinimalPluginContextWithoutEnvironment, builder: ViteBuilder) => Promise<void>`
+- **종류:** `async`, `sequential`
+- **범위:** [전역](/guide/api-environment-plugins#per-environment-hooks-and-global-hooks)
+
+플러그인은 `builder.buildApp` 설정 옵션 외에도 `buildApp` 훅을 정의해 앱 빌드에 참여할 수 있습니다. 설정 옵션과 플러그인 훅은 정해진 순서로 실행됩니다. 먼저 순서가 `'pre'` 또는 `null`인 훅을 실행하고, 구성된 `builder.buildApp`을 실행한 뒤, 순서가 `'post'`인 훅을 실행합니다. 훅에서는 `environment.isBuilt`로 환경이 이미 빌드되었는지 확인하여 중복 빌드를 피할 수 있습니다.
+
+### `createBuilder`로 프로그래밍 방식 빌드하기 {#building-programmatically-with-createbuilder}
+
+코드에서 앱 빌드를 실행하려면 독립형 `build` 함수 대신 `createBuilder`를 사용하세요. `createBuilder`는 빌드 시점의 `createServer`에 해당합니다. 설정을 해석하고 `ViteBuilder`를 반환하며, 이 객체의 `buildApp` 메서드는 구성된 모든 환경을 빌드합니다. `builder.build(environment)`로 환경 하나만 빌드할 수도 있습니다.
+
+```js [build.js]
+import { createBuilder } from 'vite'
+
+const builder = await createBuilder()
+await builder.buildApp()
+```
+
+환경을 인식하는 빌드에서는 `createBuilder`가 독립형 `build` 함수를 대체합니다. `build`는 위에서 설명한 레거시 클라이언트 전용 및 SSR 전용 빌드의 단순 진입점으로 계속 사용할 수 있지만, 임의의 환경을 빌드할 수는 없습니다. `builder.buildApp()` 실행은 프로그래밍 방식의 `vite build --app`과 같습니다.
 
 ## 환경에 구애받지 않는 코드 {#environment-agnostic-code}
 
