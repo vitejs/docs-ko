@@ -65,7 +65,7 @@ Vite의 디펜던시 탐색 휴리스틱이 항상 바람직한 것은 아닙니
 
 Vite는 사전 번들링 된 디펜던시를 `node_modules/.vite` 디렉터리 내에 캐시하고 있습니다. 다만 이를 다시 번들링하는 경우가 있는데, 다음과 같습니다.
 
-- 패키지 매니저 락 파일 콘텐츠 (예: `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml` 또는 `bun.lock`)
+- 패키지 매니저 락 파일 콘텐츠 (예: `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`, `bun.lock`, `aube-lock.yaml` 또는 `nub.lock`)
 - 폴더의 수정 시간을 패치
 - `vite.config.js`와 관련되어 있는 필드가 변경되었을 때
 - `NODE_ENV` 값
