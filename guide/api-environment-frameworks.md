@@ -172,7 +172,7 @@ Vite는 `dispatchFetch` 메서드의 입력과 출력을 검증합니다: 요청
 // Vite API를 사용하는 코드
 import { createServer } from 'vite'
 
-const server = createServer({
+const server = await createServer({
   plugins: [
     // `virtual:entrypoint`를 처리하는 플러그인
     {
@@ -181,7 +181,7 @@ const server = createServer({
     },
   ],
 })
-const ssrEnvironment = server.environment.ssr
+const ssrEnvironment = server.environments.ssr
 const input = {}
 
 // 코드를 실행하는 각 환경 팩토리가 노출한 함수를 사용합니다.
@@ -244,7 +244,7 @@ function vitePluginVirtualIndexHtml(): Plugin {
 // Vite API를 사용하는 코드
 import { createServer } from 'vite'
 
-const server = createServer({
+const server = await createServer({
   plugins: [
     // `virtual:entrypoint`를 처리하는 플러그인
     {
@@ -253,13 +253,13 @@ const server = createServer({
     },
   ],
 })
-const ssrEnvironment = server.environment.ssr
+const ssrEnvironment = server.environments.ssr
 const input = {}
 
 // 코드를 실행하는 각 환경 팩토리가 노출한 함수를 사용합니다.
 // 각 환경 팩토리가 무엇을 제공하는지 확인하세요.
 if (ssrEnvironment instanceof RunnableDevEnvironment) {
-  ssrEnvironment.runner.import('virtual:entrypoint')
+  await ssrEnvironment.runner.import('virtual:entrypoint')
 } else if (ssrEnvironment instanceof CustomDevEnvironment) {
   ssrEnvironment.runEntrypoint('virtual:entrypoint')
 } else {
@@ -269,9 +269,9 @@ if (ssrEnvironment instanceof RunnableDevEnvironment) {
 const req = new Request('http://example.com/')
 
 const uniqueId = 'a-unique-id'
-ssrEnvironment.send('request', serialize({ req, uniqueId }))
+ssrEnvironment.hot.send('request', serialize({ req, uniqueId }))
 const response = await new Promise((resolve) => {
-  ssrEnvironment.on('response', (data) => {
+  ssrEnvironment.hot.on('response', (data) => {
     data = deserialize(data)
     if (data.uniqueId === uniqueId) {
       resolve(data.res)
