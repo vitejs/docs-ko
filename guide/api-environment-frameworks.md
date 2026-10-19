@@ -19,7 +19,13 @@
 
 ### `RunnableDevEnvironment` {#runnabledevenvironment}
 
-`RunnableDevEnvironment`는 임의의 값을 주고받을 수 있는 환경입니다. 암시적인 `ssr` 환경을 포함해, 클라이언트가 아닌 환경은 개발 중 기본적으로 `RunnableDevEnvironment`를 사용합니다. 이 경우 Vite 서버가 실행되는 런타임과 동일해야 하지만, `ssrLoadModule`과 유사하게 작동하여 프레임워크가 SSR 개발 환경에서 HMR을 활성화하고 마이그레이션할 수 있도록 만듭니다. 또한 `isRunnableDevEnvironment` 함수를 사용하여 실행 가능한 환경인지 확인할 수 있습니다.
+`RunnableDevEnvironment`는 애플리케이션 코드와 임의의 JavaScript 값을 주고받을 수 있는 환경입니다. 모듈을 임포트하면 함수, 클래스 인스턴스 등 실제 익스포트 값을 그대로 반환하므로, 프레임워크는 서버 진입점을 직접 실행할 수 있습니다. 암시적인 `ssr` 환경과 그 밖의 비클라이언트 환경은 개발 중 기본적으로 `RunnableDevEnvironment`를 사용합니다. `isRunnableDevEnvironment` 함수로 러너에 대한 접근을 보호할 수 있습니다.
+
+`runner`는 `ModuleRunner`입니다. `runner.import(url)`로 모듈을 임포트하면 Vite 모듈 그래프에서 모듈을 가져와 변환하고 평가합니다(`url`은 파일 경로, 서버 경로 또는 루트 기준 상대 id를 받습니다). 그 결과 완전한 HMR 지원과 함께 인스턴스화된 모듈을 반환합니다. 이는 `server.ssrLoadModule`을 대체하는 현대적인 방식이며, 프레임워크가 SSR 개발 흐름에서 HMR을 활성화하도록 마이그레이션할 수 있습니다.
+
+:::info 임의의 값을 주고받을 수 있는 이유
+`RunnableDevEnvironment`는 Vite 서버와 같은 런타임에서 모듈을 평가하므로, 값이 직렬화되지 않고 프로세스 안에서 경계를 넘습니다. 이 점이 Fetch API를 통해 직렬화된 `Request`/`Response` 객체만 주고받을 수 있는 [`FetchableDevEnvironment`](#fetchabledevenvironment)와 다릅니다. 따라서 `RunnableDevEnvironment`를 사용하려면 러너의 런타임이 Vite 서버의 런타임과 같아야 합니다.
+:::
 
 ```ts
 export class RunnableDevEnvironment extends DevEnvironment {
@@ -120,6 +126,8 @@ if (import.meta.hot) {
 :::
 
 `FetchableDevEnvironment`는 [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch) 인터페이스를 통해 런타임과 통신할 수 있는 환경입니다. `RunnableDevEnvironment`는 제한된 런타임에서만 구현이 가능하기 때문에, `RunnableDevEnvironment` 대신 `FetchableDevEnvironment`를 사용하는 것을 권장합니다.
+
+프레임워크에서 Vite를 직접 실행할 수 없는 런타임(예: Cloudflare Workers)을 지원할 때 주로 사용합니다. `RunnableDevEnvironment`는 값이 프로세스 안에서 경계를 넘도록 러너가 Vite 서버와 같은 런타임을 사용해야 하므로 이런 환경에서는 사용할 수 없습니다. Fetch API를 표준으로 삼으면 프레임워크는 모든 대상 런타임에서 하나의 요청 처리 경로를 유지할 수 있습니다. 개발 미들웨어는 브라우저의 각 요청을 `Request`로 전달하고 반환된 `Response`를 다시 브라우저로 보내, 프로덕션에서 앱이 요청을 처리하는 방식을 그대로 재현합니다.
 
 이 환경은 `handleRequest` 메서드를 통해 요청을 처리하는 표준화된 방법을 제공합니다:
 
@@ -349,4 +357,4 @@ await builder.buildApp()
 
 ## 환경에 구애받지 않는 코드 {#environment-agnostic-code}
 
-대부분의 경우 `environment` 인스턴스는 컨텍스트에 이미 존재하기에, `server.environments`로 직접 접근할 필요가 없습니다. 예를 들어, 플러그인 훅 내부에서는 `this.environment`로 환경에 접근할 수 있습니다. 환경을 인식하는 플러그인을 만드는 방법은 [플러그인을 위한 환경 API](./api-environment-plugins.md) 섹션을 참조하세요.
+대부분의 경우 현재 `environment` 인스턴스는 실행 중인 코드의 컨텍스트에 포함되므로, `server.environments`로 직접 접근하는 경우는 드뭅니다. 예를 들어, 플러그인 훅에서는 환경이 `PluginContext`의 일부로 노출되므로 `this.environment`로 접근할 수 있습니다. 환경을 인식하는 플러그인을 만드는 방법은 [플러그인을 위한 환경 API](./api-environment-plugins.md)를 참고하세요.

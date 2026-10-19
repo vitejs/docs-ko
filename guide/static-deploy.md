@@ -20,7 +20,7 @@
 
 이 곳의 내용은 아래와 같이 설정하였다고 가정한 상태에서 진행합니다.
 
-- 빌드 결과물이 저장되는 디렉터리를 기본 디렉터리(`dist`)로 지정한 상태입니다. 물론 [`build.outDir` 설정 값을 이용해 바꿀 수는 있으나](/config/build-options.md#build-outdir), 여기서는 `dist`를 빌드 디렉터리로 지정했다 가정하고 진행합니다.
+- 기본 빌드 출력 경로(`dist`)를 사용합니다. 이 경로는 [`build.outDir`로 변경할 수 있으며](/config/build-options.md#build-outdir), 변경한 경우 이 가이드의 안내를 해당 경로에 맞게 적용하면 됩니다.
 - NPM 또는 NPM 스크립트를 실행할 수 있는 Yarn과 같은 패키지 매니저를 사용하고 있습니다.
 - vite는 로컬 PC에 존재하는 프로젝트에 개발용(Dev) 디펜던시로 설치된 상태이며, 아래와 같이 NPM 스크립트를 설정한 상태입니다.
 
@@ -101,7 +101,7 @@ $ npm run preview
 
    만약 `https://<USERNAME or GROUP>.gitlab.io/`와 같은 형태로 배포하고자 한다면, `base` 설정 값을 생략하거나 기본 값인 `'/'`로 지정해주세요.
 
-   만약 `https://<USERNAME or GROUP>.gitlab.io/<REPO>/`와 같은 형태로 배포하고자 한다면, `base` 설정 값을 `'/<REPO>/'`로 지정해주세요.
+   예를 들어 리포지토리가 `https://gitlab.com/<USERNAME>/<REPO>`에 있고 `https://<USERNAME or GROUP>.gitlab.io/<REPO>/`로 배포한다면, `base`를 `'/<REPO>/'`로 설정하세요.
 
 2. 아래와 같은 내용으로 프로젝트의 루트에 `.gitlab-ci.yml` 파일을 생성해주세요. 이와 같이 설정하게 되면, 콘텐츠가 변경될 때마다 사이트가 빌드 및 배포됩니다.
 
@@ -162,7 +162,7 @@ Netlify CLI는 확인할 수 있는 프리뷰 URL을 제공합니다. 프로덕�
 3. Vercel은 Vite를 사용하고 있음을 감지하게 되며, 배포와 관련된 올바른 설정을 활성화합니다.
 4. 애플리케이션이 배포되었습니다! (예시: [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
 
-Vercel로 프로젝트를 불러오고 배포까지 완료했다면, 이후 브랜치에 대한 모든 Push 동작은 애플리케이션에 대한 [프리뷰 배포](https://vercel.com/docs/concepts/deployments/environments#preview)를 생성하게 됩니다. 그리고 프로덕션용 브랜치(일반적으로 "main")에 대한 모든 변경 사항은 [프로덕션 배포](https://vercel.com/docs/concepts/deployments/environments#production)가 됩니다.
+Vercel로 프로젝트를 불러오고 배포까지 완료했다면, 이후 브랜치에 대한 모든 Push 동작은 애플리케이션에 대한 [프리뷰 배포](https://vercel.com/docs/deployments/environments#preview-environment-pre-production)를 생성하게 됩니다. 그리고 프로덕션용 브랜치(일반적으로 "main")에 대한 모든 변경 사항은 [프로덕션 배포](https://vercel.com/docs/deployments/environments#production-environment)가 됩니다.
 
 이에 대해 좀 더 알고 싶다면 Vercel의 [Git](https://vercel.com/docs/concepts/git) 문서를 참고해주세요.
 
@@ -302,7 +302,7 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 
 ## xmit 정적 사이트 호스팅 {#xmit-static-site-hosting}
 
-[xmit](https://xmit.co)를 사용하여 정적 사이트를 배포하려면 이 [가이드](https://xmit.dev/posts/vite-quickstart/)를 따라주세요.
+[xmit](https://xmit.co)를 사용하여 정적 사이트를 배포하려면 이 [가이드](https://xmit.dev/guides/vite-quickstart/)를 따라주세요.
 
 ## Zephyr Cloud {#zephyr-cloud}
 

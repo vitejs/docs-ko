@@ -57,7 +57,7 @@ HTTPS를 사용하는 경우 이 검사는 건너뜁니다.
 :::
 
 ::: details 환경 변수를 통해 설정하기
-`__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS` 환경 변수를 통해 허용할 호스트를 추가로 지정할 수 있습니다.
+`__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS` 환경 변수로 허용할 호스트를 추가할 수 있습니다. 여러 호스트는 쉼표로 구분하세요(예: `host1.example.com,host2.example.com`).
 :::
 
 ## server.port {#server-port}
@@ -142,7 +142,7 @@ export default defineConfig({
         target: 'http://jsonplaceholder.typicode.com',
         changeOrigin: true,
         configure: (proxy, options) => {
-          // proxy는 'http-proxy'의 인스턴스입니다.
+          // proxy는 'http-proxy-3'의 인스턴스입니다.
         },
       },
       // WebSocket 또는 socket.io 프록시:
@@ -181,17 +181,45 @@ export default defineConfig({
 
 ## server.hmr {#server-hmr}
 
-- **타입:** `boolean | { protocol?: string, host?: string, port?: number, path?: string, timeout?: number, overlay?: boolean, clientPort?: number, server?: Server }`
+- **타입:** `boolean | { overlay?: boolean }`
 
-HMR 연결을 설정하거나 사용하지 않을 수 있습니다. (HMR 웹 소켓이 http 서버와 다른 주소를 사용해야 하는 경우)
+HMR 동작을 비활성화하거나 설정합니다.
 
 서버 오류 오버레이를 사용하지 않으려면 `server.hmr.overlay`를 `false`로 설정하세요.
 
-`protocol`은 HMR 연결에 사용되는 웹소켓 프로토콜을 설정합니다: `ws` (웹소켓) 또는 `wss` (보안 웹소켓) 값을 갖습니다.
+::: warning 사용 중단된 옵션
 
-`clientPort`는 클라이언트 측의 포트만 재정의하는 고급 옵션으로, 클라이언트 코드에서 찾는 것과 다른 포트에서 웹 소켓을 제공할 수 있습니다.
+WebSocket 관련 옵션(`protocol`, `host`, `port`, `path`, `clientPort`, `timeout`, `server`)은 사용 중단되었습니다. 대신 [`server.ws`](#server-ws)를 사용하세요. 사용 중단된 옵션은 자동으로 동기화되므로 기존 설정은 계속 동작합니다.
 
-`server.hmr.server` 옵션이 정의되면 Vite는 제공된 서버를 통해 HMR 연결 요청을 처리합니다. 미들웨어 모드가 아니라면, Vite는 기존 서버를 통해 HMR 연결 요청을 처리합니다. 이는 자체적으로 서명된 인증서를 사용하거나 단일 포트의 네트워크를 통해 Vite를 제공하려는 경우 유용합니다.
+:::
+
+## server.ws {#server-ws}
+
+- **타입:** `false | { protocol?: string, host?: string, port?: number, path?: string, timeout?: number, clientPort?: number, server?: Server }`
+
+WebSocket 연결 옵션을 설정합니다. WebSocket 연결을 완전히 비활성화하려면 `false`로 설정하세요.
+
+- `protocol` - WebSocket 프로토콜(`ws` 또는 `wss`)
+- `host` - WebSocket 서버 호스트
+- `port` - WebSocket 서버 포트
+- `path` - WebSocket 경로
+- `clientPort` - 클라이언트 측 포트를 재정의하여 클라이언트 코드가 찾는 포트와 다른 포트에서 WebSocket을 제공할 수 있습니다.
+- `timeout` - 연결 제한 시간(밀리초 단위, 기본값: 30000)
+- `server` - WebSocket 연결에 커스텀 HTTP 서버 사용
+
+`server.ws.server` 옵션이 정의되면 Vite는 제공된 서버를 통해 WebSocket 연결 요청을 처리합니다. 미들웨어 모드가 아니라면 Vite는 기존 서버를 통해 WebSocket 연결 요청을 처리하려고 시도합니다. 이는 자체 서명된 인증서를 사용하거나 네트워크에서 Vite를 단일 포트로 제공하려는 경우 유용합니다.
+
+```js
+export default defineConfig({
+  server: {
+    ws: {
+      protocol: 'wss',
+      host: 'localhost',
+      port: 3001,
+    },
+  },
+})
+```
 
 예제는 [`vite-setup-catalogue`](https://github.com/sapphi-red/vite-setup-catalogue)를 참고해주세요.
 
@@ -200,14 +228,14 @@ HMR 연결을 설정하거나 사용하지 않을 수 있습니다. (HMR 웹 소
 기본적으로 Vite는 리버스 프록시가 WebSocket 프록시를 지원한다고 가정하고 동작합니다. 만약 Vite HMR 클라이언트가 WebSocket 연결에 실패하게 되면, 클라이언트는 리버스 프록시 대신 WebSocket을 Vite HMR 서버에 직접 연결합니다:
 
 ```
-Direct websocket connection fallback. Check out https://vite.dev/config/server-options.html#server-hmr to remove the previous connection error.
+Direct websocket connection fallback. Check out https://vite.dev/config/server-options.html#server-ws to remove the previous connection error.
 ```
 
 위와 같은 상황이 발생될 때 브라우저에 나타나는 이 오류는 무시해도 됩니다. 다만 아래의 작업들 중 하나를 통해 직접 리버스 프록시를 우회해서 오류를 나타나지 않게끔 할 수도 있습니다:
 
 - WebSocket도 프록시하도록 리버스 프록시를 구성
-- [`server.strictPort` 옵션의 값을 `true`로](#server-strictport), 그리고 `server.hmr.clientPort`를 `server.port`와 동일한 값으로 설정
-- `server.hmr.port`를 [`server.port`](#server-port)와 다른 값으로 설정
+- [`server.strictPort = true`](#server-strictport)로 설정하고 `server.ws.clientPort`를 `server.port`와 동일한 값으로 설정
+- `server.ws.port`를 [`server.port`](#server-port)와 다른 값으로 설정
 
 :::
 
@@ -279,7 +307,7 @@ export default defineConfig({
 
 Vite 서버 감시자는 기본적으로 `root`를 감시하며, `.git/`, `node_modules/`, `test-results/`, 그리고 Vite의 `cacheDir` 및 `build.outDir` 디렉터리는 건너뜁니다. 감시하는 파일이 업데이트되면, Vite는 필요한 경우에만 HMR을 적용하고 페이지를 업데이트합니다.
 
-`null`로 설정하면 파일을 감시하지 않습니다. [`server.watcher`](/guide/api-javascript.html#vitedevserver)는 (Node.js `EventEmitter`과)호환되는 이벤트 객체(Emitter)를 제공하지만, `add` 또는 `unwatch`를 호출해도 아무런 효과가 없습니다.
+`null`로 설정하면 파일을 감시하지 않습니다. [`server.watcher`](/guide/api-javascript.html#vitedevserver)는 호환되는 이벤트 이미터를 제공하지만, `add` 또는 `unwatch`를 호출해도 아무런 효과가 없습니다.
 
 ::: warning `node_modules` 디렉터리에서 파일 감시하기
 
@@ -396,7 +424,7 @@ export default defineConfig({
 ## server.fs.deny {#server-fs-deny}
 
 - **타입:** `string[]`
-- **기본값:** `['.env', '.env.*', '*.{crt,pem}', '**/.git/**']`
+- **기본값:** `['.env', '.env.*', '*.{crt,pem,key,p12,pfx,cer,der}', '.npmrc', '.yarnrc.yml', '**/.git/**']`
 
 Vite dev 서버에서 제공되지 않기를 원하는 민감한 파일들에 대한 차단 목록입니다. 이 옵션은 [`server.fs.allow`](#server-fs-allow)보다 높은 우선 순위를 가지며, [피코매치 패턴](https://github.com/micromatch/picomatch#globbing-features)을 사용할 수 있습니다.
 
@@ -416,7 +444,7 @@ deny 필터는 모듈 id와 쿼리 매개변수를 제거한 id에 적용됩니�
 
 - **타입:** `string`
 
-에셋 URL에 대한 `origin` 헤더를 정의합니다.
+개발 중 생성되는 에셋 URL의 오리진을 정의합니다.
 
 ```js
 export default defineConfig({
@@ -431,11 +459,11 @@ export default defineConfig({
 - **타입:** `false | (sourcePath: string, sourcemapPath: string) => boolean`
 - **기본값:** `(sourcePath) => sourcePath.includes('node_modules')`
 
-서버 소스맵에서 소스 파일을 무시할지 여부로, [`x_google_ignoreList` 소스 맵 확장](https://developer.chrome.com/articles/x-google-ignore-list/) 필드를 채워넣는 데 사용됩니다.
+서버 소스 맵에서 소스 파일을 무시할지 여부로, [`x_google_ignoreList` 소스 맵 확장](https://developer.chrome.com/articles/x-google-ignore-list/) 필드를 채워 넣는 데 사용됩니다.
 
 `server.sourcemapIgnoreList`는 개발 서버에 대한 [`build.rolldownOptions.output.sourcemapIgnoreList`](https://rollupjs.org/configuration-options/#output-sourcemapignorelist)와 동일합니다. 두 구성 옵션 사이의 차이점은 `sourcePath`에 대한 상대 경로로 rollup 함수가 호출되는 동안 `server.sourcemapIgnoreList`는 절대 경로로 호출된다는 것입니다. 개발 중에 대부분의 모듈은 맵과 소스가 동일한 폴더에 있으므로 `sourcePath`에 대한 상대 경로는 파일 이름 자체입니다. 이러한 경우 절대 경로를 사용하면 편리합니다.
 
-기본적으로 `node_modules`가 포함된 경로를 모두 제외합니다. 이 동작을 비활성화하려면 `false`를 전달하거나, 함수를 전달해 소스와 소스맵 경로를 받아 소스 경로를 무시할지 여부를 반환할 수 있습니다.
+기본적으로 `node_modules`가 포함된 경로를 모두 제외합니다. 이 동작을 비활성화하려면 `false`를 전달하거나, 함수를 전달해 소스와 소스 맵 경로를 받아 소스 경로를 무시할지 여부를 반환할 수 있습니다.
 
 ```js
 export default defineConfig({

@@ -13,9 +13,11 @@
 여러분의 피드백을 공유해주세요.
 :::
 
+이 페이지는 JavaScript 런타임을 Vite와 통합하는 런타임 제공자를 위한 문서입니다. 여기서 런타임은 Node.js, 브라우저, Cloudflare의 workerd, 워커 스레드처럼 변환된 코드가 실행되는 JavaScript 엔진을 뜻합니다. 런타임 제공자는 이러한 런타임 중 하나를 위한 통합을 패키지로 제공하므로, 프레임워크 작성자와 최종 사용자(앱을 만드는 개발자)가 직접 설정할 필요가 없습니다.
+
 ## 환경 팩토리 {#environment-factories}
 
-환경 팩토리는 일반적으로 Cloudflare와 같은 환경을 제공하는 쪽에서 구현하며, 이를 최종 사용자가 직접 작성하지는 않습니다. 환경 팩토리는 개발과 빌드 환경에서 사용할 런타임에 대한 일반적인 설정을 `EnvironmentOptions`로 반환합니다. 사용자가 직접 설정할 필요가 없도록 기본 환경 옵션도 구성할 수도 있습니다.
+환경 팩토리는 최종 사용자가 아닌 런타임 제공자가 구현합니다. 환경 팩토리는 대상 런타임을 개발 및 빌드 환경 모두에서 사용하는 일반적인 사례를 위한 `EnvironmentOptions`를 반환합니다. 사용자가 직접 설정하지 않아도 되도록 기본 환경 옵션도 지정할 수 있습니다.
 
 ```ts
 function createWorkerdEnvironment(
@@ -24,9 +26,7 @@ function createWorkerdEnvironment(
   return mergeConfig(
     {
       resolve: {
-        conditions: [
-          /*...*/
-        ],
+        conditions: [/*...*/],
       },
       dev: {
         createEnvironment(name, config) {
@@ -183,7 +183,7 @@ export class ModuleRunner {
    */
   public clearCache(): void
   /**
-   * 모든 캐시를 지우고, HMR 리스너를 제거하며, 소스맵 지원을 재설정합니다.
+   * 모든 캐시를 지우고, HMR 리스너를 제거하며, 소스 맵 지원을 재설정합니다.
    * 이 메서드는 HMR 연결을 중지하지 않습니다.
    */
   public async close(): Promise<void>
@@ -211,7 +211,7 @@ import { transport } from './rpc-implementation.js'
 const moduleRunner = new ModuleRunner(
   {
     transport,
-    createImportMeta: createNodeImportMeta, // if the module runner runs in Node.js
+    createImportMeta: createNodeImportMeta, // 모듈 러너가 Node.js에서 실행되는 경우
   },
   new ESModulesEvaluator(),
 )
@@ -231,7 +231,7 @@ import type { Debug } from '@type-challenges/utils'
 
 type InterceptorOptions = Debug<InterceptorOptionsRaw>
 type ModuleRunnerHmr = Debug<ModuleRunnerHmrRaw>
-/** see below */
+/** 아래 참고 */
 type ModuleRunnerTransport = unknown
 
 // ---cut---
@@ -241,18 +241,15 @@ interface ModuleRunnerOptions {
    */
   transport: ModuleRunnerTransport
   /**
-   * 소스맵 해석 방식을 설정합니다.
+   * 소스 맵 해석 방식을 설정합니다.
    * `process.setSourceMapsEnabled`를 사용할 수 있으면 `node`를 우선합니다.
    * 그렇지 않으면 기본적으로 `Error.prepareStackTrace` 메서드를 오버라이드하는
    * `prepareStackTrace`를 사용합니다.
-   * Vite가 처리하지 않은 파일의 파일 내용과 소스맵 해석 방식을 설정하는 객체를
+   * Vite가 처리하지 않은 파일의 파일 내용과 소스 맵 해석 방식을 설정하는 객체를
    * 제공할 수도 있습니다.
    */
   sourcemapInterceptor?:
-    | false
-    | 'node'
-    | 'prepareStackTrace'
-    | InterceptorOptions
+    false | 'node' | 'prepareStackTrace' | InterceptorOptions
   /**
    * HMR을 비활성화하거나 HMR 옵션을 설정합니다.
    *
@@ -302,7 +299,7 @@ export interface ModuleEvaluator {
 }
 ```
 
-Vite는 기본적으로 이 인터페이스를 구현하는 `ESModulesEvaluator`를 제공합니다. 이는 `new AsyncFunction`을 사용해 코드를 실행하므로, 만약 코드에 인라인 소스맵이 있다면 `AsyncFunction`이 추가하는 코드로 인해 [2 줄의 오프셋](https://tc39.es/ecma262/#sec-createdynamicfunction)이 있어야 합니다. 참고로 이는 `ESModulesEvaluator`에서 자동으로 처리됩니다. 커스텀 분석기는 새로운 코드를 추가하지 않습니다.
+Vite는 기본적으로 이 인터페이스를 구현하는 `ESModulesEvaluator`를 제공합니다. `new AsyncFunction`으로 코드를 평가하므로, 코드에 인라인 소스 맵이 있다면 추가되는 줄을 반영하기 위해 [2줄의 오프셋](https://tc39.es/ecma262/#sec-createdynamicfunction)을 포함해야 합니다. `ESModulesEvaluator`는 이를 자동으로 처리합니다. 커스텀 평가기는 추가 줄을 삽입하지 않습니다.
 
 ## `ModuleRunnerTransport` {#modulerunnertransport}
 
@@ -310,7 +307,7 @@ Vite는 기본적으로 이 인터페이스를 구현하는 `ESModulesEvaluator`
 
 ```ts twoslash
 import type { ModuleRunnerTransportHandlers } from 'vite/module-runner'
-/** an object */
+/** 객체 */
 type HotPayload = unknown
 // ---cut---
 interface ModuleRunnerTransport {
@@ -449,7 +446,7 @@ export const runner = new ModuleRunner(
         return response.json()
       },
     },
-    hmr: false, // disable HMR as HMR requires transport.connect
+    hmr: false, // HMR에는 transport.connect가 필요하므로 비활성화
   },
   new ESModulesEvaluator(),
 )
@@ -475,4 +472,13 @@ server.onRequest((request: Request) => {
 
 단, HMR을 지원하려면 `send`와 `connect` 메서드가 필요합니다. `send` 메서드는 일반적으로 커스텀 이벤트가 발생할 때 호출됩니다(예: `import.meta.hot.send("my-event")`).
 
-Vite는 Vite SSR에서 HMR을 지원하기 위해 메인 진입점에서 `createServerHotChannel`을 제공합니다.
+Vite 서버와 같은 Node.js 프로세스에서 실행되는 SSR 환경을 위해 Vite는 바로 사용할 수 있는 `HotChannel`인 `createServerHotChannel`을 제공합니다:
+
+```js
+import { createServerHotChannel, DevEnvironment } from 'vite'
+
+new DevEnvironment(name, config, {
+  hot: true,
+  transport: createServerHotChannel(),
+})
+```

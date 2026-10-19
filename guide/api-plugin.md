@@ -36,7 +36,7 @@ Vite 전용 플러그인의 경우:
 - `vite-plugin-react-`는 React만을 지원하는 Vite 플러그인을 의미합니다.
 - `vite-plugin-svelte-`는 Svelte만을 지원하는 Vite 플러그인을 의미합니다.
 
-[가상 모듈 컨벤션](#virtual-modules-convention)또한 참고가 가능합니다.
+[가상 모듈 컨벤션](https://rolldown.rs/apis/plugin-api#virtual-modules)도 참고하세요.
 
 ## 플러그인 설정 {#plugins-config}
 
@@ -96,7 +96,7 @@ export default function myPlugin() {
       handler(src, id) {
         return {
           code: compileFileToJS(src),
-          map: null, // provide source map if available
+          map: null, // 사용 가능한 소스 맵이 있으면 제공
         }
       },
     },
@@ -106,11 +106,7 @@ export default function myPlugin() {
 
 ### 가상 모듈 가져오기 {#importing-a-virtual-file}
 
-예제는 [다음 섹션](#virtual-modules-convention)을 참고해주세요.
-
-## 가상 모듈 컨벤션 {#virtual-modules-convention}
-
-가상 모듈은 ESM의 일반적인 `import` 구문을 사용해 소스 파일에 빌드 시의 정보를 전달할 수 있는 유용한 기법입니다.
+가상 모듈을 사용하면 일반적인 ESM `import` 구문으로 빌드 시점 정보를 소스 파일에 전달할 수 있습니다. 전체 컨벤션은 [가상 모듈 컨벤션](https://rolldown.rs/apis/plugin-api#virtual-modules)을 참고하세요.
 
 ```js
 import { exactRegex } from '@rolldown/pluginutils'
@@ -120,7 +116,7 @@ export default function myPlugin() {
   const resolvedVirtualModuleId = '\0' + virtualModuleId
 
   return {
-    name: 'my-plugin', // required, will show up in warnings and errors
+    name: 'my-plugin', // 필수이며 경고와 오류에 표시됩니다
     resolveId: {
       filter: { id: exactRegex(virtualModuleId) },
       handler() {
@@ -145,9 +141,7 @@ import { msg } from 'virtual:my-module'
 console.log(msg)
 ```
 
-[가상 모듈](https://rollupjs.org/plugin-development/#a-simple-example)은 Vite와 Rolldown / Rollup에서 사용자에게 보이는 경로에 `virtual:` 접두사를 붙이는 컨벤션을 사용합니다. 가능하다면 생태계의 다른 플러그인과 충돌하지 않도록 플러그인 이름을 네임스페이스로 사용해야 합니다. 예를 들어 `vite-plugin-posts`는 사용자가 빌드 시점 정보를 얻기 위해 `virtual:posts` 또는 `virtual:posts/helpers` 가상 모듈을 임포트하도록 할 수 있습니다. 내부적으로 가상 모듈을 사용하는 플러그인은 id를 해석할 때 Rollup 생태계의 컨벤션에 따라 모듈 ID 앞에 `\0`을 붙여야 합니다. 이렇게 하면 다른 플러그인이 해당 id를 노드 해석처럼 처리하려는 것을 방지하고, 소스 맵 같은 핵심 기능이 가상 모듈과 일반 파일을 구분할 수 있습니다. `\0`은 임포트 URL에서 허용되지 않는 문자이므로 임포트 분석 중 대체해야 합니다. 개발 중 브라우저에서는 `\0{id}` 가상 id가 `/@id/__x00__{id}`로 인코딩됩니다. 이 id는 플러그인 파이프라인에 들어가기 전에 다시 디코딩되므로 플러그인 훅 코드에서는 보이지 않습니다.
-
-실제 파일에서 직접 파생된 모듈, 예를 들어 Single File Component(.vue 또는 .svelte SFC)의 스크립트 모듈은 이 컨벤션을 따를 필요가 없습니다. SFC는 일반적으로 처리 과정에서 여러 하위 모듈을 생성하지만, 그 안의 코드는 파일 시스템으로 다시 매핑될 수 있습니다. 이러한 하위 모듈에 `\0`을 사용하면 소스 맵이 올바르게 동작하지 않습니다.
+Vite에서는 `\0`이 임포트 URL에 허용되지 않으므로, 개발 중 브라우저에서 `\0{id}` 가상 id가 `/@id/__x00__{id}`로 인코딩됩니다. 이 id는 플러그인 파이프라인에 들어가기 전에 다시 디코딩되므로 플러그인 훅 코드에서는 보이지 않습니다.
 
 ## Rolldown 훅 {#rolldown-hooks}
 
@@ -157,7 +151,7 @@ console.log(msg)
 
 다음 훅은 서버 시작 시 한 번 호출됩니다:
 
-- [`options`](https://rolldown.rs/reference/interface.plugin#options)
+- [`options`](https://rolldown.rs/reference/Interface.Plugin#options)
 - [`buildStart`](https://rolldown.rs/reference/Interface.Plugin#buildstart)
 
 다음 훅은 들어오는 각 모듈 요청마다 호출됩니다:
@@ -185,16 +179,16 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
 ### `config` {#config}
 
-- **타입:** `(config: UserConfig, env: { mode: string, command: string }) => UserConfig | null | void`
+- **타입:** `(config: UserConfig, env: { mode: 'build' | 'serve', command: string, isSsrBuild?: boolean, isPreview?: boolean }) => UserConfig | null | void`
 - **종류:** `async`, `sequential`
 - **범위:** [전역](/guide/api-environment-plugins#per-environment-hooks-and-global-hooks)
 
-  훅을 이용해 Vite의 설정을 실제 사용하기 전 변경할 수 있습니다. `config` 훅으로 설정 파일 또는 CLI 옵션으로 전달받은 로우 레벨 사용자 설정 값과, 현재 사용 중인 `mode` 및 `command`가 인자를 통해 전달됩니다. 훅은 객체를 반환할 수 있으며, 이 때의 객체는 기존 설정에 대해 깊은 병합(Deeply merge)이 됩니다. 또는 인자로 전달받은 설정 객체를 직접 수정할 수도 있습니다. 다만 이 방법은 객체 반환을 이용한 방법으로는 원하는 결과를 얻을 수 없을 때만 사용하세요.
+  Vite 설정이 확정되기 전에 수정합니다. 이 훅은 설정 파일에 CLI 옵션을 병합한 원시 사용자 설정과, 현재 사용 중인 `mode` 및 `command`를 포함하는 설정 환경 객체를 받습니다. 일부 설정만 담은 객체를 반환하면 기존 설정과 깊게 병합됩니다. 기본 병합 방식으로 원하는 결과를 얻을 수 없다면 설정 객체를 직접 수정할 수도 있습니다.
 
   **예제:**
 
   ```js
-  // return partial config (recommended)
+  // 일부 설정만 담은 객체를 반환합니다(권장)
   const partialConfigPlugin = () => ({
     name: 'return-partial',
     config: () => ({
@@ -206,7 +200,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
     }),
   })
 
-  // mutate the config directly (use only when merging doesn't work)
+  // 설정을 직접 수정합니다(병합으로 처리할 수 없을 때만 사용)
   const mutateConfigPlugin = () => ({
     name: 'mutate-config',
     config(config, { command }) {
@@ -239,16 +233,16 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
       name: 'read-config',
 
       configResolved(resolvedConfig) {
-        // store the resolved config
+        // 확정된 설정을 저장합니다
         config = resolvedConfig
       },
 
-      // use stored config in other hooks
+      // 다른 훅에서 저장된 설정을 사용합니다
       transform(code, id) {
         if (config.command === 'serve') {
-          // dev: plugin invoked by dev server
+          // dev: 개발 서버에서 플러그인을 호출합니다
         } else {
-          // build: plugin invoked by Rollup
+          // build: Rollup에서 플러그인을 호출합니다
         }
       },
     }
@@ -271,7 +265,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
     name: 'configure-server',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        // custom handle request...
+        // 커스텀 요청 처리...
       })
     },
   })
@@ -285,11 +279,11 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
   const myPlugin = () => ({
     name: 'configure-server',
     configureServer(server) {
-      // return a post hook that is called after internal middlewares are
-      // installed
+      // 내부 미들웨어를 설치한 뒤 호출되는
+      // 후처리 훅을 반환합니다
       return () => {
         server.middlewares.use((req, res, next) => {
-          // custom handle request...
+          // 커스텀 요청 처리...
         })
       }
     },
@@ -310,7 +304,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
       },
       transform(code, id) {
         if (server) {
-          // use server...
+          // 서버 사용...
         }
       },
     }
@@ -332,11 +326,11 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
   const myPlugin = () => ({
     name: 'configure-preview-server',
     configurePreviewServer(server) {
-      // return a post hook that is called after other middlewares are
-      // installed
+      // 다른 미들웨어를 설치한 뒤 호출되는
+      // 후처리 훅을 반환합니다
       return () => {
         server.middlewares.use((req, res, next) => {
-          // custom handle request...
+          // 커스텀 요청 처리...
         })
       }
     },
@@ -383,13 +377,12 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
       path: string
       filename: string
       server?: ViteDevServer
-      bundle?: import('rollup').OutputBundle
-      chunk?: import('rollup').OutputChunk
+      bundle?: import('rolldown').OutputBundle
+      chunk?: import('rolldown').OutputChunk
+      originalUrl?: string
     },
   ) =>
-    | IndexHtmlTransformResult
-    | void
-    | Promise<IndexHtmlTransformResult | void>
+    IndexHtmlTransformResult | void | Promise<IndexHtmlTransformResult | void>
 
   type IndexHtmlTransformResult =
     | string
@@ -402,12 +395,12 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
   interface HtmlTagDescriptor {
     tag: string
     /**
-     * attribute values will be escaped automatically if needed
+     * 필요한 경우 속성 값은 자동으로 이스케이프됩니다
      */
     attrs?: Record<string, string | boolean>
     children?: string | HtmlTagDescriptor[]
     /**
-     * default: 'head-prepend'
+     * 기본값: 'head-prepend'
      */
     injectTo?: 'head' | 'body' | 'head-prepend' | 'body-prepend'
   }
@@ -447,7 +440,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
     ```js
     handleHotUpdate({ server, modules, timestamp }) {
-      // Invalidate modules manually
+      // 모듈을 직접 무효화합니다
       const invalidatedModules = new Set()
       for (const mod of modules) {
         server.moduleGraph.invalidateModule(
@@ -480,7 +473,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
     ```js
     if (import.meta.hot) {
       import.meta.hot.on('special-update', (data) => {
-        // perform custom update
+        // 커스텀 업데이트를 수행합니다
       })
     }
     ```
@@ -521,7 +514,7 @@ function versionCheckPlugin(): Plugin {
 - `RenderedChunk`(예: `renderChunk`와 `augmentChunkHash`에서)
 - `OutputChunk`와 `OutputAsset`(예: `generateBundle`과 `writeBundle`에서)
 
-`viteMetadata` provides:
+`viteMetadata`는 다음을 제공합니다:
 
 - `viteMetadata.importedCss: Set<string>`
 - `viteMetadata.importedAssets: Set<string>`
@@ -534,6 +527,7 @@ function versionCheckPlugin(): Plugin {
 function outputMetadataPlugin(): Plugin {
   return {
     name: 'output-metadata-plugin',
+    enforce: 'post',
     generateBundle(_, bundle) {
       for (const output of Object.values(bundle)) {
         const css = output.viteMetadata?.importedCss
@@ -572,7 +566,7 @@ Vite 플러그인은 Webpack 로더와 유사한 `enforce` 프로퍼티를 추�
 function myPlugin() {
   return {
     name: 'build-only',
-    apply: 'build', // or 'serve'
+    apply: 'build', // 또는 'serve'
   }
 }
 ```
@@ -667,6 +661,44 @@ export default function myPlugin() {
 [`@rolldown/pluginutils`](https://www.npmjs.com/package/@rolldown/pluginutils)는 `exactRegex`와 `prefixRegex` 같은 훅 필터용 유틸리티를 익스포트합니다. 편의를 위해 이 유틸리티들은 `rolldown/filter`에서도 다시 익스포트됩니다.
 :::
 
+## 청크 임포트 맵 정보 {#chunk-import-map-information}
+
+:::info 실험적 기능
+
+이 기능은 실험적이며 향후 변경될 수 있습니다.
+
+:::
+
+[`build.chunkImportMap`](/config/build-options#build-chunkimportmap) 옵션을 활성화하면 생성된 청크의 임포트 문은 파일 경로 대신 청크마다 고유한 ID를 사용합니다.
+
+청크 ID에서 파일 경로로의 매핑을 가져오려면 `generateBundle` 또는 `writeBundle` 훅에서 번들에 포함해 출력한 임포트 맵에 접근할 수 있습니다. 임포트 맵의 이름은 [`build.rolldownOptions.experimental.chunkImportMap.fileName`](https://rolldown.rs/reference/InputOptions.experimental#chunkimportmap)에 지정된 값이며, 기본값은 `importmap.json`입니다.
+
+```ts
+function accessImportMap() {
+  let config: ResolvedConfig
+  return {
+    name: 'access-import-map',
+    configResolved(resolvedConfig) {
+      config = resolvedConfig
+    },
+    generateBundle(options, bundle) {
+      const chunkImportMap =
+        config.build.rolldownOptions.experimental?.chunkImportMap
+      if (chunkImportMap) {
+        const importMapFilename =
+          typeof chunkImportMap === 'object' && chunkImportMap.fileName
+            ? chunkImportMap.fileName
+            : 'importmap.json'
+        const importMap = bundle[importMapFilename]! as OutputAsset
+        const mapping = JSON.parse(importMap.source).imports
+        console.log(mapping)
+        // { "./entry.hash1.js": "./entry.hash2.js" }
+      }
+    },
+  }
+}
+```
+
 ## 클라이언트-서버 커뮤니케이션 {#client-server-communication}
 
 Vite 2.9부터 클라이언트와의 통신을 처리하는 데 도움이 되는 플러그인용 유틸을 제공합니다.
@@ -709,7 +741,7 @@ if (import.meta.hot) {
 
 ### 클라이언트에서 서버로 전송 {#client-to-server}
 
-클라이언트에서 서버로 이벤트를 보낼 때는 [`hot.send`](/guide/api-hmr.html#hot-send-event-payload)를 사용할 수 있습니다:
+클라이언트에서 서버로 이벤트를 보낼 때는 [`hot.send`](/guide/api-hmr.html#hot-send-event-data)를 사용할 수 있습니다:
 
 ```ts
 // 클라이언트 측

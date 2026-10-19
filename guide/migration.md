@@ -205,24 +205,24 @@ export default defineConfig({
 
 `esbuild`는 더 이상 Vite에서 직접 사용되지 않으며 이제 선택적 디펜던시입니다. `transformWithEsbuild` 함수를 사용하는 플러그인을 사용 중이라면 `esbuild`를 `devDependency`로 설치해야 합니다. `transformWithEsbuild` 함수는 지원 중단되었고 향후 제거될 예정입니다. 대신 새로운 `transformWithOxc` 함수로 마이그레이션하는 것을 권장합니다.
 
-### Oxc를 통한 JavaScript 최소화 {#javascript-minification-by-oxc}
+### Oxc를 통한 JavaScript 축소화 {#javascript-minification-by-oxc}
 
-이제 JavaScript 최소화에는 esbuild 대신 Oxc Minifier가 사용됩니다. esbuild로 다시 전환하려면 지원 중단된 [`build.minify: 'esbuild'`](/config/build-options#build-minify) 옵션을 사용할 수 있습니다. 이 설정 옵션은 향후 제거될 예정이며, Vite가 더 이상 esbuild에 직접 의존하지 않으므로 `esbuild`를 `devDependency`로 설치해야 합니다.
+이제 JavaScript 축소화에는 esbuild 대신 Oxc Minifier가 사용됩니다. esbuild로 다시 전환하려면 지원 중단된 [`build.minify: 'esbuild'`](/config/build-options#build-minify) 옵션을 사용할 수 있습니다. 이 설정 옵션은 향후 제거될 예정이며, Vite가 더 이상 esbuild에 직접 의존하지 않으므로 `esbuild`를 `devDependency`로 설치해야 합니다.
 
-최소화 동작을 제어하기 위해 `esbuild.minify*` 옵션을 사용하고 있었다면 이제 대신 `build.rolldownOptions.output.minify`를 사용할 수 있습니다. `esbuild.drop` 옵션을 사용하고 있었다면 이제 [`build.rolldownOptions.output.minify.compress.drop*` 옵션](https://oxc.rs/docs/guide/usage/minifier/dead-code-elimination)을 사용할 수 있습니다.
+축소화 동작을 제어하기 위해 `esbuild.minify*` 옵션을 사용하고 있었다면 이제 대신 `build.rolldownOptions.output.minify`를 사용할 수 있습니다. `esbuild.drop` 옵션을 사용하고 있었다면 이제 [`build.rolldownOptions.output.minify.compress.drop*` 옵션](https://oxc.rs/docs/guide/usage/minifier/dead-code-elimination)을 사용할 수 있습니다.
 
 프로퍼티 맹글링과 관련 옵션([`mangleProps`, `reserveProps`, `mangleQuoted`, `mangleCache`](https://esbuild.github.io/api/#mangle-props))은 Oxc에서 지원되지 않습니다. 이러한 옵션이 필요하다면 [oxc-project/oxc#15375](https://github.com/oxc-project/oxc/issues/15375)를 참고하세요.
 
-esbuild와 Oxc Minifier는 소스 코드에 대해 약간 다른 가정을 합니다. 최소화 도구 때문에 코드가 깨진다고 의심된다면 다음 문서에서 이러한 가정을 비교할 수 있습니다:
+esbuild와 Oxc Minifier는 소스 코드에 대해 약간 다른 가정을 합니다. 축소화 도구 때문에 코드가 깨진다고 의심된다면 다음 문서에서 이러한 가정을 비교할 수 있습니다:
 
-- [esbuild minify assumptions](https://esbuild.github.io/api/#minify-considerations)
-- [Oxc Minifier assumptions](https://oxc.rs/docs/guide/usage/minifier.html#assumptions)
+- [esbuild 축소화 가정](https://esbuild.github.io/api/#minify-considerations)
+- [Oxc Minifier 가정](https://github.com/oxc-project/oxc/blob/main/crates/oxc_minifier/docs/ASSUMPTIONS.md)
 
-JavaScript 앱에서 최소화와 관련된 문제를 발견하면 보고해 주세요.
+JavaScript 앱에서 축소화와 관련된 문제를 발견하면 보고해 주세요.
 
-### Lightning CSS를 통한 CSS 최소화 {#css-minification-by-lightning-css}
+### Lightning CSS를 통한 CSS 축소화 {#css-minification-by-lightning-css}
 
-이제 CSS 최소화에는 기본적으로 [Lightning CSS](https://lightningcss.dev/)가 사용됩니다. esbuild로 다시 전환하려면 [`build.cssMinify: 'esbuild'`](/config/build-options#build-cssminify) 옵션을 사용할 수 있습니다. 이 경우 `esbuild`를 `devDependency`로 설치해야 합니다.
+이제 CSS 축소화에는 기본적으로 [Lightning CSS](https://lightningcss.dev/)가 사용됩니다. esbuild로 다시 전환하려면 [`build.cssMinify: 'esbuild'`](/config/build-options#build-cssminify) 옵션을 사용할 수 있습니다. 이 경우 `esbuild`를 `devDependency`로 설치해야 합니다.
 
 Lightning CSS는 더 나은 문법 낮추기를 지원하며, CSS 번들 크기가 약간 증가할 수 있습니다.
 
@@ -263,7 +263,7 @@ CommonJS(CJS) 모듈의 `default` 임포트가 이제 일관된 방식으로 처
 
 ### 외부화된 모듈에 대한 Require 호출 {#require-calls-for-externalized-modules}
 
-외부화된 모듈에 대한 `require` 호출은 이제 `import` 문으로 변환되지 않고 `require` 호출로 보존됩니다. 이는 `require` 호출의 의미를 보존하기 위한 것입니다. 이를 `import` 문으로 변환하고 싶다면 Vite에서 다시 내보내는 [Rolldown의 내장 `esmExternalRequirePlugin`](https://rolldown.rs/builtin-plugins/esm-external-require)을 사용할 수 있습니다.
+외부화된 모듈에 대한 `require` 호출은 이제 `import` 문으로 변환되지 않고 `require` 호출로 보존됩니다. 이는 `require` 호출의 의미를 보존하기 위한 것입니다. 이를 `import` 문으로 변환하고 싶다면 `vite`에서 다시 내보내는 [Rolldown의 내장 `esmExternalRequirePlugin`](https://rolldown.rs/builtin-plugins/esm-external-require)을 사용할 수 있습니다.
 
 ```js
 import { defineConfig, esmExternalRequirePlugin } from 'vite'
@@ -304,7 +304,7 @@ try {
 } catch (e) {
   if (e.errors) {
     for (const error of e.errors) {
-      console.log(error.code) // error code
+      console.log(error.code) // 오류 코드
     }
   }
 }

@@ -6,7 +6,7 @@
 
 ## 들어가기 전에 {#overview}
 
-Vite(프랑스어로 "빠르다"를 뜻하며, `/viːt/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" aria-label="pronounce" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="../images/voice.svg?no-inline#voice" /></svg></button>, "veet"처럼 발음합니다)는 모던 웹 프로젝트에 더 빠르고 가벼운 개발 경험을 제공하는 것을 목표로 하는 빌드 도구입니다. 크게 두 부분으로 구성됩니다:
+Vite(프랑스어로 "빠르다"를 뜻하며, `/viːt/`<button style="border:none;padding:3px;border-radius:4px;vertical-align:bottom" id="play-vite-audio" aria-label="Vite 발음 듣기" onclick="document.getElementById('vite-audio').play();"><svg style="height:2em;width:2em"><use href="../images/voice.svg?no-inline#voice" /></svg></button>, "veet"처럼 발음합니다)는 모던 웹 프로젝트에 더 빠르고 가벼운 개발 경험을 제공하는 것을 목표로 하는 빌드 도구입니다. 크게 두 부분으로 구성됩니다:
 
 - [네이티브 ES 모듈](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)을 통해 소스 파일을 제공하는 개발 서버로, [다양한 기능](./features)과 놀라울 정도로 빠른 [Hot Module Replacement(HMR)](./features#hot-module-replacement)를 제공합니다.
 
@@ -18,7 +18,7 @@ Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./feat
 
 왜 Vite를 만들게 되었는지 알고 싶다면 [Vite를 사용해야 하는 이유](./why) 섹션을 참고해주세요.
 
-<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq?via=vite" title="Free Vite Course on Scrimba">Scrimba의 인터랙티브 튜토리얼로 Vite를 배워보세요</ScrimbaLink>
+<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq?via=vite" title="Scrimba 무료 Vite 강의">Scrimba의 인터랙티브 튜토리얼로 Vite를 배워보세요</ScrimbaLink>
 
 ## 지원하는 브라우저 {#browser-support}
 
@@ -71,7 +71,7 @@ $ deno init --npm vite
 
 이후에는 프롬프트 창에 출력된 메시지를 따라주세요.
 
-<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~0yhj?via=vite" title="Scaffolding Your First Vite Project">Scrimba에서 인터랙티브 강의를 시청하세요</ScrimbaLink>
+<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~0yhj?via=vite" title="첫 Vite 프로젝트 구성하기">Scrimba에서 인터랙티브 강의를 시청하세요</ScrimbaLink>
 
 ::: tip 호환성 참고 사항
 Vite는 [Node.js](https://nodejs.org/en/) 20.19+ 또는 22.12+를 요구합니다. 다만 일부 템플릿의 경우 더 높은 버전의 Node.js를 요구할 수 있으니, 패키지 관리자에서 경고가 표시되면 업그레이드해 주세요.
@@ -84,7 +84,7 @@ Vite는 [Node.js](https://nodejs.org/en/) 20.19+ 또는 22.12+를 요구합니�
 ::: code-group
 
 ```bash [npm]
-# npm 7+, extra double-dash is needed:
+# npm 7+에서는 이중 대시를 추가해야 합니다:
 $ npm create vite@latest my-vue-app -- --template vue
 ```
 
@@ -205,19 +205,19 @@ Vite는 정적(Static) HTTP 서버와 비슷하게 "루트 디렉터리"라는 �
 #### 프로젝트 루트 지정 {#specifying-alternative-root}
 
 `vite`은 개발 서버를 시작할 때 현재 위치해 있는 디렉터리를 프로젝트 루트로 가정하고 동작합니다. 만약 특정 디렉터리를 지정해 프로젝트 루트로써 동작하게끔 하고 싶다면, `vite serve some/sub/dir` 명령으로 Vite를 시작해주세요.
-참고로 Vite는 프로젝트 루트 내에서 [설정 파일(`vite.config.js`)](/config/#configure-vite)을 확인하기에, 프로젝트 루트가 변경된다면 해당 파일도 함께 옮겨줘야 합니다.
+참고로 Vite는 프로젝트 루트 내에서 [설정 파일(`vite.config.js`)](/config/#configuring-vite)을 확인하기에, 프로젝트 루트가 변경된다면 해당 파일도 함께 옮겨줘야 합니다.
 
 ## 커맨드 라인 인터페이스 {#command-line-interface}
 
-vite가 설치된 프로젝트는 `vite` 명령을 통해 바로 Vite를 실행할 수 있습니다. (`npx vite`을 이용해도 되구요.) 기본적으로 Vite에서 제공하는 npm 스크립트는 아래와 같습니다.
+Vite가 설치된 프로젝트에서는 npm 스크립트에서 `vite` 실행 파일을 사용하거나, `npx vite`로 직접 실행할 수 있습니다. 다음은 스캐폴딩한 Vite 프로젝트의 기본 npm 스크립트입니다:
 
 <!-- prettier-ignore -->
 ```json [package.json]
 {
   "scripts": {
-    "dev": "vite", // start dev server, aliases: `vite dev`, `vite serve`
-    "build": "vite build", // build for production
-    "preview": "vite preview" // locally preview production build
+    "dev": "vite", // 개발 서버 시작, 별칭: `vite dev`, `vite serve`
+    "build": "vite build", // 프로덕션 빌드
+    "preview": "vite preview" // 프로덕션 빌드의 로컬 프리뷰
   }
 }
 ```
@@ -260,7 +260,7 @@ cd vite
 pnpm install
 cd packages/vite
 pnpm run build
-pnpm link # use your preferred package manager for this step
+pnpm link # 이 단계에서는 선호하는 패키지 매니저를 사용하세요
 ```
 
 그런 다음 Vite 기반 프로젝트로 이동해 `pnpm link vite`를 실행하세요. 또는 `vite`를 전역으로 링크할 때 사용한 패키지 매니저를 사용하세요. 이제 개발 서버를 다시 시작하면 최신 변경 사항을 사용할 수 있습니다.
@@ -268,7 +268,7 @@ pnpm link # use your preferred package manager for this step
 Vite가 어떻게, 언제 릴리스되는지 더 알아보려면 [릴리스](../releases.md) 문서를 확인해 주세요.
 
 ::: tip Vite를 사용하는 디펜던시
-디펜던시에서 간접적으로 사용되는 Vite 버전을 교체하려면, [npm overrides](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#overrides) 또는 [pnpm overrides](https://pnpm.io/9.x/package_json#pnpmoverrides)를 사용해야 합니다.
+디펜던시에서 간접적으로 사용되는 Vite 버전을 교체하려면, [npm overrides](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#overrides) 또는 [pnpm overrides](https://pnpm.io/settings#overrides)를 사용해야 합니다.
 :::
 
 ## 커뮤니티 {#community}

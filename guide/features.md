@@ -53,7 +53,7 @@ export type { T }
 
 ### 타입스크립트 컴파일러 옵션 {#typescript-compiler-options}
 
-Vite는 `tsconfig.json`의 일부 옵션을 존중하고, 이에 대응하는 Oxc Transformer 옵션을 설정합니다. 각 파일에 대해 Vite는 가장 가까운 상위 디렉터리의 `tsconfig.json`을 사용합니다. 해당 `tsconfig.json`에 [`references`](https://www.typescriptlang.org/tsconfig/#references) 필드가 있다면, Vite는 [`include`](https://www.typescriptlang.org/tsconfig/#include)와 [`exclude`](https://www.typescriptlang.org/tsconfig/#exclude) 필드를 만족하는 참조된 설정 파일을 사용합니다.
+Vite는 `tsconfig.json`의 일부 옵션을 존중하고, 이에 대응하는 Oxc Transformer 옵션을 설정합니다. 각 파일에 대해 Vite는 해당 파일과 일치하는 가장 가까운 상위 `tsconfig.json`이나, 그 설정의 [`references`](https://www.typescriptlang.org/tsconfig/#references) 필드가 참조하는 설정 중 파일과 일치하는 설정을 사용합니다. 파일이 설정의 [`files`](https://www.typescriptlang.org/tsconfig/#files), [`include`](https://www.typescriptlang.org/tsconfig/#include), [`exclude`](https://www.typescriptlang.org/tsconfig/#exclude) 필드를 만족하면 해당 설정과 일치하는 것으로 봅니다.
 
 Vite 설정과 `tsconfig.json`에 같은 옵션이 모두 설정된 경우, Vite 설정의 값이 우선합니다.
 
@@ -95,13 +95,13 @@ Vite는 [esbuild](https://esbuild.github.io/)와 동일한 동작을 따라 `tsc
 
 - [TypeScript 문서](https://www.typescriptlang.org/tsconfig#emitDecoratorMetadata)
 
-이 옵션은 부분적으로만 지원됩니다. 완전한 지원에는 TypeScript 컴파일러의 타입 추론이 필요하지만, 이는 지원되지 않습니다. 자세한 내용은 [Oxc Transformer 문서](https://oxc.rs/docs/guide/usage/transformer/typescript#decorators)를 참고해 주세요.
+이 옵션은 부분적으로만 지원됩니다. 완전한 지원에는 TypeScript 컴파일러의 타입 추론이 필요하지만, 이는 지원되지 않습니다. 자세한 내용은 [Oxc Transformer 문서](https://oxc.rs/docs/guide/usage/transformer/typescript.html#decorators)를 참고해 주세요.
 
 #### `paths` {#paths}
 
 - [TypeScript 문서](https://www.typescriptlang.org/tsconfig/#paths)
 
-`resolve.tsconfigPaths: true`를 지정하면 Vite가 `tsconfig.json`의 `paths` 옵션을 사용해 import를 해석하도록 할 수 있습니다.
+[`resolve.tsconfigPaths: true`](/config/shared-options.md#resolve-tsconfigpaths)를 지정하면 Vite가 `tsconfig.json`의 `paths` 옵션을 사용해 import를 해석하도록 할 수 있습니다.
 
 이 기능에는 성능 비용이 있으며, [TypeScript 팀은 외부 도구의 동작을 변경하기 위해 이 옵션을 사용하는 것을 권장하지 않습니다](https://www.typescriptlang.org/tsconfig/#paths:~:text=Note%20that%20this%20feature%20does%20not%20change%20how%20import%20paths%20are%20emitted%20by%20tsc%2C%20so%20paths%20should%20only%20be%20used%20to%20inform%20TypeScript%20that%20another%20tool%20has%20this%20mapping%20and%20will%20use%20it%20at%20runtime%20or%20when%20bundling.). 이 점에 유의하세요.
 
@@ -116,14 +116,14 @@ Vite는 [esbuild](https://esbuild.github.io/)와 동일한 동작을 따라 `tsc
 - [`jsxFragmentFactory`](https://www.typescriptlang.org/tsconfig#jsxFragmentFactory)
 - [`jsxImportSource`](https://www.typescriptlang.org/tsconfig#jsxImportSource)
 - [`experimentalDecorators`](https://www.typescriptlang.org/tsconfig#experimentalDecorators)
-- [`alwaysStrict`](https://www.typescriptlang.org/tsconfig#alwaysStrict)
 
 ::: tip `skipLibCheck`
-Vite 스타터 템플릿은 TypeScript의 특정 버전과 설정만을 지원하는 라이브러리가 있을 수 있기 때문에, 디펜던시에 대한 타입 체크를 수행하지 않기 위해 기본값으로 `"skipLibCheck": "true"`를 설정하고 있습니다. 자세한 내용은 [vuejs/vue-cli#5688](https://github.com/vuejs/vue-cli/pull/5688)을 참고해 주세요.
+Vite 스타터 템플릿은 TypeScript의 특정 버전과 설정만을 지원하는 라이브러리가 있을 수 있기 때문에, 디펜던시에 대한 타입 체크를 수행하지 않기 위해 기본값으로 `"skipLibCheck": true`를 설정하고 있습니다. 자세한 내용은 [vuejs/vue-cli#5688](https://github.com/vuejs/vue-cli/pull/5688)을 참고해 주세요.
 :::
 
-### Client Types {#client-types}
+### 클라이언트 타입 {#client-types}
 
+Vite의 기본 타입은 Node.js API용입니다. Vite 애플리케이션의 클라이언트 코드에 필요한 환경 타입을 추가하려면 `tsconfig.json`의 `compilerOptions.types`에 `vite/client`를 추가하세요:
 
 ```json [tsconfig.json]
 {
@@ -192,7 +192,7 @@ HTML 파일은 Vite 프로젝트에서 [중심적인 역할](/guide/#index-html-
 - `<audio src>`
 - `<embed src>`
 - `<img src>` 및 `<img srcset>`
-- `<image href>` and `<image xlink:href>`
+- `<image href>` 및 `<image xlink:href>`
 - `<input src>`
 - `<link href>` 및 `<link imagesrcset>`
 - `<object data>`
@@ -235,7 +235,7 @@ HTML 파일은 Vite 프로젝트에서 [중심적인 역할](/guide/#index-html-
 
 ## JSX {#jsx}
 
-`.jsx`와 `.tsx` 파일은 기본적으로 지원됩니다. JSX 트랜스파일링 역시 [Oxc Transformer](https://oxc.rs/docs/guide/usage/transformer/)를 통해 처리됩니다.
+`.jsx`와 `.tsx` 파일은 기본적으로 지원됩니다. JSX 트랜스파일링 역시 [Oxc Transformer](https://oxc.rs/docs/guide/usage/transformer.html)를 통해 처리됩니다.
 
 선택한 프레임워크는 일반적으로 JSX를 기본적으로 구성해 둡니다. 예를 들어 Vue 사용자는 HMR, 전역 컴포넌트 해석, 디렉티브, 슬롯 등 Vue 3 전용 기능을 제공하는 공식 [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue-jsx) 플러그인을 사용해야 합니다.
 
@@ -279,13 +279,13 @@ Vite는 `postcss-import`를 통해 CSS `@import` 인라이닝을 지원하도록
 
 ### PostCSS {#postcss}
 
-만약 프로젝트에 [PostCSS 설정 파일](https://github.com/postcss/postcss-load-config)이 존재한다면, vite는 이를 이용해 모든 CSS 파일에 해당 설정을 적용합니다.
+프로젝트에 유효한 PostCSS 설정이 있으면([postcss-load-config](https://github.com/postcss/postcss-load-config)가 지원하는 모든 형식, 예: `postcss.config.js`), 임포트한 모든 CSS에 자동으로 적용됩니다.
 
 참고로 CSS의 축소화는 PostCSS 이후에 진행되며, [`build.cssTarget`](/config/build-options.md#build-csstarget) 옵션을 이용해 설정할 수 있습니다.
 
-### CSS Modules {#css-modules}
+### CSS 모듈 {#css-modules}
 
-`.module.css` 확장자로 끝나는 모든 CSS 파일들은 [CSS 모듈 파일](https://github.com/css-modules/css-modules)로 취급되며, 일반적인 JavaScript 모듈처럼 사용이 가능합니다.
+`.module.css`로 끝나는 모든 CSS 파일은 [CSS 모듈 파일](https://github.com/css-modules/css-modules)로 취급됩니다. 이러한 파일을 임포트하면 해당 모듈 객체가 반환됩니다:
 
 ```css [example.module.css]
 .red {
@@ -312,20 +312,20 @@ import { applyColor } from './example.module.css'
 document.getElementById('foo').className = applyColor
 ```
 
-### CSS Pre-processors {#css-pre-processors}
+### CSS 전처리기 {#css-pre-processors}
 
 vite는 모던 브라우저만을 타깃으로 하기에, 표준을 준수하도록 [postcss-nesting](https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nesting)과 같은 CSSWG 초안을 구현한 PostCSS 플러그인과 함께 네이티브 CSS 변수를 사용하도록 권고하고 있습니다.
 
 그렇지만 Vite는 `.scss`, `.sass`, `.less`, `.styl`, `.stylus` 파일에 대한 기본 지원을 제공합니다. 이를 위해 Vite 전용 플러그인을 설치할 필요는 없지만, 해당 전처리기 자체는 설치해야 합니다:
 
 ```bash
-# .scss and .sass
-npm add -D sass-embedded # or sass
+# .scss 및 .sass
+npm add -D sass-embedded # 또는 sass
 
 # .less
 npm add -D less
 
-# .styl and .stylus
+# .styl 및 .stylus
 npm add -D stylus
 ```
 
@@ -344,8 +344,8 @@ Vite는 Vite 별칭도 동작할 수 있도록 Sass와 Less에 대한 `@import` 
 ```js twoslash
 import 'vite/client'
 // ---cut---
-import './foo.css' // will be injected into the page
-import otherStyles from './bar.css?inline' // will not be injected
+import './foo.css' // 페이지에 주입됩니다
+import otherStyles from './bar.css?inline' // 주입되지 않습니다
 ```
 
 ::: tip 참고
@@ -362,7 +362,7 @@ CSS 처리 전체에 Lightning CSS를 사용하는 실험적 지원도 있습니
 
 ## 정적 에셋 {#static-assets}
 
-<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~05pq?via=vite" title="Static Assets in Vite">Scrimba에서 인터랙티브 강의를 시청하세요</ScrimbaLink>
+<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~05pq?via=vite" title="Vite의 정적 에셋">Scrimba에서 인터랙티브 강의를 시청하세요</ScrimbaLink>
 
 정적 에셋을 임포트하면 제공될 때 해석된 공개 URL을 반환합니다:
 
@@ -418,7 +418,7 @@ import json from './example.json'
 import { field } from './example.json'
 ```
 
-## Glob Import {#glob-import}
+## Glob 임포트 {#glob-import}
 
 Vite는 특수한 `import.meta.glob` 함수를 통해 파일 시스템에서 여러 모듈을 임포트하는 기능을 지원합니다:
 
@@ -620,7 +620,21 @@ const modulesWithBase = {
 
 `base`가 제공되면 결과 모듈 키는 모두 해당 `base`를 기준으로 상대 경로가 되도록 수정됩니다.
 
-### Glob Import 유의 사항 {#glob-import-caveats}
+#### 대소문자 구분 {#case-sensitive-matching}
+
+기본적으로 glob 패턴 매칭은 대소문자를 구분합니다. `caseSensitive` 옵션으로 이 동작을 변경할 수 있습니다:
+
+```ts twoslash
+import 'vite/client'
+// ---cut---
+const modules = import.meta.glob('./dir/module*.js', {
+  caseSensitive: false,
+})
+```
+
+`caseSensitive: false`로 설정하면 glob은 대소문자와 관계없이 파일을 매칭합니다(예: `Module.js`, `module.js`, `MODULE.js`는 모두 `module*.js`와 매칭됩니다).
+
+### Glob 임포트 유의 사항 {#glob-import-caveats}
 
 Glob 패턴과 관련하여 다음의 사항을 유의해주세요:
 
@@ -649,8 +663,35 @@ const module = await import(`./dir/${file}.js`)
 
 ## WebAssembly {#webassembly}
 
-사전에 컴파일 된 `.wasm` 파일 역시 `?init` 쿼리를 이용해 가져올 수 있습니다.
-불러와진 모듈의 `export default`는 [`WebAssembly.Instance`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/Instance)의 `Promise`를 반환하는 초기화 함수가 들어가 있습니다:
+Vite는 사전 컴파일된 `.wasm` 파일을 두 가지 방식으로 임포트할 수 있습니다. 모듈의 익스포트만 필요하다면 [ES 모듈](#esm-integration)로 직접 임포트하고, 인스턴스화를 명시적으로 제어해야 한다면 [`?init`](#manual-initialization)을 사용합니다.
+
+### ESM 통합 {#esm-integration}
+
+`.wasm` 파일을 직접 임포트할 수 있습니다. Vite는 바이너리에서 모듈의 임포트와 익스포트를 읽고 인스턴스화한 뒤, 익스포트를 이름 있는 ES 모듈 익스포트로 다시 노출합니다:
+
+```js
+import { add } from './add.wasm'
+
+console.log(add(1, 2)) // 3
+```
+
+WebAssembly 모듈이 자체 임포트를 선언하면 Vite는 JavaScript 모듈에서 이를 해석합니다. 각 임포트의 모듈 이름은 임포트 지정자로 취급되어 `.wasm` 파일을 기준으로 해석되며, 요청된 멤버는 인스턴스에 자동으로 연결됩니다.
+
+이 방식은 [WebAssembly/ES 모듈 통합 제안](https://github.com/WebAssembly/esm-integration)을 따릅니다. WebAssembly 모듈은 비동기적으로 인스턴스화되므로, 직접 임포트한 `.wasm` 파일은 비동기 모듈처럼 동작하며 최상위 `await` 지원이 필요합니다.
+
+::: tip TypeScript 지원
+
+`.wasm` 파일의 타입을 알 수 없으므로 TypeScript는 `Module '"*.wasm"' has no exported member 'add'` 같은 오류를 보고합니다. 이를 해결하려면 `tsconfig.json`에서 [`allowArbitraryExtensions`](https://www.typescriptlang.org/tsconfig/#allowArbitraryExtensions)를 활성화하고 `.wasm` 파일 옆에 선언 파일을 만드세요. `allowArbitraryExtensions`를 활성화하면 TypeScript는 `.wasm` 임포트를 해석할 때 `{filename}.d.wasm.ts`라는 선언 파일을 찾습니다. 예를 들어 `add.wasm`에는 `add.d.wasm.ts`를 만듭니다:
+
+```ts [add.d.wasm.ts]
+export function add(a: number, b: number): number
+```
+
+:::
+
+### 수동 초기화 {#manual-initialization}
+
+모듈을 언제 어떻게 인스턴스화할지 제어해야 한다면 `?init`으로 임포트하세요. 기본 익스포트는 [`WebAssembly.Instance`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/Instance)의 `Promise`를 반환하는 초기화 함수입니다:
 
 ```js twoslash
 import 'vite/client'
@@ -662,7 +703,7 @@ init().then((instance) => {
 })
 ```
 
-초기화 함수를 호출할 때 `imports` 옵션을 사용할 수도 있는데, 이 값은 [`WebAssembly.instantiate`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate) 함수의 두 번째 인자인 importObject로 전달됩니다:
+초기화 함수는 importObject를 인자로 받을 수도 있으며, 이 값은 [`WebAssembly.instantiate`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate)의 두 번째 인자로 전달됩니다:
 
 ```js twoslash
 import 'vite/client'
@@ -679,16 +720,11 @@ init({
 })
 ```
 
-프로덕션 빌드 시 `assetsInlineLimit` 옵션의 값보다 작은 크기를 갖는 `.wasm` 파일은 Base64 문자열 포맷으로 변환됩니다. 파일의 크기가 그보다 크다면 [정적 에셋](./assets)으로 처리되어 요청(Fetch) 시 이를 가져오는 방식으로 동작합니다.
-
-::: tip 참고
-[WebAssembly를 위한 ES 모듈 제안 사항](https://github.com/WebAssembly/esm-integration)은 현재 지원되지 않습니다.
-이 대신 [`vite-plugin-wasm`](https://github.com/Menci/vite-plugin-wasm) 또는 기타 커뮤니티 플러그인을 사용해 이를 처리하세요.
-:::
+프로덕션 빌드에서는 `assetInlineLimit`보다 작은 `.wasm` 파일이 Base64 문자열로 인라인됩니다. 그렇지 않으면 [정적 에셋](./assets)으로 처리되어 필요할 때 가져옵니다.
 
 ::: warning SSR 빌드에서는 Node.js 호환 런타임만 지원됩니다
 
-파일을 로드하는 범용 방식이 없기 때문에, `.wasm?init`의 내부 구현은 `node:fs` 모듈에 의존합니다. 따라서 이 기능은 SSR 빌드에서 Node.js 호환 런타임에서만 동작합니다.
+파일을 로드하는 범용 방식이 없기 때문에, 직접 `.wasm`을 임포트하는 방식과 `.wasm?init` 방식의 내부 구현은 모두 `node:fs` 모듈에 의존합니다. 따라서 이 기능들은 SSR 빌드에서 Node.js 호환 런타임에서만 동작합니다.
 
 :::
 
@@ -711,7 +747,7 @@ const main = async () => {
 main()
 ```
 
-## Web Workers {#web-workers}
+## 웹 워커 {#web-workers}
 
 ### 생성자로 임포트하기 {#import-with-constructors}
 
@@ -729,7 +765,7 @@ const worker = new Worker(new URL('./worker.js', import.meta.url), {
 })
 ```
 
-워커 탐지는 `new Worker()` 선언 내부에서 직접 `new URL()` 생성자를 사용할 때만 작동합니다. 또한 모든 옵션 매개변수는 정적 값(예: 문자열 리터럴)이어야 합니다.
+워커 탐지는 `new Worker()` 선언 내부에서 직접 `new URL()` 생성자를 사용할 때만 작동합니다. 그렇지 않으면 [정적 에셋 URL](./assets#new-url-url-import-meta-url)로 처리됩니다. 또한 모든 옵션 매개변수는 정적 값(예: 문자열 리터럴)이어야 합니다.
 
 ### 쿼리 접미사를 통해 가져오기 {#import-with-query-suffixes}
 
@@ -823,17 +859,17 @@ MIT License
 
 ## 빌드 최적화 {#build-optimizations}
 
-> 아래는 추가적인 설정 없이 기본적으로 빌드 프로세스에 적용되는 기능들에 대한 목록입니다. 물론, 필요 시 각각의 기능들에 대한 비활성화가 가능합니다.
+> 아래 기능은 빌드 프로세스의 일부로 자동 적용됩니다(실험적인 청크 임포트 맵 기능 제외). 비활성화하려는 경우가 아니라면 명시적으로 설정할 필요가 없습니다.
 
 ### CSS 코드 분리 {#css-code-splitting}
 
-vite는 비동기적으로 불러와지는 청크 내에 CSS 코드가 포함된 경우, 이를 자동으로 추출해 파일로 분리합니다. 이후 해당 청크를 불러올 때 `<link>` 태그를 이용해 분리된 CSS 코드를 불러오며, CSS가 모두 계산된 후에 청크를 렌더하도록 합니다. 굳이 왜 이렇게 복잡한 과정을 거칠까요? 바로 이 과정을 통해 CSS가 렌더링될 때 화면이 잠깐 반짝이는 [FOUC 현상](https://en.wikipedia.org/wiki/Flash_of_unstyled_content#:~:text=A%20flash%20of%20unstyled%20content,before%20all%20information%20is%20retrieved.)을 회피할 수 있기 때문입니다.
+Vite는 비동기 청크의 모듈이 사용하는 CSS를 자동으로 추출해 별도 파일로 생성합니다. 관련 비동기 청크를 로드할 때 `<link>` 태그로 CSS 파일도 자동으로 로드합니다. [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content#:~:text=A%20flash%20of%20unstyled%20content,before%20all%20information%20is%20retrieved.)를 방지하기 위해 CSS가 로드된 뒤에만 비동기 청크를 평가합니다.
 
-물론, 모든 CSS가 그냥 일반적인 각각의 파일로 저장된 경우라면 굳이 이러한 기능을 사용할 필요가 없습니다. 이러한 경우 [`build.cssCodeSplit`](/config/build-options.md#build-csscodesplit) 옵션의 값을 `false`로 설정해 비활성화가 가능합니다.
+모든 CSS를 단일 파일로 추출하려면 [`build.cssCodeSplit`](/config/build-options.md#build-csscodesplit)을 `false`로 설정해 CSS 코드 분리를 비활성화할 수 있습니다.
 
 ### 프리로드 디렉티브 생성 {#preload-directives-generation}
 
-vite는 빌드 시 Direct Import 구문에 대해 `<link ref="modulepreload">` 디렉티브를 이용해 미리 모듈을 캐싱하도록 자동으로 변환합니다. 덕분에 해당 모듈이 필요할 때 바로 사용할 수 있습니다. (`modulepreload`에 대한 더 자세한 내용은 [MDN doc](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/modulepreload) 또는 [Google developers](https://developers.google.com/web/updates/2017/12/modulepreload) 문서를 참고해주세요. - 옮긴이)
+Vite는 빌드된 HTML에서 진입 청크와 그 청크가 직접 임포트하는 청크에 대한 `<link rel="modulepreload">` 디렉티브를 자동으로 생성합니다. (`modulepreload`에 대한 더 자세한 내용은 [MDN doc](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/modulepreload) 또는 [Google developers](https://developers.google.com/web/updates/2017/12/modulepreload) 문서를 참고해 주세요. - 옮긴이)
 
 ### 비동기 청크 로딩 최적화 {#async-chunk-loading-optimization}
 
@@ -856,4 +892,22 @@ vite는 Preload 스텝을 이용해 `A`를 가져올 때 `C` 청크를 **병렬�
 Entry ---> (A + C)
 ```
 
-vite는 모든 Direct Import 구문에 대해 Preload 하도록 함으로써, 쓸 데 없이 낭비되는 네트워크 왕복을 줄이도록 구성합니다.
+`C`가 다른 모듈을 추가로 임포트할 수도 있으며, 최적화하지 않으면 네트워크 왕복이 더 늘어납니다. Vite는 직접 임포트하는 모든 모듈을 추적해 임포트 깊이에 관계없이 이러한 추가 왕복을 완전히 제거합니다.
+
+### 청크 임포트 맵 최적화 {#chunk-import-map-optimization}
+
+Vite는 청크의 캐시 적중률을 높이기 위해 청크용 임포트 맵을 만들 수 있습니다. 이를 통해 ES 모듈에서 발생하는 연쇄 캐시 무효화 문제를 방지합니다.
+
+예를 들어 다음 상황을 살펴보겠습니다:
+
+```
+Entry --> A ---> C
+```
+
+`C`가 업데이트되면 본질적으로 무효화해야 하는 청크는 `C`뿐입니다. 하지만 `A`가 정적 임포트의 일반 URL로 `C`를 참조하면(즉, `C`의 해시가 URL에 포함되면) `A`의 내용도 변경되어 `A` 역시 무효화해야 합니다. `Entry`에도 같은 문제가 발생합니다.
+
+임포트 맵을 사용하면 이 문제를 피할 수 있습니다. 이 최적화를 활성화하면 Vite는 각 청크의 ID를 URL에 매핑하는 임포트 맵을 만들고, 임포트 문에서 URL 대신 청크 ID를 사용합니다. 따라서 청크가 업데이트될 때 해당 청크만 무효화되고, 이를 참조하는 청크는 무효화되지 않습니다.
+
+현재 이 최적화는 CSS와 에셋에 적용되지 않습니다. 에셋을 업데이트하면 이를 참조하는 청크가 무효화됩니다. 다만 무효화가 연쇄적으로 이어지지는 않으므로, 무효화된 청크를 임포트하는 청크까지 무효화되지는 않습니다.
+
+이 기능을 활성화하려면 [`build.chunkImportMap`](/config/build-options.md#build-chunkimportmap)을 `true`로 설정하세요.

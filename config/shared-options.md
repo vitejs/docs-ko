@@ -34,7 +34,7 @@
 
 [환경 변수와 모드](/guide/env-and-mode)에서 더 자세한 점을 볼 수 있습니다.
 
-## input <NonInheritBadge />
+## input <NonInheritBadge /> {#input}
 
 - **타입:** `string | string[] | { [entryAlias: string]: string }`
 
@@ -164,7 +164,7 @@ resolve: {
 SSR 빌드의 경우, `build.rolldownOptions.output`을 통해 구성된 ESM 빌드 결과물에 대해 중복된 코드의 제거가 진행되지 않습니다. 이를 해결하기 위해서는 ESM이 모듈 로드에 대한 플러그인 지원을 개선할 때까지 CJS(CommonJS) 빌드를 이용하는 것입니다.
 :::
 
-## resolve.conditions <NonInheritBadge />
+## resolve.conditions <NonInheritBadge /> {#resolve-conditions}
 
 - **타입:** `string[]`
 - **기본값:** `['module', 'browser', 'development|production']` (`defaultClientConditions`)
@@ -192,7 +192,7 @@ SSR 빌드의 경우, `build.rolldownOptions.output`을 통해 구성된 ESM 빌
 
 또한 `@import 'my-library'` 같은 스타일 import를 해석할 때는 `style` 조건이 적용됩니다. 일부 CSS 전처리기의 경우, 대응하는 조건도 적용됩니다. 즉 Sass에는 `sass`, Less에는 `less`가 적용됩니다.
 
-## resolve.mainFields <NonInheritBadge />
+## resolve.mainFields <NonInheritBadge /> {#resolve-mainfields}
 
 - **타입:** `string[]`
 - **기본값:** `['browser', 'module', 'jsnext:main', 'jsnext']` (`defaultClientMainFields`)
@@ -223,12 +223,66 @@ SSR 빌드의 경우, `build.rolldownOptions.output`을 통해 구성된 ESM 빌
 
 tsconfig paths 해석 기능을 활성화합니다. `tsconfig.json`의 `paths` 옵션이 import 해석에 사용됩니다. 자세한 내용은 [기능](/guide/features.md#paths)을 참고하세요.
 
+`paths`는 `tsconfig.json`의 `files` 또는 `include`와 일치하는 파일에만 적용됩니다. 확장자가 JS가 아닌 파일은 여기에 명시적으로 나열해야 합니다. TypeScript 동작에 따라 단순한 `"src"` 또는 `"**/*"` `include`는 TS/JS 확장자만 일치시키기 때문입니다. 예를 들어 `paths` 별칭을 CSS 파일 안에서(예: `@import '@/foo.css'`) 사용하려면 해당 파일을 `files`에 나열하거나 `include`에 확장자를 명시하세요:
+
+```json [tsconfig.json]
+{
+  "include": ["src", "src/**/*.css", "src/**/*.scss"]
+}
+```
+
+::: warning Less는 지원되지 않습니다
+`resolve.tsconfigPaths`는 `.less` 파일 안에 적용되지 않습니다. Less는 Vite에 임포트하는 파일 자체가 아닌 그 파일의 디렉터리만 전달하므로 Vite가 일치하는 `tsconfig.json`을 찾을 수 없습니다. Less에서는 상대 경로나 [`resolve.alias`](#resolve-alias)를 `@import`에 사용하세요.
+:::
+
 ## html.cspNonce {#html-cspnonce}
 
 - **타입:** `string`
 - **관련 항목:** [콘텐츠 보안 정책 (Content Security Policy, CSP)](/guide/features#content-security-policy-csp)
 
 스크립트 및 스타일 태그를 생성할 때 사용되는 nonce 값에 대한 자리 표시자입니다. 이 값을 설정하면 nonce 값을 가진 메타 태그도 생성됩니다.
+
+## html.additionalAssetSources {#html-additionalassetsources}
+
+- **타입:** `Record<string, HtmlAssetSource>`
+
+```ts
+interface HtmlAssetSource {
+  srcAttributes?: string[]
+  srcsetAttributes?: string[]
+  filter?: (data: {
+    key: string
+    value: string
+    attributes: Record<string, string>
+  }) => boolean
+}
+```
+
+에셋 소스로 처리할 HTML 요소와 속성을 추가로 정의합니다. `<img src>`, `<video src>`, `<link href>` 등 표준 요소를 포함하는 내장 목록을 확장합니다.
+
+에셋을 참조하는 커스텀 웹 컴포넌트나 비표준 속성(예: `data-*`)을 사용할 때 유용합니다.
+
+**예제:**
+
+```js
+export default defineConfig({
+  html: {
+    additionalAssetSources: {
+      // 커스텀 웹 컴포넌트
+      'html-import': { srcAttributes: ['src'] },
+      // 기존 요소에 data-* 속성 추가
+      img: { srcAttributes: ['data-src-dark', 'data-src-light'] },
+      // srcset 형식 사용
+      'my-picture': { srcsetAttributes: ['data-srcset'] },
+      // filter 함수 사용
+      'my-component': {
+        srcAttributes: ['asset'],
+        filter: ({ attributes }) => attributes.type === 'image',
+      },
+    },
+  },
+})
+```
 
 ## css.modules {#css-modules}
 
@@ -244,8 +298,7 @@ tsconfig paths 해석 기능을 활성화합니다. `tsconfig.json`의 `paths` �
     globalModulePaths?: RegExp[]
     exportGlobals?: boolean
     generateScopedName?:
-      | string
-      | ((name: string, filename: string, css: string) => string)
+      string | ((name: string, filename: string, css: string) => string)
     hashPrefix?: string
     /**
      * 기본값: undefined
@@ -528,7 +581,7 @@ export default defineConfig({
 - **타입:** `string | false`
 - **기본값:** `root`
 
-'.env' 파일이 로드되는 디렉터리입니다. 절대 경로 또는 프로젝트 루트에 상대적인 경로일 수 있습니다. `false`는 `.env` 파일 로딩을 비활성화합니다.
+`.env` 파일이 로드되는 디렉터리입니다. 절대 경로 또는 프로젝트 루트에 상대적인 경로일 수 있습니다. `false`는 `.env` 파일 로딩을 비활성화합니다.
 
 환경 파일에 대한 더 자세한 점을 알려면, [여기](/guide/env-and-mode#env-files)를 확인하세요.
 

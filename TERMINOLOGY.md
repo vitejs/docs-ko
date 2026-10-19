@@ -7,6 +7,7 @@
 | Application    | 애플리케이션   |
 | Branch         | 브랜치         |
 | Bundle         | 번들           |
+| Chunk          | 청크           |
 | Conditional    | 조건부         |
 | Convention     | 컨벤션         |
 | Dependency     | 디펜던시       |
@@ -38,6 +39,7 @@
 | Type Signature | 타입 시그니처  |
 | Placeholder    | 자리 표시자    |
 | Import         | 임포트         |
+| Import Map     | 임포트 맵      |
 | Export         | 익스포트       |
 | Load           | 로드           |
 | Transform      | 변환           |

@@ -44,19 +44,19 @@ Linux를 사용하는 경우, 파일 디스크립터 및 inotify 제한이 문�
 - `ulimit`로 file descriptor 제한 늘리기
 
   ```shell
-  # Check current limit
+  # 현재 제한 확인
   $ ulimit -Sn
-  # Change limit (temporary)
-  $ ulimit -Sn 10000 # You might need to change the hard limit too
-  # Restart your browser
+  # 제한 변경(임시)
+  $ ulimit -Sn 10000 # 하드 제한도 변경해야 할 수 있습니다
+  # 브라우저 재시작
   ```
 
 - `sysctl`로 inotify 관련 제한 늘리기.
 
   ```shell
-  # Check current limits
+  # 현재 제한 확인
   $ sysctl fs.inotify
-  # Change limits (temporary)
+  # 제한 변경(임시)
   $ sudo sysctl fs.inotify.max_queued_events=16384
   $ sudo sysctl fs.inotify.max_user_instances=8192
   $ sudo sysctl fs.inotify.max_user_watches=524288
@@ -87,11 +87,11 @@ Linux에서 다음과 같은 오류가 보인다면:
 - 시스템 파일 감시자 제한 늘리기:
 
   ```shell
-  # Check current limit
+  # 현재 제한 확인
   $ cat /proc/sys/fs/inotify/max_user_watches
-  # Increase limit (temporary)
+  # 제한 증가(임시)
   $ sudo sysctl fs.inotify.max_user_watches=524288
-  # Make it permanent - add to /etc/sysctl.conf (or edit if it already exists)
+  # 영구 적용 - /etc/sysctl.conf에 추가(이미 있으면 수정)
   $ echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
   $ sudo sysctl -p
   ```
@@ -105,7 +105,7 @@ Linux에서 다음과 같은 오류가 보인다면:
 
 문제를 해결하려면 신뢰할 수 있는 SSL 인증서를 사용하십시오.
 
-참조: [Cache problems](https://helpx.adobe.com/mt/experience-manager/kb/cache-problems-on-chrome-with-SSL-certificate-errors.html), [Chrome issue](https://bugs.chromium.org/p/chromium/issues/detail?id=110649#c8)
+참조: [Chrome issue](https://bugs.chromium.org/p/chromium/issues/detail?id=110649#c8)
 
 #### macOS {#macos}
 
@@ -142,7 +142,7 @@ Dev Container나 VS Code의 포트 포워딩 기능을 사용하는 경우, 정�
 대소문자가 다른 파일을 가져왔을지도 모릅니다. 예를 들어 `src/foo.js`가 존재하고 `src/bar.js`에는 다음이 포함됩니다:
 
 ```js
-import './Foo.js' // should be './foo.js'
+import './Foo.js' // './foo.js'여야 합니다
 ```
 
 관련 이슈: [#964](https://github.com/vitejs/vite/issues/964)
@@ -212,7 +212,7 @@ HTML 파일 출력이 `file` 프로토콜로 열린 경우 다음 오류와 함�
 
 브라우저 확장 프로그램(예: 광고 차단기)이 해당 요청을 차단하는 경우에도 이 오류가 발생할 수 있습니다.
 
-이러한 확장 프로그램은 파일 이름을 기준으로 요청을 차단하는 경우가 많으므로(예: `ad`, `track`이 포함된 이름), [`build.rollupOptions.output.chunkFileNames`](../config/build-options.md#build-rollupoptions)로 다른 청크 이름을 선택해 우회할 수 있을 수도 있습니다.
+이러한 확장 프로그램은 파일 이름을 기준으로 요청을 차단하는 경우가 많으므로(예: `ad`, `track`이 포함된 이름), [`build.rolldownOptions.output.chunkFileNames`](../config/build-options.md#build-rolldownoptions)로 다른 청크 이름을 선택해 우회할 수 있을 수도 있습니다.
 
 ## 디펜던시 최적화 {#optimized-dependencies}
 
