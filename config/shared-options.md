@@ -34,6 +34,22 @@
 
 [환경 변수와 모드](/guide/env-and-mode)에서 더 자세한 점을 볼 수 있습니다.
 
+## input <NonInheritBadge />
+
+- **타입:** `string | string[] | { [entryAlias: string]: string }`
+
+애플리케이션의 진입점이며, 프로젝트 루트를 기준으로 해석됩니다. [`build.rolldownOptions.input`](/config/build-options#build-rolldownoptions), [`build.lib.entry`](/config/build-options#build-lib), [`build.ssr`](/config/build-options#build-ssr)(`true`인 경우), [`optimizeDeps.entries`](/config/dep-optimization-options#optimizedeps-entries)를 명시적으로 설정하지 않으면 이 옵션이 해당 옵션들의 기본값으로 사용됩니다.
+
+애플리케이션이 `index.html` 진입점을 사용하지 않을 때 유용합니다. 위 옵션마다 진입점을 반복해서 지정하지 않고 한 번만 선언하면 됩니다.
+
+```js twoslash [vite.config.js]
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  input: 'src/main.ts',
+})
+```
+
 ## define {#define}
 
 - **타입:** `Record<string, any>`

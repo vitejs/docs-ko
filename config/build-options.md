@@ -153,6 +153,8 @@ npm add -D esbuild
 
 기존 Rolldown 번들을 커스텀합니다. 이는 Rolldown 설정 파일에서 내보낼 수 있는 옵션과 같으며 Vite의 내부 Rolldown 옵션과 병합됩니다. 더 자세한 내용은 [Rolldown 옵션 문서](https://rolldown.rs/reference/)를 참고하세요.
 
+`build.rolldownOptions.input` 대신 최상위 [`input`](/config/shared-options#input) 옵션을 설정하기를 권장합니다. 최상위 `input` 옵션은 개발 중에도 사용되기 때문입니다. `build.rolldownOptions.input`을 설정하면 빌드에서만 최상위 `input` 옵션을 오버라이드합니다.
+
 ## build.rollupOptions {#build-rollupoptions}
 
 - **타입:** `RolldownOptions`
@@ -169,10 +171,10 @@ npm add -D esbuild
 
 ## build.lib {#build-lib}
 
-- **타입:** `{ entry: string | string[] | { [entryAlias: string]: string }, name?: string, formats?: ('es' | 'cjs' | 'umd' | 'iife')[], fileName?: string | ((format: ModuleFormat, entryName: string) => string), cssFileName?: string }`
+- **타입:** `{ entry?: string | string[] | { [entryAlias: string]: string }, name?: string, formats?: ('es' | 'cjs' | 'umd' | 'iife')[], fileName?: string | ((format: ModuleFormat, entryName: string) => string), cssFileName?: string }`
 - **관련 항목:** [라이브러리 모드](/guide/build#library-mode)
 
-라이브러리로 빌드합니다. 라이브러리에서 HTML을 진입점으로 사용할 수 없으므로, `entry`가 필요합니다. `name`은 노출된 전역 변수이며 `formats`가 `'umd'` 또는 `'iife'` 일 때 필요합니다. `formats` 기본값은 `['es', 'umd']` 이나, 여러 진입점이 존재한다면 `['es', 'cjs']`가 됩니다.
+라이브러리로 빌드합니다. `entry`의 기본값은 최상위 [`input`](/config/shared-options#input) 옵션이며, 라이브러리에서 HTML을 진입점으로 사용할 수 없으므로 둘 중 하나는 지정해야 합니다. `name`은 노출된 전역 변수이며 `formats`가 `'umd'` 또는 `'iife'`일 때 필요합니다. `formats` 기본값은 `['es', 'umd']`이나, 여러 진입점이 존재한다면 `['es', 'cjs']`가 됩니다.
 
 `fileName`은 패키지 파일 출력의 이름이며, 기본값은 `package.json`의 `"name"` 입니다. `format`과 `entryName`을 인자로 받아 파일 이름을 반환하는 함수로도 정의할 수 있습니다.
 
@@ -269,7 +271,7 @@ export default defineConfig({
 - **기본값:** `false`
 - **관련 항목:** [서버 측 렌더링](/guide/ssr)
 
-서버 측 렌더링으로 빌드합니다. 설정 값은 SSR 항목을 직접 지정하는 문자열이거나, `rolldownOptions.input`을 통해 SSR 항목을 지정해야 하는 `true`가 될 수 있습니다.
+서버 측 렌더링으로 빌드합니다. 설정 값은 SSR 진입점을 직접 지정하는 문자열이거나, [`input`](/config/shared-options#input) 또는 `build.rolldownOptions.input`을 통해 SSR 진입점을 지정해야 하는 `true`가 될 수 있습니다.
 
 ## build.emitAssets {#build-emitassets}
 
