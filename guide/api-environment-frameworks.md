@@ -180,7 +180,7 @@ Vite는 `dispatchFetch` 메서드의 입력과 출력을 검증합니다: 요청
 // Vite API를 사용하는 코드
 import { createServer } from 'vite'
 
-const server = createServer({
+const server = await createServer({
   plugins: [
     // `virtual:entrypoint`를 처리하는 플러그인
     {
@@ -189,7 +189,7 @@ const server = createServer({
     },
   ],
 })
-const ssrEnvironment = server.environment.ssr
+const ssrEnvironment = server.environments.ssr
 const input = {}
 
 // 코드를 실행하는 각 환경 팩토리가 노출한 함수를 사용합니다.
@@ -252,7 +252,7 @@ function vitePluginVirtualIndexHtml(): Plugin {
 // Vite API를 사용하는 코드
 import { createServer } from 'vite'
 
-const server = createServer({
+const server = await createServer({
   plugins: [
     // `virtual:entrypoint`를 처리하는 플러그인
     {
@@ -261,13 +261,13 @@ const server = createServer({
     },
   ],
 })
-const ssrEnvironment = server.environment.ssr
+const ssrEnvironment = server.environments.ssr
 const input = {}
 
 // 코드를 실행하는 각 환경 팩토리가 노출한 함수를 사용합니다.
 // 각 환경 팩토리가 무엇을 제공하는지 확인하세요.
 if (ssrEnvironment instanceof RunnableDevEnvironment) {
-  ssrEnvironment.runner.import('virtual:entrypoint')
+  await ssrEnvironment.runner.import('virtual:entrypoint')
 } else if (ssrEnvironment instanceof CustomDevEnvironment) {
   ssrEnvironment.runEntrypoint('virtual:entrypoint')
 } else {
@@ -277,9 +277,9 @@ if (ssrEnvironment instanceof RunnableDevEnvironment) {
 const req = new Request('http://example.com/')
 
 const uniqueId = 'a-unique-id'
-ssrEnvironment.send('request', serialize({ req, uniqueId }))
+ssrEnvironment.hot.send('request', serialize({ req, uniqueId }))
 const response = await new Promise((resolve) => {
-  ssrEnvironment.on('response', (data) => {
+  ssrEnvironment.hot.on('response', (data) => {
     data = deserialize(data)
     if (data.uniqueId === uniqueId) {
       resolve(data.res)
@@ -335,6 +335,10 @@ export default defineConfig({
 ```
 
 ### `buildApp` 플러그인 훅 {#the-buildapp-plugin-hook}
+
+- **타입:** `(this: MinimalPluginContextWithoutEnvironment, builder: ViteBuilder) => Promise<void>`
+- **종류:** `async`, `sequential`
+- **범위:** [전역](/guide/api-environment-plugins#per-environment-hooks-and-global-hooks)
 
 플러그인은 `builder.buildApp` 설정 옵션 외에도 `buildApp` 훅을 정의해 앱 빌드에 참여할 수 있습니다. 설정 옵션과 플러그인 훅은 정해진 순서로 실행됩니다. 먼저 순서가 `'pre'` 또는 `null`인 훅을 실행하고, 구성된 `builder.buildApp`을 실행한 뒤, 순서가 `'post'`인 훅을 실행합니다. 훅에서는 `environment.isBuilt`로 환경이 이미 빌드되었는지 확인하여 중복 빌드를 피할 수 있습니다.
 

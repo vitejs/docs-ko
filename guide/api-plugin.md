@@ -143,9 +143,11 @@ console.log(msg)
 
 Vite에서는 `\0`이 임포트 URL에 허용되지 않으므로, 개발 중 브라우저에서 `\0{id}` 가상 id가 `/@id/__x00__{id}`로 인코딩됩니다. 이 id는 플러그인 파이프라인에 들어가기 전에 다시 디코딩되므로 플러그인 훅 코드에서는 보이지 않습니다.
 
-## 범용 훅 {#universal-hooks}
+## Rolldown 훅 {#rolldown-hooks}
 
 개발 시 Vite 개발 서버는 Rolldown과 동일한 방식으로 [Rolldown 빌드 훅](https://rolldown.rs/apis/plugin-api#build-hooks)을 호출하는 플러그인 컨테이너를 생성합니다.
+
+모든 Rolldown 훅은 [환경별 훅](/guide/api-environment-plugins#per-environment-hooks-and-global-hooks)입니다.
 
 다음 훅은 서버 시작 시 한 번 호출됩니다:
 
@@ -179,6 +181,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
 - **타입:** `(config: UserConfig, env: { mode: 'build' | 'serve', command: string, isSsrBuild?: boolean, isPreview?: boolean }) => UserConfig | null | void`
 - **종류:** `async`, `sequential`
+- **범위:** [전역](/guide/api-environment-plugins#per-environment-hooks-and-global-hooks)
 
   훅을 이용해 Vite의 설정을 실제 사용하기 전 변경할 수 있습니다. `config` 훅으로 설정 파일 또는 CLI 옵션으로 전달받은 로우 레벨 사용자 설정 값과, 현재 사용 중인 `mode` 및 `command`가 인자를 통해 전달됩니다. 훅은 객체를 반환할 수 있으며, 이 때의 객체는 기존 설정에 대해 깊은 병합(Deeply merge)이 됩니다. 또는 인자로 전달받은 설정 객체를 직접 수정할 수도 있습니다. 다만 이 방법은 객체 반환을 이용한 방법으로는 원하는 결과를 얻을 수 없을 때만 사용하세요.
 
@@ -216,6 +219,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
 - **타입:** `(config: ResolvedConfig) => void | Promise<void>`
 - **종류:** `async`, `parallel`
+- **범위:** [전역](/guide/api-environment-plugins#per-environment-hooks-and-global-hooks)
 
   Vite 설정 값이 확정된 후 호출되는 훅입니다. 이 훅을 사용하여 최종적으로 확정된 설정 값을 읽거나 저장할 수 있습니다. 특히 플러그인이 실행 중인 명령에 따라 다른 작업을 수행해야 하는 경우 유용합니다.
 
@@ -252,6 +256,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 - **타입:** `(server: ViteDevServer) => (() => void) | void | Promise<(() => void) | void>`
 - **종류:** `async`, `sequential`
 - **관련 항목:** [ViteDevServer](./api-javascript#vitedevserver)
+- **범위:** [전역](/guide/api-environment-plugins#per-environment-hooks-and-global-hooks)
 
   개발 서버를 구성하기 위한 훅입니다. 일반적으로 커스텀 미들웨어를 내부의 [connect](https://github.com/senchalabs/connect) 앱에 추가하기 위해 사용합니다:
 
@@ -313,6 +318,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 - **타입:** `(server: PreviewServer) => (() => void) | void | Promise<(() => void) | void>`
 - **종류:** `async`, `sequential`
 - **관련 항목:** [PreviewServer](./api-javascript#previewserver)
+- **범위:** [전역](/guide/api-environment-plugins#per-environment-hooks-and-global-hooks)
 
   [`configureServer`](/guide/api-plugin.html#configureserver)와 같지만 프리뷰 서버에 대한 것입니다. `configureServer`와 마찬가지로 `configurePreviewServer` 훅은 다른 미들웨어가 설치되기 전에 호출됩니다. 만약 다른 미들웨어가 설치된 **이후에** 커스텀 미들웨어를 호출하고자 한다면, `configurePreviewServer`의 반환 값으로 함수를 반환해주세요. 이렇게 하면 내부 미들웨어가 설치된 후에 호출됩니다:
 
@@ -335,6 +341,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
 - **타입:** `IndexHtmlTransformHook | { order?: 'pre' | 'post', handler: IndexHtmlTransformHook }`
 - **종류:** `async`, `sequential`
+- **범위:** [환경별](/guide/api-environment-plugins#per-environment-hooks-and-global-hooks)
 
   `index.html`과 같은 진입점이 되는 HTML 파일을 변환하기 위한 훅입니다. 훅의 인자로는 HTML 문자열과 컨텍스트를 전달받습니다. 개발 서버의 경우 컨텍스트에 [`ViteDevServer`](./api-javascript#vitedevserver) 인스턴스를 함께 전달하며, 빌드 시에는 Rollup된 번들을 전달합니다.
 
@@ -408,6 +415,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 - **타입:** `(ctx: HmrContext) => Array<ModuleNode> | void | Promise<Array<ModuleNode> | void>`
 - **종류:** `async`, `sequential`
 - **관련 항목:** [HMR API](./api-hmr)
+- **범위:** [환경별](/guide/api-environment-plugins#per-environment-hooks-and-global-hooks)
 
   사용자가 지정한 방식대로 HMR 업데이트를 수행합니다. 이 훅은 아래와 같은 컨텍스트 객체를 전달받습니다:
 

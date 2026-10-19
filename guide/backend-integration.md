@@ -12,6 +12,8 @@
    import { defineConfig } from 'vite'
    // ---cut---
    export default defineConfig({
+     // overwrite default .html entry
+     input: '/path/to/main.js',
      server: {
        cors: {
          // the origin you will be accessing via browser
@@ -21,10 +23,6 @@
      build: {
        // generate .vite/manifest.json in outDir
        manifest: true,
-       rolldownOptions: {
-         // overwrite default .html entry
-         input: '/path/to/main.js',
-       },
      },
    })
    ```

@@ -80,6 +80,7 @@ Vite(프랑스어로 '빠른'을 의미하며 [`/vit/`](https://cdn.jsdelivr.net
   <a target="_blank" href="https://github.com/geonhwiii"><img width="100" src="https://github.com/geonhwiii.png" alt="geonhwiii"></a>
   <a target="_blank" href="https://github.com/jsh3418"><img width="100" src="https://github.com/jsh3418.png" alt="jsh3418"></a>
   <a target="_blank" href="https://github.com/jong-kyung"><img width="100" src="https://github.com/jong-kyung.png" alt="jong-kyung"></a>
+  <a target="_blank" href="https://github.com/danbom"><img width="100" src="https://github.com/danbom.png" alt="danbom"></a>
  </p>
 
 기여에 감사드립니다.
