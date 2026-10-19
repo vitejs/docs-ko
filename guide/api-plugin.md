@@ -96,7 +96,7 @@ export default function myPlugin() {
       handler(src, id) {
         return {
           code: compileFileToJS(src),
-          map: null, // provide source map if available
+          map: null, // 사용 가능한 소스 맵이 있으면 제공
         }
       },
     },
@@ -116,7 +116,7 @@ export default function myPlugin() {
   const resolvedVirtualModuleId = '\0' + virtualModuleId
 
   return {
-    name: 'my-plugin', // required, will show up in warnings and errors
+    name: 'my-plugin', // 필수이며 경고와 오류에 표시됩니다
     resolveId: {
       filter: { id: exactRegex(virtualModuleId) },
       handler() {
@@ -183,12 +183,12 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 - **종류:** `async`, `sequential`
 - **범위:** [전역](/guide/api-environment-plugins#per-environment-hooks-and-global-hooks)
 
-  훅을 이용해 Vite의 설정을 실제 사용하기 전 변경할 수 있습니다. `config` 훅으로 설정 파일 또는 CLI 옵션으로 전달받은 로우 레벨 사용자 설정 값과, 현재 사용 중인 `mode` 및 `command`가 인자를 통해 전달됩니다. 훅은 객체를 반환할 수 있으며, 이 때의 객체는 기존 설정에 대해 깊은 병합(Deeply merge)이 됩니다. 또는 인자로 전달받은 설정 객체를 직접 수정할 수도 있습니다. 다만 이 방법은 객체 반환을 이용한 방법으로는 원하는 결과를 얻을 수 없을 때만 사용하세요.
+  Vite 설정이 확정되기 전에 수정합니다. 이 훅은 설정 파일에 CLI 옵션을 병합한 원시 사용자 설정과, 현재 사용 중인 `mode` 및 `command`를 포함하는 설정 환경 객체를 받습니다. 일부 설정만 담은 객체를 반환하면 기존 설정과 깊게 병합됩니다. 기본 병합 방식으로 원하는 결과를 얻을 수 없다면 설정 객체를 직접 수정할 수도 있습니다.
 
   **예제:**
 
   ```js
-  // return partial config (recommended)
+  // 일부 설정만 담은 객체를 반환합니다(권장)
   const partialConfigPlugin = () => ({
     name: 'return-partial',
     config: () => ({
@@ -200,7 +200,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
     }),
   })
 
-  // mutate the config directly (use only when merging doesn't work)
+  // 설정을 직접 수정합니다(병합으로 처리할 수 없을 때만 사용)
   const mutateConfigPlugin = () => ({
     name: 'mutate-config',
     config(config, { command }) {
@@ -233,16 +233,16 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
       name: 'read-config',
 
       configResolved(resolvedConfig) {
-        // store the resolved config
+        // 확정된 설정을 저장합니다
         config = resolvedConfig
       },
 
-      // use stored config in other hooks
+      // 다른 훅에서 저장된 설정을 사용합니다
       transform(code, id) {
         if (config.command === 'serve') {
-          // dev: plugin invoked by dev server
+          // dev: 개발 서버에서 플러그인을 호출합니다
         } else {
-          // build: plugin invoked by Rollup
+          // build: Rollup에서 플러그인을 호출합니다
         }
       },
     }
@@ -265,7 +265,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
     name: 'configure-server',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        // custom handle request...
+        // 커스텀 요청 처리...
       })
     },
   })
@@ -279,11 +279,11 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
   const myPlugin = () => ({
     name: 'configure-server',
     configureServer(server) {
-      // return a post hook that is called after internal middlewares are
-      // installed
+      // 내부 미들웨어를 설치한 뒤 호출되는
+      // 후처리 훅을 반환합니다
       return () => {
         server.middlewares.use((req, res, next) => {
-          // custom handle request...
+          // 커스텀 요청 처리...
         })
       }
     },
@@ -304,7 +304,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
       },
       transform(code, id) {
         if (server) {
-          // use server...
+          // 서버 사용...
         }
       },
     }
@@ -326,11 +326,11 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
   const myPlugin = () => ({
     name: 'configure-preview-server',
     configurePreviewServer(server) {
-      // return a post hook that is called after other middlewares are
-      // installed
+      // 다른 미들웨어를 설치한 뒤 호출되는
+      // 후처리 훅을 반환합니다
       return () => {
         server.middlewares.use((req, res, next) => {
-          // custom handle request...
+          // 커스텀 요청 처리...
         })
       }
     },
@@ -395,12 +395,12 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
   interface HtmlTagDescriptor {
     tag: string
     /**
-     * attribute values will be escaped automatically if needed
+     * 필요한 경우 속성 값은 자동으로 이스케이프됩니다
      */
     attrs?: Record<string, string | boolean>
     children?: string | HtmlTagDescriptor[]
     /**
-     * default: 'head-prepend'
+     * 기본값: 'head-prepend'
      */
     injectTo?: 'head' | 'body' | 'head-prepend' | 'body-prepend'
   }
@@ -440,7 +440,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
 
     ```js
     handleHotUpdate({ server, modules, timestamp }) {
-      // Invalidate modules manually
+      // 모듈을 직접 무효화합니다
       const invalidatedModules = new Set()
       for (const mod of modules) {
         server.moduleGraph.invalidateModule(
@@ -473,7 +473,7 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
     ```js
     if (import.meta.hot) {
       import.meta.hot.on('special-update', (data) => {
-        // perform custom update
+        // 커스텀 업데이트를 수행합니다
       })
     }
     ```
@@ -514,7 +514,7 @@ function versionCheckPlugin(): Plugin {
 - `RenderedChunk`(예: `renderChunk`와 `augmentChunkHash`에서)
 - `OutputChunk`와 `OutputAsset`(예: `generateBundle`과 `writeBundle`에서)
 
-`viteMetadata` provides:
+`viteMetadata`는 다음을 제공합니다:
 
 - `viteMetadata.importedCss: Set<string>`
 - `viteMetadata.importedAssets: Set<string>`
@@ -566,7 +566,7 @@ Vite 플러그인은 Webpack 로더와 유사한 `enforce` 프로퍼티를 추�
 function myPlugin() {
   return {
     name: 'build-only',
-    apply: 'build', // or 'serve'
+    apply: 'build', // 또는 'serve'
   }
 }
 ```
@@ -671,7 +671,7 @@ export default function myPlugin() {
 
 [`build.chunkImportMap`](/config/build-options#build-chunkimportmap) 옵션을 활성화하면 생성된 청크의 임포트 문은 파일 경로 대신 청크마다 고유한 ID를 사용합니다.
 
-청크 ID에서 파일 경로로의 매핑을 가져오려면 `generateBundle` 또는 `writeBundle` 훅에서 번들로 방출된 임포트 맵에 접근할 수 있습니다. 임포트 맵의 이름은 [`build.rolldownOptions.experimental.chunkImportMap.fileName`](https://rolldown.rs/reference/InputOptions.experimental#chunkimportmap)에 지정된 값이며, 기본값은 `importmap.json`입니다.
+청크 ID에서 파일 경로로의 매핑을 가져오려면 `generateBundle` 또는 `writeBundle` 훅에서 번들에 포함해 출력한 임포트 맵에 접근할 수 있습니다. 임포트 맵의 이름은 [`build.rolldownOptions.experimental.chunkImportMap.fileName`](https://rolldown.rs/reference/InputOptions.experimental#chunkimportmap)에 지정된 값이며, 기본값은 `importmap.json`입니다.
 
 ```ts
 function accessImportMap() {

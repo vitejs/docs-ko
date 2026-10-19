@@ -34,7 +34,7 @@
 
 [환경 변수와 모드](/guide/env-and-mode)에서 더 자세한 점을 볼 수 있습니다.
 
-## input <NonInheritBadge />
+## input <NonInheritBadge /> {#input}
 
 - **타입:** `string | string[] | { [entryAlias: string]: string }`
 
@@ -164,7 +164,7 @@ resolve: {
 SSR 빌드의 경우, `build.rolldownOptions.output`을 통해 구성된 ESM 빌드 결과물에 대해 중복된 코드의 제거가 진행되지 않습니다. 이를 해결하기 위해서는 ESM이 모듈 로드에 대한 플러그인 지원을 개선할 때까지 CJS(CommonJS) 빌드를 이용하는 것입니다.
 :::
 
-## resolve.conditions <NonInheritBadge />
+## resolve.conditions <NonInheritBadge /> {#resolve-conditions}
 
 - **타입:** `string[]`
 - **기본값:** `['module', 'browser', 'development|production']` (`defaultClientConditions`)
@@ -192,7 +192,7 @@ SSR 빌드의 경우, `build.rolldownOptions.output`을 통해 구성된 ESM 빌
 
 또한 `@import 'my-library'` 같은 스타일 import를 해석할 때는 `style` 조건이 적용됩니다. 일부 CSS 전처리기의 경우, 대응하는 조건도 적용됩니다. 즉 Sass에는 `sass`, Less에는 `less`가 적용됩니다.
 
-## resolve.mainFields <NonInheritBadge />
+## resolve.mainFields <NonInheritBadge /> {#resolve-mainfields}
 
 - **타입:** `string[]`
 - **기본값:** `['browser', 'module', 'jsnext:main', 'jsnext']` (`defaultClientMainFields`)
@@ -581,7 +581,7 @@ export default defineConfig({
 - **타입:** `string | false`
 - **기본값:** `root`
 
-'.env' 파일이 로드되는 디렉터리입니다. 절대 경로 또는 프로젝트 루트에 상대적인 경로일 수 있습니다. `false`는 `.env` 파일 로딩을 비활성화합니다.
+`.env` 파일이 로드되는 디렉터리입니다. 절대 경로 또는 프로젝트 루트에 상대적인 경로일 수 있습니다. `false`는 `.env` 파일 로딩을 비활성화합니다.
 
 환경 파일에 대한 더 자세한 점을 알려면, [여기](/guide/env-and-mode#env-files)를 확인하세요.
 

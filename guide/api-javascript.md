@@ -369,7 +369,7 @@ function loadEnv(
 ): Record<string, string>
 ```
 
-**관련 문서:** [`.env` Files](./env-and-mode.md#env-files)
+**관련 문서:** [`.env` 파일](./env-and-mode.md#env-files)
 
 `envDir` 내부의 `.env` 파일을 로드하고 `process.env`에 이미 있는 일치하는 변수와 병합합니다. 기본적으로 `VITE_`로 시작하는 환경 변수만 로드되나, `prefixes`를 통해 이를 변경할 수 있습니다.
 

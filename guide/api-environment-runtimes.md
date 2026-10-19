@@ -183,7 +183,7 @@ export class ModuleRunner {
    */
   public clearCache(): void
   /**
-   * 모든 캐시를 지우고, HMR 리스너를 제거하며, 소스맵 지원을 재설정합니다.
+   * 모든 캐시를 지우고, HMR 리스너를 제거하며, 소스 맵 지원을 재설정합니다.
    * 이 메서드는 HMR 연결을 중지하지 않습니다.
    */
   public async close(): Promise<void>
@@ -211,7 +211,7 @@ import { transport } from './rpc-implementation.js'
 const moduleRunner = new ModuleRunner(
   {
     transport,
-    createImportMeta: createNodeImportMeta, // if the module runner runs in Node.js
+    createImportMeta: createNodeImportMeta, // 모듈 러너가 Node.js에서 실행되는 경우
   },
   new ESModulesEvaluator(),
 )
@@ -231,7 +231,7 @@ import type { Debug } from '@type-challenges/utils'
 
 type InterceptorOptions = Debug<InterceptorOptionsRaw>
 type ModuleRunnerHmr = Debug<ModuleRunnerHmrRaw>
-/** see below */
+/** 아래 참고 */
 type ModuleRunnerTransport = unknown
 
 // ---cut---
@@ -241,11 +241,11 @@ interface ModuleRunnerOptions {
    */
   transport: ModuleRunnerTransport
   /**
-   * 소스맵 해석 방식을 설정합니다.
+   * 소스 맵 해석 방식을 설정합니다.
    * `process.setSourceMapsEnabled`를 사용할 수 있으면 `node`를 우선합니다.
    * 그렇지 않으면 기본적으로 `Error.prepareStackTrace` 메서드를 오버라이드하는
    * `prepareStackTrace`를 사용합니다.
-   * Vite가 처리하지 않은 파일의 파일 내용과 소스맵 해석 방식을 설정하는 객체를
+   * Vite가 처리하지 않은 파일의 파일 내용과 소스 맵 해석 방식을 설정하는 객체를
    * 제공할 수도 있습니다.
    */
   sourcemapInterceptor?:
@@ -299,7 +299,7 @@ export interface ModuleEvaluator {
 }
 ```
 
-Vite는 기본적으로 이 인터페이스를 구현하는 `ESModulesEvaluator`를 제공합니다. 이는 `new AsyncFunction`을 사용해 코드를 실행하므로, 만약 코드에 인라인 소스맵이 있다면 `AsyncFunction`이 추가하는 코드로 인해 [2 줄의 오프셋](https://tc39.es/ecma262/#sec-createdynamicfunction)이 있어야 합니다. 참고로 이는 `ESModulesEvaluator`에서 자동으로 처리됩니다. 커스텀 분석기는 새로운 코드를 추가하지 않습니다.
+Vite는 기본적으로 이 인터페이스를 구현하는 `ESModulesEvaluator`를 제공합니다. `new AsyncFunction`으로 코드를 평가하므로, 코드에 인라인 소스 맵이 있다면 추가되는 줄을 반영하기 위해 [2줄의 오프셋](https://tc39.es/ecma262/#sec-createdynamicfunction)을 포함해야 합니다. `ESModulesEvaluator`는 이를 자동으로 처리합니다. 커스텀 평가기는 추가 줄을 삽입하지 않습니다.
 
 ## `ModuleRunnerTransport` {#modulerunnertransport}
 
@@ -307,7 +307,7 @@ Vite는 기본적으로 이 인터페이스를 구현하는 `ESModulesEvaluator`
 
 ```ts twoslash
 import type { ModuleRunnerTransportHandlers } from 'vite/module-runner'
-/** an object */
+/** 객체 */
 type HotPayload = unknown
 // ---cut---
 interface ModuleRunnerTransport {
@@ -446,7 +446,7 @@ export const runner = new ModuleRunner(
         return response.json()
       },
     },
-    hmr: false, // disable HMR as HMR requires transport.connect
+    hmr: false, // HMR에는 transport.connect가 필요하므로 비활성화
   },
   new ESModulesEvaluator(),
 )

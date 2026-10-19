@@ -76,7 +76,7 @@ function dismiss() {
         <div class="flex items-center gap-2 w-full max-w-360 mx-auto px-4">
           <img
             :src="monoIcon"
-            :alt="`${logoAlt} icon`"
+            :alt="`${logoAlt} 아이콘`"
             class="size-5 shrink-0 hidden sm:block drop-shadow-md/70"
           />
 

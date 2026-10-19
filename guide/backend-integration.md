@@ -12,32 +12,32 @@
    import { defineConfig } from 'vite'
    // ---cut---
    export default defineConfig({
-     // overwrite default .html entry
+     // 기본 .html 진입점을 덮어씁니다
      input: '/path/to/main.js',
      server: {
        cors: {
-         // the origin you will be accessing via browser
+         // 브라우저에서 접속할 오리진
          origin: 'http://my-backend.example.com',
        },
      },
      build: {
-       // generate .vite/manifest.json in outDir
+       // outDir에 .vite/manifest.json을 생성합니다
        manifest: true,
      },
    })
    ```
 
-   만약 [module preload polyfill](/config/build-options.md#build-polyfillmodulepreload)을 비활성화하지 않았다면, 진입점에 폴리필을 가져와야 합니다.
+   만약 [모듈 프리로드 폴리필](/config/build-options.md#build-polyfillmodulepreload)을 비활성화하지 않았다면, 진입점에 폴리필을 가져와야 합니다.
 
    ```js
-   // add the beginning of your app entry
+   // 앱 진입점의 시작 부분에 추가합니다
    import 'vite/modulepreload-polyfill'
    ```
 
 2. 개발 단계에서는 서버의 HTML 템플릿에 다음을 추가합니다(`http://localhost:5173`을 Vite가 실행 중인 로컬 URL로 대체):
 
    ```html
-   <!-- if development -->
+   <!-- 개발 환경인 경우 -->
    <script type="module" src="http://localhost:5173/@vite/client"></script>
    <script type="module" src="http://localhost:5173/main.js"></script>
    ```
@@ -132,52 +132,52 @@
    ```ts style:max-height:400px
    interface ManifestChunk {
      /**
-      * The input file name of this chunk / asset if known
+      * 알고 있는 경우 이 청크 / 에셋의 입력 파일 이름
       */
      src?: string
      /**
-      * The output file name of this chunk / asset
+      * 이 청크 / 에셋의 출력 파일 이름
       */
      file: string
      /**
-      * The list of CSS files imported by this chunk
+      * 이 청크가 임포트하는 CSS 파일 목록
       */
      css?: string[]
      /**
-      * The list of asset files imported by this chunk, excluding CSS files
+      * 이 청크가 임포트하는 에셋 파일 목록(CSS 파일 제외)
       */
      assets?: string[]
      /**
-      * Whether this chunk or asset is an entry point
+      * 이 청크 또는 에셋이 진입점인지 여부
       */
      isEntry?: boolean
      /**
-      * The name of this chunk / asset if known
+      * 알고 있는 경우 이 청크 / 에셋의 이름
       */
      name?: string
      /**
-      * Whether this chunk is a dynamic entry point
+      * 이 청크가 동적 진입점인지 여부
       *
-      * This field is only present in JS chunks.
+      * 이 필드는 JS 청크에만 있습니다.
       */
      isDynamicEntry?: boolean
      /**
-      * The list of statically imported chunks by this chunk
+      * 이 청크가 정적으로 임포트하는 청크 목록
       *
-      * The values are the keys of the manifest. This field is only present in JS chunks.
+      * 값은 매니페스트의 키입니다. 이 필드는 JS 청크에만 있습니다.
       */
      imports?: string[]
      /**
-      * The list of dynamically imported chunks by this chunk
+      * 이 청크가 동적으로 임포트하는 청크 목록
       *
-      * The values are the keys of the manifest. This field is only present in JS chunks.
+      * 값은 매니페스트의 키입니다. 이 필드는 JS 청크에만 있습니다.
       */
      dynamicImports?: string[]
    }
    ```
 
    매니페스트의 각 항목은 다음 중 하나를 나타냅니다:
-   - **진입 청크**: [`build.rollupOptions.input`](https://rolldown.rs/reference/InputOptions.input#input)에 지정된 파일에서 생성됩니다. 이러한 청크는 `isEntry: true`를 가지며, 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
+   - **진입 청크**: [`build.rolldownOptions.input`](https://rolldown.rs/reference/InputOptions.input#input)에 지정된 파일에서 생성됩니다. 이러한 청크는 `isEntry: true`를 가지며, 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
    - **동적 진입 청크**: 동적 가져오기에서 생성됩니다. 이러한 청크는 `isDynamicEntry: true`를 가지며, 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
    - **비진입(Non-entry) 청크**: 생성된 파일 이름에 `_` 접두사를 붙여 키로 사용합니다.
    - **에셋 청크**: 이미지나 폰트와 같은 에셋에서 생성됩니다. 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
@@ -192,18 +192,18 @@
    `importedChunks` 함수 역시 예시를 위한 것이며, Vite에서 제공하지 않습니다.
 
    ```html
-   <!-- if production -->
+   <!-- 프로덕션 환경인 경우 -->
 
-   <!-- for cssFile of manifest[name].css -->
+   <!-- manifest[name].css의 각 cssFile에 대해 -->
    <link rel="stylesheet" href="/{{ cssFile }}" />
 
-   <!-- for chunk of importedChunks(manifest, name) -->
-   <!-- for cssFile of chunk.css -->
+   <!-- importedChunks(manifest, name)의 각 chunk에 대해 -->
+   <!-- chunk.css의 각 cssFile에 대해 -->
    <link rel="stylesheet" href="/{{ cssFile }}" />
 
    <script type="module" src="/{{ manifest[name].file }}"></script>
 
-   <!-- for chunk of importedChunks(manifest, name) -->
+   <!-- importedChunks(manifest, name)의 각 chunk에 대해 -->
    <link rel="modulepreload" href="/{{ chunk.file }}" />
    ```
 
@@ -213,8 +213,8 @@
    2. 진입점의 `imports` 목록에 있는 모든 청크를 재귀적으로 따라가며, 
       가져온 각 청크의 `css` 목록(있는 경우)의 각 CSS 파일에 대한 `<link rel="stylesheet">` 태그를 포함
    3. 진입점 청크의 `file` 키에 대한 태그. JavaScript의 경우 `<script type="module">`, CSS의 경우 `<link rel="stylesheet">`가 될 수 있습니다.
-   4. 선택적으로, 진입점 청크에서 시작해 imports를 재귀적으로 따라가며 가져온
-      각 JavaScript 청크 파일에 대한 `<link rel="modulepreload">` 태그를 포함
+   4. 선택적으로, 임포트된 각 JavaScript 청크의 `file`에 대한 `<link rel="modulepreload">` 태그를 포함합니다.
+      이 경우에도 진입점 청크에서 시작해 임포트를 재귀적으로 따라갑니다.
 
    위 예시 매니페스트를 예로 들자면, 진입점 `views/foo.js`에 대해 다음 태그가 포함되어야 합니다.
 
@@ -222,16 +222,16 @@
    <link rel="stylesheet" href="assets/foo-5UjPuW-k.css" />
    <link rel="stylesheet" href="assets/shared-ChJ_j-JJ.css" />
    <script type="module" src="assets/foo-BRBmoGS9.js"></script>
-   <!-- optional -->
+   <!-- 선택 사항 -->
    <link rel="modulepreload" href="assets/shared-B7PI925R.js" />
    ```
 
-   진입점 `views/foo.js`에 대해서는 아래 코드가 포함되어야 합니다.
+   진입점 `views/bar.js`에 대해서는 아래 코드가 포함되어야 합니다.
 
    ```html
    <link rel="stylesheet" href="assets/shared-ChJ_j-JJ.css" />
    <script type="module" src="assets/bar-gkvgaI9m.js"></script>
-   <!-- optional -->
+   <!-- 선택 사항 -->
    <link rel="modulepreload" href="assets/shared-B7PI925R.js" />
    ```
 

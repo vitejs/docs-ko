@@ -116,14 +116,14 @@ Vite는 [esbuild](https://esbuild.github.io/)와 동일한 동작을 따라 `tsc
 - [`jsxFragmentFactory`](https://www.typescriptlang.org/tsconfig#jsxFragmentFactory)
 - [`jsxImportSource`](https://www.typescriptlang.org/tsconfig#jsxImportSource)
 - [`experimentalDecorators`](https://www.typescriptlang.org/tsconfig#experimentalDecorators)
-- [`alwaysStrict`](https://www.typescriptlang.org/tsconfig#alwaysStrict)
 
 ::: tip `skipLibCheck`
 Vite 스타터 템플릿은 TypeScript의 특정 버전과 설정만을 지원하는 라이브러리가 있을 수 있기 때문에, 디펜던시에 대한 타입 체크를 수행하지 않기 위해 기본값으로 `"skipLibCheck": true`를 설정하고 있습니다. 자세한 내용은 [vuejs/vue-cli#5688](https://github.com/vuejs/vue-cli/pull/5688)을 참고해 주세요.
 :::
 
-### Client Types {#client-types}
+### 클라이언트 타입 {#client-types}
 
+Vite의 기본 타입은 Node.js API용입니다. Vite 애플리케이션의 클라이언트 코드에 필요한 환경 타입을 추가하려면 `tsconfig.json`의 `compilerOptions.types`에 `vite/client`를 추가하세요:
 
 ```json [tsconfig.json]
 {
@@ -192,7 +192,7 @@ HTML 파일은 Vite 프로젝트에서 [중심적인 역할](/guide/#index-html-
 - `<audio src>`
 - `<embed src>`
 - `<img src>` 및 `<img srcset>`
-- `<image href>` and `<image xlink:href>`
+- `<image href>` 및 `<image xlink:href>`
 - `<input src>`
 - `<link href>` 및 `<link imagesrcset>`
 - `<object data>`
@@ -279,13 +279,13 @@ Vite는 `postcss-import`를 통해 CSS `@import` 인라이닝을 지원하도록
 
 ### PostCSS {#postcss}
 
-만약 프로젝트에 [PostCSS 설정 파일](https://github.com/postcss/postcss-load-config)이 존재한다면, vite는 이를 이용해 모든 CSS 파일에 해당 설정을 적용합니다.
+프로젝트에 유효한 PostCSS 설정이 있으면([postcss-load-config](https://github.com/postcss/postcss-load-config)가 지원하는 모든 형식, 예: `postcss.config.js`), 임포트한 모든 CSS에 자동으로 적용됩니다.
 
 참고로 CSS의 축소화는 PostCSS 이후에 진행되며, [`build.cssTarget`](/config/build-options.md#build-csstarget) 옵션을 이용해 설정할 수 있습니다.
 
-### CSS Modules {#css-modules}
+### CSS 모듈 {#css-modules}
 
-`.module.css` 확장자로 끝나는 모든 CSS 파일들은 [CSS 모듈 파일](https://github.com/css-modules/css-modules)로 취급되며, 일반적인 JavaScript 모듈처럼 사용이 가능합니다.
+`.module.css`로 끝나는 모든 CSS 파일은 [CSS 모듈 파일](https://github.com/css-modules/css-modules)로 취급됩니다. 이러한 파일을 임포트하면 해당 모듈 객체가 반환됩니다:
 
 ```css [example.module.css]
 .red {
@@ -312,20 +312,20 @@ import { applyColor } from './example.module.css'
 document.getElementById('foo').className = applyColor
 ```
 
-### CSS Pre-processors {#css-pre-processors}
+### CSS 전처리기 {#css-pre-processors}
 
 vite는 모던 브라우저만을 타깃으로 하기에, 표준을 준수하도록 [postcss-nesting](https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nesting)과 같은 CSSWG 초안을 구현한 PostCSS 플러그인과 함께 네이티브 CSS 변수를 사용하도록 권고하고 있습니다.
 
 그렇지만 Vite는 `.scss`, `.sass`, `.less`, `.styl`, `.stylus` 파일에 대한 기본 지원을 제공합니다. 이를 위해 Vite 전용 플러그인을 설치할 필요는 없지만, 해당 전처리기 자체는 설치해야 합니다:
 
 ```bash
-# .scss and .sass
-npm add -D sass-embedded # or sass
+# .scss 및 .sass
+npm add -D sass-embedded # 또는 sass
 
 # .less
 npm add -D less
 
-# .styl and .stylus
+# .styl 및 .stylus
 npm add -D stylus
 ```
 
@@ -344,8 +344,8 @@ Vite는 Vite 별칭도 동작할 수 있도록 Sass와 Less에 대한 `@import` 
 ```js twoslash
 import 'vite/client'
 // ---cut---
-import './foo.css' // will be injected into the page
-import otherStyles from './bar.css?inline' // will not be injected
+import './foo.css' // 페이지에 주입됩니다
+import otherStyles from './bar.css?inline' // 주입되지 않습니다
 ```
 
 ::: tip 참고
@@ -362,7 +362,7 @@ CSS 처리 전체에 Lightning CSS를 사용하는 실험적 지원도 있습니
 
 ## 정적 에셋 {#static-assets}
 
-<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~05pq?via=vite" title="Static Assets in Vite">Scrimba에서 인터랙티브 강의를 시청하세요</ScrimbaLink>
+<ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~05pq?via=vite" title="Vite의 정적 에셋">Scrimba에서 인터랙티브 강의를 시청하세요</ScrimbaLink>
 
 정적 에셋을 임포트하면 제공될 때 해석된 공개 URL을 반환합니다:
 
@@ -418,7 +418,7 @@ import json from './example.json'
 import { field } from './example.json'
 ```
 
-## Glob Import {#glob-import}
+## Glob 임포트 {#glob-import}
 
 Vite는 특수한 `import.meta.glob` 함수를 통해 파일 시스템에서 여러 모듈을 임포트하는 기능을 지원합니다:
 
@@ -634,7 +634,7 @@ const modules = import.meta.glob('./dir/module*.js', {
 
 `caseSensitive: false`로 설정하면 glob은 대소문자와 관계없이 파일을 매칭합니다(예: `Module.js`, `module.js`, `MODULE.js`는 모두 `module*.js`와 매칭됩니다).
 
-### Glob Import 유의 사항 {#glob-import-caveats}
+### Glob 임포트 유의 사항 {#glob-import-caveats}
 
 Glob 패턴과 관련하여 다음의 사항을 유의해주세요:
 
@@ -703,7 +703,7 @@ init().then((instance) => {
 })
 ```
 
-초기화 함수를 호출할 때 `imports` 옵션을 사용할 수도 있는데, 이 값은 [`WebAssembly.instantiate`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate) 함수의 두 번째 인자인 importObject로 전달됩니다:
+초기화 함수는 importObject를 인자로 받을 수도 있으며, 이 값은 [`WebAssembly.instantiate`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate)의 두 번째 인자로 전달됩니다:
 
 ```js twoslash
 import 'vite/client'
@@ -720,7 +720,7 @@ init({
 })
 ```
 
-프로덕션 빌드 시 `assetsInlineLimit` 옵션의 값보다 작은 크기를 갖는 `.wasm` 파일은 Base64 문자열 포맷으로 변환됩니다. 파일의 크기가 그보다 크다면 [정적 에셋](./assets)으로 처리되어 요청(Fetch) 시 이를 가져오는 방식으로 동작합니다.
+프로덕션 빌드에서는 `assetInlineLimit`보다 작은 `.wasm` 파일이 Base64 문자열로 인라인됩니다. 그렇지 않으면 [정적 에셋](./assets)으로 처리되어 필요할 때 가져옵니다.
 
 ::: warning SSR 빌드에서는 Node.js 호환 런타임만 지원됩니다
 
@@ -747,7 +747,7 @@ const main = async () => {
 main()
 ```
 
-## Web Workers {#web-workers}
+## 웹 워커 {#web-workers}
 
 ### 생성자로 임포트하기 {#import-with-constructors}
 
@@ -863,13 +863,13 @@ MIT License
 
 ### CSS 코드 분리 {#css-code-splitting}
 
-vite는 비동기적으로 불러와지는 청크 내에 CSS 코드가 포함된 경우, 이를 자동으로 추출해 파일로 분리합니다. 이후 해당 청크를 불러올 때 `<link>` 태그를 이용해 분리된 CSS 코드를 불러오며, CSS가 모두 계산된 후에 청크를 렌더하도록 합니다. 굳이 왜 이렇게 복잡한 과정을 거칠까요? 바로 이 과정을 통해 CSS가 렌더링될 때 화면이 잠깐 반짝이는 [FOUC 현상](https://en.wikipedia.org/wiki/Flash_of_unstyled_content#:~:text=A%20flash%20of%20unstyled%20content,before%20all%20information%20is%20retrieved.)을 회피할 수 있기 때문입니다.
+Vite는 비동기 청크의 모듈이 사용하는 CSS를 자동으로 추출해 별도 파일로 생성합니다. 관련 비동기 청크를 로드할 때 `<link>` 태그로 CSS 파일도 자동으로 로드합니다. [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content#:~:text=A%20flash%20of%20unstyled%20content,before%20all%20information%20is%20retrieved.)를 방지하기 위해 CSS가 로드된 뒤에만 비동기 청크를 평가합니다.
 
-물론, 모든 CSS가 그냥 일반적인 각각의 파일로 저장된 경우라면 굳이 이러한 기능을 사용할 필요가 없습니다. 이러한 경우 [`build.cssCodeSplit`](/config/build-options.md#build-csscodesplit) 옵션의 값을 `false`로 설정해 비활성화가 가능합니다.
+모든 CSS를 단일 파일로 추출하려면 [`build.cssCodeSplit`](/config/build-options.md#build-csscodesplit)을 `false`로 설정해 CSS 코드 분리를 비활성화할 수 있습니다.
 
 ### 프리로드 디렉티브 생성 {#preload-directives-generation}
 
-vite는 빌드 시 Direct Import 구문에 대해 `<link ref="modulepreload">` 디렉티브를 이용해 미리 모듈을 캐싱하도록 자동으로 변환합니다. 덕분에 해당 모듈이 필요할 때 바로 사용할 수 있습니다. (`modulepreload`에 대한 더 자세한 내용은 [MDN doc](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/modulepreload) 또는 [Google developers](https://developers.google.com/web/updates/2017/12/modulepreload) 문서를 참고해주세요. - 옮긴이)
+Vite는 빌드된 HTML에서 진입 청크와 그 청크가 직접 임포트하는 청크에 대한 `<link rel="modulepreload">` 디렉티브를 자동으로 생성합니다. (`modulepreload`에 대한 더 자세한 내용은 [MDN doc](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/modulepreload) 또는 [Google developers](https://developers.google.com/web/updates/2017/12/modulepreload) 문서를 참고해 주세요. - 옮긴이)
 
 ### 비동기 청크 로딩 최적화 {#async-chunk-loading-optimization}
 
@@ -892,7 +892,7 @@ vite는 Preload 스텝을 이용해 `A`를 가져올 때 `C` 청크를 **병렬�
 Entry ---> (A + C)
 ```
 
-vite는 모든 Direct Import 구문에 대해 Preload 하도록 함으로써, 쓸 데 없이 낭비되는 네트워크 왕복을 줄이도록 구성합니다.
+`C`가 다른 모듈을 추가로 임포트할 수도 있으며, 최적화하지 않으면 네트워크 왕복이 더 늘어납니다. Vite는 직접 임포트하는 모든 모듈을 추적해 임포트 깊이에 관계없이 이러한 추가 왕복을 완전히 제거합니다.
 
 ### 청크 임포트 맵 최적화 {#chunk-import-map-optimization}
 

@@ -54,7 +54,7 @@ SSR 서버를 위한 빌드 타깃입니다.
 
 :::
 
-## ssr.resolve.mainFields
+## ssr.resolve.mainFields {#ssr-resolve-mainfields}
 
 - **타입:** `string[]`
 - **기본값:** `['module', 'jsnext:main', 'jsnext']`

@@ -20,7 +20,7 @@
 
 이 곳의 내용은 아래와 같이 설정하였다고 가정한 상태에서 진행합니다.
 
-- 빌드 결과물이 저장되는 디렉터리를 기본 디렉터리(`dist`)로 지정한 상태입니다. 물론 [`build.outDir` 설정 값을 이용해 바꿀 수는 있으나](/config/build-options.md#build-outdir), 여기서는 `dist`를 빌드 디렉터리로 지정했다 가정하고 진행합니다.
+- 기본 빌드 출력 경로(`dist`)를 사용합니다. 이 경로는 [`build.outDir`로 변경할 수 있으며](/config/build-options.md#build-outdir), 변경한 경우 이 가이드의 안내를 해당 경로에 맞게 적용하면 됩니다.
 - NPM 또는 NPM 스크립트를 실행할 수 있는 Yarn과 같은 패키지 매니저를 사용하고 있습니다.
 - vite는 로컬 PC에 존재하는 프로젝트에 개발용(Dev) 디펜던시로 설치된 상태이며, 아래와 같이 NPM 스크립트를 설정한 상태입니다.
 
@@ -101,7 +101,7 @@ $ npm run preview
 
    만약 `https://<USERNAME or GROUP>.gitlab.io/`와 같은 형태로 배포하고자 한다면, `base` 설정 값을 생략하거나 기본 값인 `'/'`로 지정해주세요.
 
-   만약 `https://<USERNAME or GROUP>.gitlab.io/<REPO>/`와 같은 형태로 배포하고자 한다면, `base` 설정 값을 `'/<REPO>/'`로 지정해주세요.
+   예를 들어 리포지토리가 `https://gitlab.com/<USERNAME>/<REPO>`에 있고 `https://<USERNAME or GROUP>.gitlab.io/<REPO>/`로 배포한다면, `base`를 `'/<REPO>/'`로 설정하세요.
 
 2. 아래와 같은 내용으로 프로젝트의 루트에 `.gitlab-ci.yml` 파일을 생성해주세요. 이와 같이 설정하게 되면, 콘텐츠가 변경될 때마다 사이트가 빌드 및 배포됩니다.
 

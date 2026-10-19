@@ -10,7 +10,7 @@
 
 최종 번들에 대한 브라우저 호환성 타깃입니다. 기본값은 Vite 전용 값인 `'baseline-widely-available'`로, 2026-01-01에 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available에 포함된 브라우저를 타깃으로 합니다. 구체적으로는 `['chrome111', 'edge111', 'firefox114', 'safari16.4', 'ios16.4']`입니다.
 
-또 다른 Vite 한정 옵션은 `'esnext'` 로, 네이티브 동적 Import를 지원하며 트랜스파일링을 최소한만 수행합니다.
+또 다른 특수 값인 `'esnext'`는 네이티브 동적 임포트 지원을 전제로 하며 트랜스파일링을 최소한만 수행합니다.
 
 변환은 Oxc Transformer로 수행되며, 값은 유효한 [Oxc Transformer 타깃 옵션](https://oxc.rs/docs/guide/usage/transformer/lowering#target)이어야 합니다. 커스텀 타깃은 ES 버전 (예: `es2015`)이나 버전이 있는 브라우저 (예: `chrome58`) 또는 다중 타깃 문자열의 배열이 될 수 있습니다.
 
@@ -95,7 +95,7 @@ modulePreload: {
 
 이 값보다 작은 크기로 import 되거나 참조된 에셋은 부가적인 http 요청을 피하고자 base64 URL로 인라인 처리됩니다. 만일 인라인 변환을 사용하지 않으려면 `0`으로 설정하세요.
 
-콜백이 전달되면, boolean을 반환하여 opt-in 또는 opt-out 할 수 있습니다(여기서 opt-in은 인라인을, opt-out은 기본값을 사용합니다. 자세한 구현 사항은 [커밋](https://github.com/vitejs/vite/commit/4d1342ebe0969cbcfc9c6d7fc5347f85df07df7f#diff-91776e7c6039d23a070162f02a69cd46046a2095bd5ecb384ae9e27f2ea5288fR414-R416)을 참고해 주세요. - 옮긴이). 반환되는 값이 없으면 기본 로직이 적용됩니다.
+콜백을 전달하면 boolean을 반환해 인라인 여부를 지정할 수 있습니다. 아무 값도 반환하지 않으면 기본 로직을 적용합니다.
 
 Git LFS(Large File Storage) 자리 표시자는 해당 파일의 내용을 포함하고 있지 않기에 인라인에서는 자동으로 제외됩니다.
 
@@ -303,7 +303,7 @@ SSR 빌드 중에는 정적 에셋이 따로 생성되지 않는데, 이는 클�
 - **타입:** `boolean | 'oxc' | 'terser' | 'esbuild'`
 - **기본값:** 클라이언트 빌드에는 `'oxc'`를, SSR 빌드에는 `false`를 사용
 
-코드 경량화를 사용하지 않으려면 `false`로 설정하거나, 사용할 코드 경량화 도구를 지정하세요. 기본값은 [Oxc Minifier](https://oxc.rs/docs/guide/usage/minifier)로, terser보다 30 ~ 90배 빠르며 압축률은 0.5 ~ 2% 정도만 낮습니다. [벤치마크](https://github.com/privatenumber/minification-benchmarks)
+코드 축소화를 사용하지 않으려면 `false`로 설정하거나, 사용할 코드 축소화 도구를 지정하세요. 기본값은 [Oxc Minifier](https://oxc.rs/docs/guide/usage/minifier)로, terser보다 30~90배 빠르며 압축률은 0.5~2% 정도만 낮습니다. [벤치마크](https://github.com/privatenumber/minification-benchmarks)
 
 `build.minify: 'esbuild'`는 더 이상 권장되지 않으며, 향후 제거될 예정입니다.
 
@@ -320,7 +320,7 @@ npm add -D terser
 
 - **타입:** `TerserOptions`
 
-Terser로 전달할 추가적인 [경량화 옵션](https://terser.org/docs/api-reference#minify-options)입니다.
+Terser로 전달할 추가적인 [축소화 옵션](https://terser.org/docs/api-reference#minify-options)입니다.
 
 `maxWorkers: number` 옵션을 전달하여 생성할 최대 워커 수를 지정할 수도 있습니다. 기본값은 CPU 수에서 1을 뺀 값입니다.
 

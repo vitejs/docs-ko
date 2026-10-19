@@ -357,4 +357,4 @@ await builder.buildApp()
 
 ## 환경에 구애받지 않는 코드 {#environment-agnostic-code}
 
-대부분의 경우 `environment` 인스턴스는 컨텍스트에 이미 존재하기에, `server.environments`로 직접 접근할 필요가 없습니다. 예를 들어, 플러그인 훅 내부에서는 `this.environment`로 환경에 접근할 수 있습니다. 환경을 인식하는 플러그인을 만드는 방법은 [플러그인을 위한 환경 API](./api-environment-plugins.md) 섹션을 참조하세요.
+대부분의 경우 현재 `environment` 인스턴스는 실행 중인 코드의 컨텍스트에 포함되므로, `server.environments`로 직접 접근하는 경우는 드뭅니다. 예를 들어, 플러그인 훅에서는 환경이 `PluginContext`의 일부로 노출되므로 `this.environment`로 접근할 수 있습니다. 환경을 인식하는 플러그인을 만드는 방법은 [플러그인을 위한 환경 API](./api-environment-plugins.md)를 참고하세요.

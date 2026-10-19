@@ -19,7 +19,7 @@ head:
       content: https://vite.dev/blog/announcing-vite5-1
   - - meta
     - property: og:description
-      content: Vite 5.1 Release Announcement
+      content: Vite 5.1 릴리스 발표
   - - meta
     - name: twitter:card
       content: summary_large_image

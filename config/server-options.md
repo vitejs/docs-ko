@@ -307,7 +307,7 @@ export default defineConfig({
 
 Vite 서버 감시자는 기본적으로 `root`를 감시하며, `.git/`, `node_modules/`, `test-results/`, 그리고 Vite의 `cacheDir` 및 `build.outDir` 디렉터리는 건너뜁니다. 감시하는 파일이 업데이트되면, Vite는 필요한 경우에만 HMR을 적용하고 페이지를 업데이트합니다.
 
-`null`로 설정하면 파일을 감시하지 않습니다. [`server.watcher`](/guide/api-javascript.html#vitedevserver)는 (Node.js `EventEmitter`과)호환되는 이벤트 객체(Emitter)를 제공하지만, `add` 또는 `unwatch`를 호출해도 아무런 효과가 없습니다.
+`null`로 설정하면 파일을 감시하지 않습니다. [`server.watcher`](/guide/api-javascript.html#vitedevserver)는 호환되는 이벤트 이미터를 제공하지만, `add` 또는 `unwatch`를 호출해도 아무런 효과가 없습니다.
 
 ::: warning `node_modules` 디렉터리에서 파일 감시하기
 
@@ -444,7 +444,7 @@ deny 필터는 모듈 id와 쿼리 매개변수를 제거한 id에 적용됩니�
 
 - **타입:** `string`
 
-에셋 URL에 대한 `origin` 헤더를 정의합니다.
+개발 중 생성되는 에셋 URL의 오리진을 정의합니다.
 
 ```js
 export default defineConfig({
@@ -459,11 +459,11 @@ export default defineConfig({
 - **타입:** `false | (sourcePath: string, sourcemapPath: string) => boolean`
 - **기본값:** `(sourcePath) => sourcePath.includes('node_modules')`
 
-서버 소스맵에서 소스 파일을 무시할지 여부로, [`x_google_ignoreList` 소스 맵 확장](https://developer.chrome.com/articles/x-google-ignore-list/) 필드를 채워넣는 데 사용됩니다.
+서버 소스 맵에서 소스 파일을 무시할지 여부로, [`x_google_ignoreList` 소스 맵 확장](https://developer.chrome.com/articles/x-google-ignore-list/) 필드를 채워 넣는 데 사용됩니다.
 
 `server.sourcemapIgnoreList`는 개발 서버에 대한 [`build.rolldownOptions.output.sourcemapIgnoreList`](https://rollupjs.org/configuration-options/#output-sourcemapignorelist)와 동일합니다. 두 구성 옵션 사이의 차이점은 `sourcePath`에 대한 상대 경로로 rollup 함수가 호출되는 동안 `server.sourcemapIgnoreList`는 절대 경로로 호출된다는 것입니다. 개발 중에 대부분의 모듈은 맵과 소스가 동일한 폴더에 있으므로 `sourcePath`에 대한 상대 경로는 파일 이름 자체입니다. 이러한 경우 절대 경로를 사용하면 편리합니다.
 
-기본적으로 `node_modules`가 포함된 경로를 모두 제외합니다. 이 동작을 비활성화하려면 `false`를 전달하거나, 함수를 전달해 소스와 소스맵 경로를 받아 소스 경로를 무시할지 여부를 반환할 수 있습니다.
+기본적으로 `node_modules`가 포함된 경로를 모두 제외합니다. 이 동작을 비활성화하려면 `false`를 전달하거나, 함수를 전달해 소스와 소스 맵 경로를 받아 소스 경로를 무시할지 여부를 반환할 수 있습니다.
 
 ```js
 export default defineConfig({
