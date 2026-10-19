@@ -14,7 +14,7 @@ export default {
 }
 ```
 
-참고로 Vite는 프로젝트에서 네이티브 Node ESM을 사용하지 않는 경우(예: `package.json`에 `"type": "module"`이 없을 때)에도 설정 파일에서 ES 모듈 문법을 사용할 수 있도록 지원합니다. 이 경우 설정 파일은 로드되기 전에 자동으로 전처리됩니다.
+참고로 설정 파일에서 ES 모듈 문법을 사용하려면 Node.js가 해당 파일을 ESM으로 인식해야 합니다(예: `.mjs` 파일, 또는 가장 가까운 `package.json`에 `"type": "module"`이 지정된 `.js` 파일).
 
 또한 `--config` CLI 옵션을 사용하여 명시적으로 특정 설정 파일을 지정할 수도 있습니다. (경로는 `cwd`를 기준으로 하여 상대적으로 처리됩니다.)
 
@@ -25,9 +25,7 @@ vite --config my-config.js
 <ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~05jg?via=vite" title="Vite 설정하기">Scrimba에서 인터랙티브 강의 보기</ScrimbaLink>
 
 ::: tip 설정 파일 로딩
-기본적으로 Vite는 [Rolldown](https://rolldown.rs/)을 사용해 설정 파일을 임시 파일로 번들링한 뒤 로드합니다. 다만 이는 모노리포에서 TypeScript 파일을 불러올 때 문제가 발생할 수 있습니다. 이러한 문제가 발생한다면 `--configLoader runner`를 지정해 [모듈 러너](/guide/api-environment-runtimes.html#modulerunner)를 대신 사용할 수 있습니다. 모듈 러너는 임시 설정 파일을 생성하지 않고 파일을 즉시 변환합니다. 참고로 모듈 러너는 설정 파일에서 CJS를 지원하지 않으나, 그럼에도 외부 CJS 패키지는 정상적으로 동작합니다.
-
-또는 TypeScript를 지원하는 환경(예: `node --experimental-strip-types`)을 사용하거나 순수 JavaScript만 작성하는 경우, `--configLoader native`를 지정하여 현재 환경의 네이티브 런타임으로 설정 파일을 로드할 수 있습니다. 단, 설정 파일에서 불러온 모듈의 업데이트는 감지되지 않으므로 Vite 서버가 자동으로 재시작되지 않습니다.
+기본적으로 Vite는 [Rolldown](https://rolldown.rs/)을 사용해 설정 파일을 임시 파일로 번들링한 뒤 로드합니다. TypeScript를 지원하는 환경(예: Node 22.18+)을 사용하거나 순수 JavaScript만 작성하는 경우, `--configLoader native`를 지정하여 현재 환경의 네이티브 런타임으로 설정 파일을 로드할 수 있습니다. `configLoader: 'native'`는 향후 메이저 버전에서 기본값이 될 예정입니다.
 :::
 
 ## 인텔리센스 설정 {#config-intellisense}
