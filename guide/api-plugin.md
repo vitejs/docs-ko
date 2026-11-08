@@ -56,9 +56,8 @@ export default defineConfig({
 `plugins` 항목은 여러 플러그인을 하나의 요소로 포함할 수도 있습니다. 이는 특정 프레임워크를 타깃으로 여러 플러그인을 사용하는 경우와 같이 복잡한 기능을 구현하는 데 유용합니다. 이 때 플러그인 배열은 자동으로 병합됩니다.
 
 ```js
-// 프레임워크 플러그인
+import frameworkDevTools from 'vite-plugin-framework-devtools'
 import frameworkRefresh from 'vite-plugin-framework-refresh'
-import frameworkDevtools from 'vite-plugin-framework-devtools'
 
 export default function framework(config) {
   return [frameworkRefresh(config), frameworkDevTools(config)]

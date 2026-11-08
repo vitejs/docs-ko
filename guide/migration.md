@@ -58,7 +58,7 @@ const plugin = {
   configResolved(config) {
     console.log('options', config.optimizeDeps.rolldownOptions)
   },
-},
+}
 ```
 
 ### Oxc를 통한 JavaScript 변환 {#javascript-transforms-by-oxc}
@@ -93,7 +93,7 @@ const plugin = {
   configResolved(config) {
     console.log('options', config.oxc)
   },
-},
+}
 ```
 
 현재 Oxc transformer는 사양이 진전되기를 기다리고 있어 네이티브 데코레이터 낮추기를 지원하지 않습니다. ([oxc-project/oxc#9170](https://github.com/oxc-project/oxc/issues/9170))를 참고하세요.
@@ -317,16 +317,19 @@ _이 변경은 플러그인 개발자에게만 영향을 줍니다._
 Rolldown은 [모듈 타입](https://rolldown.rs/guide/notable-features#module-types)에 대한 실험적 지원을 제공합니다. 이는 [esbuild의 `loader` 옵션](https://esbuild.github.io/api/#loader)과 유사합니다. 이로 인해 Rolldown은 해석된 id의 확장자를 기준으로 모듈 타입을 자동 설정합니다. `load` 또는 `transform` 훅에서 다른 모듈 타입의 콘텐츠를 JavaScript로 변환하고 있다면 반환값에 `moduleType: 'js'`를 추가해야 할 수 있습니다:
 
 ```js
+import fs from 'node:fs'
+
 const plugin = {
   name: 'txt-loader',
-  load(id) {
-    if (id.endsWith('.txt')) {
-      const content = fs.readFile(id, 'utf-8')
+  load: {
+    filter: { id: /\.txt$/ },
+    handler(id) {
+      const content = fs.readFileSync(id, 'utf-8')
       return {
         code: `export default ${JSON.stringify(content)}`,
         moduleType: 'js', // [!code ++]
       }
-    }
+    },
   },
 }
 ```
