@@ -80,6 +80,8 @@ window.addEventListener('vite:preloadError', (event) => {
 })
 ```
 
+[재시도 가능한 모듈 로딩(retriable module loading)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import#browser_compatibility)을 지원하는 브라우저는 일시적인 네트워크 또는 HTTP 오류 이후 애플리케이션이나 프레임워크가 원본 동적 임포트를 재시도할 수 있도록 허용합니다. 이전 브라우저는 실패 상태를 모듈 맵에 캐시하므로 페이지 새로고침이 필요합니다.
+
 새 배포가 발생하면 호스팅 서비스가 이전 배포의 에셋을 삭제할 수 있습니다. 그 결과 새 배포 전에 사이트를 방문했던 사용자는 임포트 오류를 만날 수 있습니다. 이는 사용자 기기에서 실행 중인 에셋이 오래되어, 삭제된 이전 청크를 임포트하려 하기 때문에 발생합니다. 이 이벤트는 이러한 상황을 처리하는 데 유용합니다. 이 경우 HTML 파일에 `Cache-Control: no-cache`를 설정해야 합니다. 그렇지 않으면 이전 에셋이 계속 참조될 수 있습니다.
 
 ## 파일 변경 시 다시 빌드하기 {#rebuild-on-files-changes}
