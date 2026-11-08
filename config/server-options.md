@@ -457,21 +457,21 @@ export default defineConfig({
 ## server.sourcemapIgnoreList {#server-sourcemapignorelist}
 
 - **타입:** `false | (sourcePath: string, sourcemapPath: string) => boolean`
-- **기본값:** `(sourcePath) => sourcePath.includes('node_modules')`
+- **기본값:** `(sourcePath) => /(?:^|[\\/])node_modules(?:[\\/]|$)/.test(sourcePath)`
 
 서버 소스 맵에서 소스 파일을 무시할지 여부로, [`x_google_ignoreList` 소스 맵 확장](https://developer.chrome.com/articles/x-google-ignore-list/) 필드를 채워 넣는 데 사용됩니다.
 
 `server.sourcemapIgnoreList`는 개발 서버에 대한 [`build.rolldownOptions.output.sourcemapIgnoreList`](https://rollupjs.org/configuration-options/#output-sourcemapignorelist)와 동일합니다. 두 구성 옵션 사이의 차이점은 `sourcePath`에 대한 상대 경로로 rollup 함수가 호출되는 동안 `server.sourcemapIgnoreList`는 절대 경로로 호출된다는 것입니다. 개발 중에 대부분의 모듈은 맵과 소스가 동일한 폴더에 있으므로 `sourcePath`에 대한 상대 경로는 파일 이름 자체입니다. 이러한 경우 절대 경로를 사용하면 편리합니다.
 
-기본적으로 `node_modules`가 포함된 경로를 모두 제외합니다. 이 동작을 비활성화하려면 `false`를 전달하거나, 함수를 전달해 소스와 소스 맵 경로를 받아 소스 경로를 무시할지 여부를 반환할 수 있습니다.
+기본적으로 경로 세그먼트로 `node_modules`가 포함된 경로를 모두 제외합니다. 이 동작을 비활성화하려면 `false`를 전달하거나, 전체 제어를 위해 소스 경로와 소스 맵 경로를 받아 소스 경로를 무시할지 여부를 반환하는 함수를 전달할 수 있습니다.
 
 ```js
 export default defineConfig({
   server: {
-    // 기본값입니다. 경로에 node_modules가 있는 모든 파일을
+    // 기본값이며, 경로 세그먼트에 node_modules가 있는 모든 파일을
     // 무시 목록에 추가합니다.
     sourcemapIgnoreList(sourcePath, sourcemapPath) {
-      return sourcePath.includes('node_modules')
+      return /(?:^|[\\/])node_modules(?:[\\/]|$)/.test(sourcePath)
     },
   },
 })
