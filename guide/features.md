@@ -53,7 +53,7 @@ export type { T }
 
 ### 타입스크립트 컴파일러 옵션 {#typescript-compiler-options}
 
-Vite는 `tsconfig.json`의 일부 옵션을 존중하고, 이에 대응하는 Oxc Transformer 옵션을 설정합니다. 각 파일에 대해 Vite는 해당 파일과 일치하는 가장 가까운 상위 `tsconfig.json`이나, 그 설정의 [`references`](https://www.typescriptlang.org/tsconfig/#references) 필드가 참조하는 설정 중 파일과 일치하는 설정을 사용합니다. 파일이 설정의 [`files`](https://www.typescriptlang.org/tsconfig/#files), [`include`](https://www.typescriptlang.org/tsconfig/#include), [`exclude`](https://www.typescriptlang.org/tsconfig/#exclude) 필드를 만족하면 해당 설정과 일치하는 것으로 봅니다.
+Vite는 `tsconfig.json`의 일부 옵션을 존중하고, 이에 대응하는 Oxc Transformer 옵션을 설정합니다. 기본적으로 Vite는 각 파일과 일치하는 가장 가까운 상위 `tsconfig.json`을 사용합니다. 해당 설정의 [`references`](https://www.typescriptlang.org/tsconfig/#references) 필드가 참조하는 설정이 파일과 일치할 때 그 설정이 사용됩니다. 파일이 설정의 [`files`](https://www.typescriptlang.org/tsconfig/#files), [`include`](https://www.typescriptlang.org/tsconfig/#include), [`exclude`](https://www.typescriptlang.org/tsconfig/#exclude) 필드를 만족하면 해당 설정과 일치하는 것으로 봅니다.
 
 Vite 설정과 `tsconfig.json`에 같은 옵션이 모두 설정된 경우, Vite 설정의 값이 우선합니다.
 

@@ -624,10 +624,38 @@ define: {
 - **타입:** `boolean` | `DevToolsConfig`
 - **기본값:** `false`
 
-내부 상태와 빌드 분석을 시각화하기 위한 devtools 통합을 활성화합니다.
-`@vitejs/devtools`가 디펜던시로 설치되어 있어야 합니다. 이 기능은 현재 빌드 모드에서만 지원됩니다.
+개발 서버 검사 및 빌드 분석을 위한 DevTools 통합을 활성화합니다.
+`@vitejs/devtools`가 디펜던시로 설치되어 있어야 합니다. Vite 개발 서버를 검사하려면 `@vitejs/devtools-vite`를 설치하고, 빌드 분석을 활성화하려면 `@vitejs/devtools-rolldown`을 설치하세요. DevTools는 기본적으로 `serve`와 `build` 모두에서 실행됩니다. 두 명령 중 하나로 제한하려면 `apply`를 사용하세요.
+
+플러그인의 `config` 훅에서는 `devtools` 옵션을 변경할 수 없습니다. 대신 사용자 설정에서 지정하세요.
+
+설치 시 `@vitejs/devtools`가 이 옵션에 대한 타입 정의를 제공합니다:
+
+```ts
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  devtools: {
+    apply: 'serve',
+  },
+})
+```
 
 자세한 내용은 [Vite DevTools](https://github.com/vitejs/devtools)를 참고하세요.
+
+## tsconfig {#tsconfig}
+
+- **타입:** `string`
+
+Vite에서 사용할 TypeScript 설정 파일의 경로입니다. 상대 경로는 프로젝트 [`루트(root)`](#root) 기준으로 해석됩니다.
+
+이 옵션을 설정하지 않으면 Vite는 각 파일에 대해 가장 가까운 일치하는 `tsconfig.json`을 자동으로 검색합니다. 자세한 내용은 [타입스크립트 컴파일러 옵션](/guide/features#typescript-compiler-options)을 참고하세요.
+
+::: warning 자동 검색 권장
+이 옵션을 설정하면 TypeScript 언어 서버와 일치하는 Vite의 파일별 tsconfig 자동 검색이 재정의되므로 권장하지 않습니다. 설정하려는 파일 근처에 `tsconfig.json`을 배치하고 다중 프로젝트 환경에서는 TypeScript의 [`references`](https://www.typescriptlang.org/tsconfig/#references)를 사용하는 것이 좋습니다.
+
+가져오기 경로를 재매핑하는 것이 목적이라면 [`compilerOptions.paths`](https://www.typescriptlang.org/tsconfig/#paths)만을 위해 tsconfig를 지정하는 대신 [`resolve.alias`](#resolve-alias) 또는 `package.json`의 `imports` 및 `exports` 필드를 사용하는 것이 좋습니다. 이 옵션은 자동 검색으로 의도한 설정을 식별할 수 없는 경우에만 사용하세요.
+:::
 
 ## future {#future}
 
