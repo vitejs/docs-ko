@@ -164,6 +164,8 @@ npm add -D esbuild
 
 기존 Rolldown 번들을 커스텀합니다. 이는 Rolldown 설정 파일에서 내보낼 수 있는 옵션과 같으며 Vite의 내부 Rolldown 옵션과 병합됩니다. 더 자세한 내용은 [Rolldown 옵션 문서](https://rolldown.rs/reference/)를 참고하세요.
 
+Vite는 Rolldown의 `preserveEntrySignatures` 기본값을 오버라이드합니다. 이 옵션을 설정하지 않은 경우, Vite는 일반 클라이언트 빌드에서는 `false`, 라이브러리 빌드에서는 `'strict'`, SSR 빌드에서는 `'allow-extension'`을 사용합니다.
+
 `build.rolldownOptions.input` 대신 최상위 [`input`](/config/shared-options#input) 옵션을 설정하기를 권장합니다. 최상위 `input` 옵션은 개발 중에도 사용되기 때문입니다. `build.rolldownOptions.input`을 설정하면 빌드에서만 최상위 `input` 옵션을 오버라이드합니다.
 
 ## build.rollupOptions {#build-rollupoptions}
