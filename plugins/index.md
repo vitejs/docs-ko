@@ -42,7 +42,7 @@ npm create vite@latest -- --template rsc
 
 npm에 게시된 플러그인 목록은 [Vite Plugin Registry](https://registry.vite.dev/plugins)를 확인하세요.
 
-## Rolldown 내장 플러그인 {#rolldown-builtin-plugins}
+## Rolldown 내장 플러그인 {#rolldown-built-in-plugins}
 
 Vite는 내부적으로 [Rolldown](https://rolldown.rs/)을 사용하며, Rolldown은 일반적인 사용 사례를 위한 몇 가지 내장 플러그인을 제공합니다.
 
