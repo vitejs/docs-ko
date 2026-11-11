@@ -135,6 +135,20 @@ Dev Container나 VS Code의 포트 포워딩 기능을 사용하는 경우, 정�
 
 자세한 내용은 [#16522](https://github.com/vitejs/vite/issues/16522)를 참조하세요.
 
+### 파일 감시 중 잘못된 작업 오류 (Illegal operation error) {#illegal-operation-error-when-watching-files}
+
+파일 또는 디렉터리가 파일 시스템 이벤트를 지원하지 않는 파일 시스템에 위치한 경우, Vite가 이를 감시하지 못할 수 있습니다.
+
+발생할 수 있는 오류 예시는 다음과 같습니다:
+
+```
+Error: EISDIR: illegal operation on a directory, watch 'C:/Users/me/project/vite.config.js'
+```
+
+예를 들어, VirtualBox 공유 폴더에서 이러한 문제가 발생할 수 있습니다.
+
+이를 해결하려면 [`server.watch.usePolling`](/config/server-options#server-watch)을 활성화할 수 있습니다. 단, [`usePolling`은 CPU 사용률을 높일 수 있음](https://github.com/paulmillr/chokidar/tree/3.6.0#performance)에 유의하세요.
+
 ## HMR {#hmr}
 
 ### Vite가 파일 변경을 감지했지만 HMR이 작동하지 않음 {#vite-detects-a-file-change-but-the-hmr-is-not-working}
