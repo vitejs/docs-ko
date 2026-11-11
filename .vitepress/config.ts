@@ -150,9 +150,9 @@ const config = defineConfig({
   themeConfig: {
     variant: 'vite',
     banner: {
-      id: 'cloudflare-supports-vite',
-      text: `Cloudflare가 Vite의 사명을 지원합니다`,
-      url: '/blog/cloudflare-supports-vite',
+      id: 'viteconf-2026',
+      text: 'ViteConf 2026 - 10월 15일, 온라인',
+      url: 'https://viteconf.org/',
     },
 
     editLink: {
@@ -599,14 +599,6 @@ const config = defineConfig({
     },
   },
   vite: {
-    resolve: {
-      alias: {
-        '@components/oss/TopBanner.vue': path.resolve(
-          import.meta.dirname,
-          'theme/components/TopBanner.vue',
-        ),
-      },
-    },
     plugins: [
       groupIconVitePlugin({
         customIcon: {
