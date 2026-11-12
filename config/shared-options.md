@@ -654,7 +654,7 @@ Vite에서 사용할 TypeScript 설정 파일의 경로입니다. 상대 경로�
 ::: warning 자동 검색 권장
 이 옵션을 설정하면 TypeScript 언어 서버와 일치하는 Vite의 파일별 tsconfig 자동 검색이 재정의되므로 권장하지 않습니다. 설정하려는 파일 근처에 `tsconfig.json`을 배치하고 다중 프로젝트 환경에서는 TypeScript의 [`references`](https://www.typescriptlang.org/tsconfig/#references)를 사용하는 것이 좋습니다.
 
-가져오기 경로를 재매핑하는 것이 목적이라면 [`compilerOptions.paths`](https://www.typescriptlang.org/tsconfig/#paths)만을 위해 tsconfig를 지정하는 대신 [`resolve.alias`](#resolve-alias) 또는 `package.json`의 `imports` 및 `exports` 필드를 사용하는 것이 좋습니다. 이 옵션은 자동 검색으로 의도한 설정을 식별할 수 없는 경우에만 사용하세요.
+임포트 경로를 재매핑하는 것이 목적이라면 [`compilerOptions.paths`](https://www.typescriptlang.org/tsconfig/#paths)만을 위해 tsconfig를 지정하는 대신 [`resolve.alias`](#resolve-alias) 또는 `package.json`의 `imports` 및 `exports` 필드를 사용하는 것이 좋습니다. 이 옵션은 자동 검색으로 의도한 설정을 식별할 수 없는 경우에만 사용하세요.
 :::
 
 ## future {#future}
