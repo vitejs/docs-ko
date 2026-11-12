@@ -47,7 +47,7 @@ console.log(import.meta.env.VITE_SOME_KEY) // "123"
 console.log(import.meta.env.DB_PASSWORD) // undefined
 ```
 
-[envPrefix](/config/shared-options#envprefix) 옵션을 통해 환경 변수 접두사를 커스터마이징할 수 있습니다.
+[envPrefix](/config/shared-options.html#envprefix) 옵션을 통해 환경 변수 접두사를 커스터마이징할 수 있습니다.
 
 :::tip 환경 변수 파싱
 위와 같이 `VITE_SOME_KEY`는 숫자이지만 파싱 시 문자열로 반환됩니다. 불리얼 환경 변수에 대해서도 동일하게 적용되며, 코드에서 사용할 때는 원하는 타입으로 변환해야 합니다.
