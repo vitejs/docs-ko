@@ -1,20 +1,18 @@
-import path from 'node:path'
+import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
+import { extendConfig } from '@voidzero-dev/vitepress-theme/config'
 import type { DefaultTheme, HeadConfig } from 'vitepress'
 import { defineConfig } from 'vitepress'
-import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
+import { graphvizMarkdownPlugin } from 'vitepress-plugin-graphviz'
+import {
+  groupIconMdPlugin,
+  groupIconVitePlugin,
+} from 'vitepress-plugin-group-icons'
 // @ts-ignore
 import markdownItCustomAnchor from './markdown-it-custom-anchor'
 // @ts-ignore
 import renderPermalink from './render-permalink'
 import markdownItFootnote from 'markdown-it-footnote'
-import {
-  groupIconMdPlugin,
-  groupIconVitePlugin,
-} from 'vitepress-plugin-group-icons'
-import { graphvizMarkdownPlugin } from 'vitepress-plugin-graphviz'
-import { buildEnd } from './buildEnd.config'
-import { markdownItImageSize } from 'markdown-it-image-size'
-import { extendConfig } from '@voidzero-dev/vitepress-theme/config'
+import { buildEnd } from './buildEnd.config.ts'
 
 const ogDescription = 'Vite, 프런트엔드 개발의 새로운 기준'
 const ogImage = 'https://ko.vite.dev/og-image.jpg'
@@ -142,9 +140,7 @@ const config = defineConfig({
     zh: { label: '简体中文', link: 'https://cn.vite.dev' },
     ja: { label: '日本語', link: 'https://ja.vite.dev' },
     es: { label: 'Español', link: 'https://es.vite.dev' },
-    pt: { label: 'Português', link: 'https://pt.vite.dev' },
     de: { label: 'Deutsch', link: 'https://de.vite.dev' },
-    fa: { label: 'فارسی', link: 'https://fa.vite.dev' },
   },
 
   themeConfig: {
@@ -590,10 +586,6 @@ const config = defineConfig({
         titleBar: {
           includeSnippet: true,
         },
-      })
-      // @ts-ignore
-      md.use(markdownItImageSize, {
-        publicDir: path.resolve(import.meta.dirname, '../public')
       })
       await graphvizMarkdownPlugin(md)
     },
