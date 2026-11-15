@@ -79,7 +79,7 @@ import shaderString from './shader.glsl?raw'
 
 ### 스크립트를 Worker로 가져오기 {#importing-script-as-a-worker}
 
-스크립트는 웹 워커로 가져올 수 있는데, 이 때는 `?worker` 또는 `?sharedworker` 접미사를 이용합니다.
+스크립트는 웹 워커로 가져올 수 있는데, 이때는 `?worker` 또는 `?sharedworker` 접미사를 이용합니다.
 
 ```js twoslash
 import 'vite/client'

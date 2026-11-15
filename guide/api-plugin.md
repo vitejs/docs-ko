@@ -599,7 +599,7 @@ function outputMetadataPlugin(): Plugin {
 
 ## 생성한 에셋 참조하기 {#referencing-emitted-assets}
 
-플러그인에서 에셋을 생성하려면 [`this.emitFile({ type: 'asset', ... })`](https://rolldown.rs/reference/Interface.PluginContext#in-depth-type-asset)를 호출하세요. 번들이 생성되기 전까지는 최종 파일 이름을 알 수 없으므로, 반환된 `referenceId`를 사용해 에셋 URL을 생성할 수 있습니다.
+플러그인에서 에셋을 생성하려면 [`this.emitFile({ type: 'asset', ... })`](https://rolldown.rs/reference/Interface.PluginContext#in-depth-type-asset)을 호출하세요. 번들이 생성되기 전까지는 최종 파일 이름을 알 수 없으므로, 반환된 `referenceId`를 사용해 에셋 URL을 생성할 수 있습니다.
 
 ### JavaScript에서 {#in-javascript}
 
