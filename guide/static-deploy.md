@@ -8,6 +8,8 @@
   2. 무료 티어는 사이트를 기간 제한 없이 계속 호스팅할 수 있어야 합니다.
      대신 제한된 컴퓨팅 리소스나 사이트 개수를 제공하는 것은 괜찮습니다.
   3. 링크된 가이드에는 악성 콘텐츠가 없어야 합니다.
+  4. 플랫폼은 최소 1년 이상 운영되어야 합니다. 이를 확인할 근거를
+     PR 설명에 제시해 주세요.
 
   새 섹션은 파일 맨 아래에 추가해야 합니다. 새 섹션 형식 예시는
   이 파일 아래쪽의 기존 섹션을 참고해 주세요.
@@ -95,7 +97,7 @@ $ npm run preview
 
    <<< ./static-deploy-github-pages.yaml#content [배포 워크플로]
 
-## GitLab Pages 그리고 GitLab CI {#github-pages-and-gitlab-ci}
+## GitLab Pages 그리고 GitLab CI {#gitlab-pages-and-gitlab-ci}
 
 1. `vite.config.js` 파일 내 `base` 설정 값을 적절하게 지정합니다.
 
@@ -179,8 +181,8 @@ $ npm install --save-dev @cloudflare/vite-plugin
 ```
 
 ```js [vite.config.js]
-import { defineConfig } from 'vite'
 import { cloudflare } from '@cloudflare/vite-plugin'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [cloudflare()],
@@ -213,7 +215,7 @@ Cloudflare Pages는 Wrangler 파일을 관리하지 않고도 Cloudflare에 직�
 
 프로젝트를 가져오고 배포한 뒤에는 [브랜치 빌드 제어](https://developers.cloudflare.com/pages/platform/branch-build-controls/)에서 달리 지정하지 않는 한 브랜치로의 모든 후속 push가 [프리뷰 배포](https://developers.cloudflare.com/pages/platform/preview-deployments/)를 생성합니다. 프로덕션 브랜치(일반적으로 "main")에 대한 모든 변경 사항은 프로덕션 배포가 됩니다.
 
-커스텀 도메인을 추가하거나 커스텀 빌드 설정을 처리할 수도 있습니다. 자세한 내용은 [Cloudflare Pages Git Integration](https://developers.cloudflare.com/pages/get-started/#manage-your-site) 문서를 참고해 주세요.
+커스텀 도메인을 추가하거나 커스텀 빌드 설정을 처리할 수도 있습니다. 자세한 내용은 [Cloudflare Pages Git Integration](https://developers.cloudflare.com/pages/configuration/git-integration/) 문서를 참고해 주세요.
 
 ## Google Firebase {#google-firebase}
 
@@ -288,17 +290,13 @@ VS Code에 확장 프로그램을 설치한 뒤 앱의 루트 디렉터리로 �
 
 5. **Create Static Site**를 클릭합니다. 앱은 `https://<PROJECTNAME>.onrender.com/`에 배포됩니다.
 
-기본적으로 지정된 브랜치에 새로운 커밋이 Push되면 자동으로 새로운 배포가 트리거됩니다. [자동 배포](https://render.com/docs/deploys#toggling-auto-deploy-for-a-service)는 프로젝트 설정에서 구성할 수 있습니다.
+기본적으로 지정된 브랜치에 새로운 커밋이 Push되면 자동으로 새로운 배포가 트리거됩니다. [자동 배포](https://render.com/docs/deploys#configuring-auto-deploys)는 프로젝트 설정에서 구성할 수 있습니다.
 
 프로젝트에 [커스텀 도메인](https://render.com/docs/custom-domains)을 추가할 수도 있습니다.
 
 ## Flightcontrol {#flightcontrol}
 
 [이 문서](https://www.flightcontrol.dev/docs/reference/examples/vite?ref=docs-vite)를 따라 [Flightcontrol](https://www.flightcontrol.dev/?ref=docs-vite)을 이용해 정적 사이트를 배포할 수 있습니다.
-
-## Kinsta 정적 사이트 호스팅 {#kinsta-static-site-hosting}
-
-이 [안내](https://kinsta.com/docs/static-site-hosting/static-site-quick-start/react-static-site-examples/#react-with-vite)를 따라 [Kinsta](https://kinsta.com/static-site-hosting/)로 정적 사이트를 배포할 수 있습니다.
 
 ## xmit 정적 사이트 호스팅 {#xmit-static-site-hosting}
 

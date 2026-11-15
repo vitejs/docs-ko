@@ -23,7 +23,7 @@ Vite는 서버 측 렌더링(SSR, Server-side Rendering)을 기본적으로 지�
 - [Svelte](https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-svelte)
 - [Solid](https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-solid)
 
-[create-vite를 실행하고](./index.md#scaffolding-your-first-vite-project) 프레임워크 옵션에서 `Others > create-vite-extra`를 선택하면 이 프로젝트들을 로컬에서도 생성할 수 있습니다.
+[`create-vite`를 실행하고](./index.md#scaffolding-your-first-vite-project) 프레임워크 옵션에서 `Others > create-vite-extra`를 선택하면 이 프로젝트들을 로컬에서도 생성할 수 있습니다.
 
 ## 프로젝트 구조 {#source-structure}
 
@@ -65,7 +65,7 @@ if (import.meta.env.SSR) {
 
 SSR 앱을 빌드할 때, 메인 서버를 완전히 제어하고 Vite를 프로덕션 환경에서 분리하고자 한다면 어떻게 해야 할까요? 가장 좋은 방법은, Vite를 미들웨어 모드로 사용하는 것입니다. 가령 [express](https://expressjs.com/)를 예로 들자면:
 
-```js{15-18} twoslash [server.js]
+```js{12-15} twoslash [server.js]
 import fs from 'node:fs'
 import path from 'node:path'
 import express from 'express'

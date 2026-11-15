@@ -61,7 +61,7 @@ Vite 팀은 Node.js가 플래그 없이 `require(esm)`을 지원하도록 이러
 
 ## 기본 브라우저 타겟이 Baseline Widely Available로 변경 {#default-browser-target-changed-to-baseline-widely-available}
 
-[Baseline](https://web-platform-dx.github.io/web-features/)은 오늘날 핵심 브라우저 세트에서 어떤 웹 플랫폼 기능이 작동하는지에 대한 명확한 정보를 제공합니다. Baseline Widely Available은 해당 기능이 잘 확립되어 있고 많은 디바이스와 브라우저 버전에서 작동하며, 적어도 30개월 동안 브라우저에서 사용 가능했음을 나타냅니다.
+[Baseline](https://web-platform-dx.github.io/baseline/)은 오늘날 핵심 브라우저 세트에서 어떤 웹 플랫폼 기능이 작동하는지에 대한 명확한 정보를 제공합니다. Baseline Widely Available은 해당 기능이 잘 확립되어 있고 많은 디바이스와 브라우저 버전에서 작동하며, 적어도 30개월 동안 브라우저에서 사용 가능했음을 나타냅니다.
 
 Vite 7에서는 기본 브라우저 타겟이 `'modules'`에서 새로운 기본값인 `'baseline-widely-available'`로 변경됩니다. 브라우저 세트는 각 메이저마다 Baseline Widely available 기능과 호환되는 최소 브라우저 버전 목록에 맞춰 업데이트됩니다. Vite 7.0에서 `build.target`의 기본 브라우저 값이 변경됩니다:
 

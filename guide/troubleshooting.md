@@ -234,7 +234,7 @@ HTML 파일 출력이 `file` 프로토콜로 열린 경우 다음 오류와 함�
 
 ### 링크된 로컬 패키지의 경우 사전 번들링 된 디펜던시가 갱신되지 않음 {#outdated-pre-bundled-deps-when-linking-to-a-local-package}
 
-최적화된 디펜던시를 무효화하는 데 사용되는 해시 키는 패키지 락 파일 내용, 디펜던시에 적용된 패치, 그리고 node 모듈 번들링에 영향을 미치는 Vite 설정 파일의 옵션에 따라 달라집니다. 즉, Vite는 [npm overrides](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#overrides)와 같은 기능을 사용해 디펜던시가 재정의될 때 이를 감지하고, 다음 서버 시작 시 디펜던시를 다시 번들링합니다. 하지만 [npm link](https://docs.npmjs.com/cli/v9/commands/npm-link)와 같은 기능을 사용할 때는 Vite가 디펜던시를 무효화하지 않습니다. 디펜던시를 링크하거나 링크를 해제하는 경우, `vite --force`를 사용해 다음 서버 시작 시 최적화를 강제로 다시 실행해야 합니다. 대신 모든 패키지 매니저에서 지원되는 overrides 기능을 사용하는 것을 권장합니다([pnpm overrides](https://pnpm.io/9.x/package_json#pnpmoverrides) 및 [yarn resolutions](https://yarnpkg.com/configuration/manifest/#resolutions) 참고).
+최적화된 디펜던시를 무효화하는 데 사용되는 해시 키는 패키지 락 파일 내용, 디펜던시에 적용된 패치, 그리고 node 모듈 번들링에 영향을 미치는 Vite 설정 파일의 옵션에 따라 달라집니다. 즉, Vite는 [npm overrides](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#overrides)와 같은 기능을 사용해 디펜던시가 재정의될 때 이를 감지하고, 다음 서버 시작 시 디펜던시를 다시 번들링합니다. 하지만 [npm link](https://docs.npmjs.com/cli/v9/commands/npm-link)와 같은 기능을 사용할 때는 Vite가 디펜던시를 무효화하지 않습니다. 디펜던시를 링크하거나 링크를 해제하는 경우, `vite --force`를 사용해 다음 서버 시작 시 최적화를 강제로 다시 실행해야 합니다. 대신 모든 패키지 매니저에서 지원되는 overrides 기능을 사용하는 것을 권장합니다([pnpm overrides](https://pnpm.io/settings#overrides) 및 [yarn resolutions](https://yarnpkg.com/configuration/manifest/#resolutions) 참고).
 
 ## 성능 병목현상 {#performance-bottlenecks}
 
@@ -256,7 +256,7 @@ vite build --profile
 브라우저에서 앱을 열고 로드가 완료될 때까지 기다린 후 터미널로 돌아가 `p` 키를 누르세요(Node.js 인스펙터를 중지합니다). 이후 `q` 키를 눌러 개발 서버를 중지하세요.
 :::
 
-Node.js 인스펙터가 루트 폴더에 `vite-profile-0.cpuprofile`을 생성합니다. https://www.speedscope.app/ 에서 `BROWSE` 버튼을 눌러 CPU 프로파일을 업로드하고 결과를 확인하세요.
+Node.js 인스펙터가 루트 폴더에 `vite-profile-0.cpuprofile`을 생성합니다. `--profile <name>` 또는 `--profile=<name>`을 전달하면 대신 `<name>.cpuprofile`에 저장할 수 있습니다. https://www.speedscope.app/ 에서 `BROWSE` 버튼을 눌러 CPU 프로파일을 업로드하고 결과를 확인하세요.
 
 [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect)를 설치하여 Vite 플러그인의 중간 상태를 점검하고 병목현상을 일으키는 플러그인 또는 미들웨어를 식별할 수 있습니다. 개발 및 프로덕션 빌드 둘 다 사용 가능합니다. 자세한 내용은 readme 파일을 확인하세요.
 

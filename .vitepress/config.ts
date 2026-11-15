@@ -8,9 +8,9 @@ import {
   groupIconVitePlugin,
 } from 'vitepress-plugin-group-icons'
 // @ts-ignore
-import markdownItCustomAnchor from './markdown-it-custom-anchor'
+import markdownItCustomAnchor from './markdown-it-custom-anchor/index.js'
 // @ts-ignore
-import renderPermalink from './render-permalink'
+import renderPermalink from './render-permalink/index.js'
 import markdownItFootnote from 'markdown-it-footnote'
 import { buildEnd } from './buildEnd.config.ts'
 
@@ -34,7 +34,7 @@ const deployType = (() => {
   }
 })()
 
-const viteVersion = '8.1.5'
+const viteVersion = '8.3.8'
 const viteMajorVersion = 8
 
 const versionLinks = ((): DefaultTheme.NavItemWithLink[] => {
