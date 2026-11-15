@@ -64,7 +64,7 @@ vite build [root]
 | `-w, --watch`                  | 디스크의 모듈이 변경되면 다시 빌드 (`boolean`)                                                                        |
 | `-c, --config <file>`          | 설정 파일 지정 (`string`)                                                                                             |
 | `--base <path>`                | `base` 옵션 위치 지정 (기본값: `/`) (`string`)                                                                        |
-| `-l, --logLevel <level>`       | Info \| warn \| error \| silent (`string`)                                                                            |
+| `-l, --logLevel <level>`       | info \| warn \| error \| silent (`string`)                                                                            |
 | `--clearScreen`                | 로깅 시 화면을 지우는 것을 허용/비허용 (`boolean`)                                                                    |
 | `--configLoader <loader>`      | Rolldown으로 설정을 번들링하려면 `bundle`을, 실시간으로 처리하려면 `runner`(실험적 기능)를, 네이티브 런타임으로 로드하려면 `native`(실험적 기능)를 사용 (기본값: `bundle`) |
 | `--profile [name]` | 내장 Node.js 인스펙터를 시작하고 프로파일을 `<name>.cpuprofile`에 저장합니다([성능 병목 현상](/guide/troubleshooting#performance-bottlenecks) 참고) (`boolean \| string`) |
@@ -95,7 +95,7 @@ vite optimize [root]
 | `--force`                 | 캐시를 무시하고 다시 번들링 (`boolean`)                                                                         |
 | `-c, --config <file>`     | 설정 파일 지정 (`string`)                                                                                       |
 | `--base <path>`           | `base` 옵션 위치 지정 (기본값: `/`) (`string`)                                                                  |
-| `-l, --logLevel <level>`  | Info \| warn \| error \| silent (`string`)                                                                      |
+| `-l, --logLevel <level>`  | info \| warn \| error \| silent (`string`)                                                                      |
 | `--clearScreen`           | 로깅 시 화면을 지우는 것을 허용/비허용 (`boolean`)                                                              |
 | `--configLoader <loader>` | Rolldown으로 설정을 번들링하려면 `bundle`을, 실시간으로 처리하려면 `runner`(실험적 기능)를, 네이티브 런타임으로 로드하려면 `native`(실험적 기능)를 사용 (기본값: `bundle`) |
 | `-d, --debug [feat]`      | 디버그 로그 표시 (`string \| boolean`)                                                                          |
@@ -126,7 +126,7 @@ vite preview [root]
 | `--outDir <dir>`          | 빌드 결과 디렉터리 지정 (기본값: `dist`) (`string`)                                                              |
 | `-c, --config <file>`     | 설정 파일 지정 (`string`)                                                                                       |
 | `--base <path>`           | `base` 옵션 위치 지정 (기본값: `/`) (`string`)                                                                  |
-| `-l, --logLevel <level>`  | Info \| warn \| error \| silent (`string`)                                                                      |
+| `-l, --logLevel <level>`  | info \| warn \| error \| silent (`string`)                                                                      |
 | `--clearScreen`           | 로깅 시 화면을 지우는 것을 허용/비허용 (`boolean`)                                                              |
 | `--configLoader <loader>` | Rolldown으로 설정을 번들링하려면 `bundle`을, 실시간으로 처리하려면 `runner`(실험적 기능)를, 네이티브 런타임으로 로드하려면 `native`(실험적 기능)를 사용 (기본값: `bundle`) |
 | `-d, --debug [feat]`      | 디버그 로그 표시 (`string \| boolean`)                                                                          |
