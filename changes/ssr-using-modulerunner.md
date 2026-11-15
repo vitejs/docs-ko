@@ -4,7 +4,7 @@
 [환경 API 피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 피드백을 남겨주세요.
 :::
 
-`server.ssrLoadModule`이 [ModuleRunner](/guide/api-environment#modulerunner)를 통한 임포트로 대체되었습니다.
+`server.ssrLoadModule`이 [ModuleRunner](/guide/api-environment-runtimes#modulerunner)를 통한 임포트로 대체되었습니다.
 
 영향을 받는 범위: `Vite 플러그인 개발자`
 

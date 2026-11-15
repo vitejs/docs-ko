@@ -9,11 +9,11 @@ HMR API 설정은 기본적으로 프레임워크나 Vite 지원 도구 원작�
 Vite는 HMR API 설정을 `import.meta.hot` 객체를 통해 노출합니다:
 
 ```ts twoslash
-import type { ModuleNamespace } from 'vite/types/hot.d.ts'
 import type {
   CustomEventName,
   InferCustomEventPayload,
 } from 'vite/types/customEvent.d.ts'
+import type { ModuleNamespace } from 'vite/types/hot.d.ts'
 
 // ---cut---
 interface ImportMeta {
@@ -187,7 +187,9 @@ if (import.meta.hot) {
 
 ## `hot.data` {#hot-data}
 
-`import.meta.hot.data` 객체는 같이 변경된 각기 다른 모듈들의 인스턴스들에서 지속됩니다. 해당 객체는 전 버전의 모듈 정보를 다음 버전의 모듈에게 전달할 수 있습니다.
+Vite는 모듈 경로마다 `import.meta.hot.data` 객체를 하나씩 생성합니다. 이 객체는 HMR 중 같은 모듈의 연속된 인스턴스에 걸쳐 유지됩니다. 모듈 실행 중이나 `hot.dispose`에 전달된 `data` 인자를 통해 변경한 내용은 다음 모듈 인스턴스에서도 확인할 수 있습니다.
+
+모듈이 정리되면 `hot.dispose`와 `hot.prune` 콜백은 현재 데이터 객체를 받습니다. Vite는 이 콜백들이 완료된 뒤 데이터를 지웁니다. 나중에 이 모듈을 다시 임포트하면 새로운 빈 데이터 객체를 받습니다.
 
 `data` 자체에 대한 재할당은 지원되지 않습니다. 이 대신 다른 핸들러에서 추가된 정보가 유지되도록 `data` 객체의 속성을 변경해야 합니다.
 

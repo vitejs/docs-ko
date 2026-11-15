@@ -30,7 +30,7 @@ vite --config my-config.js
 
 ## 인텔리센스 설정 {#config-intellisense}
 
-Vite는 TypeScript 타입을 포함하고 있기 때문에, jsdoc 힌트를 통해 IDE 인텔리센스를 활용할 수 있습니다:
+Vite는 TypeScript 타입을 포함하고 있기 때문에, JSDoc 힌트를 통해 IDE 인텔리센스를 활용할 수 있습니다:
 
 ```js
 /** @type {import('vite').UserConfig} */
@@ -39,7 +39,7 @@ export default {
 }
 ```
 
-또는, jsdoc 대신 `defineConfig` 도우미 함수를 통해 인텔리센스를 활용할 수 있습니다:
+또는, JSDoc 대신 `defineConfig` 도우미 함수를 통해 인텔리센스를 활용할 수 있습니다:
 
 ```js
 import { defineConfig } from 'vite'
@@ -128,9 +128,17 @@ export default defineConfig(({ mode }) => {
 })
 ```
 
-## VS Code에서 설정 파일 디버깅하기 {#debugging-the-config-file-on-vs-code}
+## VS Code에서 설정 파일 디버깅하기 {#debugging-the-config-file-in-vs-code}
 
-기본 설정인 `--configLoader bundle` 모드에서, Vite는 `node_modules/.vite-temp` 폴더에 임시 설정 파일을 작성합니다. 이 경우 중단점을 이용해 Vite 설정 파일을 디버깅하면 파일을 찾을 수 없다는 오류가 발생합니다. 이 문제는 다음과 같이 `.vscode/settings.json` 설정을 추가해 해결할 수 있습니다:
+안정적으로 디버깅하려면 Vite를 시작할 때 네이티브 설정 로더를 사용하세요:
+
+```bash
+vite --configLoader native
+```
+
+네이티브 로더는 원본 설정 파일을 직접 실행하므로, 설정 파일과 `transform` 같은 플러그인 훅의 중단점이 원본 소스에 대응합니다. TypeScript 파일을 위한 Node.js 22.18+처럼 설정 파일의 문법을 지원하는 런타임이 필요합니다.
+
+현재 기본값인 `--configLoader bundle`을 사용하면 Vite는 인라인 소스 맵을 생성하고, 번들링한 설정을 `node_modules/.vite-temp`에 작성한 뒤 로드합니다(`native`는 향후 메이저 버전에서 기본값이 될 예정입니다). 번들 로더를 사용해야 한다면 `.vscode/settings.json`에서 JavaScript 디버그 터미널에 임시 디렉터리를 추가하세요:
 
 ```json
 {
@@ -141,5 +149,29 @@ export default defineConfig(({ mode }) => {
       "**/node_modules/.vite-temp/**"
     ]
   }
+}
+```
+
+이 설정은 JavaScript 디버그 터미널에만 적용되며, 실행 및 디버그 뷰에서 시작한 실행 구성에는 영향을 주지 않습니다. 실행 및 디버그 뷰에서도 지원하려면 `.vscode/launch.json`에 임시 디렉터리를 추가하세요:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Vite",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["exec", "vite", "--configLoader", "bundle"],
+      "console": "integratedTerminal",
+      "sourceMaps": true,
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**",
+        "**/node_modules/.vite-temp/**"
+      ]
+    }
+  ]
 }
 ```

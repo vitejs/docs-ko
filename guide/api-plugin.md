@@ -43,8 +43,8 @@ Vite 전용 플러그인의 경우:
 프로젝트의 `devDependencies`에 플러그인을 추가한 뒤, Vite 설정 파일의 `plugins` 배열 옵션을 사용해 플러그인을 구성할 수 있습니다.
 
 ```js [vite.config.js]
-import vitePlugin from 'vite-plugin-feature'
 import rollupPlugin from 'rollup-plugin-feature'
+import vitePlugin from 'vite-plugin-feature'
 
 export default defineConfig({
   plugins: [vitePlugin(), rollupPlugin()],
@@ -336,6 +336,58 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
   })
   ```
 
+### `closeServer` {#closeserver}
+
+- **타입:** `(context: { reason: 'restart' | 'close' }) => void | Promise<void>`
+- **종류:** `async`, `parallel`
+- **범위:** [전역](/guide/api-environment-plugins#per-environment-hooks-and-global-hooks)
+
+  개발 서버가 재시작되거나 종료되어 정리된 뒤 호출됩니다. 일반적으로 [`configureServer`](/guide/api-plugin.html#configureserver)에서 생성한 리소스를 해제할 때 사용합니다.
+
+  `context.reason`으로 두 경우를 구분합니다:
+  - `'restart'`: 설정 파일 변경이나 `server.restart()` 호출 등으로 서버가 재시작됩니다.
+  - `'close'`: `q` 단축키나 `server.close()` 호출 등으로 서버가 종료됩니다.
+
+  ```js
+  const myPlugin = () => {
+    let resource
+    return {
+      name: 'close-server',
+      configureServer(server) {
+        resource = createResource()
+      },
+      async closeServer({ reason }) {
+        if (reason === 'close') {
+          await resource.dispose()
+        }
+      },
+    }
+  }
+  ```
+
+### `closePreviewServer` {#closepreviewserver}
+
+- **타입:** `() => void | Promise<void>`
+- **종류:** `async`, `parallel`
+- **범위:** [전역](/guide/api-environment-plugins#per-environment-hooks-and-global-hooks)
+
+  [`closeServer`](/guide/api-plugin.html#closeserver)와 같지만 프리뷰 서버를 대상으로 합니다. 프리뷰 서버는 재시작되지 않으므로 `reason`이 없습니다.
+
+  ```js
+  const myPlugin = () => {
+    let resource
+    return {
+      name: 'close-preview-server',
+      configurePreviewServer(server) {
+        resource = createResource()
+      },
+      async closePreviewServer() {
+        await resource.dispose()
+      },
+    }
+  }
+  ```
+
 ### `transformIndexHtml` {#transformindexhtml}
 
 - **타입:** `IndexHtmlTransformHook | { order?: 'pre' | 'post', handler: IndexHtmlTransformHook }`
@@ -381,7 +433,9 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
       originalUrl?: string
     },
   ) =>
-    IndexHtmlTransformResult | void | Promise<IndexHtmlTransformResult | void>
+    | IndexHtmlTransformResult
+    | void
+    | Promise<IndexHtmlTransformResult | void>
 
   type IndexHtmlTransformResult =
     | string
@@ -541,6 +595,33 @@ function outputMetadataPlugin(): Plugin {
     },
   }
 }
+```
+
+## 생성한 에셋 참조하기 {#referencing-emitted-assets}
+
+플러그인에서 에셋을 생성하려면 [`this.emitFile({ type: 'asset', ... })`](https://rolldown.rs/reference/Interface.PluginContext#in-depth-type-asset)를 호출하세요. 번들이 생성되기 전까지는 최종 파일 이름을 알 수 없으므로, 반환된 `referenceId`를 사용해 에셋 URL을 생성할 수 있습니다.
+
+### JavaScript에서 {#in-javascript}
+
+`import.meta.ROLLDOWN_FILE_URL_<referenceId>`를 사용하세요:
+
+```js
+const referenceId = this.emitFile({
+  type: 'asset',
+  name: 'icon.png',
+  source: fileContent,
+})
+
+// JavaScript 표현식이므로 쿼리나 해시는 문자열 연결로 추가합니다.
+return `export default import.meta.ROLLDOWN_FILE_URL_${referenceId} + '#frag'`
+```
+
+### CSS 또는 HTML에서 {#in-css-or-html}
+
+`import.meta.ROLLDOWN_FILE_URL_<referenceId>`는 JavaScript 표현식 위치에서만 동작합니다. CSS나 HTML에서는 대신 `__VITE_ASSET__<referenceId>__` 토큰을 사용하고, 쿼리나 해시를 바로 뒤에 추가하세요:
+
+```css
+background: url(__VITE_ASSET__<referenceId>__#frag);
 ```
 
 ## 플러그인 순서 {#plugin-ordering}

@@ -4,7 +4,7 @@
 [환경 API 피드백 논의](https://github.com/vitejs/vite/discussions/16358)에서 피드백을 남겨주세요.
 :::
 
-[환경 API](/guide/api-environment.md)를 인식하고 `create`와 `delete` 이벤트를 추가로 처리할 수 있도록, `handleHotUpdate` 플러그인 훅을 [`hotUpdate` 훅](/guide/api-environment#the-hotupdate-hook)으로 대체할 예정입니다.
+[환경 API](/guide/api-environment.md)를 인식하고 `create`와 `delete` 이벤트를 추가로 처리할 수 있도록, `handleHotUpdate` 플러그인 훅을 [`hotUpdate` 훅](/guide/api-environment-plugins#the-hotupdate-hook)으로 대체할 예정입니다.
 
 영향을 받는 범위: `Vite 플러그인 개발자`
 

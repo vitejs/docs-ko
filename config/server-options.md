@@ -160,6 +160,12 @@ export default defineConfig({
 })
 ```
 
+::: warning WebSocket의 오리진 검사
+
+Vite는 WebSocket 요청을 프록시하기 전에 오리진을 검사하지 않습니다. 프록시 대상에서 `Origin` 헤더 등을 검사해야 합니다. `rewriteWsOrigin` 옵션은 오리진을 대상 오리진으로 바꾸므로 오리진 검사를 우회한다는 점에 주의하세요.
+
+:::
+
 ## server.cors {#server-cors}
 
 - **타입:** `boolean | CorsOptions`
@@ -242,7 +248,7 @@ Direct websocket connection fallback. Check out https://vite.dev/config/server-o
 ## server.forwardConsole {#server-forwardconsole}
 
 - **타입:** `boolean | { unhandledErrors?: boolean, logLevels?: ('error' | 'warn' | 'info' | 'log' | 'debug')[] }`
-- **기본값:** 자동([`@vercel/detect-agent`](https://www.npmjs.com/package/@vercel/detect-agent)를 기반으로 AI 코딩 에이전트가 감지되면 `true`, 그렇지 않으면 `false`)
+- **기본값:** 자동([`std-env`](https://www.npmjs.com/package/std-env)를 기반으로 AI 코딩 에이전트가 감지되면 `true`, 그렇지 않으면 `false`)
 
 개발 중 브라우저 런타임 이벤트를 Vite 서버 콘솔로 전달합니다.
 
@@ -305,6 +311,8 @@ export default defineConfig({
 
 [chokidar](https://github.com/paulmillr/chokidar/tree/3.6.0#api)에 전달할 파일 시스템 감시자(Watcher) 옵션입니다.
 
+번들 개발 모드를 활성화하면 `usePolling`, `pollInterval`, `useDebounce`, `debounceDuration`, `include`, `exclude` 같은 [Rolldown 감시 옵션](https://rolldown.rs/reference/InputOptions.watch)도 사용할 수 있습니다. chokidar 전용 옵션은 chokidar 감시자에서 계속 사용하며, 이 감시자는 설정 파일의 디펜던시나 env 파일처럼 모듈 그래프에 속하지 않는 파일을 계속 감시합니다.
+
 Vite 서버 감시자는 기본적으로 `root`를 감시하며, `.git/`, `node_modules/`, `test-results/`, 그리고 Vite의 `cacheDir` 및 `build.outDir` 디렉터리는 건너뜁니다. 감시하는 파일이 업데이트되면, Vite는 필요한 경우에만 HMR을 적용하고 페이지를 업데이트합니다.
 
 `null`로 설정하면 파일을 감시하지 않습니다. [`server.watcher`](/guide/api-javascript.html#vitedevserver)는 호환되는 이벤트 이미터를 제공하지만, `add` 또는 `unwatch`를 호출해도 아무런 효과가 없습니다.
@@ -330,10 +338,12 @@ WSL2에서 Vite를 실행할 때, WSL2가 아닌 타 Windows 응용 프로그램
 
 ## server.middlewareMode {#server-middlewaremode}
 
-- **타입:** `boolean`
+- **타입:** `boolean | { server: http.Server }`
 - **기본값:** `false`
 
 미들웨어 모드로 Vite 서버를 생성합니다.
+
+[프록시](./server-options#server-proxy)가 WebSocket을 사용하도록 설정되어 있다면 프록시를 올바르게 연결하도록 `server`를 지정해야 합니다.
 
 - **관련 항목:** [appType](./shared-options#apptype), [SSR - 개발 서버 구성하기](/guide/ssr#setting-up-the-dev-server)
 
@@ -463,7 +473,7 @@ export default defineConfig({
 
 서버 소스 맵에서 소스 파일을 무시할지 여부로, [`x_google_ignoreList` 소스 맵 확장](https://developer.chrome.com/articles/x-google-ignore-list/) 필드를 채워 넣는 데 사용됩니다.
 
-`server.sourcemapIgnoreList`는 개발 서버에 대한 [`build.rolldownOptions.output.sourcemapIgnoreList`](https://rollupjs.org/configuration-options/#output-sourcemapignorelist)와 동일합니다. 두 구성 옵션 사이의 차이점은 `sourcePath`에 대한 상대 경로로 rollup 함수가 호출되는 동안 `server.sourcemapIgnoreList`는 절대 경로로 호출된다는 것입니다. 개발 중에 대부분의 모듈은 맵과 소스가 동일한 폴더에 있으므로 `sourcePath`에 대한 상대 경로는 파일 이름 자체입니다. 이러한 경우 절대 경로를 사용하면 편리합니다.
+`server.sourcemapIgnoreList`는 개발 서버에서 [`build.rolldownOptions.output.sourcemapIgnoreList`](https://rolldown.rs/reference/OutputOptions.sourcemapIgnoreList)에 해당합니다. 두 옵션의 차이는 Rolldown 함수가 `sourcePath`의 상대 경로로 호출되는 반면, `server.sourcemapIgnoreList`는 절대 경로로 호출된다는 점입니다. 개발 중에는 대부분의 모듈에서 맵과 소스가 같은 폴더에 있으므로, `sourcePath`의 상대 경로가 파일 이름 자체입니다. 이런 경우에는 절대 경로를 사용하면 편리합니다.
 
 기본적으로 경로 세그먼트로 `node_modules`가 포함된 경로를 모두 제외합니다. 이 동작을 비활성화하려면 `false`를 전달하거나, 전체 제어를 위해 소스 경로와 소스 맵 경로를 받아 소스 경로를 무시할지 여부를 반환하는 함수를 전달할 수 있습니다.
 
@@ -480,5 +490,5 @@ export default defineConfig({
 ```
 
 ::: tip 참고
-[`server.sourcemapIgnoreList`](#server-sourcemapignorelist)와 [`build.rolldownOptions.output.sourcemapIgnoreList`](https://rollupjs.org/configuration-options/#output-sourcemapignorelist)는 독립적으로 설정해야 합니다. `server.sourcemapIgnoreList`는 서버 전용 구성이며 정의된 rollup 옵션에서 기본값을 가져오지 않습니다.
+[`server.sourcemapIgnoreList`](#server-sourcemapignorelist)와 [`build.rolldownOptions.output.sourcemapIgnoreList`](https://rolldown.rs/reference/OutputOptions.sourcemapIgnoreList)는 독립적으로 설정해야 합니다. `server.sourcemapIgnoreList`는 서버 전용 구성이며 정의된 Rolldown 옵션에서 기본값을 가져오지 않습니다.
 :::
