@@ -459,9 +459,9 @@ Vite의 플러그인은 Vite 전용 훅을 사용할 수 있습니다. 물론 �
   }
   ```
 
-::: warning 참고
-이 훅은 진입점이 되는 파일을 커스텀 처리하는 프레임워크(예: [SvelteKit](https://github.com/sveltejs/kit/discussions/8269#discussioncomment-4509145))를 사용하는 경우 호출되지 않습니다.
-:::
+  ::: warning 참고
+  이 훅은 진입점이 되는 파일을 커스텀 처리하는 프레임워크(예: [SvelteKit](https://github.com/sveltejs/kit/discussions/8269#discussioncomment-4509145))를 사용하는 경우 호출되지 않습니다.
+  :::
 
 ### `handleHotUpdate` {#handlehotupdate}
 
