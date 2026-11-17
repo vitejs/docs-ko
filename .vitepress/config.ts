@@ -550,7 +550,7 @@ const config = defineConfig({
         twoslashOptions: {
           compilerOptions: {
             moduleResolution: 100, // bundler
-            ignoreDeprecations: '5.0', // remove the options entirely when twoslash doesn't set `baseUrl`
+            ignoreDeprecations: '6.0', // remove the options entirely when twoslash doesn't set `baseUrl`
           },
         },
       }),
