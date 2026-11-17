@@ -2,7 +2,7 @@
 
 기본적으로 vite는 여타 정적 파일 서버와 크게 다르지 않습니다. 다만, vite는 네이티브 ESM 말고도 기존 번들러에서 제공하던 기능을 대부분 지원한다는 차이점이 있습니다.
 
-## npm을 이용한 디펜던시 임포트 그리고 사전 번들링 {#npm-dependency-resolving-and-pre-building}
+## npm을 이용한 디펜던시 임포트 그리고 사전 번들링 {#npm-dependency-resolving-and-pre-bundling}
 
 다음 코드는 네이티브 ES에서 정상적으로 실행되지 않습니다:
 
@@ -320,7 +320,8 @@ vite는 모던 브라우저만을 타깃으로 하기에, 표준을 준수하도
 
 ```bash
 # .scss 및 .sass
-npm add -D sass-embedded # 또는 sass
+npm add -D sass-embedded # 성능을 위해 권장
+npm add -D sass # 플랫폼이 지원되지 않는 경우
 
 # .less
 npm add -D less
@@ -655,7 +656,7 @@ const module = await import(`./dir/${file}.js`)
 
 동적 임포트가 번들링되려면 다음 규칙도 충족해야 합니다:
 
-- 임포트는 `./` 또는 `../`로 시작해야 합니다. ``import(`./dir/${foo}.js`)``는 유효하지만, ``import(`${foo}.js`)``는 유효하지 않습니다.
+- 임포트는 `./`, `../` 또는 `#`로 시작해야 합니다. ``import(`./dir/${foo}.js`)``는 유효하지만, ``import(`${foo}.js`)``는 유효하지 않습니다.
 - 임포트는 파일 확장자로 끝나야 합니다. ``import(`./dir/${foo}.js`)``는 유효하지만, ``import(`./dir/${foo}`)``는 유효하지 않습니다.
 - 자기 디렉터리로 임포트하는 경우 파일 이름 패턴을 지정해야 합니다. ``import(`./prefix-${foo}.js`)``는 유효하지만, ``import(`./${foo}.js`)``는 유효하지 않습니다.
 
@@ -720,7 +721,7 @@ init({
 })
 ```
 
-프로덕션 빌드에서는 `assetInlineLimit`보다 작은 `.wasm` 파일이 Base64 문자열로 인라인됩니다. 그렇지 않으면 [정적 에셋](./assets)으로 처리되어 필요할 때 가져옵니다.
+프로덕션 빌드에서는 `assetsInlineLimit`보다 작은 `.wasm` 파일이 Base64 문자열로 인라인됩니다. 그렇지 않으면 [정적 에셋](./assets)으로 처리되어 필요할 때 가져옵니다.
 
 ::: warning SSR 빌드에서는 Node.js 호환 런타임만 지원됩니다
 

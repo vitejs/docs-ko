@@ -22,9 +22,9 @@ Vite는 합리적인 기본 설정을 제공합니다. [기능 가이드](./feat
 
 ## 지원하는 브라우저 {#browser-support}
 
-개발 중 Vite는 모던 브라우저가 사용된다고 가정합니다. 이는 브라우저가 최신 JavaScript와 CSS 기능 대부분을 지원한다는 뜻입니다. 따라서 Vite는 [변환 타깃을 `esnext`로 설정](https://oxc.rs/docs/guide/usage/transformer/lowering.html#target)합니다. 이렇게 하면 문법 다운레벨링을 피하고, Vite가 원본 소스 코드에 최대한 가까운 형태로 모듈을 제공할 수 있습니다. Vite는 개발 서버가 동작하도록 일부 런타임 코드를 주입합니다. 이 코드는 각 메이저 릴리스 시점(이번 메이저는 2026-01-01)에 [Baseline](https://web-platform-dx.github.io/web-features/) Newly Available에 포함된 기능을 사용합니다.
+개발 중 Vite는 모던 브라우저가 사용된다고 가정합니다. 이는 브라우저가 최신 JavaScript와 CSS 기능 대부분을 지원한다는 뜻입니다. 따라서 Vite는 [변환 타깃을 `esnext`로 설정](https://oxc.rs/docs/guide/usage/transformer/lowering.html#target)합니다. 이렇게 하면 문법 다운레벨링을 피하고, Vite가 원본 소스 코드에 최대한 가까운 형태로 모듈을 제공할 수 있습니다. Vite는 개발 서버가 동작하도록 일부 런타임 코드를 주입합니다. 이 코드는 각 메이저 릴리스 시점(이번 메이저는 2026-01-01)에 [Baseline](https://web-platform-dx.github.io/baseline/) Newly Available에 포함된 기능을 사용합니다.
 
-프로덕션 빌드의 경우, Vite는 기본적으로 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available 브라우저를 타깃으로 합니다. 최소 2.5년 이전에 릴리스된 브라우저들을 의미합니다. 이 타깃은 설정을 통해 더 낮출 수 있으며, 레거시 브라우저는 공식 플러그인인 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)를 통해 지원이 가능합니다. 이에 대한 더 자세한 내용은 [프로덕션 빌드](./build) 섹션을 참고해 주세요.
+프로덕션 빌드의 경우, Vite는 기본적으로 각 메이저 릴리스에서 정한 날짜를 기준으로 [Baseline](https://web-platform-dx.github.io/baseline/) Widely Available 브라우저 버전을 타깃으로 합니다. 이번 메이저 버전에서는 [2023년 중반 무렵에 릴리스된 브라우저 버전](https://web-platform-dx.github.io/supported-browsers/?widelyAvailableOnDate=2026-01-01)에 해당합니다. 이 타깃은 설정을 통해 더 낮출 수 있으며, 레거시 브라우저는 공식 플러그인인 [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)를 통해 지원할 수 있습니다. 자세한 내용은 [프로덕션 빌드](./build) 섹션을 참고해 주세요.
 
 ## 온라인에서 Vite 체험해보기 {#trying-vite-online}
 
@@ -106,7 +106,7 @@ $ deno init --npm vite my-vue-app --template vue
 
 :::
 
-지원되는 각 템플릿에 대한 자세한 내용은 [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)를 참고해 주세요: `vanilla`, `vanilla-ts`, `vue`, `vue-ts`, `react`, `react-ts`, `preact`, `preact-ts`, `lit`, `lit-ts`, `svelte`, `svelte-ts`, `solid`, `solid-ts`, `qwik`, `qwik-ts`.
+지원되는 각 템플릿에 대한 자세한 내용은 [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)를 참고해 주세요: `vanilla`, `vanilla-ts`, `vue`, `vue-ts`, `react`, `react-compiler`, `react-ts`, `react-compiler-ts`, `preact`, `preact-ts`, `lit`, `lit-ts`, `svelte`, `svelte-ts`, `solid`, `solid-ts`, `qwik`, `qwik-ts`.
 
 현재 디렉터리에 프로젝트를 생성하려면 프로젝트 이름으로 `.`을 사용하세요.
 

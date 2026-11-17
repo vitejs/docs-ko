@@ -242,6 +242,8 @@ export default defineConfig({
 })
 ```
 
+`applyToEnvironment`나 `perEnvironmentPlugin`이 반환하는 플러그인은 Vite 전용 훅을 사용하면 안 됩니다.
+
 `applyToEnvironment` 훅은 설정 시점에 호출되며, 현재는 생태계의 프로젝트들이 플러그인을 수정하기 때문에 `configResolved` 이후에 호출됩니다. 환경 플러그인 해석은 향후 `configResolved` 이전으로 이동될 수 있습니다.
 
 ## 애플리케이션-플러그인 통신 {#application-plugin-communication}

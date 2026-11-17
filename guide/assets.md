@@ -26,7 +26,7 @@ Webpack의 `file-loader`와 비슷한데, 하나 차이점이 있다면 Vite는 
 
 - 참조된 에셋은 빌드 에셋 그래프의 일부 요소로 포함되며, 파일 이름이 해싱되거나 최적화를 위해 플러그인으로 처리될 수 있습니다.
 
-- [`assetsInlineLimit` 옵션](/config/shared-options.md#assetsinlinelimit)의 값보다 작은 에셋 파일의 경우, Base64 포맷의 데이터 URL 문자열로 가져옵니다.
+- [`assetsInlineLimit` 옵션](/config/build-options.md#build-assetsinlinelimit)의 값보다 작은 에셋 파일의 경우, Base64 포맷의 데이터 URL 문자열로 가져옵니다.
 
 - Git LFS 자리 표시자는 파일 내용을 포함하지 않기에 인라인에서 자동으로 제외됩니다. 만약 이 역시 인라인에 포함하고자 한다면 빌드하기 전 Git LFS를 통해 파일을 다운로드해주세요.
 
@@ -62,6 +62,7 @@ CSS.paintWorklet.addModule(workletURL)
 ```js twoslash
 import 'vite/client'
 // ---cut---
+// prettier-ignore
 import imgUrl1 from './img.svg?no-inline'
 import imgUrl2 from './img.png?inline'
 ```
@@ -78,7 +79,7 @@ import shaderString from './shader.glsl?raw'
 
 ### 스크립트를 Worker로 가져오기 {#importing-script-as-a-worker}
 
-스크립트는 웹 워커로 가져올 수 있는데, 이 때는 `?worker` 접미사를 이용합니다.
+스크립트는 웹 워커로 가져올 수 있는데, 이때는 `?worker` 또는 `?sharedworker` 접미사를 이용합니다.
 
 ```js twoslash
 import 'vite/client'

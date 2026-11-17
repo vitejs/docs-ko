@@ -6,7 +6,7 @@
 
 ## 브라우저 호환성 {#browser-compatibility}
 
-기본적으로 프로덕션 번들은 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available 타깃에 포함된 모던 브라우저를 가정합니다. 기본 브라우저 지원 범위는 다음과 같습니다:
+기본적으로 프로덕션 번들은 각 메이저 릴리스에서 정한 날짜를 기준으로 [Baseline](https://web-platform-dx.github.io/baseline/) Widely Available과 호환되는 최소 브라우저 버전을 타깃으로 합니다. 이번 메이저 버전의 기본 브라우저 지원 범위는 다음과 같습니다:
 
 <!-- 자세한 내용은 `ESBUILD_BASELINE_WIDELY_AVAILABLE_TARGET` 상수를 검색해 주세요 -->
 
@@ -86,7 +86,7 @@ window.addEventListener('vite:preloadError', (event) => {
 
 ## 파일 변경 시 다시 빌드하기 {#rebuild-on-files-changes}
 
-`vite build --watch`로 watcher를 활성화할 수 있습니다. 또는 `build.watch`를 통해 내부 [`WatcherOptions`](https://rolldown.rs/reference/InputOptions.watch)를 직접 조정할 수 있습니다:
+`vite build --watch`로 Rolldown 감시자를 활성화할 수 있습니다. 또는 `build.watch`를 통해 내부 [`WatcherOptions`](https://rolldown.rs/reference/InputOptions.watch)를 직접 조정할 수 있습니다:
 
 ```js [vite.config.js]
 export default defineConfig({
@@ -119,7 +119,7 @@ export default defineConfig({
 빌드 중에는 여러 `.html` 파일을 진입점으로 지정하기만 하면 됩니다:
 
 ```js twoslash [vite.config.js]
-import { dirname, resolve } from 'node:path'
+import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -143,7 +143,7 @@ HTML 파일의 경우 Vite는 `rolldownOptions.input` 객체에서 진입점에 
 ::: code-group
 
 ```js twoslash [vite.config.js (single entry)]
-import { dirname, resolve } from 'node:path'
+import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -171,7 +171,7 @@ export default defineConfig({
 ```
 
 ```js twoslash [vite.config.js (multiple entries)]
-import { dirname, resolve } from 'node:path'
+import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -204,8 +204,8 @@ export default defineConfig({
 진입 파일은 패키지 사용자가 임포트할 수 있는 익스포트를 포함하게 됩니다:
 
 ```js [lib/main.js]
-import Foo from './Foo.vue'
 import Bar from './Bar.vue'
+import Foo from './Foo.vue'
 export { Foo, Bar }
 ```
 
@@ -336,8 +336,8 @@ experimental: {
 해시 에셋과 public 파일이 함께 배포되지 않는다면, 함수에 전달되는 두 번째 `context` 매개변수에 포함된 에셋 `type`을 사용해 각 그룹의 옵션을 독립적으로 정의할 수 있습니다.
 
 ```ts twoslash
-import type { UserConfig } from 'vite'
 import path from 'node:path'
+import type { UserConfig } from 'vite'
 // prettier-ignore
 const config: UserConfig = {
 // ---cut-before---

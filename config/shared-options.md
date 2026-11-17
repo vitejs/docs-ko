@@ -298,7 +298,8 @@ export default defineConfig({
     globalModulePaths?: RegExp[]
     exportGlobals?: boolean
     generateScopedName?:
-      string | ((name: string, filename: string, css: string) => string)
+      | string
+      | ((name: string, filename: string, css: string) => string)
     hashPrefix?: string
     /**
      * 기본값: undefined
@@ -647,7 +648,7 @@ export default defineConfig({
 
 - **타입:** `string`
 
-Vite에서 사용할 TypeScript 설정 파일의 경로입니다. 상대 경로는 프로젝트 [`루트(root)`](#root) 기준으로 해석됩니다.
+Vite에서 사용할 TypeScript 설정 파일의 경로입니다. 상대 경로는 프로젝트 [루트(`root`)](#root) 기준으로 해석됩니다.
 
 이 옵션을 설정하지 않으면 Vite는 각 파일에 대해 가장 가까운 일치하는 `tsconfig.json`을 자동으로 검색합니다. 자세한 내용은 [타입스크립트 컴파일러 옵션](/guide/features#typescript-compiler-options)을 참고하세요.
 

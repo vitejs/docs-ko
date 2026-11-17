@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import VersionsList from './VersionsList.vue'
 
 declare const __VITE_VERSION__: string
 
@@ -86,15 +87,6 @@ function computeSupportInfo(
   }
 }
 
-function versionsToText(versions: string[]) {
-  versions = versions.map((v) => `<code>vite@${v}</code>`)
-  if (versions.length === 0) return ''
-  if (versions.length === 1) return versions[0]
-  return (
-    versions.slice(0, -1).join(', ') + ' 및 ' + versions[versions.length - 1]
-  )
-}
-
 function isValidViteVersion(version: string) {
   if (version.length === 1) version += '.'
   // Vite 0.x shouldn't be mentioned, and Vite 1.x was never released
@@ -108,18 +100,15 @@ function isValidViteVersion(version: string) {
     <ul>
       <li v-if="supportInfo.regularPatches.length">
         정기 패치는
-        <span v-html="versionsToText(supportInfo.regularPatches)"></span>
-        대상으로 릴리스됩니다.
+        <VersionsList :versions="supportInfo.regularPatches" /> 대상으로 릴리스됩니다.
       </li>
       <li v-if="supportInfo.importantFixes.length">
         중요한 수정 사항과 보안 패치는
-        <span v-html="versionsToText(supportInfo.importantFixes)"></span>
-        대상으로 백포트됩니다.
+        <VersionsList :versions="supportInfo.importantFixes" /> 대상으로 백포트됩니다.
       </li>
       <li v-if="supportInfo.securityPatches.length">
         보안 패치는
-        <span v-html="versionsToText(supportInfo.securityPatches)"></span>
-        대상으로도 백포트됩니다.
+        <VersionsList :versions="supportInfo.securityPatches" /> 대상으로도 백포트됩니다.
       </li>
       <li>
         이보다 이전 버전은 더 이상 지원되지 않습니다. 업데이트를 받으려면

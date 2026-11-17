@@ -18,7 +18,7 @@ Vite의 내부 및 공식 플러그인은 가능한 최소한의 작업을 수�
 
 그러나 커뮤니티 플러그인의 성능은 Vite가 통제할 수 없으며 이로 인해 개발자 경험에 영향을 줄 수 있습니다. 아래는 추가적인 Vite 플러그인을 사용할 때 주의해야 할 몇 가지 사항입니다:
 
-1. 특정 상황에서만 사용되는 대형 디펜던시는 Node.js 시작 시간을 줄이기 위해 동적으로 임포트되어야 합니다. 예시: [vite-plugin-react#212](https://github.com/vitejs/vite-plugin-react/pull/212) 및 [vite-plugin-pwa#224](https://github.com/vite-pwa/vite-plugin-pwa/pull/244).
+1. 특정 상황에서만 사용되는 대형 디펜던시는 Node.js 시작 시간을 줄이기 위해 동적으로 임포트되어야 합니다. 예시: [vite-plugin-react#212](https://github.com/vitejs/vite-plugin-react/pull/212) 및 [vite-plugin-pwa#244](https://github.com/vite-pwa/vite-plugin-pwa/pull/244).
 
 2. `buildStart`, `config`, `configResolved` 훅은 길고 복잡한 작업을 수행해서는 안 됩니다. 이 훅들은 개발 서버가 시작되는 동안 기다려야 하므로, 브라우저에서 사이트에 접근할 수 있는 시간이 지연됩니다.
 

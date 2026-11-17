@@ -159,7 +159,7 @@ interface ImportMeta {
 
 :::
 
-## HTML 내 상수 치환 {#html-env-replacement}
+## HTML 내 상수 치환 {#html-constant-replacement}
 
 Vite는 HTML 파일에서 상수를 치환하는 기능도 지원합니다. `import.meta.env`의 모든 속성은 특수한 `%CONST_NAME%` 구문을 통해 HTML 파일에서도 사용할 수 있습니다.
 

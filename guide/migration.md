@@ -11,7 +11,7 @@ Vite v6 및 v7을 위해 Rolldown이 통합된 Vite 기술 프리뷰 릴리스�
 - Firefox 104 → 114
 - Safari 16.0 → 16.4
 
-이 브라우저 버전들은 2026-01-01 기준 [Baseline Widely Available](https://web-platform-dx.github.io/web-features/) 기능 세트와 일치합니다. 즉, 모두 약 2년 반 전에 릴리스된 버전입니다.
+이 브라우저 버전들은 2026-01-01 기준 [Baseline Widely Available](https://web-platform-dx.github.io/baseline/) 기능 세트와 일치합니다. 즉, 모두 약 2년 반 전에 릴리스된 버전입니다.
 
 ## Rolldown {#rolldown}
 
@@ -129,8 +129,8 @@ $ deno add -D npm:@rolldown/plugin-babel npm:@babel/plugin-proposal-decorators
 :::
 
 ```ts [vite.config.ts]
-import { defineConfig } from 'vite'
 import babel from '@rolldown/plugin-babel'
+import { defineConfig } from 'vite'
 
 function decoratorPreset(options: Record<string, unknown>) {
   return {
@@ -178,6 +178,7 @@ $ deno add -D npm:@rollup/plugin-swc npm:@swc/core
 :::
 
 ```js
+import swc from '@rollup/plugin-swc'
 import { defineConfig, withFilter } from 'vite'
 
 export default defineConfig({
@@ -234,7 +235,7 @@ CommonJS(CJS) 모듈의 `default` 임포트가 이제 일관된 방식으로 처
 
 - 임포터가 `.mjs` 또는 `.mts`입니다.
 - 임포터에 가장 가까운 `package.json`의 `type` 필드가 `module`로 설정되어 있습니다.
-- 임포트 대상 CJS 모듈의 `module.exports.__esModule` 값이 true로 설정되어 있지 않습니다.
+- 임포트 대상 CJS 모듈의 `module.exports.__esModule` 값이 `true`로 설정되어 있지 않습니다.
 
 ::: details 이전 동작
 
@@ -242,11 +243,11 @@ CommonJS(CJS) 모듈의 `default` 임포트가 이제 일관된 방식으로 처
 
 - _임포터가 디펜던시 최적화에 포함되어 있고_ `.mjs` 또는 `.mts`입니다.
 - _임포터가 디펜던시 최적화에 포함되어 있고_ 임포터에 가장 가까운 `package.json`의 `type` 필드가 `module`로 설정되어 있습니다.
-- 임포트 대상 CJS 모듈의 `module.exports.__esModule` 값이 true로 설정되어 있지 않습니다.
+- 임포트 대상 CJS 모듈의 `module.exports.__esModule` 값이 `true`로 설정되어 있지 않습니다.
 
 빌드에서는 조건이 다음과 같았습니다:
 
-- 임포트 대상 CJS 모듈의 `module.exports.__esModule` 값이 true로 설정되어 있지 않습니다.
+- 임포트 대상 CJS 모듈의 `module.exports.__esModule` 값이 `true`로 설정되어 있지 않습니다.
 - _`module.exports`의 `default` 프로퍼티가 존재하지 않습니다_.
 
 ([`build.commonjsOptions.defaultIsModuleExports`](https://github.com/rollup/plugins/tree/master/packages/commonjs#defaultismoduleexports)가 기본값 `'auto'`에서 변경되지 않았다고 가정)
@@ -365,7 +366,7 @@ const plugin = {
 - 동일한 브라우저를 여러 버전으로 `build.target` 옵션에 전달하면 이제 오류가 발생합니다. esbuild는 그중 최신 버전을 선택했지만, 이는 의도한 동작이 아니었을 가능성이 큽니다.
 - Rolldown의 미지원 항목: 다음 기능은 Rolldown에서 지원되지 않으며 Vite에서도 더 이상 지원되지 않습니다.
   - `build.rollupOptions.output.format: 'system'` ([rolldown#2387](https://github.com/rolldown/rolldown/issues/2387))
-  - `build.rollupOptions.output.format: 'amd'` ([rolldown#2387](https://github.com/rolldown/rolldown/issues/2528))
+  - `build.rollupOptions.output.format: 'amd'` ([rolldown#2528](https://github.com/rolldown/rolldown/issues/2528))
   - `shouldTransformCachedModule` 훅 ([rolldown#4389](https://github.com/rolldown/rolldown/issues/4389))
   - `resolveImportMeta` 훅 ([rolldown#1010](https://github.com/rolldown/rolldown/issues/1010))
   - `renderDynamicImport` 훅 ([rolldown#4532](https://github.com/rolldown/rolldown/issues/4532))

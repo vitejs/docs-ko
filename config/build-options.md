@@ -8,7 +8,7 @@
 - **기본값:** `'baseline-widely-available'`
 - **관련 항목:** [브라우저 지원 현황](/guide/build#browser-compatibility)
 
-최종 번들에 대한 브라우저 호환성 타깃입니다. 기본값은 Vite 전용 값인 `'baseline-widely-available'`로, 2026-01-01에 [Baseline](https://web-platform-dx.github.io/web-features/) Widely Available에 포함된 브라우저를 타깃으로 합니다. 구체적으로는 `['chrome111', 'edge111', 'firefox114', 'safari16.4', 'ios16.4']`입니다.
+최종 번들의 브라우저 호환성 타깃입니다. 기본값은 Vite 전용 값인 `'baseline-widely-available'`로, 각 메이저 릴리스에서 정한 날짜를 기준으로 [Baseline](https://web-platform-dx.github.io/baseline/) Widely Available과 호환되는 최소 브라우저 버전을 타깃으로 합니다([이번 메이저 버전은 2026-01-01 기준](https://web-platform-dx.github.io/supported-browsers/?widelyAvailableOnDate=2026-01-01)). 구체적으로는 `['chrome111', 'edge111', 'firefox114', 'safari16.4', 'ios16.4']`입니다.
 
 또 다른 특수 값인 `'esnext'`는 네이티브 동적 임포트 지원을 전제로 하며 트랜스파일링을 최소한만 수행합니다.
 
@@ -123,8 +123,10 @@ CSS 코드 분할을 활성화/비활성화합니다. 활성화된 경우 비동
 
 이 옵션을 사용하면 CSS 축소 시 타깃이 되는 브라우저를 설정할 수 있습니다.
 
-일반적으로 비주류 브라우저를 대상으로 하는 경우에만 사용되며, Android WeChat WebView를 예로 들 수 있습니다.
-이 브라우저는 대부분의 최신 JavaScript 문법을 지원하지만 [16진수 CSS 색상 표기법인 `#RGBA`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb_colors)를 지원하지 않습니다.
+`build.cssMinify`가 기본값인 `'lightningcss'`일 때는, 축소화 단계에서 이 옵션이 [`css.lightningcss.targets`](./shared-options.md#css-lightningcss)보다 우선합니다.
+
+비주류 브라우저를 대상으로 하는 경우에만 사용해야 합니다.
+Android WeChat WebView를 예로 들 수 있습니다. 이 브라우저는 대부분의 최신 JavaScript 문법을 지원하지만 [16진수 CSS 색상 표기법인 `#RGBA`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb_colors)를 지원하지 않습니다.
 이런 경우, Vite가 `rgba()` 색상을 `#RGBA` 16진수 표기법으로 변환하지 않도록 `build.cssTarget`을 `chrome61`로 설정해야 합니다.
 
 ## build.cssMinify {#build-cssminify}
@@ -366,7 +368,7 @@ gzip 압축 크기 리포트를 활성화/비활성화합니다. 큰 출력 파�
 - **타입:** [`WatcherOptions`](https://rolldown.rs/reference/InputOptions.watch)`| null`
 - **기본값:** `null`
 
-Rollup 감시자를 사용하려면 `{}`로 설정하세요. 이는 대부분 빌드 전용 플러그인 또는 통합 프로세스를 포함하는 경우에 사용됩니다.
+Rolldown 감시자를 사용하려면 `{}`로 설정하세요. 이는 대부분 빌드 전용 플러그인 또는 통합 프로세스를 포함하는 경우에 사용됩니다.
 
 ::: warning Windows Subsystem for Linux (WSL) 2 에서 Vite 사용하기
 
