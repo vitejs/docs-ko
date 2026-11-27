@@ -28,8 +28,8 @@
     "vite": "^8.3.8",
     "vitepress": "^2.0.0-alpha.21",
     "vitepress-plugin-graphviz": "^0.1.0",
-    "vitepress-plugin-group-icons": "^1.8.1",
-    "vue": "^3.5.45"
+    "vitepress-plugin-group-icons": "^1.8.2",
+    "vue": "^3.5.46"
   },
   "scripts": {
     "dev": "vitepress dev",

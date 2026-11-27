@@ -402,13 +402,15 @@ CSS 전처리기가 사용할 수 있는 최대 스레드 수를 지정합니다
 
 전처리기 옵션에 따라, 이 옵션이 `0`으로 설정되지 않았더라도 Vite가 메인 스레드에서 전처리기를 실행할 수 있습니다.
 
-## css.devSourcemap {#css-devsourcemap}
+## dev.sourcemap {#dev-sourcemap}
 
-- **실험적 기능:** [이 곳에 피드백을 남겨주세요](https://github.com/vitejs/vite/discussions/13845)
-- **타입:** `boolean`
-- **기본값:** `false`
+- **실험적 기능:** [`dev.sourcemap.css`에 대한 피드백 남기기](https://github.com/vitejs/vite/discussions/13845)
+- **타입:** `boolean | { js?: boolean; css?: boolean }`
+- **기본값:** `{ js: true, css: false }`
 
-개발 중 CSS 소스 맵을 활성화할지 여부를 나타냅니다.
+개발 중 소스 맵을 사용할지 설정합니다.
+
+`dev.sourcemap`에 `boolean` 값을 지정하면 JS와 CSS 모두에 적용됩니다.
 
 ## css.transformer {#css-transformer}
 
