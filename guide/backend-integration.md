@@ -162,6 +162,14 @@
       */
      isDynamicEntry?: boolean
      /**
+      * 이 청크가 웹 워커 번들에 속하는지 나타냅니다.
+      */
+     isWorker?: boolean
+     /**
+      * 이 청크가 웹 워커 번들의 진입점인지 나타냅니다.
+      */
+     isWorkerEntry?: boolean
+     /**
       * 이 청크가 정적으로 임포트하는 청크 목록
       *
       * 값은 매니페스트의 키입니다. 이 필드는 JS 청크에만 있습니다.
@@ -180,6 +188,7 @@
    - **진입 청크**: [`build.rolldownOptions.input`](https://rolldown.rs/reference/InputOptions.input#input)에 지정된 파일에서 생성됩니다. 이러한 청크는 `isEntry: true`를 가지며, 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
    - **동적 진입 청크**: 동적 가져오기에서 생성됩니다. 이러한 청크는 `isDynamicEntry: true`를 가지며, 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
    - **비진입(Non-entry) 청크**: 생성된 파일 이름에 `_` 접두사를 붙여 키로 사용합니다.
+   - **워커 청크**: 임포트한 웹 워커에서 생성됩니다. 워커 청크에는 `isWorker: true`가 설정되고, 워커 진입점에는 `isWorkerEntry: true`도 설정됩니다. 키는 생성된 파일 이름에 `_worker_` 접두사를 붙인 값입니다.
    - **에셋 청크**: 이미지나 폰트와 같은 에셋에서 생성됩니다. 키는 프로젝트 루트 기준 상대적인 src 경로입니다.
    - **CSS 파일**: [`build.cssCodeSplit`](/config/build-options.md#build-csscodesplit)이 `false`인 경우, `style.css` 키로 단일 CSS 파일이 생성됩니다. `build.cssCodeSplit`이 `false`가 아닌 경우, 키는 JS 청크와 유사하게 생성됩니다(즉, 진입 청크는 `_` 접두사가 없고 비진입 청크는 `_` 접두사가 있음).
 

@@ -50,6 +50,8 @@ JS에서 임포트한 에셋 URL, CSS `url()` 참조, `.html` 파일의 에셋 �
 
 :::
 
+IIFE나 UMD 같은 형식으로 브라우저용 번들을 빌드하면, Vite는 상대 에셋 URL을 해석할 때 `document.baseURI`를 대체 기준 URL로 사용할 수 있습니다. 따라서 HTML의 `<base href>`에 따라 에셋 URL이 가리키는 위치가 달라질 수 있습니다. 문서의 기준 URL은 애플리케이션에서 직접 제어하세요.
+
 ## 빌드 커스터마이즈하기 {#customizing-the-build}
 
 다양한 [빌드 설정 옵션](/config/build-options.md)을 통해 빌드를 커스터마이즈할 수 있습니다. 특히 `build.rolldownOptions`를 통해 내부 [Rolldown 옵션](https://rolldown.rs/reference/)을 직접 조정할 수 있습니다:

@@ -37,6 +37,35 @@ Vite 서버는 모든 환경이 공유하는 하나의 플러그인 파이프라
   }
 ```
 
+## 안전한 모듈 등록하기 {#registering-safe-modules}
+
+개발 중 플러그인은 `this.environment.addSafeModule(id)`를 호출해 [`server.fs.allow`](/config/server-options#server-fs-allow) 범위 밖에서도 해석된 ID에 해당하는 모듈을 로드하도록 허용할 수 있습니다.
+
+파일 시스템 모듈을 등록할 때는 정규화한 절대 경로를 전달하세요. 경로에 쿼리를 붙여도 됩니다. 파일 시스템 경로를 정규화할 때는 Vite의 `normalizePath` 유틸리티를 사용하세요. Vite는 전체 ID와 쿼리 및 해시를 제거한 경로를 모두 등록합니다. 쿼리가 다른 ID는 각각 등록해야 합니다.
+
+플러그인이 Vite의 임포트 분석으로 찾을 수 없는 참조를 추가한다면, 같은 `transform` 훅에서 참조 대상의 ID를 등록하세요. 나중에 해당 모듈을 요청하면 접근 권한 검사를 통과합니다.
+
+```ts
+import type { Plugin } from 'vite'
+
+// runtimeId는 정규화한 절대 경로이며 쿼리를 포함할 수 있습니다.
+// runtimeUrl은 변환된 코드에 삽입할 URL입니다.
+function runtimePlugin(runtimeId: string, runtimeUrl: string): Plugin {
+  return {
+    name: 'plugin-runtime',
+    transform: {
+      filter: { code: '__RUNTIME_URL__' },
+      handler(code) {
+        if (this.environment.mode === 'dev') {
+          this.environment.addSafeModule(runtimeId)
+        }
+        return code.replaceAll('__RUNTIME_URL__', JSON.stringify(runtimeUrl))
+      },
+    },
+  }
+}
+```
+
 ## 훅을 사용해 새로운 환경 등록하기 {#registering-new-environments-using-hooks}
 
 플러그인은 `config` 훅에서 새 환경을 추가할 수 있습니다. 예를 들어 [RSC 지원](/plugins/#vitejs-plugin-rsc)은 `react-server` 조건을 가진 별도의 모듈 그래프를 갖기 위해 추가 환경을 사용합니다:

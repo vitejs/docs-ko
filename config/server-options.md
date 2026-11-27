@@ -311,7 +311,7 @@ export default defineConfig({
 
 [chokidar](https://github.com/paulmillr/chokidar/tree/3.6.0#api)에 전달할 파일 시스템 감시자(Watcher) 옵션입니다.
 
-번들 개발 모드를 활성화하면 `usePolling`, `pollInterval`, `useDebounce`, `debounceDuration`, `include`, `exclude` 같은 [Rolldown 감시 옵션](https://rolldown.rs/reference/InputOptions.watch)도 사용할 수 있습니다. chokidar 전용 옵션은 chokidar 감시자에서 계속 사용하며, 이 감시자는 설정 파일의 디펜던시나 env 파일처럼 모듈 그래프에 속하지 않는 파일을 계속 감시합니다.
+번들 개발 모드를 활성화하면 `watcher.usePolling`, `watcher.pollInterval`, `watcher.useDebounce`, `watcher.debounceDuration`, `include`, `exclude` 같은 [Rolldown 감시 옵션](https://rolldown.rs/reference/InputOptions.watch)도 사용할 수 있습니다. chokidar 전용 옵션은 chokidar 감시자에서 계속 사용하며, 이 감시자는 설정 파일의 디펜던시나 env 파일처럼 모듈 그래프에 속하지 않는 파일을 계속 감시합니다.
 
 Vite 서버 감시자는 기본적으로 `root`를 감시하며, `.git/`, `node_modules/`, `test-results/`, 그리고 Vite의 `cacheDir` 및 `build.outDir` 디렉터리는 건너뜁니다. 감시하는 파일이 업데이트되면, Vite는 필요한 경우에만 HMR을 적용하고 페이지를 업데이트합니다.
 
@@ -378,16 +378,18 @@ createServer()
 
 ## server.fs.strict {#server-fs-strict}
 
-- **타입:** `boolean`
+- **타입:** `boolean | 'extended'`
 - **기본값:** `true` (Vite 2.7에서 기본적으로 활성화되도록 변경되었습니다.)
 
 작업영역 루트 외부에 있는 파일 제공을 제한합니다.
+
+`'extended'`로 설정하면 플러그인이 `load` 훅으로 모듈을 로드할 때도 접근 권한을 검사합니다. 단, ID가 `\0`으로 시작하는 모듈은 검사에서 제외합니다.
 
 ## server.fs.allow {#server-fs-allow}
 
 - **타입:** `string[]`
 
-`/@fs/`를 통해 제공될 수 있는 파일을 제한합니다. `server.fs.strict`가 `true`로 설정된 경우, 이 목록에 포함되지 않았으며 허용된 파일에서 `import` 되는 것도 아닌 외부 파일에 접근하면 403 결과를 반환합니다.
+`/@fs/`로 제공할 수 있는 파일을 제한합니다. `server.fs.strict`가 `true` 또는 `'extended'`일 때, 목록에 있는 디렉터리 밖의 파일에 접근하면 허용된 파일에서 임포트한 경우를 제외하고 403을 반환합니다.
 
 디렉터리와 파일 모두 제공될 수 있습니다.
 

@@ -340,6 +340,31 @@ export default defineConfig({
 
 플러그인은 `builder.buildApp` 설정 옵션 외에도 `buildApp` 훅을 정의해 앱 빌드에 참여할 수 있습니다. 설정 옵션과 플러그인 훅은 정해진 순서로 실행됩니다. 먼저 순서가 `'pre'` 또는 `null`인 훅을 실행하고, 구성된 `builder.buildApp`을 실행한 뒤, 순서가 `'post'`인 훅을 실행합니다. 훅에서는 `environment.isBuilt`로 환경이 이미 빌드되었는지 확인하여 중복 빌드를 피할 수 있습니다.
 
+### `environment.manifest`로 빌드 매니페스트 읽기 {#accessing-the-build-manifest-with-environment-manifest}
+
+환경을 빌드하면 `environment.manifest`에서 그 환경의 [빌드 매니페스트](/config/build-options#build-manifest)를 읽을 수 있습니다. 플러그인은 `buildApp` 훅에서 이미 빌드한 환경의 매니페스트를 직접 읽을 수 있으므로 파일 시스템에 썼다가 다시 읽을 필요가 없습니다. 예를 들어 서버 환경에서 생성한 에셋을 클라이언트 번들로 옮길 때 매니페스트를 자주 사용합니다.
+
+[`build.manifest`](/config/build-options#build-manifest) 옵션은 매니페스트 파일을 디스크에 쓸지만 결정합니다. 이 옵션의 값과 관계없이 각 환경은 자체 매니페스트를 생성합니다.
+
+```js [vite.config.js]
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  plugins: [
+    {
+      name: 'read-manifest',
+      async buildApp(builder) {
+        const client = builder.environments.client
+        if (!client.isBuilt) {
+          await builder.build(client)
+        }
+        console.log('client manifest', client.manifest)
+      },
+    },
+  ],
+})
+```
+
 ### `createBuilder`로 프로그래밍 방식 빌드하기 {#building-programmatically-with-createbuilder}
 
 코드에서 앱 빌드를 실행하려면 독립형 `build` 함수 대신 `createBuilder`를 사용하세요. `createBuilder`는 빌드 시점의 `createServer`에 해당합니다. 설정을 해석하고 `ViteBuilder`를 반환하며, 이 객체의 `buildApp` 메서드는 구성된 모든 환경을 빌드합니다. `builder.build(environment)`로 환경 하나만 빌드할 수도 있습니다.

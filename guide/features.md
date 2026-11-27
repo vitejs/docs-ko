@@ -680,12 +680,50 @@ WebAssembly 모듈이 자체 임포트를 선언하면 Vite는 JavaScript 모듈
 
 이 방식은 [WebAssembly/ES 모듈 통합 제안](https://github.com/WebAssembly/esm-integration)을 따릅니다. WebAssembly 모듈은 비동기적으로 인스턴스화되므로, 직접 임포트한 `.wasm` 파일은 비동기 모듈처럼 동작하며 최상위 `await` 지원이 필요합니다.
 
+Vite는 WebAssembly/ES 모듈 통합 로더와 마찬가지로 [JS String Builtins](https://github.com/WebAssembly/js-string-builtins)와 [Imported String Constants](https://github.com/WebAssembly/js-string-builtins) 제안의 기능을 활성화한 상태로 모듈을 컴파일합니다.
+
 ::: tip TypeScript 지원
 
 `.wasm` 파일의 타입을 알 수 없으므로 TypeScript는 `Module '"*.wasm"' has no exported member 'add'` 같은 오류를 보고합니다. 이를 해결하려면 `tsconfig.json`에서 [`allowArbitraryExtensions`](https://www.typescriptlang.org/tsconfig/#allowArbitraryExtensions)를 활성화하고 `.wasm` 파일 옆에 선언 파일을 만드세요. `allowArbitraryExtensions`를 활성화하면 TypeScript는 `.wasm` 임포트를 해석할 때 `{filename}.d.wasm.ts`라는 선언 파일을 찾습니다. 예를 들어 `add.wasm`에는 `add.d.wasm.ts`를 만듭니다:
 
 ```ts [add.d.wasm.ts]
 export function add(a: number, b: number): number
+```
+
+:::
+
+::: details 소스 단계 임포트 지원
+
+#### 소스 단계 임포트 {#source-phase-imports}
+
+ESM 통합 제안은 `.wasm` 파일의 [소스 단계 임포트](https://github.com/tc39/proposal-source-phase-imports)도 정의합니다. 이 구문은 인스턴스를 생성하지 않고 컴파일된 [`WebAssembly.Module`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/Module)을 반환하므로, 언제 어떻게 인스턴스화할지 직접 정할 수 있습니다. 인스턴스화를 제어하는 표준 방식이며, [TypeScript 7.1](https://devblogs.microsoft.com/typescript/announcing-typescript-7-1-beta/#source-phase-imports) 정식 버전이 나오면 [`?init`](#manual-initialization)의 대안으로 권장할 예정입니다:
+
+```js
+import source mod from './example.wasm'
+
+// `mod`는 `WebAssembly.Module`이므로 원하는 시점에 원하는 방식으로 인스턴스화할 수 있습니다.
+const instance = await WebAssembly.instantiate(mod)
+instance.exports.test()
+```
+
+`WebAssembly.Instance`를 직접 생성하므로 모듈이 임포트하는 값을 전달하고 필요한 만큼 인스턴스화할 수 있습니다:
+
+```js
+import source mod from './example.wasm'
+
+const instance = await WebAssembly.instantiate(mod, {
+  './imports.js': {
+    someFunc: () => {
+      /* ... */
+    },
+  },
+})
+```
+
+동적 임포트 구문으로도 `WebAssembly.Module`을 얻을 수 있습니다:
+
+```js
+const mod = await import.source('./example.wasm')
 ```
 
 :::
@@ -725,7 +763,7 @@ init({
 
 ::: warning SSR 빌드에서는 Node.js 호환 런타임만 지원됩니다
 
-파일을 로드하는 범용 방식이 없기 때문에, 직접 `.wasm`을 임포트하는 방식과 `.wasm?init` 방식의 내부 구현은 모두 `node:fs` 모듈에 의존합니다. 따라서 이 기능들은 SSR 빌드에서 Node.js 호환 런타임에서만 동작합니다.
+파일을 로드하는 공통 방식이 없어 `.wasm` 직접 임포트, 소스 단계 임포트, `.wasm?init`은 내부적으로 모두 `node:fs` 모듈에 의존합니다. 따라서 SSR 빌드에서는 이 기능을 Node.js 호환 런타임에서만 사용할 수 있습니다.
 
 :::
 

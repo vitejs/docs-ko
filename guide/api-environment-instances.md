@@ -87,6 +87,13 @@ class DevEnvironment {
   async warmupRequest(url: string): Promise<void>
 
   /**
+   * 해석된 모듈 ID를 이 환경에서 안전하게 로드할 수 있도록 등록합니다.
+   * server.fs.allow 범위 밖에서도 로드할 수 있지만 server.fs.deny는 계속 적용됩니다.
+   * 플러그인의 transform 훅에서 이 모듈에 대한 참조를 추가할 때 호출하세요.
+   */
+  addSafeModule(id: string): void
+
+  /**
    * 모듈 러너가 지정된 모듈의 정보를 가져올 때 호출됩니다.
    * 내부적으로 `transformRequest`를 호출하고, 모듈 러너가 이해하는
    * 형식으로 결과를 감쌉니다. 이 메서드는 직접 호출하기 위한 것이 아닙니다.

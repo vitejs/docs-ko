@@ -256,7 +256,7 @@ vite build --profile
 브라우저에서 앱을 열고 로드가 완료될 때까지 기다린 후 터미널로 돌아가 `p` 키를 누르세요(Node.js 인스펙터를 중지합니다). 이후 `q` 키를 눌러 개발 서버를 중지하세요.
 :::
 
-Node.js 인스펙터가 루트 폴더에 `vite-profile-0.cpuprofile`을 생성합니다. `--profile <name>` 또는 `--profile=<name>`을 전달하면 대신 `<name>.cpuprofile`에 저장할 수 있습니다. https://www.speedscope.app/ 에서 `BROWSE` 버튼을 눌러 CPU 프로파일을 업로드하고 결과를 확인하세요.
+Node.js 인스펙터가 루트 폴더에 `vite-profile.cpuprofile`을 생성합니다. `--profile <name>` 또는 `--profile=<name>`을 전달하면 대신 `<name>.cpuprofile`에 저장할 수 있습니다. https://www.speedscope.app/ 에서 `BROWSE` 버튼을 눌러 CPU 프로파일을 업로드하고 결과를 확인하세요.
 
 [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect)를 설치하여 Vite 플러그인의 중간 상태를 점검하고 병목현상을 일으키는 플러그인 또는 미들웨어를 식별할 수 있습니다. 개발 및 프로덕션 빌드 둘 다 사용 가능합니다. 자세한 내용은 readme 파일을 확인하세요.
 
